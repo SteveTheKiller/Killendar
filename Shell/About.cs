@@ -1,119 +1,47 @@
 using System;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
+using Killendar.Features;
 
-// KillerUI kit. Replace "Killendar" with your app's root namespace and set the three
-// constants below. A partial of your MainWindow.
-//
-// About overlay: dims the window and shows a centred card with version, code-signing
-// publisher + thumbprint, the running exe's SHA-256, and a quiet GitHub update check
-// with optional one-click self-update.
-//
-// Your MainWindow.xaml is expected to provide an "AboutOverlay" Grid (ZIndex high,
-// Visibility=Collapsed, dim background, MouseLeftButtonDown="AboutOverlay_Click")
-// containing a card (MouseLeftButtonDown="AboutCard_Click") with these named elements:
-//   AboutVersionBlock and AboutReleaseDateBlock (one row, version left / date right),
-//   AboutPublisherBlock, AboutAkaBlock (Collapsed by default) wrapping AboutAkaRun inside a
-//   thekiller.net Hyperlink, AboutThumbprintBlock, AboutSha256Block, AboutUpdateButton,
-//   AboutUpdateText  (+ a close button Click="AboutClose_Click")
-// The info panel Grid must be named AboutInfoGrid - the header binds its width to it so the
-// SHA-256 line stays the only thing that sets the card width (family standard, code/CLAUDE.md).
-// The easiest path: copy the AboutOverlay Grid from KillerScan's MainWindow.xaml and
-// drop the vendor-DB rows (AboutDbBlock / AboutDbStatus / AboutDbUpdateLink).
-//
-// The release date needs plumbing in your csproj: a <ReleaseDate>yyyy-MM-dd</ReleaseDate>
-// property baked in through an AssemblyAttribute ItemGroup for AssemblyMetadataAttribute
-// (Key ReleaseDate). Bump it in the same pass as the version and the CHANGELOG section.
-// A file timestamp does not survive being copied and the PE linker stamp is a build date.
-//
-// The self-update confirmation uses the kit's themed ConfirmDialog (ConfirmDialog.xaml/.cs),
-// so copy those files too.
-//
-// Call ShowAboutOverlay() from your About button / F1 handler.
 namespace Killendar
 {
-    public partial class MainWindow
+    /// <summary>
+    /// The About overlay's window half: the fade, the click handling, and the IAboutHost
+    /// implementation that maps the controller's values onto the named XAML elements.
+    /// </summary>
+    public partial class MainWindow : IAboutHost
     {
-        // ---- Configure these three per app ----
-        private const string GitHubRepo    = "SteveTheKiller/Killendar"; // owner/repo for update checks + links
-        private const string ExeName       = "Killendar.exe";     // release asset + on-disk exe name
-        private const string AppDisplayName = "Killendar";        // shown in the update prompt
+        private AboutController _about = null!;
 
-        private string? _updateTag;
+        private void ShowAboutOverlay() => _about.Show();
 
-        // The certificate subject is the legal name ("Open Source Developer Stephen Riley"),
-        // so the About card ties it back to the name people know. Gated on the subject actually
-        // being Steve's: a fork signed by somebody else must not claim the alias, and an
-        // unsigned build has no subject at all. Family standard, see code/CLAUDE.md.
-        private const string SignerName = "Stephen Riley";
-        private const string AkaName    = "Steve the Killer";
+        // ---- IAboutHost ----
 
-        // Uncomment these two, and the DemoMode line in ShowAboutOverlay, once the app has a
-        // --demo / /demo marketing-screenshot switch: they render the About card in its signed
-        // state so captures from an unsigned local build match the release. These are the REAL
-        // certificate values, not invented ones - a published screenshot must never show a
-        // fingerprint that does not exist. The current cert expires 2027-05-04.
-        // private const string DemoSubject    = "Open Source Developer Stephen Riley";
-        // private const string DemoThumbprint = "E478E4940DFD3547DAF2199494B399214FB3E0FD";
+        string IAboutHost.Version     { set => AboutVersionBlock.Text = value; }
+        string IAboutHost.ReleaseDate { set => AboutReleaseDateBlock.Text = value; }
+        string IAboutHost.Publisher   { set => AboutPublisherBlock.Text = value; }
+        string IAboutHost.Alias       { set => AboutAkaRun.Text = value; }
+        string IAboutHost.Thumbprint  { set => AboutThumbprintBlock.Text = value; }
+        string IAboutHost.Sha256      { set => AboutSha256Block.Text = value; }
+        string IAboutHost.UpdateText  { set => AboutUpdateText.Text = value; }
 
-        private static string CurrentVersion =>
-            Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion
-            ?? Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "1.0.0";
-
-        /// <summary>Release date baked in from the csproj's ReleaseDate property, so a user can
-        /// see how old their build is. Empty when the attribute is missing (an older build), in
-        /// which case the version line shows the version alone.</summary>
-        private static string ReleaseDate
+        bool IAboutHost.AliasVisible
         {
-            get
-            {
-                foreach (var a in Assembly.GetExecutingAssembly().GetCustomAttributes<AssemblyMetadataAttribute>())
-                    if (a.Key == "ReleaseDate") return a.Value ?? string.Empty;
-                return string.Empty;
-            }
+            set => AboutAkaBlock.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private void ShowAboutOverlay()
+        bool IAboutHost.UpdateVisible
         {
-            AboutVersionBlock.Text = $"v{CurrentVersion}";
-            // Its own block so it can sit muted, italic and right-aligned opposite the version.
-            AboutReleaseDateBlock.Text = ReleaseDate;
-
-            var (sigValid, subject, thumb) = GetSignerInfo();
-            // --demo previews the signed card; uncomment with the DemoSubject constants above.
-            // if (DemoMode) { sigValid = true; subject = DemoSubject; thumb = DemoThumbprint; }
-            AboutPublisherBlock.Text  = sigValid ? subject : LocStatic("Str_About_Unsigned");
-            // Shown only when the exe is signed by Steve AND the signature actually verifies -
-            // reading a cert out of the file does not prove the file was not tampered with.
-            bool signedByMe = sigValid && subject.IndexOf(SignerName, StringComparison.OrdinalIgnoreCase) >= 0;
-            // Only the quoted alias goes in the run - the "AKA " prefix and the thekiller.net
-            // hyperlink around it live in the XAML. 0x201C / 0x201D are the curly quotes, built
-            // from codepoints so this line adds no non-ASCII bytes to the source.
-            AboutAkaRun.Text         = (char)0x201C + AkaName + (char)0x201D;
-            AboutAkaBlock.Visibility = signedByMe ? Visibility.Visible : Visibility.Collapsed;
-            AboutThumbprintBlock.Text = thumb;
-            AboutSha256Block.Text     = LocStatic("Str_About_Computing");
-            AboutUpdateButton.Visibility = Visibility.Collapsed;
-
-            FadeOverlayIn(AboutOverlay);
-
-            // SHA-256 is slow on a large EXE; compute off the UI thread.
-            Task.Run(() =>
-            {
-                var h = GetExeSha256();
-                Dispatcher.BeginInvoke((Action)(() => AboutSha256Block.Text = h));
-            });
-            CheckForUpdateAsync(Assembly.GetExecutingAssembly().GetName().Version);
+            set => AboutUpdateButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        bool IAboutHost.UpdateEnabled { set => AboutUpdateButton.IsEnabled = value; }
+
+        void IAboutHost.ShowCard() => FadeOverlayIn(AboutOverlay);
+
+        // ---- Overlay fade ----
 
         private static void FadeOverlayIn(UIElement o)
         {
@@ -131,297 +59,21 @@ namespace Killendar
             o.BeginAnimation(UIElement.OpacityProperty, a);
         }
 
+        // ---- Handlers ----
+
         // Click the dim backdrop to dismiss; a click on the card itself is swallowed.
         private void AboutOverlay_Click(object sender, MouseButtonEventArgs e) => FadeOverlayOut(AboutOverlay);
         private void AboutCard_Click(object sender, MouseButtonEventArgs e) => e.Handled = true;
         private void AboutClose_Click(object sender, RoutedEventArgs e) => FadeOverlayOut(AboutOverlay);
 
-        private void AboutVersion_Click(object sender, MouseButtonEventArgs e) =>
-            OpenUrl($"https://github.com/{GitHubRepo}/releases/tag/v{CurrentVersion}");
+        private void AboutVersion_Click(object sender, MouseButtonEventArgs e) => _about.OpenReleaseNotes();
+
+        private void AboutUpdateButton_Click(object sender, RoutedEventArgs e) => _about.Update();
 
         private void AboutLink_Navigate(object sender, RequestNavigateEventArgs e)
         {
-            OpenUrl(e.Uri.AbsoluteUri);
+            Services.WebLink.Open(e.Uri.AbsoluteUri);
             e.Handled = true;
-        }
-
-        private void AboutUpdateButton_Click(object sender, RoutedEventArgs e) => DoSelfUpdateAsync();
-
-        // One-click self-update: downloads the released exe, verifies it against the published
-        // SHA256SUMS.txt at the tag, then hands off to a small batch that waits for this process to
-        // exit, swaps the exe in place, and relaunches. Falls back to opening the releases page if
-        // anything fails (offline, checksum mismatch, unwritable location).
-        private async void DoSelfUpdateAsync()
-        {
-            var tag = _updateTag;
-            if (string.IsNullOrEmpty(tag)) return;
-
-            var dlg = new ConfirmDialog(
-                $"Download and install {AppDisplayName} {tag}?",
-                "The app will close and reopen automatically.",
-                "Update") { Owner = this };
-            dlg.ShowDialog();
-            if (!dlg.Confirmed) return;
-
-            AboutUpdateButton.IsEnabled = false;
-            AboutUpdateText.Text = LocStatic("Str_About_Downloading");
-
-            string? newExe = null;
-            try
-            {
-                System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12;
-                using var http = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(90) };
-                http.DefaultRequestHeaders.UserAgent.ParseAdd($"{AppDisplayName}-UpdateCheck");
-
-                var exeUrl  = $"https://github.com/{GitHubRepo}/releases/download/{tag}/{ExeName}";
-                // Read the checksums from the release ASSET next to the exe, not from raw.githubusercontent
-                // at the tag. Both files are uploaded to the release together, so the hash can never drift
-                // from the exe the way a repo-committed file does when the tag/commit order gets muddled.
-                var sumsUrl = $"https://github.com/{GitHubRepo}/releases/download/{tag}/SHA256SUMS.txt";
-
-                var exeBytes = await http.GetByteArrayAsync(exeUrl);
-                var sumsTxt  = await http.GetStringAsync(sumsUrl);
-
-                string? expected = null;
-                foreach (var line in sumsTxt.Replace("\r", "").Split('\n'))
-                {
-                    if (line.TrimStart().StartsWith(ExeName, StringComparison.OrdinalIgnoreCase))
-                    {
-                        var parts = line.Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries);
-                        if (parts.Length >= 2) expected = parts[^1];
-                        break;
-                    }
-                }
-                if (string.IsNullOrEmpty(expected)) throw new Exception("checksum entry not found");
-
-                string actual;
-                using (var sha = SHA256.Create())
-                    actual = BitConverter.ToString(sha.ComputeHash(exeBytes)).Replace("-", "");
-                if (!actual.Equals(expected, StringComparison.OrdinalIgnoreCase))
-                    throw new Exception("checksum mismatch");
-
-                newExe = Path.Combine(Path.GetTempPath(), $"{AppDisplayName}_update_{Guid.NewGuid():N}.exe");
-                File.WriteAllBytes(newExe, exeBytes);
-            }
-            catch
-            {
-                AboutUpdateButton.IsEnabled = true;
-                AboutUpdateText.Text = $"Update available: {tag}";
-                OpenUrl($"https://github.com/{GitHubRepo}/releases/latest");
-                return;
-            }
-
-            // A machine-wide install (Program Files, from a /silent path, winget, choco or an
-            // RMM) is not writable by a normal user, so the swap has to run elevated. An earlier
-            // version of this batch ran unelevated and sent the copy to >nul with no errorlevel
-            // check, so on those installs it silently failed and then relaunched the OLD exe -
-            // the app appeared to "update" to the same version, with no error. Do not simplify
-            // this back: check the copy result, and elevate when the target needs it.
-            try
-            {
-                var curExe = Process.GetCurrentProcess().MainModule!.FileName;
-                var pid    = Process.GetCurrentProcess().Id;
-                var bat    = Path.Combine(Path.GetTempPath(), $"{AppDisplayName}_update_{Guid.NewGuid():N}.bat");
-
-                bool needsElevation = !CanWriteTo(Path.GetDirectoryName(curExe)!);
-
-                // When elevated, relaunch through explorer.exe so the app comes back at the
-                // user's normal integrity level instead of inheriting the elevated token.
-                string relaunch = needsElevation
-                    ? $"start \"\" explorer.exe \"{curExe}\""
-                    : $"start \"\" \"{curExe}\"";
-
-                File.WriteAllText(bat,
-                    "@echo off\r\n" +
-                    ":wait\r\n" +
-                    $"tasklist /fi \"PID eq {pid}\" 2>nul | find \"{pid}\" >nul\r\n" +
-                    "if not errorlevel 1 ( ping -n 2 127.0.0.1 >nul & goto wait )\r\n" +
-                    $"copy /y \"{newExe}\" \"{curExe}\" >nul 2>&1\r\n" +
-                    "if errorlevel 1 goto failed\r\n" +
-                    relaunch + "\r\n" +
-                    "goto cleanup\r\n" +
-                    ":failed\r\n" +
-                    // Do not relaunch a stale exe and call it an update: send the user to the
-                    // releases page so the failure is visible and fixable by hand.
-                    $"start \"\" \"https://github.com/{GitHubRepo}/releases/latest\"\r\n" +
-                    ":cleanup\r\n" +
-                    $"del \"{newExe}\" >nul 2>&1\r\n" +
-                    "del \"%~f0\" >nul 2>&1\r\n");
-
-                var psi = new ProcessStartInfo("cmd.exe", $"/c \"{bat}\"")
-                {
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                    UseShellExecute = true
-                };
-                if (needsElevation) psi.Verb = "runas";   // triggers the UAC prompt
-
-                // Declining UAC throws Win32Exception 1223, so only shut down once the helper
-                // is actually running - otherwise the app would close without updating.
-                Process.Start(psi);
-                Application.Current.Shutdown();
-            }
-            catch
-            {
-                try { if (newExe is not null && File.Exists(newExe)) File.Delete(newExe); } catch { }
-                AboutUpdateButton.IsEnabled = true;
-                AboutUpdateText.Text = $"Update available: {tag}";
-            }
-        }
-
-        /// <summary>True if this process can create a file in <paramref name="dir"/>. Used to decide
-        /// whether the self-update swap needs elevating: Program Files installs are not writable by a
-        /// normal user, per-user installs under LOCALAPPDATA always are.</summary>
-        private static bool CanWriteTo(string dir)
-        {
-            try
-            {
-                var probe = Path.Combine(dir, $".upd_write_{Guid.NewGuid():N}.tmp");
-                using (new FileStream(probe, FileMode.CreateNew, FileAccess.Write, FileShare.None,
-                                      1, FileOptions.DeleteOnClose)) { }
-                return true;
-            }
-            catch { return false; }
-        }
-
-        // Quietly checks GitHub for a newer release when About opens. Times out fast and fails
-        // silently with no internet; shows the update button only if a newer tag exists.
-        private async void CheckForUpdateAsync(Version? current)
-        {
-            if (current is null) return;
-            try
-            {
-                System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12;
-                using var http = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(4) };
-                http.DefaultRequestHeaders.UserAgent.ParseAdd($"{AppDisplayName}-UpdateCheck");
-                var json = await http.GetStringAsync(
-                    $"https://api.github.com/repos/{GitHubRepo}/releases/latest").ConfigureAwait(false);
-
-                var m = System.Text.RegularExpressions.Regex.Match(json, "\"tag_name\"\\s*:\\s*\"([^\"]+)\"");
-                if (!m.Success) return;
-                if (!Version.TryParse(m.Groups[1].Value.TrimStart('v', 'V').Trim(), out var latest)) return;
-
-                var cur = new Version(current.Major, current.Minor, current.Build < 0 ? 0 : current.Build);
-                var lat = new Version(latest.Major, latest.Minor, latest.Build < 0 ? 0 : latest.Build);
-                if (lat <= cur) return;
-
-                await Dispatcher.BeginInvoke((Action)(() =>
-                {
-                    _updateTag = $"v{lat.ToString(3)}";
-                    AboutUpdateText.Text = $"Update available: {_updateTag}";
-                    AboutUpdateButton.Visibility = Visibility.Visible;
-                }));
-            }
-            catch { /* offline or API error - silently ignore */ }
-        }
-
-        private static void OpenUrl(string url)
-        {
-            try { Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); }
-            catch { /* no browser available - ignore */ }
-        }
-
-        // WinVerifyTrust P/Invoke. Reading the certificate out of the file only proves a cert is
-        // embedded; it does not prove the signature validates. WinVerifyTrust does the full chain
-        // check, so a tampered or badly signed exe cannot show Steve's name or claim the AKA alias.
-        [StructLayout(LayoutKind.Sequential)]
-        private struct WINTRUST_FILE_INFO
-        {
-            public uint   cbStruct;
-            public IntPtr pcwszFilePath;   // LPCWSTR
-            public IntPtr hFile;
-            public IntPtr pgKnownSubject;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct WINTRUST_DATA
-        {
-            public uint   cbStruct;
-            public IntPtr pPolicyCallbackData;
-            public IntPtr pSIPClientData;
-            public uint   dwUIChoice;          // 2 = WTD_UI_NONE
-            public uint   fdwRevocationChecks; // 0 = WTD_REVOKE_NONE
-            public uint   dwUnionChoice;       // 1 = WTD_CHOICE_FILE
-            public IntPtr pUnion;              // -> WINTRUST_FILE_INFO
-            public uint   dwStateAction;       // 0 = WTD_STATEACTION_IGNORE
-            public IntPtr hWVTStateData;
-            public IntPtr pwszURLReference;
-            public uint   dwProvFlags;         // 0x1000 = WTD_CACHE_ONLY_URL_RETRIEVAL
-            public uint   dwUIContext;
-            public IntPtr pSignatureSettings;
-        }
-
-        private static readonly Guid WTD_VERIFY_GENERIC =
-            new Guid("00AAC56B-CD44-11d0-8CC2-00C04FC295EE");
-
-        [DllImport("wintrust.dll", ExactSpelling = true, SetLastError = false,
-                   CharSet = CharSet.Unicode)]
-        private static extern uint WinVerifyTrust(
-            IntPtr hwnd, ref Guid pgActionID, IntPtr pWVTData);
-
-        /// <summary>Reads the running exe's Authenticode certificate for display and validates the
-        /// signature with WinVerifyTrust. Valid is false for unsigned, expired or tampered files.
-        /// Retrieval is cache-only (0x1000), so opening the About card never waits on the network -
-        /// a signed exe carries its own intermediates, so the chain still builds offline.</summary>
-        private static (bool valid, string subject, string thumb) GetSignerInfo()
-        {
-            var subject = "(not signed)";
-            var thumb   = "(none)";
-            var exePath = string.Empty;
-
-            try
-            {
-                exePath = Process.GetCurrentProcess().MainModule?.FileName ?? string.Empty;
-                if (exePath.Length == 0) return (false, "(unavailable)", "(none)");
-                using var cert = new X509Certificate2(X509Certificate.CreateFromSignedFile(exePath));
-                var subj = cert.GetNameInfo(X509NameType.SimpleName, false);
-                subject = string.IsNullOrEmpty(subj) ? cert.Subject : subj;
-                thumb   = string.IsNullOrEmpty(cert.Thumbprint) ? "(none)" : cert.Thumbprint;
-            }
-            catch { return (false, "(not signed)", "(none)"); }
-
-            var pathPtr     = Marshal.StringToHGlobalUni(exePath);
-            var fileInfoPtr = Marshal.AllocHGlobal(Marshal.SizeOf<WINTRUST_FILE_INFO>());
-            var dataPtr     = Marshal.AllocHGlobal(Marshal.SizeOf<WINTRUST_DATA>());
-            try
-            {
-                Marshal.StructureToPtr(new WINTRUST_FILE_INFO
-                {
-                    cbStruct      = (uint)Marshal.SizeOf<WINTRUST_FILE_INFO>(),
-                    pcwszFilePath = pathPtr
-                }, fileInfoPtr, false);
-
-                Marshal.StructureToPtr(new WINTRUST_DATA
-                {
-                    cbStruct      = (uint)Marshal.SizeOf<WINTRUST_DATA>(),
-                    dwUIChoice    = 2,       // WTD_UI_NONE
-                    dwUnionChoice = 1,       // WTD_CHOICE_FILE
-                    pUnion        = fileInfoPtr,
-                    dwProvFlags   = 0x1000   // WTD_CACHE_ONLY_URL_RETRIEVAL, never hit the network
-                }, dataPtr, false);
-
-                var actionId = WTD_VERIFY_GENERIC;
-                return (WinVerifyTrust(IntPtr.Zero, ref actionId, dataPtr) == 0, subject, thumb);
-            }
-            catch { return (false, subject, thumb); }
-            finally
-            {
-                Marshal.FreeHGlobal(dataPtr);
-                Marshal.FreeHGlobal(fileInfoPtr);
-                Marshal.FreeHGlobal(pathPtr);
-            }
-        }
-
-        private static string GetExeSha256()
-        {
-            try
-            {
-                var path = Process.GetCurrentProcess().MainModule?.FileName;
-                if (string.IsNullOrEmpty(path) || !File.Exists(path)) return "(unavailable)";
-                using var sha = SHA256.Create();
-                using var fs  = File.OpenRead(path);
-                return BitConverter.ToString(sha.ComputeHash(fs)).Replace("-", "").ToLowerInvariant();
-            }
-            catch { return "(unavailable)"; }
         }
     }
 }

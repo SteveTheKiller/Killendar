@@ -1,11 +1,11 @@
 using System.Windows;
 using System.Windows.Input;
+using Killendar.Features;
 
-// The Killendar - main window. This file holds only the constructor and the handlers that are
-// not supplied by a kit partial. The rest of MainWindow lives in:
-//   Chrome.cs       - caption buttons, maximize, corners, grain, window placement, resize grip
-//   ThemeFlyout.cs  - theme + accent swatch flyout
-//   About.cs        - the About overlay, signature check, update check, self-update
+// The main window's constructor and the handlers that belong to no feature. The rest of MainWindow
+// is split by surface: Chrome.cs (caption buttons, placement, grain), ThemeFlyout.cs (theme and
+// accent swatches), About.cs (the About overlay), CalendarHost.cs (the calendar surface and the
+// composition root), plus the host halves of the other features.
 namespace Killendar
 {
     public partial class MainWindow : Window
@@ -14,41 +14,42 @@ namespace Killendar
         {
             InitializeComponent();
 
-            RestoreWindowPlacement();                           // Chrome.cs
-            SourceInitialized += MainWindow_SourceInitialized;  // Chrome.cs
-            ApplyGrainTexture();                                // Chrome.cs
+            RestoreWindowPlacement();
+            SourceInitialized += MainWindow_SourceInitialized;
+            ApplyGrainTexture();
             Loaded += (_, _) =>
             {
-                FadeInContent();                                // Chrome.cs
+                FadeInContent();
                 // Deferred, NOT called inline: Loaded fires synchronously inside Show(), and the
                 // unlock prompt both needs an already-shown Owner and may Close() the window on
                 // cancel - a reentrant Close() during Show() throws. Dispatching lets Show()
                 // finish first, so the prompt appears right after the first paint.
                 Dispatcher.BeginInvoke(new System.Action(() =>
                 {
-                    OpenCalendarData();        // Calendar.cs - opens, unlocks if needed, paints
-                    HandlePendingOpenFile();   // OpenFile.cs - a double-clicked .kcal, if any
+                    OpenCalendarData();        // opens, unlocks if needed, paints
+                    HandlePendingOpenFile();   // a double-clicked .kcal, if any
                 }), System.Windows.Threading.DispatcherPriority.Background);
             };
 
-            UpdateThemeSwatchSelection();                       // ThemeFlyout.cs
-            UpdateAccentSwatches();                             // ThemeFlyout.cs
+            UpdateThemeSwatchSelection();
+            UpdateAccentSwatches();
             Services.ThemeManager.ThemeChanged += () =>
             {
                 UpdateThemeSwatchSelection();
                 UpdateAccentSwatches();
             };
 
-            VersionLabel.Text = "v" + CurrentVersion;
+            _about = new AboutController(this);
+            VersionLabel.Text = "v" + Services.AppInfo.Version;
 
-            InitCalendar();   // Calendar.cs - store, the four views, navigation, ICS
+            InitCalendar();   // store, the four views, navigation, ICS
         }
 
-        /// <summary>Footer version label opens the About card, same as every other Killer app.</summary>
+        /// <summary>The footer version label opens the About card.</summary>
         private void VersionLabel_Click(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
-            ShowAboutOverlay();   // About.cs
+            ShowAboutOverlay();
         }
     }
 }
