@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace Killendar
+namespace Killendar.Shell
 {
     /// <summary>
     /// The theme flyout's window half: the handlers the XAML binds to, forwarded to ThemePicker.

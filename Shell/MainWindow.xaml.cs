@@ -6,7 +6,7 @@ using Killendar.Features;
 // is split by surface: Chrome.cs (caption buttons, placement, grain), ThemeFlyout.cs (theme and
 // accent swatches), About.cs (the About overlay), CalendarHost.cs (the calendar surface and the
 // composition root), plus the host halves of the other features.
-namespace Killendar
+namespace Killendar.Shell
 {
     public partial class MainWindow : Window
     {

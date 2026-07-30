@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Windows;
 using Killendar.Services;
+using Killendar.Shell;
 using Microsoft.Win32;
 
 // Application entry point and install system. The exe installs itself, per-user by default or

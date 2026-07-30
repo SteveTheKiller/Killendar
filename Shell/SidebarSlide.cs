@@ -2,12 +2,13 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using Killendar.Controls;
 
 // The appointment panel's slide. Pure view behaviour, so it stays with the window rather than
 // moving into the feature: the panel is never hidden with Visibility, the SidebarCol column width
 // is animated between 0 and SidebarW instead, so the calendar reflows with the slide rather than
 // snapping after it. The rail beside it is permanent, which is the point of a rail.
-namespace Killendar
+namespace Killendar.Shell
 {
     public partial class MainWindow
     {

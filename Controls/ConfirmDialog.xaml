@@ -3,7 +3,7 @@
      Themed confirm dialog: same surface, grain, shadow, and wordmark language as the
      main window. Used by About.cs for the self-update prompt; reuse it anywhere a
      MessageBox would break the look (install prompts, destructive confirms, ...). -->
-<Window x:Class="Killendar.ConfirmDialog"
+<Window x:Class="Killendar.Controls.ConfirmDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Killendar"

@@ -3,9 +3,10 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
+using Killendar.Controls;
 using Killendar.Features;
 
-namespace Killendar
+namespace Killendar.Shell
 {
     /// <summary>
     /// The About overlay's window half: the fade, the click handling, and the IAboutHost

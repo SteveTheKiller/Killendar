@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Killendar
+namespace Killendar.Controls
 {
     /// <summary>Open or Save. Picked at construction; changes the accept button and the rules.</summary>
     public enum FileDialogMode { Open, Save }
@@ -134,8 +134,8 @@ namespace Killendar
             {
                 // Without the corner call a WindowStyle="None" window has hard edges and no
                 // system shadow at all.
-                Controls.DwmChrome.SetRoundedCorners(this, rounded: true);
-                Controls.DwmChrome.SetThemeBorder(this);
+                DwmChrome.SetRoundedCorners(this, rounded: true);
+                DwmChrome.SetThemeBorder(this);
                 var src = (System.Windows.Interop.HwndSource?)PresentationSource.FromVisual(this);
                 src?.AddHook((IntPtr h, int msg, IntPtr w, IntPtr l, ref bool handled) =>
                 {

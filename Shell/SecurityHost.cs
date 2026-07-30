@@ -4,7 +4,7 @@ using Killendar.Features;
 
 // MainWindow's side of the security feature: it satisfies ISecurityHost and forwards the two
 // button clicks. All the behaviour lives in Features/Security/SecurityController.cs.
-namespace Killendar
+namespace Killendar.Shell
 {
     public partial class MainWindow : ISecurityHost
     {

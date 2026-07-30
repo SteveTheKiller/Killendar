@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 
 // KillerUI kit. Replace "Killendar" with your app's root namespace.
-namespace Killendar
+namespace Killendar.Controls
 {
     // Keeps the scrollbar reactive (thumb sized to the visible proportion) while guaranteeing it
     // never shrinks below a grabbable floor.

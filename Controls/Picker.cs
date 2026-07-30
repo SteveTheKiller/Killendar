@@ -1,6 +1,6 @@
 using System;
 
-namespace Killendar
+namespace Killendar.Controls
 {
     // Row and place models for FileDialog.
     public sealed class PickerPlace(string glyph, string label, string path)

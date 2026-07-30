@@ -1,7 +1,7 @@
 using System.Windows;
 using Killendar.Services;
 
-namespace Killendar
+namespace Killendar.Shell
 {
     /// <summary>
     /// The language menu's window half: the handler the XAML binds to, and putting the strings that

@@ -8,7 +8,7 @@ using System.Windows.Input;
 // safe: a single-key shortcut must never fire while the user is typing, so everything bails out
 // when focus is in a text field. Modified combinations (Ctrl+I, Ctrl+E) are checked first and are
 // allowed regardless, since they cannot collide with typing.
-namespace Killendar
+namespace Killendar.Shell
 {
     public partial class MainWindow
     {

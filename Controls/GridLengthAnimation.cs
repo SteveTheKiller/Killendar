@@ -2,7 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace Killendar
+namespace Killendar.Controls
 {
     /// <summary>Animates a Grid ColumnDefinition/RowDefinition size (a GridLength), which WPF
     /// has no built-in animation for. Pixel values only - enough for the appointment sidebar's

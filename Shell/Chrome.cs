@@ -18,7 +18,7 @@ using Killendar.Controls;
 //
 // MainWindow.xaml is expected to name: RootGrid (Opacity="0" so FadeInContent can reveal it),
 // MinimizeBtn / MaximizeBtn / CloseBtn, ResizeGrip, and any *GrainBrush layers.
-namespace Killendar
+namespace Killendar.Shell
 {
     public partial class MainWindow
     {

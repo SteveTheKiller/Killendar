@@ -5,7 +5,7 @@ using Killendar.Services;
 
 // MainWindow's side of the calendar surface: it satisfies ICalendarHost, wires the toolbar, and
 // composes the feature objects. The behaviour lives in Features/Calendar/.
-namespace Killendar
+namespace Killendar.Shell
 {
     public partial class MainWindow : ICalendarHost
     {

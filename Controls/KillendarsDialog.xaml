@@ -3,7 +3,7 @@
      caller closes the store before showing this, so every file - the active one included -
      is safe to touch. Ported from KillerNotes' DatabasesDialog; the data-folder picker is
      deliberately not carried over (Killendars are per-user in APPDATA by design). -->
-<Window x:Class="Killendar.KillendarsDialog"
+<Window x:Class="Killendar.Controls.KillendarsDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Killendar"

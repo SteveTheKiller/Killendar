@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace Killendar
+namespace Killendar.Controls
 {
     // Themed password prompt. Password / PasswordConfirm are captured on OK.
     // Ported from KillerNotes; showHint adds the "there is no recovery" line, which belongs on the

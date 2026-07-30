@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Killendar.Services;
 
-namespace Killendar
+namespace Killendar.Controls
 {
     // Manage Killendars: list every .kcal in the data folder with size / modified / [encrypted] /
     // [active] flags; create (+), delete (with confirm), load one from elsewhere, reveal in

@@ -4,7 +4,7 @@ using Killendar.Features;
 // MainWindow's side of the appointment panel: it satisfies IAppointmentView by forwarding to the
 // boxes in MainWindow.xaml, and routes the panel's buttons to the editor. The validation and the
 // store writes live in Features/Appointments/AppointmentEditor.cs.
-namespace Killendar
+namespace Killendar.Shell
 {
     public partial class MainWindow : IAppointmentView
     {

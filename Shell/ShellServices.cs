@@ -3,7 +3,7 @@ using Killendar.Features;
 
 // The three seams every feature shares. Implemented once here; each feature's own interface
 // extends IShellServices, so all of them are satisfied by these.
-namespace Killendar
+namespace Killendar.Shell
 {
     public partial class MainWindow : IShellServices
     {
