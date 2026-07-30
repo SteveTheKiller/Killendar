@@ -40,46 +40,9 @@ namespace Killendar
             confirm.ShowDialog();
             if (!confirm.Confirmed) return;
 
-            CloseSidebar();   // whatever was being edited belongs to the Killendar we are leaving
-
-            string previous = EventStore.ActiveFile;
-            try
-            {
-                string name = EventStore.ImportKillendar(path);
-                _store.Close();
-                EventStore.SetActive(name);
-                _kcalPassword = null;   // a different file - its password is not ours to try
-
-                if (!OpenKillendar(exitOnCancel: false))
-                {
-                    // Unlocking the copy was cancelled - fall back to what was open before rather
-                    // than leaving the app with nothing.
-                    EventStore.SetActive(previous);
-                    _kcalPassword = null;
-                    OpenKillendar(exitOnCancel: false);
-                    _active.Refresh();
-                    UpdateActiveKillendarLabel();
-                    return;
-                }
-
-                _active.Refresh();
-                UpdatePeriodLabel();
-                UpdateActiveKillendarLabel();
-                StatusText.Text = string.Format(Loc("Str_Status_Opened"), _store.DisplayName);
-            }
-            catch (Exception ex)
-            {
-                StatusText.Text = string.Format(Loc("Str_Kc_LoadFailed"), ex.Message);
-                // The copy failed before anything was switched, or the switch failed after it -
-                // either way get a Killendar open again before the next edit needs one.
-                if (!_store.IsOpen)
-                {
-                    EventStore.SetActive(previous);
-                    OpenKillendar(exitOnCancel: false);
-                    _active.Refresh();
-                    UpdateActiveKillendarLabel();
-                }
-            }
+            string status = _security.AdoptFile(path);
+            UpdatePeriodLabel();
+            if (status.Length > 0) StatusText.Text = status;
         }
     }
 }

@@ -30,6 +30,10 @@ namespace Killendar
             _store = new EventStore();
             _store.Changed += () => _active.Refresh();
 
+            // Password handling, unlock-on-launch and switching Killendars. MainWindow supplies
+            // ISecurityHost (Shell/SecurityHost.cs); the controller owns the behaviour.
+            _security = new Features.SecurityController(this, _store);
+
             _monthView  = new MonthView();
             _weekView   = new WeekView();
             _dayView    = new DayView();
@@ -41,8 +45,8 @@ namespace Killendar
                 v.SlotSelected  += OnSlotSelected;
             }
 
-            SelectView("Month");   // paints an empty month; OpenCalendarData refreshes it
-            UpdateLockGlyph();     // so the title-bar button is never blank before the open
+            SelectView("Month");            // paints an empty month; OpenCalendarData refreshes it
+            _security.RefreshLockState();   // so the title-bar button is never blank before the open
         }
 
         /// <summary>
@@ -56,13 +60,13 @@ namespace Killendar
         /// </summary>
         private void OpenCalendarData()
         {
-            OpenKillendar(exitOnCancel: true);   // Security.cs
+            _security.Open(exitOnCancel: true);
             _active.Refresh();
             UpdatePeriodLabel();
 
-            // Precedence: a message Security.cs parked (the fresh-Killendar escape hatch), then a
-            // one-off migration count, then an error. Each is more informative than the next.
-            if (_pendingStatus != null) { StatusText.Text = _pendingStatus; _pendingStatus = null; }
+            // Precedence: a message the controller parked (the fresh-Killendar escape hatch), then
+            // a one-off migration count, then an error. Each is more informative than the next.
+            if (_security.TakePendingStatus() is string queued) StatusText.Text = queued;
             else if (_store.MigratedCount > 0)
                 StatusText.Text = string.Format(Loc("Str_Status_Migrated"), _store.MigratedCount);
             else if (_store.LoadError != null)
