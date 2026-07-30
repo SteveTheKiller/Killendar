@@ -25,9 +25,9 @@ namespace Killendar
             {
                 switch (e.Key)
                 {
-                    case Key.I: ImportBtn_Click(this, new RoutedEventArgs()); e.Handled = true; return;
-                    case Key.E: ExportBtn_Click(this, new RoutedEventArgs()); e.Handled = true; return;
-                    case Key.N: OpenNewAppointment(NewAppointmentDefault()); e.Handled = true; return;
+                    case Key.I: _ics.Import();          e.Handled = true; return;
+                    case Key.E: _ics.Export();          e.Handled = true; return;
+                    case Key.N: _calendar.NewAtAnchor(); e.Handled = true; return;
                 }
                 return;
             }
@@ -46,22 +46,22 @@ namespace Killendar
 
             switch (e.Key)
             {
-                case Key.N:      OpenNewAppointment(NewAppointmentDefault()); break;
-                case Key.T:      TodayBtn_Click(this, new RoutedEventArgs()); break;
+                case Key.N:      _calendar.NewAtAnchor(); break;
+                case Key.T:      _calendar.GoToday(); break;
 
                 case Key.Left:
-                case Key.OemComma:  Move(-1); break;
+                case Key.OemComma:  _calendar.Move(-1); break;
                 case Key.Right:
-                case Key.OemPeriod: Move(1); break;
+                case Key.OemPeriod: _calendar.Move(1); break;
 
                 case Key.M:
-                case Key.D1: SelectView("Month");  break;
+                case Key.D1: _calendar.SelectView("Month");  break;
                 case Key.W:
-                case Key.D2: SelectView("Week");   break;
+                case Key.D2: _calendar.SelectView("Week");   break;
                 case Key.D:
-                case Key.D3: SelectView("Day");    break;
+                case Key.D3: _calendar.SelectView("Day");    break;
                 case Key.A:
-                case Key.D4: SelectView("Agenda"); break;
+                case Key.D4: _calendar.SelectView("Agenda"); break;
 
                 case Key.B:      SidebarToggle_Click(this, new RoutedEventArgs()); break;
                 case Key.F1:     ShowAboutOverlay(); break;
@@ -72,11 +72,6 @@ namespace Killendar
             e.Handled = true;
         }
 
-        /// <summary>Where a keyboard-started appointment lands: 9am on the day in view.</summary>
-        private System.DateTime NewAppointmentDefault()
-        {
-            var day = _anchor.Date == System.DateTime.Today ? System.DateTime.Today : _anchor.Date;
-            return day.AddHours(9);
-        }
+
     }
 }

@@ -1,5 +1,3 @@
-using System.Windows;
-
 namespace Killendar.Features
 {
     /// <summary>Which field to put the caret in when validation rejects an entry.</summary>
@@ -7,11 +5,11 @@ namespace Killendar.Features
 
     /// <summary>
     /// The appointment panel as AppointmentEditor sees it: text in and out, plus a handful of
-    /// commands. Everything is a string or a bool rather than a TextBox, so the editor's parsing
-    /// and validation can be exercised without a window - which is the whole point, because that
-    /// is where the logic worth testing lives.
+    /// commands. Everything is a string or a bool rather than a TextBox, so the editor's parsing and
+    /// validation can be exercised without a window - which is the point, because that is where the
+    /// logic worth testing lives.
     /// </summary>
-    internal interface IAppointmentView
+    internal interface IAppointmentView : IShellServices
     {
         string FieldTitle       { get; set; }
         string FieldLocation    { get; set; }
@@ -42,11 +40,5 @@ namespace Killendar.Features
         /// <summary>Slides the panel open, or shut and forgets what was being edited.</summary>
         void OpenPanel();
         void ClosePanel();
-
-        void SetStatus(string text);
-        string Loc(string key);
-
-        /// <summary>Owner for the delete confirm.</summary>
-        Window Window { get; }
     }
 }

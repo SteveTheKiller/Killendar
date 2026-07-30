@@ -70,12 +70,6 @@ namespace Killendar
 
         void IAppointmentView.ClosePanel() => CloseSidebar();
 
-        void IAppointmentView.SetStatus(string text) => StatusText.Text = text;
-
-        string IAppointmentView.Loc(string key) => Loc(key);
-
-        Window IAppointmentView.Window => this;
-
         // ---- panel buttons ----
 
         private void SidebarClose_Click(object sender, RoutedEventArgs e) => CloseSidebar();

@@ -10,12 +10,6 @@ namespace Killendar
     {
         private SecurityController _security = null!;
 
-        Window ISecurityHost.Window => this;
-
-        string ISecurityHost.Loc(string key) => Loc(key);
-
-        void ISecurityHost.SetStatus(string text) => StatusText.Text = text;
-
         /// <summary>Lock (0xE72E) when encrypted, unlock (0xE785) when plaintext, Segoe MDL2.
         /// Written as char casts so the private-use glyphs cannot be mangled by tooling.</summary>
         void ISecurityHost.ShowLockState(bool encrypted)
@@ -30,7 +24,7 @@ namespace Killendar
             ActiveKillendarLabel.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        void ISecurityHost.RefreshView() => _active.Refresh();
+        void ISecurityHost.RefreshView() => _calendar.Refresh();
 
         void ISecurityHost.CloseSidebar() => CloseSidebar();
 

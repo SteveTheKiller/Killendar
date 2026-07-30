@@ -41,7 +41,7 @@ namespace Killendar
             if (!confirm.Confirmed) return;
 
             string status = _security.AdoptFile(path);
-            UpdatePeriodLabel();
+            _calendar.Refresh();
             if (status.Length > 0) StatusText.Text = status;
         }
     }

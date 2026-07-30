@@ -166,8 +166,7 @@ namespace Killendar
         private void RelocalizeDynamicUi()
         {
             // The views are rebuilt wholesale, which re-reads every string they use.
-            _active.Refresh();
-            UpdatePeriodLabel();
+            _calendar.Refresh();
 
             // Rail tooltips track the panel state.
             SidebarToggleBtn.ToolTip = Loc(_sidebarOpen ? "Str_TT_PanelHide" : "Str_TT_PanelShow");
