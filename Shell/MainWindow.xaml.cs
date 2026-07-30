@@ -31,13 +31,7 @@ namespace Killendar
                 }), System.Windows.Threading.DispatcherPriority.Background);
             };
 
-            UpdateThemeSwatchSelection();
-            UpdateAccentSwatches();
-            Services.ThemeManager.ThemeChanged += () =>
-            {
-                UpdateThemeSwatchSelection();
-                UpdateAccentSwatches();
-            };
+            InitThemePicker();
 
             _about = new AboutController(this);
             VersionLabel.Text = "v" + Services.AppInfo.Version;
