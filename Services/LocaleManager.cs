@@ -3,9 +3,8 @@ using System.Windows;
 
 namespace Killendar.Services
 {
-    // 10 UI languages, matching KillerScan, KillerNotes, KillerPDF and KillerShell. en-US is always
-    // the base layer so any locale that omits a key falls back to English; the chosen locale's file
-    // layers on top. Ported from KillerShell.
+    // 10 UI languages. en-US is always the base layer so any locale that omits a key falls back to
+    // English; the chosen locale's file layers on top.
     //
     // Append new members at the END: the value is persisted by NAME, not by ordinal, but keeping
     // the order stable also keeps the language menu's order stable.
@@ -17,8 +16,7 @@ namespace Killendar.Services
         public static Func<string, string?> GetSetting { get; set; } = _ => null;
         public static Action<string, string> SetSetting { get; set; } = (_, _) => { };
 
-        // App.xaml merged-dictionary layout for Killendar. NOTE this differs from KillerShell,
-        // which has an extra AppStyles.xaml at [2]:
+        // App.xaml merged-dictionary layout:
         //   [0] theme palette (ThemeManager swaps this one in place)
         //   [1] Controls.xaml
         //   [2] Strings/en-US.xaml   (string BASE - always present)
@@ -28,6 +26,11 @@ namespace Killendar.Services
 
         private static Locale _current = Locale.EnUS;
         public static Locale Current => _current;
+
+        /// <summary>Localized string for a Str_ key. Falls back to the key name when the key is
+        /// missing, so a translation gap shows up as itself instead of as blank UI.</summary>
+        public static string Loc(string key) =>
+            Application.Current.TryFindResource(key) as string ?? key;
 
         /// <summary>Call once at startup (after ThemeManager.Initialize) to restore the saved locale.</summary>
         public static void Initialize()

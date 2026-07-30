@@ -170,7 +170,7 @@ namespace Killendar.Views
             if (events.Count > shown)
             {
                 var more = CalendarChrome.Text(
-                    string.Format(MainWindow.LocStatic("Str_Cal_MoreCount"), events.Count - shown),
+                    string.Format(Services.LocaleManager.Loc("Str_Cal_MoreCount"), events.Count - shown),
                     "MutedTextBrush", 9);
                 more.Margin = new Thickness(2, 1, 0, 0);
                 sp.Children.Add(more);

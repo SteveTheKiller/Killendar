@@ -30,7 +30,7 @@ namespace Killendar.Models
         {
             get
             {
-                if (AllDay) return Killendar.MainWindow.LocStatic("Str_Cal_AllDay");
+                if (AllDay) return Services.LocaleManager.Loc("Str_Cal_AllDay");
                 if (SpansMultipleDays)
                     return $"{Start:M/d h:mm tt} - {End:M/d h:mm tt}";
                 return $"{Start:h:mm tt} - {End:h:mm tt}";

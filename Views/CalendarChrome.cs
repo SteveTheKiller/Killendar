@@ -77,7 +77,7 @@ namespace Killendar.Views
             if (showTime && !ev.AllDay)
                 line.Inlines.Add(new Run(ev.Start.ToString("h:mm") + "  "));
 
-            line.Inlines.Add(new Run(string.IsNullOrWhiteSpace(ev.Title) ? MainWindow.LocStatic("Str_Cal_NoTitle") : ev.Title));
+            line.Inlines.Add(new Run(string.IsNullOrWhiteSpace(ev.Title) ? Services.LocaleManager.Loc("Str_Cal_NoTitle") : ev.Title));
             chip.Child = line;
             return chip;
         }

@@ -32,6 +32,7 @@ namespace Killendar
             };
 
             InitThemePicker();
+            InitLanguageMenu();
 
             _about = new AboutController(this);
             VersionLabel.Text = "v" + Services.AppInfo.Version;

@@ -70,7 +70,7 @@ namespace Killendar.Views
 
             if (events.Count == 0)
             {
-                var empty = CalendarChrome.Text(MainWindow.LocStatic("Str_Cal_AgendaEmpty"), "DimTextBrush", 12);
+                var empty = CalendarChrome.Text(Services.LocaleManager.Loc("Str_Cal_AgendaEmpty"), "DimTextBrush", 12);
                 empty.Margin = new Thickness(0, 24, 0, 0);
                 empty.HorizontalAlignment = HorizontalAlignment.Center;
                 _list.Children.Add(empty);
@@ -105,7 +105,7 @@ namespace Killendar.Views
                     Margin = new Thickness(0, 14, 0, 4),
                     Background = System.Windows.Media.Brushes.Transparent,
                     Cursor = System.Windows.Input.Cursors.Hand,
-                    ToolTip = MainWindow.LocStatic("Str_TT_NewOnDay")
+                    ToolTip = Services.LocaleManager.Loc("Str_TT_NewOnDay")
                 };
                 var headDate = date;
                 head.MouseLeftButtonDown += (_, e) =>
@@ -114,7 +114,7 @@ namespace Killendar.Views
                     SlotSelected?.Invoke(headDate.Date.AddHours(9));
                 };
                 var dayName = CalendarChrome.Text(
-                    isToday ? MainWindow.LocStatic("Str_Cal_Today") : date.ToString("dddd").ToUpperInvariant(),
+                    isToday ? Services.LocaleManager.Loc("Str_Cal_Today") : date.ToString("dddd").ToUpperInvariant(),
                     isToday ? "PrimaryBrush" : "MutedTextBrush", 10,
                     isToday ? FontWeights.Bold : (FontWeight?)null);
                 dayName.Margin = new Thickness(0, 0, 8, 0);
