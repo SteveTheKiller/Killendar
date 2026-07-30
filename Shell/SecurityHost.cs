@@ -28,6 +28,10 @@ namespace Killendar
 
         void ISecurityHost.CloseSidebar() => CloseSidebar();
 
+        /// <summary>Routes a double-clicked .kcal after the active Killendar has opened. Internal:
+        /// App also calls this for a path forwarded from a blocked second launch.</summary>
+        internal void HandlePendingOpenFile() => _security.AdoptPendingFile();
+
         private void KillendarsButton_Click(object sender, RoutedEventArgs e)
             => _security.ShowKillendars();
 

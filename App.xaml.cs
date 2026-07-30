@@ -6,12 +6,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Windows;
+using Killendar.Services;
 using Microsoft.Win32;
 
-// The Killendar - application entry point and install system.
-// The install half is ported from KillerShell (which took it from KillerScan): the exe installs
-// itself, per-user by default or machine-wide via /silent, and uninstalls itself from Add/Remove
-// Programs. There is no separate installer package to keep in sync with the app.
+// Application entry point and install system. The exe installs itself, per-user by default or
+// machine-wide via /silent, and uninstalls itself from Add/Remove Programs. There is no separate
+// installer package to keep in sync with the app.
 namespace Killendar
 {
     public partial class App : Application
@@ -39,6 +39,37 @@ namespace Killendar
         private static readonly string StartMenuLnk = Path.Combine(StartMenuDir, AppName + ".lnk");
         private static readonly string DesktopLnk = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), AppName + ".lnk");
+
+        // ============================================================
+        // Shell integration
+        // ============================================================
+
+        private SingleInstanceGuard? _instance;
+
+        /// <summary>Path of a double-clicked .kcal, waiting for the window to finish opening.
+        /// Internal so MainWindow can drain it, and so a forwarded second launch can refill it.</summary>
+        internal static string? PendingOpenFile;
+
+        private static void CaptureOpenFileArgument(string[] args)
+        {
+            var path = FileAssociations.CalendarPathFrom(args);
+            if (path != null) PendingOpenFile = path;
+        }
+
+        /// <summary>A second launch was blocked and forwarded its command line here: bring the window
+        /// forward, then route any .kcal through the same path as a first-launch double-click.</summary>
+        private void OnForwardedLaunch(string? path)
+        {
+            if (MainWindow is not MainWindow win) return;
+
+            if (win.WindowState == WindowState.Minimized) win.WindowState = WindowState.Normal;
+            win.Activate();
+            win.Topmost = true; win.Topmost = false;   // foreground nudge past the focus rules
+
+            if (string.IsNullOrEmpty(path)) return;
+            CaptureOpenFileArgument(new[] { path! });
+            if (PendingOpenFile != null) win.HandlePendingOpenFile();
+        }
 
         // ============================================================
         // Startup
@@ -74,20 +105,21 @@ namespace Killendar
 
             // A double-clicked .kcal arrives as argv[0]. Captured before the single-instance check
             // so a blocked second launch can forward it to the running window.
-            CaptureOpenFileArgument(e.Args);   // Associations.cs
+            CaptureOpenFileArgument(e.Args);
 
-            // One Killendar per desktop session (SingleInstance.cs). Must come AFTER the /silent
-            // and /uninstall paths above: those are meant to run alongside a live instance.
-            if (!ClaimSingleInstance())
+            // One Killendar per desktop session. Must come AFTER the /silent and /uninstall paths
+            // above: those are meant to run alongside a live instance.
+            _instance = new SingleInstanceGuard(AppName, Dispatcher, OnForwardedLaunch);
+            if (!_instance.Claim(PendingOpenFile))
             {
                 Shutdown(0);
                 return;
             }
 
-            RegisterFileAssociations();   // Associations.cs - HKCU, best-effort, idempotent
+            FileAssociations.Register();   // HKCU, best-effort, idempotent
 
-            // Wire the kit's persistence hooks. ThemeManager uses these for theme and accent;
-            // Chrome.cs uses the same pair for window size, position and maximized state.
+            // Persistence hooks. ThemeManager uses these for theme and accent; the window chrome
+            // uses the same pair for size, position and maximized state.
             Services.ThemeManager.GetSetting = Settings.Get;
             Services.ThemeManager.SetSetting = Settings.Set;
 
@@ -349,7 +381,7 @@ namespace Killendar
 
             // Drop the .kcal association before the exe goes: a ProgID pointing at a deleted file
             // is how you get a broken Open With list that nothing in the UI offers to clean up.
-            UnregisterFileAssociations();   // Associations.cs
+            FileAssociations.Unregister();
 
             // Self-delete, deferred through a batch file so this exe can exit first. Appointments
             // in APPDATA are deliberately NOT touched: uninstalling the app should not throw away

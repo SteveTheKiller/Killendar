@@ -210,6 +210,39 @@ namespace Killendar.Features
             }
         }
 
+        /// <summary>Adopts a double-clicked .kcal once a Killendar is open, asking first.
+        ///
+        /// It COPIES the file into the data folder and switches to the copy rather than opening it
+        /// where it sits. A Killendar is written to constantly, and SQLite over SMB is a well-known
+        /// way to corrupt a database, so silently making someone's network share or Downloads folder
+        /// the live store is not what a double-click should mean.
+        ///
+        /// The confirm is not ceremony: the copy changes which Killendar is open, and doing that
+        /// without asking would surprise anyone who only wanted a look at the file.</summary>
+        internal void AdoptPendingFile()
+        {
+            string? path = App.PendingOpenFile;
+            App.PendingOpenFile = null;
+            if (path == null || !_store.IsOpen) return;
+
+            // Already the open one - nothing to copy, nothing to ask.
+            if (string.Equals(Path.GetFullPath(path), Path.GetFullPath(_store.FilePath),
+                              StringComparison.OrdinalIgnoreCase))
+                return;
+
+            var confirm = new ConfirmDialog(
+                string.Format(_host.Loc("Str_Kc_AddHead"), Path.GetFileName(path)),
+                _host.Loc("Str_Kc_AddBody"),
+                _host.Loc("Str_Btn_Add"),
+                _host.Loc("Str_Btn_Cancel")) { Owner = _host.Window };
+            confirm.ShowDialog();
+            if (!confirm.Confirmed) return;
+
+            string status = AdoptFile(path);
+            _host.RefreshView();
+            if (status.Length > 0) _host.SetStatus(status);
+        }
+
         /// <summary>Sets, changes or removes the password on the open Killendar.</summary>
         internal void ToggleLock()
         {
