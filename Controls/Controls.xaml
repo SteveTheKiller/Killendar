@@ -271,14 +271,14 @@
                                 </MultiBinding>
                             </Track.ViewportSize>
                             <Track.DecreaseRepeatButton>
-                                <RepeatButton Command="ScrollBar.PageUpCommand" Focusable="False" IsTabStop="False">
+                                <RepeatButton x:Name="PageBack" Command="ScrollBar.PageUpCommand" Focusable="False" IsTabStop="False">
                                     <RepeatButton.Template>
                                         <ControlTemplate TargetType="RepeatButton"><Border Background="Transparent"/></ControlTemplate>
                                     </RepeatButton.Template>
                                 </RepeatButton>
                             </Track.DecreaseRepeatButton>
                             <Track.IncreaseRepeatButton>
-                                <RepeatButton Command="ScrollBar.PageDownCommand" Focusable="False" IsTabStop="False">
+                                <RepeatButton x:Name="PageForward" Command="ScrollBar.PageDownCommand" Focusable="False" IsTabStop="False">
                                     <RepeatButton.Template>
                                         <ControlTemplate TargetType="RepeatButton"><Border Background="Transparent"/></ControlTemplate>
                                     </RepeatButton.Template>
@@ -315,6 +315,16 @@
                             </Track.Thumb>
                         </Track>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <!-- A vertical track counts downward, so it needs IsDirectionReversed;
+                             a horizontal one counts rightward and must not, or dragging the thumb
+                             left scrolls the content right. The paging commands flip with it. -->
+                        <Trigger Property="Orientation" Value="Horizontal">
+                            <Setter TargetName="PART_Track"   Property="IsDirectionReversed" Value="False"/>
+                            <Setter TargetName="PageBack"     Property="Command" Value="ScrollBar.PageLeftCommand"/>
+                            <Setter TargetName="PageForward"  Property="Command" Value="ScrollBar.PageRightCommand"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
