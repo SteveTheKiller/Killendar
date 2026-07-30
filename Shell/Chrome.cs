@@ -78,10 +78,15 @@ namespace Killendar
         }
 
         private void ApplyWindowCorners(bool rounded)
+            => ApplyWindowCorners(this, rounded);
+
+        /// <summary>Rounds a window's corners via DWM. Any WindowStyle="None" window needs this or
+        /// it renders as a hard-edged rectangle with no system shadow.</summary>
+        internal static void ApplyWindowCorners(Window w, bool rounded)
         {
             try
             {
-                var hwnd = new WindowInteropHelper(this).Handle;
+                var hwnd = new WindowInteropHelper(w).Handle;
                 if (hwnd == IntPtr.Zero) return;
                 int pref = rounded ? DWMWCP_ROUND : DWMWCP_DONOTROUND;
                 DwmSetWindowAttribute(hwnd, DWMWA_WINDOW_CORNER_PREFERENCE, ref pref, sizeof(int));

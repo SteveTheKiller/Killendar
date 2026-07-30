@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         Title="The Killendar"
-        Icon="Resources/kd-icon.ico"
+        Icon="/Resources/kd-icon.ico"
         WindowStyle="None" Background="{DynamicResource BackgroundBrush}"
         MinWidth="820" MinHeight="560" Width="1100" Height="760"
         TextOptions.TextFormattingMode="Display" UseLayoutRounding="True"

@@ -109,6 +109,7 @@
                 <!-- Explicit style: an unstyled TextBox falls back to WPF's white fill and blue
                      focus border. -->
                 <TextBox x:Name="PathBox" Grid.Column="1" Height="28" Style="{StaticResource DarkTextBox}"
+                         FontFamily="Consolas" FontSize="12" Padding="8,0"
                          VerticalContentAlignment="Center" KeyDown="PathBox_KeyDown"/>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="8,0,0,0" VerticalAlignment="Center">
                     <Button x:Name="ViewListBtn"    Style="{StaticResource PickerViewBtn}" Content="&#xE8FD;" ToolTip="{DynamicResource Str_TT_ViewList}"    Click="ViewList_Click"/>
@@ -219,13 +220,14 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Str_Dlg_FileName}" VerticalAlignment="Center"
-                           Margin="0,0,10,0" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="11"/>
+                           Margin="0,0,10,0" Foreground="{DynamicResource MutedTextBrush}" FontFamily="Consolas" FontSize="11"/>
                 <TextBox x:Name="FileNameBox" Grid.Row="0" Grid.Column="1" Height="28"
                          Style="{StaticResource DarkTextBox}"
+                         FontFamily="Consolas" FontSize="12" Padding="8,0"
                          VerticalContentAlignment="Center" KeyDown="FileNameBox_KeyDown"/>
 
                 <TextBlock x:Name="FilterLabel" Grid.Row="1" Grid.Column="0" Text="{DynamicResource Str_Dlg_FileType}" VerticalAlignment="Center"
-                           Margin="0,8,10,0" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="11"/>
+                           Margin="0,8,10,0" Foreground="{DynamicResource MutedTextBrush}" FontFamily="Consolas" FontSize="11"/>
                 <ComboBox x:Name="FilterCombo" Grid.Row="1" Grid.Column="1" Height="28" Margin="0,8,0,0"
                           SelectionChanged="Filter_SelectionChanged"/>
             </Grid>
