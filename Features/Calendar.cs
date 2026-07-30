@@ -30,9 +30,10 @@ namespace Killendar
             _store = new EventStore();
             _store.Changed += () => _active.Refresh();
 
-            // Password handling, unlock-on-launch and switching Killendars. MainWindow supplies
-            // ISecurityHost (Shell/SecurityHost.cs); the controller owns the behaviour.
+            // MainWindow supplies the view seams (Shell/SecurityHost.cs, Shell/AppointmentView.cs);
+            // the controllers own the behaviour.
             _security = new Features.SecurityController(this, _store);
+            _appointments = new Features.AppointmentEditor(this, _store);
 
             _monthView  = new MonthView();
             _weekView   = new WeekView();

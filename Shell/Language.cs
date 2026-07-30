@@ -138,12 +138,7 @@ namespace Killendar
 
                 // An open editor is showing dates in the old pattern, so reformat what is in the
                 // fields rather than leaving a mix of the two.
-                if (_sidebarOpen)
-                {
-                    if (TryParseDate(FieldStartDate.Text, out var s)) FieldStartDate.Text = DateFormatManager.Format(s);
-                    if (TryParseDate(FieldEndDate.Text, out var en)) FieldEndDate.Text = DateFormatManager.Format(en);
-                    RefreshDateHints();
-                }
+                if (_sidebarOpen) _appointments.ReformatDates();
             }
         }
 
@@ -177,9 +172,8 @@ namespace Killendar
             // Rail tooltips track the panel state.
             SidebarToggleBtn.ToolTip = Loc(_sidebarOpen ? "Str_TT_PanelHide" : "Str_TT_PanelShow");
 
-            // The sidebar's own dynamic bits: heading, all-day toggle, and any visible error.
-            SidebarTitle.Text = Loc(_editing == null ? "Str_Side_New" : "Str_Side_Edit");
-            ApplyAllDayState();
+            // The panel's own dynamic bits: heading and the all-day toggle.
+            _appointments.RefreshLocalizedText();
 
             // The status line is transient by nature; put it back to a neutral, translated idle
             // rather than leaving the previous language's sentence sitting there.
