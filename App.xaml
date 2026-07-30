@@ -12,7 +12,7 @@
                      is Dark's red (#DD504B) that the wordmark, the og-image and killendar.net are
                      built on, not Black's #FF2929. -->
                 <ResourceDictionary Source="Themes/Dark.xaml"/>
-                <ResourceDictionary Source="Controls.xaml"/>
+                <ResourceDictionary Source="Controls/Controls.xaml"/>
                 <!-- [2] English string base, ALWAYS present. LocaleManager re-asserts this slot and
                      layers the chosen locale at [3], so a partial translation falls back to English
                      instead of rendering raw Str_ key names. Adding a dictionary before this one
