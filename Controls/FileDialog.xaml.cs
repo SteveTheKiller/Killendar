@@ -134,8 +134,8 @@ namespace Killendar
             {
                 // Without the corner call a WindowStyle="None" window has hard edges and no
                 // system shadow at all.
-                MainWindow.ApplyWindowCorners(this, rounded: true);
-                MainWindow.ApplyThemeBorder(this);
+                Controls.DwmChrome.SetRoundedCorners(this, rounded: true);
+                Controls.DwmChrome.SetThemeBorder(this);
                 var src = (System.Windows.Interop.HwndSource?)PresentationSource.FromVisual(this);
                 src?.AddHook((IntPtr h, int msg, IntPtr w, IntPtr l, ref bool handled) =>
                 {

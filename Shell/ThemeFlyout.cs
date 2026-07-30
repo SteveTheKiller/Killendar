@@ -29,7 +29,7 @@ namespace Killendar
             if (sender is Button b && b.Tag is string name && Enum.TryParse<Theme>(name, out var theme))
             {
                 ThemeManager.Apply(theme);
-                ApplyThemeBorder(this);   // retint the DWM frame border to the new palette
+                Controls.DwmChrome.SetThemeBorder(this);   // retint the DWM frame border to the new palette
                 UpdateThemeSwatchSelection();
                 UpdateAccentSwatches();
             }

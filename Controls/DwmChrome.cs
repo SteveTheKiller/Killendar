@@ -1,0 +1,65 @@
+using System;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
+
+namespace Killendar.Controls
+{
+    /// <summary>
+    /// The DWM frame attributes any WindowStyle="None" window in the app needs: rounded corners and
+    /// a themed 1px border. Both are no-ops before Windows 11, which is why every call swallows its
+    /// failure rather than guarding on a version.
+    ///
+    /// A window with square corners also gets no system drop shadow, so this is what makes a
+    /// borderless window look like a window at all.
+    /// </summary>
+    internal static class DwmChrome
+    {
+        [DllImport("dwmapi.dll")]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int value, int size);
+
+        private const int DWMWA_WINDOW_CORNER_PREFERENCE = 33;
+        private const int DWMWA_BORDER_COLOR = 34;
+
+        private const int DWMWCP_DONOTROUND = 1;
+        private const int DWMWCP_ROUND = 2;
+
+        /// <summary>Rounds or squares a window's corners. Square when maximized, so it sits flush
+        /// to the screen edges.</summary>
+        internal static void SetRoundedCorners(Window w, bool rounded)
+        {
+            try
+            {
+                var hwnd = new WindowInteropHelper(w).Handle;
+                if (hwnd == IntPtr.Zero) return;
+                int pref = rounded ? DWMWCP_ROUND : DWMWCP_DONOTROUND;
+                DwmSetWindowAttribute(hwnd, DWMWA_WINDOW_CORNER_PREFERENCE, ref pref, sizeof(int));
+            }
+            catch { /* pre-Win11: attribute unsupported */ }
+        }
+
+        /// <summary>
+        /// Tints the frame border to the theme instead of leaving it system gray. Reads
+        /// AppBorderBrush if the theme defines one, else PaneBorderBrush - the override exists for
+        /// palettes whose pane borders are deliberately near-invisible. Call at SourceInitialized
+        /// and again after every theme change.
+        /// </summary>
+        internal static void SetThemeBorder(Window w)
+        {
+            try
+            {
+                var hwnd = new WindowInteropHelper(w).Handle;
+                if (hwnd == IntPtr.Zero) return;
+                if ((Application.Current.TryFindResource("AppBorderBrush")
+                     ?? Application.Current.TryFindResource("PaneBorderBrush")) is SolidColorBrush b)
+                {
+                    // COLORREF is 0x00BBGGRR, not RGB.
+                    int colorref = b.Color.R | (b.Color.G << 8) | (b.Color.B << 16);
+                    DwmSetWindowAttribute(hwnd, DWMWA_BORDER_COLOR, ref colorref, sizeof(int));
+                }
+            }
+            catch { /* pre-Win11: attribute unsupported */ }
+        }
+    }
+}
