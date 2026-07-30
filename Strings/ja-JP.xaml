@@ -1,0 +1,226 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Japanese. Layered over en-US, so any key omitted here falls back to English. -->
+
+    <sys:String x:Key="Str_Btn_New">+ 新規</sys:String>
+    <sys:String x:Key="Str_Btn_Import">.ics を読み込む</sys:String>
+    <sys:String x:Key="Str_Btn_Export">.ics を書き出す</sys:String>
+    <sys:String x:Key="Str_Btn_Today">今日</sys:String>
+    <sys:String x:Key="Str_View_Month">月</sys:String>
+    <sys:String x:Key="Str_View_Week">週</sys:String>
+    <sys:String x:Key="Str_View_Day">日</sys:String>
+    <sys:String x:Key="Str_View_Agenda">予定一覧</sys:String>
+    <sys:String x:Key="Str_TT_Prev">前へ</sys:String>
+    <sys:String x:Key="Str_TT_Next">次へ</sys:String>
+
+    <sys:String x:Key="Str_TT_Theme">テーマ</sys:String>
+    <sys:String x:Key="Str_TT_Language">言語</sys:String>
+    <sys:String x:Key="Str_TT_PanelShow">予定パネルを表示</sys:String>
+    <sys:String x:Key="Str_TT_PanelHide">予定パネルを隠す</sys:String>
+    <sys:String x:Key="Str_Lbl_Theme">テーマ</sys:String>
+    <sys:String x:Key="Str_Lbl_Accent">アクセント</sys:String>
+
+    <sys:String x:Key="Str_Side_New">新しい予定</sys:String>
+    <sys:String x:Key="Str_Side_Edit">予定を編集</sys:String>
+    <sys:String x:Key="Str_Fld_Title">タイトル</sys:String>
+    <sys:String x:Key="Str_Fld_Starts">開始</sys:String>
+    <sys:String x:Key="Str_Fld_Ends">終了</sys:String>
+    <sys:String x:Key="Str_Fld_Location">場所</sys:String>
+    <sys:String x:Key="Str_Fld_Description">説明</sys:String>
+    <sys:String x:Key="Str_Fld_Attendees">参加者</sys:String>
+    <sys:String x:Key="Str_Hint_Attendees">カンマ区切り</sys:String>
+    <sys:String x:Key="Str_Hint_Date">yyyy-mm-dd</sys:String>
+    <sys:String x:Key="Str_Hint_Time">h:mm am/pm または 24 時間表記</sys:String>
+    <sys:String x:Key="Str_Hint_AttendeesTip">カンマ区切りのメールアドレス</sys:String>
+    <sys:String x:Key="Str_Chk_AllDayOff">[ ] 終日</sys:String>
+    <sys:String x:Key="Str_Chk_AllDayOn">[x] 終日</sys:String>
+    <sys:String x:Key="Str_Btn_Save">保存</sys:String>
+    <sys:String x:Key="Str_Btn_Cancel">キャンセル</sys:String>
+    <sys:String x:Key="Str_Btn_Delete">削除</sys:String>
+
+    <sys:String x:Key="Str_Err_NoTitle">タイトルを入力してください。</sys:String>
+    <sys:String x:Key="Str_Err_StartDate">開始日は 2026-07-29 のような形式にしてください。</sys:String>
+    <sys:String x:Key="Str_Err_EndDate">終了日は 2026-07-29 のような形式にしてください。</sys:String>
+    <sys:String x:Key="Str_Err_StartTime">開始時刻は 9:30 am または 21:30 のような形式にしてください。</sys:String>
+    <sys:String x:Key="Str_Err_EndTime">終了時刻は 9:30 am または 21:30 のような形式にしてください。</sys:String>
+    <sys:String x:Key="Str_Err_EndBeforeStart">開始より後に終了する必要があります。</sys:String>
+
+    <sys:String x:Key="Str_Dlg_DeleteMsg">"{0}" を削除しますか?</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteDetail">この操作は元に戻せません。</sys:String>
+
+    <sys:String x:Key="Str_Status_Ready">準備完了</sys:String>
+    <sys:String x:Key="Str_Status_Added">{0} を追加しました</sys:String>
+    <sys:String x:Key="Str_Status_Saved">{0} を保存しました</sys:String>
+    <sys:String x:Key="Str_Status_Deleted">{0} を削除しました</sys:String>
+    <sys:String x:Key="Str_Status_Imported">{0} 件の予定を読み込みました</sys:String>
+    <sys:String x:Key="Str_Status_ImportedSkipped">{0} 件の予定を読み込み、既存の {1} 件をスキップしました</sys:String>
+    <sys:String x:Key="Str_Status_ImportFailed">読み込みに失敗しました: {0}</sys:String>
+    <sys:String x:Key="Str_Status_Exported">{0} 件の予定を書き出しました</sys:String>
+    <sys:String x:Key="Str_Status_ExportFailed">書き出しに失敗しました: {0}</sys:String>
+    <sys:String x:Key="Str_Status_NothingToExport">書き出すものがありません</sys:String>
+    <sys:String x:Key="Str_Status_LoadError">この Killendar を開けませんでした: {0}</sys:String>
+    <sys:String x:Key="Str_Status_Migrated">{0} 件の予定を Killendar に移行しました</sys:String>
+
+    <sys:String x:Key="Str_Dlg_ImportTitle">iCalendar を読み込む</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">iCalendar を書き出す</sys:String>
+    <sys:String x:Key="Str_Dlg_IcsFilter">iCalendar ファイル (*.ics)|*.ics|すべてのファイル (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_IcsSaveFilter">iCalendar ファイル (*.ics)|*.ics</sys:String>
+
+    <sys:String x:Key="Str_Cal_AllDay">終日</sys:String>
+    <sys:String x:Key="Str_Cal_NoTitle">(タイトルなし)</sys:String>
+    <sys:String x:Key="Str_Cal_Today">今日</sys:String>
+    <sys:String x:Key="Str_Cal_MoreCount">他 {0} 件</sys:String>
+    <sys:String x:Key="Str_Cal_AgendaEmpty">この期間に予定はありません。</sys:String>
+    <sys:String x:Key="Str_TT_NewOnDay">この日に新しい予定</sys:String>
+
+    <sys:String x:Key="Str_About_Version">バージョン</sys:String>
+    <sys:String x:Key="Str_About_Publisher">発行元</sys:String>
+    <sys:String x:Key="Str_About_Thumbprint">拇印</sys:String>
+    <sys:String x:Key="Str_About_Sha">EXE の SHA-256</sys:String>
+    <sys:String x:Key="Str_About_Computing">計算中...</sys:String>
+    <sys:String x:Key="Str_About_Unsigned">(署名なし、または検証に失敗)</sys:String>
+    <sys:String x:Key="Str_About_UpdateAvailable">更新があります: {0}</sys:String>
+    <sys:String x:Key="Str_About_Downloading">ダウンロード中...</sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">月・週・日・予定一覧の表示、iCalendar の読み込みと書き出し、そして自分のマシンから出ていかない予定。GPLv3 の </sys:String>
+    <sys:String x:Key="Str_About_DescB" xml:space="preserve"> ユーティリティです。</sys:String>
+
+    <sys:String x:Key="Str_Dlg_UpdateMsg">Killendar {0} をダウンロードしてインストールしますか?</sys:String>
+    <sys:String x:Key="Str_Dlg_UpdateBullets">アプリは自動的に終了して再起動します。</sys:String>
+    <sys:String x:Key="Str_Btn_Update">更新</sys:String>
+
+    <sys:String x:Key="Str_Sc_Title">キーボードショートカット</sys:String>
+    <sys:String x:Key="Str_Sc_New">新しい予定</sys:String>
+    <sys:String x:Key="Str_Sc_Today">今日へ移動</sys:String>
+    <sys:String x:Key="Str_Sc_Prev">前の期間</sys:String>
+    <sys:String x:Key="Str_Sc_Next">次の期間</sys:String>
+    <sys:String x:Key="Str_Sc_Month">月表示</sys:String>
+    <sys:String x:Key="Str_Sc_Week">週表示</sys:String>
+    <sys:String x:Key="Str_Sc_Day">日表示</sys:String>
+    <sys:String x:Key="Str_Sc_Agenda">予定一覧表示</sys:String>
+    <sys:String x:Key="Str_Sc_Panel">予定パネルの表示を切り替え</sys:String>
+    <sys:String x:Key="Str_Sc_About">バージョン情報</sys:String>
+    <sys:String x:Key="Str_Sc_Close">パネルまたはオーバーレイを閉じる</sys:String>
+    <sys:String x:Key="Str_Sc_Hint">単独のキーは、入力欄に文字を打っていないときに使えます。</sys:String>
+
+    <!-- Date format picker (in the language menu). The three samples are format examples,
+         so they read the same in every language. -->
+    <sys:String x:Key="Str_Lbl_DateFormat">日付形式</sys:String>
+    <sys:String x:Key="Str_Date_FollowWindows">Windows に合わせる</sys:String>
+    <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
+    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+
+
+    <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
+         and the forgotten-password escape hatch. {0} is a file name or an error. -->
+    <sys:String x:Key="Str_Pw_UnlockHead">この Killendar のロックを解除</sys:String>
+    <sys:String x:Key="Str_Pw_WrongPw">そのパスワードでは開けませんでした。もう一度お試しください。</sys:String>
+    <sys:String x:Key="Str_Pw_Protected">{0} は暗号化されています。開くにはパスワードを入力してください。</sys:String>
+    <sys:String x:Key="Str_Pw_NewKcalBtn">新しい Killendar...</sys:String>
+    <sys:String x:Key="Str_Pw_SetHead">この Killendar を暗号化</sys:String>
+    <sys:String x:Key="Str_Pw_SetBody">予定は保存時に AES-256 で暗号化されます。Killendar を起動するたびにこのパスワードの入力が求められます。</sys:String>
+    <sys:String x:Key="Str_Pw_ChangeHead">パスワードの変更または削除</sys:String>
+    <sys:String x:Key="Str_Pw_ChangeBody">新しいパスワードを入力してください。両方の欄を空にすると暗号化を解除し、この Killendar を通常の SQLite として保存します。</sys:String>
+    <sys:String x:Key="Str_Pw_ConfirmLbl">確認</sys:String>
+    <sys:String x:Key="Str_Pw_NoRecovery">復旧手段はありません。パスワードを失うと、この Killendar の予定は完全に失われます。</sys:String>
+    <sys:String x:Key="Str_Btn_Unlock">解除</sys:String>
+    <sys:String x:Key="Str_Btn_Encrypt">暗号化</sys:String>
+    <sys:String x:Key="Str_Btn_Apply">適用</sys:String>
+    <sys:String x:Key="Str_Btn_StartNew">新規作成</sys:String>
+    <sys:String x:Key="Str_Dlg_FreshHead">新しい Killendar を作成しますか?</sys:String>
+    <sys:String x:Key="Str_Dlg_FreshBody">ロックされた Killendar は名前を変えてディスクに残りますが、パスワードがなければ中の予定は読めません。代わりに空の Killendar が開きます。</sys:String>
+    <sys:String x:Key="Str_Tip_LockOn">暗号化済み - クリックしてパスワードを変更または削除</sys:String>
+    <sys:String x:Key="Str_Tip_LockOff">暗号化なし - クリックしてパスワードを設定</sys:String>
+    <sys:String x:Key="Str_Status_Encrypted">この Killendar を暗号化しました</sys:String>
+    <sys:String x:Key="Str_Status_PwChanged">パスワードを変更しました</sys:String>
+    <sys:String x:Key="Str_Status_PwRemoved">パスワードを削除しました - この Killendar は暗号化されていません</sys:String>
+    <sys:String x:Key="Str_Status_PwMismatch">2 つのパスワードが一致しません</sys:String>
+    <sys:String x:Key="Str_Status_PwFailed">パスワードを変更できませんでした: {0}</sys:String>
+    <sys:String x:Key="Str_Status_FreshKcal">新しい Killendar を作成しました。ロックされていたものは {0} として保存されています</sys:String>
+
+
+    <!-- Export warning: an .ics is plain text, so exporting from an encrypted
+         Killendar hands out what the password was protecting. -->
+    <sys:String x:Key="Str_Exp_WarnHead">暗号化された Killendar からエクスポートしますか?</sys:String>
+    <sys:String x:Key="Str_Exp_WarnBody">.ics ファイルはプレーンテキストです。エクスポートした内容はファイルを開いた人が誰でも読めるようになり、この Killendar のパスワードでは保護されません。</sys:String>
+    <sys:String x:Key="Str_Exp_WarnCheck">今後は確認しない</sys:String>
+
+
+    <!-- Manage Killendars: the .kcal file list, its context menu and the rail
+         button. {0} is a file name or an error; Str_Kc_Renamed takes {0} old, {1} new. -->
+    <sys:String x:Key="Str_Kc_Title">Killendar</sys:String>
+    <sys:String x:Key="Str_Kc_Hint">データフォルダー内のすべての .kcal です。名前をダブルクリックすると変更できます。</sys:String>
+    <sys:String x:Key="Str_Kc_FlagEncrypted">暗号化</sys:String>
+    <sys:String x:Key="Str_Kc_FlagActive">使用中</sys:String>
+    <sys:String x:Key="Str_Kc_SelectFirst">先に Killendar を選んでください。</sys:String>
+    <sys:String x:Key="Str_Kc_BadName">その名前にはファイル名に使えない文字が含まれています。</sys:String>
+    <sys:String x:Key="Str_Kc_Exists">{0} はすでに存在します。</sys:String>
+    <sys:String x:Key="Str_Kc_Renamed">{0} を {1} に変更しました</sys:String>
+    <sys:String x:Key="Str_Kc_RenameFailed">名前の変更に失敗しました: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_CreateFailed">Killendar を作成できませんでした: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteHead">{0} を削除しますか?</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteBody">ファイルと中のすべての予定がディスクから削除されます。元に戻せません。</sys:String>
+    <sys:String x:Key="Str_Kc_Deleted">{0} を削除しました</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteFailed">削除に失敗しました: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_LoadTitle">Killendar を読み込む</sys:String>
+    <sys:String x:Key="Str_Kc_Filter">Killendar ファイル (*.kcal)|*.kcal|すべてのファイル (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Kc_Loaded">コピーを {0} として読み込みました</sys:String>
+    <sys:String x:Key="Str_Kc_LoadFailed">読み込みに失敗しました: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Copied">{0} をクリップボードにコピーしました。ファイルを受け付ける場所に貼り付けられます</sys:String>
+    <sys:String x:Key="Str_Kc_CopyFailed">コピーに失敗しました: {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_Rename">名前の変更</sys:String>
+    <sys:String x:Key="Str_Ctx_Delete">削除</sys:String>
+    <sys:String x:Key="Str_Ctx_CopyFile">ファイルをコピー</sys:String>
+    <sys:String x:Key="Str_Ctx_Reveal">エクスプローラーで表示</sys:String>
+    <sys:String x:Key="Str_TT_CopyFile">ファイルをクリップボードに入れ、エクスプローラーやメールに貼り付けられるようにします</sys:String>
+    <sys:String x:Key="Str_TT_NewKcal">新しい Killendar</sys:String>
+    <sys:String x:Key="Str_TT_DeleteKcal">選択した Killendar を削除</sys:String>
+    <sys:String x:Key="Str_TT_LoadKcal">ファイルから Killendar を読み込む</sys:String>
+    <sys:String x:Key="Str_TT_Explorer">データフォルダーを開く</sys:String>
+    <sys:String x:Key="Str_TT_Killendars">Killendar</sys:String>
+    <sys:String x:Key="Str_Btn_Open">開く</sys:String>
+    <sys:String x:Key="Str_Status_Opened">{0} を開きました</sys:String>
+
+
+    <!-- Double-clicked .kcal: the confirm before a copy is added and opened.
+         {0} is the file name. -->
+    <sys:String x:Key="Str_Kc_AddHead">{0} を Killendar で開きますか?</sys:String>
+    <sys:String x:Key="Str_Kc_AddBody">コピーをデータフォルダーに追加して開きます。ダブルクリックしたファイルはそのまま、手を加えずに残ります。Killendar には絶えず書き込みが行われるため、ネットワーク共有やダウンロードフォルダーのファイルを直接使うのは適切ではありません。</sys:String>
+    <sys:String x:Key="Str_Btn_Add">追加</sys:String>
+
+
+    <!-- Text-input context menu (replaces WPF's built-in Cut/Copy/Paste, which
+         ignores app-level menu styling). -->
+    <sys:String x:Key="Str_Ctx_Cut">切り取り</sys:String>
+    <sys:String x:Key="Str_Ctx_Copy">コピー</sys:String>
+    <sys:String x:Key="Str_Ctx_Paste">貼り付け</sys:String>
+    <sys:String x:Key="Str_Ctx_SelectAll">すべて選択</sys:String>
+
+
+    <!-- Themed file dialog (FileDialog.xaml), replacing the Win32 open/save boxes.
+         Str_Sum_Counts takes {0} folders, {1} files. -->
+    <sys:String x:Key="Str_Btn_Replace">置き換え</sys:String>
+    <sys:String x:Key="Str_Dlg_FileName">ファイル名:</sys:String>
+    <sys:String x:Key="Str_Dlg_FileType">ファイルの種類:</sys:String>
+    <sys:String x:Key="Str_Dlg_AllFiles">すべてのファイル</sys:String>
+    <sys:String x:Key="Str_Dlg_NoMatchingFiles">現在のファイルの種類に一致するものはありません。</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFolder">そのフォルダーは存在しません。</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFile">そのファイルは存在しません。</sys:String>
+    <sys:String x:Key="Str_Dlg_OverwriteMsg">{0} を置き換えますか?</sys:String>
+    <sys:String x:Key="Str_Sum_Counts">フォルダー {0}、ファイル {1}</sys:String>
+    <sys:String x:Key="Str_QA_Home">ホーム</sys:String>
+    <sys:String x:Key="Str_QA_Desktop">デスクトップ</sys:String>
+    <sys:String x:Key="Str_QA_Documents">ドキュメント</sys:String>
+    <sys:String x:Key="Str_QA_Downloads">ダウンロード</sys:String>
+    <sys:String x:Key="Str_QA_Pictures">ピクチャ</sys:String>
+    <sys:String x:Key="Str_Col_Name">名前</sys:String>
+    <sys:String x:Key="Str_Col_Size">サイズ</sys:String>
+    <sys:String x:Key="Str_Col_Modified">更新日</sys:String>
+    <sys:String x:Key="Str_TT_Up">上のフォルダーへ</sys:String>
+    <sys:String x:Key="Str_TT_ViewList">一覧表示</sys:String>
+    <sys:String x:Key="Str_TT_ViewIcons">アイコン表示</sys:String>
+    <sys:String x:Key="Str_TT_ViewDetails">詳細表示</sys:String>
+
+</ResourceDictionary>

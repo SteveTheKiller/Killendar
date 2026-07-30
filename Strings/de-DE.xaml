@@ -1,0 +1,226 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- German. Layered over en-US, so any key omitted here falls back to English. -->
+
+    <sys:String x:Key="Str_Btn_New">+ Neu</sys:String>
+    <sys:String x:Key="Str_Btn_Import">.ics importieren</sys:String>
+    <sys:String x:Key="Str_Btn_Export">.ics exportieren</sys:String>
+    <sys:String x:Key="Str_Btn_Today">Heute</sys:String>
+    <sys:String x:Key="Str_View_Month">Monat</sys:String>
+    <sys:String x:Key="Str_View_Week">Woche</sys:String>
+    <sys:String x:Key="Str_View_Day">Tag</sys:String>
+    <sys:String x:Key="Str_View_Agenda">Agenda</sys:String>
+    <sys:String x:Key="Str_TT_Prev">Zurück</sys:String>
+    <sys:String x:Key="Str_TT_Next">Weiter</sys:String>
+
+    <sys:String x:Key="Str_TT_Theme">Design</sys:String>
+    <sys:String x:Key="Str_TT_Language">Sprache</sys:String>
+    <sys:String x:Key="Str_TT_PanelShow">Terminbereich einblenden</sys:String>
+    <sys:String x:Key="Str_TT_PanelHide">Terminbereich ausblenden</sys:String>
+    <sys:String x:Key="Str_Lbl_Theme">design</sys:String>
+    <sys:String x:Key="Str_Lbl_Accent">akzent</sys:String>
+
+    <sys:String x:Key="Str_Side_New">Neuer Termin</sys:String>
+    <sys:String x:Key="Str_Side_Edit">Termin bearbeiten</sys:String>
+    <sys:String x:Key="Str_Fld_Title">TITEL</sys:String>
+    <sys:String x:Key="Str_Fld_Starts">BEGINN</sys:String>
+    <sys:String x:Key="Str_Fld_Ends">ENDE</sys:String>
+    <sys:String x:Key="Str_Fld_Location">ORT</sys:String>
+    <sys:String x:Key="Str_Fld_Description">BESCHREIBUNG</sys:String>
+    <sys:String x:Key="Str_Fld_Attendees">TEILNEHMER</sys:String>
+    <sys:String x:Key="Str_Hint_Attendees">durch Kommas getrennt</sys:String>
+    <sys:String x:Key="Str_Hint_Date">jjjj-mm-tt</sys:String>
+    <sys:String x:Key="Str_Hint_Time">h:mm am/pm oder 24 h</sys:String>
+    <sys:String x:Key="Str_Hint_AttendeesTip">E-Mail-Adressen durch Kommas getrennt</sys:String>
+    <sys:String x:Key="Str_Chk_AllDayOff">[ ] ganztägig</sys:String>
+    <sys:String x:Key="Str_Chk_AllDayOn">[x] ganztägig</sys:String>
+    <sys:String x:Key="Str_Btn_Save">Speichern</sys:String>
+    <sys:String x:Key="Str_Btn_Cancel">Abbrechen</sys:String>
+    <sys:String x:Key="Str_Btn_Delete">Löschen</sys:String>
+
+    <sys:String x:Key="Str_Err_NoTitle">Gib ihm einen Titel.</sys:String>
+    <sys:String x:Key="Str_Err_StartDate">Das Startdatum sollte wie 2026-07-29 aussehen.</sys:String>
+    <sys:String x:Key="Str_Err_EndDate">Das Enddatum sollte wie 2026-07-29 aussehen.</sys:String>
+    <sys:String x:Key="Str_Err_StartTime">Die Startzeit sollte wie 9:30 am oder 21:30 aussehen.</sys:String>
+    <sys:String x:Key="Str_Err_EndTime">Die Endzeit sollte wie 9:30 am oder 21:30 aussehen.</sys:String>
+    <sys:String x:Key="Str_Err_EndBeforeStart">Es muss nach dem Beginn enden.</sys:String>
+
+    <sys:String x:Key="Str_Dlg_DeleteMsg">"{0}" löschen?</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteDetail">Das kann nicht rückgängig gemacht werden.</sys:String>
+
+    <sys:String x:Key="Str_Status_Ready">Bereit</sys:String>
+    <sys:String x:Key="Str_Status_Added">{0} hinzugefügt</sys:String>
+    <sys:String x:Key="Str_Status_Saved">{0} gespeichert</sys:String>
+    <sys:String x:Key="Str_Status_Deleted">{0} gelöscht</sys:String>
+    <sys:String x:Key="Str_Status_Imported">{0} Termine importiert</sys:String>
+    <sys:String x:Key="Str_Status_ImportedSkipped">{0} Termine importiert, {1} bereits vorhandene übersprungen</sys:String>
+    <sys:String x:Key="Str_Status_ImportFailed">Import fehlgeschlagen: {0}</sys:String>
+    <sys:String x:Key="Str_Status_Exported">{0} Termine exportiert</sys:String>
+    <sys:String x:Key="Str_Status_ExportFailed">Export fehlgeschlagen: {0}</sys:String>
+    <sys:String x:Key="Str_Status_NothingToExport">Nichts zu exportieren</sys:String>
+    <sys:String x:Key="Str_Status_LoadError">Dieser Killendar konnte nicht geöffnet werden: {0}</sys:String>
+    <sys:String x:Key="Str_Status_Migrated">{0} Termine in Ihren Killendar übertragen</sys:String>
+
+    <sys:String x:Key="Str_Dlg_ImportTitle">iCalendar importieren</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">iCalendar exportieren</sys:String>
+    <sys:String x:Key="Str_Dlg_IcsFilter">iCalendar-Dateien (*.ics)|*.ics|Alle Dateien (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_IcsSaveFilter">iCalendar-Dateien (*.ics)|*.ics</sys:String>
+
+    <sys:String x:Key="Str_Cal_AllDay">ganztägig</sys:String>
+    <sys:String x:Key="Str_Cal_NoTitle">(ohne Titel)</sys:String>
+    <sys:String x:Key="Str_Cal_Today">HEUTE</sys:String>
+    <sys:String x:Key="Str_Cal_MoreCount">+{0} weitere</sys:String>
+    <sys:String x:Key="Str_Cal_AgendaEmpty">In diesem Zeitraum ist nichts geplant.</sys:String>
+    <sys:String x:Key="Str_TT_NewOnDay">Neuer Termin an diesem Tag</sys:String>
+
+    <sys:String x:Key="Str_About_Version">VERSION</sys:String>
+    <sys:String x:Key="Str_About_Publisher">HERAUSGEBER</sys:String>
+    <sys:String x:Key="Str_About_Thumbprint">FINGERABDRUCK</sys:String>
+    <sys:String x:Key="Str_About_Sha">EXE-SHA-256</sys:String>
+    <sys:String x:Key="Str_About_Computing">wird berechnet...</sys:String>
+    <sys:String x:Key="Str_About_Unsigned">(nicht signiert oder Kette ungültig)</sys:String>
+    <sys:String x:Key="Str_About_UpdateAvailable">Update verfügbar: {0}</sys:String>
+    <sys:String x:Key="Str_About_Downloading">Wird heruntergeladen...</sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Monats-, Wochen-, Tages- und Agendaansicht, iCalendar-Import und -Export, und Termine, die deinen Rechner nie verlassen. Ein GPLv3-Werkzeug von </sys:String>
+    <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>
+
+    <sys:String x:Key="Str_Dlg_UpdateMsg">Killendar {0} herunterladen und installieren?</sys:String>
+    <sys:String x:Key="Str_Dlg_UpdateBullets">Die App wird geschlossen und automatisch neu geöffnet.</sys:String>
+    <sys:String x:Key="Str_Btn_Update">Aktualisieren</sys:String>
+
+    <sys:String x:Key="Str_Sc_Title">Tastenkürzel</sys:String>
+    <sys:String x:Key="Str_Sc_New">Neuer Termin</sys:String>
+    <sys:String x:Key="Str_Sc_Today">Zu heute springen</sys:String>
+    <sys:String x:Key="Str_Sc_Prev">Vorheriger Zeitraum</sys:String>
+    <sys:String x:Key="Str_Sc_Next">Nächster Zeitraum</sys:String>
+    <sys:String x:Key="Str_Sc_Month">Monatsansicht</sys:String>
+    <sys:String x:Key="Str_Sc_Week">Wochenansicht</sys:String>
+    <sys:String x:Key="Str_Sc_Day">Tagesansicht</sys:String>
+    <sys:String x:Key="Str_Sc_Agenda">Agendaansicht</sys:String>
+    <sys:String x:Key="Str_Sc_Panel">Terminbereich ein- oder ausblenden</sys:String>
+    <sys:String x:Key="Str_Sc_About">Info</sys:String>
+    <sys:String x:Key="Str_Sc_Close">Bereich oder Overlay schließen</sys:String>
+    <sys:String x:Key="Str_Sc_Hint">Einzelne Tasten funktionieren, solange du nicht in einem Feld tippst.</sys:String>
+
+    <!-- Date format picker (in the language menu). The three samples are format examples,
+         so they read the same in every language. -->
+    <sys:String x:Key="Str_Lbl_DateFormat">datumsformat</sys:String>
+    <sys:String x:Key="Str_Date_FollowWindows">Windows folgen</sys:String>
+    <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
+    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+
+
+    <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
+         and the forgotten-password escape hatch. {0} is a file name or an error. -->
+    <sys:String x:Key="Str_Pw_UnlockHead">Diesen Killendar entsperren</sys:String>
+    <sys:String x:Key="Str_Pw_WrongPw">Dieses Kennwort hat nicht funktioniert. Bitte erneut versuchen.</sys:String>
+    <sys:String x:Key="Str_Pw_Protected">{0} ist verschlüsselt. Geben Sie das Kennwort ein, um ihn zu öffnen.</sys:String>
+    <sys:String x:Key="Str_Pw_NewKcalBtn">Neuer Killendar...</sys:String>
+    <sys:String x:Key="Str_Pw_SetHead">Diesen Killendar verschlüsseln</sys:String>
+    <sys:String x:Key="Str_Pw_SetBody">Ihre Termine werden im Ruhezustand mit AES-256 verschlüsselt. Dieses Kennwort wird bei jedem Start von Killendar abgefragt.</sys:String>
+    <sys:String x:Key="Str_Pw_ChangeHead">Kennwort ändern oder entfernen</sys:String>
+    <sys:String x:Key="Str_Pw_ChangeBody">Geben Sie ein neues Kennwort ein, oder lassen Sie beide Felder leer, um die Verschlüsselung zu entfernen und diesen Killendar als unverschlüsseltes SQLite zu speichern.</sys:String>
+    <sys:String x:Key="Str_Pw_ConfirmLbl">BESTÄTIGEN</sys:String>
+    <sys:String x:Key="Str_Pw_NoRecovery">Es gibt keine Wiederherstellung. Ist das Kennwort verloren, sind die Termine in diesem Killendar endgültig verloren.</sys:String>
+    <sys:String x:Key="Str_Btn_Unlock">Entsperren</sys:String>
+    <sys:String x:Key="Str_Btn_Encrypt">Verschlüsseln</sys:String>
+    <sys:String x:Key="Str_Btn_Apply">Übernehmen</sys:String>
+    <sys:String x:Key="Str_Btn_StartNew">Neu anlegen</sys:String>
+    <sys:String x:Key="Str_Dlg_FreshHead">Neuen Killendar anlegen?</sys:String>
+    <sys:String x:Key="Str_Dlg_FreshBody">Der gesperrte Killendar wird umbenannt und auf der Festplatte behalten, ohne sein Kennwort sind die enthaltenen Termine aber nicht lesbar. An seiner Stelle wird ein neuer, leerer Killendar geöffnet.</sys:String>
+    <sys:String x:Key="Str_Tip_LockOn">Verschlüsselt - klicken, um das Kennwort zu ändern oder zu entfernen</sys:String>
+    <sys:String x:Key="Str_Tip_LockOff">Nicht verschlüsselt - klicken, um ein Kennwort festzulegen</sys:String>
+    <sys:String x:Key="Str_Status_Encrypted">Dieser Killendar ist jetzt verschlüsselt</sys:String>
+    <sys:String x:Key="Str_Status_PwChanged">Kennwort geändert</sys:String>
+    <sys:String x:Key="Str_Status_PwRemoved">Kennwort entfernt - dieser Killendar ist nicht mehr verschlüsselt</sys:String>
+    <sys:String x:Key="Str_Status_PwMismatch">Die beiden Kennwörter stimmen nicht überein</sys:String>
+    <sys:String x:Key="Str_Status_PwFailed">Kennwort konnte nicht geändert werden: {0}</sys:String>
+    <sys:String x:Key="Str_Status_FreshKcal">Neuer Killendar angelegt; der gesperrte wurde als {0} behalten</sys:String>
+
+
+    <!-- Export warning: an .ics is plain text, so exporting from an encrypted
+         Killendar hands out what the password was protecting. -->
+    <sys:String x:Key="Str_Exp_WarnHead">Aus einem verschlüsselten Killendar exportieren?</sys:String>
+    <sys:String x:Key="Str_Exp_WarnBody">Eine .ics-Datei ist unverschlüsselter Text. Alles, was Sie exportieren, kann jeder lesen, der die Datei öffnet, und das Kennwort dieses Killendars schützt es nicht mehr.</sys:String>
+    <sys:String x:Key="Str_Exp_WarnCheck">Nicht mehr daran erinnern</sys:String>
+
+
+    <!-- Manage Killendars: the .kcal file list, its context menu and the rail
+         button. {0} is a file name or an error; Str_Kc_Renamed takes {0} old, {1} new. -->
+    <sys:String x:Key="Str_Kc_Title">Killendars</sys:String>
+    <sys:String x:Key="Str_Kc_Hint">Alle .kcal in Ihrem Datenordner. Doppelklicken Sie einen Namen, um ihn zu ändern.</sys:String>
+    <sys:String x:Key="Str_Kc_FlagEncrypted">verschlüsselt</sys:String>
+    <sys:String x:Key="Str_Kc_FlagActive">geöffnet</sys:String>
+    <sys:String x:Key="Str_Kc_SelectFirst">Wählen Sie zuerst einen Killendar aus.</sys:String>
+    <sys:String x:Key="Str_Kc_BadName">Dieser Name enthält Zeichen, die in einem Dateinamen nicht erlaubt sind.</sys:String>
+    <sys:String x:Key="Str_Kc_Exists">{0} existiert bereits.</sys:String>
+    <sys:String x:Key="Str_Kc_Renamed">{0} in {1} umbenannt</sys:String>
+    <sys:String x:Key="Str_Kc_RenameFailed">Umbenennen fehlgeschlagen: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_CreateFailed">Killendar konnte nicht erstellt werden: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteHead">{0} löschen?</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteBody">Die Datei und alle darin enthaltenen Termine werden von der Festplatte gelöscht. Das lässt sich nicht rückgängig machen.</sys:String>
+    <sys:String x:Key="Str_Kc_Deleted">{0} gelöscht</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteFailed">Löschen fehlgeschlagen: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_LoadTitle">Killendar laden</sys:String>
+    <sys:String x:Key="Str_Kc_Filter">Killendar-Dateien (*.kcal)|*.kcal|Alle Dateien (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Kc_Loaded">Kopie als {0} geladen</sys:String>
+    <sys:String x:Key="Str_Kc_LoadFailed">Laden fehlgeschlagen: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Copied">{0} liegt in der Zwischenablage - überall einfügen, wo eine Datei erwartet wird</sys:String>
+    <sys:String x:Key="Str_Kc_CopyFailed">Kopieren fehlgeschlagen: {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_Rename">Umbenennen</sys:String>
+    <sys:String x:Key="Str_Ctx_Delete">Löschen</sys:String>
+    <sys:String x:Key="Str_Ctx_CopyFile">Datei kopieren</sys:String>
+    <sys:String x:Key="Str_Ctx_Reveal">Im Explorer anzeigen</sys:String>
+    <sys:String x:Key="Str_TT_CopyFile">Legt die Datei in die Zwischenablage, bereit zum Einfügen in Explorer oder E-Mail</sys:String>
+    <sys:String x:Key="Str_TT_NewKcal">Neuer Killendar</sys:String>
+    <sys:String x:Key="Str_TT_DeleteKcal">Ausgewählten Killendar löschen</sys:String>
+    <sys:String x:Key="Str_TT_LoadKcal">Killendar aus einer Datei laden</sys:String>
+    <sys:String x:Key="Str_TT_Explorer">Datenordner öffnen</sys:String>
+    <sys:String x:Key="Str_TT_Killendars">Killendars</sys:String>
+    <sys:String x:Key="Str_Btn_Open">Öffnen</sys:String>
+    <sys:String x:Key="Str_Status_Opened">{0} geöffnet</sys:String>
+
+
+    <!-- Double-clicked .kcal: the confirm before a copy is added and opened.
+         {0} is the file name. -->
+    <sys:String x:Key="Str_Kc_AddHead">{0} in Killendar öffnen?</sys:String>
+    <sys:String x:Key="Str_Kc_AddBody">Eine Kopie wird in Ihrem Datenordner angelegt und geöffnet. Die doppelt angeklickte Datei bleibt unangetastet an ihrem Platz - in einen Killendar wird ständig geschrieben, und das gehört nicht in eine Netzwerkfreigabe oder den Downloads-Ordner.</sys:String>
+    <sys:String x:Key="Str_Btn_Add">Hinzufügen</sys:String>
+
+
+    <!-- Text-input context menu (replaces WPF's built-in Cut/Copy/Paste, which
+         ignores app-level menu styling). -->
+    <sys:String x:Key="Str_Ctx_Cut">Ausschneiden</sys:String>
+    <sys:String x:Key="Str_Ctx_Copy">Kopieren</sys:String>
+    <sys:String x:Key="Str_Ctx_Paste">Einfügen</sys:String>
+    <sys:String x:Key="Str_Ctx_SelectAll">Alles auswählen</sys:String>
+
+
+    <!-- Themed file dialog (FileDialog.xaml), replacing the Win32 open/save boxes.
+         Str_Sum_Counts takes {0} folders, {1} files. -->
+    <sys:String x:Key="Str_Btn_Replace">Ersetzen</sys:String>
+    <sys:String x:Key="Str_Dlg_FileName">Dateiname:</sys:String>
+    <sys:String x:Key="Str_Dlg_FileType">Dateityp:</sys:String>
+    <sys:String x:Key="Str_Dlg_AllFiles">Alle Dateien</sys:String>
+    <sys:String x:Key="Str_Dlg_NoMatchingFiles">Hier passt nichts zum aktuellen Dateityp.</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFolder">Dieser Ordner existiert nicht.</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFile">Diese Datei existiert nicht.</sys:String>
+    <sys:String x:Key="Str_Dlg_OverwriteMsg">{0} ersetzen?</sys:String>
+    <sys:String x:Key="Str_Sum_Counts">{0} Ordner, {1} Datei(en)</sys:String>
+    <sys:String x:Key="Str_QA_Home">Start</sys:String>
+    <sys:String x:Key="Str_QA_Desktop">Desktop</sys:String>
+    <sys:String x:Key="Str_QA_Documents">Dokumente</sys:String>
+    <sys:String x:Key="Str_QA_Downloads">Downloads</sys:String>
+    <sys:String x:Key="Str_QA_Pictures">Bilder</sys:String>
+    <sys:String x:Key="Str_Col_Name">Name</sys:String>
+    <sys:String x:Key="Str_Col_Size">Größe</sys:String>
+    <sys:String x:Key="Str_Col_Modified">geändert</sys:String>
+    <sys:String x:Key="Str_TT_Up">Eine Ebene höher</sys:String>
+    <sys:String x:Key="Str_TT_ViewList">Listenansicht</sys:String>
+    <sys:String x:Key="Str_TT_ViewIcons">Symbolansicht</sys:String>
+    <sys:String x:Key="Str_TT_ViewDetails">Detailansicht</sys:String>
+
+</ResourceDictionary>

@@ -1,0 +1,24 @@
+<Application x:Class="Killendar.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- [0] is the live palette: ThemeManager updates THIS dictionary in place at
+                     runtime and paints the accent overlay into it too, so it must stay first and
+                     must be the only palette here. Dark is Killendar's shipped default; the red
+                     accent is applied over it by ThemeManager (see _darkAccent). This must match
+                     ThemeManager's _current or the first paint flashes the wrong palette - and it
+                     is Dark's red (#DD504B) that the wordmark, the og-image and killendar.net are
+                     built on, not Black's #FF2929. -->
+                <ResourceDictionary Source="Themes/Dark.xaml"/>
+                <ResourceDictionary Source="Controls.xaml"/>
+                <!-- [2] English string base, ALWAYS present. LocaleManager re-asserts this slot and
+                     layers the chosen locale at [3], so a partial translation falls back to English
+                     instead of rendering raw Str_ key names. Adding a dictionary before this one
+                     shifts the indices LocaleManager depends on. -->
+                <ResourceDictionary Source="Strings/en-US.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

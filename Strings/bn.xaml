@@ -1,0 +1,226 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Bengali. Layered over en-US, so any key omitted here falls back to English. -->
+
+    <sys:String x:Key="Str_Btn_New">+ নতুন</sys:String>
+    <sys:String x:Key="Str_Btn_Import">.ics ইমপোর্ট</sys:String>
+    <sys:String x:Key="Str_Btn_Export">.ics এক্সপোর্ট</sys:String>
+    <sys:String x:Key="Str_Btn_Today">আজ</sys:String>
+    <sys:String x:Key="Str_View_Month">মাস</sys:String>
+    <sys:String x:Key="Str_View_Week">সপ্তাহ</sys:String>
+    <sys:String x:Key="Str_View_Day">দিন</sys:String>
+    <sys:String x:Key="Str_View_Agenda">সূচি</sys:String>
+    <sys:String x:Key="Str_TT_Prev">আগের</sys:String>
+    <sys:String x:Key="Str_TT_Next">পরের</sys:String>
+
+    <sys:String x:Key="Str_TT_Theme">থিম</sys:String>
+    <sys:String x:Key="Str_TT_Language">ভাষা</sys:String>
+    <sys:String x:Key="Str_TT_PanelShow">অ্যাপয়েন্টমেন্ট প্যানেল দেখান</sys:String>
+    <sys:String x:Key="Str_TT_PanelHide">অ্যাপয়েন্টমেন্ট প্যানেল লুকান</sys:String>
+    <sys:String x:Key="Str_Lbl_Theme">থিম</sys:String>
+    <sys:String x:Key="Str_Lbl_Accent">অ্যাকসেন্ট</sys:String>
+
+    <sys:String x:Key="Str_Side_New">নতুন অ্যাপয়েন্টমেন্ট</sys:String>
+    <sys:String x:Key="Str_Side_Edit">অ্যাপয়েন্টমেন্ট সম্পাদনা</sys:String>
+    <sys:String x:Key="Str_Fld_Title">শিরোনাম</sys:String>
+    <sys:String x:Key="Str_Fld_Starts">শুরু</sys:String>
+    <sys:String x:Key="Str_Fld_Ends">শেষ</sys:String>
+    <sys:String x:Key="Str_Fld_Location">স্থান</sys:String>
+    <sys:String x:Key="Str_Fld_Description">বিবরণ</sys:String>
+    <sys:String x:Key="Str_Fld_Attendees">অংশগ্রহণকারী</sys:String>
+    <sys:String x:Key="Str_Hint_Attendees">কমা দিয়ে আলাদা</sys:String>
+    <sys:String x:Key="Str_Hint_Date">yyyy-mm-dd</sys:String>
+    <sys:String x:Key="Str_Hint_Time">h:mm am/pm অথবা ২৪ ঘণ্টা</sys:String>
+    <sys:String x:Key="Str_Hint_AttendeesTip">কমা দিয়ে আলাদা করা ইমেল ঠিকানা</sys:String>
+    <sys:String x:Key="Str_Chk_AllDayOff">[ ] সারাদিন</sys:String>
+    <sys:String x:Key="Str_Chk_AllDayOn">[x] সারাদিন</sys:String>
+    <sys:String x:Key="Str_Btn_Save">সংরক্ষণ</sys:String>
+    <sys:String x:Key="Str_Btn_Cancel">বাতিল</sys:String>
+    <sys:String x:Key="Str_Btn_Delete">মুছুন</sys:String>
+
+    <sys:String x:Key="Str_Err_NoTitle">একটি শিরোনাম দিন।</sys:String>
+    <sys:String x:Key="Str_Err_StartDate">শুরুর তারিখ 2026-07-29 এর মতো হওয়া উচিত।</sys:String>
+    <sys:String x:Key="Str_Err_EndDate">শেষের তারিখ 2026-07-29 এর মতো হওয়া উচিত।</sys:String>
+    <sys:String x:Key="Str_Err_StartTime">শুরুর সময় 9:30 am বা 21:30 এর মতো হওয়া উচিত।</sys:String>
+    <sys:String x:Key="Str_Err_EndTime">শেষের সময় 9:30 am বা 21:30 এর মতো হওয়া উচিত।</sys:String>
+    <sys:String x:Key="Str_Err_EndBeforeStart">শুরুর পরে শেষ হতে হবে।</sys:String>
+
+    <sys:String x:Key="Str_Dlg_DeleteMsg">"{0}" মুছবেন?</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteDetail">এটি ফেরানো যাবে না।</sys:String>
+
+    <sys:String x:Key="Str_Status_Ready">প্রস্তুত</sys:String>
+    <sys:String x:Key="Str_Status_Added">{0} যোগ করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_Status_Saved">{0} সংরক্ষণ করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_Status_Deleted">{0} মুছে ফেলা হয়েছে</sys:String>
+    <sys:String x:Key="Str_Status_Imported">{0} টি অ্যাপয়েন্টমেন্ট ইমপোর্ট করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_Status_ImportedSkipped">{0} টি অ্যাপয়েন্টমেন্ট ইমপোর্ট, আগে থেকেই থাকা {1} টি বাদ</sys:String>
+    <sys:String x:Key="Str_Status_ImportFailed">ইমপোর্ট ব্যর্থ: {0}</sys:String>
+    <sys:String x:Key="Str_Status_Exported">{0} টি অ্যাপয়েন্টমেন্ট এক্সপোর্ট করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_Status_ExportFailed">এক্সপোর্ট ব্যর্থ: {0}</sys:String>
+    <sys:String x:Key="Str_Status_NothingToExport">এক্সপোর্ট করার কিছু নেই</sys:String>
+    <sys:String x:Key="Str_Status_LoadError">এই Killendar খোলা যায়নি: {0}</sys:String>
+    <sys:String x:Key="Str_Status_Migrated">{0} টি অ্যাপয়েন্টমেন্ট আপনার Killendar-এ স্থানান্তর করা হয়েছে</sys:String>
+
+    <sys:String x:Key="Str_Dlg_ImportTitle">iCalendar ইমপোর্ট</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">iCalendar এক্সপোর্ট</sys:String>
+    <sys:String x:Key="Str_Dlg_IcsFilter">iCalendar ফাইল (*.ics)|*.ics|সব ফাইল (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_IcsSaveFilter">iCalendar ফাইল (*.ics)|*.ics</sys:String>
+
+    <sys:String x:Key="Str_Cal_AllDay">সারাদিন</sys:String>
+    <sys:String x:Key="Str_Cal_NoTitle">(শিরোনামহীন)</sys:String>
+    <sys:String x:Key="Str_Cal_Today">আজ</sys:String>
+    <sys:String x:Key="Str_Cal_MoreCount">আরও {0} টি</sys:String>
+    <sys:String x:Key="Str_Cal_AgendaEmpty">এই সময়ে কিছু নির্ধারিত নেই।</sys:String>
+    <sys:String x:Key="Str_TT_NewOnDay">এই দিনে নতুন অ্যাপয়েন্টমেন্ট</sys:String>
+
+    <sys:String x:Key="Str_About_Version">সংস্করণ</sys:String>
+    <sys:String x:Key="Str_About_Publisher">প্রকাশক</sys:String>
+    <sys:String x:Key="Str_About_Thumbprint">থাম্বপ্রিন্ট</sys:String>
+    <sys:String x:Key="Str_About_Sha">EXE SHA-256</sys:String>
+    <sys:String x:Key="Str_About_Computing">গণনা চলছে...</sys:String>
+    <sys:String x:Key="Str_About_Unsigned">(স্বাক্ষরিত নয় বা চেইন যাচাই ব্যর্থ)</sys:String>
+    <sys:String x:Key="Str_About_UpdateAvailable">আপডেট পাওয়া গেছে: {0}</sys:String>
+    <sys:String x:Key="Str_About_Downloading">ডাউনলোড হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">মাস, সপ্তাহ, দিন ও সূচি ভিউ, iCalendar ইমপোর্ট ও এক্সপোর্ট, এবং এমন অ্যাপয়েন্টমেন্ট যা কখনও আপনার মেশিন ছাড়ে না। একটি GPLv3 </sys:String>
+    <sys:String x:Key="Str_About_DescB" xml:space="preserve"> ইউটিলিটি।</sys:String>
+
+    <sys:String x:Key="Str_Dlg_UpdateMsg">Killendar {0} ডাউনলোড করে ইনস্টল করবেন?</sys:String>
+    <sys:String x:Key="Str_Dlg_UpdateBullets">অ্যাপটি বন্ধ হয়ে স্বয়ংক্রিয়ভাবে আবার খুলবে।</sys:String>
+    <sys:String x:Key="Str_Btn_Update">আপডেট</sys:String>
+
+    <sys:String x:Key="Str_Sc_Title">কীবোর্ড শর্টকাট</sys:String>
+    <sys:String x:Key="Str_Sc_New">নতুন অ্যাপয়েন্টমেন্ট</sys:String>
+    <sys:String x:Key="Str_Sc_Today">আজকের দিনে যান</sys:String>
+    <sys:String x:Key="Str_Sc_Prev">আগের সময়কাল</sys:String>
+    <sys:String x:Key="Str_Sc_Next">পরের সময়কাল</sys:String>
+    <sys:String x:Key="Str_Sc_Month">মাস ভিউ</sys:String>
+    <sys:String x:Key="Str_Sc_Week">সপ্তাহ ভিউ</sys:String>
+    <sys:String x:Key="Str_Sc_Day">দিন ভিউ</sys:String>
+    <sys:String x:Key="Str_Sc_Agenda">সূচি ভিউ</sys:String>
+    <sys:String x:Key="Str_Sc_Panel">অ্যাপয়েন্টমেন্ট প্যানেল দেখান বা লুকান</sys:String>
+    <sys:String x:Key="Str_Sc_About">সম্পর্কে</sys:String>
+    <sys:String x:Key="Str_Sc_Close">প্যানেল বা ওভারলে বন্ধ করুন</sys:String>
+    <sys:String x:Key="Str_Sc_Hint">কোনো ঘরে টাইপ না করলে একক কী কাজ করে।</sys:String>
+
+    <!-- Date format picker (in the language menu). The three samples are format examples,
+         so they read the same in every language. -->
+    <sys:String x:Key="Str_Lbl_DateFormat">তারিখের বিন্যাস</sys:String>
+    <sys:String x:Key="Str_Date_FollowWindows">Windows অনুসরণ করুন</sys:String>
+    <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
+    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+
+
+    <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
+         and the forgotten-password escape hatch. {0} is a file name or an error. -->
+    <sys:String x:Key="Str_Pw_UnlockHead">এই Killendar আনলক করুন</sys:String>
+    <sys:String x:Key="Str_Pw_WrongPw">এই পাসওয়ার্ড কাজ করেনি। আবার চেষ্টা করুন।</sys:String>
+    <sys:String x:Key="Str_Pw_Protected">{0} এনক্রিপ্ট করা আছে। খুলতে এর পাসওয়ার্ড দিন।</sys:String>
+    <sys:String x:Key="Str_Pw_NewKcalBtn">নতুন Killendar...</sys:String>
+    <sys:String x:Key="Str_Pw_SetHead">এই Killendar এনক্রিপ্ট করুন</sys:String>
+    <sys:String x:Key="Str_Pw_SetBody">আপনার অ্যাপয়েন্টমেন্টগুলি AES-256 দিয়ে এনক্রিপ্ট করা থাকবে। Killendar প্রতিবার চালু হলে এই পাসওয়ার্ড চাওয়া হবে।</sys:String>
+    <sys:String x:Key="Str_Pw_ChangeHead">পাসওয়ার্ড বদলান বা সরান</sys:String>
+    <sys:String x:Key="Str_Pw_ChangeBody">নতুন পাসওয়ার্ড দিন, অথবা দুটি ঘরই খালি রাখলে এনক্রিপশন সরে যাবে এবং এই Killendar সাধারণ SQLite হিসেবে থাকবে।</sys:String>
+    <sys:String x:Key="Str_Pw_ConfirmLbl">নিশ্চিত করুন</sys:String>
+    <sys:String x:Key="Str_Pw_NoRecovery">পুনরুদ্ধারের কোনো উপায় নেই। পাসওয়ার্ড হারালে এই Killendar-এর অ্যাপয়েন্টমেন্টগুলি চিরতরে হারিয়ে যাবে।</sys:String>
+    <sys:String x:Key="Str_Btn_Unlock">আনলক</sys:String>
+    <sys:String x:Key="Str_Btn_Encrypt">এনক্রিপ্ট</sys:String>
+    <sys:String x:Key="Str_Btn_Apply">প্রয়োগ</sys:String>
+    <sys:String x:Key="Str_Btn_StartNew">নতুন শুরু</sys:String>
+    <sys:String x:Key="Str_Dlg_FreshHead">নতুন Killendar শুরু করবেন?</sys:String>
+    <sys:String x:Key="Str_Dlg_FreshBody">লক করা Killendar-এর নাম বদলে ডিস্কে রেখে দেওয়া হবে, তবে পাসওয়ার্ড ছাড়া ভেতরের অ্যাপয়েন্টমেন্ট পড়া যাবে না। এর জায়গায় একটি নতুন খালি Killendar খুলবে।</sys:String>
+    <sys:String x:Key="Str_Tip_LockOn">এনক্রিপ্ট করা - পাসওয়ার্ড বদলাতে বা সরাতে ক্লিক করুন</sys:String>
+    <sys:String x:Key="Str_Tip_LockOff">এনক্রিপ্ট করা নয় - পাসওয়ার্ড দিতে ক্লিক করুন</sys:String>
+    <sys:String x:Key="Str_Status_Encrypted">এই Killendar এখন এনক্রিপ্ট করা</sys:String>
+    <sys:String x:Key="Str_Status_PwChanged">পাসওয়ার্ড বদলানো হয়েছে</sys:String>
+    <sys:String x:Key="Str_Status_PwRemoved">পাসওয়ার্ড সরানো হয়েছে - এই Killendar আর এনক্রিপ্ট করা নয়</sys:String>
+    <sys:String x:Key="Str_Status_PwMismatch">দুটি পাসওয়ার্ড মিলছে না</sys:String>
+    <sys:String x:Key="Str_Status_PwFailed">পাসওয়ার্ড বদলানো যায়নি: {0}</sys:String>
+    <sys:String x:Key="Str_Status_FreshKcal">নতুন Killendar শুরু হয়েছে; লক করাটি {0} হিসেবে রাখা হয়েছে</sys:String>
+
+
+    <!-- Export warning: an .ics is plain text, so exporting from an encrypted
+         Killendar hands out what the password was protecting. -->
+    <sys:String x:Key="Str_Exp_WarnHead">একটি এনক্রিপ্ট করা Killendar থেকে এক্সপোর্ট করবেন?</sys:String>
+    <sys:String x:Key="Str_Exp_WarnBody">.ics ফাইল সাধারণ টেক্সট। আপনি যা এক্সপোর্ট করবেন তা ফাইলটি খোলা যে কেউ পড়তে পারবে, এবং এই Killendar-এর পাসওযার্ড আর তা সুরক্ষিত রাখে না।</sys:String>
+    <sys:String x:Key="Str_Exp_WarnCheck">আর মনে করিয়ে দেবেন না</sys:String>
+
+
+    <!-- Manage Killendars: the .kcal file list, its context menu and the rail
+         button. {0} is a file name or an error; Str_Kc_Renamed takes {0} old, {1} new. -->
+    <sys:String x:Key="Str_Kc_Title">Killendar তালিকা</sys:String>
+    <sys:String x:Key="Str_Kc_Hint">আপনার ডেটা ফোল্ডারের সব .kcal ফাইল। নাম বদলাতে নামের উপর ডাবল-ক্লিক করুন।</sys:String>
+    <sys:String x:Key="Str_Kc_FlagEncrypted">এনক্রিপ্ট করা</sys:String>
+    <sys:String x:Key="Str_Kc_FlagActive">চালু</sys:String>
+    <sys:String x:Key="Str_Kc_SelectFirst">আগে একটি Killendar বেছে নিন।</sys:String>
+    <sys:String x:Key="Str_Kc_BadName">এই নামে এমন অক্ষর আছে যা ফাইলের নামে রাখা যায় না।</sys:String>
+    <sys:String x:Key="Str_Kc_Exists">{0} আগে থেকেই আছে।</sys:String>
+    <sys:String x:Key="Str_Kc_Renamed">{0} এর নাম {1} করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_Kc_RenameFailed">নাম বদলানো যায়নি: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_CreateFailed">Killendar তৈরি করা যায়নি: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteHead">{0} মুছে ফেলবেন?</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteBody">ফাইলটি এবং তার ভেতরের সব অ্যাপয়েন্টমেন্ট ডিস্ক থেকে মুছে যাবে। এটি ফেরানো যাবে না।</sys:String>
+    <sys:String x:Key="Str_Kc_Deleted">{0} মুছে ফেলা হয়েছে</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteFailed">মোছা যায়নি: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_LoadTitle">Killendar লোড করুন</sys:String>
+    <sys:String x:Key="Str_Kc_Filter">Killendar ফাইল (*.kcal)|*.kcal|সব ফাইল (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Kc_Loaded">একটি কপি {0} নামে লোড হয়েছে</sys:String>
+    <sys:String x:Key="Str_Kc_LoadFailed">লোড করা যায়নি: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Copied">{0} ক্লিপবোর্ডে আছে - ফাইল নেয় এমন যেকোনো জায়গায় পেস্ট করুন</sys:String>
+    <sys:String x:Key="Str_Kc_CopyFailed">কপি করা যায়নি: {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_Rename">নাম বদলান</sys:String>
+    <sys:String x:Key="Str_Ctx_Delete">মুছুন</sys:String>
+    <sys:String x:Key="Str_Ctx_CopyFile">ফাইল কপি করুন</sys:String>
+    <sys:String x:Key="Str_Ctx_Reveal">এক্সপ্লোরারে দেখান</sys:String>
+    <sys:String x:Key="Str_TT_CopyFile">ফাইলটি ক্লিপবোর্ডে রাখে, এক্সপ্লোরার বা ইমেলে পেস্ট করার জন্য তৈরি</sys:String>
+    <sys:String x:Key="Str_TT_NewKcal">নতুন Killendar</sys:String>
+    <sys:String x:Key="Str_TT_DeleteKcal">নির্বাচিত Killendar মুছুন</sys:String>
+    <sys:String x:Key="Str_TT_LoadKcal">ফাইল থেকে Killendar লোড করুন</sys:String>
+    <sys:String x:Key="Str_TT_Explorer">ডেটা ফোল্ডার খুলুন</sys:String>
+    <sys:String x:Key="Str_TT_Killendars">Killendar তালিকা</sys:String>
+    <sys:String x:Key="Str_Btn_Open">খুলুন</sys:String>
+    <sys:String x:Key="Str_Status_Opened">{0} খোলা হয়েছে</sys:String>
+
+
+    <!-- Double-clicked .kcal: the confirm before a copy is added and opened.
+         {0} is the file name. -->
+    <sys:String x:Key="Str_Kc_AddHead">{0} Killendar-এ খুলবেন?</sys:String>
+    <sys:String x:Key="Str_Kc_AddBody">একটি কপি আপনার ডেটা ফোল্ডারে যোগ করে খোলা হবে। আপনি যে ফাইলে ডাবল-ক্লিক করেছেন সেটি যেখানে আছে সেখানেই অপরিবর্তিত থাকবে - Killendar-এ অবিরত লেখা হয়, আর নেটওয়ার্ক শেয়ার বা ডাউনলোড ফোল্ডারের ফাইলের জন্য সেটি উপযুক্ত নয়।</sys:String>
+    <sys:String x:Key="Str_Btn_Add">যোগ করুন</sys:String>
+
+
+    <!-- Text-input context menu (replaces WPF's built-in Cut/Copy/Paste, which
+         ignores app-level menu styling). -->
+    <sys:String x:Key="Str_Ctx_Cut">কাট</sys:String>
+    <sys:String x:Key="Str_Ctx_Copy">কপি</sys:String>
+    <sys:String x:Key="Str_Ctx_Paste">পেস্ট</sys:String>
+    <sys:String x:Key="Str_Ctx_SelectAll">সব নির্বাচন করুন</sys:String>
+
+
+    <!-- Themed file dialog (FileDialog.xaml), replacing the Win32 open/save boxes.
+         Str_Sum_Counts takes {0} folders, {1} files. -->
+    <sys:String x:Key="Str_Btn_Replace">পরিবর্তন</sys:String>
+    <sys:String x:Key="Str_Dlg_FileName">ফাইলের নাম:</sys:String>
+    <sys:String x:Key="Str_Dlg_FileType">ফাইলের ধরন:</sys:String>
+    <sys:String x:Key="Str_Dlg_AllFiles">সব ফাইল</sys:String>
+    <sys:String x:Key="Str_Dlg_NoMatchingFiles">বর্তমান ফাইলের ধরনের সঙ্গে মিলে এমন কিছু নেই।</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFolder">ওই ফোল্ডারটি নেই।</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFile">ওই ফাইলটি নেই।</sys:String>
+    <sys:String x:Key="Str_Dlg_OverwriteMsg">{0} পরিবর্তন করবেন?</sys:String>
+    <sys:String x:Key="Str_Sum_Counts">{0} টি ফোল্ডার, {1} টি ফাইল</sys:String>
+    <sys:String x:Key="Str_QA_Home">হোম</sys:String>
+    <sys:String x:Key="Str_QA_Desktop">ডেস্কটপ</sys:String>
+    <sys:String x:Key="Str_QA_Documents">ডকুমেন্ট</sys:String>
+    <sys:String x:Key="Str_QA_Downloads">ডাউনলোড</sys:String>
+    <sys:String x:Key="Str_QA_Pictures">ছবি</sys:String>
+    <sys:String x:Key="Str_Col_Name">নাম</sys:String>
+    <sys:String x:Key="Str_Col_Size">আকার</sys:String>
+    <sys:String x:Key="Str_Col_Modified">পরিবর্তিত</sys:String>
+    <sys:String x:Key="Str_TT_Up">এক ফোল্ডার উপরে</sys:String>
+    <sys:String x:Key="Str_TT_ViewList">তালিকা দেখা</sys:String>
+    <sys:String x:Key="Str_TT_ViewIcons">আইকন দেখা</sys:String>
+    <sys:String x:Key="Str_TT_ViewDetails">বিস্তারিত দেখা</sys:String>
+
+</ResourceDictionary>

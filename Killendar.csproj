@@ -1,0 +1,116 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\kd-icon.ico</ApplicationIcon>
+    <Version>1.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <InformationalVersion>1.0.0</InformationalVersion>
+    <AssemblyTitle>Killendar</AssemblyTitle>
+    <Product>Killendar</Product>
+    <Company>killertools.net</Company>
+    <RootNamespace>Killendar</RootNamespace>
+    <!-- Bump with the version, same pass as the CHANGELOG section. About.cs reads this back
+         so a user can see how old their build is. Placeholder until the first real release. -->
+    <ReleaseDate>2026-07-29</ReleaseDate>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+  </PropertyGroup>
+
+  <!-- Bake ReleaseDate into the assembly so About can show it. A file timestamp would not
+       survive being copied and the PE linker stamp is a build date, not a release date. -->
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>ReleaseDate</_Parameter1>
+      <_Parameter2>$(ReleaseDate)</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <!-- The pre-rewrite app is parked here for reference while the rewrite lands. The SDK globs
+       **/*.cs and **/*.xaml by default, so it MUST be excluded or the old views fight the new
+       shell for type names and resource keys. -->
+  <ItemGroup>
+    <Compile Remove="_old_pre_rewrite\**" />
+    <Page Remove="_old_pre_rewrite\**" />
+    <None Remove="_old_pre_rewrite\**" />
+    <Resource Remove="_old_pre_rewrite\**" />
+    <ApplicationDefinition Remove="_old_pre_rewrite\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <!-- net48 does not pull System.Net.Http in by default; About.cs uses HttpClient for the
+         update check and the self-update download. -->
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Costura.Fody" Version="5.7.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Fody" Version="6.8.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+    <!-- Transitive pins: Costura.Fody -> NETStandard.Library 1.6.1 resolves the vulnerable
+         System.Net.Http 4.3.0 / System.Text.RegularExpressions 4.3.0 (GHSA-7jgj-8wvc-jh57,
+         GHSA-cmhx-cq75-c4mj). Costura is build-time only and the app compiles against the net48
+         framework assemblies, so nothing from that graph ships - these pins just move the
+         resolved versions to the patched releases. ExcludeAssets=all keeps them out of compile
+         and output entirely. Carried over from KillerNotes along with SQLCipher. -->
+    <PackageReference Include="System.Net.Http" Version="4.3.4" ExcludeAssets="all" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" ExcludeAssets="all" />
+    <!-- The Killendar store: SQLite, encrypted at rest with SQLCipher (AES-256) when a password
+         is set. The STATIC provider (not bundle_e_sqlcipher) is deliberate for the single-exe
+         build: the bundle's Batteries_V2 dynamic loader probes Assembly.Location, which is empty
+         for Costura in-memory assemblies and crashes at startup. The static provider binds via
+         plain DllImport, satisfied by SqlCipherBootstrap's preload. The .Core ADO.NET wrapper
+         stays managed. Run the vulnerable-package scan at every release. -->
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.6" />
+    <PackageReference Include="SQLitePCLRaw.provider.e_sqlcipher" Version="2.1.8" />
+    <!-- The x64 SQLCipher native is embedded as a resource and self-extracted at runtime
+         (SqlCipherBootstrap). ExcludeAssets stops the loose native copy in the output while
+         GeneratePathProperty exposes the package path for the embed below. Version pinned to
+         match the provider. -->
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlcipher" Version="2.1.8" GeneratePathProperty="true" ExcludeAssets="build;buildTransitive;native;contentFiles" />
+    <PackageReference Include="PolySharp" Version="1.15.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\kd-icon.ico" />
+    <!-- About card header art. Generated from brand/logo.png, which is gitignored, so this
+         tracked copy is what makes a fresh clone build and render correctly. -->
+    <Resource Include="Resources\kd-icon.png" />
+    <!-- The typewriter wordmark. Build Action must be Resource for the component font URI. -->
+    <Resource Include="Fonts\*.ttf" />
+  </ItemGroup>
+
+  <!-- SQLCipher native (x64) embedded for the single-exe build; SqlCipherBootstrap extracts it
+       to a per-version cache under %LOCALAPPDATA%\Killendar and preloads it before the first
+       database open. PkgSQLitePCLRaw_lib_e_sqlcipher comes from GeneratePathProperty. -->
+  <ItemGroup>
+    <EmbeddedResource Include="$(PkgSQLitePCLRaw_lib_e_sqlcipher)\runtimes\win-x64\native\e_sqlcipher.dll" Condition="'$(PkgSQLitePCLRaw_lib_e_sqlcipher)' != ''">
+      <LogicalName>Killendar.SqlCipherNative.e_sqlcipher.dll</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <Target Name="BundleSource" AfterTargets="Publish">
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(ProjectDir)build\bundle-source.ps1&quot; -ProjectDir &quot;$(ProjectDir.TrimEnd('\\'))&quot; -Version &quot;$(Version)&quot; -AppName &quot;$(AssemblyName)&quot; -PublishDir &quot;$(PublishDir.TrimEnd('\\'))&quot;" IgnoreExitCode="true" />
+  </Target>
+
+</Project>

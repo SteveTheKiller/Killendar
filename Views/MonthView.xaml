@@ -1,0 +1,22 @@
+<UserControl x:Class="Killendar.Views.MonthView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="26"/>   <!-- weekday header -->
+            <RowDefinition Height="*"/>    <!-- day cells -->
+        </Grid.RowDefinitions>
+
+        <!-- Weekday names, filled in code so the first day of week follows the OS culture.
+             Top corners rounded so the strip reads as the head of the calendar card rather than
+             a band butted against the toolbar. Radius 5 matches KillerScan's scan-session tab
+             (the family's value for a top-rounded band on a pane) and TimeGridView's header, so
+             all four views agree. -->
+        <Border Grid.Row="0" Background="{DynamicResource TableHeaderBrush}" CornerRadius="5,5,0,0"
+                BorderBrush="{DynamicResource HeaderLineBrush}" BorderThickness="0,0,0,1">
+            <Grid x:Name="WeekdayHeader"/>
+        </Border>
+
+        <Grid x:Name="CalGrid" Grid.Row="1"/>
+    </Grid>
+</UserControl>

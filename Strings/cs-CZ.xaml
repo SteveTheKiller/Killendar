@@ -1,0 +1,226 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Czech. Layered over en-US, so any key omitted here falls back to English. -->
+
+    <sys:String x:Key="Str_Btn_New">+ Nová</sys:String>
+    <sys:String x:Key="Str_Btn_Import">Importovat .ics</sys:String>
+    <sys:String x:Key="Str_Btn_Export">Exportovat .ics</sys:String>
+    <sys:String x:Key="Str_Btn_Today">Dnes</sys:String>
+    <sys:String x:Key="Str_View_Month">Měsíc</sys:String>
+    <sys:String x:Key="Str_View_Week">Týden</sys:String>
+    <sys:String x:Key="Str_View_Day">Den</sys:String>
+    <sys:String x:Key="Str_View_Agenda">Agenda</sys:String>
+    <sys:String x:Key="Str_TT_Prev">Předchozí</sys:String>
+    <sys:String x:Key="Str_TT_Next">Další</sys:String>
+
+    <sys:String x:Key="Str_TT_Theme">Motiv</sys:String>
+    <sys:String x:Key="Str_TT_Language">Jazyk</sys:String>
+    <sys:String x:Key="Str_TT_PanelShow">Zobrazit panel schůzek</sys:String>
+    <sys:String x:Key="Str_TT_PanelHide">Skrýt panel schůzek</sys:String>
+    <sys:String x:Key="Str_Lbl_Theme">motiv</sys:String>
+    <sys:String x:Key="Str_Lbl_Accent">akcent</sys:String>
+
+    <sys:String x:Key="Str_Side_New">Nová schůzka</sys:String>
+    <sys:String x:Key="Str_Side_Edit">Upravit schůzku</sys:String>
+    <sys:String x:Key="Str_Fld_Title">NÁZEV</sys:String>
+    <sys:String x:Key="Str_Fld_Starts">ZAČÁTEK</sys:String>
+    <sys:String x:Key="Str_Fld_Ends">KONEC</sys:String>
+    <sys:String x:Key="Str_Fld_Location">MÍSTO</sys:String>
+    <sys:String x:Key="Str_Fld_Description">POPIS</sys:String>
+    <sys:String x:Key="Str_Fld_Attendees">ÚČASTNÍCI</sys:String>
+    <sys:String x:Key="Str_Hint_Attendees">oddělené čárkami</sys:String>
+    <sys:String x:Key="Str_Hint_Date">rrrr-mm-dd</sys:String>
+    <sys:String x:Key="Str_Hint_Time">h:mm am/pm nebo 24 h</sys:String>
+    <sys:String x:Key="Str_Hint_AttendeesTip">E-mailové adresy oddělené čárkami</sys:String>
+    <sys:String x:Key="Str_Chk_AllDayOff">[ ] celý den</sys:String>
+    <sys:String x:Key="Str_Chk_AllDayOn">[x] celý den</sys:String>
+    <sys:String x:Key="Str_Btn_Save">Uložit</sys:String>
+    <sys:String x:Key="Str_Btn_Cancel">Zrušit</sys:String>
+    <sys:String x:Key="Str_Btn_Delete">Smazat</sys:String>
+
+    <sys:String x:Key="Str_Err_NoTitle">Zadej název.</sys:String>
+    <sys:String x:Key="Str_Err_StartDate">Datum začátku má vypadat jako 2026-07-29.</sys:String>
+    <sys:String x:Key="Str_Err_EndDate">Datum konce má vypadat jako 2026-07-29.</sys:String>
+    <sys:String x:Key="Str_Err_StartTime">Čas začátku má vypadat jako 9:30 am nebo 21:30.</sys:String>
+    <sys:String x:Key="Str_Err_EndTime">Čas konce má vypadat jako 9:30 am nebo 21:30.</sys:String>
+    <sys:String x:Key="Str_Err_EndBeforeStart">Musí skončit až po začátku.</sys:String>
+
+    <sys:String x:Key="Str_Dlg_DeleteMsg">Smazat "{0}"?</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteDetail">Tohle nejde vrátit zpět.</sys:String>
+
+    <sys:String x:Key="Str_Status_Ready">Připraveno</sys:String>
+    <sys:String x:Key="Str_Status_Added">{0} přidáno</sys:String>
+    <sys:String x:Key="Str_Status_Saved">{0} uloženo</sys:String>
+    <sys:String x:Key="Str_Status_Deleted">{0} smazáno</sys:String>
+    <sys:String x:Key="Str_Status_Imported">Importováno {0} schůzek</sys:String>
+    <sys:String x:Key="Str_Status_ImportedSkipped">Importováno {0} schůzek, {1} již existujících přeskočeno</sys:String>
+    <sys:String x:Key="Str_Status_ImportFailed">Import selhal: {0}</sys:String>
+    <sys:String x:Key="Str_Status_Exported">Exportováno {0} schůzek</sys:String>
+    <sys:String x:Key="Str_Status_ExportFailed">Export selhal: {0}</sys:String>
+    <sys:String x:Key="Str_Status_NothingToExport">Není co exportovat</sys:String>
+    <sys:String x:Key="Str_Status_LoadError">Tento Killendar nelze otevřít: {0}</sys:String>
+    <sys:String x:Key="Str_Status_Migrated">Přeneseno {0} schůzek do vašeho Killendaru</sys:String>
+
+    <sys:String x:Key="Str_Dlg_ImportTitle">Importovat iCalendar</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">Exportovat iCalendar</sys:String>
+    <sys:String x:Key="Str_Dlg_IcsFilter">Soubory iCalendar (*.ics)|*.ics|Všechny soubory (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_IcsSaveFilter">Soubory iCalendar (*.ics)|*.ics</sys:String>
+
+    <sys:String x:Key="Str_Cal_AllDay">celý den</sys:String>
+    <sys:String x:Key="Str_Cal_NoTitle">(bez názvu)</sys:String>
+    <sys:String x:Key="Str_Cal_Today">DNES</sys:String>
+    <sys:String x:Key="Str_Cal_MoreCount">+{0} dalších</sys:String>
+    <sys:String x:Key="Str_Cal_AgendaEmpty">V tomto období není nic naplánováno.</sys:String>
+    <sys:String x:Key="Str_TT_NewOnDay">Nová schůzka v tento den</sys:String>
+
+    <sys:String x:Key="Str_About_Version">VERZE</sys:String>
+    <sys:String x:Key="Str_About_Publisher">VYDAVATEL</sys:String>
+    <sys:String x:Key="Str_About_Thumbprint">OTISK</sys:String>
+    <sys:String x:Key="Str_About_Sha">SHA-256 EXE</sys:String>
+    <sys:String x:Key="Str_About_Computing">počítá se...</sys:String>
+    <sys:String x:Key="Str_About_Unsigned">(nepodepsáno nebo řetěz selhal)</sys:String>
+    <sys:String x:Key="Str_About_UpdateAvailable">K dispozici je aktualizace: {0}</sys:String>
+    <sys:String x:Key="Str_About_Downloading">Stahuje se...</sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Zobrazení měsíce, týdne, dne a agendy, import a export iCalendar a schůzky, které nikdy neopustí tvůj počítač. Nástroj GPLv3 od </sys:String>
+    <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>
+
+    <sys:String x:Key="Str_Dlg_UpdateMsg">Stáhnout a nainstalovat Killendar {0}?</sys:String>
+    <sys:String x:Key="Str_Dlg_UpdateBullets">Aplikace se zavře a automaticky znovu otevře.</sys:String>
+    <sys:String x:Key="Str_Btn_Update">Aktualizovat</sys:String>
+
+    <sys:String x:Key="Str_Sc_Title">Klávesové zkratky</sys:String>
+    <sys:String x:Key="Str_Sc_New">Nová schůzka</sys:String>
+    <sys:String x:Key="Str_Sc_Today">Přejít na dnešek</sys:String>
+    <sys:String x:Key="Str_Sc_Prev">Předchozí období</sys:String>
+    <sys:String x:Key="Str_Sc_Next">Další období</sys:String>
+    <sys:String x:Key="Str_Sc_Month">Zobrazení měsíce</sys:String>
+    <sys:String x:Key="Str_Sc_Week">Zobrazení týdne</sys:String>
+    <sys:String x:Key="Str_Sc_Day">Zobrazení dne</sys:String>
+    <sys:String x:Key="Str_Sc_Agenda">Zobrazení agendy</sys:String>
+    <sys:String x:Key="Str_Sc_Panel">Zobrazit nebo skrýt panel schůzek</sys:String>
+    <sys:String x:Key="Str_Sc_About">O aplikaci</sys:String>
+    <sys:String x:Key="Str_Sc_Close">Zavřít panel nebo překryv</sys:String>
+    <sys:String x:Key="Str_Sc_Hint">Jednotlivé klávesy fungují, dokud nepíšeš do pole.</sys:String>
+
+    <!-- Date format picker (in the language menu). The three samples are format examples,
+         so they read the same in every language. -->
+    <sys:String x:Key="Str_Lbl_DateFormat">formát data</sys:String>
+    <sys:String x:Key="Str_Date_FollowWindows">Podle Windows</sys:String>
+    <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
+    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+
+
+    <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
+         and the forgotten-password escape hatch. {0} is a file name or an error. -->
+    <sys:String x:Key="Str_Pw_UnlockHead">Odemknout tento Killendar</sys:String>
+    <sys:String x:Key="Str_Pw_WrongPw">Toto heslo nefunguje. Zkuste to znovu.</sys:String>
+    <sys:String x:Key="Str_Pw_Protected">{0} je zašifrovaný. Zadejte jeho heslo pro otevření.</sys:String>
+    <sys:String x:Key="Str_Pw_NewKcalBtn">Nový Killendar...</sys:String>
+    <sys:String x:Key="Str_Pw_SetHead">Zašifrovat tento Killendar</sys:String>
+    <sys:String x:Key="Str_Pw_SetBody">Vaše schůzky budou v klidovém stavu zašifrovány pomocí AES-256. Toto heslo bude vyžadováno při každém spuštění Killendaru.</sys:String>
+    <sys:String x:Key="Str_Pw_ChangeHead">Změnit nebo odebrat heslo</sys:String>
+    <sys:String x:Key="Str_Pw_ChangeBody">Zadejte nové heslo, nebo nechte oba řádky prázdné a šifrování se odebere - Killendar se uloží jako nezašifrovaná databáze SQLite.</sys:String>
+    <sys:String x:Key="Str_Pw_ConfirmLbl">POTVRDIT</sys:String>
+    <sys:String x:Key="Str_Pw_NoRecovery">Obnovení není možné. Pokud heslo ztratíte, schůzky v tomto Killendaru jsou nadobro pryč.</sys:String>
+    <sys:String x:Key="Str_Btn_Unlock">Odemknout</sys:String>
+    <sys:String x:Key="Str_Btn_Encrypt">Zašifrovat</sys:String>
+    <sys:String x:Key="Str_Btn_Apply">Použít</sys:String>
+    <sys:String x:Key="Str_Btn_StartNew">Vytvořit nový</sys:String>
+    <sys:String x:Key="Str_Dlg_FreshHead">Vytvořit nový Killendar?</sys:String>
+    <sys:String x:Key="Str_Dlg_FreshBody">Zamčený Killendar se přejmenuje a zůstane na disku, ale bez hesla nelze schůzky v něm přečíst. Na jeho místě se otevře nový prázdný Killendar.</sys:String>
+    <sys:String x:Key="Str_Tip_LockOn">Zašifrováno - kliknutím změníte nebo odeberete heslo</sys:String>
+    <sys:String x:Key="Str_Tip_LockOff">Nezašifrováno - kliknutím nastavíte heslo</sys:String>
+    <sys:String x:Key="Str_Status_Encrypted">Tento Killendar je nyní zašifrovaný</sys:String>
+    <sys:String x:Key="Str_Status_PwChanged">Heslo změněno</sys:String>
+    <sys:String x:Key="Str_Status_PwRemoved">Heslo odebráno - tento Killendar již není zašifrovaný</sys:String>
+    <sys:String x:Key="Str_Status_PwMismatch">Hesla se neshodují</sys:String>
+    <sys:String x:Key="Str_Status_PwFailed">Heslo nelze změnit: {0}</sys:String>
+    <sys:String x:Key="Str_Status_FreshKcal">Nový Killendar vytvořen; zamčený byl ponechán jako {0}</sys:String>
+
+
+    <!-- Export warning: an .ics is plain text, so exporting from an encrypted
+         Killendar hands out what the password was protecting. -->
+    <sys:String x:Key="Str_Exp_WarnHead">Exportovat ze zašifrovaného Killendaru?</sys:String>
+    <sys:String x:Key="Str_Exp_WarnBody">Soubor .ics je nezašifrovaný text. Vše, co vyexportujete, si může přečíst kdokoli, kdo soubor otevře, a heslo tohoto Killendaru to už nechrání.</sys:String>
+    <sys:String x:Key="Str_Exp_WarnCheck">Znovu mě neupozorňovat</sys:String>
+
+
+    <!-- Manage Killendars: the .kcal file list, its context menu and the rail
+         button. {0} is a file name or an error; Str_Kc_Renamed takes {0} old, {1} new. -->
+    <sys:String x:Key="Str_Kc_Title">Killendary</sys:String>
+    <sys:String x:Key="Str_Kc_Hint">Všechny soubory .kcal ve vaší datové složce. Dvojklikem na název jej přejmenujete.</sys:String>
+    <sys:String x:Key="Str_Kc_FlagEncrypted">zašifrováno</sys:String>
+    <sys:String x:Key="Str_Kc_FlagActive">otevřeno</sys:String>
+    <sys:String x:Key="Str_Kc_SelectFirst">Nejprve vyberte Killendar.</sys:String>
+    <sys:String x:Key="Str_Kc_BadName">Tento název obsahuje znaky, které v názvu souboru být nemohou.</sys:String>
+    <sys:String x:Key="Str_Kc_Exists">{0} už existuje.</sys:String>
+    <sys:String x:Key="Str_Kc_Renamed">{0} přejmenován na {1}</sys:String>
+    <sys:String x:Key="Str_Kc_RenameFailed">Přejmenování se nezdařilo: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_CreateFailed">Killendar nelze vytvořit: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteHead">Odstranit {0}?</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteBody">Soubor i všechny schůzky v něm se odstraní z disku. Tuto akci nelze vzít zpět.</sys:String>
+    <sys:String x:Key="Str_Kc_Deleted">{0} odstraněn</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteFailed">Odstranění se nezdařilo: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_LoadTitle">Načíst Killendar</sys:String>
+    <sys:String x:Key="Str_Kc_Filter">Soubory Killendar (*.kcal)|*.kcal|Všechny soubory (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Kc_Loaded">Kopie načtena jako {0}</sys:String>
+    <sys:String x:Key="Str_Kc_LoadFailed">Načtení se nezdařilo: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Copied">{0} je ve schránce - vložte jej kamkoli, kde lze vložit soubor</sys:String>
+    <sys:String x:Key="Str_Kc_CopyFailed">Kopírování se nezdařilo: {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_Rename">Přejmenovat</sys:String>
+    <sys:String x:Key="Str_Ctx_Delete">Odstranit</sys:String>
+    <sys:String x:Key="Str_Ctx_CopyFile">Kopírovat soubor</sys:String>
+    <sys:String x:Key="Str_Ctx_Reveal">Zobrazit v Průzkumníku</sys:String>
+    <sys:String x:Key="Str_TT_CopyFile">Vloží soubor do schránky, připravený vložit do Průzkumníka nebo e-mailu</sys:String>
+    <sys:String x:Key="Str_TT_NewKcal">Nový Killendar</sys:String>
+    <sys:String x:Key="Str_TT_DeleteKcal">Odstranit vybraný Killendar</sys:String>
+    <sys:String x:Key="Str_TT_LoadKcal">Načíst Killendar ze souboru</sys:String>
+    <sys:String x:Key="Str_TT_Explorer">Otevřít datovou složku</sys:String>
+    <sys:String x:Key="Str_TT_Killendars">Killendary</sys:String>
+    <sys:String x:Key="Str_Btn_Open">Otevřít</sys:String>
+    <sys:String x:Key="Str_Status_Opened">{0} otevřen</sys:String>
+
+
+    <!-- Double-clicked .kcal: the confirm before a copy is added and opened.
+         {0} is the file name. -->
+    <sys:String x:Key="Str_Kc_AddHead">Otevřít {0} v Killendaru?</sys:String>
+    <sys:String x:Key="Str_Kc_AddBody">Kopie se přidá do vaší datové složky a otevře se. Soubor, na který jste dvakrát klikli, zůstane nedotčený na svém místě - do Killendaru se zapisuje neustále, a to se nehodí pro soubor na síťovém disku nebo ve Stažených.</sys:String>
+    <sys:String x:Key="Str_Btn_Add">Přidat</sys:String>
+
+
+    <!-- Text-input context menu (replaces WPF's built-in Cut/Copy/Paste, which
+         ignores app-level menu styling). -->
+    <sys:String x:Key="Str_Ctx_Cut">Vyjmout</sys:String>
+    <sys:String x:Key="Str_Ctx_Copy">Kopírovat</sys:String>
+    <sys:String x:Key="Str_Ctx_Paste">Vložit</sys:String>
+    <sys:String x:Key="Str_Ctx_SelectAll">Vybrat vše</sys:String>
+
+
+    <!-- Themed file dialog (FileDialog.xaml), replacing the Win32 open/save boxes.
+         Str_Sum_Counts takes {0} folders, {1} files. -->
+    <sys:String x:Key="Str_Btn_Replace">Nahradit</sys:String>
+    <sys:String x:Key="Str_Dlg_FileName">Název souboru:</sys:String>
+    <sys:String x:Key="Str_Dlg_FileType">Typ souboru:</sys:String>
+    <sys:String x:Key="Str_Dlg_AllFiles">Všechny soubory</sys:String>
+    <sys:String x:Key="Str_Dlg_NoMatchingFiles">Zde nic neodpovídá aktuálnímu typu souboru.</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFolder">Tato složka neexistuje.</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFile">Tento soubor neexistuje.</sys:String>
+    <sys:String x:Key="Str_Dlg_OverwriteMsg">Nahradit {0}?</sys:String>
+    <sys:String x:Key="Str_Sum_Counts">Složek: {0}, souborů: {1}</sys:String>
+    <sys:String x:Key="Str_QA_Home">Domů</sys:String>
+    <sys:String x:Key="Str_QA_Desktop">Plocha</sys:String>
+    <sys:String x:Key="Str_QA_Documents">Dokumenty</sys:String>
+    <sys:String x:Key="Str_QA_Downloads">Stažené</sys:String>
+    <sys:String x:Key="Str_QA_Pictures">Obrázky</sys:String>
+    <sys:String x:Key="Str_Col_Name">název</sys:String>
+    <sys:String x:Key="Str_Col_Size">velikost</sys:String>
+    <sys:String x:Key="Str_Col_Modified">změněno</sys:String>
+    <sys:String x:Key="Str_TT_Up">O úroveň výše</sys:String>
+    <sys:String x:Key="Str_TT_ViewList">Zobrazení seznamu</sys:String>
+    <sys:String x:Key="Str_TT_ViewIcons">Zobrazení ikon</sys:String>
+    <sys:String x:Key="Str_TT_ViewDetails">Zobrazení podrobností</sys:String>
+
+</ResourceDictionary>

@@ -1,0 +1,28 @@
+# Build output
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Publish
+publish/
+*.pubxml.user
+
+# OS junk
+Thumbs.db
+.DS_Store
+
+# The pre-rewrite app, parked for reference during the rewrite. Not built (the csproj excludes
+# it) and not worth versioning - the history it matters to is the old repo, not this one.
+/_old_pre_rewrite/
+
+# Working art assets (source .xcf, exports). Anything the APP consumes is generated out of here
+# into Resources/ and IS tracked, so a clone still builds without the art folder.
+# Leading slash anchors this to the repo root: unanchored, "brand/" matches at ANY depth and
+# would swallow killendar-landing/brand/ too, so a published web icon there would be silently
+# untracked (KillerShell hit exactly this).
+/brand/
+_shot/

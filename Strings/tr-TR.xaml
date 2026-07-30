@@ -1,0 +1,226 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Turkish. Layered over en-US, so any key omitted here falls back to English. -->
+
+    <sys:String x:Key="Str_Btn_New">+ Yeni</sys:String>
+    <sys:String x:Key="Str_Btn_Import">.ics içe aktar</sys:String>
+    <sys:String x:Key="Str_Btn_Export">.ics dışa aktar</sys:String>
+    <sys:String x:Key="Str_Btn_Today">Bugün</sys:String>
+    <sys:String x:Key="Str_View_Month">Ay</sys:String>
+    <sys:String x:Key="Str_View_Week">Hafta</sys:String>
+    <sys:String x:Key="Str_View_Day">Gün</sys:String>
+    <sys:String x:Key="Str_View_Agenda">Ajanda</sys:String>
+    <sys:String x:Key="Str_TT_Prev">Önceki</sys:String>
+    <sys:String x:Key="Str_TT_Next">Sonraki</sys:String>
+
+    <sys:String x:Key="Str_TT_Theme">Tema</sys:String>
+    <sys:String x:Key="Str_TT_Language">Dil</sys:String>
+    <sys:String x:Key="Str_TT_PanelShow">Randevu panelini göster</sys:String>
+    <sys:String x:Key="Str_TT_PanelHide">Randevu panelini gizle</sys:String>
+    <sys:String x:Key="Str_Lbl_Theme">tema</sys:String>
+    <sys:String x:Key="Str_Lbl_Accent">vurgu</sys:String>
+
+    <sys:String x:Key="Str_Side_New">Yeni randevu</sys:String>
+    <sys:String x:Key="Str_Side_Edit">Randevuyu düzenle</sys:String>
+    <sys:String x:Key="Str_Fld_Title">BAŞLIK</sys:String>
+    <sys:String x:Key="Str_Fld_Starts">BAŞLANGIÇ</sys:String>
+    <sys:String x:Key="Str_Fld_Ends">BİTİŞ</sys:String>
+    <sys:String x:Key="Str_Fld_Location">KONUM</sys:String>
+    <sys:String x:Key="Str_Fld_Description">AÇIKLAMA</sys:String>
+    <sys:String x:Key="Str_Fld_Attendees">KATILIMCILAR</sys:String>
+    <sys:String x:Key="Str_Hint_Attendees">virgülle ayrılmış</sys:String>
+    <sys:String x:Key="Str_Hint_Date">yyyy-aa-gg</sys:String>
+    <sys:String x:Key="Str_Hint_Time">s:dd am/pm veya 24 saat</sys:String>
+    <sys:String x:Key="Str_Hint_AttendeesTip">Virgülle ayrılmış e-posta adresleri</sys:String>
+    <sys:String x:Key="Str_Chk_AllDayOff">[ ] tüm gün</sys:String>
+    <sys:String x:Key="Str_Chk_AllDayOn">[x] tüm gün</sys:String>
+    <sys:String x:Key="Str_Btn_Save">Kaydet</sys:String>
+    <sys:String x:Key="Str_Btn_Cancel">İptal</sys:String>
+    <sys:String x:Key="Str_Btn_Delete">Sil</sys:String>
+
+    <sys:String x:Key="Str_Err_NoTitle">Bir başlık ver.</sys:String>
+    <sys:String x:Key="Str_Err_StartDate">Başlangıç tarihi 2026-07-29 gibi olmalı.</sys:String>
+    <sys:String x:Key="Str_Err_EndDate">Bitiş tarihi 2026-07-29 gibi olmalı.</sys:String>
+    <sys:String x:Key="Str_Err_StartTime">Başlangıç saati 9:30 am veya 21:30 gibi olmalı.</sys:String>
+    <sys:String x:Key="Str_Err_EndTime">Bitiş saati 9:30 am veya 21:30 gibi olmalı.</sys:String>
+    <sys:String x:Key="Str_Err_EndBeforeStart">Başladıktan sonra bitmeli.</sys:String>
+
+    <sys:String x:Key="Str_Dlg_DeleteMsg">"{0}" silinsin mi?</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteDetail">Bu geri alınamaz.</sys:String>
+
+    <sys:String x:Key="Str_Status_Ready">Hazır</sys:String>
+    <sys:String x:Key="Str_Status_Added">{0} eklendi</sys:String>
+    <sys:String x:Key="Str_Status_Saved">{0} kaydedildi</sys:String>
+    <sys:String x:Key="Str_Status_Deleted">{0} silindi</sys:String>
+    <sys:String x:Key="Str_Status_Imported">{0} randevu içe aktarıldı</sys:String>
+    <sys:String x:Key="Str_Status_ImportedSkipped">{0} randevu içe aktarıldı, hâlihazırda bulunan {1} tanesi atlandı</sys:String>
+    <sys:String x:Key="Str_Status_ImportFailed">İçe aktarma başarısız: {0}</sys:String>
+    <sys:String x:Key="Str_Status_Exported">{0} randevu dışa aktarıldı</sys:String>
+    <sys:String x:Key="Str_Status_ExportFailed">Dışa aktarma başarısız: {0}</sys:String>
+    <sys:String x:Key="Str_Status_NothingToExport">Dışa aktarılacak bir şey yok</sys:String>
+    <sys:String x:Key="Str_Status_LoadError">Bu Killendar açılamadı: {0}</sys:String>
+    <sys:String x:Key="Str_Status_Migrated">{0} randevu Killendar'ınıza taşındı</sys:String>
+
+    <sys:String x:Key="Str_Dlg_ImportTitle">iCalendar içe aktar</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">iCalendar dışa aktar</sys:String>
+    <sys:String x:Key="Str_Dlg_IcsFilter">iCalendar dosyaları (*.ics)|*.ics|Tüm dosyalar (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_IcsSaveFilter">iCalendar dosyaları (*.ics)|*.ics</sys:String>
+
+    <sys:String x:Key="Str_Cal_AllDay">tüm gün</sys:String>
+    <sys:String x:Key="Str_Cal_NoTitle">(başlıksız)</sys:String>
+    <sys:String x:Key="Str_Cal_Today">BUGÜN</sys:String>
+    <sys:String x:Key="Str_Cal_MoreCount">+{0} tane daha</sys:String>
+    <sys:String x:Key="Str_Cal_AgendaEmpty">Bu aralıkta planlanmış bir şey yok.</sys:String>
+    <sys:String x:Key="Str_TT_NewOnDay">Bu güne yeni randevu</sys:String>
+
+    <sys:String x:Key="Str_About_Version">SÜRÜM</sys:String>
+    <sys:String x:Key="Str_About_Publisher">YAYIMCI</sys:String>
+    <sys:String x:Key="Str_About_Thumbprint">PARMAK İZİ</sys:String>
+    <sys:String x:Key="Str_About_Sha">EXE SHA-256</sys:String>
+    <sys:String x:Key="Str_About_Computing">hesaplanıyor...</sys:String>
+    <sys:String x:Key="Str_About_Unsigned">(imzasız veya zincir doğrulanamadı)</sys:String>
+    <sys:String x:Key="Str_About_UpdateAvailable">Güncelleme mevcut: {0}</sys:String>
+    <sys:String x:Key="Str_About_Downloading">İndiriliyor...</sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Ay, hafta, gün ve ajanda görünümleri, iCalendar içe ve dışa aktarma, ve makinenden hiç çıkmayan randevular. Bir GPLv3 </sys:String>
+    <sys:String x:Key="Str_About_DescB" xml:space="preserve"> aracı.</sys:String>
+
+    <sys:String x:Key="Str_Dlg_UpdateMsg">Killendar {0} indirilip kurulsun mu?</sys:String>
+    <sys:String x:Key="Str_Dlg_UpdateBullets">Uygulama kapanacak ve otomatik olarak yeniden açılacak.</sys:String>
+    <sys:String x:Key="Str_Btn_Update">Güncelle</sys:String>
+
+    <sys:String x:Key="Str_Sc_Title">Klavye kısayolları</sys:String>
+    <sys:String x:Key="Str_Sc_New">Yeni randevu</sys:String>
+    <sys:String x:Key="Str_Sc_Today">Bugüne git</sys:String>
+    <sys:String x:Key="Str_Sc_Prev">Önceki dönem</sys:String>
+    <sys:String x:Key="Str_Sc_Next">Sonraki dönem</sys:String>
+    <sys:String x:Key="Str_Sc_Month">Ay görünümü</sys:String>
+    <sys:String x:Key="Str_Sc_Week">Hafta görünümü</sys:String>
+    <sys:String x:Key="Str_Sc_Day">Gün görünümü</sys:String>
+    <sys:String x:Key="Str_Sc_Agenda">Ajanda görünümü</sys:String>
+    <sys:String x:Key="Str_Sc_Panel">Randevu panelini göster veya gizle</sys:String>
+    <sys:String x:Key="Str_Sc_About">Hakkında</sys:String>
+    <sys:String x:Key="Str_Sc_Close">Paneli veya katmanı kapat</sys:String>
+    <sys:String x:Key="Str_Sc_Hint">Tek tuşlar, bir alana yazmadığın sürece çalışır.</sys:String>
+
+    <!-- Date format picker (in the language menu). The three samples are format examples,
+         so they read the same in every language. -->
+    <sys:String x:Key="Str_Lbl_DateFormat">tarih biçimi</sys:String>
+    <sys:String x:Key="Str_Date_FollowWindows">Windows'u izle</sys:String>
+    <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
+    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+
+
+    <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
+         and the forgotten-password escape hatch. {0} is a file name or an error. -->
+    <sys:String x:Key="Str_Pw_UnlockHead">Bu Killendar'ın kilidini aç</sys:String>
+    <sys:String x:Key="Str_Pw_WrongPw">Bu parola işe yaramadı. Yeniden deneyin.</sys:String>
+    <sys:String x:Key="Str_Pw_Protected">{0} şifreli. Açmak için parolasını girin.</sys:String>
+    <sys:String x:Key="Str_Pw_NewKcalBtn">Yeni Killendar...</sys:String>
+    <sys:String x:Key="Str_Pw_SetHead">Bu Killendar'ı şifrele</sys:String>
+    <sys:String x:Key="Str_Pw_SetBody">Randevularınız beklerken AES-256 ile şifrelenir. Killendar her başladığında bu parola sorulur.</sys:String>
+    <sys:String x:Key="Str_Pw_ChangeHead">Parolayı değiştir veya kaldır</sys:String>
+    <sys:String x:Key="Str_Pw_ChangeBody">Yeni bir parola girin ya da şifrelemeyi kaldırıp bu Killendar'ı düz SQLite olarak saklamak için iki kutuyu da boş bırakın.</sys:String>
+    <sys:String x:Key="Str_Pw_ConfirmLbl">ONAYLA</sys:String>
+    <sys:String x:Key="Str_Pw_NoRecovery">Kurtarma yoktur. Parolayı kaybederseniz bu Killendar'daki randevular kalıcı olarak gider.</sys:String>
+    <sys:String x:Key="Str_Btn_Unlock">Kilidi aç</sys:String>
+    <sys:String x:Key="Str_Btn_Encrypt">Şifrele</sys:String>
+    <sys:String x:Key="Str_Btn_Apply">Uygula</sys:String>
+    <sys:String x:Key="Str_Btn_StartNew">Yeni oluştur</sys:String>
+    <sys:String x:Key="Str_Dlg_FreshHead">Yeni bir Killendar oluşturulsun mu?</sys:String>
+    <sys:String x:Key="Str_Dlg_FreshBody">Kilitli Killendar yeniden adlandırılıp diskte tutulur, ancak parolası olmadan içindeki randevular okunamaz. Yerine yeni ve boş bir Killendar açılır.</sys:String>
+    <sys:String x:Key="Str_Tip_LockOn">Şifreli - parolayı değiştirmek veya kaldırmak için tıklayın</sys:String>
+    <sys:String x:Key="Str_Tip_LockOff">Şifresiz - parola belirlemek için tıklayın</sys:String>
+    <sys:String x:Key="Str_Status_Encrypted">Bu Killendar artık şifreli</sys:String>
+    <sys:String x:Key="Str_Status_PwChanged">Parola değiştirildi</sys:String>
+    <sys:String x:Key="Str_Status_PwRemoved">Parola kaldırıldı - bu Killendar artık şifreli değil</sys:String>
+    <sys:String x:Key="Str_Status_PwMismatch">İki parola birbiriyle uyuşmuyor</sys:String>
+    <sys:String x:Key="Str_Status_PwFailed">Parola değiştirilemedi: {0}</sys:String>
+    <sys:String x:Key="Str_Status_FreshKcal">Yeni Killendar oluşturuldu; kilitli olan {0} olarak saklandı</sys:String>
+
+
+    <!-- Export warning: an .ics is plain text, so exporting from an encrypted
+         Killendar hands out what the password was protecting. -->
+    <sys:String x:Key="Str_Exp_WarnHead">Şifreli bir Killendar'dan dışa aktarılsın mı?</sys:String>
+    <sys:String x:Key="Str_Exp_WarnBody">.ics dosyası düz metindir. Dışa aktardığınız her şeyi dosyayı açan herkes okuyabilir ve bu Killendar'ın parolası onu artık korumaz.</sys:String>
+    <sys:String x:Key="Str_Exp_WarnCheck">Bir daha hatırlatma</sys:String>
+
+
+    <!-- Manage Killendars: the .kcal file list, its context menu and the rail
+         button. {0} is a file name or an error; Str_Kc_Renamed takes {0} old, {1} new. -->
+    <sys:String x:Key="Str_Kc_Title">Killendar'lar</sys:String>
+    <sys:String x:Key="Str_Kc_Hint">Veri klasörünüzdeki tüm .kcal dosyaları. Adı yeniden adlandırmak için çift tıklayın.</sys:String>
+    <sys:String x:Key="Str_Kc_FlagEncrypted">şifreli</sys:String>
+    <sys:String x:Key="Str_Kc_FlagActive">açık</sys:String>
+    <sys:String x:Key="Str_Kc_SelectFirst">Önce bir Killendar seçin.</sys:String>
+    <sys:String x:Key="Str_Kc_BadName">Bu adda dosya adında bulunamayacak karakterler var.</sys:String>
+    <sys:String x:Key="Str_Kc_Exists">{0} zaten var.</sys:String>
+    <sys:String x:Key="Str_Kc_Renamed">{0}, {1} olarak yeniden adlandırıldı</sys:String>
+    <sys:String x:Key="Str_Kc_RenameFailed">Yeniden adlandırma başarısız: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_CreateFailed">Killendar oluşturulamadı: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteHead">{0} silinsin mi?</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteBody">Dosya ve içindeki tüm randevular diskten silinir. Bu geri alınamaz.</sys:String>
+    <sys:String x:Key="Str_Kc_Deleted">{0} silindi</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteFailed">Silme başarısız: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_LoadTitle">Killendar yükle</sys:String>
+    <sys:String x:Key="Str_Kc_Filter">Killendar dosyaları (*.kcal)|*.kcal|Tüm dosyalar (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Kc_Loaded">Kopya {0} olarak yüklendi</sys:String>
+    <sys:String x:Key="Str_Kc_LoadFailed">Yükleme başarısız: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Copied">{0} panoda - dosya kabul eden her yere yapıştırın</sys:String>
+    <sys:String x:Key="Str_Kc_CopyFailed">Kopyalama başarısız: {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_Rename">Yeniden adlandır</sys:String>
+    <sys:String x:Key="Str_Ctx_Delete">Sil</sys:String>
+    <sys:String x:Key="Str_Ctx_CopyFile">Dosyayı kopyala</sys:String>
+    <sys:String x:Key="Str_Ctx_Reveal">Dosya Gezgini'nde göster</sys:String>
+    <sys:String x:Key="Str_TT_CopyFile">Dosyayı panoya koyar; Dosya Gezgini'ne veya bir e-postaya yapıştırmaya hazır</sys:String>
+    <sys:String x:Key="Str_TT_NewKcal">Yeni Killendar</sys:String>
+    <sys:String x:Key="Str_TT_DeleteKcal">Seçili Killendar'ı sil</sys:String>
+    <sys:String x:Key="Str_TT_LoadKcal">Bir dosyadan Killendar yükle</sys:String>
+    <sys:String x:Key="Str_TT_Explorer">Veri klasörünü aç</sys:String>
+    <sys:String x:Key="Str_TT_Killendars">Killendar'lar</sys:String>
+    <sys:String x:Key="Str_Btn_Open">Aç</sys:String>
+    <sys:String x:Key="Str_Status_Opened">{0} açıldı</sys:String>
+
+
+    <!-- Double-clicked .kcal: the confirm before a copy is added and opened.
+         {0} is the file name. -->
+    <sys:String x:Key="Str_Kc_AddHead">{0} Killendar'da açılsın mı?</sys:String>
+    <sys:String x:Key="Str_Kc_AddBody">Veri klasörünüze bir kopya eklenip açılır. Çift tıkladığınız dosya olduğu yerde, dokunulmadan kalır - bir Killendar'a sürekli yazılır ve bu, ağ paylaşımındaki ya da İndirilenler'deki bir dosya için uygun değildir.</sys:String>
+    <sys:String x:Key="Str_Btn_Add">Ekle</sys:String>
+
+
+    <!-- Text-input context menu (replaces WPF's built-in Cut/Copy/Paste, which
+         ignores app-level menu styling). -->
+    <sys:String x:Key="Str_Ctx_Cut">Kes</sys:String>
+    <sys:String x:Key="Str_Ctx_Copy">Kopyala</sys:String>
+    <sys:String x:Key="Str_Ctx_Paste">Yapıştır</sys:String>
+    <sys:String x:Key="Str_Ctx_SelectAll">Tümünü seç</sys:String>
+
+
+    <!-- Themed file dialog (FileDialog.xaml), replacing the Win32 open/save boxes.
+         Str_Sum_Counts takes {0} folders, {1} files. -->
+    <sys:String x:Key="Str_Btn_Replace">Değiştir</sys:String>
+    <sys:String x:Key="Str_Dlg_FileName">Dosya adı:</sys:String>
+    <sys:String x:Key="Str_Dlg_FileType">Dosya türü:</sys:String>
+    <sys:String x:Key="Str_Dlg_AllFiles">Tüm dosyalar</sys:String>
+    <sys:String x:Key="Str_Dlg_NoMatchingFiles">Burada geçerli dosya türüyle eşleşen bir şey yok.</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFolder">Böyle bir klasör yok.</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFile">Böyle bir dosya yok.</sys:String>
+    <sys:String x:Key="Str_Dlg_OverwriteMsg">{0} değiştirilsin mi?</sys:String>
+    <sys:String x:Key="Str_Sum_Counts">{0} klasör, {1} dosya</sys:String>
+    <sys:String x:Key="Str_QA_Home">Ana klasör</sys:String>
+    <sys:String x:Key="Str_QA_Desktop">Masaüstü</sys:String>
+    <sys:String x:Key="Str_QA_Documents">Belgeler</sys:String>
+    <sys:String x:Key="Str_QA_Downloads">İndirilenler</sys:String>
+    <sys:String x:Key="Str_QA_Pictures">Resimler</sys:String>
+    <sys:String x:Key="Str_Col_Name">ad</sys:String>
+    <sys:String x:Key="Str_Col_Size">boyut</sys:String>
+    <sys:String x:Key="Str_Col_Modified">değiştirilme</sys:String>
+    <sys:String x:Key="Str_TT_Up">Bir klasör yukarı</sys:String>
+    <sys:String x:Key="Str_TT_ViewList">Liste görünümü</sys:String>
+    <sys:String x:Key="Str_TT_ViewIcons">Simge görünümü</sys:String>
+    <sys:String x:Key="Str_TT_ViewDetails">Ayrıntı görünümü</sys:String>
+
+</ResourceDictionary>

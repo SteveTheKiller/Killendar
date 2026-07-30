@@ -1,0 +1,226 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Simplified Chinese. Layered over en-US, so any key omitted here falls back to English. -->
+
+    <sys:String x:Key="Str_Btn_New">+ 新建</sys:String>
+    <sys:String x:Key="Str_Btn_Import">导入 .ics</sys:String>
+    <sys:String x:Key="Str_Btn_Export">导出 .ics</sys:String>
+    <sys:String x:Key="Str_Btn_Today">今天</sys:String>
+    <sys:String x:Key="Str_View_Month">月</sys:String>
+    <sys:String x:Key="Str_View_Week">周</sys:String>
+    <sys:String x:Key="Str_View_Day">日</sys:String>
+    <sys:String x:Key="Str_View_Agenda">日程</sys:String>
+    <sys:String x:Key="Str_TT_Prev">上一个</sys:String>
+    <sys:String x:Key="Str_TT_Next">下一个</sys:String>
+
+    <sys:String x:Key="Str_TT_Theme">主题</sys:String>
+    <sys:String x:Key="Str_TT_Language">语言</sys:String>
+    <sys:String x:Key="Str_TT_PanelShow">显示约会面板</sys:String>
+    <sys:String x:Key="Str_TT_PanelHide">隐藏约会面板</sys:String>
+    <sys:String x:Key="Str_Lbl_Theme">主题</sys:String>
+    <sys:String x:Key="Str_Lbl_Accent">强调色</sys:String>
+
+    <sys:String x:Key="Str_Side_New">新建约会</sys:String>
+    <sys:String x:Key="Str_Side_Edit">编辑约会</sys:String>
+    <sys:String x:Key="Str_Fld_Title">标题</sys:String>
+    <sys:String x:Key="Str_Fld_Starts">开始</sys:String>
+    <sys:String x:Key="Str_Fld_Ends">结束</sys:String>
+    <sys:String x:Key="Str_Fld_Location">地点</sys:String>
+    <sys:String x:Key="Str_Fld_Description">说明</sys:String>
+    <sys:String x:Key="Str_Fld_Attendees">参与者</sys:String>
+    <sys:String x:Key="Str_Hint_Attendees">以逗号分隔</sys:String>
+    <sys:String x:Key="Str_Hint_Date">yyyy-mm-dd</sys:String>
+    <sys:String x:Key="Str_Hint_Time">h:mm am/pm 或 24 小时制</sys:String>
+    <sys:String x:Key="Str_Hint_AttendeesTip">以逗号分隔的电子邮件地址</sys:String>
+    <sys:String x:Key="Str_Chk_AllDayOff">[ ] 全天</sys:String>
+    <sys:String x:Key="Str_Chk_AllDayOn">[x] 全天</sys:String>
+    <sys:String x:Key="Str_Btn_Save">保存</sys:String>
+    <sys:String x:Key="Str_Btn_Cancel">取消</sys:String>
+    <sys:String x:Key="Str_Btn_Delete">删除</sys:String>
+
+    <sys:String x:Key="Str_Err_NoTitle">请填写标题。</sys:String>
+    <sys:String x:Key="Str_Err_StartDate">开始日期应为 2026-07-29 这样的格式。</sys:String>
+    <sys:String x:Key="Str_Err_EndDate">结束日期应为 2026-07-29 这样的格式。</sys:String>
+    <sys:String x:Key="Str_Err_StartTime">开始时间应为 9:30 am 或 21:30 这样的格式。</sys:String>
+    <sys:String x:Key="Str_Err_EndTime">结束时间应为 9:30 am 或 21:30 这样的格式。</sys:String>
+    <sys:String x:Key="Str_Err_EndBeforeStart">结束时间必须晚于开始时间。</sys:String>
+
+    <sys:String x:Key="Str_Dlg_DeleteMsg">删除"{0}"?</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteDetail">此操作无法撤销。</sys:String>
+
+    <sys:String x:Key="Str_Status_Ready">就绪</sys:String>
+    <sys:String x:Key="Str_Status_Added">已添加 {0}</sys:String>
+    <sys:String x:Key="Str_Status_Saved">已保存 {0}</sys:String>
+    <sys:String x:Key="Str_Status_Deleted">已删除 {0}</sys:String>
+    <sys:String x:Key="Str_Status_Imported">已导入 {0} 个约会</sys:String>
+    <sys:String x:Key="Str_Status_ImportedSkipped">已导入 {0} 个约会，跳过 {1} 个已存在的</sys:String>
+    <sys:String x:Key="Str_Status_ImportFailed">导入失败：{0}</sys:String>
+    <sys:String x:Key="Str_Status_Exported">已导出 {0} 个约会</sys:String>
+    <sys:String x:Key="Str_Status_ExportFailed">导出失败：{0}</sys:String>
+    <sys:String x:Key="Str_Status_NothingToExport">没有可导出的内容</sys:String>
+    <sys:String x:Key="Str_Status_LoadError">无法打开此 Killendar：{0}</sys:String>
+    <sys:String x:Key="Str_Status_Migrated">已将 {0} 个约会迁移到你的 Killendar</sys:String>
+
+    <sys:String x:Key="Str_Dlg_ImportTitle">导入 iCalendar</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">导出 iCalendar</sys:String>
+    <sys:String x:Key="Str_Dlg_IcsFilter">iCalendar 文件 (*.ics)|*.ics|所有文件 (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_IcsSaveFilter">iCalendar 文件 (*.ics)|*.ics</sys:String>
+
+    <sys:String x:Key="Str_Cal_AllDay">全天</sys:String>
+    <sys:String x:Key="Str_Cal_NoTitle">(无标题)</sys:String>
+    <sys:String x:Key="Str_Cal_Today">今天</sys:String>
+    <sys:String x:Key="Str_Cal_MoreCount">还有 {0} 个</sys:String>
+    <sys:String x:Key="Str_Cal_AgendaEmpty">这段时间没有安排。</sys:String>
+    <sys:String x:Key="Str_TT_NewOnDay">在这一天新建约会</sys:String>
+
+    <sys:String x:Key="Str_About_Version">版本</sys:String>
+    <sys:String x:Key="Str_About_Publisher">发布者</sys:String>
+    <sys:String x:Key="Str_About_Thumbprint">指纹</sys:String>
+    <sys:String x:Key="Str_About_Sha">EXE SHA-256</sys:String>
+    <sys:String x:Key="Str_About_Computing">正在计算...</sys:String>
+    <sys:String x:Key="Str_About_Unsigned">(未签名或证书链验证失败)</sys:String>
+    <sys:String x:Key="Str_About_UpdateAvailable">有可用更新：{0}</sys:String>
+    <sys:String x:Key="Str_About_Downloading">正在下载...</sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">月、周、日和日程视图，iCalendar 导入导出，以及永远不离开你电脑的约会。一个 GPLv3 的 </sys:String>
+    <sys:String x:Key="Str_About_DescB" xml:space="preserve"> 工具。</sys:String>
+
+    <sys:String x:Key="Str_Dlg_UpdateMsg">下载并安装 Killendar {0}?</sys:String>
+    <sys:String x:Key="Str_Dlg_UpdateBullets">应用将关闭并自动重新打开。</sys:String>
+    <sys:String x:Key="Str_Btn_Update">更新</sys:String>
+
+    <sys:String x:Key="Str_Sc_Title">键盘快捷键</sys:String>
+    <sys:String x:Key="Str_Sc_New">新建约会</sys:String>
+    <sys:String x:Key="Str_Sc_Today">跳到今天</sys:String>
+    <sys:String x:Key="Str_Sc_Prev">上一个时段</sys:String>
+    <sys:String x:Key="Str_Sc_Next">下一个时段</sys:String>
+    <sys:String x:Key="Str_Sc_Month">月视图</sys:String>
+    <sys:String x:Key="Str_Sc_Week">周视图</sys:String>
+    <sys:String x:Key="Str_Sc_Day">日视图</sys:String>
+    <sys:String x:Key="Str_Sc_Agenda">日程视图</sys:String>
+    <sys:String x:Key="Str_Sc_Panel">显示或隐藏约会面板</sys:String>
+    <sys:String x:Key="Str_Sc_About">关于</sys:String>
+    <sys:String x:Key="Str_Sc_Close">关闭面板或浮层</sys:String>
+    <sys:String x:Key="Str_Sc_Hint">只要没有在输入框中打字，单个按键即可使用。</sys:String>
+
+    <!-- Date format picker (in the language menu). The three samples are format examples,
+         so they read the same in every language. -->
+    <sys:String x:Key="Str_Lbl_DateFormat">日期格式</sys:String>
+    <sys:String x:Key="Str_Date_FollowWindows">跟随 Windows</sys:String>
+    <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
+    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+
+
+    <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
+         and the forgotten-password escape hatch. {0} is a file name or an error. -->
+    <sys:String x:Key="Str_Pw_UnlockHead">解锁此 Killendar</sys:String>
+    <sys:String x:Key="Str_Pw_WrongPw">该密码无效，请重试。</sys:String>
+    <sys:String x:Key="Str_Pw_Protected">{0} 已加密。请输入密码以打开。</sys:String>
+    <sys:String x:Key="Str_Pw_NewKcalBtn">新建 Killendar...</sys:String>
+    <sys:String x:Key="Str_Pw_SetHead">加密此 Killendar</sys:String>
+    <sys:String x:Key="Str_Pw_SetBody">你的约会将以 AES-256 静态加密。每次启动 Killendar 都会要求输入此密码。</sys:String>
+    <sys:String x:Key="Str_Pw_ChangeHead">更改或移除密码</sys:String>
+    <sys:String x:Key="Str_Pw_ChangeBody">输入新密码，或将两个输入框都留空以移除加密，将此 Killendar 以普通 SQLite 保存。</sys:String>
+    <sys:String x:Key="Str_Pw_ConfirmLbl">确认</sys:String>
+    <sys:String x:Key="Str_Pw_NoRecovery">无法恢复。一旦丢失密码，此 Killendar 中的约会将永久无法读取。</sys:String>
+    <sys:String x:Key="Str_Btn_Unlock">解锁</sys:String>
+    <sys:String x:Key="Str_Btn_Encrypt">加密</sys:String>
+    <sys:String x:Key="Str_Btn_Apply">应用</sys:String>
+    <sys:String x:Key="Str_Btn_StartNew">新建</sys:String>
+    <sys:String x:Key="Str_Dlg_FreshHead">新建一个 Killendar？</sys:String>
+    <sys:String x:Key="Str_Dlg_FreshBody">已锁定的 Killendar 会被重命名并保留在磁盘上，但没有密码就无法读取其中的约会。系统会改为打开一个新的空 Killendar。</sys:String>
+    <sys:String x:Key="Str_Tip_LockOn">已加密 - 点击更改或移除密码</sys:String>
+    <sys:String x:Key="Str_Tip_LockOff">未加密 - 点击设置密码</sys:String>
+    <sys:String x:Key="Str_Status_Encrypted">此 Killendar 现已加密</sys:String>
+    <sys:String x:Key="Str_Status_PwChanged">密码已更改</sys:String>
+    <sys:String x:Key="Str_Status_PwRemoved">密码已移除 - 此 Killendar 不再加密</sys:String>
+    <sys:String x:Key="Str_Status_PwMismatch">两次输入的密码不一致</sys:String>
+    <sys:String x:Key="Str_Status_PwFailed">无法更改密码：{0}</sys:String>
+    <sys:String x:Key="Str_Status_FreshKcal">已新建 Killendar；已锁定的那个保留为 {0}</sys:String>
+
+
+    <!-- Export warning: an .ics is plain text, so exporting from an encrypted
+         Killendar hands out what the password was protecting. -->
+    <sys:String x:Key="Str_Exp_WarnHead">从加密的 Killendar 导出？</sys:String>
+    <sys:String x:Key="Str_Exp_WarnBody">.ics 文件是纯文本。导出的所有内容任何打开该文件的人都能读取，此 Killendar 的密码不再对其提供保护。</sys:String>
+    <sys:String x:Key="Str_Exp_WarnCheck">不再提醒</sys:String>
+
+
+    <!-- Manage Killendars: the .kcal file list, its context menu and the rail
+         button. {0} is a file name or an error; Str_Kc_Renamed takes {0} old, {1} new. -->
+    <sys:String x:Key="Str_Kc_Title">Killendar 文件</sys:String>
+    <sys:String x:Key="Str_Kc_Hint">数据文件夹中的所有 .kcal 文件。双击名称可重命名。</sys:String>
+    <sys:String x:Key="Str_Kc_FlagEncrypted">已加密</sys:String>
+    <sys:String x:Key="Str_Kc_FlagActive">使用中</sys:String>
+    <sys:String x:Key="Str_Kc_SelectFirst">请先选择一个 Killendar。</sys:String>
+    <sys:String x:Key="Str_Kc_BadName">该名称包含文件名不允许的字符。</sys:String>
+    <sys:String x:Key="Str_Kc_Exists">{0} 已存在。</sys:String>
+    <sys:String x:Key="Str_Kc_Renamed">已将 {0} 重命名为 {1}</sys:String>
+    <sys:String x:Key="Str_Kc_RenameFailed">重命名失败：{0}</sys:String>
+    <sys:String x:Key="Str_Kc_CreateFailed">无法创建 Killendar：{0}</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteHead">删除 {0}？</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteBody">该文件以及其中的所有约会都会从磁盘删除，无法撤销。</sys:String>
+    <sys:String x:Key="Str_Kc_Deleted">已删除 {0}</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteFailed">删除失败：{0}</sys:String>
+    <sys:String x:Key="Str_Kc_LoadTitle">加载 Killendar</sys:String>
+    <sys:String x:Key="Str_Kc_Filter">Killendar 文件 (*.kcal)|*.kcal|所有文件 (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Kc_Loaded">已加载副本，名为 {0}</sys:String>
+    <sys:String x:Key="Str_Kc_LoadFailed">加载失败：{0}</sys:String>
+    <sys:String x:Key="Str_Kc_Copied">{0} 已复制到剪贴板，可粘贴到任何接受文件的位置</sys:String>
+    <sys:String x:Key="Str_Kc_CopyFailed">复制失败：{0}</sys:String>
+    <sys:String x:Key="Str_Ctx_Rename">重命名</sys:String>
+    <sys:String x:Key="Str_Ctx_Delete">删除</sys:String>
+    <sys:String x:Key="Str_Ctx_CopyFile">复制文件</sys:String>
+    <sys:String x:Key="Str_Ctx_Reveal">在资源管理器中显示</sys:String>
+    <sys:String x:Key="Str_TT_CopyFile">把文件放到剪贴板，可直接粘贴到资源管理器或邮件中</sys:String>
+    <sys:String x:Key="Str_TT_NewKcal">新建 Killendar</sys:String>
+    <sys:String x:Key="Str_TT_DeleteKcal">删除所选的 Killendar</sys:String>
+    <sys:String x:Key="Str_TT_LoadKcal">从文件加载 Killendar</sys:String>
+    <sys:String x:Key="Str_TT_Explorer">打开数据文件夹</sys:String>
+    <sys:String x:Key="Str_TT_Killendars">Killendar 文件</sys:String>
+    <sys:String x:Key="Str_Btn_Open">打开</sys:String>
+    <sys:String x:Key="Str_Status_Opened">已打开 {0}</sys:String>
+
+
+    <!-- Double-clicked .kcal: the confirm before a copy is added and opened.
+         {0} is the file name. -->
+    <sys:String x:Key="Str_Kc_AddHead">在 Killendar 中打开 {0}？</sys:String>
+    <sys:String x:Key="Str_Kc_AddBody">会在你的数据文件夹中添加一个副本并打开它。你双击的文件保持原位、不作改动 —— Killendar 会被持续写入，而网络共享或下载文件夹里的文件不适合这样使用。</sys:String>
+    <sys:String x:Key="Str_Btn_Add">添加</sys:String>
+
+
+    <!-- Text-input context menu (replaces WPF's built-in Cut/Copy/Paste, which
+         ignores app-level menu styling). -->
+    <sys:String x:Key="Str_Ctx_Cut">剪切</sys:String>
+    <sys:String x:Key="Str_Ctx_Copy">复制</sys:String>
+    <sys:String x:Key="Str_Ctx_Paste">粘贴</sys:String>
+    <sys:String x:Key="Str_Ctx_SelectAll">全选</sys:String>
+
+
+    <!-- Themed file dialog (FileDialog.xaml), replacing the Win32 open/save boxes.
+         Str_Sum_Counts takes {0} folders, {1} files. -->
+    <sys:String x:Key="Str_Btn_Replace">替换</sys:String>
+    <sys:String x:Key="Str_Dlg_FileName">文件名：</sys:String>
+    <sys:String x:Key="Str_Dlg_FileType">文件类型：</sys:String>
+    <sys:String x:Key="Str_Dlg_AllFiles">所有文件</sys:String>
+    <sys:String x:Key="Str_Dlg_NoMatchingFiles">此处没有与当前文件类型匹配的项。</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFolder">该文件夹不存在。</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFile">该文件不存在。</sys:String>
+    <sys:String x:Key="Str_Dlg_OverwriteMsg">要替换 {0} 吗？</sys:String>
+    <sys:String x:Key="Str_Sum_Counts">{0} 个文件夹，{1} 个文件</sys:String>
+    <sys:String x:Key="Str_QA_Home">主目录</sys:String>
+    <sys:String x:Key="Str_QA_Desktop">桌面</sys:String>
+    <sys:String x:Key="Str_QA_Documents">文档</sys:String>
+    <sys:String x:Key="Str_QA_Downloads">下载</sys:String>
+    <sys:String x:Key="Str_QA_Pictures">图片</sys:String>
+    <sys:String x:Key="Str_Col_Name">名称</sys:String>
+    <sys:String x:Key="Str_Col_Size">大小</sys:String>
+    <sys:String x:Key="Str_Col_Modified">修改时间</sys:String>
+    <sys:String x:Key="Str_TT_Up">上一级文件夹</sys:String>
+    <sys:String x:Key="Str_TT_ViewList">列表视图</sys:String>
+    <sys:String x:Key="Str_TT_ViewIcons">图标视图</sys:String>
+    <sys:String x:Key="Str_TT_ViewDetails">详细信息视图</sys:String>
+
+</ResourceDictionary>
