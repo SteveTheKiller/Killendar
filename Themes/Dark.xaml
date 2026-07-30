@@ -7,8 +7,8 @@
     <sys:Double x:Key="IconShadowOpacity">0.9</sys:Double>
 
     <!-- ================================================================
-         KillerScan - DARK theme (colours + brushes only). Tiered surface
-         hierarchy ported from KillerPDF:
+         DARK theme (colours + brushes only). Tiered surface
+         hierarchy:
            Background = chrome   (#1c1c1c) - window, titlebar, footer (blend)
            Surface    = bar      (#333333) - scan config bar, table header
            Pane       = content  (#3a3a3a) - devices pane + grid rows (lightest)

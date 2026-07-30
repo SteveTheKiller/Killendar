@@ -6,7 +6,7 @@
     <sys:Double x:Key="GrainOpacity">0.12</sys:Double>
     <sys:Double x:Key="IconShadowOpacity">0.9</sys:Double>
 
-    <!-- KillerScan - BLACK theme. OLED-style near-black with subtle surface tiering so
+    <!-- BLACK theme. OLED-style near-black with subtle surface tiering so
          elements read by background, not by bright borders (borders kept dark). -->
     <SolidColorBrush x:Key="PrimaryBrush"        Color="#00ff66" po:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryHoverBrush"   Color="#00ff66" po:Freeze="True"/>

@@ -3,9 +3,9 @@ using System.Windows.Input;
 
 namespace Killendar.Controls
 {
-    // Themed password prompt. Password / PasswordConfirm are captured on OK.
-    // Ported from KillerNotes; showHint adds the "there is no recovery" line, which belongs on the
-    // set/change prompts and would be noise on the unlock prompt.
+    // Themed password prompt. Password / PasswordConfirm are captured on OK. showHint adds the
+    // "there is no recovery" line, which belongs on the set/change prompts and would be noise on
+    // the unlock prompt.
     public partial class PasswordDialog : Window
     {
         public bool Confirmed { get; private set; }

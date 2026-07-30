@@ -1,11 +1,7 @@
 <!--
-    KillerUI kit - Controls.xaml
     Theme-INDEPENDENT control styles. All brush references use DynamicResource, so a
-    live theme/accent change repaints them automatically. Merge this AFTER a
-    Themes/{Theme}.xaml colour dictionary (see App.xaml in the guide).
-
-    Replace "Killendar" below (the xmlns:kui namespace and the font component path) with
-    your app's root namespace / assembly name.
+    live theme or accent change repaints them automatically. Merged AFTER a
+    Themes/{Theme}.xaml colour dictionary.
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -20,7 +16,7 @@
     <kui:ThumbViewportFloorConverter x:Key="ThumbFloor"/>
 
     <!-- Typewriter wordmark font (bundled in Fonts/). The face name after '#' must match the
-         font's internal family name; keep it as-is if you copy KillerScan's Fonts/ verbatim. -->
+         font's internal family name. -->
     <FontFamily x:Key="WordmarkFont">/Killendar;component/Fonts/#Typewriter - a602 (dead postman 2004)</FontFamily>
 
     <!-- Global themed tooltip. Implicit (no key) so every tooltip app-wide picks it up. -->
@@ -413,7 +409,7 @@
          The implicit ContextMenu/MenuItem styles above do NOT reach a TextBox's or PasswordBox's
          BUILT-IN Cut/Copy/Paste menu: WPF builds that one from the framework theme dictionary, not
          from application resources, so it comes up as the stock white Aero menu however well the
-         rest of the app is themed (Steve, 2026-07-29). The only reliable fix is to hand the inputs
+         rest of the app is themed. The only reliable fix is to hand the inputs
          an explicit menu, which replaces the built-in one.
 
          The ApplicationCommands route to whatever has focus and handle their own enable state, so
@@ -553,9 +549,8 @@
         </Setter>
     </Style>
 
-    <!-- Sidebar icon-rail button, ported from KillerShell (which took it from KillerNotes, which
-         took it from KillerPDF): bare glyph with a soft shadow, turning the accent color on hover.
-         Set Content to the glyph; override FontFamily/FontSize for text glyphs like a "?" button. -->
+    <!-- Sidebar icon-rail button: bare glyph with a soft shadow, turning the accent colour on
+         hover. Content is the glyph; override FontFamily/FontSize for text glyphs like a "?". -->
     <Style x:Key="RailButton" TargetType="Button">
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>

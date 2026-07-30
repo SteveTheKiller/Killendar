@@ -14,9 +14,8 @@ namespace Killendar.Controls
     // caller). The store is CLOSED while this dialog is up, so file operations - the active file
     // included - are safe.
     //
-    // Ported from KillerNotes' DatabasesDialog. Not carried over: the change-data-folder picker.
-    // Killendars are per-user under %APPDATA% by design, and a folder picker would need
-    // FolderPicker.cs ported as well for a feature nobody asked for.
+    // There is deliberately no change-data-folder picker: Killendars are per-user under %APPDATA%
+    // by design.
     public partial class KillendarsDialog : Window
     {
         /// <summary>File name the user chose to open, or null if they just closed.</summary>
@@ -32,7 +31,7 @@ namespace Killendar.Controls
             // Segoe MDL2 glyphs assigned in code, never pasted into XAML: the private-use
             // characters do not survive tooling. Add / delete / bring-a-file-in / data folder.
             // E8DA points the arrow INTO the page; E8E5 was tried first and points out, which
-            // reads as export. E838 is the folder KillerNotes' equivalent button uses.
+            // reads as export. E838 is the folder glyph.
             NewBtn.Content      = ((char)0xE710).ToString();
             DeleteBtn.Content   = ((char)0xE711).ToString();
             LoadBtn.Content     = ((char)0xE8DA).ToString();
@@ -85,7 +84,7 @@ namespace Killendar.Controls
 
         // A selected row fills with the accent (RowSelectedBrush); force white text so name and
         // meta stay readable - in the Light accents the fill and the accent text are the same hue,
-        // which made a selected row unreadable in KillerNotes until this was added. Unselected:
+        // which leaves a selected row unreadable without this. Unselected:
         // the active Killendar's name in the accent, the rest normal. SetResourceReference rather
         // than a cached brush, so the colours follow a theme switch.
         private static void SetRowColors(TextBlock name, TextBlock meta, bool active, bool selected)

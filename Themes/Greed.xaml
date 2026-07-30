@@ -6,7 +6,7 @@
     <sys:Double x:Key="GrainOpacity">0.32</sys:Double>
     <sys:Double x:Key="IconShadowOpacity">1.0</sys:Double>
 
-    <!-- KillerScan - GREED theme. Ported from KillerPDF Themes/Greed.xaml. -->
+    <!-- GREED theme. -->
     <SolidColorBrush x:Key="PrimaryBrush"        Color="#3fbf6f" po:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryHoverBrush"   Color="#3fbf6f" po:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#3fbf6f" po:Freeze="True"/>

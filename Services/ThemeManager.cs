@@ -1,7 +1,7 @@
 using System;
 using System.Windows;
 
-// KillerUI kit. Replace "Killendar" with your app's root namespace.
+
 namespace Killendar.Services
 {
     public enum Theme { Dark, Light, Black, Blood, Greed, Cyanotic }
@@ -22,7 +22,7 @@ namespace Killendar.Services
     ///
     /// REQUIRES (as app resources, merged in App.xaml before Controls.xaml):
     ///   MergedDictionaries[0] = a Themes/{Theme}.xaml colour dictionary.
-    /// Colour dictionaries + Accents/ overlays are app-neutral; copy them from KillerScan.
+
     /// </summary>
     public static class ThemeManager
     {
@@ -32,7 +32,7 @@ namespace Killendar.Services
 
         // Default theme/accent when nothing is stored. Tweak per app if you like.
         //
-        // Killendar ships DARK + RED (Steve, 2026-07-29). The three neutral families each define
+        // Killendar ships DARK + RED. The three neutral families each define
         // their own red - Dark #DD504B, Light #931A1A, Black #FF2929 - and the brand wordmark, the
         // og-image and killendar.net are all built on Dark's #DD504B. Defaulting to Black + Red
         // would open the app in #FF2929 and not match its own branding. Black + Red is still one

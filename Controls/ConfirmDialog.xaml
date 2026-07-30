@@ -1,8 +1,6 @@
-<!-- KillerUI kit. Replace "Killendar" with your app's root namespace, and set the two
-     wordmark Runs below ("Killer" + your app's second word) to match your title bar.
-     Themed confirm dialog: same surface, grain, shadow, and wordmark language as the
-     main window. Used by About.cs for the self-update prompt; reuse it anywhere a
-     MessageBox would break the look (install prompts, destructive confirms, ...). -->
+<!-- Themed confirm dialog: same surface, grain, shadow and wordmark language as the
+     main window. Used anywhere a MessageBox would break the look - install prompts,
+     the self-update prompt, destructive confirms. -->
 <Window x:Class="Killendar.Controls.ConfirmDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -16,7 +14,7 @@
         ShowInTaskbar="False">
 
     <!-- Margin is a transparent halo so the drop shadow has room to render (AllowsTransparency window,
-         so WPF draws the shadow rather than the OS). Same shadow language as the KillerPDF KillerDialog. -->
+         so WPF draws the shadow rather than the OS). -->
     <!-- Dialog cards sit on the dark tier. Inputs and DimTextBrush are calibrated against it;
          on SurfaceBrush a field is the same colour as the card behind it. -->
     <Border x:Name="RootBorder" Opacity="0"
@@ -104,12 +102,11 @@
                     <Button x:Name="CancelButton" Content="Cancel" Click="Cancel_Click"
                             Style="{StaticResource SurfaceButton}"
                             Width="80" Margin="0,0,8,0"/>
-                    <!-- OutlineButton, NOT PrimaryButton: family standard (KillerNotes, KillerScan's
-                         Scan button, and this app's PasswordDialog and KillendarsDialog) is an
-                         accent outline at rest that fills solid on hover. PrimaryButton is already
-                         solid, so hovering it only shifts one shade and the button reads as dead.
-                         The KillerUI kit's copy of this file still has PrimaryButton - fix it there
-                         too. MinWidth rather than Width: "Hinzufügen" does not fit in 80. -->
+                    <!-- OutlineButton, NOT PrimaryButton: the confirm button is an accent outline at
+                         rest that fills solid on hover, matching PasswordDialog and
+                         KillendarsDialog. PrimaryButton is already solid, so hovering it only shifts
+                         one shade and the button reads as dead. MinWidth rather than Width:
+                         "Hinzufügen" does not fit in 80. -->
                     <Button x:Name="OkButton" Content="Install" Click="OK_Click"
                             Style="{StaticResource OutlineButton}"
                             MinWidth="80"/>

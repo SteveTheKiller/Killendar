@@ -20,7 +20,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="36"/>   <!-- title bar -->
             <RowDefinition Height="*"/>    <!-- calendar + appointment sidebar -->
-            <RowDefinition Height="24"/>   <!-- footer (family standard) -->
+            <RowDefinition Height="24"/>   <!-- footer -->
         </Grid.RowDefinitions>
 
         <!-- ================= TITLE BAR ================= -->
@@ -33,7 +33,7 @@
             </Border>
 
             <!-- Wordmark: "The" in the text colour, "Killendar" 1.3x and bold in the accent.
-                 Blurred dark copy underneath is the family's soft drop shadow. -->
+                 Blurred dark copy underneath is the soft drop shadow. -->
             <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,0"
                   shell:WindowChrome.IsHitTestVisibleInChrome="True">
                 <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15" Margin="1,2,0,0"
@@ -43,23 +43,22 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
                         shell:WindowChrome.IsHitTestVisibleInChrome="True">
-                <!-- File actions sit in the title bar, matching KillerNotes: both are about the
-                     open Killendar, not about the view. Theme and language stay on the sidebar
-                     rail (family pattern). Order is Killendars, lock, then the caption buttons.
+                <!-- File actions sit in the title bar: both are about the open Killendar, not about
+                     the view. Theme and language stay on the sidebar rail. Order is Killendars,
+                     lock, then the caption buttons.
 
-                     Bigger than ChromeButton's 10: the kit's 10 is sized for the caption glyphs,
-                     and at that size these two read as specks (Steve, 2026-07-29 - KillerNotes has
-                     the same problem and wants the same bump). Set locally so Controls.xaml stays
-                     byte-identical across the family. The Library glyph is drawn narrower than the
-                     padlock, so it needs 16 to look the same weight at the lock's 14.
+                     Bigger than ChromeButton's 10, which is sized for the caption glyphs: at that
+                     size these two read as specks. Set locally rather than in Controls.xaml, since
+                     it is only these two. The Library glyph is drawn narrower than the padlock, so
+                     it needs 16 to look the same weight at the lock's 14.
 
                      E8F1 is Library (three books); E8B7 was tried first and renders as a blank
                      page. Numeric reference, never the literal PUA character. -->
                 <Button x:Name="KillendarsButton" Click="KillendarsButton_Click"
                         Style="{StaticResource ChromeButton}" FontSize="16" Content="&#xE8F1;"
                         ToolTip="{DynamicResource Str_TT_Killendars}"/>
-                <!-- Lock glyph and tooltip are set by Security.cs UpdateLockGlyph, so the state
-                     and the picture can never disagree - never hardcode a glyph here. -->
+                <!-- Lock glyph and tooltip are set from code (ISecurityHost.ShowLockState), so the
+                     state and the picture can never disagree - never hardcode a glyph here. -->
                 <Button x:Name="LockButton" Click="LockButton_Click" Style="{StaticResource ChromeButton}"
                         FontSize="14" Margin="0,0,6,0"/>
                 <Button x:Name="MinimizeBtn" Click="MinimizeBtn_Click" Style="{StaticResource ChromeButton}"
@@ -71,8 +70,7 @@
             </StackPanel>
 
             <!-- Theme + accent flyout. Anchored to the fixed point on the rail and opening upward,
-                 so its bottom sits on the footer boundary and it grows away from the button -
-                 the same placement KillerNotes uses for its rail flyouts. -->
+                 so its bottom sits on the footer boundary and it grows away from the button. -->
             <Popup x:Name="ThemePopup" PlacementTarget="{Binding ElementName=RailFlyoutAnchor}" Placement="Top"
                    StaysOpen="False" AllowsTransparency="True" HorizontalOffset="-10" VerticalOffset="-4">
                 <Border Background="{DynamicResource MenuBackgroundBrush}" BorderBrush="{DynamicResource MenuBorderBrush}"
@@ -115,8 +113,7 @@
              carry the same brush and grain as the title bar and footer and read as one surface
              running top to bottom. Only the calendar is a lifted card. -->
         <Grid Grid.Row="1">
-                    <!-- Panel, then the rail on its inner lip, then the calendar - the family
-                         order (KillerShell's tree, KillerNotes' notes list). -->
+                    <!-- Panel, then the rail on its inner lip, then the calendar. -->
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition x:Name="SidebarCol" Width="0"/>      <!-- appointment panel, animated -->
                         <ColumnDefinition x:Name="RailCol" Width="24"/>        <!-- permanent icon rail -->
@@ -131,18 +128,17 @@
                     <RowDefinition Height="*"/>    <!-- the lifted calendar card -->
                 </Grid.RowDefinitions>
 
-                <!-- The toolbar sits on the app background, NOT on the raised card (Steve,
-                     2026-07-29). No Background of its own, so the chrome tier's brush and grain show
-                     straight through and the title bar reads as continuing down into the menu bar,
-                     the way every other app in the family does it. The buttons then sit on the app
-                     surface rather than on a lighter panel, and the card can start at the date
+                <!-- The toolbar sits on the app background, NOT on the raised card. No Background of
+                     its own, so the chrome tier's brush and grain show straight through and the
+                     title bar reads as continuing down into the menu bar. The buttons then sit on
+                     the app surface rather than on a lighter panel, and the card can start at the date
                      header - which is what lets the header's top edge carry a shadow.
                      Right margin 18 = the card's 8px inset plus the toolbar's own 10, so the view
                      buttons line up with the card's right edge. -->
                 <Grid Grid.Row="0" Margin="10,0,18,0">
                     <!-- Three columns, so the two arrows BRACKET the date rather than sitting next
                          to each other: prev / Today / date on the left, next pushed to the right of
-                         the flexible middle, view modes pinned right (Steve, 2026-07-29). -->
+                         the flexible middle, view modes pinned right. -->
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>   <!-- actions, then prev / Today / date -->
                         <ColumnDefinition Width="*"/>      <!-- flexible; next arrow rides its right edge -->
@@ -165,9 +161,9 @@
                         <Button x:Name="TodayBtn" Content="{DynamicResource Str_Btn_Today}" Style="{StaticResource SurfaceButton}"
                                 Padding="10,4" Margin="0,0,12,0" Click="TodayBtn_Click"/>
 
-                        <!-- Typewriter, and clearly bigger than the buttons around it (Steve,
-                             2026-07-29): this is the one label that says where you are, so it
-                             carries the wordmark's face rather than the UI font. 22 in a 42px row -
+                        <!-- Typewriter, and clearly bigger than the buttons around it: this is the
+                             one label that says where you are, so it carries the wordmark's face
+                             rather than the UI font. 22 in a 42px row -
                              the typewriter's line box is tall, so going much past this crowds it. -->
                         <TextBlock x:Name="PeriodLabel" VerticalAlignment="Center"
                                    FontFamily="{DynamicResource WordmarkFont}" FontSize="22"
@@ -193,8 +189,7 @@
                 </Grid>
 
                 <!-- The lifted card starts HERE, at the date header, not up at the toolbar.
-                     ShadowDepth 0 - a symmetric halo, like KillerPDF's document pane (Tabs.cs uses
-                     ShadowDepth 0 for the same reason). The card has to cast BOTH ways now: upward
+                     ShadowDepth 0 - a symmetric halo. The card has to cast BOTH ways: upward
                      onto the toolbar background above the date header, and downward onto the footer.
                      A single DropShadowEffect cannot do two directions, so an offset shadow always
                      robs one edge - at ShadowDepth 3 the upward reach measured only ~2px. This works
@@ -223,9 +218,9 @@
                          chrome tier's own brush and grain show through, with no border of its own. -->
                     <Border Grid.Column="1" Background="Transparent">
                         <Grid Margin="2,0,2,0">
-                            <!-- Matches KillerNotes exactly: E76C/E76B at FontSize 12, and the 2px
-                                 left margin on centred rail elements is a 1px shift toward the
-                                 pane so the icon reads as centred on the rail. -->
+                            <!-- E76C/E76B at FontSize 12. The 2px left margin on centred rail
+                                 elements is a 1px shift toward the pane, so the icon reads as
+                                 centred on the rail. -->
                             <Button x:Name="SidebarToggleBtn" Style="{StaticResource RailButton}"
                                     Content="&#xE76C;" FontSize="12"
                                     VerticalAlignment="Top" HorizontalAlignment="Center" Margin="2,10,0,0"
@@ -271,8 +266,8 @@
                                 <!-- Needs its own Template. Background=Transparent alone leaves
                                      WPF's DEFAULT Button template in place, and that paints the
                                      system highlight - light blue - on hover, whatever the theme
-                                     says (Steve, 2026-07-29). Same close-X behaviour as
-                                     ConfirmDialog and PasswordDialog: only the glyph reddens. -->
+                                     says. Same close-X behaviour as ConfirmDialog and
+                                     PasswordDialog: only the glyph reddens. -->
                                 <Button Content="&#x2715;" Click="SidebarClose_Click" HorizontalAlignment="Right"
                                         Width="24" Height="22" FontSize="10" Cursor="Hand"
                                         Background="Transparent" BorderThickness="0"
@@ -297,12 +292,11 @@
                                     <TextBlock Text="{DynamicResource Str_Fld_Title}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
                                     <TextBox x:Name="FieldTitle" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="6,3" Margin="0,2,0,10"/>
 
-                                    <!-- Plain toggle rather than a CheckBox: the kit ships no CheckBox
-                                         template, and a stock one renders light grey on every theme.
-                                         The Template is not optional - Background=Transparent leaves
-                                         WPF's DEFAULT Button template in place and that paints the
-                                         system highlight (light blue) on hover, whatever the theme
-                                         says (Steve, 2026-07-29). Accent on hover instead. -->
+                                    <!-- Plain toggle rather than a CheckBox: a stock CheckBox renders
+                                         light grey on every theme. The Template is not optional -
+                                         Background=Transparent leaves WPF's DEFAULT Button template
+                                         in place and that paints the system highlight (light blue)
+                                         on hover, whatever the theme says. Accent on hover instead. -->
                                     <Button x:Name="AllDayToggle" Click="AllDayToggle_Click" Cursor="Hand"
                                             HorizontalAlignment="Left" Margin="0,0,0,10" Padding="0"
                                             Background="Transparent" BorderThickness="0"
@@ -382,7 +376,7 @@
                     </Border>
         </Grid>
 
-        <!-- ================= FOOTER (family standard: 24px) =================
+        <!-- ================= FOOTER (24px) =================
              Panel.ZIndex -1 so the calendar card's downward shadow lands ON the footer. Root-grid
              children all default to ZIndex 0 and ties break on declaration order, so the footer -
              declared after the calendar row - used to paint over the shadow and swallow it
@@ -409,7 +403,7 @@
 
                 <!-- Which Killendar is open. The centre column was already reserved and empty.
                      Hidden while there is only the default one, so the common case stays quiet -
-                     Security.cs UpdateActiveKillendarLabel decides. Click opens Manage Killendars,
+                     ISecurityHost.ShowActiveKillendar decides. Click opens Manage Killendars,
                      the same as the rail button. -->
                 <TextBlock x:Name="ActiveKillendarLabel" Grid.Column="1" Visibility="Collapsed"
                            Foreground="{DynamicResource TextFooter}" FontFamily="Consolas"
@@ -418,10 +412,7 @@
                            MouseLeftButtonUp="ActiveKillendarLabel_Click"/>
 
                 <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <!-- FontSize 10, matching KillerScan's footer exactly (Steve, 2026-07-29).
-                         Killendar shipped 10.5 and read visibly larger than the rest of the family
-                         side by side. The status line on the left stays 11.5, which KillerScan also
-                         uses. -->
+                    <!-- FontSize 10. The status line on the left stays 11.5. -->
                     <TextBlock x:Name="VersionLabel" Text="v1.0.0"
                                Foreground="{DynamicResource TextFooter}" FontFamily="Consolas"
                                FontSize="10" VerticalAlignment="Center" Margin="0,0,12,0"
@@ -452,7 +443,7 @@
             <Rectangle Canvas.Left="10" Canvas.Top="10" Width="2" Height="2" Fill="{DynamicResource DimTextBrush}"/>
         </Canvas>
 
-        <!-- ================= ABOUT OVERLAY (family card standard) ================= -->
+        <!-- ================= ABOUT OVERLAY ================= -->
         <Grid x:Name="AboutOverlay" Grid.RowSpan="3" Panel.ZIndex="9000" Visibility="Collapsed"
               Background="#88000000" MouseLeftButtonDown="AboutOverlay_Click">
             <!-- No fixed width: the SHA-256 line never wraps, so it sizes the info panel and the
@@ -515,7 +506,7 @@
                                         <TextBlock FontFamily="{DynamicResource WordmarkFont}"><Run Text="The " FontSize="22" Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="28.6" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}"/></TextBlock>
                                     </Grid>
                                     <!-- Tagline split so GPLv3 and the Killer Tools link stay out of
-                                         translation, the same way KillerScan does it. -->
+                                         translation. -->
                                     <TextBlock FontSize="12" Foreground="{DynamicResource MutedTextBrush}" TextWrapping="Wrap"><Run Text="{DynamicResource Str_About_DescA}"/><Hyperlink NavigateUri="https://killertools.net" RequestNavigate="AboutLink_Navigate" Foreground="{DynamicResource PrimaryBrush}" TextDecorations="None">Killer Tools</Hyperlink><Run Text="{DynamicResource Str_About_DescB}"/></TextBlock>
                                 </StackPanel>
                             </Grid>

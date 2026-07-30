@@ -14,7 +14,7 @@ namespace Killendar.Views
     /// The one rule that matters here: every brush on a code-built element goes on with
     /// SetResourceReference, never a cached SolidColorBrush. A snapshot brush does not follow
     /// a theme switch, which is exactly why the pre-rewrite views hardcoded dark green and
-    /// could never be themed (net48 gotcha, see code/CLAUDE.md).
+    /// could never be themed - a net48 gotcha.
     /// </summary>
     internal static class CalendarChrome
     {

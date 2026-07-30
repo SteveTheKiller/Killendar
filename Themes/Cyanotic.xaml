@@ -6,7 +6,7 @@
     <sys:Double x:Key="GrainOpacity">0.32</sys:Double>
     <sys:Double x:Key="IconShadowOpacity">1.0</sys:Double>
 
-    <!-- KillerScan - CYANOTIC theme. Ported from KillerPDF Themes/Cyanotic.xaml. -->
+    <!-- CYANOTIC theme. -->
     <SolidColorBrush x:Key="PrimaryBrush"        Color="#3aa0d8" po:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryHoverBrush"   Color="#3aa0d8" po:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#3aa0d8" po:Freeze="True"/>

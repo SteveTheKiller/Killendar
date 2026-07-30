@@ -7,7 +7,7 @@ namespace Killendar.Controls
     /// <summary>Animates a Grid ColumnDefinition/RowDefinition size (a GridLength), which WPF
     /// has no built-in animation for. Pixel values only - enough for the appointment sidebar's
     /// collapse and expand slide. Set From/To in device-independent pixels and an optional
-    /// EasingFunction. Ported verbatim from KillerShell (originally KillerNotes).</summary>
+    /// EasingFunction.</summary>
     public class GridLengthAnimation : AnimationTimeline
     {
         public override Type TargetPropertyType => typeof(GridLength);

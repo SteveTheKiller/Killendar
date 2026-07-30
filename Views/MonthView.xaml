@@ -9,9 +9,8 @@
 
         <!-- Weekday names, filled in code so the first day of week follows the OS culture.
              Top corners rounded so the strip reads as the head of the calendar card rather than
-             a band butted against the toolbar. Radius 5 matches KillerScan's scan-session tab
-             (the family's value for a top-rounded band on a pane) and TimeGridView's header, so
-             all four views agree. -->
+             a band butted against the toolbar. Radius 5 matches TimeGridView's header, so all
+             four views agree. -->
         <Border Grid.Row="0" Background="{DynamicResource TableHeaderBrush}" CornerRadius="5,5,0,0"
                 BorderBrush="{DynamicResource HeaderLineBrush}" BorderThickness="0,0,0,1">
             <Grid x:Name="WeekdayHeader"/>

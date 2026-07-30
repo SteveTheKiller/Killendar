@@ -2,7 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Media.Animation;
 
-// KillerUI kit. Replace "Killendar" with your app's root namespace.
+
 namespace Killendar.Controls
 {
     // Shared fade used across the whole app so every surface - the main window,

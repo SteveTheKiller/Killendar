@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 // The Killendar - keyboard shortcuts. Partial of MainWindow.
 //
-// Single keys, no modifier, the way the rest of the family does it. The one rule that makes that
+// Single keys, no modifier. The one rule that makes that
 // safe: a single-key shortcut must never fire while the user is typing, so everything bails out
 // when focus is in a text field. Modified combinations (Ctrl+I, Ctrl+E) are checked first and are
 // allowed regardless, since they cannot collide with typing.

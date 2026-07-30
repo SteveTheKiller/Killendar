@@ -6,7 +6,7 @@
     <sys:Double x:Key="GrainOpacity">0.34</sys:Double>
     <sys:Double x:Key="IconShadowOpacity">1.0</sys:Double>
 
-    <!-- KillerScan - BLOOD theme. Ported from KillerPDF Themes/Blood.xaml.
+    <!-- BLOOD theme.
          Primary = HeaderAccent so the accent reads as colour, not the white base Accent. -->
     <SolidColorBrush x:Key="PrimaryBrush"        Color="#e8485a" po:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryHoverBrush"   Color="#e8485a" po:Freeze="True"/>

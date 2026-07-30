@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-// KillerUI kit. Replace "Killendar" with your app's root namespace.
+
 namespace Killendar.Controls
 {
     public partial class ConfirmDialog : Window

@@ -25,7 +25,7 @@ namespace Killendar.Controls
     ///     var dlg = new FileDialog(FileDialogMode.Save) { Title = ..., Filter = ..., FileName = ... };
     ///     if (dlg.ShowDialog(owner) == true) Use(dlg.FileName);
     ///
-    /// Multiselect is deliberately NOT implemented yet - no call site in the family needs it, and
+    /// Multiselect is deliberately NOT implemented yet - nothing in the app needs it, and
     /// a half-working Multiselect is worse than an absent one. Add it when something wants it.
     /// </summary>
     public partial class FileDialog : Window

@@ -73,11 +73,9 @@ namespace Killendar.Views
             root.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
 
             // The day-name strip is the head of the calendar card, so its top corners are rounded
-            // rather than butted square against the toolbar. Radius 5 matches KillerScan's
-            // scan-session tab (`TabButton`, CornerRadius 5,5,0,0), which is the family's value for
-            // a top-rounded band attached to a pane - Steve pointed at it as the reference. 4 (the
-            // card's own radius) was tried first and is invisible, because TableHeaderBrush and
-            // PaneBrush are only #0d0d0d vs #161616 apart.
+            // rather than butted square against the toolbar. Radius 5, not the card's own 4: at 4
+            // the rounding is invisible, because TableHeaderBrush and PaneBrush are only #0d0d0d vs
+            // #161616 apart.
             //
             // A Grid cannot carry a CornerRadius, so the Grid lives inside a Border that holds the
             // fill, the radius and the bottom rule; that Border replaces the separately overlaid

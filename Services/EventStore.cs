@@ -39,7 +39,7 @@ namespace Killendar.Services
         public const string DefaultFileName = "Default" + Extension;
         private const int SchemaVersion = 1;
 
-        /// <summary>Killendars live in roaming APPDATA, matching KillerNotes. Per-user always; a
+        /// <summary>Killendars live in roaming APPDATA. Per-user always; a
         /// machine-wide install just means each user gets their own fresh Killendar.</summary>
         public static string DataDir => Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Killendar");
@@ -286,8 +286,8 @@ namespace Killendar.Services
         }
 
         // ============================================================
-        // Password (SQLCipher). Ported from KillerNotes, including the two hard-won bits:
-        // the forced finalization before the file swap, and ReplaceWithRetry.
+        // Password (SQLCipher). Two parts of this are load-bearing and easy to mistake for
+        // ceremony: the forced finalization before the file swap, and ReplaceWithRetry.
         // ============================================================
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace Killendar.Services
             Exec("DETACH DATABASE rekeyed");
             Close();
 
-            // Clearing the pool alone is not always enough (KillerNotes issue #3): a straggler
+            // Clearing the pool alone is not always enough: a straggler
             // sqlite3 handle kept alive by a finalizer still has the old file mapped, and the swap
             // below then throws "being used by another process" however long we retry. Force
             // finalization so every native handle on both files is truly closed.
@@ -347,8 +347,8 @@ namespace Killendar.Services
         }
 
         /// <summary>File.Replace with backoff retries. Antivirus and indexer scans of the freshly
-        /// written rekey file cause transient sharing violations on the swap (KillerNotes issue
-        /// #3); waiting a moment and retrying beats failing the password change. If Replace never
+        /// written rekey file cause transient sharing violations on the swap; waiting a moment and
+        /// retrying beats failing the password change. If Replace never
         /// succeeds, falls back to a move-based swap - Replace needs simultaneous exclusive access
         /// to all three paths, while the moves need one file at a time and put the original back if
         /// the second move fails.</summary>

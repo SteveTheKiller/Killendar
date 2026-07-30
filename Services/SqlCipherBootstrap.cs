@@ -6,18 +6,13 @@ namespace Killendar.Services
 {
     /// <summary>
     /// Keeps the single-exe build self-sufficient for SQLCipher. The native e_sqlcipher.dll (x64)
-    /// is embedded as a resource and self-extracted to a per-version cache on first use, the same
-    /// pattern KillerNotes uses (and KillerPDF for its OCR natives). Must run immediately before
-    /// SQLitePCL.raw.SetProvider(new SQLite3Provider_e_sqlcipher()) in the store's static
-    /// constructor. Thread-safe.
+    /// is embedded as a resource and self-extracted to a per-version cache on first use. Must run
+    /// immediately before SQLitePCL.raw.SetProvider(new SQLite3Provider_e_sqlcipher()) in the
+    /// store's static constructor. Thread-safe.
     ///
-    /// Ported verbatim from KillerNotes apart from the app name. Do not swap the static provider
-    /// for the bundle, and do not call Batteries_V2.Init(): the bundle's loader probes
-    /// Assembly.Location, which is empty under Costura, and crashes at startup.
-    ///
-    /// Verified 2026-07-29 from a copy of the single exe alone in an empty directory with the
-    /// native cache deleted: cold extract, encrypted create, keyed roundtrip, and rejection of
-    /// both a wrong password and no password all pass.
+    /// Do not swap the static provider for the bundle, and do not call Batteries_V2.Init(): the
+    /// bundle's loader probes Assembly.Location, which is empty under Costura, and crashes at
+    /// startup.
     ///
     /// The cache stays under LOCALAPPDATA even though Killendar data roams in APPDATA - an
     /// extracted x64 native is machine state, not user state, and roaming it would be wrong.

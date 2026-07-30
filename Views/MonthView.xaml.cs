@@ -78,8 +78,8 @@ namespace Killendar.Views
                     // Cells draw their own right and bottom grid lines. On the last column and the
                     // last row that line lands right against the card's own 1px border, reading as
                     // a doubled edge - one pixel off on the right and bottom while the left and top
-                    // look correct, because cells have no left/top border to double up (Steve,
-                    // 2026-07-29). Drop the line on the outer edges and let the card's border be it.
+                    // look correct, because cells have no left/top border to double up. Drop the
+                    // line on the outer edges and let the card's border be it.
                     var cell = BuildDayCell(date, date.Month == _anchor.Month, date == today,
                                             lastColumn: c == 6, lastRow: r == rows - 1);
                     Grid.SetRow(cell, r);

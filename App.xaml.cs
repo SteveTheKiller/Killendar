@@ -80,7 +80,7 @@ namespace Killendar
         {
             base.OnStartup(e);
 
-            // Family default: render on the CPU so the window is not black over console-session
+            // Render on the CPU so the window is not black over console-session
             // screen-sharing tools (ScreenConnect, Kaseya LiveConnect, VNC, TeamViewer).
             System.Windows.Media.RenderOptions.ProcessRenderMode =
                 System.Windows.Interop.RenderMode.SoftwareOnly;
