@@ -20,8 +20,9 @@ namespace Killendar.Shell
 
         void ISecurityHost.ShowActiveKillendar(string name, bool visible)
         {
-            ActiveKillendarLabel.Text = name;
-            ActiveKillendarLabel.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
+            // TITLE BAR ONLY - there is no footer copy (Steve, 2026-07-30).
+            TitleKillendarLabel.Text = name;
+            TitleKillendarLabel.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
         }
 
         void ISecurityHost.RefreshView() => _calendar.Refresh();

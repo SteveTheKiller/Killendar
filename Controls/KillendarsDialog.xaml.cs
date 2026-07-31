@@ -104,12 +104,14 @@ namespace Killendar.Controls
         private ListBoxItem? SelectedItem => KcList.SelectedItem as ListBoxItem;
         private string? SelectedFile => SelectedItem?.Tag as string;
 
-        // ---- Inline rename (double-click the name, or right-click > Rename) ----
+        // ---- Row actions ----
 
-        private void KcList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (SelectedItem is ListBoxItem item) BeginRename(item);
-        }
+        /// <summary>Double-click OPENS the Killendar. Everywhere else in Windows a double-click on
+        /// a file list means "open this one", and rename is still on the right-click menu, the
+        /// rename button and F2 - so nothing was lost by moving it off the double-click.</summary>
+        private void KcList_MouseDoubleClick(object sender, MouseButtonEventArgs e) => Open_Click(sender, e);
+
+        // ---- Inline rename (right-click > Rename, the rename button, or F2) ----
 
         /// <summary>Right-click selects the row under the cursor before the context menu opens.</summary>
         private void KcList_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

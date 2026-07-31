@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -72,14 +73,19 @@ namespace Killendar.Controls
         // Per-filter-entry patterns, parallel to FilterCombo's items. Empty list = show all.
         private readonly List<string[]> _filterPatterns = [];
 
-        private static readonly string GlyphHome      = ((char)0xE80F).ToString();
-        private static readonly string GlyphDesktop   = ((char)0xE7F4).ToString();
-        private static readonly string GlyphDocuments = ((char)0xE8A5).ToString();
-        private static readonly string GlyphDownloads = ((char)0xE896).ToString();
-        private static readonly string GlyphPictures  = ((char)0xE91B).ToString();
-        private static readonly string GlyphDrive     = ((char)0xEDA2).ToString();
-        private static readonly string ArrowUp        = ((char)0xE70E).ToString();
-        private static readonly string ArrowDown      = ((char)0xE70D).ToString();
+        private static readonly string ArrowUp   = ((char)0xE70E).ToString();
+        private static readonly string ArrowDown = ((char)0xE70D).ToString();
+
+        // ── Tree / pinned places / recents / hidden state ────────────────────────
+        public ObservableCollection<FolderNode> TreeRoots { get; } = [];
+        private bool _treeSyncing;   // tree selection navigates, navigation selects: no ping-pong
+        private bool _showHidden;
+
+        private const string ShowHiddenKey = "FileDlgShowHidden";
+        private const string RecentsKey    = "FileDlgRecents";
+        private const string PinnedKey     = "FileDlgPinned";
+        private const string PlacesHKey    = "FileDlgPlacesH";
+        private const int    RecentsMax    = 12;
 
         public FileDialog(FileDialogMode mode = FileDialogMode.Open)
         {
@@ -114,8 +120,15 @@ namespace Killendar.Controls
                         Top  = y;
                     }
                 }
+                if (double.TryParse(Services.ThemeManager.GetSetting(PlacesHKey),
+                        System.Globalization.NumberStyles.Float, ci, out double ph) && ph >= 56)
+                    PlacesRow.Height = new GridLength(Math.Min(ph, 600));
             }
             catch { /* registry unavailable - defaults are fine */ }
+
+            _showHidden = Services.ThemeManager.GetSetting(ShowHiddenKey) == "1";
+            FolderNode.ShowHidden = _showHidden;
+            ApplyShowHiddenButton();
 
             Closing += (_, _) =>
             {
@@ -126,23 +139,18 @@ namespace Killendar.Controls
                     Services.ThemeManager.SetSetting("FileDlgH", ActualHeight.ToString(ci));
                     Services.ThemeManager.SetSetting("FileDlgX", Left.ToString(ci));
                     Services.ThemeManager.SetSetting("FileDlgY", Top.ToString(ci));
+                    Services.ThemeManager.SetSetting(PlacesHKey, PlacesRow.ActualHeight.ToString(ci));
                 }
                 catch { /* not worth failing the close */ }
             };
 
-            SourceInitialized += (_, _) =>
-            {
-                // Without the corner call a WindowStyle="None" window has hard edges and no
-                // system shadow at all.
-                DwmChrome.SetRoundedCorners(this, rounded: true);
-                DwmChrome.SetThemeBorder(this);
-                var src = (System.Windows.Interop.HwndSource?)PresentationSource.FromVisual(this);
-                src?.AddHook((IntPtr h, int msg, IntPtr w, IntPtr l, ref bool handled) =>
-                {
-                    if (msg == 0x0014 /* WM_ERASEBKGND */) { handled = true; return new IntPtr(1); }
-                    return IntPtr.Zero;
-                });
-            };
+            // NO DwmChrome calls, deliberately. On an AllowsTransparency window the DWM corner
+            // preference makes DWM composite its own rounded frame around the WINDOW rect - the
+            // transparent 10px halo included - and SetThemeBorder tints it: that WAS the gray
+            // band. The other four dialogs are AllowsTransparency with no DWM calls and have
+            // never shown one; the card draws its own border and shadow, so DWM has nothing to
+            // add. The WM_ERASEBKGND hook that lived here went too - a layered window is rendered
+            // via UpdateLayeredWindow and never receives it. (Steve, 2026-07-30, fifth attempt.)
         }
 
         /// <summary>
@@ -163,6 +171,7 @@ namespace Killendar.Controls
             BuildPlaces();
             PlacesList.ItemsSource = Places;
             FileList.ItemsSource   = Entries;
+            InitTree();
             ApplyView();
 
             // A seeded FileName can be a bare name ("export.ics"), a full path, or empty.
@@ -259,31 +268,138 @@ namespace Killendar.Controls
             return Regex.IsMatch(name, rx, RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
         }
 
-        // ── Quick places ─────────────────────────────────────────────────────────
+        // ── Quick places (pinned + drives) ───────────────────────────────────────
 
+        /// <summary>
+        /// Pinned folders first (persisted, user-editable via right-click), then the ready
+        /// drives. Drives are enumerated live every build - they come and go with USB sticks -
+        /// and are not pinned, so they carry no remove menu.
+        /// </summary>
         private void BuildPlaces()
         {
-            if (Places.Count > 0) return;
-            AddPlace(GlyphHome,      Loc("Str_QA_Home"),      Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
-            AddPlace(GlyphDesktop,   Loc("Str_QA_Desktop"),   Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
-            AddPlace(GlyphDocuments, Loc("Str_QA_Documents"), Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
-            AddPlace(GlyphDownloads, Loc("Str_QA_Downloads"),
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"));
-            AddPlace(GlyphPictures,  Loc("Str_QA_Pictures"),  Environment.GetFolderPath(Environment.SpecialFolder.MyPictures));
+            Places.Clear();
+
+            foreach (var p in PinnedPaths())
+                AddPlace(LabelFor(p), p, pinned: true);
 
             foreach (var d in DriveInfo.GetDrives().Where(d => d.IsReady))
             {
                 string label;
                 try { label = string.IsNullOrWhiteSpace(d.VolumeLabel) ? d.DriveType.ToString() : d.VolumeLabel.Trim(); }
                 catch { label = d.DriveType.ToString(); }
-                AddPlace(GlyphDrive, $"{d.Name.TrimEnd('\\')}  {label}", d.RootDirectory.FullName);
+                AddPlace($"{d.Name.TrimEnd('\\')}  {label}", d.RootDirectory.FullName);
             }
         }
 
-        private void AddPlace(string glyph, string label, string path)
+        /// <summary>
+        /// The persisted pin list. First run (key absent, null) seeds the five standard folders;
+        /// an EMPTY stored value means the user unpinned everything and must stay empty.
+        /// </summary>
+        private static List<string> PinnedPaths()
+        {
+            string? saved = Services.ThemeManager.GetSetting(PinnedKey);
+            if (saved != null)
+                return saved.Split('|').Where(s => s.Length > 0).ToList();
+
+            return new List<string>
+            {
+                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"),
+                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
+            }.Where(p => !string.IsNullOrEmpty(p)).ToList();
+        }
+
+        /// <summary>Localized label for the five standard folders, plain folder name otherwise.</summary>
+        private static string LabelFor(string path)
+        {
+            string p = path.TrimEnd('\\');
+            bool Is(string other) => other.Length > 0 &&
+                p.Equals(other.TrimEnd('\\'), StringComparison.OrdinalIgnoreCase);
+
+            if (Is(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)))  return Loc("Str_QA_Home");
+            if (Is(Environment.GetFolderPath(Environment.SpecialFolder.Desktop)))      return Loc("Str_QA_Desktop");
+            if (Is(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)))  return Loc("Str_QA_Documents");
+            if (Is(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads")))
+                                                                                       return Loc("Str_QA_Downloads");
+            if (Is(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)))   return Loc("Str_QA_Pictures");
+
+            var name = Path.GetFileName(p);
+            return name.Length == 0 ? p : name;
+        }
+
+        private void AddPlace(string label, string path, bool pinned = false)
         {
             if (!string.IsNullOrEmpty(path) && Directory.Exists(path))
-                Places.Add(new PickerPlace(glyph, label, path));
+                Places.Add(new PickerPlace(label, path, pinned));
+        }
+
+        private void PinPlace(string path)
+        {
+            var list = PinnedPaths();
+            if (list.Any(p => p.TrimEnd('\\').Equals(path.TrimEnd('\\'), StringComparison.OrdinalIgnoreCase)))
+                return;
+            list.Add(path);
+            Services.ThemeManager.SetSetting(PinnedKey, string.Join("|", list));
+            BuildPlaces();
+            SyncPlacesSelection();
+        }
+
+        private PickerPlace? _placesMenuPlace;
+
+        private void Places_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            _placesMenuPlace = ItemUnder<PickerPlace>(e.OriginalSource as DependencyObject);
+            // Drives are dynamic, not pinned - nothing to remove; empty space likewise.
+            if (_placesMenuPlace is not { Pinned: true }) e.Handled = true;
+        }
+
+        private void UnpinPlace_Click(object sender, RoutedEventArgs e)
+        {
+            if (_placesMenuPlace is not { Pinned: true } pl) return;
+            var list = PinnedPaths()
+                .Where(p => !p.TrimEnd('\\').Equals(pl.Path.TrimEnd('\\'), StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            Services.ThemeManager.SetSetting(PinnedKey, string.Join("|", list));
+            BuildPlaces();
+            SyncPlacesSelection();
+        }
+
+        private PickerEntry? _filesMenuEntry;
+
+        private void Files_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            _filesMenuEntry = ItemUnder<PickerEntry>(e.OriginalSource as DependencyObject);
+            if (_filesMenuEntry is not { IsFolder: true }) e.Handled = true;   // only folders pin
+        }
+
+        private void FilePin_Click(object sender, RoutedEventArgs e)
+        {
+            if (_filesMenuEntry is { IsFolder: true } en) PinPlace(en.FullPath);
+        }
+
+        /// <summary>Marks the place matching the current folder, or clears the marker.</summary>
+        private void SyncPlacesSelection()
+        {
+            bool was = _navigating;
+            _navigating = true;
+            PlacesList.SelectedItem = _currentDir.Length == 0 ? null : Places.FirstOrDefault(p =>
+                p.Path.TrimEnd('\\').Equals(_currentDir.TrimEnd('\\'), StringComparison.OrdinalIgnoreCase));
+            _navigating = was;
+        }
+
+        /// <summary>The row model under a right-click, resolved by walking up to the ListBoxItem.</summary>
+        private static T? ItemUnder<T>(DependencyObject? d) where T : class
+        {
+            while (d != null)
+            {
+                if (d is ListBoxItem lbi) return lbi.DataContext as T;
+                d = d is System.Windows.Media.Visual or System.Windows.Media.Media3D.Visual3D
+                    ? System.Windows.Media.VisualTreeHelper.GetParent(d)
+                    : LogicalTreeHelper.GetParent(d);
+            }
+            return null;
         }
 
         private static string Loc(string key)
@@ -302,18 +418,29 @@ namespace Killendar.Controls
 
             try
             {
+                // The toggle gates two things together: attribute Hidden/System AND leading-dot
+                // names - the Unix convention is all over a Windows home folder (.gradle, .ssh)
+                // and those carry no Hidden attribute. Same gate in the folder tree (FolderTree.cs).
                 foreach (var sub in Directory.EnumerateDirectories(dir))
                 {
                     DirectoryInfo info;
                     try { info = new DirectoryInfo(sub); } catch { continue; }
-                    if ((info.Attributes & (FileAttributes.Hidden | FileAttributes.System)) != 0) continue;
+                    if (!_showHidden)
+                    {
+                        if ((info.Attributes & (FileAttributes.Hidden | FileAttributes.System)) != 0) continue;
+                        if (info.Name.StartsWith(".", StringComparison.Ordinal)) continue;
+                    }
                     _raw.Add(new PickerEntry(info.Name, sub, true, 0, SafeTime(() => info.LastWriteTime)));
                 }
                 foreach (var file in Directory.EnumerateFiles(dir))
                 {
                     FileInfo fi;
                     try { fi = new FileInfo(file); } catch { continue; }
-                    if ((fi.Attributes & (FileAttributes.Hidden | FileAttributes.System)) != 0) continue;
+                    if (!_showHidden)
+                    {
+                        if ((fi.Attributes & (FileAttributes.Hidden | FileAttributes.System)) != 0) continue;
+                        if (fi.Name.StartsWith(".", StringComparison.Ordinal)) continue;
+                    }
                     _raw.Add(new PickerEntry(fi.Name, file, false, SafeLen(fi), SafeTime(() => fi.LastWriteTime)));
                 }
             }
@@ -322,7 +449,11 @@ namespace Killendar.Controls
             ApplySort();
             UpButton.IsEnabled = Directory.GetParent(dir) != null;
             UpdateInfoSummary();
+            SyncPlacesSelection();
             _navigating = false;
+
+            RecordRecent(dir);
+            _ = RevealInTree(dir);
         }
 
         private static DateTime SafeTime(Func<DateTime> get)
@@ -345,6 +476,288 @@ namespace Killendar.Controls
         {
             if (_navigating) return;
             if (PlacesList.SelectedItem is PickerPlace p) NavigateTo(p.Path);
+        }
+
+        // ── Folder tree (ported from KillerShell, see Controls/FolderTree.cs) ────
+
+        /// <summary>Ready drives only - an empty optical drive or a dropped mapping would sit
+        /// there as a node that throws the moment anyone touches it.</summary>
+        private void InitTree()
+        {
+            if (TreeRoots.Count > 0) return;
+            FolderTreeCtl.ItemsSource = TreeRoots;
+
+            DriveInfo[] drives;
+            try { drives = DriveInfo.GetDrives(); }
+            catch (IOException) { return; }
+
+            foreach (var d in drives)
+            {
+                bool ready;
+                try { ready = d.IsReady; }
+                catch (IOException) { continue; }
+                catch (UnauthorizedAccessException) { continue; }
+                if (ready) TreeRoots.Add(new FolderNode(d));
+            }
+
+            // Edge fades follow the scroll position (KillerShell TreePanel.cs). ScrollChanged is
+            // handled at the TreeView rather than dug out of its template: it bubbles, so the
+            // inner ScrollViewer is reached without needing to have found it first. Loaded and
+            // SizeChanged cover the passes where nothing scrolled but the extent moved.
+            FolderTreeCtl.AddHandler(ScrollViewer.ScrollChangedEvent,
+                new ScrollChangedEventHandler((_, _) => { SyncTreeEdgeFades(); SyncTreeFade(); }));
+            FolderTreeCtl.SizeChanged += (_, _) => { SyncTreeEdgeFades(); SyncTreeFade(); };
+            FolderTreeCtl.Loaded      += (_, _) => { SyncTreeEdgeFades(); SyncTreeFade(); };
+
+            // The places list gets the same treatment (Steve, 2026-07-30). No scrollbar lift:
+            // horizontal scrolling is disabled on it.
+            PlacesList.AddHandler(ScrollViewer.ScrollChangedEvent,
+                new ScrollChangedEventHandler((_, _) => SyncPlacesEdgeFades()));
+            PlacesList.SizeChanged += (_, _) => SyncPlacesEdgeFades();
+            PlacesList.Loaded      += (_, _) => SyncPlacesEdgeFades();
+        }
+
+        /// <summary>Places-list twin of SyncTreeEdgeFades: same ramp, same rules.</summary>
+        private void SyncPlacesEdgeFades()
+        {
+            var sv = FindDescendant<ScrollViewer>(PlacesList);
+            if (sv == null) return;
+
+            PlacesFadeTop.Opacity    = Ramp(sv.VerticalOffset, PlacesFadeTop.Height, 18);
+            PlacesFadeBottom.Opacity = Ramp(sv.ExtentHeight - sv.ViewportHeight - sv.VerticalOffset,
+                                            PlacesFadeBottom.Height, 22);
+        }
+
+        /// <summary>
+        /// Fade each edge only while there is something PAST it, ramped over the fade's own
+        /// height: none at the very top, none at the very bottom, full in between. A proportional
+        /// ramp rather than a flip - at one pixel of scroll it is one pixel's worth of fade, so
+        /// neither edge ever pops. (KillerShell TreePanel.SyncTreeEdgeFades, verbatim.)
+        /// </summary>
+        private void SyncTreeEdgeFades()
+        {
+            var sv = FindDescendant<ScrollViewer>(FolderTreeCtl);
+            if (sv == null) return;
+
+            TreeFadeTop.Opacity    = Ramp(sv.VerticalOffset, TreeFadeTop.Height, 18);
+            TreeFadeBottom.Opacity = Ramp(sv.ExtentHeight - sv.ViewportHeight - sv.VerticalOffset,
+                                          TreeFadeBottom.Height, 22);
+        }
+
+        // Height is NaN until the border has been laid out, hence the fallback.
+        private static double Ramp(double distance, double height, double fallback)
+        {
+            double h = double.IsNaN(height) || height <= 0 ? fallback : height;
+            return Math.Min(1, Math.Max(0, distance) / h);
+        }
+
+        /// <summary>
+        /// Keep the bottom edge fade sitting on the tree's last visible ROW rather than on the
+        /// horizontal scrollbar underneath it. The bar's real height is measured, not taken from
+        /// SystemParameters - the themed template is not the system metric. Base 4 is the tree's
+        /// own bottom margin. (KillerShell TreePanel.SyncTreeFade, adapted.)
+        /// </summary>
+        private void SyncTreeFade()
+        {
+            var sv = FindDescendant<ScrollViewer>(FolderTreeCtl);
+            double lift = 0;
+
+            if (sv != null && sv.ComputedHorizontalScrollBarVisibility == Visibility.Visible)
+            {
+                var bar = FindHorizontalBar(sv);
+                lift = bar?.ActualHeight ?? SystemParameters.HorizontalScrollBarHeight;
+            }
+
+            var m = TreeFadeBottom.Margin;
+            double want = 4 + lift;
+            if (Math.Abs(m.Bottom - want) < 0.5) return;     // no churn on every layout pass
+            TreeFadeBottom.Margin = new Thickness(m.Left, m.Top, m.Right, want);
+        }
+
+        private static T? FindDescendant<T>(DependencyObject root) where T : DependencyObject
+        {
+            int n = System.Windows.Media.VisualTreeHelper.GetChildrenCount(root);
+            for (int i = 0; i < n; i++)
+            {
+                var c = System.Windows.Media.VisualTreeHelper.GetChild(root, i);
+                if (c is T hit) return hit;
+                var deeper = FindDescendant<T>(c);
+                if (deeper != null) return deeper;
+            }
+            return null;
+        }
+
+        // FindDescendant takes the FIRST match of a type, and a ScrollViewer has two scrollbars,
+        // so the orientation has to be checked rather than assumed.
+        private static System.Windows.Controls.Primitives.ScrollBar? FindHorizontalBar(DependencyObject root)
+        {
+            int n = System.Windows.Media.VisualTreeHelper.GetChildrenCount(root);
+            for (int i = 0; i < n; i++)
+            {
+                var c = System.Windows.Media.VisualTreeHelper.GetChild(root, i);
+                if (c is System.Windows.Controls.Primitives.ScrollBar sb &&
+                    sb.Orientation == Orientation.Horizontal) return sb;
+                var deeper = FindHorizontalBar(c);
+                if (deeper != null) return deeper;
+            }
+            return null;
+        }
+
+        // TreeViewItem.Expanded is attached at the TreeView, so this fires for every node at any
+        // depth - which is the point: one handler drives the whole lazy load.
+        private async void FolderTree_Expanded(object sender, RoutedEventArgs e)
+        {
+            if (e.OriginalSource is not TreeViewItem tvi) return;
+            if (tvi.DataContext is not FolderNode node) return;
+            await node.LoadChildrenAsync();
+        }
+
+        private void FolderTree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (_treeSyncing) return;
+            if (e.NewValue is not FolderNode node) return;
+            if (string.IsNullOrEmpty(node.Path)) return;   // the placeholder, mid-load
+            NavigateTo(node.Path);
+        }
+
+        private FolderNode? _treeMenuNode;
+
+        private void FolderTree_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            _treeMenuNode = NodeUnder(Mouse.DirectlyOver as DependencyObject)
+                         ?? NodeUnder(e.OriginalSource as DependencyObject);
+            // Drives are already in places; empty space has nothing to pin.
+            if (_treeMenuNode == null || _treeMenuNode.IsDrive) e.Handled = true;
+        }
+
+        private void TreePin_Click(object sender, RoutedEventArgs e)
+        {
+            if (_treeMenuNode is { IsDrive: false } n && !string.IsNullOrEmpty(n.Path))
+                PinPlace(n.Path);
+        }
+
+        private static FolderNode? NodeUnder(DependencyObject? d)
+        {
+            while (d != null)
+            {
+                if (d is TreeViewItem tvi) return tvi.DataContext as FolderNode;
+                d = d is System.Windows.Media.Visual or System.Windows.Media.Media3D.Visual3D
+                    ? System.Windows.Media.VisualTreeHelper.GetParent(d)
+                    : LogicalTreeHelper.GetParent(d);
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Points the tree at a folder reached from somewhere else - places, the path box, a
+        /// double-click. Expands the chain of ANCESTORS and selects the folder; the destination's
+        /// own expander is left exactly as the user had it (KillerShell's rule - forcing it
+        /// collapsed the branch under the cursor and the whole tree jumped).
+        /// </summary>
+        private async Task RevealInTree(string folder)
+        {
+            if (string.IsNullOrEmpty(folder)) return;
+
+            string full;
+            try { full = Path.GetFullPath(folder); }
+            catch { return; }
+
+            var root = TreeRoots.FirstOrDefault(
+                r => full.StartsWith(r.Path, StringComparison.OrdinalIgnoreCase));
+            if (root == null) return;
+
+            var segments = RelativeSegments(root.Path, full).ToList();
+
+            var current = root;
+            if (segments.Count > 0)
+            {
+                await current.LoadChildrenAsync();
+                current.IsExpanded = true;
+            }
+
+            for (int i = 0; i < segments.Count; i++)
+            {
+                var next = current.Children.FirstOrDefault(
+                    c => string.Equals(c.Name, segments[i], StringComparison.OrdinalIgnoreCase));
+                if (next == null) return;   // hidden by the filter, or gone since the listing
+
+                current = next;
+                if (i == segments.Count - 1) break;
+
+                await current.LoadChildrenAsync();   // needed to match the NEXT segment
+                current.IsExpanded = true;
+            }
+
+            _treeSyncing = true;
+            current.IsSelected = true;
+            _treeSyncing = false;
+        }
+
+        private static IEnumerable<string> RelativeSegments(string rootPath, string fullPath)
+        {
+            string rest = fullPath.Substring(rootPath.Length);
+            return rest.Split(new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar },
+                              StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        // ── Recent locations ─────────────────────────────────────────────────────
+
+        private static List<string> LoadRecents()
+            => (Services.ThemeManager.GetSetting(RecentsKey) ?? "")
+               .Split('|').Where(s => s.Length > 0).ToList();
+
+        private static void RecordRecent(string dir)
+        {
+            var list = LoadRecents();
+            list.RemoveAll(p => p.TrimEnd('\\').Equals(dir.TrimEnd('\\'), StringComparison.OrdinalIgnoreCase));
+            list.Insert(0, dir);
+            if (list.Count > RecentsMax) list.RemoveRange(RecentsMax, list.Count - RecentsMax);
+            Services.ThemeManager.SetSetting(RecentsKey, string.Join("|", list));
+        }
+
+        private void RecentsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // Stale entries (unplugged drive, deleted folder) are filtered at open rather than
+            // scrubbed from the store - the drive may be back tomorrow.
+            var list = LoadRecents().Where(Directory.Exists).ToList();
+            if (list.Count == 0) return;
+
+            _navigating = true;              // rebinding must not raise a navigation
+            RecentsList.ItemsSource = list;
+            RecentsList.SelectedItem = null;
+            _navigating = false;
+            RecentsPopup.IsOpen = true;
+        }
+
+        private void RecentsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_navigating) return;
+            if (RecentsList.SelectedItem is not string dir) return;
+            RecentsPopup.IsOpen = false;
+            NavigateTo(dir);
+        }
+
+        // ── Hidden / dot files ───────────────────────────────────────────────────
+
+        private void ShowHidden_Click(object sender, RoutedEventArgs e)
+        {
+            _showHidden = !_showHidden;
+            Services.ThemeManager.SetSetting(ShowHiddenKey, _showHidden ? "1" : "0");
+            FolderNode.ShowHidden = _showHidden;
+            ApplyShowHiddenButton();
+
+            if (_currentDir.Length > 0) NavigateTo(_currentDir);
+
+            // Re-enumerate loaded tree branches in place, keeping expansion (FolderTree.cs).
+            foreach (var r in TreeRoots.ToList()) _ = r.RefreshAsync();
+        }
+
+        private void ApplyShowHiddenButton()
+        {
+            // E7B3 eye at rest, E890 while showing - KillerShell's build-proven pair
+            // (ViewOptions.cs). Codepoints, never literal PUA glyphs (family rule).
+            ShowHiddenBtn.Content = ((char)(_showHidden ? 0xE890 : 0xE7B3)).ToString();
+            ShowHiddenBtn.Tag     = _showHidden ? "on" : null;
         }
 
         private void Files_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -573,12 +986,83 @@ namespace Killendar.Controls
 
         private void Cancel_Click(object sender, RoutedEventArgs e) => Close();
 
-        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => DragMove();
+        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // Handled, or the press bubbles on to Resize_MouseDown AFTER DragMove's modal loop
+            // returns - by then the button is UP, and WM_NCLBUTTONDOWN with no button held puts
+            // Windows into its sticky keyboard-style size loop: the window chases the mouse,
+            // resizing, until a click. (Steve, 2026-07-30.)
+            e.Handled = true;
+            DragMove();
+        }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (e.Key == Key.Escape) { Close(); e.Handled = true; return; }
             base.OnKeyDown(e);
         }
+
+        // ---- edge resize, done by hand ----
+        //
+        // This dialog carries no shell:WindowChrome - on an AllowsTransparency window it fills its
+        // own non-client area and that paints as a flat band around the card. So the 10px halo does
+        // the job instead: work out which edge the pointer is in and hand the drag to Windows with
+        // WM_NCLBUTTONDOWN, exactly as Shell/Chrome.cs does for the main window's corner grip.
+        // Windows then runs its own resize loop, so this gets the real snapping and live preview
+        // rather than a hand-rolled approximation. (Steve, 2026-07-30.)
+
+        private const int WM_NCLBUTTONDOWN = 0x00A1;
+        private const int HTLEFT = 10, HTRIGHT = 11, HTTOP = 12, HTTOPLEFT = 13,
+                          HTTOPRIGHT = 14, HTBOTTOM = 15, HTBOTTOMLEFT = 16, HTBOTTOMRIGHT = 17;
+
+        /// <summary>Width of the grab band, matching the ResizeBorderThickness WindowChrome used.</summary>
+        private const double ResizeEdge = 8;
+
+        /// <summary>Which edge the pointer is in, or 0 for none.</summary>
+        private int HitTestEdge(Point p)
+        {
+            bool left   = p.X <= ResizeEdge;
+            bool right  = p.X >= ActualWidth  - ResizeEdge;
+            bool top    = p.Y <= ResizeEdge;
+            bool bottom = p.Y >= ActualHeight - ResizeEdge;
+
+            if (top && left)     return HTTOPLEFT;
+            if (top && right)    return HTTOPRIGHT;
+            if (bottom && left)  return HTBOTTOMLEFT;
+            if (bottom && right) return HTBOTTOMRIGHT;
+            if (left)            return HTLEFT;
+            if (right)           return HTRIGHT;
+            if (top)             return HTTOP;
+            if (bottom)          return HTBOTTOM;
+            return 0;
+        }
+
+        private void Resize_MouseMove(object sender, MouseEventArgs e)
+        {
+            Cursor = HitTestEdge(e.GetPosition(this)) switch
+            {
+                HTLEFT or HTRIGHT           => Cursors.SizeWE,
+                HTTOP or HTBOTTOM           => Cursors.SizeNS,
+                HTTOPLEFT or HTBOTTOMRIGHT  => Cursors.SizeNWSE,
+                HTTOPRIGHT or HTBOTTOMLEFT  => Cursors.SizeNESW,
+                _                           => Cursors.Arrow,
+            };
+        }
+
+        private void Resize_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            // Only a press on the halo Grid ITSELF may start a resize. Every press on the card
+            // bubbles up here too (with OriginalSource somewhere in the card's tree), and a stale
+            // bubbled press must never reach WM_NCLBUTTONDOWN - see TitleBar_MouseLeftButtonDown.
+            if (!ReferenceEquals(e.OriginalSource, sender)) return;
+            int ht = HitTestEdge(e.GetPosition(this));
+            if (ht == 0) return;
+            e.Handled = true;
+            SendMessage(new System.Windows.Interop.WindowInteropHelper(this).Handle,
+                        WM_NCLBUTTONDOWN, new IntPtr(ht), IntPtr.Zero);
+        }
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
     }
 }

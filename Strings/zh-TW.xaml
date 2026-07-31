@@ -4,7 +4,7 @@
 
     <!-- Traditional Chinese. Layered over en-US, so any key omitted here falls back to English. -->
 
-    <sys:String x:Key="Str_Btn_New">+ 新增</sys:String>
+    <sys:String x:Key="Str_Btn_New">新增</sys:String>
     <sys:String x:Key="Str_Btn_Import">匯入 .ics</sys:String>
     <sys:String x:Key="Str_Btn_Export">匯出 .ics</sys:String>
     <sys:String x:Key="Str_Btn_Today">今天</sys:String>
@@ -28,6 +28,22 @@
     <sys:String x:Key="Str_Fld_Starts">開始</sys:String>
     <sys:String x:Key="Str_Fld_Ends">結束</sys:String>
     <sys:String x:Key="Str_Fld_Location">地點</sys:String>
+
+    <sys:String x:Key="Str_Sys_Restore">還原</sys:String>
+    <sys:String x:Key="Str_Sys_Move">移動</sys:String>
+    <sys:String x:Key="Str_Sys_Size">大小</sys:String>
+    <sys:String x:Key="Str_Sys_Minimize">最小化</sys:String>
+    <sys:String x:Key="Str_Sys_Maximize">最大化</sys:String>
+    <sys:String x:Key="Str_Sys_Close">關閉</sys:String>
+
+    <sys:String x:Key="Str_Toolbar_Header">工具列</sys:String>
+    <sys:String x:Key="Str_Toolbar_SmallIcons">圖示</sys:String>
+    <sys:String x:Key="Str_Toolbar_LargeIcons">大圖示</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextNone">無文字</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextBeside">圖示旁顯示文字</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextUnder">圖示下顯示文字</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextOnly">僅文字</sys:String>
+    <sys:String x:Key="Str_TT_OpenInMaps">在地圖中開啟此地點</sys:String>
     <sys:String x:Key="Str_Fld_Description">說明</sys:String>
     <sys:String x:Key="Str_Fld_Attendees">參加者</sys:String>
     <sys:String x:Key="Str_Hint_Attendees">以逗號分隔</sys:String>
@@ -50,12 +66,40 @@
     <sys:String x:Key="Str_Dlg_DeleteMsg">刪除「{0}」?</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteDetail">此操作無法復原。</sys:String>
 
+    <sys:String x:Key="Str_Fld_Repeats">重複</sys:String>
+    <sys:String x:Key="Str_Rep_Never">不重複</sys:String>
+    <sys:String x:Key="Str_Rep_Daily">每天</sys:String>
+    <sys:String x:Key="Str_Rep_Weekly">每週</sys:String>
+    <sys:String x:Key="Str_Rep_Monthly">每月</sys:String>
+    <sys:String x:Key="Str_Rep_Yearly">每年</sys:String>
+    <sys:String x:Key="Str_Rep_Every">間隔</sys:String>
+    <sys:String x:Key="Str_Rep_UnitDays">天</sys:String>
+    <sys:String x:Key="Str_Rep_UnitWeeks">週</sys:String>
+    <sys:String x:Key="Str_Rep_UnitMonths">個月</sys:String>
+    <sys:String x:Key="Str_Rep_UnitYears">年</sys:String>
+    <sys:String x:Key="Str_Rep_Ends">結束</sys:String>
+    <sys:String x:Key="Str_Rep_EndNever">不結束</sys:String>
+    <sys:String x:Key="Str_Rep_EndAfter">按次數</sys:String>
+    <sys:String x:Key="Str_Rep_EndOn">按日期</sys:String>
+    <sys:String x:Key="Str_Rep_HintCount">重複幾次</sys:String>
+    <sys:String x:Key="Str_Rep_SummaryNext">接下來：{0}</sys:String>
+    <sys:String x:Key="Str_Rep_SummaryNone">這樣一次也不會發生。請檢查日期。</sys:String>
+    <sys:String x:Key="Str_Rep_Scope">這是一個重複約會</sys:String>
+    <sys:String x:Key="Str_Btn_ThisDate">僅這一天</sys:String>
+    <sys:String x:Key="Str_Btn_WholeSeries">整個系列</sys:String>
+    <sys:String x:Key="Str_Err_RepeatEnd">請說明重複何時結束，或設為永不結束。</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">只刪除這一天，系列中的其餘日期保留。</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">該系列的所有日期都會被刪除。此操作無法復原。</sys:String>
+
     <sys:String x:Key="Str_Status_Ready">就緒</sys:String>
     <sys:String x:Key="Str_Status_Added">已新增 {0}</sys:String>
     <sys:String x:Key="Str_Status_Saved">已儲存 {0}</sys:String>
     <sys:String x:Key="Str_Status_Deleted">已刪除 {0}</sys:String>
     <sys:String x:Key="Str_Status_Imported">已匯入 {0} 個約會</sys:String>
     <sys:String x:Key="Str_Status_ImportedSkipped">已匯入 {0} 個約會，略過 {1} 個已存在的</sys:String>
+    <sys:String x:Key="Str_Status_ImportRepeat">。其中 {0} 個是重複約會，只加入了第一個日期</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnreadable">。{0} 個的日期無法讀取，已略過</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnsupported">。{0} 個是工作或筆記，Killendar 不保存這類內容</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">匯入失敗：{0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">已匯出 {0} 個約會</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">匯出失敗：{0}</sys:String>
@@ -83,7 +127,7 @@
     <sys:String x:Key="Str_About_Unsigned">(未簽署或憑證鏈驗證失敗)</sys:String>
     <sys:String x:Key="Str_About_UpdateAvailable">有可用更新：{0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">下載中...</sys:String>
-    <sys:String x:Key="Str_About_DescA" xml:space="preserve">月、週、日與行程檢視，iCalendar 匯入匯出，以及永遠不離開你電腦的約會。一個 GPLv3 的 </sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">沒有帳號、沒有同步、不向任何地方回傳的日曆。你的約會保存在自己電腦上的單一檔案裡，需要的話還可以加密。一個 GPLv3 的 </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> 工具。</sys:String>
 
     <sys:String x:Key="Str_Dlg_UpdateMsg">下載並安裝 Killendar {0}?</sys:String>
@@ -151,7 +195,7 @@
     <!-- Manage Killendars: the .kcal file list, its context menu and the rail
          button. {0} is a file name or an error; Str_Kc_Renamed takes {0} old, {1} new. -->
     <sys:String x:Key="Str_Kc_Title">Killendar 檔案</sys:String>
-    <sys:String x:Key="Str_Kc_Hint">資料夾中的所有 .kcal 檔案。雙擊名稱即可重新命名。</sys:String>
+    <sys:String x:Key="Str_Kc_Hint">資料夾中的所有 .kcal 檔案。雙擊即可開啟，按右鍵可重新命名或刪除。</sys:String>
     <sys:String x:Key="Str_Kc_FlagEncrypted">已加密</sys:String>
     <sys:String x:Key="Str_Kc_FlagActive">使用中</sys:String>
     <sys:String x:Key="Str_Kc_SelectFirst">請先選擇一個 Killendar。</sys:String>
@@ -187,7 +231,7 @@
     <!-- Double-clicked .kcal: the confirm before a copy is added and opened.
          {0} is the file name. -->
     <sys:String x:Key="Str_Kc_AddHead">要在 Killendar 中開啟 {0} 嗎？</sys:String>
-    <sys:String x:Key="Str_Kc_AddBody">會在你的資料夾中新增一份副本並開啟它。你雙擊的檔案保持原位、不作改動 —— Killendar 會被持續寫入，而網路共用或下載資料夾裡的檔案不適合這樣使用。</sys:String>
+    <sys:String x:Key="Str_Kc_AddBody">會在你的資料夾中新增一份副本並開啟它。你雙擊的檔案保持原位、不作改動 - Killendar 會被持續寫入，而網路共用或下載資料夾裡的檔案不適合這樣使用。</sys:String>
     <sys:String x:Key="Str_Btn_Add">新增</sys:String>
 
 
@@ -222,5 +266,78 @@
     <sys:String x:Key="Str_TT_ViewList">清單檢視</sys:String>
     <sys:String x:Key="Str_TT_ViewIcons">圖示檢視</sys:String>
     <sys:String x:Key="Str_TT_ViewDetails">詳細資料檢視</sys:String>
+    <sys:String x:Key="Str_TT_ShowHidden">顯示隱藏和系統項目</sys:String>
+    <sys:String x:Key="Str_TT_RecentLocations">最近的位置</sys:String>
+    <sys:String x:Key="Str_Menu_PinPlace">釘選到位置</sys:String>
+    <sys:String x:Key="Str_Menu_UnpinPlace">從位置移除</sys:String>
+    <sys:String x:Key="Str_Btn_Edit">編輯</sys:String>
+    <sys:String x:Key="Str_Side_NoAppointments">這一天沒有約會</sys:String>
+
+    <!-- 可攜版安裝 -->
+    <sys:String x:Key="Str_Portable">可攜版</sys:String>
+    <sys:String x:Key="Str_Btn_Install">安裝 Killendar...</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallMsg">將 Killendar 安裝到這台電腦？</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallBullets">Killendar 會複製到你的程式資料夾，並新增開始功能表項目。&#x0a;你的 Killendar 檔案不會被更動，這份 exe 副本也會留在原處。&#x0a;Killendar 將從安裝位置重新啟動。</sys:String>
+    <sys:String x:Key="Str_Btn_DoInstall">安裝</sys:String>
+    <sys:String x:Key="Str_Chk_Desktop">新增桌面捷徑</sys:String>
+    <sys:String x:Key="Str_Chk_AllUsers">為這台電腦上的所有使用者安裝（需要系統管理員）</sys:String>
+    <sys:String x:Key="Str_Status_InstallFailed">安裝未完成 - Killendar 仍以可攜版執行。</sys:String>
+
+    <!-- 類別 -->
+    <sys:String x:Key="Str_KS_Title">鍵盤快速鍵</sys:String>
+    <sys:String x:Key="Str_KS_ViewList">清單</sys:String>
+    <sys:String x:Key="Str_KS_ViewMap">鍵盤</sys:String>
+    <sys:String x:Key="Str_KS_Hint">輸入時單鍵快速鍵暫停</sys:String>
+    <sys:String x:Key="Str_TT_Shortcuts">鍵盤快速鍵 (F1)</sys:String>
+    <sys:String x:Key="Str_KS_GrpViews">檢視</sys:String>
+    <sys:String x:Key="Str_KS_GrpNav">導覽</sys:String>
+    <sys:String x:Key="Str_KS_GrpAppt">約會</sys:String>
+    <sys:String x:Key="Str_KS_GrpFile">檔案</sys:String>
+    <sys:String x:Key="Str_KS_GrpHelp">說明</sys:String>
+    <sys:String x:Key="Str_KS_Month">月檢視</sys:String>
+    <sys:String x:Key="Str_KS_Week">週檢視</sys:String>
+    <sys:String x:Key="Str_KS_Day">日檢視</sys:String>
+    <sys:String x:Key="Str_KS_Agenda">行程檢視</sys:String>
+    <sys:String x:Key="Str_KS_Prev">上一個月、週或日</sys:String>
+    <sys:String x:Key="Str_KS_Next">下一個月、週或日</sys:String>
+    <sys:String x:Key="Str_KS_Today">跳到今天</sys:String>
+    <sys:String x:Key="Str_KS_New">在此新增約會</sys:String>
+    <sys:String x:Key="Str_KS_Panel">約會面板</sys:String>
+    <sys:String x:Key="Str_KS_Import">匯入 .ics 檔案</sys:String>
+    <sys:String x:Key="Str_KS_Export">匯出為 .ics</sys:String>
+    <sys:String x:Key="Str_KS_ThisList">此快速鍵清單</sys:String>
+    <sys:String x:Key="Str_KS_About">關於卡片</sys:String>
+    <sys:String x:Key="Str_KS_Close">關閉面板或卡片</sys:String>
+
+    <sys:String x:Key="Str_Fld_Categories">類別</sys:String>
+    <sys:String x:Key="Str_Hint_NoCategories">還沒有類別。可從側邊欄新增。</sys:String>
+    <sys:String x:Key="Str_TT_Categories">類別</sys:String>
+    <sys:String x:Key="Str_TT_Density">格線密度 - 按一下或捲動</sys:String>
+    <sys:String x:Key="Str_St_Density">格線密度：每小時 {0} 條線</sys:String>
+    <sys:String x:Key="Str_Cat_Title">類別</sys:String>
+    <sys:String x:Key="Str_Cat_Hint">這個 Killendar 的顏色。一個約會可以帶多個類別，第一個決定它的顏色。</sys:String>
+    <sys:String x:Key="Str_Cat_NeedName">請為類別取個名稱。</sys:String>
+    <sys:String x:Key="Str_Cat_Exists">已有同名的類別。</sys:String>
+    <sys:String x:Key="Str_Cat_DeleteHead">刪除 {0}？</sys:String>
+    <sys:String x:Key="Str_Cat_DeleteBody">它會從帶有它的每個約會上移除。約會本身不受影響。</sys:String>
+    <sys:String x:Key="Str_Btn_CatAdd">新增</sys:String>
+    <sys:String x:Key="Str_Btn_Done">完成</sys:String>
+    <sys:String x:Key="Str_TT_CatPickColor">為新類別選擇顏色</sys:String>
+    <sys:String x:Key="Str_TT_CatRecolor">變更顏色</sys:String>
+    <sys:String x:Key="Str_TT_CatRename">重新命名</sys:String>
+    <sys:String x:Key="Str_TT_CatDelete">刪除</sys:String>
+
+    <!-- 選色器 -->
+    <sys:String x:Key="Str_Dlg_PickColor">選擇顏色</sys:String>
+    <sys:String x:Key="Str_TT_Eyedropper">從螢幕上任意位置取色</sys:String>
+    <sys:String x:Key="Str_Btn_Reset">重設</sys:String>
+    <sys:String x:Key="Str_TT_ReplaceSwatch">按一下後再按一個色票，即可將它設為目前顏色</sys:String>
+    <sys:String x:Key="Str_TT_ResetSwatches">將色票還原為預設值</sys:String>
+    <sys:String x:Key="Str_TT_SwatchReplace">按一下將此色票設為目前顏色</sys:String>
+    <sys:String x:Key="Str_TT_SwatchUse">按一下使用此顏色</sys:String>
+
+    <!-- 右鍵功能表 -->
+    <sys:String x:Key="Str_Ctx_AddAppointment">新增約會</sys:String>
+    <sys:String x:Key="Str_Ctx_Open">開啟</sys:String>
 
 </ResourceDictionary>

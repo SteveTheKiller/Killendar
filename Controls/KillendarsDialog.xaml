@@ -48,30 +48,15 @@
                             </StackPanel>
                             <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15"><Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}"/></TextBlock>
                         </Grid>
-                        <Button Content="&#x2715;" Click="Close_Click"
-                                HorizontalAlignment="Right"
-                                Width="28" FontSize="10"
-                                Foreground="{StaticResource MutedTextBrush}"
-                                Background="Transparent" BorderThickness="0"
-                                Cursor="Hand">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="bg" Background="Transparent" CornerRadius="3">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="bg" Property="Background" Value="#C42B1C"/>
-                                            <Setter Property="Foreground" Value="White"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
+                        <Button Content="&#xE711;" Click="Close_Click" Style="{StaticResource DangerCloseButton}"
+                                HorizontalAlignment="Right"/>
                     </Grid>
                 </Border>
 
-                <StackPanel Grid.Row="1" Margin="24,16,24,12">
+                <!-- Top margin 4, not 16. The 36px title-bar row above already provides the air;
+                     16 on top of it left the "Killendars" heading floating a long way down the
+                     card. (Steve, 2026-07-30.) -->
+                <StackPanel Grid.Row="1" Margin="24,4,24,12">
                     <TextBlock Text="{DynamicResource Str_Kc_Title}" Foreground="{StaticResource TextBrush}"
                                FontFamily="Consolas" FontSize="14" FontWeight="Bold" Margin="0,0,0,4"/>
                     <TextBlock Text="{DynamicResource Str_Kc_Hint}" Foreground="{DynamicResource MutedTextBrush}"
@@ -84,6 +69,8 @@
                                  PreviewMouseRightButtonDown="KcList_PreviewMouseRightButtonDown">
                             <ListBox.ContextMenu>
                                 <ContextMenu>
+                                    <MenuItem Header="{DynamicResource Str_Ctx_Open}" Click="Open_Click"/>
+                                    <Separator/>
                                     <MenuItem Header="{DynamicResource Str_Ctx_Rename}" Click="RenameMenu_Click"/>
                                     <MenuItem Header="{DynamicResource Str_Ctx_Delete}" Click="Delete_Click"/>
                                     <MenuItem Header="{DynamicResource Str_Ctx_CopyFile}" Click="CopyFileMenu_Click"

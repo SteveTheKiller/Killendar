@@ -1,10 +1,13 @@
-# Killendar
+<p align="center">
+  <a href="https://killendar.net"><img src="docs/wordmark.png" width="640" alt="The Killendar - Free Encrypted Calendar"></a>
+</p>
 
-A fast, private desktop calendar for Windows. Month, week, day and agenda views, iCalendar import
-and export, and appointments that stay on your machine.
+A calendar for Windows with no account, no sync and nothing phoning home. Your appointments live in
+a single file on your own machine, and you can put a password on it. Once it is locked, that file is
+encrypted at rest with SQLCipher using AES-256.
 
-No account, no sync service, no telemetry. Your calendar is a single file in your own profile that
-you can read, back up, or move to another machine with a copy and paste.
+Unlocked it is an ordinary SQLite database, so you can read it, back it up, or carry it to another
+machine with a copy and paste. No service to sign up for, no telemetry, no ads.
 
 [killendar.net](https://killendar.net) &nbsp;|&nbsp; part of [Killer Tools](https://killertools.net)
 
@@ -15,8 +18,16 @@ you can read, back up, or move to another machine with a copy and paste.
   description and attendees, with the panel sliding out from the icon rail.
 - **Overlapping appointments sit side by side** in the week and day views, so a double-booked hour
   shows both rather than hiding one behind the other.
+- **Repeating appointments** - daily, weekly on the days you tick, monthly or yearly, every N of
+  those, ending never, after a set number, or on a date. A series is one stored appointment whose
+  dates are worked out as the calendar draws them, so editing a weekly standup is one edit and a
+  series with no end date costs nothing. Editing or deleting one date asks whether you mean just
+  that date or the whole series.
 - **iCalendar import and export** (RFC 5545), written from scratch with no external dependencies.
-  Import skips anything already in your calendar and tells you how many it skipped.
+  Repeats survive the round trip, including dates you deleted from a series or edited on their own.
+  Import skips anything already in your calendar, and says what it could not keep rather than
+  swallowing it: repeat rules too exotic to draw, entries with no readable date, and tasks or
+  journal entries Killendar has nowhere to put are all counted and reported.
 - **Optional encryption** - the lock button in the title bar puts a password on your Killendar and
   it is encrypted at rest with SQLCipher (AES-256). Opt-in: no password means a plain SQLite file.
 - **As many Killendars as you like** - work, on-call, family. Create, rename, delete, load and

@@ -6,7 +6,9 @@
          translation falls back to English rather than showing the raw key name. -->
 
     <!-- Toolbar -->
-    <sys:String x:Key="Str_Btn_New">+ New</sys:String>
+    <!-- No leading "+". ToolbarStyle.cs draws the E710 Add glyph in front of every caption, so a
+         plus in the string renders as "+ + New". (Steve, 2026-07-30.) -->
+    <sys:String x:Key="Str_Btn_New">New</sys:String>
     <sys:String x:Key="Str_Btn_Import">Import .ics</sys:String>
     <sys:String x:Key="Str_Btn_Export">Export .ics</sys:String>
     <sys:String x:Key="Str_Btn_Today">Today</sys:String>
@@ -32,6 +34,25 @@
     <sys:String x:Key="Str_Fld_Starts">STARTS</sys:String>
     <sys:String x:Key="Str_Fld_Ends">ENDS</sys:String>
     <sys:String x:Key="Str_Fld_Location">LOCATION</sys:String>
+
+    <!-- Themed Windows system menu (Shell/SystemMenu.cs). Same wording as KillerScan's. -->
+    <sys:String x:Key="Str_Sys_Restore">Restore</sys:String>
+    <sys:String x:Key="Str_Sys_Move">Move</sys:String>
+    <sys:String x:Key="Str_Sys_Size">Size</sys:String>
+    <sys:String x:Key="Str_Sys_Minimize">Minimize</sys:String>
+    <sys:String x:Key="Str_Sys_Maximize">Maximize</sys:String>
+    <sys:String x:Key="Str_Sys_Close">Close</sys:String>
+
+    <sys:String x:Key="Str_Toolbar_Header">Toolbar</sys:String>
+    <!-- Two independent groups now: icon size, then where the text goes. "Icons" was the caption
+         for the whole small-icons MODE; as a size it reads better as "Small icons". -->
+    <sys:String x:Key="Str_Toolbar_SmallIcons">Small icons</sys:String>
+    <sys:String x:Key="Str_Toolbar_LargeIcons">Large icons</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextNone">No text</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextBeside">Text beside icons</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextUnder">Text under icons</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextOnly">Text only</sys:String>
+    <sys:String x:Key="Str_TT_OpenInMaps">Open this location in maps</sys:String>
     <sys:String x:Key="Str_Fld_Description">DESCRIPTION</sys:String>
     <sys:String x:Key="Str_Fld_Attendees">ATTENDEES</sys:String>
     <sys:String x:Key="Str_Hint_Attendees">comma separated</sys:String>
@@ -57,12 +78,44 @@
     <sys:String x:Key="Str_Dlg_DeleteDetail">This cannot be undone.</sys:String>
 
     <!-- Status line. {0} is a title or a count. -->
+    <!-- Repeats. Weekday letters are NOT here: they come from the culture, along with the order
+         they appear in, so a week that starts on Monday needs no translation at all. -->
+    <sys:String x:Key="Str_Fld_Repeats">REPEATS</sys:String>
+    <sys:String x:Key="Str_Rep_Never">Never</sys:String>
+    <sys:String x:Key="Str_Rep_Daily">Daily</sys:String>
+    <sys:String x:Key="Str_Rep_Weekly">Weekly</sys:String>
+    <sys:String x:Key="Str_Rep_Monthly">Monthly</sys:String>
+    <sys:String x:Key="Str_Rep_Yearly">Yearly</sys:String>
+    <sys:String x:Key="Str_Rep_Every">Every</sys:String>
+    <sys:String x:Key="Str_Rep_UnitDays">days</sys:String>
+    <sys:String x:Key="Str_Rep_UnitWeeks">weeks</sys:String>
+    <sys:String x:Key="Str_Rep_UnitMonths">months</sys:String>
+    <sys:String x:Key="Str_Rep_UnitYears">years</sys:String>
+    <sys:String x:Key="Str_Rep_Ends">ENDS</sys:String>
+    <sys:String x:Key="Str_Rep_EndNever">Never</sys:String>
+    <sys:String x:Key="Str_Rep_EndAfter">After</sys:String>
+    <sys:String x:Key="Str_Rep_EndOn">On date</sys:String>
+    <sys:String x:Key="Str_Rep_HintCount">How many times</sys:String>
+    <sys:String x:Key="Str_Rep_SummaryNext">Next: {0}</sys:String>
+    <sys:String x:Key="Str_Rep_SummaryNone">This never happens. Check the dates.</sys:String>
+    <sys:String x:Key="Str_Rep_Scope">THIS IS A REPEATING APPOINTMENT</sys:String>
+    <sys:String x:Key="Str_Btn_ThisDate">Just this date</sys:String>
+    <sys:String x:Key="Str_Btn_WholeSeries">The whole series</sys:String>
+    <sys:String x:Key="Str_Err_RepeatEnd">Say when the repeat ends, or set it to never end.</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Only this date is removed. The rest of the series stays.</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">Every date in this series is removed. This cannot be undone.</sys:String>
+
     <sys:String x:Key="Str_Status_Ready">Ready</sys:String>
     <sys:String x:Key="Str_Status_Added">Added {0}</sys:String>
     <sys:String x:Key="Str_Status_Saved">Saved {0}</sys:String>
     <sys:String x:Key="Str_Status_Deleted">Deleted {0}</sys:String>
     <sys:String x:Key="Str_Status_Imported">Imported {0} appointments</sys:String>
     <sys:String x:Key="Str_Status_ImportedSkipped">Imported {0} appointments, skipped {1} already present</sys:String>
+    <!-- Import caveats, appended to the line above. Each carries its OWN leading sentence break,
+         because that mark is not "." in every language. -->
+    <sys:String x:Key="Str_Status_ImportRepeat">. {0} repeat, and only the first date was added</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnreadable">. {0} had no readable date and were skipped</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnsupported">. {0} were tasks or notes, which Killendar does not store</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import failed: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Exported {0} appointments</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export failed: {0}</sys:String>
@@ -94,7 +147,7 @@
     <sys:String x:Key="Str_About_UpdateAvailable">Update available: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">Downloading...</sys:String>
     <!-- Tagline is split so the GPLv3 licence and the Killer Tools link stay untranslated. -->
-    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Month, week, day and agenda views, iCalendar import and export, and appointments that never leave your machine. A GPLv3 </sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">A calendar with no account, no sync and nothing phoning home. Your appointments live in one file on your own machine, encrypted if you want them to be. A GPLv3 </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> utility.</sys:String>
 
     <!-- Self-update prompt -->
@@ -163,7 +216,7 @@
     <!-- Manage Killendars: the .kcal file list, its context menu and the rail
          button. {0} is a file name or an error; Str_Kc_Renamed takes {0} old, {1} new. -->
     <sys:String x:Key="Str_Kc_Title">Killendars</sys:String>
-    <sys:String x:Key="Str_Kc_Hint">Every .kcal in your data folder. Double-click a name to rename it.</sys:String>
+    <sys:String x:Key="Str_Kc_Hint">Every .kcal in your data folder. Double-click one to open it; right-click to rename or delete.</sys:String>
     <sys:String x:Key="Str_Kc_FlagEncrypted">encrypted</sys:String>
     <sys:String x:Key="Str_Kc_FlagActive">open</sys:String>
     <sys:String x:Key="Str_Kc_SelectFirst">Select a Killendar first.</sys:String>
@@ -182,6 +235,8 @@
     <sys:String x:Key="Str_Kc_LoadFailed">Load failed: {0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} is on the clipboard - paste it anywhere that takes a file</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">Copy failed: {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_AddAppointment">Add appointment</sys:String>
+    <sys:String x:Key="Str_Ctx_Open">Open</sys:String>
     <sys:String x:Key="Str_Ctx_Rename">Rename</sys:String>
     <sys:String x:Key="Str_Ctx_Delete">Delete</sys:String>
     <sys:String x:Key="Str_Ctx_CopyFile">Copy file</sys:String>
@@ -234,5 +289,78 @@
     <sys:String x:Key="Str_TT_ViewList">List view</sys:String>
     <sys:String x:Key="Str_TT_ViewIcons">Icon view</sys:String>
     <sys:String x:Key="Str_TT_ViewDetails">Details view</sys:String>
+    <sys:String x:Key="Str_TT_ShowHidden">Show hidden and system items</sys:String>
+    <sys:String x:Key="Str_TT_RecentLocations">Recent locations</sys:String>
+    <sys:String x:Key="Str_Menu_PinPlace">Pin to places</sys:String>
+    <sys:String x:Key="Str_Menu_UnpinPlace">Remove from places</sys:String>
+    <sys:String x:Key="Str_Btn_Edit">Edit</sys:String>
+    <sys:String x:Key="Str_Side_NoAppointments">No appointments on this day</sys:String>
+
+    <!-- Portable install (family install system) -->
+    <sys:String x:Key="Str_Portable">PORTABLE</sys:String>
+    <sys:String x:Key="Str_Btn_Install">Install Killendar...</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallMsg">Install Killendar on this computer?</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallBullets">Killendar is copied to your programs folder and a Start menu entry is added.&#x0a;Your Killendars are not touched, and this copy of the exe is left where it is.&#x0a;Killendar restarts from the installed location.</sys:String>
+    <sys:String x:Key="Str_Btn_DoInstall">Install</sys:String>
+    <sys:String x:Key="Str_Chk_Desktop">Add a desktop shortcut</sys:String>
+    <sys:String x:Key="Str_Chk_AllUsers">Install for everyone on this computer (needs admin)</sys:String>
+    <sys:String x:Key="Str_Status_InstallFailed">Install did not complete - Killendar is still running portable.</sys:String>
+
+    <!-- Shortcuts overlay (F1). One binding table in Shell/ShortcutsOverlay.cs feeds both the
+         list and the keyboard map, so each of these is used in exactly one place. -->
+    <sys:String x:Key="Str_KS_Title">Keyboard shortcuts</sys:String>
+    <sys:String x:Key="Str_KS_ViewList">LIST</sys:String>
+    <sys:String x:Key="Str_KS_ViewMap">KEYBOARD</sys:String>
+    <sys:String x:Key="Str_KS_Hint">Single keys stand down while you are typing</sys:String>
+    <sys:String x:Key="Str_TT_Shortcuts">Keyboard shortcuts (F1)</sys:String>
+    <sys:String x:Key="Str_KS_GrpViews">VIEWS</sys:String>
+    <sys:String x:Key="Str_KS_GrpNav">NAVIGATION</sys:String>
+    <sys:String x:Key="Str_KS_GrpAppt">APPOINTMENTS</sys:String>
+    <sys:String x:Key="Str_KS_GrpFile">FILE</sys:String>
+    <sys:String x:Key="Str_KS_GrpHelp">HELP</sys:String>
+    <sys:String x:Key="Str_KS_Month">Month view</sys:String>
+    <sys:String x:Key="Str_KS_Week">Week view</sys:String>
+    <sys:String x:Key="Str_KS_Day">Day view</sys:String>
+    <sys:String x:Key="Str_KS_Agenda">Agenda view</sys:String>
+    <sys:String x:Key="Str_KS_Prev">Previous month, week or day</sys:String>
+    <sys:String x:Key="Str_KS_Next">Next month, week or day</sys:String>
+    <sys:String x:Key="Str_KS_Today">Jump to today</sys:String>
+    <sys:String x:Key="Str_KS_New">New appointment here</sys:String>
+    <sys:String x:Key="Str_KS_Panel">Appointment panel</sys:String>
+    <sys:String x:Key="Str_KS_Import">Import an .ics file</sys:String>
+    <sys:String x:Key="Str_KS_Export">Export to .ics</sys:String>
+    <sys:String x:Key="Str_KS_ThisList">This shortcut list</sys:String>
+    <sys:String x:Key="Str_KS_About">About card</sys:String>
+    <sys:String x:Key="Str_KS_Close">Close the panel or a card</sys:String>
+
+    <!-- Categories -->
+    <sys:String x:Key="Str_Fld_Categories">CATEGORIES</sys:String>
+    <sys:String x:Key="Str_Hint_NoCategories">No categories yet. Add some from the sidebar rail.</sys:String>
+    <sys:String x:Key="Str_TT_Categories">Categories</sys:String>
+    <!-- Density.cs appends the current lines-per-hour in brackets, so this reads
+         "Grid density - click or scroll  (2)". {0} in the status line is that same number. -->
+    <sys:String x:Key="Str_TT_Density">Grid density - click or scroll</sys:String>
+    <sys:String x:Key="Str_St_Density">Grid density: {0} line(s) per hour</sys:String>
+    <sys:String x:Key="Str_Cat_Title">Categories</sys:String>
+    <sys:String x:Key="Str_Cat_Hint">Colors for this Killendar. An appointment can carry more than one; the first one colors it.</sys:String>
+    <sys:String x:Key="Str_Cat_NeedName">Give the category a name.</sys:String>
+    <sys:String x:Key="Str_Cat_Exists">There is already a category with that name.</sys:String>
+    <sys:String x:Key="Str_Cat_DeleteHead">Delete {0}?</sys:String>
+    <sys:String x:Key="Str_Cat_DeleteBody">It will be removed from every appointment that carries it. The appointments themselves are left alone.</sys:String>
+    <sys:String x:Key="Str_Btn_CatAdd">Add</sys:String>
+    <sys:String x:Key="Str_Btn_Done">Done</sys:String>
+    <sys:String x:Key="Str_TT_CatPickColor">Pick a color for the new category</sys:String>
+    <sys:String x:Key="Str_TT_CatRecolor">Change color</sys:String>
+    <sys:String x:Key="Str_TT_CatRename">Rename</sys:String>
+    <sys:String x:Key="Str_TT_CatDelete">Delete</sys:String>
+
+    <!-- Color picker -->
+    <sys:String x:Key="Str_Dlg_PickColor">Pick a color</sys:String>
+    <sys:String x:Key="Str_TT_Eyedropper">Pick a color from anywhere on screen</sys:String>
+    <sys:String x:Key="Str_Btn_Reset">Reset</sys:String>
+    <sys:String x:Key="Str_TT_ReplaceSwatch">Click, then click a swatch to set it to the current color</sys:String>
+    <sys:String x:Key="Str_TT_ResetSwatches">Reset swatches to defaults</sys:String>
+    <sys:String x:Key="Str_TT_SwatchReplace">Click to set this swatch to the current color</sys:String>
+    <sys:String x:Key="Str_TT_SwatchUse">Click to use this color</sys:String>
 
 </ResourceDictionary>

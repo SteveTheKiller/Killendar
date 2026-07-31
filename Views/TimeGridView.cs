@@ -20,6 +20,11 @@ namespace Killendar.Views
     /// </summary>
     internal abstract class TimeGridView : UserControl, ICalendarView
     {
+        // Hover band opacity at rest and while the button is down. RowHoverBrush at full strength
+        // is too close to an event chip - the point is to hint at a target, not look like content.
+        private const double HoverRest = 0.55;
+        private const double HoverPress = 1.0;
+
         private readonly int _dayCount;
         private EventStore? _store;
         private DateTime _anchor = DateTime.Today;
@@ -32,12 +37,24 @@ namespace Killendar.Views
         private readonly List<Canvas> _dayCanvases = new List<Canvas>();
 
         public event Action<CalendarEvent>? EventSelected;
+        public event Action<DateTime>? DaySelected;
         public event Action<DateTime>? SlotSelected;
+        public event Action<int>? DensityStepped;
 
         protected TimeGridView(int dayCount)
         {
             _dayCount = dayCount;
             BuildSkeleton();
+
+            // Ctrl+wheel changes density; plain wheel keeps scrolling the day. Preview, so it is
+            // seen before the ScrollViewer consumes it, and Handled so the grid does not also
+            // scroll while zooming.
+            PreviewMouseWheel += (_, e) =>
+            {
+                if (Keyboard.Modifiers != ModifierKeys.Control) return;
+                e.Handled = true;
+                DensityStepped?.Invoke(e.Delta > 0 ? +1 : -1);
+            };
         }
 
         /// <summary>First day shown. Week starts on the culture's first day; Day is just the anchor.</summary>
@@ -47,6 +64,81 @@ namespace Killendar.Views
         {
             get => _anchor;
             set { _anchor = value; Rebuild(); }
+        }
+
+        // date -> that column's selection band. Rebuilt with the columns.
+        private readonly Dictionary<DateTime, Border> _selectionBands = new Dictionary<DateTime, Border>();
+
+        // Today's decoration, when today is in range. Null otherwise.
+        private Border? _todayTint;   // the column fill
+        private Border? _todayEdge;   // the column's accent edges, when another day is selected
+        private Border? _todayHead;   // the day header at the top of that column
+
+        private DateTime? _selDay;
+        private TimeSpan? _selTime;
+
+        /// <summary>
+        /// Marks the half hour the appointment panel is talking about. Needs BOTH parts: with no
+        /// time (all-day, or a half-typed time box) there is no slot to mark, so the band is hidden
+        /// rather than parked at midnight, which would point at a real slot nobody chose.
+        /// </summary>
+        public void SetSelection(DateTime? day, TimeSpan? timeOfDay)
+        {
+            if (day?.Date == _selDay && timeOfDay == _selTime) return;
+            _selDay = day?.Date;
+            _selTime = timeOfDay;
+            ApplySelectionBand();
+        }
+
+        /// <summary>
+        /// Shows the band on the one column that matches, hides it everywhere else. Only the two
+        /// affected columns actually change, but there are at most seven and each is one Border, so
+        /// this stays cheap enough to run on a keystroke.
+        /// </summary>
+        private void ApplySelectionBand()
+        {
+            int snap = CalendarChrome.SnapMinutes;
+            double slot = CalendarChrome.HourHeight / CalendarChrome.Subdivisions;
+            foreach (var kv in _selectionBands)
+            {
+                bool on = _selDay != null && _selTime != null && kv.Key == _selDay;
+                if (on)
+                {
+                    // Snap to the visible subdivision, the same granularity a click resolves to, so
+                    // the band never promises a slot different from the one the click would give.
+                    int band = (int)(_selTime!.Value.TotalMinutes / snap);
+                    band = Math.Max(0, Math.Min(24 * CalendarChrome.Subdivisions - 1, band));
+                    Canvas.SetTop(kv.Value, band * slot);
+                    kv.Value.Height = slot;
+                }
+                kv.Value.Visibility = on ? Visibility.Visible : Visibility.Collapsed;
+            }
+
+            // Today's column AND its header, on Month's rule: fill only while nothing is selected,
+            // otherwise the accent edge. Selecting today itself keeps the fill - it is the
+            // selected day.
+            bool todayFilled = _selDay == null || _selDay == DateTime.Today;
+            if (_todayTint != null)
+                _todayTint.Visibility = todayFilled ? Visibility.Visible : Visibility.Collapsed;
+            if (_todayEdge != null)
+                _todayEdge.Visibility = todayFilled ? Visibility.Collapsed : Visibility.Visible;
+
+            if (_todayHead != null)
+            {
+                if (todayFilled)
+                {
+                    _todayHead.SetResourceReference(Border.BackgroundProperty, "SelectionBg");
+                    _todayHead.BorderThickness = new Thickness(0);
+                }
+                else
+                {
+                    // Edges only, matching the column beneath it, so the two read as one marked
+                    // strip rather than a lit header over an unlit column.
+                    _todayHead.Background = Brushes.Transparent;
+                    _todayHead.BorderThickness = new Thickness(1, 1, 1, 0);
+                    _todayHead.SetResourceReference(Border.BorderBrushProperty, "PrimaryBrush");
+                }
+            }
         }
 
         public abstract string PeriodLabel { get; }
@@ -108,7 +200,44 @@ namespace Killendar.Views
             Grid.SetRow(_scroller, 2);
             root.Children.Add(_scroller);
 
+            // The body scrolls vertically and its scrollbar is effectively always visible (24h of
+            // rows), which makes the body's star columns narrower than the header's by exactly the
+            // bar's width - every day boundary drifted right of its header, worst at SAT. The
+            // header grid gets a matching right inset, measured from the themed bar itself rather
+            // than SystemParameters (the template is not the system metric - KillerShell's rule).
+            _scroller.ScrollChanged += (_, _) => SyncHeaderInset();
+            _scroller.SizeChanged   += (_, _) => SyncHeaderInset();
+            _scroller.Loaded        += (_, _) => SyncHeaderInset();
+
             Content = root;
+        }
+
+        private void SyncHeaderInset()
+        {
+            double inset = 0;
+            if (_scroller.ComputedVerticalScrollBarVisibility == Visibility.Visible)
+            {
+                var bar = FindVerticalBar(_scroller);
+                inset = bar?.ActualWidth ?? SystemParameters.VerticalScrollBarWidth;
+            }
+            var m = _headerRow.Margin;
+            if (Math.Abs(m.Right - inset) < 0.5) return;   // no churn on every layout pass
+            _headerRow.Margin = new Thickness(m.Left, m.Top, inset, m.Bottom);
+        }
+
+        // A ScrollViewer has two scrollbars, so the orientation is checked rather than assumed.
+        private static System.Windows.Controls.Primitives.ScrollBar? FindVerticalBar(DependencyObject root)
+        {
+            int n = System.Windows.Media.VisualTreeHelper.GetChildrenCount(root);
+            for (int i = 0; i < n; i++)
+            {
+                var c = System.Windows.Media.VisualTreeHelper.GetChild(root, i);
+                if (c is System.Windows.Controls.Primitives.ScrollBar sb &&
+                    sb.Orientation == Orientation.Vertical) return sb;
+                var deeper = FindVerticalBar(c);
+                if (deeper != null) return deeper;
+            }
+            return null;
         }
 
         private void ApplyColumns(Grid g)
@@ -124,6 +253,12 @@ namespace Killendar.Views
             if (_store == null) return;
 
             _dayCanvases.Clear();
+            // These belong to columns that are about to be discarded; a stale entry would move or
+            // show a Border that is no longer in the tree.
+            _selectionBands.Clear();
+            _todayTint = null;
+            _todayEdge = null;
+            _todayHead = null;
             _headerRow.Children.Clear();
             _bodyGrid.Children.Clear();
             _bodyGrid.RowDefinitions.Clear();
@@ -149,18 +284,49 @@ namespace Killendar.Views
                 };
                 var dow = CalendarChrome.Text(
                     CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames[(int)date.DayOfWeek].ToUpperInvariant(),
-                    isToday ? "PrimaryBrush" : "DimTextBrush", 10);
+                    isToday ? "SelectionFg" : "DimTextBrush", 10);
                 dow.VerticalAlignment = VerticalAlignment.Center;
                 dow.Margin = new Thickness(0, 0, 6, 0);
+                // SelectionFg on BOTH the weekday name and the number, matching MonthView. The name
+                // used to be PrimaryBrush while the number was SelectionFg, so "THU 30" was printed
+                // in two different colours on the one header. (Steve, 2026-07-30.)
                 var num = CalendarChrome.Text(date.Day.ToString(),
-                    isToday ? "PrimaryBrush" : "TextBrush", 13,
+                    isToday ? "SelectionFg" : "TextBrush", 13,
                     isToday ? FontWeights.Bold : (FontWeight?)null);
                 num.VerticalAlignment = VerticalAlignment.Center;
                 sp.Children.Add(dow);
                 sp.Children.Add(num);
 
-                Grid.SetColumn(sp, i + 1);
-                _headerRow.Children.Add(sp);
+                // Today's header gets the SAME fill-or-edge treatment as its column and as
+                // MonthView's cell, rather than being marked by text colour alone. On the
+                // TableHeaderBrush strip a white bold label is barely a marker at all - Month
+                // fills the whole cell, so Week and Day fill the whole header.
+                //
+                // The Border wraps the label whether or not it is today: an unwrapped one would sit
+                // at a different offset in the row, because the Border's own padding moves it.
+                var head = new Border { Child = sp, Padding = new Thickness(0, 2, 0, 2) };
+
+                // The header is the "whole day" surface a time grid has, so clicking it opens the
+                // day's agenda in the sidebar - the empty slots below stay the explicit create.
+                // Transparent, not null: a null Background gets no mouse events. (Steve, 2026-07-30.)
+                if (head.Background == null) head.Background = Brushes.Transparent;
+                head.Cursor = System.Windows.Input.Cursors.Hand;
+                var headDate = date;
+                head.MouseLeftButtonDown += (_, e) =>
+                {
+                    e.Handled = true;
+                    DaySelected?.Invoke(headDate.Date);
+                };
+                if (isToday)
+                {
+                    _todayHead = head;
+                    // Rounded on the TOP only, so it reads as a tab on the head of the card rather
+                    // than a floating pill - the same 5px the strip's own corners use.
+                    head.CornerRadius = new CornerRadius(5, 5, 0, 0);
+                }
+
+                Grid.SetColumn(head, i + 1);
+                _headerRow.Children.Add(head);
             }
 
             // ---- all-day strip ----
@@ -212,6 +378,10 @@ namespace Killendar.Views
                 _bodyGrid.Children.Add(canvas);
                 _dayCanvases.Add(canvas);
             }
+
+            // The columns are freshly built and their bands are all hidden; re-apply the marker so
+            // it survives a rebuild (a navigation step, a store refresh, a language change).
+            ApplySelectionBand();
         }
 
         private Canvas BuildDayCanvas(DateTime date, double fullHeight)
@@ -223,35 +393,150 @@ namespace Killendar.Views
             canvas.Children.Add(border);
             border.SetBinding(WidthProperty, new System.Windows.Data.Binding("ActualWidth") { Source = canvas });
 
-            // Hour lines
-            for (int h = 1; h < 24; h++)
+            // Hour lines, plus the density subdivisions inside each hour. The interior lines are
+            // fainter than the hour line so the hour is still the thing you read the grid by -
+            // equal weight turns a quarter-hour grid into visual static.
+            int subs = CalendarChrome.Subdivisions;
+            double subHeight = CalendarChrome.HourHeight / subs;
+            for (int h = 0; h < 24; h++)
             {
-                var line = new Border { BorderThickness = new Thickness(0, 1, 0, 0), Height = 1 };
-                line.Themed(Border.BorderBrushProperty, "CardBorderBrush");
-                line.Opacity = 0.6;
-                Canvas.SetTop(line, h * CalendarChrome.HourHeight);
-                Canvas.SetLeft(line, 0);
-                line.SetBinding(WidthProperty, new System.Windows.Data.Binding("ActualWidth") { Source = canvas });
-                canvas.Children.Add(line);
+                for (int s = 0; s < subs; s++)
+                {
+                    if (h == 0 && s == 0) continue;         // no line on the very top edge
+                    bool onTheHour = s == 0;
+                    var line = new Border { BorderThickness = new Thickness(0, 1, 0, 0), Height = 1 };
+                    line.Themed(Border.BorderBrushProperty, "CardBorderBrush");
+                    line.Opacity = onTheHour ? 0.6 : 0.25;
+                    Canvas.SetTop(line, h * CalendarChrome.HourHeight + s * subHeight);
+                    Canvas.SetLeft(line, 0);
+                    line.SetBinding(WidthProperty, new System.Windows.Data.Binding("ActualWidth") { Source = canvas });
+                    canvas.Children.Add(line);
+                }
             }
 
-            // Today's date gets a tinted backdrop so the current column is obvious.
+            // Today's column, on exactly the rule Month uses for today's cell: it carries the
+            // SelectionBg fill only while NOTHING is selected, and drops to a 1px accent edge as
+            // soon as the panel is talking about some other day - so the loudest thing on screen is
+            // always the day being edited. This tint used to be unconditional, which is why Week
+            // and Day did not match Month. (Steve, 2026-07-30.)
             if (date == DateTime.Today)
             {
-                var tint = new Border { Height = fullHeight, Opacity = 0.5, IsHitTestVisible = false };
-                tint.Themed(Border.BackgroundProperty, "RowSelectedBrush");
-                tint.SetBinding(WidthProperty, new System.Windows.Data.Binding("ActualWidth") { Source = canvas });
-                canvas.Children.Insert(0, tint);
+                _todayTint = new Border { Height = fullHeight, Opacity = 0.5, IsHitTestVisible = false };
+                _todayTint.Themed(Border.BackgroundProperty, "SelectionBg");
+                _todayTint.SetBinding(WidthProperty, new System.Windows.Data.Binding("ActualWidth") { Source = canvas });
+                canvas.Children.Insert(0, _todayTint);
+
+                // Edges only - a full box would draw a line across the bottom of a column that
+                // scrolls, which reads as a divider rather than a marker.
+                _todayEdge = new Border
+                {
+                    Height = fullHeight,
+                    IsHitTestVisible = false,
+                    BorderThickness = new Thickness(1, 0, 1, 0),
+                    Visibility = Visibility.Collapsed,
+                };
+                _todayEdge.Themed(Border.BorderBrushProperty, "PrimaryBrush");
+                _todayEdge.SetBinding(WidthProperty, new System.Windows.Data.Binding("ActualWidth") { Source = canvas });
+                canvas.Children.Insert(1, _todayEdge);
             }
+
+            // Hover band. The column is one Canvas rather than a grid of cells, so there is nothing
+            // to light up on its own - this is a single half-hour-tall Border that follows the
+            // pointer. Half an hour because that is exactly what a click snaps to: highlighting a
+            // whole hour would promise a slot different from the one you actually get.
+            //
+            // IsHitTestVisible false, or it swallows the clicks it is advertising. Added before
+            // PlaceTimedEvents so it sits UNDER the event chips.
+            // One subdivision tall, so the bands track the density: at level 0 that is the hour, at
+            // level 3 the quarter hour. Half an hour was hardcoded before density existed.
+            double slot = CalendarChrome.HourHeight / CalendarChrome.Subdivisions;
+
+            // SELECTED band - the slot the appointment panel is talking about. Same geometry
+            // as the hover band and added first, so hovering elsewhere still reads on top of it.
+            // Solid SelectionBg with an accent edge, because unlike hover this one persists and has
+            // to be findable after the pointer has moved away. (Steve, 2026-07-30.)
+            var selected = new Border
+            {
+                Height = slot,
+                Visibility = Visibility.Collapsed,
+                IsHitTestVisible = false,
+                BorderThickness = new Thickness(0, 1, 0, 1),
+            };
+            selected.Themed(Border.BackgroundProperty, "SelectionBg");
+            selected.Themed(Border.BorderBrushProperty, "PrimaryBrush");
+            selected.SetBinding(WidthProperty, new System.Windows.Data.Binding("ActualWidth") { Source = canvas });
+            canvas.Children.Add(selected);
+            _selectionBands[date.Date] = selected;
+
+            var hover = new Border
+            {
+                Height = slot,
+                Opacity = HoverRest,
+                Visibility = Visibility.Collapsed,
+                IsHitTestVisible = false,
+            };
+            hover.Themed(Border.BackgroundProperty, "RowHoverBrush");
+            hover.SetBinding(WidthProperty, new System.Windows.Data.Binding("ActualWidth") { Source = canvas });
+            canvas.Children.Add(hover);
+
+            hover.Height = slot;
+
+            // The band the pointer was last in. MouseMove fires on every pixel, and moving the
+            // Border re-arranges the whole column - which on a day with events is real work for a
+            // no-op. The band only changes once per subdivision of column height, so most moves
+            // are skipped. -1 means "not shown", so re-entering the column always paints.
+            int lastBand = -1;
+
+            void MoveHover(double y)
+            {
+                int band = (int)(Math.Max(0, Math.Min(fullHeight - 1, y)) / slot);
+                if (band == lastBand) return;
+                lastBand = band;
+                Canvas.SetTop(hover, band * slot);
+                hover.Visibility = Visibility.Visible;
+            }
+
+            canvas.MouseMove += (s, e) => MoveHover(e.GetPosition(canvas).Y);
+            canvas.MouseLeave += (s, e) =>
+            {
+                lastBand = -1;
+                hover.Visibility = Visibility.Collapsed;
+                hover.Opacity = HoverRest;
+            };
 
             // Click empty space to create at that time, rounded to the nearest half hour.
             canvas.MouseLeftButtonDown += (s, e) =>
             {
                 if (e.Handled) return;
                 double y = e.GetPosition(canvas).Y;
-                double hours = Math.Max(0, Math.Min(23.5, y / CalendarChrome.HourHeight));
-                int half = (int)Math.Round(hours * 2);
-                SlotSelected?.Invoke(date.Date.AddMinutes(half * 30));
+                // Press: deepen the band under the pointer so the click registers visually before
+                // the sidebar opens.
+                MoveHover(y);
+                hover.Opacity = HoverPress;
+                // Snap to the visible subdivision, so a click lands on a line the grid actually
+                // drew. Clamped one slot short of midnight rather than at 23:30, which was the old
+                // fixed half-hour assumption.
+                int snap = CalendarChrome.SnapMinutes;
+                double mins = Math.Max(0, Math.Min(24 * 60 - snap, y / CalendarChrome.HourHeight * 60));
+                int half = (int)Math.Round(mins / snap);
+                SlotSelected?.Invoke(date.Date.AddMinutes(half * snap));
+            };
+            canvas.MouseLeftButtonUp += (s, e) => hover.Opacity = HoverRest;
+
+            // Right-click offers the same thing. The menu is rebuilt on each press rather than
+            // assigned once, because the time it should create at depends on where in the column
+            // the pointer is. Assigning on button-DOWN is in time: WPF opens the menu on UP.
+            canvas.MouseRightButtonDown += (s, e) =>
+            {
+                double y = e.GetPosition(canvas).Y;
+                // Snap to the visible subdivision, so a click lands on a line the grid actually
+                // drew. Clamped one slot short of midnight rather than at 23:30, which was the old
+                // fixed half-hour assumption.
+                int snap = CalendarChrome.SnapMinutes;
+                double mins = Math.Max(0, Math.Min(24 * 60 - snap, y / CalendarChrome.HourHeight * 60));
+                int half = (int)Math.Round(mins / snap);
+                canvas.ContextMenu = CalendarChrome.DayMenu(
+                    date.Date.AddMinutes(half * snap), d => SlotSelected?.Invoke(d));
             };
 
             PlaceTimedEvents(canvas, date);

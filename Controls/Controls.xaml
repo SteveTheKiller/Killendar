@@ -104,15 +104,24 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <!-- Hover/press are a translucent tint OVER the accent, so the feedback works
+                         whatever the palette says. Killendar's 15 accent files all set
+                         PrimaryHoverBrush == PrimaryBrush, so the old brush swap was a no-op and
+                         this button had never shown a hover. Ported from KillerShell.
+                         (Steve, 2026-07-30.) -->
+                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="4">
+                        <Grid>
+                            <Border x:Name="tint" CornerRadius="4" Background="Transparent"/>
+                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource PrimaryHoverBrush}"/>
+                            <Setter TargetName="tint" Property="Background" Value="#2EFFFFFF"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource PrimaryPressedBrush}"/>
+                            <Setter TargetName="tint" Property="Background" Value="#38000000"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5"/>
@@ -180,11 +189,68 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <!-- Order matters: IsPressed after IsMouseOver so it wins. -->
+                        <!-- A real fill change, not an opacity fade. Opacity 0.75 on a PaneBrush
+                             button over the dark panel is a ~9-step move - invisible in practice,
+                             so Cancel read as dead. (Steve, 2026-07-30: "THERE IS NO HOVER".) -->
+                        <!-- Fill only, no accent border: the accent outline is the CONFIRM
+                             button's identity (OutlineButton), and a neutral button borrowing it
+                             on hover reads as a second confirm. (Steve, 2026-07-30.) -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Opacity" Value="0.75"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource RowHoverBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Opacity" Value="0.6"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource SurfaceBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.4"/>
+                            <Setter Property="Cursor" Value="Arrow"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Chip Toggle: a small on/off pill for picking one of a short row of options (the repeat
+         pattern, the weekdays, how a series ends).
+
+         A stock CheckBox or RadioButton renders light grey on every theme, and a bare ToggleButton
+         keeps WPF's DEFAULT template, which paints the system highlight blue on hover whatever the
+         theme says - the same trap the all-day toggle and the sidebar close X fell into.
+
+         CHECKED IS A FILL, not an outline. The accent OUTLINE is the confirm button's identity
+         (OutlineButton); a chip wearing it would read as the primary action rather than as a
+         setting that is currently on. -->
+    <Style x:Key="ChipToggle" TargetType="ToggleButton">
+        <Setter Property="Background" Value="{DynamicResource PaneBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontFamily" Value="Consolas"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Padding" Value="8,3"/>
+        <Setter Property="Margin" Value="0,0,4,4"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource RowHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                        </Trigger>
+                        <!-- After IsMouseOver so hovering a checked chip does not undo the fill. -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.4"/>
@@ -200,7 +266,14 @@
     <!-- Inputs take the darkest tone with a dim border, not the mid surface: the border is what
          delineates a field, not a lighter fill. -->
     <Style x:Key="DarkTextBox" TargetType="TextBox">
-        <Setter Property="Background" Value="{DynamicResource BackgroundBrush}"/>
+        <!-- SurfaceBrush (#333333 on Dark), NOT BackgroundBrush. The appointment sidebar paints
+             nothing of its own and sits straight on the window's BackgroundBrush (#1c1c1c), so a
+             BackgroundBrush field was the exact same colour as the panel behind it - the only thing
+             separating a text box from empty space was its 1px border. KillerNotes has always used
+             SurfaceBrush here; this is that. (Steve, 2026-07-30.)
+             It reads correctly on the other surfaces too: the dialog cards are PaneBrush (#3a3a3a),
+             against which a SurfaceBrush field is a step darker and reads as recessed. -->
+        <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -334,6 +407,45 @@
     </Style>
 
     <!-- Context Menu (grain + rounding + shadow match the theme flyout) -->
+    <!-- ═══════════ ONE definition for every flyout surface ═══════════
+         Menus and flyouts used to be written twice: the ContextMenu template here, and a
+         hand-rolled Border on ThemePopup in MainWindow.xaml with its own margin, its own
+         background and its own grain brush. Same intent, two sets of numbers, so they drifted
+         apart and only matched when someone noticed and re-tuned one by hand.
+         (Steve, 2026-07-30: "WHY WOULD THE MENUS BE WRITTEN DIFFERENTLY?")
+
+         Both now use these two styles, so there is nothing left to keep in sync. Change a flyout's
+         look HERE and every flyout changes with it. Do not put chrome values on a flyout again. -->
+
+    <!-- The card: fill, frame, radius, shadow-room margin and the shadow itself. -->
+    <Style x:Key="FlyoutCard" TargetType="Border">
+        <Setter Property="Background" Value="{DynamicResource MenuBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="6"/>
+        <!-- Margin is the room the drop shadow renders into: a Popup clips to its own bounds, so
+             without it the shadow is cut off square. 6 all round. -->
+        <Setter Property="Margin" Value="6"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="Black" BlurRadius="22" ShadowDepth="4" Direction="270" Opacity="0.55"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- The grain overlay. Goes LAST inside the card so it lies OVER the content, including a
+         highlighted row's solid SelectionBg fill - underneath, that row is the one flat surface in
+         the app. Radius 5 = the card's 6 minus its 1px border, so the texture stops exactly at the
+         inside of the frame. Uses the shared GrainTileBrush; flyouts do not get private grain
+         brushes wired through Chrome.cs any more. -->
+    <Style x:Key="FlyoutGrain" TargetType="Border">
+        <Setter Property="IsHitTestVisible" Value="False"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Background" Value="{DynamicResource GrainTileBrush}"/>
+        <Setter Property="Opacity" Value="{DynamicResource GrainOpacity}"/>
+    </Style>
+
     <Style TargetType="ContextMenu">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="HasDropShadow" Value="False"/>
@@ -345,18 +457,31 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ContextMenu">
-                    <Border Margin="6" CornerRadius="6"
-                            Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
-                        <Border.Effect>
-                            <DropShadowEffect Color="Black" BlurRadius="22" ShadowDepth="4" Direction="270" Opacity="0.55"/>
-                        </Border.Effect>
+                    <!-- FADE IN. A ContextMenu has no PopupAnimation property - it is not a Popup,
+                         it is hosted inside one WPF owns - so the fade is driven from the template
+                         with an EventTrigger on Loaded. Submenus already faded, so a menu appeared
+                         instantly while its own children faded in, which is backwards. 150ms
+                         ease-out, the curve Anim.FadeIn uses. (Steve, 2026-07-30.) -->
+                    <!-- Chrome comes from FlyoutCard - the SAME style the theme flyout uses.
+                         Opacity 0 is the fade's start value, not chrome. -->
+                    <Border x:Name="MenuRoot" Opacity="0" Style="{StaticResource FlyoutCard}">
                         <Grid>
-                            <Border IsHitTestVisible="False" CornerRadius="5"
-                                    Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
                             <StackPanel IsItemsHost="True" Margin="{TemplateBinding Padding}" KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                            <Border Style="{StaticResource FlyoutGrain}"/>
                         </Grid>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="ContextMenu.Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="MenuRoot" Storyboard.TargetProperty="Opacity"
+                                                     From="0" To="1" Duration="0:0:0.15">
+                                        <DoubleAnimation.EasingFunction><QuadraticEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -365,19 +490,104 @@
     <Style TargetType="MenuItem">
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource MenuTextBrush}"/>
+        <!-- TextBrush, not MenuTextBrush: menu items are body text. See KillerUI. -->
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Padding" Value="24,7"/>
+        <!-- 8 on the left, not 24: the 16px icon gutter provides the inset now. -->
+        <Setter Property="Padding" Value="8,6,10,6"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="MenuItem">
-                    <Border x:Name="bg" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
-                        <ContentPresenter ContentSource="Header" VerticalAlignment="Center"/>
+                    <!-- Four columns, the family standard from KillerPDF (KillerUI/Controls):
+                           0  16px gutter - MenuItem.Icon, or the check glyph when checkable
+                           1  the header
+                           2  InputGestureText, right-aligned
+                           3  submenu chevron
+                         This template used to render ONLY the header, so Icon, InputGestureText
+                         and submenus were all silently dropped - which is why the themed system
+                         menu came up with no icons. -->
+                    <Border x:Name="bg" Background="{TemplateBinding Background}"
+                            Padding="{TemplateBinding Padding}" CornerRadius="3" SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ContentPresenter x:Name="IconPresenter" Grid.Column="0" ContentSource="Icon"
+                                              VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <TextBlock x:Name="Check" Grid.Column="0" Text="&#xE73E;"
+                                       FontFamily="Segoe MDL2 Assets" FontSize="11"
+                                       Foreground="{DynamicResource PrimaryBrush}"
+                                       VerticalAlignment="Center" HorizontalAlignment="Left"
+                                       Visibility="Collapsed"/>
+
+                            <ContentPresenter Grid.Column="1" ContentSource="Header" VerticalAlignment="Center"/>
+
+                            <TextBlock x:Name="Gesture" Grid.Column="2" Text="{TemplateBinding InputGestureText}"
+                                       Foreground="{DynamicResource MutedTextBrush}" FontSize="11"
+                                       VerticalAlignment="Center" Margin="24,0,0,0"/>
+
+                            <TextBlock x:Name="SubArrow" Grid.Column="3" Text="&#xE76C;"
+                                       FontFamily="Segoe MDL2 Assets" FontSize="8"
+                                       Foreground="{DynamicResource MutedTextBrush}"
+                                       VerticalAlignment="Center" Margin="12,0,0,0"
+                                       Visibility="Collapsed"/>
+
+                            <Popup x:Name="SubPopup" AllowsTransparency="True" Placement="Right"
+                                   HorizontalOffset="-4" Focusable="False" PopupAnimation="Fade"
+                                   IsOpen="{TemplateBinding IsSubmenuOpen}">
+                                <Grid Margin="6">
+                                    <Border Background="{DynamicResource MenuBackgroundBrush}" CornerRadius="6"
+                                            IsHitTestVisible="False">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="Black" BlurRadius="22" ShadowDepth="4"
+                                                              Direction="270" Opacity="0.55"/>
+                                        </Border.Effect>
+                                    </Border>
+                                    <Border Background="{DynamicResource MenuBackgroundBrush}"
+                                            BorderBrush="{DynamicResource MenuBorderBrush}"
+                                            BorderThickness="1" CornerRadius="6" SnapsToDevicePixels="True">
+                                        <Grid>
+                                            <Border IsHitTestVisible="False" CornerRadius="5"
+                                                    Background="{DynamicResource GrainTileBrush}"
+                                                    Opacity="{DynamicResource GrainOpacity}"/>
+                                            <StackPanel IsItemsHost="True" Margin="0,4"
+                                                        KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Popup>
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="InputGestureText" Value="">
+                            <Setter TargetName="Gesture" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Check" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="IconPresenter" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="Role" Value="SubmenuHeader">
+                            <Setter TargetName="SubArrow" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="Role" Value="TopLevelHeader">
+                            <Setter TargetName="SubArrow" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <!-- Background only - see KillerUI/Controls/Controls.xaml. Recolouring the
+                             text to the accent on hover was the drift Steve caught 2026-07-30. -->
+                        <!-- SELECTION, not a gray wash - solid SelectionBg fill with SelectionFg
+                             text, the same treatment a selected tool or tab gets. The gesture and
+                             chevron are recoloured too: they are MutedTextBrush at rest, which is
+                             unreadable on a saturated fill. Family standard, see KillerUI.
+                             (Steve, 2026-07-30.) -->
                         <Trigger Property="IsHighlighted" Value="True">
-                            <Setter TargetName="bg" Property="Background" Value="{DynamicResource MenuHoverBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+                            <Setter TargetName="bg" Property="Background" Value="{DynamicResource SelectionBg}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
+                            <Setter TargetName="Gesture" Property="Foreground" Value="{DynamicResource SelectionFg}"/>
+                            <Setter TargetName="SubArrow" Property="Foreground" Value="{DynamicResource SelectionFg}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -488,16 +698,114 @@
     </Style>
 
     <!-- Close button: only the glyph reddens on hover (no red block). -->
+    <!-- CAPTION close. This is NOT the same thing as DangerCloseButton and must not be made to
+         match it - there are two close treatments in the family and they are deliberately
+         different:
+
+           CAPTION  (this one, title bar)  - glyph is RED AT REST, hover fills a red BLOCK with a
+                                             white glyph. The Windows caption convention, and what
+                                             KillerPDF has always done.
+           CARD     (DangerCloseButton)    - grey glyph, only the GLYPH reddens on hover, never a
+                                             block. A filled red square is wrong on a card
+                                             floating over the app.
+
+         Copied from KillerPDF 2026-07-30; Killendar had the card behaviour on its caption. -->
     <Style x:Key="ChromeCloseButton" TargetType="Button" BasedOn="{StaticResource ChromeButton}">
-        <Setter Property="Foreground" Value="{DynamicResource ChromeTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource DangerRed}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Bd" Background="Transparent">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource DangerRed}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Toolbar buttons: the glyph sits DIRECTLY on the chrome, no box at rest. The outline
+         appears on hover and stays on the selected view button - KillerPDF's toolbar treatment
+         (Steve, 2026-07-30). Unlike KillerPDF's, this sets no fixed Width/Height: the button has
+         to grow for the text-beside and text-under toolbar modes, so it sizes to its content and
+         only Padding changes per mode (ToolbarStyle.cs).
+         BorderThickness is 1 ALWAYS, transparent at rest. If the border only existed on hover
+         every button would grow 2px as the pointer crossed it and the whole bar would shuffle. -->
+    <Style x:Key="ToolbarButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="9,4"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                            CornerRadius="3" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <ContentPresenter.Effect>
+                                <!-- IconShadowOpacity is 0 on Light, so the glyph stays crisp
+                                     ClearType there and only the dark themes get the depth. -->
+                                <DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="2" Direction="270"
+                                                  Opacity="{DynamicResource IconShadowOpacity}"/>
+                            </ContentPresenter.Effect>
+                        </ContentPresenter>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Fill only. No coloured border: KillerPDF's toolbar has never had one
+                             and this is the family standard (KillerUI/Controls/Controls.xaml). -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource RowHoverBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource SurfaceBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.4"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Card / overlay close X. Only the GLYPH reddens on hover - no filled red block, which is
+         the Windows caption treatment and wrong on a card floating over the app. Same rule
+         ChromeCloseButton follows for the caption X. Named to match KillerPDF, where the
+         family's overlay X comes from, so the two can be compared side by side. -->
+    <Style x:Key="DangerCloseButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}"/>
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="Transparent" CornerRadius="3">
+                        <ContentPresenter x:Name="Cp" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource DangerRed}"/>
+                            <Setter TargetName="Cp" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="#000000" BlurRadius="4" ShadowDepth="1"
+                                                      Direction="270" Opacity="0.5"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource DangerRed}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -614,9 +922,11 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="bg" Property="Background" Value="{DynamicResource RowHoverBrush}"/>
                         </Trigger>
+                        <!-- SelectionBg/SelectionFg, the family pair - never the raw accent.
+                             Same treatment as a selected menu item or tab. (Steve, 2026-07-30.) -->
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="bg" Property="Background" Value="{DynamicResource PrimaryBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
+                            <Setter TargetName="bg" Property="Background" Value="{DynamicResource SelectionBg}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -645,12 +955,12 @@
                 <Setter Property="Foreground" Value="{DynamicResource DimTextBrush}"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>
 
-    <!-- Entry name: normal for folders, muted for files, white while selected. -->
+    <!-- Entry name: normal for folders, muted for files, SelectionFg while selected. -->
     <Style x:Key="PickerName" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="Consolas"/>
         <Setter Property="FontSize" Value="12"/>
@@ -662,7 +972,7 @@
                 <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>
@@ -675,7 +985,7 @@
         <Setter Property="Foreground" Value="{DynamicResource DimTextBrush}"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>
@@ -793,7 +1103,9 @@
 
     <!-- Themed ComboBox; without one a dropdown renders as a stock white box. -->
     <Style TargetType="ComboBox">
-    <Setter Property="Background" Value="{DynamicResource BackgroundBrush}"/>
+    <!-- SurfaceBrush, matching DarkTextBox - see the note there. A combo is an input and has to
+         sit on the same surface as the text boxes beside it, or a form reads as two materials. -->
+    <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
     <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
     <Setter Property="FontFamily" Value="Consolas"/>
     <Setter Property="FontSize" Value="12"/>
@@ -881,6 +1193,221 @@
             </ControlTemplate>
         </Setter.Value>
     </Setter>
+    </Style>
+
+    <!-- ═══════════ FOLDER TREE (file dialog left pane) ═══════════ -->
+    <!-- Ported from KillerShell's Controls.xaml, the family reference. The stock WPF TreeView
+         brings its own chrome: a white SystemColors selection highlight, Aero triangles, and a
+         ScrollViewer whose corner square between the two scrollbars is painted with the system
+         Control brush. All three are replaced rather than patched. The tree sits flat on the
+         dialog card (BackgroundBrush), exactly as KillerShell's sits on its chrome, so the
+         expander's mask fill matches KillerShell's too. -->
+
+    <kui:LastChildConverter x:Key="IsLastChild"/>
+
+    <!-- Expander triangle. Two Paths rather than a glyph font so it stays crisp at any scale.
+         The two states are separate geometries rather than one chevron on a RotateTransform:
+         rotating about the bounding-box center swings the arms back across the connecting line,
+         which draws an X over it. The FILL path paints the panel background between the arms so
+         the line reads as a zigzag rather than showing through - it reaches back to x=7, past
+         the line's left edge at 7.5, and carries no stroke. -->
+    <Style x:Key="TreeExpander" TargetType="ToggleButton">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Width" Value="16"/>
+        <Setter Property="Height" Value="16"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border Background="Transparent" Width="16" Height="16">
+                        <Canvas Width="16" Height="16">
+                            <Path x:Name="arrowFill" Data="M 7,3.5 L 13,7.5 L 7,11.5"
+                                  Fill="{DynamicResource BackgroundBrush}" SnapsToDevicePixels="False"/>
+                            <Path x:Name="arrow" Data="M 8.5,3.5 L 13,7.5 L 8.5,11.5"
+                                  StrokeThickness="1.4" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                                  Stroke="{DynamicResource DimTextBrush}" SnapsToDevicePixels="False"/>
+                        </Canvas>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <!-- Points down, vertex landing on x=8 - the line's center. Arm length
+                                 and angle match the collapsed chevron, worked out by hand: a
+                                 RenderTransform cannot be reached by TargetName (MC4111). -->
+                            <Setter TargetName="arrow"     Property="Data" Value="M 4,5.25 L 8,9.75 L 12,5.25"/>
+                            <Setter TargetName="arrowFill" Property="Data" Value="M 4,5.25 L 8,9.75 L 12,5.25"/>
+                            <Setter TargetName="arrow" Property="Stroke" Value="{DynamicResource PrimaryBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="arrow" Property="Stroke" Value="{DynamicResource PrimaryBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Node text. SelectionBg/SelectionFg pair on selection, same as the picker rows. -->
+    <Style x:Key="TreeName" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Consolas"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TreeViewItem}}" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="FolderTreeItem" TargetType="TreeViewItem">
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="Padding" Value="2,1"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TreeViewItem">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <!-- 16px gutter carries the expander AND the connecting lines, so
+                                 the lines land dead center on the triangle at every depth. -->
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Connecting lines. The vertical runs the full height of the node and
+                             its children; the horizontal is the stub out to this node's icon.
+                             For the last child the vertical is cut to an elbow (see trigger). -->
+                        <Rectangle x:Name="VerLine" Grid.RowSpan="2" Width="1"
+                                   HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                                   Fill="{DynamicResource TreeLineBrush}" SnapsToDevicePixels="True"/>
+                        <!-- Only drawn for a node with no expander - where there IS one, the
+                             chevron is the connector. -->
+                        <Rectangle x:Name="HorLine" Height="1" Margin="8,0,0,0"
+                                   VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                                   Visibility="Collapsed"
+                                   Fill="{DynamicResource TreeLineBrush}" SnapsToDevicePixels="True"/>
+
+                        <ToggleButton x:Name="Expander" Style="{StaticResource TreeExpander}"
+                                      ClickMode="Press" VerticalAlignment="Center"
+                                      IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                        <Border x:Name="Bd" Grid.Column="1" CornerRadius="3" Margin="2,0,0,0"
+                                Background="Transparent" Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter x:Name="PART_Header" ContentSource="Header"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                        </Border>
+
+                        <ItemsPresenter x:Name="ItemsHost" Grid.Row="1" Grid.Column="1"/>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="False">
+                            <Setter TargetName="ItemsHost" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <!-- No children means no chevron, so the elbow stub takes over as the
+                             connector. The vertical stays either way: a leaf still belongs to
+                             the run of siblings drawn down the gutter. -->
+                        <Trigger Property="HasItems" Value="False">
+                            <Setter TargetName="Expander" Property="Visibility" Value="Hidden"/>
+                            <Setter TargetName="HorLine" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" SourceName="Bd" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource RowHoverBrush}"/>
+                        </Trigger>
+                        <!-- SelectionBg, the family pair - not KillerShell's RowSelectedBrush,
+                             because in THIS dialog the tree node and the places row mean the same
+                             thing and must light up the same way. -->
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource SelectionBg}"/>
+                        </Trigger>
+                        <!-- Last sibling: cut the vertical to an elbow. Bound to the container
+                             itself so a recycled container re-evaluates (FolderTree.cs). -->
+                        <DataTrigger Value="True"
+                                     Binding="{Binding RelativeSource={RelativeSource Self}, Converter={StaticResource IsLastChild}}">
+                            <Setter TargetName="VerLine" Property="VerticalAlignment" Value="Top"/>
+                            <Setter TargetName="VerLine" Property="Height" Value="11"/>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ScrollViewer with NO corner element. The stock template puts a Rectangle in the gap
+         where the two scrollbars meet, filled with SystemColors.ControlBrushKey - white in
+         every theme this app ships. The cell is simply left empty here. -->
+    <Style x:Key="BareScrollViewer" TargetType="ScrollViewer">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollViewer">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <ScrollContentPresenter Grid.Row="0" Grid.Column="0"
+                                                Margin="{TemplateBinding Padding}"
+                                                CanContentScroll="{TemplateBinding CanContentScroll}"
+                                                CanHorizontallyScroll="False"
+                                                CanVerticallyScroll="False"/>
+
+                        <!-- The PART_ names are what ScrollViewer wires its own scrolling to, so
+                             Value binds one-way and the control drives it from there. -->
+                        <ScrollBar x:Name="PART_VerticalScrollBar" Grid.Row="0" Grid.Column="1"
+                                   Orientation="Vertical" Cursor="Arrow"
+                                   Minimum="0" Maximum="{TemplateBinding ScrollableHeight}"
+                                   ViewportSize="{TemplateBinding ViewportHeight}"
+                                   Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+
+                        <ScrollBar x:Name="PART_HorizontalScrollBar" Grid.Row="1" Grid.Column="0"
+                                   Orientation="Horizontal" Cursor="Arrow"
+                                   Minimum="0" Maximum="{TemplateBinding ScrollableWidth}"
+                                   ViewportSize="{TemplateBinding ViewportWidth}"
+                                   Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+
+                        <!-- Row 1 / Column 1 deliberately left empty: that is the corner. -->
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="FolderTreeView" TargetType="TreeView">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="ItemContainerStyle" Value="{StaticResource FolderTreeItem}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TreeView">
+                    <Border Background="{TemplateBinding Background}" BorderThickness="0">
+                        <ScrollViewer Style="{StaticResource BareScrollViewer}"
+                                      Padding="{TemplateBinding Padding}"
+                                      CanContentScroll="False"
+                                      HorizontalScrollBarVisibility="Auto"
+                                      VerticalScrollBarVisibility="Auto">
+                            <ItemsPresenter/>
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

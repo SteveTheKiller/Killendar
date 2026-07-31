@@ -28,6 +28,9 @@ namespace Killendar.Shell
             _ics          = new IcsTransfer(this, _store, () => _calendar.Refresh());
 
             _store.Changed += () => _calendar.Refresh();
+            // A color picker previewing a category repaints the calendar without writing, so it
+            // cannot come through _store.Changed.
+            Services.CategoryManager.Previewed += () => _calendar.Refresh();
 
             _calendar.Initialize();         // builds the views, shows Month
             _security.RefreshLockState();   // so the title-bar lock is never blank before the open
@@ -59,7 +62,18 @@ namespace Killendar.Shell
 
         void ICalendarHost.ShowView(object view) => ViewHost.Content = view;
 
-        /// <summary>The active tab carries the accent; the rest sit flat.</summary>
+        void ICalendarHost.StepDensity(int direction) => DensityStepped(direction);   // Density.cs
+
+        /// <summary>
+        /// The active tab gets the family's selection treatment: a solid SelectionBg fill with
+        /// SelectionFg (white) text, exactly as KillerPDF marks its selected tool.
+        ///
+        /// It used to be PrimaryBrush text on a RowHoverBrush fill - accent-coloured text on a
+        /// tint, which is the hover treatment wearing the selected state's job and looked nothing
+        /// like the rest of the family. (Steve, 2026-07-30: "SELECTIONBG with white is how
+        /// killerpdf looks.") Killendar had no SelectionBg/SelectionFg keys at all; they are in
+        /// the theme files now, with KillerPDF's values.
+        /// </summary>
         void ICalendarHost.HighlightTab(string which)
         {
             foreach (var (btn, tag) in new[]
@@ -67,8 +81,10 @@ namespace Killendar.Shell
                          (TabMonth, "Month"), (TabWeek, "Week"), (TabDay, "Day"), (TabAgenda, "Agenda")
                      })
             {
-                btn.SetResourceReference(ForegroundProperty,
-                                         tag == which ? "PrimaryBrush" : "TextBrush");
+                bool on = tag == which;
+                btn.SetResourceReference(ForegroundProperty, on ? "SelectionFg" : "TextBrush");
+                if (on) btn.SetResourceReference(BackgroundProperty, "SelectionBg");
+                else    btn.Background = System.Windows.Media.Brushes.Transparent;
             }
         }
 

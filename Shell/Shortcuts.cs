@@ -64,7 +64,12 @@ namespace Killendar.Shell
                 case Key.D4: _calendar.SelectView("Agenda"); break;
 
                 case Key.B:      SidebarToggle_Click(this, new RoutedEventArgs()); break;
-                case Key.F1:     ShowAboutOverlay(); break;
+
+                // Family standard, and it is the same in every app: F1 is the shortcuts overlay,
+                // F12 is About. Killendar had F1 on About until 2026-07-30, which was the odd one
+                // out - do not swap these back.
+                case Key.F1:     ToggleShortcutsOverlay(); break;
+                case Key.F12:    ShowAboutOverlay(); break;
 
                 default: return;   // leave e.Handled alone so anything else still routes normally
             }

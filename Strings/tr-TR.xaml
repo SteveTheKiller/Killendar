@@ -4,7 +4,7 @@
 
     <!-- Turkish. Layered over en-US, so any key omitted here falls back to English. -->
 
-    <sys:String x:Key="Str_Btn_New">+ Yeni</sys:String>
+    <sys:String x:Key="Str_Btn_New">Yeni</sys:String>
     <sys:String x:Key="Str_Btn_Import">.ics içe aktar</sys:String>
     <sys:String x:Key="Str_Btn_Export">.ics dışa aktar</sys:String>
     <sys:String x:Key="Str_Btn_Today">Bugün</sys:String>
@@ -28,6 +28,22 @@
     <sys:String x:Key="Str_Fld_Starts">BAŞLANGIÇ</sys:String>
     <sys:String x:Key="Str_Fld_Ends">BİTİŞ</sys:String>
     <sys:String x:Key="Str_Fld_Location">KONUM</sys:String>
+
+    <sys:String x:Key="Str_Sys_Restore">Geri Yükle</sys:String>
+    <sys:String x:Key="Str_Sys_Move">Taşı</sys:String>
+    <sys:String x:Key="Str_Sys_Size">Boyutlandır</sys:String>
+    <sys:String x:Key="Str_Sys_Minimize">Simge Durumuna Küçült</sys:String>
+    <sys:String x:Key="Str_Sys_Maximize">Ekranı Kapla</sys:String>
+    <sys:String x:Key="Str_Sys_Close">Kapat</sys:String>
+
+    <sys:String x:Key="Str_Toolbar_Header">Araç çubuğu</sys:String>
+    <sys:String x:Key="Str_Toolbar_SmallIcons">Simgeler</sys:String>
+    <sys:String x:Key="Str_Toolbar_LargeIcons">Büyük simgeler</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextNone">Metin yok</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextBeside">Simgelerin yanında metin</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextUnder">Simgelerin altında metin</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextOnly">Yalnızca metin</sys:String>
+    <sys:String x:Key="Str_TT_OpenInMaps">Bu konumu haritalarda aç</sys:String>
     <sys:String x:Key="Str_Fld_Description">AÇIKLAMA</sys:String>
     <sys:String x:Key="Str_Fld_Attendees">KATILIMCILAR</sys:String>
     <sys:String x:Key="Str_Hint_Attendees">virgülle ayrılmış</sys:String>
@@ -50,12 +66,40 @@
     <sys:String x:Key="Str_Dlg_DeleteMsg">"{0}" silinsin mi?</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteDetail">Bu geri alınamaz.</sys:String>
 
+    <sys:String x:Key="Str_Fld_Repeats">TEKRAR</sys:String>
+    <sys:String x:Key="Str_Rep_Never">Asla</sys:String>
+    <sys:String x:Key="Str_Rep_Daily">Günlük</sys:String>
+    <sys:String x:Key="Str_Rep_Weekly">Haftalık</sys:String>
+    <sys:String x:Key="Str_Rep_Monthly">Aylık</sys:String>
+    <sys:String x:Key="Str_Rep_Yearly">Yıllık</sys:String>
+    <sys:String x:Key="Str_Rep_Every">Her</sys:String>
+    <sys:String x:Key="Str_Rep_UnitDays">günde bir</sys:String>
+    <sys:String x:Key="Str_Rep_UnitWeeks">haftada bir</sys:String>
+    <sys:String x:Key="Str_Rep_UnitMonths">ayda bir</sys:String>
+    <sys:String x:Key="Str_Rep_UnitYears">yılda bir</sys:String>
+    <sys:String x:Key="Str_Rep_Ends">BİTİŞ</sys:String>
+    <sys:String x:Key="Str_Rep_EndNever">Asla</sys:String>
+    <sys:String x:Key="Str_Rep_EndAfter">Şu kadar sonra</sys:String>
+    <sys:String x:Key="Str_Rep_EndOn">Tarihte</sys:String>
+    <sys:String x:Key="Str_Rep_HintCount">Kaç kez</sys:String>
+    <sys:String x:Key="Str_Rep_SummaryNext">Sonraki: {0}</sys:String>
+    <sys:String x:Key="Str_Rep_SummaryNone">Bu hiç gerçekleşmiyor. Tarihleri kontrol et.</sys:String>
+    <sys:String x:Key="Str_Rep_Scope">BU RANDEVU TEKRARLANIYOR</sys:String>
+    <sys:String x:Key="Str_Btn_ThisDate">Yalnızca bu tarih</sys:String>
+    <sys:String x:Key="Str_Btn_WholeSeries">Tüm seri</sys:String>
+    <sys:String x:Key="Str_Err_RepeatEnd">Tekrarın ne zaman biteceğini belirt, ya da hiç bitmesin.</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Yalnızca bu tarih kaldırılır. Serinin geri kalanı durur.</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">Bu serideki tüm tarihler kaldırılır. Bu geri alınamaz.</sys:String>
+
     <sys:String x:Key="Str_Status_Ready">Hazır</sys:String>
     <sys:String x:Key="Str_Status_Added">{0} eklendi</sys:String>
     <sys:String x:Key="Str_Status_Saved">{0} kaydedildi</sys:String>
     <sys:String x:Key="Str_Status_Deleted">{0} silindi</sys:String>
     <sys:String x:Key="Str_Status_Imported">{0} randevu içe aktarıldı</sys:String>
     <sys:String x:Key="Str_Status_ImportedSkipped">{0} randevu içe aktarıldı, hâlihazırda bulunan {1} tanesi atlandı</sys:String>
+    <sys:String x:Key="Str_Status_ImportRepeat">. {0} tanesi tekrarlanıyor ve yalnızca ilk tarih eklendi</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnreadable">. {0} tanesinin tarihi okunamadı ve atlandı</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnsupported">. {0} tanesi görev veya nottu; Killendar bunları saklamaz</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">İçe aktarma başarısız: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} randevu dışa aktarıldı</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Dışa aktarma başarısız: {0}</sys:String>
@@ -83,7 +127,7 @@
     <sys:String x:Key="Str_About_Unsigned">(imzasız veya zincir doğrulanamadı)</sys:String>
     <sys:String x:Key="Str_About_UpdateAvailable">Güncelleme mevcut: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">İndiriliyor...</sys:String>
-    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Ay, hafta, gün ve ajanda görünümleri, iCalendar içe ve dışa aktarma, ve makinenden hiç çıkmayan randevular. Bir GPLv3 </sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Hesapsız, senkronizasyonsuz ve eve telefon etmeyen bir takvim. Randevuların kendi makinendeki tek bir dosyada yaşar, istersen şifreli. Bir GPLv3 </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> aracı.</sys:String>
 
     <sys:String x:Key="Str_Dlg_UpdateMsg">Killendar {0} indirilip kurulsun mu?</sys:String>
@@ -151,7 +195,7 @@
     <!-- Manage Killendars: the .kcal file list, its context menu and the rail
          button. {0} is a file name or an error; Str_Kc_Renamed takes {0} old, {1} new. -->
     <sys:String x:Key="Str_Kc_Title">Killendar'lar</sys:String>
-    <sys:String x:Key="Str_Kc_Hint">Veri klasörünüzdeki tüm .kcal dosyaları. Adı yeniden adlandırmak için çift tıklayın.</sys:String>
+    <sys:String x:Key="Str_Kc_Hint">Veri klasörünüzdeki tüm .kcal dosyaları. Açmak için çift tıklayın; yeniden adlandırmak veya silmek için sağ tıklayın.</sys:String>
     <sys:String x:Key="Str_Kc_FlagEncrypted">şifreli</sys:String>
     <sys:String x:Key="Str_Kc_FlagActive">açık</sys:String>
     <sys:String x:Key="Str_Kc_SelectFirst">Önce bir Killendar seçin.</sys:String>
@@ -222,5 +266,78 @@
     <sys:String x:Key="Str_TT_ViewList">Liste görünümü</sys:String>
     <sys:String x:Key="Str_TT_ViewIcons">Simge görünümü</sys:String>
     <sys:String x:Key="Str_TT_ViewDetails">Ayrıntı görünümü</sys:String>
+    <sys:String x:Key="Str_TT_ShowHidden">Gizli ve sistem öğelerini göster</sys:String>
+    <sys:String x:Key="Str_TT_RecentLocations">Son konumlar</sys:String>
+    <sys:String x:Key="Str_Menu_PinPlace">Yerlere sabitle</sys:String>
+    <sys:String x:Key="Str_Menu_UnpinPlace">Yerlerden kaldır</sys:String>
+    <sys:String x:Key="Str_Btn_Edit">Düzenle</sys:String>
+    <sys:String x:Key="Str_Side_NoAppointments">Bu günde randevu yok</sys:String>
+
+    <!-- Taşınabilir kurulum -->
+    <sys:String x:Key="Str_Portable">TAŞINABİLİR</sys:String>
+    <sys:String x:Key="Str_Btn_Install">Killendar'ı yükle...</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallMsg">Killendar bu bilgisayara yüklensin mi?</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallBullets">Killendar programlar klasörünüze kopyalanır ve Başlat menüsüne bir kısayol eklenir.&#x0a;Killendar dosyalarınıza dokunulmaz ve exe'nin bu kopyası olduğu yerde kalır.&#x0a;Killendar yüklendiği konumdan yeniden başlar.</sys:String>
+    <sys:String x:Key="Str_Btn_DoInstall">Yükle</sys:String>
+    <sys:String x:Key="Str_Chk_Desktop">Masaüstü kısayolu ekle</sys:String>
+    <sys:String x:Key="Str_Chk_AllUsers">Bu bilgisayardaki herkes için yükle (yönetici gerekir)</sys:String>
+    <sys:String x:Key="Str_Status_InstallFailed">Yükleme tamamlanmadı - Killendar taşınabilir olarak çalışmaya devam ediyor.</sys:String>
+
+    <!-- Kategoriler -->
+    <sys:String x:Key="Str_KS_Title">Klavye kısayolları</sys:String>
+    <sys:String x:Key="Str_KS_ViewList">LİSTE</sys:String>
+    <sys:String x:Key="Str_KS_ViewMap">KLAVYE</sys:String>
+    <sys:String x:Key="Str_KS_Hint">Yazarken tek tuşlar devre dışı kalır</sys:String>
+    <sys:String x:Key="Str_TT_Shortcuts">Klavye kısayolları (F1)</sys:String>
+    <sys:String x:Key="Str_KS_GrpViews">GÖRÜNÜMLER</sys:String>
+    <sys:String x:Key="Str_KS_GrpNav">GEZİNME</sys:String>
+    <sys:String x:Key="Str_KS_GrpAppt">RANDEVULAR</sys:String>
+    <sys:String x:Key="Str_KS_GrpFile">DOSYA</sys:String>
+    <sys:String x:Key="Str_KS_GrpHelp">YARDIM</sys:String>
+    <sys:String x:Key="Str_KS_Month">Ay görünümü</sys:String>
+    <sys:String x:Key="Str_KS_Week">Hafta görünümü</sys:String>
+    <sys:String x:Key="Str_KS_Day">Gün görünümü</sys:String>
+    <sys:String x:Key="Str_KS_Agenda">Ajanda görünümü</sys:String>
+    <sys:String x:Key="Str_KS_Prev">Önceki ay, hafta veya gün</sys:String>
+    <sys:String x:Key="Str_KS_Next">Sonraki ay, hafta veya gün</sys:String>
+    <sys:String x:Key="Str_KS_Today">Bugüne git</sys:String>
+    <sys:String x:Key="Str_KS_New">Buraya yeni randevu</sys:String>
+    <sys:String x:Key="Str_KS_Panel">Randevu paneli</sys:String>
+    <sys:String x:Key="Str_KS_Import">Bir .ics dosyası içe aktar</sys:String>
+    <sys:String x:Key="Str_KS_Export">.ics olarak dışa aktar</sys:String>
+    <sys:String x:Key="Str_KS_ThisList">Bu kısayol listesi</sys:String>
+    <sys:String x:Key="Str_KS_About">Hakkında kartı</sys:String>
+    <sys:String x:Key="Str_KS_Close">Paneli veya kartı kapat</sys:String>
+
+    <sys:String x:Key="Str_Fld_Categories">KATEGORİLER</sys:String>
+    <sys:String x:Key="Str_Hint_NoCategories">Henüz kategori yok. Kenar çubuğundan ekleyin.</sys:String>
+    <sys:String x:Key="Str_TT_Categories">Kategoriler</sys:String>
+    <sys:String x:Key="Str_TT_Density">Izgara yoğunluğu - tıklayın veya kaydırın</sys:String>
+    <sys:String x:Key="Str_St_Density">Izgara yoğunluğu: saatte {0} çizgi</sys:String>
+    <sys:String x:Key="Str_Cat_Title">Kategoriler</sys:String>
+    <sys:String x:Key="Str_Cat_Hint">Bu Killendar için renkler. Bir randevu birden fazla taşıyabilir; ilki onu renklendirir.</sys:String>
+    <sys:String x:Key="Str_Cat_NeedName">Kategoriye bir ad verin.</sys:String>
+    <sys:String x:Key="Str_Cat_Exists">Bu adda bir kategori zaten var.</sys:String>
+    <sys:String x:Key="Str_Cat_DeleteHead">{0} silinsin mi?</sys:String>
+    <sys:String x:Key="Str_Cat_DeleteBody">Onu taşıyan her randevudan kaldırılır. Randevuların kendisine dokunulmaz.</sys:String>
+    <sys:String x:Key="Str_Btn_CatAdd">Ekle</sys:String>
+    <sys:String x:Key="Str_Btn_Done">Bitti</sys:String>
+    <sys:String x:Key="Str_TT_CatPickColor">Yeni kategori için renk seç</sys:String>
+    <sys:String x:Key="Str_TT_CatRecolor">Rengi değiştir</sys:String>
+    <sys:String x:Key="Str_TT_CatRename">Yeniden adlandır</sys:String>
+    <sys:String x:Key="Str_TT_CatDelete">Sil</sys:String>
+
+    <!-- Renk seçici -->
+    <sys:String x:Key="Str_Dlg_PickColor">Bir renk seç</sys:String>
+    <sys:String x:Key="Str_TT_Eyedropper">Ekranın herhangi bir yerinden renk al</sys:String>
+    <sys:String x:Key="Str_Btn_Reset">Sıfırla</sys:String>
+    <sys:String x:Key="Str_TT_ReplaceSwatch">Tıklayın, sonra geçerli rengi atamak için bir örneğe tıklayın</sys:String>
+    <sys:String x:Key="Str_TT_ResetSwatches">Renk örneklerini varsayılana sıfırla</sys:String>
+    <sys:String x:Key="Str_TT_SwatchReplace">Bu örneğe geçerli rengi atamak için tıklayın</sys:String>
+    <sys:String x:Key="Str_TT_SwatchUse">Bu rengi kullanmak için tıklayın</sys:String>
+
+    <!-- Bağlam menüleri -->
+    <sys:String x:Key="Str_Ctx_AddAppointment">Randevu ekle</sys:String>
+    <sys:String x:Key="Str_Ctx_Open">Aç</sys:String>
 
 </ResourceDictionary>

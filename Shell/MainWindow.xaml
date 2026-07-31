@@ -1,3 +1,8 @@
+<!-- MinWidth is rail (24) + CalendarMinW (460) + card slack (10), and deliberately NOT enough for
+     the appointment panel as well: with the panel shut the app should be able to get genuinely
+     small, and opening the panel GROWS the window instead of squeezing the calendar
+     (SidebarSlide.cs GrowForSidebar). 820 forced every user to carry the panel's width whether or
+     not they ever opened it. (Steve, 2026-07-30.) -->
 <Window x:Class="Killendar.Shell.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -5,7 +10,7 @@
         Title="The Killendar"
         Icon="/Resources/kd-icon.ico"
         WindowStyle="None" Background="{DynamicResource BackgroundBrush}"
-        MinWidth="820" MinHeight="560" Width="1100" Height="760"
+        MinWidth="494" MinHeight="460" Width="1100" Height="760"
         TextOptions.TextFormattingMode="Display" UseLayoutRounding="True"
         WindowStartupLocation="CenterScreen"
         PreviewKeyDown="Window_PreviewKeyDown">
@@ -33,13 +38,28 @@
             </Border>
 
             <!-- Wordmark: "The" in the text colour, "Killendar" 1.3x and bold in the accent.
-                 Blurred dark copy underneath is the soft drop shadow. -->
-            <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,0"
-                  shell:WindowChrome.IsHitTestVisibleInChrome="True">
-                <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15" Margin="1,2,0,0"
-                           IsHitTestVisible="False" Opacity="{DynamicResource IconShadowOpacity}"><TextBlock.Effect><BlurEffect Radius="3"/></TextBlock.Effect><Run Text="The " Foreground="#C0000000"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="#C0000000"/></TextBlock>
-                <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15"><Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}"/></TextBlock>
-            </Grid>
+                 Blurred dark copy underneath is the soft drop shadow.
+                 The open Killendar's NAME sits right after it (Steve, 2026-07-30) - the title bar
+                 is where every other app says which file is open, so it belongs here rather than
+                 tucked in the footer. Hidden while only the default file is open, so the common
+                 case stays quiet; ISecurityHost.ShowActiveKillendar drives both this and the
+                 footer copy. Clicking it opens Manage Killendars, same as the title-bar button. -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
+                        Margin="12,0" shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                <Grid>
+                    <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15" Margin="1,2,0,0"
+                               IsHitTestVisible="False" Opacity="{DynamicResource IconShadowOpacity}"><TextBlock.Effect><BlurEffect Radius="3"/></TextBlock.Effect><Run Text="The " Foreground="#C0000000"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="#C0000000"/></TextBlock>
+                    <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15"><Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}"/></TextBlock>
+                </Grid>
+                <!-- Consolas, not the wordmark face: it is a file name, not branding. Muted and a
+                     tier smaller so the wordmark still leads. -->
+                <TextBlock x:Name="TitleKillendarLabel" Visibility="Collapsed"
+                           Foreground="{DynamicResource MutedTextBrush}" FontFamily="Consolas"
+                           FontSize="11.5" VerticalAlignment="Center" Margin="10,2,0,0"
+                           MaxWidth="220" TextTrimming="CharacterEllipsis"
+                           Cursor="Hand" ToolTip="{DynamicResource Str_TT_Killendars}"
+                           MouseLeftButtonUp="ActiveKillendarLabel_Click"/>
+            </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
                         shell:WindowChrome.IsHitTestVisibleInChrome="True">
@@ -69,37 +89,6 @@
                         Content="&#xE8BB;"/>
             </StackPanel>
 
-            <!-- Theme + accent flyout. Anchored to the fixed point on the rail and opening upward,
-                 so its bottom sits on the footer boundary and it grows away from the button. -->
-            <Popup x:Name="ThemePopup" PlacementTarget="{Binding ElementName=RailFlyoutAnchor}" Placement="Top"
-                   StaysOpen="False" AllowsTransparency="True" HorizontalOffset="-10" VerticalOffset="-4">
-                <Border Background="{DynamicResource MenuBackgroundBrush}" BorderBrush="{DynamicResource MenuBorderBrush}"
-                        BorderThickness="1" CornerRadius="6" Padding="12,10" Margin="14">
-                    <Border.Effect>
-                        <DropShadowEffect Color="Black" BlurRadius="22" ShadowDepth="4" Direction="270" Opacity="0.55"/>
-                    </Border.Effect>
-                    <StackPanel>
-                        <TextBlock Text="{DynamicResource Str_Lbl_Theme}" Foreground="{DynamicResource DimTextBrush}" FontSize="10" Margin="0,0,0,4"/>
-                        <StackPanel x:Name="ThemeSwatches" Orientation="Horizontal">
-                            <Button Style="{StaticResource ThemeSwatch}" Tag="Dark"     Background="#3a3a3a" Click="ThemeSwatch_Click"/>
-                            <Button Style="{StaticResource ThemeSwatch}" Tag="Light"    Background="#e8e8e8" Click="ThemeSwatch_Click"/>
-                            <Button Style="{StaticResource ThemeSwatch}" Tag="Black"    Background="#000000" Click="ThemeSwatch_Click"/>
-                            <Button Style="{StaticResource ThemeSwatch}" Tag="Blood"    Background="#4a1f20" Click="ThemeSwatch_Click"/>
-                            <Button Style="{StaticResource ThemeSwatch}" Tag="Greed"    Background="#0a5234" Click="ThemeSwatch_Click"/>
-                            <Button Style="{StaticResource ThemeSwatch}" Tag="Cyanotic" Background="#0a4a6e" Click="ThemeSwatch_Click"/>
-                        </StackPanel>
-                        <TextBlock x:Name="AccentLabel" Text="{DynamicResource Str_Lbl_Accent}" Foreground="{DynamicResource DimTextBrush}" FontSize="10" Margin="0,8,0,4"/>
-                        <StackPanel x:Name="AccentSwatches" Orientation="Horizontal">
-                            <Button Style="{StaticResource ThemeSwatch}" Tag="Red"    Background="#DD504B" Click="AccentSwatch_Click"/>
-                            <Button Style="{StaticResource ThemeSwatch}" Tag="Orange" Background="#E8962C" Click="AccentSwatch_Click"/>
-                            <Button Style="{StaticResource ThemeSwatch}" Tag="Green"  Background="#1ea54c" Click="AccentSwatch_Click"/>
-                            <Button Style="{StaticResource ThemeSwatch}" Tag="Teal"   Background="#1FB8A8" Click="AccentSwatch_Click"/>
-                            <Button Style="{StaticResource ThemeSwatch}" Tag="Blue"   Background="#50AEE8" Click="AccentSwatch_Click"/>
-                            <Button Style="{StaticResource ThemeSwatch}" Tag="Purple" Background="#B982E3" Click="AccentSwatch_Click"/>
-                        </StackPanel>
-                    </StackPanel>
-                </Border>
-            </Popup>
         </Grid>
 
         <!-- ================= CONTENT ================= -->
@@ -124,8 +113,15 @@
                  grain. Left margin 0 so it butts against the rail. -->
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="42"/>   <!-- toolbar, on the CHROME tier -->
-                    <RowDefinition Height="*"/>    <!-- the lifted calendar card -->
+                    <!-- Auto with a 42 floor, NOT a fixed 42. The toolbar buttons are sized per
+                         display mode now (ToolbarStyle.cs): 32px tall on small icons, 42 on large,
+                         52 with text under them. A fixed 42 fitted only the first two - large icons
+                         exactly filled the row and text-under overflowed it, so in both cases the
+                         buttons ran straight into the top of the calendar card with no gap.
+                         MinHeight keeps the bar from collapsing on the shortest mode.
+                         (Steve, 2026-07-30.) -->
+                    <RowDefinition Height="Auto" MinHeight="42"/>   <!-- toolbar, on the CHROME tier -->
+                    <RowDefinition Height="*"/>                     <!-- the lifted calendar card -->
                 </Grid.RowDefinitions>
 
                 <!-- The toolbar sits on the app background, NOT on the raised card. No Background of
@@ -134,56 +130,110 @@
                      the app surface rather than on a lighter panel, and the card can start at the date
                      header - which is what lets the header's top edge carry a shadow.
                      Right margin 18 = the card's 8px inset plus the toolbar's own 10, so the view
-                     buttons line up with the card's right edge. -->
-                <Grid Grid.Row="0" Margin="10,0,18,0">
-                    <!-- Three columns, so the two arrows BRACKET the date rather than sitting next
-                         to each other: prev / Today / date on the left, next pushed to the right of
-                         the flexible middle, view modes pinned right. -->
+                     buttons line up with the card's right edge.
+                     Bottom margin 6 is the gap between the buttons and the card below - the row
+                     used to be exactly as tall as a large icon button, so there was none. -->
+                <Grid x:Name="ToolbarGrid" Grid.Row="0" Margin="10,2,18,6" Background="Transparent">
+                    <!-- Right-click anywhere on the bar picks the icon/text style. Built in
+                         Shell/ToolbarStyle.cs. Background must be Transparent, not null, or the
+                         Grid gets no mouse events and the menu never opens. -->
+                    <Grid.ContextMenu>
+                        <ContextMenu x:Name="ToolbarMenu"/>
+                    </Grid.ContextMenu>
+                    <!-- Three columns: everything that must never disappear on the left in Auto,
+                         the date filling the middle, view modes pinned right.
+
+                         Nav order is prev / Today / next / date (Steve, 2026-07-30). The arrows
+                         used to bracket the whole row, with next riding the flexible column - and
+                         that is what starved it: an Auto column takes whatever width it wants, so a
+                         long date ("Wednesday, August 19, 2026" in day view) squeezed the star to
+                         zero and the next arrow vanished. Both arrows now sit in the Auto group
+                         with Today, so neither can be squeezed out; only the DATE shrinks, and it
+                         trims rather than pushing anything off the bar. -->
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>   <!-- actions, then prev / Today / date -->
-                        <ColumnDefinition Width="*"/>      <!-- flexible; next arrow rides its right edge -->
+                        <ColumnDefinition Width="Auto"/>   <!-- actions, then prev / Today / next -->
+                        <ColumnDefinition Width="*"/>      <!-- the date; shrinks and trims -->
                         <ColumnDefinition Width="Auto"/>   <!-- view modes -->
                     </Grid.ColumnDefinitions>
 
                     <!-- The action you came here to do, then file actions, then where you are in time. -->
-                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <Button x:Name="NewEventBtn" Content="{DynamicResource Str_Btn_New}" Style="{StaticResource PrimaryButton}"
+                    <StackPanel x:Name="ToolbarLeft" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                        <!-- OutlineButton, not PrimaryButton. Family standard is an accent OUTLINE
+                             at rest that fills solid on hover; PrimaryButton is already solid, so
+                             hovering it only shifts a shade and the button reads as dead. Same
+                             correction ConfirmDialog's OK button needed. (Steve, 2026-07-30.) -->
+                        <Button x:Name="NewEventBtn" Content="{DynamicResource Str_Btn_New}" Style="{StaticResource OutlineButton}"
                                 Padding="12,4" Margin="0,0,10,0" Click="NewEventBtn_Click"/>
 
-                        <Button x:Name="ImportBtn" Content="{DynamicResource Str_Btn_Import}" Style="{StaticResource SurfaceButton}"
-                                Padding="10,4" Margin="0,0,4,0" Click="ImportBtn_Click"/>
-                        <Button x:Name="ExportBtn" Content="{DynamicResource Str_Btn_Export}" Style="{StaticResource SurfaceButton}"
-                                Padding="10,4" Margin="0,0,14,0" Click="ExportBtn_Click"/>
+                        <!-- Group separators, KillerPDF's exactly (MainWindow.xaml, GrpPageOps and
+                             friends): a 1px Rectangle in BorderDim with Margin 4,6. Killendar was
+                             separating its groups with wider MARGINS, which is a weaker signal and
+                             a different one from the rest of the family. The named brush here is
+                             CardBorderBrush - Killendar's palette does not carry BorderDim, and
+                             they are the same role. (Steve, 2026-07-30.)
 
+                             Padding and Margin are NOT set on the buttons: ToolbarStyle.cs sizes
+                             every one of them per display mode now, and a local Padding would be
+                             overwritten on the first apply anyway. -->
+                        <Rectangle Width="1" Fill="{DynamicResource CardBorderBrush}" Margin="4,6"/>
+
+                        <Button x:Name="ImportBtn" Content="{DynamicResource Str_Btn_Import}" Style="{StaticResource ToolbarButton}"
+                                Click="ImportBtn_Click"/>
+                        <Button x:Name="ExportBtn" Content="{DynamicResource Str_Btn_Export}" Style="{StaticResource ToolbarButton}"
+                                Click="ExportBtn_Click"/>
+
+                        <Rectangle Width="1" Fill="{DynamicResource CardBorderBrush}" Margin="4,6"/>
+
+                        <!-- prev / Today / next, all three together, then the date after them
+                             (Steve, 2026-07-30 - changed from the arrows bracketing the whole row).
+                             Both arrows now live in this Auto column, which is also what guarantees
+                             they cannot be starved: an Auto column takes the width it needs, and it
+                             was the next arrow riding the flexible column that made it vanish
+                             behind a long date. -->
                         <Button x:Name="PrevBtn" Content="&#xE76B;" FontFamily="Segoe MDL2 Assets" FontSize="10"
-                                Style="{StaticResource SurfaceButton}" Padding="8,5" Margin="0,0,2,0"
+                                Style="{StaticResource ToolbarButton}" Padding="8,5" Margin="0,0,2,0"
                                 Click="PrevBtn_Click" ToolTip="{DynamicResource Str_TT_Prev}"/>
-                        <Button x:Name="TodayBtn" Content="{DynamicResource Str_Btn_Today}" Style="{StaticResource SurfaceButton}"
-                                Padding="10,4" Margin="0,0,12,0" Click="TodayBtn_Click"/>
+                        <Button x:Name="TodayBtn" Content="{DynamicResource Str_Btn_Today}" Style="{StaticResource ToolbarButton}"
+                                Click="TodayBtn_Click"/>
+                        <Button x:Name="NextBtn" Content="&#xE76C;" FontFamily="Segoe MDL2 Assets" FontSize="10"
+                                Style="{StaticResource ToolbarButton}" Padding="8,5" Margin="2,0,0,0"
+                                Click="NextBtn_Click" ToolTip="{DynamicResource Str_TT_Next}"/>
 
                         <!-- Typewriter, and clearly bigger than the buttons around it: this is the
                              one label that says where you are, so it carries the wordmark's face
                              rather than the UI font. 22 in a 42px row -
                              the typewriter's line box is tall, so going much past this crowds it. -->
-                        <TextBlock x:Name="PeriodLabel" VerticalAlignment="Center"
-                                   FontFamily="{DynamicResource WordmarkFont}" FontSize="22"
-                                   Foreground="{DynamicResource TextBrush}"/>
                     </StackPanel>
 
-                    <Button x:Name="NextBtn" Grid.Column="1" Content="&#xE76C;"
-                            FontFamily="Segoe MDL2 Assets" FontSize="10"
-                            Style="{StaticResource SurfaceButton}" Padding="8,5"
-                            HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,12,0"
-                            Click="NextBtn_Click" ToolTip="{DynamicResource Str_TT_Next}"/>
+                    <!-- The date, in its own flexible column. TextTrimming, because this is the one
+                         element allowed to shrink - it would rather lose its tail than push the
+                         next arrow off the bar. -->
+                    <TextBlock x:Name="PeriodLabel" Grid.Column="1" VerticalAlignment="Center"
+                               Margin="12,0,6,0" TextTrimming="CharacterEllipsis"
+                               FontFamily="{DynamicResource WordmarkFont}" FontSize="22"
+                               Foreground="{DynamicResource TextBrush}"/>
 
-                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                        <Button x:Name="TabMonth"  Content="{DynamicResource Str_View_Month}"  Style="{StaticResource SurfaceButton}"
+                    <!-- Overflow. Shown INSTEAD of the four view buttons when the toolbar runs out
+                         of room, which happens as soon as the appointment sidebar opens on a
+                         narrow window. Its menu carries the same four views. (ToolbarOverflow.cs) -->
+                    <Button x:Name="ViewOverflowBtn" Grid.Column="2" Content="&#xE712;"
+                            FontFamily="Segoe MDL2 Assets" FontSize="12"
+                            Style="{StaticResource ToolbarButton}" Padding="9,5"
+                            VerticalAlignment="Center" Visibility="Collapsed"
+                            Click="ViewOverflowBtn_Click">
+                        <Button.ContextMenu>
+                            <ContextMenu x:Name="ViewOverflowMenu"/>
+                        </Button.ContextMenu>
+                    </Button>
+
+                    <StackPanel x:Name="ViewTabs" Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button x:Name="TabMonth"  Content="{DynamicResource Str_View_Month}"  Style="{StaticResource ToolbarButton}"
                                 Padding="12,4" Margin="0,0,4,0" Click="ViewTab_Click" Tag="Month"/>
-                        <Button x:Name="TabWeek"   Content="{DynamicResource Str_View_Week}"   Style="{StaticResource SurfaceButton}"
+                        <Button x:Name="TabWeek"   Content="{DynamicResource Str_View_Week}"   Style="{StaticResource ToolbarButton}"
                                 Padding="12,4" Margin="0,0,4,0" Click="ViewTab_Click" Tag="Week"/>
-                        <Button x:Name="TabDay"    Content="{DynamicResource Str_View_Day}"    Style="{StaticResource SurfaceButton}"
+                        <Button x:Name="TabDay"    Content="{DynamicResource Str_View_Day}"    Style="{StaticResource ToolbarButton}"
                                 Padding="12,4" Margin="0,0,4,0" Click="ViewTab_Click" Tag="Day"/>
-                        <Button x:Name="TabAgenda" Content="{DynamicResource Str_View_Agenda}" Style="{StaticResource SurfaceButton}"
+                        <Button x:Name="TabAgenda" Content="{DynamicResource Str_View_Agenda}" Style="{StaticResource ToolbarButton}"
                                 Padding="12,4" Click="ViewTab_Click" Tag="Agenda"/>
                     </StackPanel>
                 </Grid>
@@ -195,7 +245,8 @@
                      robs one edge - at ShadowDepth 3 the upward reach measured only ~2px. This works
                      downward only because the footer is at Panel.ZIndex -1 and no longer paints over
                      it; that was the original reason a depth was needed at all. -->
-                <Border Grid.Row="1" Background="{DynamicResource PaneBrush}" BorderBrush="{DynamicResource PaneBorderBrush}"
+                <Border x:Name="ContentPane"
+                        Grid.Row="1" Background="{DynamicResource PaneBrush}" BorderBrush="{DynamicResource PaneBorderBrush}"
                         BorderThickness="1" CornerRadius="4" Margin="0,0,8,0" Panel.ZIndex="10">
                     <Border.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="16" ShadowDepth="0" Opacity="0.6"/>
@@ -228,9 +279,34 @@
                                     ToolTip="{DynamicResource Str_TT_PanelShow}"/>
 
                             <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,8">
-                                <!-- The flyout hangs off this fixed point rather than the button, so
-                                     it opens in the same place whatever the rail height. -->
-                                <Border x:Name="RailFlyoutAnchor" Height="1" Background="Transparent"/>
+
+                                <!-- FAMILY RAIL ORDER, top to bottom in this bottom-anchored stack:
+                                     app-specific toggles, then ?, then language, then theme.
+                                     KillerNotes and KillerShell both read that way; Killendar had
+                                     ? above Categories until 2026-07-30. The logic is that the
+                                     app's own tools come first and the three universal buttons
+                                     land in the same place in every app, so muscle memory carries
+                                     across. Categories is the app-specific one here. -->
+                                <Button x:Name="CategoriesButton" Style="{StaticResource RailButton}"
+                                        Click="CategoriesButton_Click" Content="&#xE8EC;" Margin="0,0,0,6"
+                                        ToolTip="{DynamicResource Str_TT_Categories}"/>
+
+                                <!-- Week/Day grid density (Density.cs). Click cycles, wheel steps -
+                                     the same behaviour and the same E8A1 list glyph as KillerNotes'
+                                     Density button, so the gesture carries between the apps.
+                                     Ctrl+wheel over the grid does the same thing.
+                                     (Steve, 2026-07-30.) -->
+                                <Button x:Name="DensityBtn" Style="{StaticResource RailButton}"
+                                        Click="DensityBtn_Click" PreviewMouseWheel="DensityBtn_MouseWheel"
+                                        Content="&#xE8A1;" Margin="0,0,0,6"
+                                        ToolTip="{DynamicResource Str_TT_Density}"/>
+
+                                <!-- Shortcuts. A literal ? in Consolas at 18, the family's rail
+                                     standard - not a Segoe MDL2 glyph. Same overlay as F1. -->
+                                <Button x:Name="ShortcutsButton" Style="{StaticResource RailButton}"
+                                        Click="ShortcutsButton_Click" Content="?" FontFamily="Consolas"
+                                        FontSize="18" Margin="0,0,0,6"
+                                        ToolTip="{DynamicResource Str_TT_Shortcuts}"/>
                                 <Button x:Name="LangButton" Style="{StaticResource RailButton}"
                                         Click="LangButton_Click" Content="&#xF2B7;" Margin="0,0,0,6"
                                         ToolTip="{DynamicResource Str_TT_Language}">
@@ -238,9 +314,76 @@
                                         <ContextMenu x:Name="LangMenu"/>
                                     </Button.ContextMenu>
                                 </Button>
+                                <!-- THE THEME MENU IS A ContextMenu ON ITS BUTTON, exactly like
+                                     LangMenu above. It was a Popup with its own Border, margin,
+                                     background and grain brush - a second, parallel implementation
+                                     of a menu - which is why it never matched the locale menu
+                                     however many times the numbers were hand-tuned. Now: same
+                                     control, same FlyoutCard/FlyoutGrain chrome, same
+                                     FlyoutPlacement call, same fade.
+                                     (Steve, 2026-07-30: "make the menus the same".)
+                                     A ContextMenu cannot be a child of a panel - it has to hang off
+                                     a control's ContextMenu property, which is what LangMenu does
+                                     and what the XamlParseException was about. -->
                                 <Button x:Name="ThemeButton" Style="{StaticResource RailButton}"
                                         Click="ThemeButton_Click" Content="&#xE790;"
-                                        ToolTip="{DynamicResource Str_TT_Theme}"/>
+                                        ToolTip="{DynamicResource Str_TT_Theme}">
+                                    <Button.ContextMenu>
+                                        <ContextMenu x:Name="ThemeMenu">
+                                            <ContextMenu.Template>
+                                                <ControlTemplate TargetType="ContextMenu">
+                                                    <Border Style="{StaticResource FlyoutCard}">
+                                                        <Grid>
+                                                            <ItemsPresenter/>
+                                                            <Border Style="{StaticResource FlyoutGrain}"/>
+                                                        </Grid>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </ContextMenu.Template>
+                                            <!-- The swatch panel is ONE menu item, so WPF wraps it
+                                                 in a MenuItem. Left alone that container does two
+                                                 unwanted things: it paints the menu's highlight
+                                                 (SelectionBg - GREEN on Dark) across the whole card
+                                                 on hover, and it reserves an icon gutter on the
+                                                 left. This is a panel of swatches, not a row you
+                                                 pick, so the container is templated down to its
+                                                 content: no highlight, no gutter.
+                                                 (Steve, 2026-07-30: "why is it green on hover".) -->
+                                            <ContextMenu.ItemContainerStyle>
+                                                <Style TargetType="MenuItem">
+                                                    <Setter Property="Padding" Value="0"/>
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="MenuItem">
+                                                                <ContentPresenter ContentSource="Header"/>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </ContextMenu.ItemContainerStyle>
+                                            <StackPanel Margin="10,10,12,10">
+                                                <TextBlock Text="{DynamicResource Str_Lbl_Theme}" Foreground="{DynamicResource DimTextBrush}" FontSize="10" Margin="0,0,0,4"/>
+                                                <StackPanel x:Name="ThemeSwatches" Orientation="Horizontal">
+                                                    <Button Style="{StaticResource ThemeSwatch}" Tag="Dark"     Background="#3a3a3a" Click="ThemeSwatch_Click"/>
+                                                    <Button Style="{StaticResource ThemeSwatch}" Tag="Light"    Background="#e8e8e8" Click="ThemeSwatch_Click"/>
+                                                    <Button Style="{StaticResource ThemeSwatch}" Tag="Black"    Background="#000000" Click="ThemeSwatch_Click"/>
+                                                    <Button Style="{StaticResource ThemeSwatch}" Tag="Blood"    Background="#4a1f20" Click="ThemeSwatch_Click"/>
+                                                    <Button Style="{StaticResource ThemeSwatch}" Tag="Greed"    Background="#0a5234" Click="ThemeSwatch_Click"/>
+                                                    <Button Style="{StaticResource ThemeSwatch}" Tag="Cyanotic" Background="#0a4a6e" Click="ThemeSwatch_Click"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="AccentLabel" Text="{DynamicResource Str_Lbl_Accent}" Foreground="{DynamicResource DimTextBrush}" FontSize="10" Margin="0,8,0,4"/>
+                                                <StackPanel x:Name="AccentSwatches" Orientation="Horizontal">
+                                                    <Button Style="{StaticResource ThemeSwatch}" Tag="Red"    Background="#DD504B" Click="AccentSwatch_Click"/>
+                                                    <Button Style="{StaticResource ThemeSwatch}" Tag="Orange" Background="#E8962C" Click="AccentSwatch_Click"/>
+                                                    <Button Style="{StaticResource ThemeSwatch}" Tag="Green"  Background="#1ea54c" Click="AccentSwatch_Click"/>
+                                                    <Button Style="{StaticResource ThemeSwatch}" Tag="Teal"   Background="#1FB8A8" Click="AccentSwatch_Click"/>
+                                                    <Button Style="{StaticResource ThemeSwatch}" Tag="Blue"   Background="#50AEE8" Click="AccentSwatch_Click"/>
+                                                    <Button Style="{StaticResource ThemeSwatch}" Tag="Purple" Background="#B982E3" Click="AccentSwatch_Click"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </ContextMenu>
+                                    </Button.ContextMenu>
+                                </Button>
                             </StackPanel>
                         </Grid>
                     </Border>
@@ -260,35 +403,28 @@
                                 <RowDefinition Height="Auto"/>   <!-- actions -->
                             </Grid.RowDefinitions>
 
+                            <!-- No close X. The rail chevron right next to it already closes the
+                                 panel, and two controls a few pixels apart doing the same thing is
+                                 just a second way to get it wrong. Cancel closes it too.
+                                 (Steve, 2026-07-30.) -->
                             <Grid Grid.Row="0" Margin="14,12,10,10">
                                 <TextBlock x:Name="SidebarTitle" Text="{DynamicResource Str_Side_New}" FontSize="14"
                                            VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
-                                <!-- Needs its own Template. Background=Transparent alone leaves
-                                     WPF's DEFAULT Button template in place, and that paints the
-                                     system highlight - light blue - on hover, whatever the theme
-                                     says. Same close-X behaviour as ConfirmDialog and
-                                     PasswordDialog: only the glyph reddens. -->
-                                <Button Content="&#x2715;" Click="SidebarClose_Click" HorizontalAlignment="Right"
-                                        Width="24" Height="22" FontSize="10" Cursor="Hand"
-                                        Background="Transparent" BorderThickness="0"
-                                        Foreground="{DynamicResource MutedTextBrush}">
-                                    <Button.Template>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border Background="Transparent" CornerRadius="3">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Foreground" Value="{DynamicResource DangerRed}"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Button.Template>
-                                </Button>
                             </Grid>
 
-                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,4,0">
+                            <ScrollViewer x:Name="EditorScroll" Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,4,0">
                                 <StackPanel Margin="14,0,10,10">
+                                    <!-- "This date or the whole series", shown only while editing one
+                                         date of a repeating appointment. It is a row in the PANEL, not
+                                         a dialog that appears on Save: the panel is the editor here
+                                         (AppointmentEditor's own rule), and a modal that interrogates
+                                         you after you have finished typing asks the question too late
+                                         to change what you typed. Save and Delete both obey it. -->
+                                    <StackPanel x:Name="SeriesScopeRow" Visibility="Collapsed" Margin="0,0,0,10">
+                                        <TextBlock Text="{DynamicResource Str_Rep_Scope}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
+                                        <WrapPanel x:Name="SeriesScopeChips" Margin="0,4,0,0"/>
+                                    </StackPanel>
+
                                     <TextBlock Text="{DynamicResource Str_Fld_Title}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
                                     <TextBox x:Name="FieldTitle" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="6,3" Margin="0,2,0,10"/>
 
@@ -324,8 +460,14 @@
                                             <ColumnDefinition Width="8"/>
                                             <ColumnDefinition Width="96"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBox x:Name="FieldStartDate" Grid.Column="0" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="6,3" ToolTip="{DynamicResource Str_Hint_Date}"/>
-                                        <TextBox x:Name="FieldStartTime" Grid.Column="2" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="6,3" ToolTip="{DynamicResource Str_Hint_Time}"/>
+                                        <!-- TextChanged on BOTH start boxes moves the calendar's
+                                             marker while you type: the date picks the day cell in
+                                             Month, and the time picks the half-hour band in Week
+                                             and Day. (Steve, 2026-07-30.) -->
+                                        <TextBox x:Name="FieldStartDate" Grid.Column="0" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="6,3"
+                                                 TextChanged="FieldStart_TextChanged" ToolTip="{DynamicResource Str_Hint_Date}"/>
+                                        <TextBox x:Name="FieldStartTime" Grid.Column="2" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="6,3"
+                                                 TextChanged="FieldStart_TextChanged" ToolTip="{DynamicResource Str_Hint_Time}"/>
                                     </Grid>
 
                                     <TextBlock Text="{DynamicResource Str_Fld_Ends}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
@@ -339,8 +481,69 @@
                                         <TextBox x:Name="FieldEndTime" Grid.Column="2" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="6,3" ToolTip="{DynamicResource Str_Hint_Time}"/>
                                     </Grid>
 
+                                    <!-- REPEATS. The chips and weekday buttons are built in code
+                                         (RepeatPanel.cs) rather than declared here: the weekday
+                                         letters and their ORDER come from the culture, so a locale
+                                         that starts its week on Monday gets them that way without
+                                         seven more translated strings, and the pattern captions
+                                         come from the same table the summary line reads. -->
+                                    <TextBlock Text="{DynamicResource Str_Fld_Repeats}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
+                                    <WrapPanel x:Name="RepeatFreqRow" Margin="0,4,0,0"/>
+
+                                    <StackPanel x:Name="RepeatDetail" Visibility="Collapsed" Margin="0,4,0,0">
+                                        <Grid Margin="0,2,0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="48"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{DynamicResource Str_Rep_Every}"
+                                                       Foreground="{DynamicResource MutedTextBrush}" FontFamily="Consolas"
+                                                       FontSize="11" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                            <TextBox x:Name="FieldRepeatInterval" Grid.Column="1" Style="{StaticResource DarkTextBox}"
+                                                     FontSize="12" Padding="6,3" TextAlignment="Center"
+                                                     TextChanged="RepeatInterval_TextChanged"/>
+                                            <TextBlock x:Name="RepeatUnitLabel" Grid.Column="2"
+                                                       Foreground="{DynamicResource MutedTextBrush}" FontFamily="Consolas"
+                                                       FontSize="11" VerticalAlignment="Center" Margin="6,0,0,0"/>
+                                        </Grid>
+
+                                        <WrapPanel x:Name="RepeatDaysRow" Visibility="Collapsed" Margin="0,0,0,4"/>
+
+                                        <TextBlock Text="{DynamicResource Str_Rep_Ends}" Foreground="{DynamicResource DimTextBrush}"
+                                                   FontFamily="Consolas" FontSize="10" Margin="0,2,0,0"/>
+                                        <WrapPanel x:Name="RepeatEndRow" Margin="0,4,0,0"/>
+
+                                        <!-- One box for both end conditions: it holds a NUMBER of
+                                             occurrences or a DATE depending on the chip above, and
+                                             the tooltip says which. Two boxes where only one can
+                                             ever be used is a box that is always dead. -->
+                                        <TextBox x:Name="FieldRepeatEnd" Style="{StaticResource DarkTextBox}" FontSize="12"
+                                                 Padding="6,3" Margin="0,0,0,4" Visibility="Collapsed"/>
+
+                                        <TextBlock x:Name="RepeatSummary" Foreground="{DynamicResource DimTextBrush}"
+                                                   FontFamily="Consolas" FontSize="9.5" TextWrapping="Wrap"
+                                                   Margin="0,2,0,0"/>
+                                    </StackPanel>
+
+                                    <Border Height="10"/>
+
                                     <TextBlock Text="{DynamicResource Str_Fld_Location}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
-                                    <TextBox x:Name="FieldLocation" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="6,3" Margin="0,2,0,10"/>
+                                    <!-- The map button hands whatever is typed to the user's browser as a maps
+                                         search. It is not a lookup: nothing is sent anywhere until this is
+                                         clicked, which is the whole point given what killendar.net promises. -->
+                                    <Grid Margin="0,2,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox x:Name="FieldLocation" Grid.Column="0" Style="{StaticResource DarkTextBox}"
+                                                 FontSize="12" Padding="6,3"/>
+                                        <Button x:Name="LocationMapBtn" Grid.Column="1" Style="{StaticResource RailButton}"
+                                                Content="&#xE707;" FontSize="14" Margin="6,0,2,0"
+                                                VerticalAlignment="Center" Click="LocationMap_Click"
+                                                ToolTip="{DynamicResource Str_TT_OpenInMaps}"/>
+                                    </Grid>
 
                                     <TextBlock Text="{DynamicResource Str_Fld_Description}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
                                     <TextBox x:Name="FieldDescription" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="6,3" Margin="0,2,0,10"
@@ -353,23 +556,56 @@
                                     <TextBlock Text="{DynamicResource Str_Hint_Attendees}" Foreground="{DynamicResource DimTextBrush}"
                                                FontFamily="Consolas" FontSize="9.5" Margin="0,0,0,10"/>
 
+                                    <!-- Categories are ASSIGNED by clicking chips, never typed: the
+                                         names come from the Killendar's own definitions, so a text
+                                         box here would invite typos that render as orphan gray. The
+                                         chips are built in code (AppointmentView.cs) because their
+                                         colors are user data, not theme resources. -->
+                                    <TextBlock Text="{DynamicResource Str_Fld_Categories}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
+                                    <WrapPanel x:Name="FieldCategories" Margin="0,4,0,2"/>
+                                    <TextBlock x:Name="FieldCategoriesEmpty" Text="{DynamicResource Str_Hint_NoCategories}"
+                                               Foreground="{DynamicResource DimTextBrush}" Visibility="Collapsed"
+                                               FontFamily="Consolas" FontSize="9.5" TextWrapping="Wrap" Margin="0,0,0,10"/>
+
                                     <TextBlock x:Name="SidebarError" Visibility="Collapsed" TextWrapping="Wrap"
                                                Foreground="{DynamicResource DangerRed}" FontSize="11" Margin="0,0,0,6"/>
                                 </StackPanel>
                             </ScrollViewer>
 
-                            <Border Grid.Row="2">
+                            <Border x:Name="EditorActions" Grid.Row="2">
                                 <Grid Margin="14,10,10,12">
-                                    <Button x:Name="DeleteAppointmentBtn" Content="{DynamicResource Str_Btn_Delete}" Click="DeleteAppointment_Click"
-                                            Style="{StaticResource SurfaceButton}" Padding="12,5"
-                                            HorizontalAlignment="Left" Visibility="Collapsed"
+                                    <!-- Glyph with a tooltip, not a text button (Steve, 2026-07-30).
+                                         E74D, the trash can - NOT E711, which is the Cancel X and
+                                         read as "close" here. E74D is the delete glyph Killendar's
+                                         CategoriesDialog and KillerNotes' menus already ship. -->
+                                    <Button x:Name="DeleteAppointmentBtn" Content="&#xE74D;" Click="DeleteAppointment_Click"
+                                            Style="{StaticResource RailButton}" FontFamily="Segoe MDL2 Assets" FontSize="14"
+                                            ToolTip="{DynamicResource Str_Btn_Delete}"
+                                            HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"
                                             Foreground="{DynamicResource DangerRed}"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Button Content="{DynamicResource Str_Btn_Cancel}" Click="SidebarClose_Click"
                                                 Style="{StaticResource SurfaceButton}" Padding="12,5" Margin="0,0,6,0"/>
                                         <Button Content="{DynamicResource Str_Btn_Save}" Click="SaveAppointment_Click"
-                                                Style="{StaticResource PrimaryButton}" Padding="16,5"/>
+                                                Style="{StaticResource OutlineButton}" Padding="16,5"/>
                                     </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- DAY AGENDA mode (Steve, 2026-07-30): what clicking a day or an
+                                 appointment opens - viewing first. Rows are built in code
+                                 (DayAgendaPanel.cs); Edit on a row swaps to the editor above, and
+                                 the editor's Save/Cancel/Delete come back here rather than
+                                 closing the panel. Same two sidebar rows, visibility-swapped. -->
+                            <ScrollViewer x:Name="AgendaScroll" Grid.Row="1" Visibility="Collapsed"
+                                          VerticalScrollBarVisibility="Auto" Padding="0,0,4,0">
+                                <StackPanel x:Name="AgendaListHost" Margin="14,0,10,10"/>
+                            </ScrollViewer>
+                            <Border x:Name="AgendaActions" Grid.Row="2" Visibility="Collapsed">
+                                <Grid Margin="14,10,10,12">
+                                    <Button Content="{DynamicResource Str_Ctx_AddAppointment}" Click="AgendaNew_Click"
+                                            Style="{StaticResource OutlineButton}" Padding="16,5"
+                                            HorizontalAlignment="Right"/>
                                 </Grid>
                             </Border>
                         </Grid>
@@ -401,15 +637,22 @@
                            FontFamily="Segoe UI, Microsoft JhengHei UI, Nirmala UI"
                            FontSize="11.5" VerticalAlignment="Center"/>
 
-                <!-- Which Killendar is open. The centre column was already reserved and empty.
-                     Hidden while there is only the default one, so the common case stays quiet -
-                     ISecurityHost.ShowActiveKillendar decides. Click opens Manage Killendars,
-                     the same as the rail button. -->
-                <TextBlock x:Name="ActiveKillendarLabel" Grid.Column="1" Visibility="Collapsed"
-                           Foreground="{DynamicResource TextFooter}" FontFamily="Consolas"
-                           FontSize="10" VerticalAlignment="Center"
-                           Cursor="Hand" ToolTip="{DynamicResource Str_TT_Killendars}"
-                           MouseLeftButtonUp="ActiveKillendarLabel_Click"/>
+                <!-- Centre column: the portable badge only. The open Killendar's NAME lives in the
+                     TITLE BAR and nowhere else (Steve, 2026-07-30) - it was briefly in both, which
+                     was wrong; a file name belongs in one place. -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- Portable mode indicator, same as KillerNotes/KillerScan/KillerShell:
+                         shown only when running from outside the installed location, so an
+                         installed copy never displays it. -->
+                    <StackPanel x:Name="PortableBadge" Orientation="Horizontal"
+                                VerticalAlignment="Center" Visibility="Collapsed">
+                        <TextBlock Text="{DynamicResource Str_Portable}" Foreground="{DynamicResource TextFooter}"
+                                   FontFamily="Consolas" FontSize="9" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <Button x:Name="InstallBtn" Content="{DynamicResource Str_Btn_Install}" Click="Install_Click"
+                                Style="{StaticResource OutlineButton}" FontFamily="Segoe UI" FontSize="10" Padding="8,1"
+                                VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    </StackPanel>
+                </StackPanel>
 
                 <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <!-- FontSize 10. The status line on the left stays 11.5. -->
@@ -443,7 +686,120 @@
             <Rectangle Canvas.Left="10" Canvas.Top="10" Width="2" Height="2" Fill="{DynamicResource DimTextBrush}"/>
         </Canvas>
 
-        <!-- ================= ABOUT OVERLAY ================= -->
+        <!-- ================= SHORTCUTS OVERLAY (F1) =================
+             Declared BEFORE AboutOverlay so About still wins the z-order tie, the same reason the
+             footer sits at ZIndex -1. Both views are generated in Shell/ShortcutsOverlay.cs from
+             one binding table; the hosts below are just empty shells. -->
+        <Grid x:Name="ShortcutsOverlay" Grid.RowSpan="3" Panel.ZIndex="8900" Visibility="Collapsed"
+              Background="#88000000" MouseLeftButtonDown="ShortcutsOverlay_Click">
+            <Grid.Resources>
+                <!-- Segmented toggle: accent outline at rest, filled when Tag="on". Same rule as
+                     the rail's toggles, so "this one is active" reads identically everywhere. -->
+                <Style x:Key="KsToggle" TargetType="Button">
+                    <Setter Property="FontFamily" Value="Consolas"/>
+                    <Setter Property="FontSize" Value="11"/>
+                    <Setter Property="Padding" Value="10,3"/>
+                    <Setter Property="Margin" Value="0,0,6,0"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="bg" Background="Transparent" CornerRadius="4"
+                                        BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1"
+                                        Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+                                    </Trigger>
+                                    <Trigger Property="Tag" Value="on">
+                                        <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Grid.Resources>
+
+            <!-- Stretch with a margin, NOT Center, and capped by MaxWidth. Centered, the card sized
+                 itself to the keyboard map's natural width and the window simply clipped whatever
+                 did not fit - the right-hand keys were cut off on a narrow window. Stretched, the
+                 card is at most MaxWidth on a wide window (so it stays a card, not a full-width
+                 band) and shrinks with the window below that, which is what gives the Viewbox
+                 inside something smaller to scale the keyboard into. (Steve, 2026-07-30.) -->
+            <Grid x:Name="ShortcutCardGrid"
+                  VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="28,0"
+                  MouseLeftButtonDown="ShortcutsCard_Click">
+                <Border Background="{DynamicResource BackgroundBrush}" CornerRadius="6" IsHitTestVisible="False">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="26" ShadowDepth="5" Direction="270" Opacity="0.6"/>
+                    </Border.Effect>
+                </Border>
+                <Border Background="{DynamicResource BackgroundBrush}" BorderBrush="{DynamicResource CardBorderBrush}"
+                        BorderThickness="1" CornerRadius="6" MaxHeight="620">
+                    <Grid>
+                        <Border IsHitTestVisible="False" CornerRadius="6"
+                                Opacity="{DynamicResource GrainOpacity}" Background="{DynamicResource GrainTileBrush}"/>
+
+                        <Button Content="&#xE711;" Click="ShortcutsClose_Click" Style="{StaticResource DangerCloseButton}"
+                                HorizontalAlignment="Right" VerticalAlignment="Top"
+                                Margin="0,6,6,0" Panel.ZIndex="2"/>
+
+                        <StackPanel Margin="22,18,22,20">
+                            <TextBlock Text="{DynamicResource Str_KS_Title}" Foreground="{DynamicResource TextBrush}"
+                                       FontFamily="Consolas" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                <Button x:Name="KsViewList"     Style="{StaticResource KsToggle}" Tag="on"
+                                        Content="{DynamicResource Str_KS_ViewList}" Click="KsViewList_Click"/>
+                                <Button x:Name="KsViewKeyboard" Style="{StaticResource KsToggle}"
+                                        Content="{DynamicResource Str_KS_ViewMap}" Click="KsViewKeyboard_Click"/>
+                                <TextBlock Text="{DynamicResource Str_KS_Hint}" Foreground="{DynamicResource DimTextBrush}"
+                                           FontSize="11" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                            </StackPanel>
+
+                            <!-- LIST -->
+                            <ScrollViewer x:Name="KsListHostScroll" VerticalScrollBarVisibility="Auto" MaxHeight="470">
+                                <StackPanel x:Name="KsListHost" Width="330"/>
+                            </ScrollViewer>
+
+                            <!-- MAP -->
+                            <StackPanel x:Name="KsMapHost" Visibility="Collapsed">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <Button x:Name="KsLayerBase" Style="{StaticResource KsToggle}" Tag="on"
+                                            Content="BASE" Click="KsLayerBase_Click"/>
+                                    <Button x:Name="KsLayerCtrl" Style="{StaticResource KsToggle}"
+                                            Content="CTRL" Click="KsLayerCtrl_Click"/>
+                                </StackPanel>
+                                <!-- The keyboard map is drawn at a FIXED unit size (KbUnit), so a
+                                     full row is wider than a narrow window and the right-hand keys
+                                     were simply cut off. A Viewbox scales the whole map down to
+                                     whatever width is going.
+
+                                     StretchDirection DownOnly: it may shrink to fit, never blow up
+                                     to fill a wide window - a keyboard rendered at 200% would look
+                                     absurd and the caps carry text sized for the natural scale.
+                                     Uniform, so the keys keep their proportions. (Steve, 2026-07-30.) -->
+                                <!-- Centered DownOnly Viewbox, the same wrapper KillerPDF puts round
+                                     its board: it may shrink to fit a narrow window but never blows
+                                     up on a wide one, where the card's MaxWidth holds it instead. -->
+                                <Viewbox Stretch="Uniform" StretchDirection="DownOnly"
+                                         HorizontalAlignment="Center">
+                                    <StackPanel x:Name="KsMapRows"/>
+                                </Viewbox>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!-- ================= ABOUT OVERLAY (F12) ================= -->
         <Grid x:Name="AboutOverlay" Grid.RowSpan="3" Panel.ZIndex="9000" Visibility="Collapsed"
               Background="#88000000" MouseLeftButtonDown="AboutOverlay_Click">
             <!-- No fixed width: the SHA-256 line never wraps, so it sizes the info panel and the

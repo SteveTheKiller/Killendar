@@ -4,7 +4,7 @@
 
     <!-- Czech. Layered over en-US, so any key omitted here falls back to English. -->
 
-    <sys:String x:Key="Str_Btn_New">+ Nová</sys:String>
+    <sys:String x:Key="Str_Btn_New">Nová</sys:String>
     <sys:String x:Key="Str_Btn_Import">Importovat .ics</sys:String>
     <sys:String x:Key="Str_Btn_Export">Exportovat .ics</sys:String>
     <sys:String x:Key="Str_Btn_Today">Dnes</sys:String>
@@ -28,6 +28,22 @@
     <sys:String x:Key="Str_Fld_Starts">ZAČÁTEK</sys:String>
     <sys:String x:Key="Str_Fld_Ends">KONEC</sys:String>
     <sys:String x:Key="Str_Fld_Location">MÍSTO</sys:String>
+
+    <sys:String x:Key="Str_Sys_Restore">Obnovit</sys:String>
+    <sys:String x:Key="Str_Sys_Move">Přesunout</sys:String>
+    <sys:String x:Key="Str_Sys_Size">Velikost</sys:String>
+    <sys:String x:Key="Str_Sys_Minimize">Minimalizovat</sys:String>
+    <sys:String x:Key="Str_Sys_Maximize">Maximalizovat</sys:String>
+    <sys:String x:Key="Str_Sys_Close">Zavřít</sys:String>
+
+    <sys:String x:Key="Str_Toolbar_Header">Panel nástrojů</sys:String>
+    <sys:String x:Key="Str_Toolbar_SmallIcons">Ikony</sys:String>
+    <sys:String x:Key="Str_Toolbar_LargeIcons">Velké ikony</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextNone">Bez textu</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextBeside">Text vedle ikon</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextUnder">Text pod ikonami</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextOnly">Pouze text</sys:String>
+    <sys:String x:Key="Str_TT_OpenInMaps">Otevřít toto místo v mapách</sys:String>
     <sys:String x:Key="Str_Fld_Description">POPIS</sys:String>
     <sys:String x:Key="Str_Fld_Attendees">ÚČASTNÍCI</sys:String>
     <sys:String x:Key="Str_Hint_Attendees">oddělené čárkami</sys:String>
@@ -50,12 +66,40 @@
     <sys:String x:Key="Str_Dlg_DeleteMsg">Smazat "{0}"?</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteDetail">Tohle nejde vrátit zpět.</sys:String>
 
+    <sys:String x:Key="Str_Fld_Repeats">OPAKOVÁNÍ</sys:String>
+    <sys:String x:Key="Str_Rep_Never">Nikdy</sys:String>
+    <sys:String x:Key="Str_Rep_Daily">Denně</sys:String>
+    <sys:String x:Key="Str_Rep_Weekly">Týdně</sys:String>
+    <sys:String x:Key="Str_Rep_Monthly">Měsíčně</sys:String>
+    <sys:String x:Key="Str_Rep_Yearly">Ročně</sys:String>
+    <sys:String x:Key="Str_Rep_Every">Každých</sys:String>
+    <sys:String x:Key="Str_Rep_UnitDays">dnů</sys:String>
+    <sys:String x:Key="Str_Rep_UnitWeeks">týdnů</sys:String>
+    <sys:String x:Key="Str_Rep_UnitMonths">měsíců</sys:String>
+    <sys:String x:Key="Str_Rep_UnitYears">let</sys:String>
+    <sys:String x:Key="Str_Rep_Ends">KONEC</sys:String>
+    <sys:String x:Key="Str_Rep_EndNever">Nikdy</sys:String>
+    <sys:String x:Key="Str_Rep_EndAfter">Po</sys:String>
+    <sys:String x:Key="Str_Rep_EndOn">K datu</sys:String>
+    <sys:String x:Key="Str_Rep_HintCount">Kolikrát</sys:String>
+    <sys:String x:Key="Str_Rep_SummaryNext">Další: {0}</sys:String>
+    <sys:String x:Key="Str_Rep_SummaryNone">Tohle nikdy nenastane. Zkontroluj data.</sys:String>
+    <sys:String x:Key="Str_Rep_Scope">TATO SCHŮZKA SE OPAKUJE</sys:String>
+    <sys:String x:Key="Str_Btn_ThisDate">Jen toto datum</sys:String>
+    <sys:String x:Key="Str_Btn_WholeSeries">Celou sérii</sys:String>
+    <sys:String x:Key="Str_Err_RepeatEnd">Uveď, kdy opakování končí, nebo že nekončí nikdy.</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Odstraní se jen toto datum. Zbytek série zůstane.</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">Odstraní se všechna data této série. Tohle nejde vrátit zpět.</sys:String>
+
     <sys:String x:Key="Str_Status_Ready">Připraveno</sys:String>
     <sys:String x:Key="Str_Status_Added">{0} přidáno</sys:String>
     <sys:String x:Key="Str_Status_Saved">{0} uloženo</sys:String>
     <sys:String x:Key="Str_Status_Deleted">{0} smazáno</sys:String>
     <sys:String x:Key="Str_Status_Imported">Importováno {0} schůzek</sys:String>
     <sys:String x:Key="Str_Status_ImportedSkipped">Importováno {0} schůzek, {1} již existujících přeskočeno</sys:String>
+    <sys:String x:Key="Str_Status_ImportRepeat">. {0} se opakuje a přidáno bylo jen první datum</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnreadable">. {0} nemělo čitelné datum a bylo přeskočeno</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnsupported">. {0} byly úkoly nebo poznámky, které Killendar neukládá</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import selhal: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Exportováno {0} schůzek</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export selhal: {0}</sys:String>
@@ -83,7 +127,7 @@
     <sys:String x:Key="Str_About_Unsigned">(nepodepsáno nebo řetěz selhal)</sys:String>
     <sys:String x:Key="Str_About_UpdateAvailable">K dispozici je aktualizace: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">Stahuje se...</sys:String>
-    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Zobrazení měsíce, týdne, dne a agendy, import a export iCalendar a schůzky, které nikdy neopustí tvůj počítač. Nástroj GPLv3 od </sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Kalendář bez účtu, bez synchronizace a bez čehokoli, co volá domů. Tvoje schůzky žijí v jediném souboru na tvém vlastním počítači, v případě zájmu šifrovaném. Nástroj GPLv3 od </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>
 
     <sys:String x:Key="Str_Dlg_UpdateMsg">Stáhnout a nainstalovat Killendar {0}?</sys:String>
@@ -151,7 +195,7 @@
     <!-- Manage Killendars: the .kcal file list, its context menu and the rail
          button. {0} is a file name or an error; Str_Kc_Renamed takes {0} old, {1} new. -->
     <sys:String x:Key="Str_Kc_Title">Killendary</sys:String>
-    <sys:String x:Key="Str_Kc_Hint">Všechny soubory .kcal ve vaší datové složce. Dvojklikem na název jej přejmenujete.</sys:String>
+    <sys:String x:Key="Str_Kc_Hint">Všechny soubory .kcal ve vaší datové složce. Dvojklikem jeden otevřete; pravým tlačítkem přejmenujete nebo smažete.</sys:String>
     <sys:String x:Key="Str_Kc_FlagEncrypted">zašifrováno</sys:String>
     <sys:String x:Key="Str_Kc_FlagActive">otevřeno</sys:String>
     <sys:String x:Key="Str_Kc_SelectFirst">Nejprve vyberte Killendar.</sys:String>
@@ -222,5 +266,78 @@
     <sys:String x:Key="Str_TT_ViewList">Zobrazení seznamu</sys:String>
     <sys:String x:Key="Str_TT_ViewIcons">Zobrazení ikon</sys:String>
     <sys:String x:Key="Str_TT_ViewDetails">Zobrazení podrobností</sys:String>
+    <sys:String x:Key="Str_TT_ShowHidden">Zobrazit skryté a systémové položky</sys:String>
+    <sys:String x:Key="Str_TT_RecentLocations">Nedávná umístění</sys:String>
+    <sys:String x:Key="Str_Menu_PinPlace">Připnout k místům</sys:String>
+    <sys:String x:Key="Str_Menu_UnpinPlace">Odebrat z míst</sys:String>
+    <sys:String x:Key="Str_Btn_Edit">Upravit</sys:String>
+    <sys:String x:Key="Str_Side_NoAppointments">V tento den nejsou žádné schůzky</sys:String>
+
+    <!-- Přenosná instalace -->
+    <sys:String x:Key="Str_Portable">PŘENOSNÁ</sys:String>
+    <sys:String x:Key="Str_Btn_Install">Nainstalovat Killendar...</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallMsg">Nainstalovat Killendar do tohoto počítače?</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallBullets">Killendar se zkopíruje do složky s programy a přidá se zástupce do nabídky Start.&#x0a;Vaše Killendary zůstanou nedotčené a tato kopie souboru exe zůstane tam, kde je.&#x0a;Killendar se restartuje z nainstalovaného umístění.</sys:String>
+    <sys:String x:Key="Str_Btn_DoInstall">Nainstalovat</sys:String>
+    <sys:String x:Key="Str_Chk_Desktop">Přidat zástupce na plochu</sys:String>
+    <sys:String x:Key="Str_Chk_AllUsers">Nainstalovat pro všechny uživatele tohoto počítače (vyžaduje správce)</sys:String>
+    <sys:String x:Key="Str_Status_InstallFailed">Instalace nebyla dokončena - Killendar běží dál přenosně.</sys:String>
+
+    <!-- Kategorie -->
+    <sys:String x:Key="Str_KS_Title">Klávesové zkratky</sys:String>
+    <sys:String x:Key="Str_KS_ViewList">SEZNAM</sys:String>
+    <sys:String x:Key="Str_KS_ViewMap">KLÁVESNICE</sys:String>
+    <sys:String x:Key="Str_KS_Hint">Jednotlivé klávesy jsou při psaní neaktivní</sys:String>
+    <sys:String x:Key="Str_TT_Shortcuts">Klávesové zkratky (F1)</sys:String>
+    <sys:String x:Key="Str_KS_GrpViews">ZOBRAZENÍ</sys:String>
+    <sys:String x:Key="Str_KS_GrpNav">NAVIGACE</sys:String>
+    <sys:String x:Key="Str_KS_GrpAppt">SCHŮZKY</sys:String>
+    <sys:String x:Key="Str_KS_GrpFile">SOUBOR</sys:String>
+    <sys:String x:Key="Str_KS_GrpHelp">NÁPOVĚDA</sys:String>
+    <sys:String x:Key="Str_KS_Month">Zobrazení měsíce</sys:String>
+    <sys:String x:Key="Str_KS_Week">Zobrazení týdne</sys:String>
+    <sys:String x:Key="Str_KS_Day">Zobrazení dne</sys:String>
+    <sys:String x:Key="Str_KS_Agenda">Zobrazení agendy</sys:String>
+    <sys:String x:Key="Str_KS_Prev">Předchozí měsíc, týden nebo den</sys:String>
+    <sys:String x:Key="Str_KS_Next">Další měsíc, týden nebo den</sys:String>
+    <sys:String x:Key="Str_KS_Today">Přejít na dnešek</sys:String>
+    <sys:String x:Key="Str_KS_New">Nová schůzka zde</sys:String>
+    <sys:String x:Key="Str_KS_Panel">Panel schůzky</sys:String>
+    <sys:String x:Key="Str_KS_Import">Importovat soubor .ics</sys:String>
+    <sys:String x:Key="Str_KS_Export">Exportovat do .ics</sys:String>
+    <sys:String x:Key="Str_KS_ThisList">Tento seznam zkratek</sys:String>
+    <sys:String x:Key="Str_KS_About">Karta O aplikaci</sys:String>
+    <sys:String x:Key="Str_KS_Close">Zavřít panel nebo kartu</sys:String>
+
+    <sys:String x:Key="Str_Fld_Categories">KATEGORIE</sys:String>
+    <sys:String x:Key="Str_Hint_NoCategories">Zatím žádné kategorie. Přidejte je z postranního panelu.</sys:String>
+    <sys:String x:Key="Str_TT_Categories">Kategorie</sys:String>
+    <sys:String x:Key="Str_TT_Density">Hustota mřížky - klik nebo kolečko</sys:String>
+    <sys:String x:Key="Str_St_Density">Hustota mřížky: {0} čar za hodinu</sys:String>
+    <sys:String x:Key="Str_Cat_Title">Kategorie</sys:String>
+    <sys:String x:Key="Str_Cat_Hint">Barvy pro tento Killendar. Schůzka jich může nést více; první ji obarví.</sys:String>
+    <sys:String x:Key="Str_Cat_NeedName">Zadejte název kategorie.</sys:String>
+    <sys:String x:Key="Str_Cat_Exists">Kategorie s tímto názvem už existuje.</sys:String>
+    <sys:String x:Key="Str_Cat_DeleteHead">Smazat {0}?</sys:String>
+    <sys:String x:Key="Str_Cat_DeleteBody">Odebere se ze všech schůzek, které ji nesou. Samotné schůzky zůstanou nedotčené.</sys:String>
+    <sys:String x:Key="Str_Btn_CatAdd">Přidat</sys:String>
+    <sys:String x:Key="Str_Btn_Done">Hotovo</sys:String>
+    <sys:String x:Key="Str_TT_CatPickColor">Vybrat barvu pro novou kategorii</sys:String>
+    <sys:String x:Key="Str_TT_CatRecolor">Změnit barvu</sys:String>
+    <sys:String x:Key="Str_TT_CatRename">Přejmenovat</sys:String>
+    <sys:String x:Key="Str_TT_CatDelete">Smazat</sys:String>
+
+    <!-- Výběr barvy -->
+    <sys:String x:Key="Str_Dlg_PickColor">Vybrat barvu</sys:String>
+    <sys:String x:Key="Str_TT_Eyedropper">Nabrat barvu odkudkoli z obrazovky</sys:String>
+    <sys:String x:Key="Str_Btn_Reset">Obnovit</sys:String>
+    <sys:String x:Key="Str_TT_ReplaceSwatch">Klikněte a pak klikněte na vzorek, aby získal aktuální barvu</sys:String>
+    <sys:String x:Key="Str_TT_ResetSwatches">Obnovit výchozí vzorky</sys:String>
+    <sys:String x:Key="Str_TT_SwatchReplace">Kliknutím nastavíte tomuto vzorku aktuální barvu</sys:String>
+    <sys:String x:Key="Str_TT_SwatchUse">Kliknutím použijete tuto barvu</sys:String>
+
+    <!-- Místní nabídky -->
+    <sys:String x:Key="Str_Ctx_AddAppointment">Přidat schůzku</sys:String>
+    <sys:String x:Key="Str_Ctx_Open">Otevřít</sys:String>
 
 </ResourceDictionary>

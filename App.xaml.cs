@@ -68,7 +68,7 @@ namespace Killendar
             win.Topmost = true; win.Topmost = false;   // foreground nudge past the focus rules
 
             if (string.IsNullOrEmpty(path)) return;
-            CaptureOpenFileArgument(new[] { path! });
+            CaptureOpenFileArgument([path!]);
             if (PendingOpenFile != null) win.HandlePendingOpenFile();
         }
 
@@ -147,6 +147,7 @@ namespace Killendar
             // build too, and it cannot destroy real data.
             if (e.Args.Any(a => string.Equals(a, "--demo", StringComparison.OrdinalIgnoreCase)))
             {
+                IsDemo = true;
                 try { Services.DemoData.Build(); }
                 catch (Exception ex)
                 {
@@ -157,6 +158,10 @@ namespace Killendar
 
             new MainWindow().Show();
         }
+
+        /// <summary>True when launched with --demo. Read by the shell to keep marketing
+        /// screenshots clean - the portable badge is suppressed in demo mode.</summary>
+        internal static bool IsDemo { get; private set; }
 
         // ============================================================
         // Install state
@@ -337,12 +342,12 @@ namespace Killendar
                 if (shellType is null) return;
                 object shell = Activator.CreateInstance(shellType)!;
                 object shortcut = shellType.InvokeMember("CreateShortcut",
-                    BindingFlags.InvokeMethod, null, shell, new object[] { lnkPath })!;
+                    BindingFlags.InvokeMethod, null, shell, [lnkPath])!;
                 var sc = shortcut.GetType();
                 sc.InvokeMember("TargetPath", BindingFlags.SetProperty,
-                    null, shortcut, new object[] { targetPath });
+                    null, shortcut, [targetPath]);
                 sc.InvokeMember("WorkingDirectory", BindingFlags.SetProperty,
-                    null, shortcut, new object[] { Path.GetDirectoryName(targetPath)! });
+                    null, shortcut, [Path.GetDirectoryName(targetPath)!]);
                 sc.InvokeMember("Save", BindingFlags.InvokeMethod, null, shortcut, null);
             }
             catch { /* best-effort: a missing shortcut is not worth failing an install over */ }
@@ -426,10 +431,10 @@ namespace Killendar
             {
                 _cache = File.Exists(FilePath)
                     ? JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(FilePath))
-                      ?? new Dictionary<string, string>()
-                    : new Dictionary<string, string>();
+                      ?? []
+                    : [];
             }
-            catch { _cache = new Dictionary<string, string>(); }
+            catch { _cache = []; }
             return _cache;
         }
 

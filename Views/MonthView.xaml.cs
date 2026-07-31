@@ -15,7 +15,15 @@ namespace Killendar.Views
         private DateTime _anchor = DateTime.Today;
 
         public event Action<CalendarEvent>? EventSelected;
+        public event Action<DateTime>? DaySelected;
         public event Action<DateTime>? SlotSelected;
+
+        /// <summary>
+        /// Never raised - a month cell is a day, with no hour grid to make denser. Declared with
+        /// empty accessors rather than as a field: a field-like event that nothing raises is
+        /// CS0067, and the interface still has to be satisfied.
+        /// </summary>
+        public event Action<int>? DensityStepped { add { } remove { } }
 
         public MonthView() => InitializeComponent();
 
@@ -29,6 +37,32 @@ namespace Killendar.Views
         {
             get => _anchor;
             set { _anchor = value; Rebuild(); }
+        }
+
+        private DateTime? _selectedDay;
+
+        /// <summary>
+        /// The day the appointment panel is editing. The time is ignored here - a month cell is a
+        /// day, so a keystroke in the TIME box must not repaint anything.
+        ///
+        /// Repaints only the cells that can have changed rather than calling Rebuild. This is
+        /// driven by TextChanged, so it fires on every keystroke, and rebuilding a 42-cell grid
+        /// (each cell re-querying the store for its events) per keystroke would be exactly the kind
+        /// of per-input layout churn that made the toolbar lag.
+        /// </summary>
+        public void SetSelection(DateTime? day, TimeSpan? timeOfDay)
+        {
+            var v = day?.Date;
+            if (v == _selectedDay) return;
+            var was = _selectedDay;
+            _selectedDay = v;
+            RepaintDay(was);
+            RepaintDay(v);
+            // Today as well. Its appearance depends on whether ANYTHING is selected - it holds the
+            // fill only while the selection is empty - so it changes on the null-to-date and
+            // date-to-null transitions even though it is neither the old nor the new day. Missing
+            // this is what put two solid cells on screen at once. (Steve, 2026-07-30.)
+            if (was == null || v == null) RepaintDay(DateTime.Today);
         }
 
         public string PeriodLabel => _anchor.ToString("MMMM yyyy");
@@ -52,6 +86,11 @@ namespace Killendar.Views
             if (_store == null) return;
 
             BuildWeekdayHeader();
+
+            // The maps point at Borders that are about to be discarded. Stale entries would make
+            // RepaintDay colour a cell that is no longer in the tree.
+            _cells.Clear();
+            _rings.Clear();
 
             CalGrid.Children.Clear();
             CalGrid.RowDefinitions.Clear();
@@ -121,38 +160,55 @@ namespace Killendar.Views
             };
             cell.Themed(Border.BorderBrushProperty, "CardBorderBrush");
 
-            // Days outside the current month sit back; today gets a neutral raised fill.
+            // Days outside the current month sit back. The SELECTED day - the one the appointment
+            // panel is talking about - gets the SelectionBg fill, and today gets it too whenever
+            // nothing is selected. When the two differ, today falls back to a 1px accent ring so
+            // the strongest mark on the grid is always the day you are actually editing.
             //
             // In-month days carry NO fill of their own. They used to paint PaneBrush, which is the
             // same colour as the card underneath - so it looked identical while quietly covering
             // the card's film grain, and only the semi-transparent out-of-month cells (RowAltBrush
             // is #14FFFFFF) showed any texture. Transparent, NOT null: a Border with a null
             // Background receives no mouse events, and the cell has to stay clickable.
-            // Today gets a neutral raised fill rather than the accent-tinted row brush: the event
-            // chips are accent-tinted too and would wash out against it. The red day number is
-            // what marks today.
-            string? restKey = isToday ? "SurfaceBrush" : inMonth ? null : "RowAltBrush";
-            void Rest()
-            {
-                if (restKey == null) cell.Background = Brushes.Transparent;
-                else cell.SetResourceReference(Border.BackgroundProperty, restKey);
-            }
+            //
+            // SelectionBg is the family's "this one is active" fill - the same brush behind a
+            // selected tool, tab or menu item. Today used to be the neutral SurfaceBrush, which is
+            // the same brush the PRESS state uses, so it looked permanently half-clicked.
+            // (Steve, 2026-07-30.)
+            _cells[date.Date] = (cell, inMonth, isToday);
+
+            void Rest() => ApplyRest(cell, date.Date, inMonth, isToday);
             Rest();
             cell.MouseEnter += (_, _) => cell.SetResourceReference(Border.BackgroundProperty, "RowHoverBrush");
             cell.MouseLeave += (_, _) => Rest();
 
-            // Clicking empty space in a day starts a new appointment at 9am on that date.
+            // Clicking a day opens that day's agenda in the sidebar - viewing first, editing
+            // behind an Edit action. The context menu below still offers the explicit create.
+            // (Steve, 2026-07-30.)
             cell.MouseLeftButtonDown += (_, e) =>
             {
                 e.Handled = true;
-                SlotSelected?.Invoke(date.Date.AddHours(9));
+                // Press state: one tier brighter than hover, so the click is acknowledged before
+                // the sidebar slides out. MouseLeave restores it if the pointer moves away first.
+                cell.SetResourceReference(Border.BackgroundProperty, "SurfaceBrush");
+                DaySelected?.Invoke(date.Date);
             };
+            cell.MouseLeftButtonUp += (_, _) =>
+                cell.SetResourceReference(Border.BackgroundProperty, "RowHoverBrush");
+            // Right-click is the explicit create, for anyone who wants to skip the agenda.
+            cell.ContextMenu = CalendarChrome.DayMenu(date.Date.AddHours(9), d => SlotSelected?.Invoke(d));
 
             var sp = new StackPanel { Margin = new Thickness(4, 3, 4, 3) };
 
+            // SelectionFg on today, not PrimaryBrush. When today carries the SelectionBg fill, the
+            // accent on its own selection fill is the weakest pairing on the card (#DD504B on
+            // #5E1C1C) - SelectionBg and SelectionFg are a pair and are used as one. When today is
+            // instead wearing the ring (because another day is selected), white still reads: the
+            // cell is then unfilled and white is the ordinary text colour, with the ring and the
+            // bold weight doing the marking.
             var dayNum = CalendarChrome.Text(
                 date.Day.ToString(),
-                isToday ? "PrimaryBrush" : inMonth ? "TextBrush" : "DimTextBrush",
+                isToday ? "SelectionFg" : inMonth ? "TextBrush" : "DimTextBrush",
                 11,
                 isToday ? FontWeights.Bold : (FontWeight?)null);
             dayNum.HorizontalAlignment = HorizontalAlignment.Right;
@@ -176,8 +232,61 @@ namespace Killendar.Views
                 sp.Children.Add(more);
             }
 
-            cell.Child = sp;
+            // The ring lives on its own layer rather than on the cell's BorderThickness, because
+            // that thickness is the GRID LINE (0,0,1,1, suppressed on the last column and row) -
+            // reusing it for the today marker would blow a hole in the grid.
+            var ring = new Border
+            {
+                BorderThickness = new Thickness(1),
+                IsHitTestVisible = false,
+                Visibility = Visibility.Collapsed,
+            };
+            ring.Themed(Border.BorderBrushProperty, "PrimaryBrush");
+            _rings[date.Date] = ring;
+
+            var layers = new Grid();
+            layers.Children.Add(sp);
+            layers.Children.Add(ring);
+            cell.Child = layers;
+
+            ApplyRest(cell, date.Date, inMonth, isToday);
             return cell;
+        }
+
+        // date -> the cell and what it is, so a selection change can repaint two cells instead of
+        // rebuilding all 42 (each of which re-queries the store for its events).
+        private readonly System.Collections.Generic.Dictionary<DateTime, (Border Cell, bool InMonth, bool IsToday)> _cells = new();
+        private readonly System.Collections.Generic.Dictionary<DateTime, Border> _rings = new();
+
+        /// <summary>
+        /// The cell's resting appearance for the current selection. Called on build, on mouse
+        /// leave, and when the selected day moves.
+        /// </summary>
+        private void ApplyRest(Border cell, DateTime date, bool inMonth, bool isToday)
+        {
+            bool selected = _selectedDay == date;
+            // Today keeps the fill only while nothing is selected; otherwise the fill belongs to
+            // the day being edited and today wears the ring instead.
+            bool todayFilled = isToday && _selectedDay == null;
+
+            if (selected || todayFilled)
+                cell.SetResourceReference(Border.BackgroundProperty, "SelectionBg");
+            else if (!inMonth)
+                cell.SetResourceReference(Border.BackgroundProperty, "RowAltBrush");
+            else
+                cell.Background = Brushes.Transparent;   // never null - a null Background gets no mouse events
+
+            if (_rings.TryGetValue(date, out var ring))
+                ring.Visibility = isToday && !todayFilled && !selected
+                                  ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>Re-apply one day's resting appearance, if that day is on screen.</summary>
+        private void RepaintDay(DateTime? date)
+        {
+            if (date is not DateTime d) return;
+            if (_cells.TryGetValue(d.Date, out var e))
+                ApplyRest(e.Cell, d.Date, e.InMonth, e.IsToday);
         }
 
         private void OnChipClick(CalendarEvent ev) => EventSelected?.Invoke(ev);

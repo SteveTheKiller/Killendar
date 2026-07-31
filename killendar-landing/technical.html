@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<script>(function(){var d=document.documentElement,t=null;try{t=localStorage.getItem('kcal-theme');if(t){d.setAttribute('data-theme',t);if({dark:1,light:1,black:1}[t]){var v=localStorage.getItem('kcal-accent');if(v)d.style.setProperty('--accent',v);}}}catch(e){}
+var bg={dark:'#1c1c1c',light:'#dcdcdc',black:'#000000',blood:'#240c0d',greed:'#002115',cyanotic:'#001a28'};d.style.backgroundColor=bg[t]||bg.dark;})();</script>
+<link rel="preload" href="brand/Typewriter_a602_Dead_Postman.ttf" as="font" type="font/ttf" crossorigin>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="darkreader-lock">
+<title>Technical - Killendar</title>
+<link rel="canonical" href="https://killendar.net/technical.html">
+<meta name="description" content="How Killendar stores appointments: the .kcal SQLite format, SQLCipher encryption, UTC and floating all-day dates, iCalendar round-tripping, the keyboard map, and a glossary.">
+<link rel="icon" type="image/x-icon" href="brand/kd-icon.ico">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://killendar.net/technical.html">
+<meta property="og:title" content="Technical - Killendar">
+<meta property="og:description" content="The .kcal format, SQLCipher encryption, time handling, the keyboard map, and a glossary.">
+<meta property="og:image" content="https://killendar.net/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<script defer src="https://koya.thekiller.net/script.js" data-website-id="158a903b-5f16-45b9-98c6-9c8eab4a519f"></script>
+<link rel="stylesheet" href="kd.css?v=1">
+<style>
+.content-inner { max-width: 880px; margin: 0 auto; padding: 26px 28px 50px; }
+.page-sub { text-align: center; color: var(--muted); font-size: 14.5px; margin: 0 0 30px; }
+/* Interactive keyboard map - same treatment as killerpdf.net/help.html, driven by the same
+   binding table the app uses. Neon category colours, layer tabs, hover for the action. */
+.kbmap { --kc-file:#00fff9; --kc-view:#f222ff; --kc-nav:#8c1eff; --kc-appt:#ffd319; --kc-help:#39ff14; margin: 0 0 30px; }
+html[data-theme="black"] .kbmap { --kc-nav:#a64dff; }
+html[data-theme="light"] .kbmap { --kc-file:#009e99; --kc-view:#a316b5; --kc-nav:#6a11cc; --kc-appt:#a67c00; --kc-help:#128c07; }
+.kbmap-layers { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.kbmap-layers button { font-family: Consolas, monospace; font-size: 12px; padding: 5px 12px; background: var(--surface); color: var(--text2); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; }
+.kbmap-layers button.on { color: var(--accent); border-color: var(--accent); }
+.kbmap-hint { font-size: 11.5px; color: var(--muted); margin-left: 6px; }
+.kbmap-scroll { overflow: hidden; padding-top: 6px; }
+.kbmap-board { display: inline-block; transform-origin: 0 0; }
+.kbmap-row { display: flex; margin-bottom: 4px; }
+.kb-key { flex: none; margin-right: 4px; height: 44px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; font-family: Consolas, monospace; color: var(--text); display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 5px 2px 3px; transition: transform .09s ease; }
+.kb-key .cap { font-size: 11.5px; line-height: 1; }
+.kb-key .act { font-size: 8.5px; line-height: 1; max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding: 0 2px; visibility: hidden; }
+.kb-key .act > span { display: inline; }
+.kb-key .act.scrolling { text-overflow: clip; }
+.kb-key .act.scrolling > span { display: inline-block; width: max-content; }
+.kb-key .bar { height: 3px; width: calc(100% - 6px); border-radius: 1.5px; visibility: hidden; }
+.kb-key.bound { border-color: var(--kc); }
+.kb-key.bound .act { visibility: visible; color: var(--kc); }
+.kb-key.bound .bar { visibility: visible; background: var(--kc); }
+.kb-key.bound:hover { transform: translateY(-3px); }
+.kb-key.mod-on { border-color: var(--accent); color: var(--accent); }
+.kbmap-detail { font-family: Consolas, monospace; font-size: 13px; color: var(--accent); height: 20px; margin-top: 10px; }
+/* Two-column grouped list under the map */
+.kbd-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 44px; align-items: start; }
+.kbd-col { min-width: 0; }
+.kbd-group { display: grid; grid-template-columns: max-content 1fr; column-gap: 18px; row-gap: 6px; align-items: baseline; margin-bottom: 22px; }
+.kbd-group h4 { grid-column: 1 / -1; font-family: 'Killendar', 'Courier New', monospace; font-size: 15px; letter-spacing: .5px; color: var(--accent); font-weight: normal; margin-bottom: 4px; text-shadow: 0 2px 5px rgba(0,0,0,0.55), 0 1px 2px rgba(0,0,0,0.5); }
+html[data-theme="light"] .kbd-group h4 { text-shadow: none; }
+.kbd-row { display: contents; }
+.kbd-row .k { font-family: Consolas, monospace; font-size: 12.5px; color: var(--text); white-space: nowrap; }
+.kbd-row .d { font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+@media (max-width: 900px) { .content-inner { padding: 22px 16px 42px; } .kbd-cols { grid-template-columns: 1fr; gap: 0; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+<a href="index.html" class="tb-home" title="Killendar">
+<img class="tb-icon" src="brand/kd-logo.png" alt="Killendar" width="36" height="36">
+<img class="wm-logo tb-wm" src="brand/killendar-logo-dark-red.svg" alt="The Killendar">
+</a>
+<!-- PRE-RELEASE: restore the download link below once 1.0.0 is tagged.
+<a class="tb-dl" href="https://github.com/SteveTheKiller/Killendar/releases/latest"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h3l-4 5-4-5h3V4zM5 18h14v2H5z"/></svg><span>Download</span></a>
+-->
+<span class="tb-soon"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h3l-4 5-4-5h3V4zM5 18h14v2H5z"/></svg><span>Coming soon</span></span>
+<span class="tb-spacer"></span>
+<nav class="tb-nav">
+<a href="technical.html" class="on">Technical</a>
+<a href="about.html">About</a>
+</nav>
+<div class="tgrp" role="group" aria-label="Theme">
+<button class="swatch sw-dark"     data-theme="dark"     title="Dark"></button>
+<button class="swatch sw-light"    data-theme="light"    title="Light"></button>
+<button class="swatch sw-black"    data-theme="black"    title="Black"></button>
+<button class="swatch sw-blood"    data-theme="blood"    title="Blood"></button>
+<button class="swatch sw-greed"    data-theme="greed"    title="Greed"></button>
+<button class="swatch sw-cyanotic" data-theme="cyanotic" title="Cyanotic"></button>
+</div>
+<div class="acc-fly accent-switch" id="accentSwitch">
+<button class="acc-toggle" id="accentToggle" aria-haspopup="true" aria-expanded="false" title="Accent color"></button>
+<div class="acc-pop" id="accentPop" hidden role="group" aria-label="Accent color">
+<span class="acc-pop-label">accent:</span>
+<button class="acc" data-accent="Red"    title="Red"></button>
+<button class="acc" data-accent="Orange" title="Orange"></button>
+<button class="acc" data-accent="Green"  title="Green"></button>
+<button class="acc" data-accent="Teal"   title="Teal"></button>
+<button class="acc" data-accent="Blue"   title="Blue"></button>
+<button class="acc" data-accent="Purple" title="Purple"></button>
+</div>
+</div>
+</div>
+
+<div class="shell">
+<div class="content">
+<div class="content-scroll">
+<div class="content-inner">
+
+<span class="page-title">Technical</span>
+<p class="page-sub">What the file is, where it lives, and what the encryption actually covers.</p>
+
+<section class="tech-sec">
+<h2>The file</h2>
+<p>One <b>.kcal</b> file is one Killendar. It is an ordinary SQLite database, opened and written
+in place, so you can read it with any SQLite tool without going through the app. There is no
+proprietary container and no index to rebuild.</p>
+<table class="spec-table">
+<tr><th>file</th><th>what it is for</th></tr>
+<tr><td>.kcal</td><td>A Killendar. The live database, written in place.</td></tr>
+<tr><td>.ics</td><td>Interchange only. Import and export.</td></tr>
+</table>
+<p>Killendars live in <b>%APPDATA%\Killendar</b>, per user, always. A machine-wide install makes
+the app available to everyone on the box; each Windows account still gets its own Killendar.
+Nothing is written outside your profile.</p>
+
+<h3>What is inside it</h3>
+<ul class="blurb-list">
+<li><b>events</b> - one row per appointment.</li>
+<li><b>categories</b> - the color definitions. They live in the Killendar rather than in
+settings, so they travel with the file when you move or share it.</li>
+<li><b>meta</b> - schema version and the app version that created the file, for forensics on a
+file that turns up years later.</li>
+</ul>
+</section>
+
+<section class="tech-sec">
+<h2>Time</h2>
+<p>Timed appointments are stored in UTC and converted at the edges, so a calendar carried to
+another timezone still says the right thing.</p>
+<p>All-day entries are the exception, and deliberately so: they are floating calendar dates,
+stored unconverted with no <b>Z</b>. Converting them to UTC would slide an all-day appointment
+to the previous day for everyone east of UTC.</p>
+<table class="spec-table">
+<tr><th>what you entered</th><th>what is on disk</th></tr>
+<tr><td>14:00 local, in PDT</td><td>2026-08-03T21:00:00.0000000Z</td></tr>
+<tr><td>All-day, Sep 7</td><td>2026-09-07T00:00:00.0000000 - no Z, unconverted</td></tr>
+</table>
+</section>
+
+<section class="tech-sec">
+<h2>Encryption</h2>
+<p>Encryption is opt-in. With no password the file is plain SQLite. Set one from the lock button
+in the title bar and the whole file is encrypted at rest with SQLCipher.</p>
+<table class="spec-table">
+<tr><th>property</th><th>value</th></tr>
+<tr><td>Cipher</td><td>AES-256 in CBC mode</td></tr>
+<tr><td>Integrity</td><td>Per-page HMAC-SHA512</td></tr>
+<tr><td>Key derivation</td><td>SQLCipher's own PBKDF2, not a hand-rolled one</td></tr>
+<tr><td>Unit of locking</td><td>One password per Killendar - the file</td></tr>
+</table>
+<p>The same button changes the password, or removes it and writes the file back out as plain
+SQLite. An encrypted Killendar asks for its password on launch; a wrong one just asks again.</p>
+
+<h3>There is no password recovery</h3>
+<p>The app says so before you commit to one. If a password is lost the locked Killendar is
+renamed aside and kept on disk rather than destroyed, and a new empty one opens in its place -
+so a forgotten password costs you access, not the file.</p>
+
+<h3>What the encryption does not protect</h3>
+<p>Worth stating plainly rather than implying otherwise:</p>
+<ul class="blurb-list">
+<li>Nothing is protected while the app is open and unlocked.</li>
+<li>It is no defense against a keylogger, a memory dump, or someone who has your password.</li>
+<li><b>settings.json</b> stays plaintext. It holds the theme, locale, window position and which
+Killendar is active.</li>
+<li>An <b>.ics</b> export is plain text by definition. Exporting from an encrypted Killendar
+writes an unencrypted copy, and the app warns you at the moment of export rather than after.</li>
+</ul>
+</section>
+
+<section class="tech-sec">
+<h2>iCalendar</h2>
+<p>Import and export are written against RFC 5545 directly, with no external dependencies.
+Import skips appointments already in the calendar and reports how many were added and how many
+were skipped.</p>
+<p>Categories travel through both, using the standard <b>CATEGORIES</b> property, so they
+survive a trip through another calendar app. A category you import but have never defined shows
+in neutral gray rather than being dropped or silently created - deleting a category is meant to
+stick, and an import should not quietly undo that.</p>
+</section>
+
+<section class="tech-sec">
+<h2>Keyboard</h2>
+<p>Almost everything is a <b>single key</b>, no modifier. That is only safe because of one rule:
+a bare-letter shortcut never fires while you are typing. The moment focus is in a text field
+every single-key binding stands down, so a <b>w</b> in a title is a <b>w</b> and not a jump to
+week view. The modified combinations are checked first and work regardless, because they cannot
+collide with typing.</p>
+
+<div class="kbmap">
+<div class="kbmap-layers">
+<button data-kblayer="base" class="on">BASE</button>
+<button data-kblayer="ctrl">CTRL</button>
+<span class="kbmap-hint">Hold Ctrl to preview that layer - hover a lit key for its action</span>
+</div>
+<div class="kbmap-scroll"><div class="kbmap-board" id="kbmapBoard"></div></div>
+<div class="kbmap-detail" id="kbmapDetail">&nbsp;</div>
+</div>
+
+<script>
+(function(){
+// Same binding table the app uses (Shell/Shortcuts.cs). Killendar has no Shift, Alt or
+// Ctrl+Shift bindings, so unlike KillerPDF there are only two layers to show.
+var KBL = {
+base: { Esc:['help','Close the panel or a card'], F1:['help','This shortcut list'], F12:['help','About card'],
+  D1:['view','Month view'], D2:['view','Week view'], D3:['view','Day view'], D4:['view','Agenda view'],
+  M:['view','Month view'], W:['view','Week view'], D:['view','Day view'], A:['view','Agenda view'],
+  N:['appt','New appointment here'], B:['appt','Appointment panel'],
+  T:['nav','Jump to today'],
+  Left:['nav','Previous month, week or day'], Right:['nav','Next month, week or day'],
+  Comma:['nav','Previous month, week or day'], Period:['nav','Next month, week or day'] },
+ctrl: { N:['appt','New appointment here'], I:['file','Import an .ics file'], E:['file','Export to .ics'] } };
+var CATNAME = { file:'FILE', view:'VIEWS', nav:'NAVIGATION', appt:'APPOINTMENTS', help:'HELP' };
+var KBROWS = [
+[['Esc','Esc',1],['',0.8],['F1','F1',1],['F2','F2',1],['F3','F3',1],['F4','F4',1],['',0.6],['F5','F5',1],['F6','F6',1],['F7','F7',1],['F8','F8',1],['',0.6],['F9','F9',1],['F10','F10',1],['F11','F11',1],['F12','F12',1]],
+[['Grave','`',1],['D1','1',1],['D2','2',1],['D3','3',1],['D4','4',1],['D5','5',1],['D6','6',1],['D7','7',1],['D8','8',1],['D9','9',1],['D0','0',1],['Minus','-',1],['Equals','=',1],['Back','&#8592;',2],['',0.6],['Ins','Ins',1],['Home','Home',1],['PgUp','PgUp',1]],
+[['Tab','Tab',1.5],['Q','Q',1],['W','W',1],['E','E',1],['R','R',1],['T','T',1],['Y','Y',1],['U','U',1],['I','I',1],['O','O',1],['P','P',1],['LBr','[',1],['RBr',']',1],['Bslash','\\',1.5],['',0.6],['Del','Del',1],['End','End',1],['PgDn','PgDn',1]],
+[['Caps','Caps',1.8],['A','A',1],['S','S',1],['D','D',1],['F','F',1],['G','G',1],['H','H',1],['J','J',1],['K','K',1],['L','L',1],['Semi',';',1],['Quote','\'',1],['Enter','Enter',2.2]],
+[['Shift','Shift',2.3],['Z','Z',1],['X','X',1],['C','C',1],['V','V',1],['B','B',1],['N','N',1],['M','M',1],['Comma',',',1],['Period','.',1],['Slash','/',1],['RShift','Shift',2.7],['',1.6],['Up','&#8593;',1]],
+[['Ctrl','Ctrl',1.5],['Win','Win',1.2],['Alt','Alt',1.5],['Space','',6.8],['RAlt','Alt',1.5],['Menu','&#9776;',1],['RCtrl','Ctrl',1.5],['',0.6],['Left','&#8592;',1],['Down','&#8595;',1],['Right','&#8594;',1]]];
+var MODS = { base:[], ctrl:['Ctrl','RCtrl'] };
+var U = 46, board = document.getElementById('kbmapBoard'), detail = document.getElementById('kbmapDetail');
+var layer = 'base', keys = {}, hover = null;
+function startMarquee(h){   // a cut-off caption scrolls, marquee-style
+  var b = KBL[layer][h.id];
+  if (!b || !h.m.animate) return;
+  h.act.classList.add('scrolling');   // unclamps the span so the full text width is measurable
+  var d = h.m.offsetWidth - h.act.clientWidth + 4;   // +4: the act's own side padding
+  if (d > 2) {
+    h.k._anim = h.m.animate([{transform:'translateX(0)'},{transform:'translateX(' + (-d) + 'px)'}],
+      {duration: Math.max(600, d * 40), direction: 'alternate', iterations: Infinity, easing: 'linear', delay: 350});
+  } else { h.act.classList.remove('scrolling'); }
+}
+function stopMarquee(h){
+  if (h.k._anim) { h.k._anim.cancel(); h.k._anim = null; }
+  h.act.classList.remove('scrolling');
+}
+KBROWS.forEach(function(row){
+  var r = document.createElement('div'); r.className = 'kbmap-row';
+  row.forEach(function(c){
+    if (!c[0]) { var g = document.createElement('div'); g.style.cssText = 'flex:none;width:' + (U * c[1]) + 'px'; r.appendChild(g); return; }
+    var k = document.createElement('div'); k.className = 'kb-key'; k.style.width = (U * c[2] - 4) + 'px';
+    k.innerHTML = '<span class="cap"></span><span class="act"><span></span></span><span class="bar"></span>';
+    k.firstChild.innerHTML = c[1];
+    var id = c[0], act = k.querySelector('.act'), m = act.firstChild;
+    k._h = { k: k, act: act, m: m, id: id };
+    k.addEventListener('mouseenter', function(){
+      var b = KBL[layer][id];
+      hover = k._h;
+      startMarquee(k._h);
+      detail.textContent = b ? (CATNAME[b[0]] + ' :: ' + b[1]) : ' '; });
+    k.addEventListener('mouseleave', function(){
+      stopMarquee(k._h);
+      hover = null;
+      detail.textContent = ' '; });
+    keys[id] = k; r.appendChild(k);
+  });
+  board.appendChild(r);
+});
+function paint(){
+  Object.keys(keys).forEach(function(id){
+    var k = keys[id], b = KBL[layer][id];
+    k.classList.toggle('bound', !!b);
+    if (b) { k.style.setProperty('--kc', 'var(--kc-' + b[0] + ')'); k.querySelector('.act').firstChild.textContent = b[1]; }
+    k.classList.toggle('mod-on', MODS[layer].indexOf(id) >= 0);
+  });
+  document.querySelectorAll('.kbmap-layers button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-kblayer') === layer); });
+  // Layer changed while a key is hovered (held modifier): restart its marquee for the NEW caption.
+  if (hover) {
+    stopMarquee(hover);
+    startMarquee(hover);
+    var hb = KBL[layer][hover.id];
+    detail.textContent = hb ? (CATNAME[hb[0]] + ' :: ' + hb[1]) : ' ';
+  }
+}
+document.querySelectorAll('.kbmap-layers button').forEach(function(b){
+  b.addEventListener('click', function(){ layer = b.getAttribute('data-kblayer'); paint(); });
+});
+function sync(e){
+  var l = e.ctrlKey ? 'ctrl' : 'base';
+  if (l !== layer) { layer = l; paint(); }
+}
+window.addEventListener('keydown', sync);
+window.addEventListener('keyup', sync);
+paint();
+// Scale the board down to the column width instead of scrolling, like the app's Viewbox.
+function fit(){
+  var wrap = board.parentNode;
+  board.style.transform = ''; wrap.style.height = '';
+  var s = wrap.clientWidth / board.offsetWidth;
+  if (s < 1) { board.style.transform = 'scale(' + s + ')'; wrap.style.height = (board.offsetHeight * s + 6) + 'px'; }
+}
+fit();
+window.addEventListener('resize', fit);
+})();
+</script>
+
+<div class="kbd-cols">
+<div class="kbd-col">
+<div class="kbd-group"><h4>VIEWS</h4>
+<div class="kbd-row"><span class="k">M or 1</span><span class="d">Month view</span></div>
+<div class="kbd-row"><span class="k">W or 2</span><span class="d">Week view</span></div>
+<div class="kbd-row"><span class="k">D or 3</span><span class="d">Day view</span></div>
+<div class="kbd-row"><span class="k">A or 4</span><span class="d">Agenda view</span></div>
+</div>
+<div class="kbd-group"><h4>NAVIGATION</h4>
+<div class="kbd-row"><span class="k">&#8592; / &#8594;</span><span class="d">Previous / next month, week or day - whichever view is open</span></div>
+<div class="kbd-row"><span class="k">, / .</span><span class="d">Same as the arrows, without leaving the home row</span></div>
+<div class="kbd-row"><span class="k">T</span><span class="d">Jump to today</span></div>
+</div>
+</div>
+<div class="kbd-col">
+<div class="kbd-group"><h4>APPOINTMENTS</h4>
+<div class="kbd-row"><span class="k">N / Ctrl+N</span><span class="d">New appointment on the day you are looking at</span></div>
+<div class="kbd-row"><span class="k">B</span><span class="d">Open the appointment panel composing a new one, or close it</span></div>
+</div>
+<div class="kbd-group"><h4>FILE</h4>
+<div class="kbd-row"><span class="k">Ctrl+I</span><span class="d">Import an .ics file</span></div>
+<div class="kbd-row"><span class="k">Ctrl+E</span><span class="d">Export to .ics</span></div>
+</div>
+<div class="kbd-group"><h4>HELP</h4>
+<div class="kbd-row"><span class="k">F1</span><span class="d">The shortcuts overlay, with this same map and list in the app</span></div>
+<div class="kbd-row"><span class="k">F12</span><span class="d">About card - version, signature, exe hash, update check</span></div>
+<div class="kbd-row"><span class="k">Esc</span><span class="d">Close whichever card or panel is open. Works even mid-typing, because bailing out of a half-filled form is exactly when you reach for it.</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="tech-sec">
+<h2>Running it</h2>
+<table class="spec-table">
+<tr><th>requirement</th><th>detail</th></tr>
+<tr><td>Platform</td><td>Windows 10 / 11, x64</td></tr>
+<tr><td>Runtime</td><td>.NET Framework 4.8, already present on a current Windows</td></tr>
+<tr><td>Install</td><td>Portable, per-user, or all-users. A silent path exists for winget,
+Chocolatey and RMM deployment.</td></tr>
+<tr><td>Uninstall</td><td>Leaves your appointments in place and removes the file association
+it added.</td></tr>
+</table>
+<p>Only one instance runs at a time. A second launch hands its file to the window already open
+and exits, rather than leaving two copies of the app writing to one database - which is the
+quickest way to corrupt SQLite.</p>
+<p>Double-clicking a <b>.kcal</b> copies it into your data folder and opens the copy, leaving
+the original where it is. A Killendar is written to constantly, and SQLite over a network share
+is a well known way to lose a database.</p>
+</section>
+
+<section class="tech-sec">
+<h2>Signing</h2>
+<p>Releases are Authenticode signed. The About card shows the publisher, the certificate
+thumbprint and the SHA-256 of the running exe, and it validates the signature with
+<b>WinVerifyTrust</b> rather than merely reading the embedded certificate - so a tampered build
+cannot display a signer it does not own. The chain check is cache-only, so opening About never
+stalls waiting on the network.</p>
+</section>
+
+<section class="tech-sec">
+<h2>Glossary</h2>
+<table class="spec-table">
+<tr><th>term</th><th>what it means here</th></tr>
+<tr><td>Killendar</td><td>Both the app and one calendar file. "Open another Killendar" means
+switch to a different <b>.kcal</b>.</td></tr>
+<tr><td>.kcal</td><td>Killendar's file. A SQLite database holding your appointments and your
+category definitions, encrypted or not.</td></tr>
+<tr><td>.ics</td><td>iCalendar, the interchange format every other calendar reads. Import and
+export only - Killendar never runs from one.</td></tr>
+<tr><td>Category</td><td>A named color you define. An appointment can carry several; the first
+one paints it. Definitions live in the file, so they travel with it.</td></tr>
+<tr><td>Orphan category</td><td>A category on an appointment that this Killendar has no
+definition for, usually from an import. It shows in neutral gray rather than disappearing.</td></tr>
+<tr><td>All-day</td><td>An appointment with no time, held as a floating date. It never shifts
+with a timezone.</td></tr>
+<tr><td>Floating date</td><td>A date with no timezone attached. September 7th is September 7th
+wherever you open it.</td></tr>
+<tr><td>SQLCipher</td><td>The extension to SQLite that encrypts the whole database file at rest,
+page by page.</td></tr>
+<tr><td>At rest</td><td>Encrypted on disk. It says nothing about the app while it is open and
+unlocked, which is why that limit is spelled out above.</td></tr>
+<tr><td>Portable</td><td>Running the exe from wherever it sits, with no install. The footer says
+PORTABLE and offers to install it.</td></tr>
+<tr><td>Per-user install</td><td>Into your own profile. No administrator needed, and only your
+account gets it.</td></tr>
+<tr><td>All-users install</td><td>Into Program Files. Needs an administrator, and every account
+on the machine gets the app - though each still gets its own separate Killendar.</td></tr>
+<tr><td>Authenticode</td><td>Microsoft's code signing. It proves the exe came from the signer
+and has not been altered since.</td></tr>
+<tr><td>Accent</td><td>The highlight color of a theme. Dark, Light and Black each offer six;
+Blood, Greed and Cyanotic carry their own.</td></tr>
+</table>
+</section>
+
+</div>
+</div>
+</div>
+
+<aside class="sidebar">
+<div class="sb-tabs"><span class="on">Technical</span></div>
+<div class="sb-thumbs" id="sbThumbs">
+<div class="sb-empty">Screenshots<br>coming soon</div>
+</div>
+<div class="sb-fade sb-fade-top" aria-hidden="true"></div>
+<div class="sb-fade sb-fade-bottom" aria-hidden="true"></div>
+</aside>
+</div>
+
+<footer class="statusbar">
+<span class="left"><a href="https://github.com/SteveTheKiller/Killendar" target="_blank" rel="noopener">Source on GitHub</a> &middot; GPLv3 &middot; Part of <a href="https://killertools.net" target="_blank" rel="noopener">killertools.net</a></span>
+<span class="right"><span id="verEgg" title="click me">v1.0.0</span> &middot; &copy; 2026 <b><a href="https://thekiller.net" target="_blank" rel="noopener">Steve the Killer</a></b></span>
+</footer>
+
+<div class="lightbox" id="lightbox"><img id="lightboxImg" src="" alt="Killendar screenshot"></div>
+<div class="egg-toast" id="eggToast"></div>
+
+<script src="kd.js?v=1"></script>
+</body>
+</html>

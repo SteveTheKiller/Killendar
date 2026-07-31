@@ -4,7 +4,7 @@
 
     <!-- Bengali. Layered over en-US, so any key omitted here falls back to English. -->
 
-    <sys:String x:Key="Str_Btn_New">+ নতুন</sys:String>
+    <sys:String x:Key="Str_Btn_New">নতুন</sys:String>
     <sys:String x:Key="Str_Btn_Import">.ics ইমপোর্ট</sys:String>
     <sys:String x:Key="Str_Btn_Export">.ics এক্সপোর্ট</sys:String>
     <sys:String x:Key="Str_Btn_Today">আজ</sys:String>
@@ -28,6 +28,22 @@
     <sys:String x:Key="Str_Fld_Starts">শুরু</sys:String>
     <sys:String x:Key="Str_Fld_Ends">শেষ</sys:String>
     <sys:String x:Key="Str_Fld_Location">স্থান</sys:String>
+
+    <sys:String x:Key="Str_Sys_Restore">পুনরুদ্ধার</sys:String>
+    <sys:String x:Key="Str_Sys_Move">সরান</sys:String>
+    <sys:String x:Key="Str_Sys_Size">আকার</sys:String>
+    <sys:String x:Key="Str_Sys_Minimize">ছোট করুন</sys:String>
+    <sys:String x:Key="Str_Sys_Maximize">বড় করুন</sys:String>
+    <sys:String x:Key="Str_Sys_Close">বন্ধ করুন</sys:String>
+
+    <sys:String x:Key="Str_Toolbar_Header">টুলবার</sys:String>
+    <sys:String x:Key="Str_Toolbar_SmallIcons">আইকন</sys:String>
+    <sys:String x:Key="Str_Toolbar_LargeIcons">বড় আইকন</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextNone">লেখা নেই</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextBeside">আইকনের পাশে লেখা</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextUnder">আইকনের নিচে লেখা</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextOnly">শুধু লেখা</sys:String>
+    <sys:String x:Key="Str_TT_OpenInMaps">এই স্থানটি মানচিত্রে খুলুন</sys:String>
     <sys:String x:Key="Str_Fld_Description">বিবরণ</sys:String>
     <sys:String x:Key="Str_Fld_Attendees">অংশগ্রহণকারী</sys:String>
     <sys:String x:Key="Str_Hint_Attendees">কমা দিয়ে আলাদা</sys:String>
@@ -50,12 +66,40 @@
     <sys:String x:Key="Str_Dlg_DeleteMsg">"{0}" মুছবেন?</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteDetail">এটি ফেরানো যাবে না।</sys:String>
 
+    <sys:String x:Key="Str_Fld_Repeats">পুনরাবৃত্তি</sys:String>
+    <sys:String x:Key="Str_Rep_Never">কখনও নয়</sys:String>
+    <sys:String x:Key="Str_Rep_Daily">প্রতিদিন</sys:String>
+    <sys:String x:Key="Str_Rep_Weekly">প্রতি সপ্তাহে</sys:String>
+    <sys:String x:Key="Str_Rep_Monthly">প্রতি মাসে</sys:String>
+    <sys:String x:Key="Str_Rep_Yearly">প্রতি বছরে</sys:String>
+    <sys:String x:Key="Str_Rep_Every">প্রতি</sys:String>
+    <sys:String x:Key="Str_Rep_UnitDays">দিন অন্তর</sys:String>
+    <sys:String x:Key="Str_Rep_UnitWeeks">সপ্তাহ অন্তর</sys:String>
+    <sys:String x:Key="Str_Rep_UnitMonths">মাস অন্তর</sys:String>
+    <sys:String x:Key="Str_Rep_UnitYears">বছর অন্তর</sys:String>
+    <sys:String x:Key="Str_Rep_Ends">শেষ</sys:String>
+    <sys:String x:Key="Str_Rep_EndNever">কখনও নয়</sys:String>
+    <sys:String x:Key="Str_Rep_EndAfter">এতবারের পর</sys:String>
+    <sys:String x:Key="Str_Rep_EndOn">তারিখে</sys:String>
+    <sys:String x:Key="Str_Rep_HintCount">কতবার</sys:String>
+    <sys:String x:Key="Str_Rep_SummaryNext">পরবর্তী: {0}</sys:String>
+    <sys:String x:Key="Str_Rep_SummaryNone">এটি কখনও ঘটে না। তারিখগুলি দেখুন।</sys:String>
+    <sys:String x:Key="Str_Rep_Scope">এই অ্যাপয়েন্টমেন্টটি পুনরাবৃত্ত</sys:String>
+    <sys:String x:Key="Str_Btn_ThisDate">শুধু এই তারিখ</sys:String>
+    <sys:String x:Key="Str_Btn_WholeSeries">পুরো সিরিজ</sys:String>
+    <sys:String x:Key="Str_Err_RepeatEnd">পুনরাবৃত্তি কবে শেষ হবে বলুন, অথবা কখনও শেষ না হতে দিন।</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">শুধু এই তারিখটি সরানো হবে। সিরিজের বাকিটা থাকবে।</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">এই সিরিজের সব তারিখ সরানো হবে। এটি ফেরানো যাবে না।</sys:String>
+
     <sys:String x:Key="Str_Status_Ready">প্রস্তুত</sys:String>
     <sys:String x:Key="Str_Status_Added">{0} যোগ করা হয়েছে</sys:String>
     <sys:String x:Key="Str_Status_Saved">{0} সংরক্ষণ করা হয়েছে</sys:String>
     <sys:String x:Key="Str_Status_Deleted">{0} মুছে ফেলা হয়েছে</sys:String>
     <sys:String x:Key="Str_Status_Imported">{0} টি অ্যাপয়েন্টমেন্ট ইমপোর্ট করা হয়েছে</sys:String>
     <sys:String x:Key="Str_Status_ImportedSkipped">{0} টি অ্যাপয়েন্টমেন্ট ইমপোর্ট, আগে থেকেই থাকা {1} টি বাদ</sys:String>
+    <sys:String x:Key="Str_Status_ImportRepeat">। {0} টি পুনরাবৃত্ত, শুধু প্রথম তারিখটি যোগ হয়েছে</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnreadable">। {0} টির তারিখ পড়া যায়নি, বাদ দেওয়া হয়েছে</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnsupported">। {0} টি কাজ বা নোট, যা Killendar রাখে না</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">ইমপোর্ট ব্যর্থ: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} টি অ্যাপয়েন্টমেন্ট এক্সপোর্ট করা হয়েছে</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">এক্সপোর্ট ব্যর্থ: {0}</sys:String>
@@ -83,7 +127,7 @@
     <sys:String x:Key="Str_About_Unsigned">(স্বাক্ষরিত নয় বা চেইন যাচাই ব্যর্থ)</sys:String>
     <sys:String x:Key="Str_About_UpdateAvailable">আপডেট পাওয়া গেছে: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">ডাউনলোড হচ্ছে...</sys:String>
-    <sys:String x:Key="Str_About_DescA" xml:space="preserve">মাস, সপ্তাহ, দিন ও সূচি ভিউ, iCalendar ইমপোর্ট ও এক্সপোর্ট, এবং এমন অ্যাপয়েন্টমেন্ট যা কখনও আপনার মেশিন ছাড়ে না। একটি GPLv3 </sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">কোনো অ্যাকাউন্ট নেই, সিঙ্ক নেই, কোথাও কিছু পাঠায় না এমন একটি ক্যালেন্ডার। আপনার অ্যাপয়েন্টমেন্ট থাকে নিজের মেশিনের একটিমাত্র ফাইলে, চাইলে এনক্রিপ্ট করা। একটি GPLv3 </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> ইউটিলিটি।</sys:String>
 
     <sys:String x:Key="Str_Dlg_UpdateMsg">Killendar {0} ডাউনলোড করে ইনস্টল করবেন?</sys:String>
@@ -151,7 +195,7 @@
     <!-- Manage Killendars: the .kcal file list, its context menu and the rail
          button. {0} is a file name or an error; Str_Kc_Renamed takes {0} old, {1} new. -->
     <sys:String x:Key="Str_Kc_Title">Killendar তালিকা</sys:String>
-    <sys:String x:Key="Str_Kc_Hint">আপনার ডেটা ফোল্ডারের সব .kcal ফাইল। নাম বদলাতে নামের উপর ডাবল-ক্লিক করুন।</sys:String>
+    <sys:String x:Key="Str_Kc_Hint">আপনার ডেটা ফোল্ডারের সব .kcal ফাইল। খুলতে ডাবল-ক্লিক করুন; নাম বদলাতে বা মুছতে ডান-ক্লিক করুন।</sys:String>
     <sys:String x:Key="Str_Kc_FlagEncrypted">এনক্রিপ্ট করা</sys:String>
     <sys:String x:Key="Str_Kc_FlagActive">চালু</sys:String>
     <sys:String x:Key="Str_Kc_SelectFirst">আগে একটি Killendar বেছে নিন।</sys:String>
@@ -222,5 +266,78 @@
     <sys:String x:Key="Str_TT_ViewList">তালিকা দেখা</sys:String>
     <sys:String x:Key="Str_TT_ViewIcons">আইকন দেখা</sys:String>
     <sys:String x:Key="Str_TT_ViewDetails">বিস্তারিত দেখা</sys:String>
+    <sys:String x:Key="Str_TT_ShowHidden">লুকানো ও সিস্টেম আইটেম দেখান</sys:String>
+    <sys:String x:Key="Str_TT_RecentLocations">সাম্প্রতিক অবস্থান</sys:String>
+    <sys:String x:Key="Str_Menu_PinPlace">স্থানে পিন করুন</sys:String>
+    <sys:String x:Key="Str_Menu_UnpinPlace">স্থান থেকে সরান</sys:String>
+    <sys:String x:Key="Str_Btn_Edit">সম্পাদনা</sys:String>
+    <sys:String x:Key="Str_Side_NoAppointments">এই দিনে কোনো অ্যাপয়েন্টমেন্ট নেই</sys:String>
+
+    <!-- পোর্টেবল ইনস্টল -->
+    <sys:String x:Key="Str_Portable">পোর্টেবল</sys:String>
+    <sys:String x:Key="Str_Btn_Install">Killendar ইনস্টল করুন...</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallMsg">এই কম্পিউটারে Killendar ইনস্টল করবেন?</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallBullets">Killendar আপনার প্রোগ্রাম ফোল্ডারে কপি হবে এবং স্টার্ট মেনুতে একটি এন্ট্রি যোগ হবে।&#x0a;আপনার Killendar ফাইলগুলিতে হাত দেওয়া হবে না, এবং exe-র এই কপিটিও যেখানে আছে সেখানেই থাকবে।&#x0a;Killendar ইনস্টল করা জায়গা থেকে আবার চালু হবে।</sys:String>
+    <sys:String x:Key="Str_Btn_DoInstall">ইনস্টল</sys:String>
+    <sys:String x:Key="Str_Chk_Desktop">ডেস্কটপ শর্টকাট যোগ করুন</sys:String>
+    <sys:String x:Key="Str_Chk_AllUsers">এই কম্পিউটারের সব ব্যবহারকারীর জন্য ইনস্টল করুন (অ্যাডমিন লাগবে)</sys:String>
+    <sys:String x:Key="Str_Status_InstallFailed">ইনস্টল সম্পূর্ণ হয়নি - Killendar এখনও পোর্টেবল হিসেবে চলছে।</sys:String>
+
+    <!-- বিভাগ -->
+    <sys:String x:Key="Str_KS_Title">কীবোর্ড শর্টকাট</sys:String>
+    <sys:String x:Key="Str_KS_ViewList">তালিকা</sys:String>
+    <sys:String x:Key="Str_KS_ViewMap">কীবোর্ড</sys:String>
+    <sys:String x:Key="Str_KS_Hint">টাইপ করার সময় একক কী নিষ্ক্রিয় থাকে</sys:String>
+    <sys:String x:Key="Str_TT_Shortcuts">কীবোর্ড শর্টকাট (F1)</sys:String>
+    <sys:String x:Key="Str_KS_GrpViews">ভিউ</sys:String>
+    <sys:String x:Key="Str_KS_GrpNav">নেভিগেশন</sys:String>
+    <sys:String x:Key="Str_KS_GrpAppt">অ্যাপয়েন্টমেন্ট</sys:String>
+    <sys:String x:Key="Str_KS_GrpFile">ফাইল</sys:String>
+    <sys:String x:Key="Str_KS_GrpHelp">সহায়তা</sys:String>
+    <sys:String x:Key="Str_KS_Month">মাস ভিউ</sys:String>
+    <sys:String x:Key="Str_KS_Week">সপ্তাহ ভিউ</sys:String>
+    <sys:String x:Key="Str_KS_Day">দিন ভিউ</sys:String>
+    <sys:String x:Key="Str_KS_Agenda">সূচি ভিউ</sys:String>
+    <sys:String x:Key="Str_KS_Prev">আগের মাস, সপ্তাহ বা দিন</sys:String>
+    <sys:String x:Key="Str_KS_Next">পরের মাস, সপ্তাহ বা দিন</sys:String>
+    <sys:String x:Key="Str_KS_Today">আজকে যান</sys:String>
+    <sys:String x:Key="Str_KS_New">এখানে নতুন অ্যাপয়েন্টমেন্ট</sys:String>
+    <sys:String x:Key="Str_KS_Panel">অ্যাপয়েন্টমেন্ট প্যানেল</sys:String>
+    <sys:String x:Key="Str_KS_Import">একটি .ics ফাইল ইমপোর্ট করুন</sys:String>
+    <sys:String x:Key="Str_KS_Export">.ics এ এক্সপোর্ট করুন</sys:String>
+    <sys:String x:Key="Str_KS_ThisList">এই শর্টকাট তালিকা</sys:String>
+    <sys:String x:Key="Str_KS_About">সম্পর্কে কার্ড</sys:String>
+    <sys:String x:Key="Str_KS_Close">প্যানেল বা কার্ড বন্ধ করুন</sys:String>
+
+    <sys:String x:Key="Str_Fld_Categories">বিভাগ</sys:String>
+    <sys:String x:Key="Str_Hint_NoCategories">এখনও কোনো বিভাগ নেই। সাইডবার থেকে যোগ করুন।</sys:String>
+    <sys:String x:Key="Str_TT_Categories">বিভাগ</sys:String>
+    <sys:String x:Key="Str_TT_Density">গ্রিড ঘনত্ব - ক্লিক বা স্ক্রল</sys:String>
+    <sys:String x:Key="Str_St_Density">গ্রিড ঘনত্ব: প্রতি ঘণ্টায় {0}টি লাইন</sys:String>
+    <sys:String x:Key="Str_Cat_Title">বিভাগ</sys:String>
+    <sys:String x:Key="Str_Cat_Hint">এই Killendar-এর রং। একটি অ্যাপয়েন্টমেন্ট একাধিক বিভাগ নিতে পারে; প্রথমটি তার রং ঠিক করে।</sys:String>
+    <sys:String x:Key="Str_Cat_NeedName">বিভাগের একটি নাম দিন।</sys:String>
+    <sys:String x:Key="Str_Cat_Exists">এই নামে একটি বিভাগ আগে থেকেই আছে।</sys:String>
+    <sys:String x:Key="Str_Cat_DeleteHead">{0} মুছবেন?</sys:String>
+    <sys:String x:Key="Str_Cat_DeleteBody">যেসব অ্যাপয়েন্টমেন্টে এটি আছে সেগুলি থেকে সরিয়ে দেওয়া হবে। অ্যাপয়েন্টমেন্টগুলি নিজে অপরিবর্তিত থাকবে।</sys:String>
+    <sys:String x:Key="Str_Btn_CatAdd">যোগ করুন</sys:String>
+    <sys:String x:Key="Str_Btn_Done">সম্পন্ন</sys:String>
+    <sys:String x:Key="Str_TT_CatPickColor">নতুন বিভাগের জন্য রং বাছুন</sys:String>
+    <sys:String x:Key="Str_TT_CatRecolor">রং বদলান</sys:String>
+    <sys:String x:Key="Str_TT_CatRename">নাম বদলান</sys:String>
+    <sys:String x:Key="Str_TT_CatDelete">মুছুন</sys:String>
+
+    <!-- রং নির্বাচক -->
+    <sys:String x:Key="Str_Dlg_PickColor">একটি রং বাছুন</sys:String>
+    <sys:String x:Key="Str_TT_Eyedropper">স্ক্রিনের যেকোনো জায়গা থেকে রং নিন</sys:String>
+    <sys:String x:Key="Str_Btn_Reset">রিসেট</sys:String>
+    <sys:String x:Key="Str_TT_ReplaceSwatch">ক্লিক করুন, তারপর কোনো সোয়াচে ক্লিক করলে সেটি বর্তমান রং পাবে</sys:String>
+    <sys:String x:Key="Str_TT_ResetSwatches">সোয়াচগুলি ডিফল্টে ফিরিয়ে দিন</sys:String>
+    <sys:String x:Key="Str_TT_SwatchReplace">ক্লিক করলে এই সোয়াচ বর্তমান রং পাবে</sys:String>
+    <sys:String x:Key="Str_TT_SwatchUse">এই রং ব্যবহার করতে ক্লিক করুন</sys:String>
+
+    <!-- কনটেক্সট মেনু -->
+    <sys:String x:Key="Str_Ctx_AddAppointment">অ্যাপয়েন্টমেন্ট যোগ করুন</sys:String>
+    <sys:String x:Key="Str_Ctx_Open">খুলুন</sys:String>
 
 </ResourceDictionary>

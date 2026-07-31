@@ -14,7 +14,7 @@ namespace Killendar.Shell
         private void InitThemePicker()
         {
             _themePicker = new Controls.ThemePicker(
-                this, ThemePopup, ThemeSwatches, AccentSwatches, AccentLabel);
+                this, ThemeMenu, ThemeButton, ThemeSwatches, AccentSwatches, AccentLabel);
             _themePicker.Refresh();
             Services.ThemeManager.ThemeChanged += () => _themePicker.Refresh();
         }

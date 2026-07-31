@@ -35,12 +35,27 @@
     <SolidColorBrush x:Key="RowAltBrush"         Color="#14FFFFFF" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowHoverBrush"       Color="#242424" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowSelectedBrush"    Color="#003322" po:Freeze="True"/>
+    <!-- Selection pair - see the note in Dark.xaml. Values from KillerPDF. -->
+    <SolidColorBrush x:Key="SelectionBg"         Color="#003314" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SelectionFg"         Color="#ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TreeLineBrush"       Color="#383838" po:Freeze="True"/>
+
+    <!-- Shortcut category colours - see the note in Dark.xaml. Nav is lifted to #a64dff on Black
+         exactly as KillerPDF does: #8c1eff against a pure-black panel is too dark to read. -->
+    <SolidColorBrush x:Key="KsCatFile"           Color="#00fff9" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatView"           Color="#f222ff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatNav"            Color="#a64dff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatAppt"           Color="#ffd319" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatHelp"           Color="#39ff14" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="InputBorderBrush"    Color="#2a2a2a" po:Freeze="True"/>
-    <SolidColorBrush x:Key="MenuBackgroundBrush" Color="#121212" po:Freeze="True"/>
-    <SolidColorBrush x:Key="MenuBorderBrush"     Color="#2a2a2a" po:Freeze="True"/>
+    <!-- Menu surface: KillerPDF's values, the family source of truth for colour. On Black the
+         menu is pure #000000 like every other surface, so the #808080 border is what defines its
+         edge - that is deliberate, not a missing fill. -->
+    <SolidColorBrush x:Key="MenuBackgroundBrush" Color="#000000" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MenuBorderBrush"     Color="#808080" po:Freeze="True"/>
     <SolidColorBrush x:Key="MenuTextBrush"       Color="#cccccc" po:Freeze="True"/>
-    <SolidColorBrush x:Key="MenuHoverBrush"      Color="#242424" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MenuHoverBrush"      Color="#333333" po:Freeze="True"/>
     <SolidColorBrush x:Key="OutlinePressedBrush" Color="#003322" po:Freeze="True"/>
     <SolidColorBrush x:Key="ScrollThumbBrush"    Color="#8800ff66" po:Freeze="True"/>
     <SolidColorBrush x:Key="ScrollThumbHoverBrush" Color="#00ff66" po:Freeze="True"/>

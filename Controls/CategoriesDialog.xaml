@@ -1,0 +1,121 @@
+<!-- Manage categories: add, rename, recolor (via ColorPickerDialog) and delete the open
+     Killendar's category definitions. Same dialog chrome as KillendarsDialog. Deleting a
+     category removes it from every appointment; renaming rewrites it in every appointment
+     (EventStore). Unlike Manage Killendars the store stays OPEN - these are ordinary row
+     edits on the live database. Ported from KillerNotes' TagsDialog. -->
+<Window x:Class="Killendar.Controls.CategoriesDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Killendar"
+        Width="400" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        ShowInTaskbar="False">
+
+    <!-- Dark tier, so the fields and list rows on top of it read as raised. -->
+    <Border x:Name="RootBorder" Opacity="0"
+            Background="{StaticResource BackgroundBrush}"
+            BorderBrush="{StaticResource CardBorderBrush}"
+            BorderThickness="1"
+            CornerRadius="6"
+            Margin="10">
+        <Border.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="18" ShadowDepth="3" Direction="270" Opacity="0.6"/>
+        </Border.Effect>
+        <Grid>
+            <Border IsHitTestVisible="False" CornerRadius="6"
+                    Opacity="{DynamicResource GrainOpacity}"
+                    Background="{DynamicResource GrainTileBrush}"/>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="36"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Background="Transparent"
+                        MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                    <Grid Margin="14,0">
+                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" Margin="1,2,0,0"
+                                        Opacity="{DynamicResource IconShadowOpacity}">
+                                <StackPanel.Effect><BlurEffect Radius="3"/></StackPanel.Effect>
+                                <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15"><Run Text="The " Foreground="#D8000000"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="#D8000000"/></TextBlock>
+                            </StackPanel>
+                            <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15"><Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}"/></TextBlock>
+                        </Grid>
+                        <Button Content="&#xE711;" Click="Close_Click" Style="{StaticResource DangerCloseButton}"
+                                HorizontalAlignment="Right"/>
+                    </Grid>
+                </Border>
+
+                <StackPanel Grid.Row="1" Margin="24,16,24,12">
+                    <TextBlock Text="{DynamicResource Str_Cat_Title}" Foreground="{StaticResource TextBrush}"
+                               FontFamily="Consolas" FontSize="14" FontWeight="Bold" Margin="0,0,0,4"/>
+                    <TextBlock Text="{DynamicResource Str_Cat_Hint}" Foreground="{DynamicResource MutedTextBrush}"
+                               FontSize="11" TextWrapping="Wrap" Margin="0,0,0,8"/>
+                    <Border Background="{DynamicResource PaneBrush}"
+                            BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1" CornerRadius="4">
+                        <ListBox x:Name="CategoryList" Height="200" Background="Transparent" BorderThickness="0"
+                                 HorizontalContentAlignment="Stretch" Margin="4">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="Padding" Value="6,4"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListBoxItem">
+                                                <Border x:Name="bg" Background="Transparent" CornerRadius="4"
+                                                        Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter/>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="bg" Property="Background" Value="{DynamicResource RowHoverBrush}"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="bg" Property="Background" Value="{DynamicResource RowSelectedBrush}"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <!-- Rows are built in code (CategoriesDialog.xaml.cs Refresh) so the
+                                 swatch, name and per-row buttons can carry the category name. -->
+                        </ListBox>
+                    </Border>
+
+                    <!-- Add row: name box + color swatch button + Add -->
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <!-- FontSize/Padding/VerticalContentAlignment all overridden: DarkTextBox's
+                             defaults (14pt, 8,6) do not fit a fixed-height row and the text scrolls
+                             out of sight. See the template comment on the style. -->
+                        <TextBox x:Name="NewNameBox" Width="180" Height="26"
+                                 Style="{StaticResource DarkTextBox}"
+                                 FontSize="12" Padding="6,0" VerticalContentAlignment="Center"
+                                 KeyDown="NewNameBox_KeyDown"/>
+                        <Border x:Name="NewColorSwatch" Width="26" Height="26" CornerRadius="3" Margin="8,0,0,0"
+                                Cursor="Hand" BorderBrush="{DynamicResource InputBorderBrush}" BorderThickness="1"
+                                MouseLeftButtonUp="NewColorSwatch_Click" ToolTip="{DynamicResource Str_TT_CatPickColor}"/>
+                        <Button x:Name="AddBtn" Content="{DynamicResource Str_Btn_CatAdd}" Click="Add_Click"
+                                Style="{StaticResource SurfaceButton}" Margin="8,0,0,0" Padding="12,0" Height="26"/>
+                    </StackPanel>
+                    <TextBlock x:Name="DlgStatus" Foreground="{DynamicResource DimTextBrush}"
+                               FontSize="10.5" Margin="0,6,0,0" TextWrapping="Wrap"/>
+                </StackPanel>
+
+                <Grid Grid.Row="2" Margin="24,0,24,18">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button x:Name="DoneBtn" Content="{DynamicResource Str_Btn_Done}" Click="Close_Click"
+                                Style="{StaticResource OutlineButton}" MinWidth="80"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

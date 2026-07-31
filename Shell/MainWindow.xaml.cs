@@ -20,6 +20,7 @@ namespace Killendar.Shell
             Loaded += (_, _) =>
             {
                 FadeInContent();
+                RefreshPortableBadge();   // Install.cs - footer badge when not running installed
                 // Deferred, NOT called inline: Loaded fires synchronously inside Show(), and the
                 // unlock prompt both needs an already-shown Owner and may Close() the window on
                 // cancel - a reentrant Close() during Show() throws. Dispatching lets Show()
@@ -31,8 +32,22 @@ namespace Killendar.Shell
                 }), System.Windows.Threading.DispatcherPriority.Background);
             };
 
+            // Every flyout opens at the content pane's bottom-left corner: inside the window, above
+            // the footer, clear of the rail. Set before the flyouts are built (FlyoutPlacement.cs).
+            Controls.FlyoutPlacement.UsePane(ContentPane);
+
             InitThemePicker();
             InitLanguageMenu();
+            // After InitLanguageMenu: the toolbar captions are read through Loc(), so the locale
+            // has to be settled before they are built. (ToolbarStyle.cs)
+            InitToolbarStyle();
+            // After InitToolbarStyle: the overflow measurement depends on the button widths that
+            // the display mode sets. (ToolbarOverflow.cs)
+            InitToolbarOverflow();
+
+            // Before InitCalendar: the views read CalendarChrome.HourHeight while they build, so the
+            // saved density has to be in place or the first paint uses the default and then jumps.
+            InitDensity();
 
             _about = new AboutController(this);
             VersionLabel.Text = "v" + Services.AppInfo.Version;

@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using Killendar.Controls;
 using Killendar.Services;
 
@@ -36,12 +37,22 @@ namespace Killendar.Features
 
             try
             {
-                var incoming = IcsService.ParseFile(dlg.FileName);
-                int added = _store.ImportEvents(incoming);
-                int skipped = incoming.Count - added;
-                _host.SetStatus(skipped > 0
+                var parsed  = IcsService.ParseFile(dlg.FileName);
+                int added   = _store.ImportEvents(parsed.Events);
+                int skipped = parsed.Events.Count - added;
+
+                var status = new StringBuilder(skipped > 0
                     ? string.Format(_host.Loc("Str_Status_ImportedSkipped"), added, skipped)
                     : string.Format(_host.Loc("Str_Status_Imported"), added));
+
+                // Everything the file contained that Killendar could not keep is SAID, not
+                // swallowed. A repeating appointment in particular imports as a single date, and
+                // the user has no way of discovering that except by missing the second occurrence.
+                Note(status, parsed.Repeating,   "Str_Status_ImportRepeat");
+                Note(status, parsed.Unreadable,  "Str_Status_ImportUnreadable");
+                Note(status, parsed.Unsupported, "Str_Status_ImportUnsupported");
+
+                _host.SetStatus(status.ToString());
                 _afterChange();
             }
             catch (Exception ex)
@@ -78,6 +89,18 @@ namespace Killendar.Features
             {
                 _host.SetStatus(string.Format(_host.Loc("Str_Status_ExportFailed"), ex.Message));
             }
+        }
+
+        /// <summary>
+        /// Appends one caveat sentence to the import status when its count is non-zero. No
+        /// separator is added here: each locale's string carries its OWN leading punctuation,
+        /// because the sentence break is "." in Latin scripts, "。" in Japanese and Chinese and
+        /// "।" in Bengali. Hardcoding ". " would put a Western full stop in every language.
+        /// </summary>
+        private void Note(StringBuilder status, int count, string key)
+        {
+            if (count <= 0) return;
+            status.Append(string.Format(_host.Loc(key), count));
         }
 
         /// <summary>

@@ -44,11 +44,38 @@
     <SolidColorBrush x:Key="RowAltBrush"         Color="#18FFFFFF" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowHoverBrush"       Color="#404040" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowSelectedBrush"    Color="#0d2a18" po:Freeze="True"/>
+    <!-- SELECTION PAIR - the family's "this one is active" treatment, copied value-for-value from
+         KillerPDF, which is the source of truth. A selected toolbar button, tool or tab is a solid
+         SelectionBg fill with SelectionFg text; it is NEVER accent-coloured text on a faint fill,
+         and never an outline. Killendar had neither key and marked its active view button with
+         PrimaryBrush text on RowHoverBrush, so it looked nothing like the other apps.
+         (Steve, 2026-07-30.)
+         Distinct from RowSelectedBrush, which is the much fainter tint behind a selected LIST row. -->
+    <SolidColorBrush x:Key="SelectionBg"         Color="#1c5e38" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SelectionFg"         Color="#ffffff" po:Freeze="True"/>
+    <!-- KillerShell's value verbatim: the file dialog's tree sits flat on BackgroundBrush,
+         the same surface KillerShell's tree sits on. (Steve, 2026-07-30.) -->
+    <SolidColorBrush x:Key="TreeLineBrush"       Color="#3d3d3d" po:Freeze="True"/>
+
+    <!-- SHORTCUT CATEGORY COLOURS, for the F1 keyboard map. Theme brushes, not hardcoded hex:
+         the neon set is right on the dark themes and unreadable on Light, which is exactly why
+         KillerPDF has always declared these per theme. Values copied from KillerPDF verbatim -
+         a category has to mean the same colour in every app or the colour says nothing.
+         KsCatAppt is Killendar's app-specific action category and takes the same yellow as
+         KillerPDF's KsCatTools. (Steve, 2026-07-30.) -->
+    <SolidColorBrush x:Key="KsCatFile"           Color="#00fff9" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatView"           Color="#f222ff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatNav"            Color="#8c1eff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatAppt"           Color="#ffd319" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatHelp"           Color="#39ff14" po:Freeze="True"/>
 
     <!-- Inputs / menus / scrollbar -->
     <SolidColorBrush x:Key="InputBorderBrush"    Color="#2e2e2e" po:Freeze="True"/>
-    <SolidColorBrush x:Key="MenuBackgroundBrush" Color="#363636" po:Freeze="True"/>
-    <SolidColorBrush x:Key="MenuBorderBrush"     Color="#2e2e2e" po:Freeze="True"/>
+    <!-- Menu surface: KillerPDF's values, which are the family source of truth for colour
+         (Steve, 2026-07-30). It sits CLOSE to the window background rather than a tier above it;
+         #363636 over a #1c1c1c window read as a pale slab floating on a dark app. -->
+    <SolidColorBrush x:Key="MenuBackgroundBrush" Color="#1e1e1e" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MenuBorderBrush"     Color="#404040" po:Freeze="True"/>
     <SolidColorBrush x:Key="MenuTextBrush"       Color="#a0a0a0" po:Freeze="True"/>
     <SolidColorBrush x:Key="MenuHoverBrush"      Color="#404040" po:Freeze="True"/>
     <SolidColorBrush x:Key="OutlinePressedBrush" Color="#0d2a18" po:Freeze="True"/>

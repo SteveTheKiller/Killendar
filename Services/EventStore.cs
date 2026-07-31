@@ -37,7 +37,10 @@ namespace Killendar.Services
 
         public const string Extension = ".kcal";
         public const string DefaultFileName = "Default" + Extension;
-        private const int SchemaVersion = 1;
+        // 2: categories (events.categories assignment string + the categories definition table).
+        // 3: repeats (repeat_* columns, skip_dates, and series_id / occurrence_start for the
+        //    rows that replace a single date of a series).
+        private const int SchemaVersion = 3;
 
         /// <summary>Killendars live in roaming APPDATA. Per-user always; a
         /// machine-wide install just means each user gets their own fresh Killendar.</summary>
@@ -56,7 +59,7 @@ namespace Killendar.Services
         private SqliteConnection? _db;
         private string? _password;          // key of the open db (null = plaintext)
         private string _file = "";
-        private List<CalendarEvent> _events = new List<CalendarEvent>();
+        private List<CalendarEvent> _events = [];
 
         /// <summary>Raised after any add, update, delete or import.</summary>
         public event Action? Changed;
@@ -115,12 +118,12 @@ namespace Killendar.Services
             catch (SqliteException ex) when (IsKeyFailure(ex))
             {
                 NeedsPassword = true;
-                _events = new List<CalendarEvent>();
+                _events = [];
             }
             catch (Exception ex)
             {
                 LoadError = ex.Message;
-                _events = new List<CalendarEvent>();
+                _events = [];
             }
         }
 
@@ -142,11 +145,9 @@ namespace Killendar.Services
                 db.Open();
                 // Force the key check right here. Open() on its own validates nothing, and a lazy
                 // failure surfaces later as a corrupt-looking calendar instead of a prompt.
-                using (var probe = db.CreateCommand())
-                {
-                    probe.CommandText = "SELECT count(*) FROM sqlite_master";
-                    probe.ExecuteScalar();
-                }
+                using var probe = db.CreateCommand();
+                probe.CommandText = "SELECT count(*) FROM sqlite_master";
+                probe.ExecuteScalar();
             }
             catch
             {
@@ -160,6 +161,10 @@ namespace Killendar.Services
             _file = path;
             EnsureSchema();
             LoadIntoMemory();
+            // Definitions are per-Killendar, so the cache is refreshed here rather than at the
+            // call sites: SecurityController alone opens the store from six places, and a cache
+            // left over from the previous file would paint this one's events in its colors.
+            CategoryManager.Refresh(this);
         }
 
         public void Close()
@@ -231,7 +236,7 @@ namespace Killendar.Services
                                 .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
                                 .ToList()!;
             }
-            catch { return new List<string>(); }
+            catch { return []; }
         }
 
         /// <summary>Points the app at a different Killendar. Accepts a bare name inside DataDir or
@@ -405,15 +410,35 @@ CREATE TABLE IF NOT EXISTS events (
     location     TEXT NOT NULL DEFAULT '',
     description  TEXT NOT NULL DEFAULT '',
     attendees    TEXT NOT NULL DEFAULT '',
+    categories   TEXT NOT NULL DEFAULT '',
     created_utc  TEXT NOT NULL,
-    modified_utc TEXT NOT NULL
+    modified_utc TEXT NOT NULL,
+    repeat_freq      INTEGER NOT NULL DEFAULT 0,
+    repeat_interval  INTEGER NOT NULL DEFAULT 1,
+    repeat_days      TEXT    NOT NULL DEFAULT '',
+    repeat_until     TEXT    NOT NULL DEFAULT '',
+    repeat_count     INTEGER NOT NULL DEFAULT 0,
+    skip_dates       TEXT    NOT NULL DEFAULT '',
+    series_id        TEXT    NOT NULL DEFAULT '',
+    occurrence_start TEXT    NOT NULL DEFAULT ''
 );
 CREATE INDEX IF NOT EXISTS events_range ON events (start_utc, end_utc);
+CREATE TABLE IF NOT EXISTS categories (
+    name  TEXT PRIMARY KEY COLLATE NOCASE,
+    color TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
 
         private void EnsureSchema()
         {
+            // Captured BEFORE the CREATE, so the seed below can tell a brand new Killendar from
+            // one whose categories the user has already emptied out.
+            bool hadCategories = TableExists("categories");
             Exec(SchemaSql);
+            EnsureColumns();
+            // Seed ONLY when the categories table was just created: customizations and
+            // deletions must never resurrect (KillerNotes tags design, same rule).
+            if (!hadCategories) SeedDefaultCategories();
             SetMeta("schema_version", SchemaVersion.ToString());
             // Stamped once, for forensics on a file that turns up years later. Read straight off
             // the assembly rather than through About.cs, whose version helper is private to
@@ -421,6 +446,69 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
             if (GetMeta("app_version_created") == null)
                 SetMeta("app_version_created",
                     typeof(EventStore).Assembly.GetName().Version?.ToString() ?? "0");
+        }
+
+        private bool TableExists(string name)
+        {
+            using var cmd = _db!.CreateCommand();
+            cmd.CommandText = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name = $n";
+            cmd.Parameters.AddWithValue("$n", name);
+            return (long)cmd.ExecuteScalar()! > 0;
+        }
+
+        // Outlook-style starter set in the family palette (the same hexes as the accent row).
+        private static readonly (string Name, string Color)[] DefaultCategories =
+        [
+            ("Red",   "#DD504B"), ("Orange", "#E8962C"), ("Yellow", "#E8D44B"),
+            ("Green", "#1EA54C"), ("Blue",   "#50AEE8"), ("Purple", "#B982E3"),
+        ];
+
+        private void SeedDefaultCategories()
+        {
+            if (_db != null) SeedDefaultCategories(_db);
+        }
+
+        // Takes the connection explicitly for the same reason Upsert does: the events.json
+        // migration builds a database that is not the open one, and it runs SchemaSql itself,
+        // so it must seed there or EnsureSchema will later see the table already present and
+        // skip the seed - leaving a migrated Killendar with no categories at all.
+        private static void SeedDefaultCategories(SqliteConnection db)
+        {
+            foreach (var (name, color) in DefaultCategories) AddCategory(db, name, color);
+        }
+
+        /// <summary>Additive columns from v2 and v3. ALTER-on-open is needed because CREATE TABLE
+        /// IF NOT EXISTS never touches an existing table, so a Killendar written by 1.0.0 keeps its
+        /// original events table; PRAGMA-checking first keeps this idempotent and cheap.
+        ///
+        /// Every column added here MUST have a default that reads back as "not repeating", so an
+        /// older Killendar opens with its appointments unchanged rather than acquiring repeats.
+        /// </summary>
+        private void EnsureColumns()
+        {
+            var have = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            using (var cmd = _db!.CreateCommand())
+            {
+                cmd.CommandText = "PRAGMA table_info(events)";
+                using var r = cmd.ExecuteReader();
+                while (r.Read()) have.Add(r.GetString(1));
+            }
+
+            void AddColumn(string name, string decl)
+            {
+                if (!have.Contains(name))
+                    Exec("ALTER TABLE events ADD COLUMN " + name + " " + decl);
+            }
+
+            AddColumn("categories",       "TEXT NOT NULL DEFAULT ''");
+            AddColumn("repeat_freq",      "INTEGER NOT NULL DEFAULT 0");
+            AddColumn("repeat_interval",  "INTEGER NOT NULL DEFAULT 1");
+            AddColumn("repeat_days",      "TEXT NOT NULL DEFAULT ''");
+            AddColumn("repeat_until",     "TEXT NOT NULL DEFAULT ''");
+            AddColumn("repeat_count",     "INTEGER NOT NULL DEFAULT 0");
+            AddColumn("skip_dates",       "TEXT NOT NULL DEFAULT ''");
+            AddColumn("series_id",        "TEXT NOT NULL DEFAULT ''");
+            AddColumn("occurrence_start", "TEXT NOT NULL DEFAULT ''");
         }
 
         private string? GetMeta(string key)
@@ -490,8 +578,76 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
 
         private static List<string> SplitAttendees(string s) =>
             string.IsNullOrEmpty(s)
-                ? new List<string>()
-                : s.Split('\n').Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+                ? []
+                : [.. s.Split('\n').Where(x => !string.IsNullOrWhiteSpace(x))];
+
+        // ── Repeat columns ────────────────────────────────────────────────────────────────
+        // Weekdays and skipped dates are short comma-separated lists rather than side tables:
+        // they belong to exactly one appointment, are read whole every time, and are never
+        // queried across events. Same reasoning as the categories assignment string.
+
+        private const string DateOnly = "yyyy-MM-dd";
+
+        private static string JoinDays(IEnumerable<DayOfWeek> days) =>
+            string.Join(",", days.Select(d => ((int)d).ToString(System.Globalization.CultureInfo.InvariantCulture)));
+
+        private static List<DayOfWeek> SplitDays(string s)
+        {
+            var list = new List<DayOfWeek>();
+            if (string.IsNullOrWhiteSpace(s)) return list;
+            foreach (var part in s.Split(','))
+            {
+                if (int.TryParse(part.Trim(), out int n) && n >= 0 && n <= 6 &&
+                    !list.Contains((DayOfWeek)n))
+                    list.Add((DayOfWeek)n);
+            }
+            list.Sort();
+            return list;
+        }
+
+        // Skipped dates and the until date are calendar DATES, not instants: they are floating,
+        // exactly like an all-day event, and must never be shifted into UTC or a user east of
+        // Greenwich loses the wrong day.
+        private static string JoinDates(IEnumerable<DateTime> dates) =>
+            string.Join(",", dates.Select(d => d.Date.ToString(DateOnly,
+                System.Globalization.CultureInfo.InvariantCulture)));
+
+        private static List<DateTime> SplitDates(string s)
+        {
+            var list = new List<DateTime>();
+            if (string.IsNullOrWhiteSpace(s)) return list;
+            foreach (var part in s.Split(','))
+            {
+                if (DateTime.TryParseExact(part.Trim(), DateOnly,
+                        System.Globalization.CultureInfo.InvariantCulture,
+                        System.Globalization.DateTimeStyles.None, out var d))
+                    list.Add(d.Date);
+            }
+            return list;
+        }
+
+        private static string ToStoreDate(DateTime? d) => d.HasValue
+            ? d.Value.Date.ToString(DateOnly, System.Globalization.CultureInfo.InvariantCulture)
+            : "";
+
+        private static DateTime? FromStoreDate(string s) =>
+            DateTime.TryParseExact(s, DateOnly, System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None, out var d)
+                ? d.Date : (DateTime?)null;
+
+        /// <summary>An unknown number reads as "does not repeat". A Killendar written by a LATER
+        /// Killendar that has more patterns must not throw here: the appointment still shows, it
+        /// just shows once, which is the same honest degradation the .ics importer makes.</summary>
+        private static RepeatFreq ToFreq(long n) =>
+            n >= (long)RepeatFreq.None && n <= (long)RepeatFreq.Yearly
+                ? (RepeatFreq)n : RepeatFreq.None;
+
+        private static Guid? ParseGuid(string s) =>
+            Guid.TryParse(s, out var g) ? g : (Guid?)null;
+
+        /// <summary>Empty column reads as null rather than 0001-01-01.</summary>
+        private static DateTime? FromStoreNullable(string s, bool allDay) =>
+            string.IsNullOrWhiteSpace(s) ? null : FromStore(s, allDay);
 
         // ============================================================
         // In-memory mirror
@@ -499,7 +655,8 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
 
         private const string SelectAll =
             "SELECT id, title, start_utc, end_utc, all_day, location, description, attendees, " +
-            "created_utc, modified_utc FROM events";
+            "created_utc, modified_utc, categories, repeat_freq, repeat_interval, repeat_days, " +
+            "repeat_until, repeat_count, skip_dates, series_id, occurrence_start FROM events";
 
         private void LoadIntoMemory()
         {
@@ -523,6 +680,22 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
                         Attendees   = SplitAttendees(r.GetString(7)),
                         Created     = FromStoreUtc(r.GetString(8)),
                         Modified    = FromStoreUtc(r.GetString(9)),
+                        Categories  = r.IsDBNull(10) ? "" : r.GetString(10),
+
+                        // Repeat columns. Every one is IsDBNull-guarded: an ALTER TABLE ADD COLUMN
+                        // on an existing row fills it with the default, but a database touched by
+                        // another SQLite tool may not have, and a null here must read as "plain
+                        // appointment" rather than throw the whole Killendar's load away.
+                        Repeat          = r.IsDBNull(11) ? RepeatFreq.None : ToFreq(r.GetInt64(11)),
+                        RepeatInterval  = r.IsDBNull(12) ? 1 : Math.Max(1, (int)r.GetInt64(12)),
+                        RepeatDays      = SplitDays(r.IsDBNull(13) ? "" : r.GetString(13)),
+                        RepeatUntil     = FromStoreDate(r.IsDBNull(14) ? "" : r.GetString(14)),
+                        RepeatCount     = r.IsDBNull(15) ? 0 : Math.Max(0, (int)r.GetInt64(15)),
+                        SkipDates       = SplitDates(r.IsDBNull(16) ? "" : r.GetString(16)),
+                        SeriesId        = ParseGuid(r.IsDBNull(17) ? "" : r.GetString(17)),
+                        OccurrenceStart = r.IsDBNull(18)
+                                            ? null
+                                            : FromStoreNullable(r.GetString(18), allDay),
                     });
                 }
             }
@@ -533,13 +706,13 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
         /// it, and because Calendar.cs used to call Load() on the JSON store.</summary>
         public void Load()
         {
-            if (_db == null) { _events = new List<CalendarEvent>(); return; }
+            if (_db == null) { _events = []; return; }
             LoadError = null;
             try { LoadIntoMemory(); }
             catch (Exception ex)
             {
                 LoadError = ex.Message;
-                _events = new List<CalendarEvent>();
+                _events = [];
             }
         }
 
@@ -556,10 +729,16 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
             using var cmd = db.CreateCommand();
             cmd.CommandText =
                 "INSERT INTO events(id, title, start_utc, end_utc, all_day, location, " +
-                "description, attendees, created_utc, modified_utc) " +
-                "VALUES($id, $ti, $st, $en, $ad, $lo, $de, $at, $cr, $mo) " +
+                "description, attendees, categories, created_utc, modified_utc, " +
+                "repeat_freq, repeat_interval, repeat_days, repeat_until, repeat_count, " +
+                "skip_dates, series_id, occurrence_start) " +
+                "VALUES($id, $ti, $st, $en, $ad, $lo, $de, $at, $ca, $cr, $mo, " +
+                "$rf, $ri, $rd, $ru, $rc, $sk, $si, $os) " +
                 "ON CONFLICT(id) DO UPDATE SET title=$ti, start_utc=$st, end_utc=$en, " +
-                "all_day=$ad, location=$lo, description=$de, attendees=$at, modified_utc=$mo";
+                "all_day=$ad, location=$lo, description=$de, attendees=$at, categories=$ca, " +
+                "modified_utc=$mo, repeat_freq=$rf, repeat_interval=$ri, repeat_days=$rd, " +
+                "repeat_until=$ru, repeat_count=$rc, skip_dates=$sk, series_id=$si, " +
+                "occurrence_start=$os";
             cmd.Parameters.AddWithValue("$id", ev.Id.ToString());
             cmd.Parameters.AddWithValue("$ti", ev.Title ?? "");
             cmd.Parameters.AddWithValue("$st", ToStore(ev.Start, ev.AllDay));
@@ -567,9 +746,19 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
             cmd.Parameters.AddWithValue("$ad", ev.AllDay ? 1 : 0);
             cmd.Parameters.AddWithValue("$lo", ev.Location ?? "");
             cmd.Parameters.AddWithValue("$de", ev.Description ?? "");
-            cmd.Parameters.AddWithValue("$at", JoinAttendees(ev.Attendees ?? new List<string>()));
+            cmd.Parameters.AddWithValue("$at", JoinAttendees(ev.Attendees ?? []));
+            cmd.Parameters.AddWithValue("$ca", NormalizeCategories(ev.Categories));
             cmd.Parameters.AddWithValue("$cr", ToStoreUtc(ev.Created));
             cmd.Parameters.AddWithValue("$mo", ToStoreUtc(ev.Modified));
+            cmd.Parameters.AddWithValue("$rf", (int)ev.Repeat);
+            cmd.Parameters.AddWithValue("$ri", ev.RepeatInterval > 0 ? ev.RepeatInterval : 1);
+            cmd.Parameters.AddWithValue("$rd", JoinDays(ev.RepeatDays ?? []));
+            cmd.Parameters.AddWithValue("$ru", ToStoreDate(ev.RepeatUntil));
+            cmd.Parameters.AddWithValue("$rc", ev.RepeatCount > 0 ? ev.RepeatCount : 0);
+            cmd.Parameters.AddWithValue("$sk", JoinDates(ev.SkipDates ?? []));
+            cmd.Parameters.AddWithValue("$si", ev.SeriesId?.ToString() ?? "");
+            cmd.Parameters.AddWithValue("$os", ev.OccurrenceStart.HasValue
+                ? ToStore(ev.OccurrenceStart.Value, ev.AllDay) : "");
             cmd.ExecuteNonQuery();
         }
 
@@ -611,6 +800,276 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
             });
         }
 
+        // ============================================================
+        // Series. The four things "this one or the whole series" can mean.
+        // ============================================================
+
+        /// <summary>
+        /// Applies an edit to the WHOLE series. Moving the appointment moves every occurrence by
+        /// the same amount, which is what editing the series from one of its dates means - the
+        /// master keeps being the anchor of the pattern rather than jumping to the date the user
+        /// happened to be looking at.
+        /// </summary>
+        public void UpdateSeries(CalendarEvent edited)
+        {
+            var master = GetSeriesMaster(edited);
+            if (master == null) { Update(edited); return; }
+
+            var duration = edited.End > edited.Start ? edited.End - edited.Start : TimeSpan.FromHours(1);
+
+            // How far the user moved the occurrence they were looking at.
+            var origin = edited.OccurrenceStart ?? master.Start;
+            var delta  = edited.Start - origin;
+
+            master.Title       = edited.Title;
+            master.Location    = edited.Location;
+            master.Description = edited.Description;
+            master.Attendees   = new List<string>(edited.Attendees ?? []);
+            master.Categories  = edited.Categories;
+            master.AllDay      = edited.AllDay;
+
+            master.Start = master.Start + delta;
+            master.End   = master.Start + duration;
+
+            master.Repeat         = edited.Repeat;
+            master.RepeatInterval = edited.RepeatInterval > 0 ? edited.RepeatInterval : 1;
+            master.RepeatDays     = new List<DayOfWeek>(edited.RepeatDays ?? []);
+            master.RepeatUntil    = edited.RepeatUntil;
+            master.RepeatCount    = edited.RepeatCount;
+
+            // Deleted dates move with the series. Leaving them put would silently un-delete the
+            // date the user removed and delete a different one instead.
+            if (delta.Days != 0)
+            {
+                var shifted = new List<DateTime>();
+                foreach (var d in master.SkipDates) shifted.Add(d.Date.AddDays(delta.Days));
+                master.SkipDates = shifted;
+            }
+
+            Update(master);
+        }
+
+        /// <summary>
+        /// Saves an edit to ONE date of a series, as a row that stands in for that occurrence.
+        /// </summary>
+        public void SaveOccurrence(CalendarEvent edited)
+        {
+            var key = edited.SeriesKey;
+            var day = (edited.OccurrenceStart ?? edited.Start).Date;
+
+            var existing = _events.FirstOrDefault(
+                e => e.IsOverride && e.SeriesId == key &&
+                     e.OccurrenceStart.HasValue && e.OccurrenceStart.Value.Date == day);
+
+            var row = edited.Clone();
+            row.SeriesId        = key;
+            row.OccurrenceStart = edited.OccurrenceStart ?? edited.Start;
+
+            // An override is one date. The SERIES repeats, not the row that replaces one of its
+            // dates - leaving the pattern on here would expand the override too and every later
+            // occurrence would appear twice.
+            row.Repeat         = RepeatFreq.None;
+            row.RepeatInterval = 1;
+            row.RepeatDays     = [];
+            row.RepeatUntil    = null;
+            row.RepeatCount    = 0;
+            row.SkipDates      = [];
+
+            if (existing != null)
+            {
+                row.Id      = existing.Id;
+                row.Created = existing.Created;
+                Update(row);
+            }
+            else
+            {
+                // A NEW id, always. The occurrence handed out by Recurrence carries its master's
+                // id, and saving with that would overwrite the series with a single appointment.
+                row.Id = Guid.NewGuid();
+                Add(row);
+            }
+        }
+
+        /// <summary>Removes ONE date from a series, leaving the rest of it alone.</summary>
+        public void DeleteOccurrence(CalendarEvent occ)
+        {
+            var key = occ.SeriesKey;
+            var day = (occ.OccurrenceStart ?? occ.Start).Date;
+
+            // If that date had been edited singly it is a real row, and it has to go too or the
+            // deleted occurrence survives its own deletion.
+            var stray = _events.FirstOrDefault(
+                e => e.IsOverride && e.SeriesId == key &&
+                     e.OccurrenceStart.HasValue && e.OccurrenceStart.Value.Date == day);
+            if (stray != null) Delete(stray.Id);
+
+            var master = GetSeriesMaster(occ);
+            if (master == null) return;
+            if (master.SkipDates.Any(d => d.Date == day)) return;
+
+            master.SkipDates.Add(day);
+            Update(master);
+        }
+
+        /// <summary>Removes a whole series: the master and every single-date edit belonging to it.</summary>
+        public void DeleteSeries(Guid masterId)
+        {
+            var ids = _events.Where(e => e.Id == masterId || e.SeriesId == masterId)
+                             .Select(e => e.Id).ToList();
+            if (ids.Count == 0) return;
+
+            var gone = new HashSet<Guid>(ids);
+            _events.RemoveAll(e => gone.Contains(e.Id));
+
+            Commit(() =>
+            {
+                using var tx = _db!.BeginTransaction();
+                foreach (var id in ids)
+                {
+                    using var cmd = _db.CreateCommand();
+                    cmd.CommandText = "DELETE FROM events WHERE id = $id";
+                    cmd.Parameters.AddWithValue("$id", id.ToString());
+                    cmd.ExecuteNonQuery();
+                }
+                tx.Commit();
+            });
+        }
+
+        // ============================================================
+        // Categories (per-Killendar definitions; assignment is the events.categories string,
+        // so there is no join table to keep in step and an event carries its own list)
+        // ============================================================
+
+        /// <summary>Splits an assignment string into category names, trimmed, blanks dropped.</summary>
+        public static List<string> SplitCategories(string categories) =>
+            string.IsNullOrEmpty(categories)
+                ? []
+                : [.. categories.Split(',').Select(c => c.Trim()).Where(c => c.Length > 0)];
+
+        /// <summary>Canonical storage form: trimmed names, ", " separated, duplicates dropped.</summary>
+        public static string NormalizeCategories(string? categories)
+        {
+            if (string.IsNullOrWhiteSpace(categories)) return "";
+            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var kept = new List<string>();
+            foreach (string c in SplitCategories(categories!))
+                if (seen.Add(c)) kept.Add(c);
+            return string.Join(", ", kept);
+        }
+
+        /// <summary>Definitions in insertion order, the order the pickers show them in.</summary>
+        public List<(string Name, string Color)> ListCategories()
+        {
+            var list = new List<(string, string)>();
+            if (_db == null) return list;
+            using var cmd = _db.CreateCommand();
+            cmd.CommandText = "SELECT name, color FROM categories ORDER BY rowid";
+            using var r = cmd.ExecuteReader();
+            while (r.Read()) list.Add((r.GetString(0), r.GetString(1)));
+            return list;
+        }
+
+        /// <summary>Adds a definition; an existing name (case-insensitive) wins.</summary>
+        public void AddCategory(string name, string color)
+        {
+            if (_db == null) return;
+            AddCategory(_db, name, color);
+            AfterDefinitionChange();
+        }
+
+        // Every definition edit has to refresh the paint cache BEFORE the repaint, or the views
+        // redraw from the colors that were just replaced. Seeding does not come through here - it
+        // uses the static overload - so this cannot fire mid-Open.
+        private void AfterDefinitionChange()
+        {
+            CategoryManager.Refresh(this);
+            Changed?.Invoke();
+        }
+
+        private static void AddCategory(SqliteConnection db, string name, string color)
+        {
+            using var cmd = db.CreateCommand();
+            cmd.CommandText = "INSERT OR IGNORE INTO categories(name, color) VALUES ($n, $c)";
+            cmd.Parameters.AddWithValue("$n", name);
+            cmd.Parameters.AddWithValue("$c", color);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void SetCategoryColor(string name, string color)
+        {
+            if (_db == null) return;
+            using (var cmd = _db.CreateCommand())
+            {
+                cmd.CommandText = "UPDATE categories SET color = $c WHERE name = $n";
+                cmd.Parameters.AddWithValue("$c", color);
+                cmd.Parameters.AddWithValue("$n", name);
+                cmd.ExecuteNonQuery();
+            }
+            // Assignment strings hold names, not colors, so nothing to rewrite - but the views
+            // paint from the definitions, so they still need telling.
+            AfterDefinitionChange();
+        }
+
+        /// <summary>Renames a definition and rewrites it inside every event's assignment.</summary>
+        public void RenameCategory(string oldName, string newName)
+        {
+            if (_db == null) return;
+            using (var cmd = _db.CreateCommand())
+            {
+                cmd.CommandText = "UPDATE categories SET name = $new WHERE name = $old";
+                cmd.Parameters.AddWithValue("$new", newName);
+                cmd.Parameters.AddWithValue("$old", oldName);
+                cmd.ExecuteNonQuery();
+            }
+            CategoryManager.Refresh(this);
+            RewriteCategoryInEvents(oldName, newName);
+        }
+
+        /// <summary>Deletes a definition and removes it from every event's assignment.</summary>
+        public void DeleteCategory(string name)
+        {
+            if (_db == null) return;
+            using (var cmd = _db.CreateCommand())
+            {
+                cmd.CommandText = "DELETE FROM categories WHERE name = $n";
+                cmd.Parameters.AddWithValue("$n", name);
+                cmd.ExecuteNonQuery();
+            }
+            CategoryManager.Refresh(this);
+            RewriteCategoryInEvents(name, null);
+        }
+
+        // Renames (newName != null) or removes (null) one category across every event. The
+        // in-memory mirror is rewritten first because reads are served from it, then only the
+        // events that actually changed are written back. Modified is deliberately left alone:
+        // renaming a definition is not an edit to the appointment.
+        private void RewriteCategoryInEvents(string name, string? newName)
+        {
+            var touched = new List<CalendarEvent>();
+            foreach (var ev in _events)
+            {
+                bool hit = false;
+                var kept = new List<string>();
+                foreach (string c in SplitCategories(ev.Categories))
+                {
+                    if (string.Equals(c, name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        hit = true;
+                        if (newName != null && !kept.Contains(newName, StringComparer.OrdinalIgnoreCase))
+                            kept.Add(newName);
+                    }
+                    else kept.Add(c);
+                }
+                if (!hit) continue;
+                ev.Categories = string.Join(", ", kept);
+                touched.Add(ev);
+            }
+            Commit(() =>
+            {
+                foreach (var ev in touched) Upsert(ev);
+            });
+        }
+
         /// <summary>Import events, skipping any whose Id is already present. Returns how many were
         /// added. One transaction, because a 2000-event .ics one INSERT at a time is slow enough
         /// to be visible.</summary>
@@ -641,23 +1100,84 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
 
         public CalendarEvent? GetById(Guid id) => _events.FirstOrDefault(e => e.Id == id);
 
-        /// <summary>All events overlapping the half-open interval [start, end), earliest first.</summary>
+        /// <summary>The series master an occurrence belongs to, or null.</summary>
+        public CalendarEvent? GetSeriesMaster(CalendarEvent ev)
+        {
+            if (ev == null) return null;
+            var key = ev.SeriesKey;
+            return _events.FirstOrDefault(e => e.Id == key && e.IsSeries);
+        }
+
+        /// <summary>
+        /// All appointments overlapping the half-open interval [start, end), earliest first.
+        ///
+        /// This is where repeats become visible. A series is ONE stored row; its dates are
+        /// generated here, so every view and the day agenda got repeats the moment this method
+        /// did, without any of them changing. Three kinds of row are handled:
+        ///   - plain appointments, included when they overlap, exactly as before;
+        ///   - series masters, expanded into occurrences by Recurrence;
+        ///   - overrides, which stand in for one generated date and are included on their own
+        ///     dates - so an occurrence moved to another day appears there, not here.
+        /// </summary>
         public List<CalendarEvent> GetInRange(DateTime start, DateTime end)
-            => _events.Where(e => e.Start < end && e.End > start)
-                      .OrderBy(e => e.AllDay ? 0 : 1)
-                      .ThenBy(e => e.Start)
-                      .ToList();
+        {
+            var result = new List<CalendarEvent>();
+
+            // Which generated dates have been replaced by an edited row. Keyed by date, because
+            // the override's own Start is wherever the user moved it to, and the thing being
+            // replaced is the date the series WOULD have produced.
+            var replaced = new HashSet<(Guid Series, DateTime Day)>();
+            foreach (var e in _events)
+                if (e.IsOverride && e.OccurrenceStart.HasValue)
+                    replaced.Add((e.SeriesId!.Value, e.OccurrenceStart.Value.Date));
+
+            foreach (var e in _events)
+            {
+                if (e.IsSeries)
+                {
+                    foreach (var occ in Recurrence.Expand(e, start, end))
+                        if (!replaced.Contains((e.Id, occ.OccurrenceStart!.Value.Date)))
+                            result.Add(occ);
+                    continue;
+                }
+
+                // Plain appointments AND overrides: both are real rows shown on their own dates.
+                if (e.Start < end && e.End > start) result.Add(e);
+            }
+
+            return [.. result.OrderBy(e => e.AllDay ? 0 : 1).ThenBy(e => e.Start)];
+        }
 
         /// <summary>All events touching a calendar date, all-day entries first.</summary>
         public List<CalendarEvent> GetOnDay(DateTime date)
             => GetInRange(date.Date, date.Date.AddDays(1));
 
-        /// <summary>The next <paramref name="count"/> events starting at or after <paramref name="from"/>.</summary>
+        /// <summary>
+        /// The next <paramref name="count"/> appointments starting at or after
+        /// <paramref name="from"/>. Repeats are included, which is why this walks forward a window
+        /// at a time instead of reading the row list: a series has no rows to read.
+        /// </summary>
         public List<CalendarEvent> GetUpcoming(DateTime from, int count)
-            => _events.Where(e => e.End > from)
-                      .OrderBy(e => e.Start)
-                      .Take(count)
-                      .ToList();
+        {
+            if (count <= 0) return [];
+
+            // Widening windows rather than one huge range, so the common case (something on in the
+            // next fortnight) does not expand five years of every series to find it.
+            foreach (int days in new[] { 14, 90, 400, 1500 })
+            {
+                var found = GetInRange(from, from.AddDays(days))
+                            .Where(e => e.End > from)
+                            .OrderBy(e => e.Start)
+                            .Take(count)
+                            .ToList();
+                if (found.Count >= count) return found;
+
+                // Last window: return what there is rather than looping forever on a calendar
+                // that genuinely has nothing further out.
+                if (days == 1500) return found;
+            }
+            return [];
+        }
 
         // ============================================================
         // Migration from the pre-1.0 events.json
@@ -693,7 +1213,7 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
             {
                 old = JsonSerializer.Deserialize<List<CalendarEvent>>(File.ReadAllText(json),
                           new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
-                      ?? new List<CalendarEvent>();
+                      ?? [];
             }
             catch (Exception ex)
             {
@@ -711,6 +1231,9 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
                 using var schema = c.CreateCommand();
                 schema.CommandText = SchemaSql;
                 schema.ExecuteNonQuery();
+                // Seeded here, not on the next open: EnsureSchema only seeds when it finds no
+                // categories table, and the line above has just created one.
+                SeedDefaultCategories(c);
 
                 using var tx = c.BeginTransaction();
                 foreach (var ev in old)

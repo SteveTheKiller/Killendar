@@ -1,0 +1,282 @@
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ---- Theme palettes (match the Killendar app - values taken from Themes/*.xaml) ----
+   Structural roles are the family's: --sidebar is the chrome tier (the app's BackgroundBrush),
+   --bg is the content pane (SurfaceBrush), --panel is a card (PaneBrush). Each neutral family
+   defines its own red; Dark's #DD504B is the one the wordmark and og-image are built on.
+   Blood / Greed / Cyanotic carry their own accent rather than white, so unlike KillerShell
+   there is no white-accent special case to undo. */
+html[data-theme="dark"]     { --bg:#333333; --surface:#2b2b2b; --panel:#3a3a3a; --sidebar:#1c1c1c; --canvas:#3a3a3a; --border:#2e2e2e; --pane-border:#2e2e2e; --dragline:#363636; --tab-edge:var(--sel,var(--btn)); --accent:#DD504B; --accent-text:#ffffff; --text:#e0e0e0; --text2:#bcbcbc; --muted:#a0a0a0; --footer-text:#6a6a6a; --danger:#ef4444; --grain:0.26; --btn:var(--accent); --btn-text:#ffffff; --logo-pdf:var(--accent); --chrome:#141414; --modal:#1e1e1e; --fade:rgba(0,0,0,0.55); }
+html[data-theme="light"]    { --bg:#f0f0f0; --surface:#e8e8e8; --panel:#c8c8c8; --sidebar:#dcdcdc; --canvas:#f0f0f0; --border:#b0b0b0; --pane-border:#b0b0b0; --dragline:#a0a0a0; --tab-edge:var(--sel,var(--btn)); --accent:#931A1A; --accent-text:#ffffff; --text:#1a1a1a; --text2:#555555; --muted:#666666; --footer-text:#888888; --danger:#dc2626; --grain:0.28; --btn:var(--accent); --btn-text:#ffffff; --logo-pdf:var(--accent); --chrome:#c4c4c4; --modal:#ffffff; --fade:rgba(0,0,0,0.22); }
+html[data-theme="black"]    { --bg:#0d0d0d; --surface:#0a0a0a; --panel:#161616; --sidebar:#000000; --canvas:#0d0d0d; --border:#2a2a2a; --pane-border:#333333; --dragline:#373737; --tab-edge:var(--sel,var(--btn)); --accent:#FF2929; --accent-text:#000000; --text:#ffffff; --text2:#cccccc; --muted:#cccccc; --footer-text:#aaaaaa; --danger:#ff4444; --grain:0.08; --btn:var(--accent); --btn-text:#000000; --logo-pdf:var(--accent); --chrome:#000000; --modal:#000000; --fade:rgba(0,0,0,0.75); }
+html[data-theme="blood"]    { --bg:#2c1012; --surface:#2c1012; --panel:#321416; --sidebar:#240c0d; --canvas:#2c1012; --border:#401d1d; --pane-border:#401d1d; --dragline:#4a2325; --tab-edge:var(--sel,var(--btn)); --accent:#e8485a; --accent-text:#ffffff; --text:#fffde8; --text2:#f8c99e; --muted:#e2b58a; --footer-text:#a85a5a; --danger:#ff6666; --grain:0.32; --btn:var(--accent); --btn-text:#ffffff; --logo-pdf:var(--accent); --chrome:#1a0809; --modal:#1e0a0b; --fade:rgba(0,0,0,0.6); }
+html[data-theme="greed"]    { --bg:#002e1c; --surface:#002e1c; --panel:#003824; --sidebar:#002115; --canvas:#002e1c; --border:#0f4a30; --pane-border:#0f4a30; --dragline:#155a3a; --tab-edge:var(--sel,var(--btn)); --accent:#3fbf6f; --accent-text:#002819; --text:#fffde8; --text2:#e0d49a; --muted:#c0aa68; --footer-text:#3a8a5a; --danger:#ff6666; --grain:0.26; --btn:var(--accent); --btn-text:#002819; --logo-pdf:var(--accent); --chrome:#001710; --modal:#001e13; --fade:rgba(0,0,0,0.6); }
+html[data-theme="cyanotic"] { --bg:#00263a; --surface:#00263a; --panel:#002e48; --sidebar:#001a28; --canvas:#00263a; --border:#183450; --pane-border:#183450; --dragline:#1e4162; --tab-edge:var(--sel,var(--btn)); --accent:#3aa0d8; --accent-text:#001e2e; --text:#fffde8; --text2:#e0d49a; --muted:#c0aa68; --footer-text:#4a88bb; --danger:#ff6666; --grain:0.26; --btn:var(--accent); --btn-text:#001e2e; --logo-pdf:var(--accent); --chrome:#00121c; --modal:#001624; --fade:rgba(0,0,0,0.6); }
+:root { --accent-dim: color-mix(in srgb, var(--accent) 16%, transparent); }
+
+html { background: var(--bg); height: 100%; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; height: 100%; overflow: hidden; display: flex; flex-direction: column; position: relative; isolation: isolate; transition: background-color 0.2s, color 0.2s; }
+/* Grain: chrome bars carry their own (fixed); the document-pane grain lives on .content so it scrolls with the content. grain.png is a sparse transparent speckle (matches the app's generated texture) so it composites normally - no blend mode, no lightening. */
+body > * { position: relative; z-index: 1; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { filter: brightness(1.15); }
+
+/* ---- Wordmark (rendered as text in the app's typewriter font: "The" in --text, "Killendar" in --accent) ---- */
+@font-face {
+  font-family: 'Killendar';
+  src: url('brand/Typewriter_a602_Dead_Postman.ttf') format('truetype');
+  font-weight: normal; font-style: normal; font-display: block;
+}
+/* Offsets are in em, NOT the px KillerShell uses. KillerShell only ever renders its wordmark
+   as text at hero size - the topbar and the cross-promo cards use an SVG - so a fixed 1px rim
+   is always small relative to the glyph. Killendar's wordmark is text everywhere, including a
+   20px topbar, and at that size a 1px rim and a 2px offset are roughly three times heavier in
+   proportion than they are on the hero: the bevel goes muddy and the letterforms thicken. In
+   em they hold the same ratio at every size. 0.012em is 1px on the ~86px hero wordmark. */
+.wm-logo { display: inline-block; width: auto; white-space: nowrap; line-height: 1; font-family: 'Killendar', 'Courier New', monospace; font-weight: normal; letter-spacing: 1px;
+  text-shadow: 0 0.045em 0.12em rgba(0,0,0,0.55), 0 0.015em 0.03em rgba(0,0,0,0.5); }
+.wm-logo .wmk { color: var(--text); }
+.wm-logo .wms { color: var(--accent); font-size: 1.3em; font-weight: bold;
+  /* bevel: light top-left rim + dark bottom-right rim, over the shared drop shadow */
+  text-shadow: -0.012em -0.012em 0 rgba(255,255,255,0.5), 0.012em 0.012em 0 rgba(0,0,0,0.4), 0.023em 0.023em 0 rgba(0,0,0,0.22), 0 0.035em 0.09em rgba(0,0,0,0.55), 0 0.012em 0.023em rgba(0,0,0,0.5); }
+html[data-theme="light"] .wm-logo { text-shadow: none; }
+html[data-theme="light"] .wm-logo .wms { text-shadow: -0.012em -0.012em 0 rgba(255,255,255,0.6), 0.012em 0.012em 0 rgba(0,0,0,0.28); }
+
+/* ---- Page title kicker (sits above the wordmark on sub-pages), same typewriter font ---- */
+.page-title { display: block; text-align: center; font-family: 'Killendar', 'Courier New', monospace; font-size: clamp(30px, 5.2vw, 48px); letter-spacing: 1px; color: var(--text); margin: 0 auto 2px; line-height: 1.1;
+  /* white version (dark / colored themes): heavy drop shadow */
+  text-shadow: 0 3px 8px rgba(0,0,0,0.7), 0 1px 2px rgba(0,0,0,0.6); }
+/* black version (light theme): no heavy shadow */
+html[data-theme="light"] .page-title { text-shadow: none; }
+
+/* ---- Top bar (single app-style chrome bar) ---- */
+.topbar { position: relative; flex: 0 0 auto; z-index: 100; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 8px 16px 0; background: var(--sidebar); }
+.topbar::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: url('grain.png?v=2') repeat fixed; background-size: 256px 256px; opacity: 1; }
+.topbar > * { position: relative; z-index: 1; }
+.tb-home { display: inline-flex; align-items: center; gap: 9px; color: var(--text); }
+.tb-home:hover { filter: none; }
+/* No border-radius, unlike KillerShell's: Killendar's logo is a shaped mark on transparency
+   with its own shadow baked in, so rounding the box clips the shadow and squares off the
+   corners of the artwork. The drop-shadow filter follows the alpha, so it still lifts. */
+.tb-icon { width: 36px; height: 36px; display: block; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.55)); }
+.tb-wm { height: 22px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+.tb-sub { font-size: 12px; color: var(--muted); font-family: Consolas, monospace; }
+.tb-spacer { flex: 1; }
+.help-link { color: var(--accent); font-size: 13px; font-weight: 600; border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); border-radius: 6px; padding: 4px 12px; }
+.help-link:hover { background: var(--btn); color: var(--btn-text); }
+.tgrp { display: inline-flex; align-items: center; gap: 7px; }
+.tlabel { font-size: 11px; color: var(--muted); font-family: Consolas, monospace; }
+.swatch { width: 19px; height: 19px; border-radius: 50%; cursor: pointer; border: 2px solid rgba(255,255,255,0.22); padding: 0; position: relative; transition: transform 0.12s, border-color 0.12s; }
+.swatch:hover { transform: scale(1.15); }
+.swatch[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+.swatch::after { content: ""; position: absolute; inset: 4px; border-radius: 50%; background: var(--sw-accent); }
+.sw-dark { background:#1c1c1c; --sw-accent:#DD504B; } .sw-light { background:#dcdcdc; --sw-accent:#931A1A; }
+.sw-black { background:#000; --sw-accent:#FF2929; } .sw-blood { background:#240c0d; --sw-accent:#e8485a; }
+.sw-greed { background:#002115; --sw-accent:#3fbf6f; } .sw-cyanotic { background:#001a28; --sw-accent:#3aa0d8; }
+.acc { width: 17px; height: 17px; border-radius: 50%; cursor: pointer; border: 2px solid rgba(255,255,255,0.25); padding: 0; transition: transform 0.12s; }
+.acc:hover { transform: scale(1.18); }
+.acc[aria-pressed="true"] { border-color: #fff; box-shadow: 0 0 0 2px currentColor; }
+.accent-switch[hidden] { display: inline-flex; visibility: hidden; }
+.topbar .accent-switch { order: 1; }
+.topbar .tgrp { order: 2; }
+.topbar .lang-switch { order: 3; }
+.tb-right { margin-left: auto; display: inline-flex; align-items: center; gap: 14px; }
+.icon-link { color: var(--muted); display: inline-flex; }
+.icon-link:hover { color: var(--accent); }
+.icon-link svg { width: 19px; height: 19px; fill: currentColor; display: block; }
+
+/* ---- App body: content + right-hand sidebar ---- */
+/* Chrome-toned shell: the gutter around the rounded content pane reads as grained chrome, like the app windows and killertools.net */
+.shell { display: grid; grid-template-columns: 1fr 268px; flex: 1 1 auto; min-height: 0; overflow: hidden; position: relative; background: var(--sidebar); }
+.shell::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: url('grain.png?v=2') repeat fixed; background-size: 256px 256px; opacity: 1; }
+@keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
+/* Inset rounded pane (killertools.net MenuLayout treatment): 8px chrome gutter on the window edges, 2px hugging the sidebar, none above the statusbar.
+   The pane carries its own frame line + outward shadow (z 6: above the sidebar and the statusbar chrome, below the statusbar text at z 7),
+   and clips the inner scroller so the scrollbar lives INSIDE the rounded pane. */
+.content { min-width: 0; min-height: 0; overflow: hidden; position: relative; z-index: 6; margin: 8px 2px 0 8px; border: 1px solid var(--pane-border); border-radius: 14px; box-shadow: 0 0 20px 0 rgba(0,0,0,0.42); background-color: var(--bg); background-image: url('grain.png?v=2'); background-repeat: repeat; background-size: 256px 256px; background-attachment: fixed; animation: pageFadeIn .28s ease both; }
+.content-scroll { height: 100%; overflow-y: auto; scroll-behavior: smooth; }
+
+/* ---- Sidebar (the app's docked pane) ---- */
+.sidebar { position: relative; height: calc(100% - 8px); margin-top: 8px; min-height: 0; background: var(--sidebar); display: flex; flex-direction: column; z-index: 5; }
+.sidebar::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: url('grain.png?v=2') repeat fixed; background-size: 256px 256px; opacity: 1; }
+.sb-thumbs { flex: 1 1 auto; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding: 14px 14px 0; }
+/* Bottom fade while the strip overflows and isn't scrolled to the last shot (toggled in JS),
+   matching the app sidebar: the mask reveals the grainy sidebar behind, so grain stays intact. */
+.sb-thumbs.faded { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent); }
+.sb-empty { margin: auto; text-align: center; color: var(--muted); font-family: 'Killendar', 'Courier New', monospace; font-size: 14px; letter-spacing: .5px; line-height: 1.5; padding: 20px; }
+.sb-thumb { display: block; width: 100%; padding: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; background: var(--panel); cursor: zoom-in; box-shadow: 0 2px 6px rgba(0,0,0,0.45); transition: border-color .15s ease, transform .15s ease; }
+.sb-thumb:hover { border-color: var(--accent); transform: translateY(-1px); }
+.sb-thumb img { display: block; width: 100%; height: auto; }
+/* Grain fade overlays pinned to the sidebar top/bottom (not a mask on the scroller, so the
+   scrollbar is never faded). Inset 8px from the right to clear the scrollbar. JS toggles .on:
+   top only once scrolled down, bottom only while more shots remain below. Shared by all three
+   pages, so these live here rather than in the landing page's own style block. */
+.sb-fade { position: absolute; left: 0; right: 8px; height: 40px; pointer-events: none; z-index: 2; opacity: 0; transition: opacity 0.12s ease;
+  background: var(--sidebar) url('grain.png?v=2') repeat fixed; background-size: 256px 256px; }
+.sb-fade-top { top: 0; -webkit-mask-image: linear-gradient(to bottom, #000, transparent); mask-image: linear-gradient(to bottom, #000, transparent); }
+.sb-fade-bottom { bottom: 0; -webkit-mask-image: linear-gradient(to top, #000, transparent); mask-image: linear-gradient(to top, #000, transparent); }
+.sb-fade.on { opacity: 1; }
+.sidebar > * { position: relative; z-index: 1; }
+.sb-tabs { display: flex; font-size: 11px; font-family: Consolas, monospace; letter-spacing: 0.5px; color: var(--muted); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.sb-tabs span { flex: 1; text-align: center; padding: 9px 0; }
+.sb-tabs .on { color: var(--accent); border-bottom: 2px solid var(--tab-edge); }
+
+/* ---- Status bar footer (matches the app) ---- */
+.statusbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 3px 16px; background: var(--sidebar); font-family: Consolas, monospace; font-size: 11.5px; color: var(--footer-text); position: relative; flex: 0 0 auto; }
+.statusbar::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: url('grain.png?v=2') repeat fixed; background-size: 256px 256px; opacity: 1; }
+/* Resize-grip dots in the window corner, matching the app chrome (grain owns ::after) */
+.statusbar::before { content: ""; position: absolute; right: 5px; bottom: 5px; width: 2px; height: 2px; background: var(--footer-text); box-shadow: -4px 0 var(--footer-text), -8px 0 var(--footer-text), 0 -4px var(--footer-text), -4px -4px var(--footer-text), 0 -8px var(--footer-text); opacity: .8; pointer-events: none; z-index: 7; }
+.statusbar > * { position: relative; z-index: 7; }
+/* Keep the right-side text clear of the corner grip (family standard spacing) */
+.statusbar .right { padding-right: 10px; }
+.statusbar a { color: var(--footer-text); }
+.statusbar a:hover { color: var(--accent); }
+.statusbar .right b { color: var(--logo-pdf); font-weight: 600; }
+#verEgg { cursor: pointer; }
+
+/* ---- Easter egg (click the version) ---- */
+.drip { position: fixed; top: -60px; width: 6px; border-radius: 0 0 3px 3px; background: #df1d1d; z-index: 300; pointer-events: none; }
+@keyframes dripfall { to { transform: translateY(112vh); } }
+.egg-toast { position: fixed; left: 50%; bottom: 42px; transform: translateX(-50%); background: var(--modal); color: var(--text); border: 1px solid var(--accent); border-radius: 8px; padding: 11px 20px; font-size: 13px; box-shadow: 0 12px 28px rgba(0,0,0,0.5); z-index: 301; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.egg-toast.show { opacity: 1; }
+
+/* ---- Lightbox ---- */
+.lightbox { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; padding: 32px; cursor: zoom-out; opacity: 0; visibility: hidden; transition: opacity .2s ease, visibility 0s linear .2s; }
+.lightbox.show { opacity: 1; visibility: visible; transition: opacity .2s ease; }
+.lightbox[hidden] { display: none; }
+.lightbox img { max-width: 100%; max-height: 100%; border-radius: 6px; box-shadow: 0 24px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); transform: scale(.96); transition: transform .2s ease; }
+.lightbox.show img { transform: scale(1); }
+
+/* Slim scrollbars: transparent track (no opaque band), no arrow buttons, thumb flat to the ends.
+   IMPORTANT: the standard scrollbar-width/scrollbar-color props are scoped to browsers that do
+   NOT support ::-webkit-scrollbar (i.e. Firefox). If they're declared globally, their mere
+   presence makes Chrome/Edge IGNORE the ::-webkit-scrollbar rules below - which is what brought
+   back the opaque track and the arrow buttons on the content area. */
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--accent) 60%, var(--bg)) transparent; }
+}
+::-webkit-scrollbar { width: 8px; height: 8px; background: transparent; }
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-track-piece { background: var(--bg) url('grain.png?v=2') repeat; background-size: 256px 256px; }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--accent) 55%, var(--bg)); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+::-webkit-scrollbar-corner { background: transparent; }
+/* Sidebar is darker than --bg, so its scrollbar track must use --sidebar (not the global --bg) or it shows a lighter mismatched band. */
+.sidebar::-webkit-scrollbar-track,
+.sidebar::-webkit-scrollbar-track-piece,
+.sidebar ::-webkit-scrollbar-track,
+.sidebar ::-webkit-scrollbar-track-piece { background: var(--sidebar) url('grain.png?v=2') repeat; background-size: 256px 256px; }
+
+@media (max-width: 900px) {
+  html, body { height: auto; overflow: visible; display: block; }
+  .shell { grid-template-columns: minmax(0, 1fr); overflow: visible; }
+  .content { overflow: visible; min-height: 0; margin: 0; border: 0; border-radius: 0; box-shadow: none; }
+  .content-scroll { height: auto; overflow: visible; }
+  .sidebar { position: static; height: auto; min-width: 0; overflow: hidden; border-left: 0; border-top: 1px solid var(--border); }
+  .topbar { gap: 10px; padding-bottom: 8px; } /* no pane gutter below 900px, so the bar keeps its own bottom air */
+}
+
+/* ---- Phones: reflow the app-chrome topbar into tidy rows + stack the statusbar ---- */
+@media (max-width: 560px) {
+  .topbar { min-height: 0; padding: 8px 12px; gap: 8px 9px; justify-content: center; }
+  .tb-icon { width: 30px; height: 30px; }
+  .tb-wm { height: 18px; }
+  .tb-spacer { display: none; }
+  /* Row 1: home logo on the left, download button pushed to the right */
+  .tb-dl { margin-left: auto; padding: 7px 13px; font-size: 12px; }
+  /* Row 2: section nav on its own full-width centered line */
+  .topbar .tb-nav { order: 1; flex-basis: 100%; justify-content: center; gap: 2px; padding-top: 7px; border-top: 1px solid var(--border); }
+  .tb-nav a { padding: 6px 10px; font-size: 13.5px; }
+  /* Row 3: theme swatches and accent, centered together */
+  .topbar .tgrp { order: 2; }
+  .topbar .accent-switch { order: 3; }
+  /* Footer: stack the two status lines and center them */
+  .statusbar { flex-direction: column; gap: 4px; justify-content: center; text-align: center; padding: 9px 12px; }
+}
+
+/* ============ Header nav + appearance flyout (shared) ============ */
+.tb-nav { display: inline-flex; align-items: center; gap: 1px; }
+.tb-nav a { font-family: 'Killendar', 'Courier New', monospace; color: var(--text2); font-size: 18px; font-weight: normal; letter-spacing: .3px; line-height: 1.2; padding: 6px 11px; border-radius: 6px; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+html[data-theme="light"] .tb-nav a { text-shadow: none; }
+.tb-nav a:hover { color: var(--text); background: color-mix(in srgb, var(--accent) 12%, transparent); filter: none; }
+.tb-nav a.on { color: var(--accent); }
+
+/* Header download button */
+.tb-dl { display: inline-flex; align-items: center; gap: 7px; margin-left: 10px; background: var(--btn); color: var(--btn-text); font-size: 13px; font-weight: 700; padding: 7px 15px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: filter 0.15s, transform 0.1s, box-shadow 0.15s; }
+.tb-dl:hover { filter: brightness(1.1); color: var(--btn-text); transform: translateY(-1px); box-shadow: 0 7px 16px rgba(0,0,0,0.4); }
+.tb-dl:active { transform: translateY(1px); box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+.tb-dl svg { width: 14px; height: 14px; fill: currentColor; }
+/* Pre-release ghost of the topbar download. Same metrics as .tb-dl so the bar does not shift
+   when the real button returns, but outlined and inert - the releases page is empty until
+   1.0.0 is tagged, and a header button that 404s is worse than one that says "not yet". */
+.tb-soon { display: inline-flex; align-items: center; gap: 7px; margin-left: 10px; background: transparent; border: 1.5px dashed var(--muted); color: var(--muted); font-size: 13px; font-weight: 700; padding: 5.5px 13.5px; border-radius: 6px; cursor: default; user-select: none; }
+.tb-soon svg { width: 14px; height: 14px; fill: currentColor; opacity: 0.7; }
+
+/* Accent flyout: one dot in the header opens a small popup of accents */
+.acc-fly { position: relative; display: inline-flex; align-items: center; }
+.acc-fly[hidden] { display: inline-flex; visibility: hidden; }
+.acc-toggle { width: 22px; height: 22px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); background: var(--accent); cursor: pointer; padding: 0; transition: transform 0.12s, border-color 0.12s; }
+.acc-toggle:hover { transform: scale(1.12); border-color: var(--accent); }
+.acc-pop { position: absolute; top: 152%; right: 0; background: var(--modal); border: 1px solid var(--border); border-radius: 9px; padding: 9px 11px; box-shadow: 0 12px 28px rgba(0,0,0,0.5); z-index: 110; display: flex; gap: 9px; align-items: center; }
+.acc-pop[hidden] { display: none; }
+.acc-pop .acc-pop-label { font-size: 11px; font-family: Consolas, monospace; color: var(--muted); margin-right: 1px; }
+
+/* ============ Landing hero info block ============ */
+.hero-info { background: color-mix(in srgb, var(--modal) 80%, transparent) url('grain.png?v=2') repeat; background-size: 256px 256px; -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); border: 1px solid var(--pane-border); border-left: 2px solid var(--tab-edge); border-right: 2px solid var(--tab-edge); border-radius: 8px; box-shadow: 0 14px 32px rgba(0,0,0,0.4); padding: 15px 14px; font-family: Consolas, monospace; font-size: 13px; line-height: 1.9; flex: 0 0 auto; width: 336px; transition: transform 0.12s, box-shadow 0.15s, border-color 0.12s; }
+.hero-info:hover { border-left-color: var(--accent); border-right-color: var(--accent); }
+.hero-info:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0,0,0,0.5); border-top-color: var(--dragline); border-bottom-color: var(--dragline); }
+.hero-info .row { display: flex; gap: 8px; }
+.hero-info .k { color: var(--accent); min-width: 56px; }
+.hero-info .v { color: var(--text); }
+.hero-info .hash { color: var(--muted); white-space: nowrap; font-size: 11.5px; letter-spacing: -0.2px; }
+.hero-info .note { margin-top: 11px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; line-height: 1.55; color: var(--muted); }
+
+/* ============ About page ============ */
+.about-card { background: var(--modal) url('grain.png?v=2') repeat; background-size: 256px 256px; border: 1px solid var(--pane-border); border-radius: 10px; padding: 22px 24px; margin-bottom: 18px; }
+.about-card h2 { font-size: 19px; font-weight: 700; margin-bottom: 12px; color: var(--text); }
+.about-card p { color: var(--muted); font-size: 14.5px; line-height: 1.7; margin-bottom: 11px; }
+.about-card p:last-child { margin-bottom: 0; }
+.about-card b { color: var(--text); }
+.about-card a { color: var(--accent); font-weight: 600; }
+.about-quote { border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin: 4px 0 14px; color: var(--text2); font-style: italic; font-size: 15px; }
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(210px, 100%), 1fr)); gap: 10px; margin-top: 4px; }
+.contact-grid a { display: flex; align-items: center; gap: 10px; background: var(--panel); border: 1px solid var(--dragline); border-radius: 8px; padding: 11px 14px; color: var(--text); font-size: 13.5px; font-weight: 600; transition: border-color 0.15s, transform 0.1s; }
+.contact-grid a:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--border)); transform: translateY(-2px); filter: none; }
+.contact-grid svg { width: 18px; height: 18px; fill: var(--accent); flex-shrink: 0; }
+.contact-grid a > span { min-width: 0; }
+.contact-grid .sub { display: block; font-size: 11px; font-weight: 400; color: var(--muted); font-family: Consolas, monospace; overflow-wrap: break-word; }
+
+/* ============ Technical page ============ */
+.tech-sec { margin-bottom: 30px; scroll-margin-top: 74px; }
+/* Universal content-header style: typewriter wordmark font across all pages */
+.tech-sec h2, .about-card h2 { font-family: 'Killendar', 'Courier New', monospace; font-size: 24px; font-weight: normal; letter-spacing: .5px; margin: 6px 0 12px; color: var(--text); }
+.tech-sec h2, .about-card h2, .features h2 { text-shadow: 0 1px 1px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.32); }
+html[data-theme="light"] .tech-sec h2, html[data-theme="light"] .about-card h2, html[data-theme="light"] .features h2 { text-shadow: none; }
+.tech-sec h3 { font-family: 'Killendar', 'Courier New', monospace; font-size: 15px; font-weight: normal; letter-spacing: .5px; color: var(--accent); margin: 16px 0 7px;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.55), 0 1px 2px rgba(0,0,0,0.5); }
+html[data-theme="light"] .tech-sec h3 { text-shadow: none; }
+.tech-sec p { color: var(--muted); font-size: 14px; line-height: 1.7; margin-bottom: 11px; }
+.tech-sec b { color: var(--text); }
+.tech-sec a { color: var(--accent); font-weight: 600; }
+.codeblock { background: var(--panel); border: 1px solid var(--pane-border); border-left: 2px solid var(--accent); border-radius: 7px; padding: 13px 16px; margin: 10px 0 14px; font-family: Consolas, monospace; font-size: 12.5px; line-height: 1.7; color: var(--text); white-space: pre-wrap; overflow-x: auto; }
+.codeblock .cm { color: var(--muted); }
+/* Arrow-bulleted lists, shared by the hero blurbs and the technical sections */
+.blurb-list { list-style: none; margin-bottom: 11px; }
+.blurb-list li { font-size: 13.5px; color: var(--muted); line-height: 1.55; padding-left: 16px; position: relative; margin-bottom: 6px; }
+.blurb-list li:last-child { margin-bottom: 0; }
+.blurb-list li::before { content: "\203A"; position: absolute; left: 3px; color: var(--accent); font-weight: 700; }
+.blurb-list b { color: var(--text); }
+.spec-table { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 13px; background: var(--bg); }
+.spec-table th { text-align: left; background: var(--accent); color: var(--accent-text); padding: 7px 12px; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.45); }
+.spec-table td { padding: 7px 12px; border-bottom: 1px solid var(--pane-border); color: var(--muted); overflow-wrap: anywhere; }
+.spec-table td:first-child { color: var(--text); font-weight: 600; width: 42%; }
+.spec-table tr:nth-child(even) td { background: color-mix(in srgb, var(--panel) 50%, transparent); }
+/* Dark themes: the panel tint merges into the page, so use a distinctly darker stripe (like the app's bars) */
+html[data-theme="dark"]  .spec-table tr:nth-child(even) td { background: #262626; }
+html[data-theme="black"] .spec-table tr:nth-child(even) td { background: #050505; }
+
+@media (max-width: 900px) {
+  .tb-nav a { padding: 6px 8px; font-size: 13px; }
+  .hero-info { flex: 1 1 auto; min-width: 0; }
+}

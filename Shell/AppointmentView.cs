@@ -14,6 +14,9 @@ namespace Killendar.Shell
         string IAppointmentView.FieldLocation    { get => FieldLocation.Text;    set => FieldLocation.Text = value; }
         string IAppointmentView.FieldDescription { get => FieldDescription.Text; set => FieldDescription.Text = value; }
         string IAppointmentView.FieldAttendees   { get => FieldAttendees.Text;   set => FieldAttendees.Text = value; }
+
+        // Backed by the chip row rather than a box - see BuildCategoryChips below.
+        string IAppointmentView.FieldCategories  { get => ReadCategoryChips();   set => BuildCategoryChips(value); }
         string IAppointmentView.FieldStartDate   { get => FieldStartDate.Text;   set => FieldStartDate.Text = value; }
         string IAppointmentView.FieldStartTime   { get => FieldStartTime.Text;   set => FieldStartTime.Text = value; }
         string IAppointmentView.FieldEndDate     { get => FieldEndDate.Text;     set => FieldEndDate.Text = value; }
@@ -66,13 +69,33 @@ namespace Killendar.Shell
             if (selectAll) box.SelectAll();
         }
 
-        void IAppointmentView.OpenPanel() => OpenSidebarPanel();
+        void IAppointmentView.OpenPanel()
+        {
+            // The editor always claims the panel's content rows - a stale day agenda must never
+            // sit behind a form that is about to open (DayAgendaPanel.cs).
+            SidebarMode(agenda: false);
+            OpenSidebarPanel();
+        }
 
-        void IAppointmentView.ClosePanel() => CloseSidebar();
+        // Routed, not straight to CloseSidebar: with a day agenda pending, Save/Cancel/Delete
+        // return to the day's list instead of shutting the panel (DayAgendaPanel.cs).
+        void IAppointmentView.ClosePanel() => CloseEditorPanel();
+
+        /// <summary>The editor knows nothing about the calendar; the shell owns both and forwards.</summary>
+        void IAppointmentView.HighlightSelection(System.DateTime? day, System.TimeSpan? timeOfDay)
+            => _calendar.SetSelection(day, timeOfDay);
+
+        /// <summary>
+        /// Typing in either start box moves the calendar's marker. TextChanged, not LostFocus: the
+        /// point is to see where you are landing WHILE you type.
+        /// </summary>
+        private void FieldStart_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+            => _appointments?.StartEdited();
 
         // ---- panel buttons ----
 
-        private void SidebarClose_Click(object sender, RoutedEventArgs e) => CloseSidebar();
+        // Cancel routes like the editor's own ClosePanel: back to a pending day agenda, else shut.
+        private void SidebarClose_Click(object sender, RoutedEventArgs e) => CloseEditorPanel();
 
         private void AllDayToggle_Click(object sender, RoutedEventArgs e) => _appointments.ToggleAllDay();
 

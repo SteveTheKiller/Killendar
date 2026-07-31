@@ -21,7 +21,15 @@ namespace Killendar.Views
         private readonly StackPanel _list;
 
         public event Action<CalendarEvent>? EventSelected;
+        public event Action<DateTime>? DaySelected;
         public event Action<DateTime>? SlotSelected;
+
+        /// <summary>
+        /// Never raised - an agenda list has no hour grid to make denser. Declared with empty
+        /// accessors rather than as a field: a field-like event that nothing raises is CS0067,
+        /// and the interface still has to be satisfied.
+        /// </summary>
+        public event Action<int>? DensityStepped { add { } remove { } }
 
         public AgendaView()
         {
@@ -39,6 +47,13 @@ namespace Killendar.Views
             get => _anchor;
             set { _anchor = value; Rebuild(); }
         }
+
+        /// <summary>
+        /// Accepted and ignored: the agenda is a list of the days that HAVE appointments, so the
+        /// day being composed is usually not on screen to mark. Nothing to draw, and pretending
+        /// otherwise would mean silently scrolling the list while someone types a date.
+        /// </summary>
+        public void SetSelection(DateTime? day, TimeSpan? timeOfDay) { }
 
         public string PeriodLabel
         {
@@ -97,22 +112,24 @@ namespace Killendar.Views
                 var date = kv.Key;
                 bool isToday = date == today;
 
-                // The day heading doubles as "add something on this day", which is the only
-                // empty space an agenda has to offer.
+                // The day heading opens that day's agenda in the sidebar, same as a Month cell
+                // or a Week/Day column header; the context menu keeps the explicit create.
+                // (Steve, 2026-07-30.)
                 var head = new StackPanel
                 {
                     Orientation = Orientation.Horizontal,
                     Margin = new Thickness(0, 14, 0, 4),
                     Background = System.Windows.Media.Brushes.Transparent,
-                    Cursor = System.Windows.Input.Cursors.Hand,
-                    ToolTip = Services.LocaleManager.Loc("Str_TT_NewOnDay")
+                    Cursor = System.Windows.Input.Cursors.Hand
                 };
                 var headDate = date;
                 head.MouseLeftButtonDown += (_, e) =>
                 {
                     e.Handled = true;
-                    SlotSelected?.Invoke(headDate.Date.AddHours(9));
+                    DaySelected?.Invoke(headDate.Date);
                 };
+                head.ContextMenu = CalendarChrome.DayMenu(
+                    headDate.Date.AddHours(9), d => SlotSelected?.Invoke(d));
                 var dayName = CalendarChrome.Text(
                     isToday ? Services.LocaleManager.Loc("Str_Cal_Today") : date.ToString("dddd").ToUpperInvariant(),
                     isToday ? "PrimaryBrush" : "MutedTextBrush", 10,

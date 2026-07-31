@@ -57,11 +57,12 @@ namespace Killendar.Controls
         internal void Open()
         {
             Build();
-            // The fixed anchor the theme flyout also uses, so the two rail menus open in the same
-            // place rather than one tracking its button and one not.
-            _menu.PlacementTarget = _anchor;
-            _menu.Placement       = PlacementMode.Top;
-            _menu.IsOpen          = true;
+            // Beside the button that opens it and clamped inside the window - FlyoutPlacement.cs
+            // does both. PlacementMode.Right alone is not enough: WPF only avoids the SCREEN edge,
+            // so with the rail near the window's right side the menu opened over the desktop.
+            // (Steve, 2026-07-30.)
+            FlyoutPlacement.Attach(_menu, _anchor);
+            _menu.IsOpen = true;
             Anim.FadeIn(_menu);
         }
 

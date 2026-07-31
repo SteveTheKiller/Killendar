@@ -33,6 +33,20 @@ namespace Killendar.Features
         /// <summary>Where the view is currently looking. "+ New" starts from here.</summary>
         internal DateTime Anchor => _anchor;
 
+        private DateTime? _selectedDay;
+        private TimeSpan? _selectedTime;
+
+        /// <summary>
+        /// What the appointment panel is editing, or (null, null) when it is shut. Held here rather
+        /// than in a view so it survives switching views, and pushed into whichever view is active.
+        /// </summary>
+        internal void SetSelection(DateTime? day, TimeSpan? timeOfDay)
+        {
+            _selectedDay = day?.Date;
+            _selectedTime = timeOfDay;
+            _active?.SetSelection(_selectedDay, _selectedTime);
+        }
+
         /// <summary>Builds the views and shows Month. Does NOT open the Killendar - that has to
         /// wait until the window is on screen, because an encrypted one prompts for a password and
         /// a modal dialog needs a shown owner.</summary>
@@ -45,8 +59,15 @@ namespace Killendar.Features
 
             foreach (ICalendarView v in new ICalendarView[] { _month, _week, _day, _agenda })
             {
-                v.EventSelected += _editor.Load;
+                // Clicking an appointment or a day opens the day's AGENDA in the sidebar - the
+                // editor is behind each row's Edit action, never the default (Steve, 2026-07-30).
+                // Only SlotSelected, the explicit create gesture, still goes straight to the form.
+                v.EventSelected += ev => _host.ShowDayAgenda(ev.Start.Date, ev);
+                v.DaySelected += d => _host.ShowDayAgenda(d, null);
                 v.SlotSelected += _editor.NewAt;
+                // Ctrl+wheel over a time grid. The shell owns the setting because it is persisted
+                // and shared by Week and Day; Month and Agenda never raise it.
+                v.DensityStepped += _host.StepDensity;
             }
 
             SelectView("Month");
@@ -65,6 +86,8 @@ namespace Killendar.Features
             // Initialize is idempotent for our purposes: it rebinds the store and repaints.
             _active.Initialize(_store);
             _active.Anchor = _anchor;
+            // After Anchor, which rebuilds: the marker is applied to freshly built cells.
+            _active.SetSelection(_selectedDay, _selectedTime);
 
             _host.ShowView(_active);
             _host.HighlightTab(which);
@@ -76,6 +99,8 @@ namespace Killendar.Features
         internal void Refresh()
         {
             _active.Refresh();
+            // Refresh rebuilds the cells, so the marker has to be re-applied to the new ones.
+            _active.SetSelection(_selectedDay, _selectedTime);
             RefreshPeriodLabel();
         }
 

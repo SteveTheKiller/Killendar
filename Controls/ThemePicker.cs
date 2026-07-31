@@ -14,16 +14,18 @@ namespace Killendar.Controls
     internal sealed class ThemePicker
     {
         private readonly Window _window;
-        private readonly Popup _popup;
+        private readonly ContextMenu _menu;
+        private readonly UIElement _button;
         private readonly Panel _themeSwatches;
         private readonly Panel _accentSwatches;
         private readonly UIElement _accentLabel;
 
-        internal ThemePicker(Window window, Popup popup, Panel themeSwatches,
+        internal ThemePicker(Window window, ContextMenu menu, UIElement themeButton, Panel themeSwatches,
                              Panel accentSwatches, UIElement accentLabel)
         {
             _window         = window;
-            _popup          = popup;
+            _menu           = menu;
+            _button         = themeButton;
             _themeSwatches  = themeSwatches;
             _accentSwatches = accentSwatches;
             _accentLabel    = accentLabel;
@@ -34,13 +36,20 @@ namespace Killendar.Controls
         private static bool HasAccents(Theme t) =>
             t == Theme.Dark || t == Theme.Light || t == Theme.Black;
 
-        /// <summary>Opens or closes the flyout. It slides out of the rail rather than only fading, so
-        /// it reads as coming from the button that was pressed; negative dx comes in from the left,
-        /// toward the calendar.</summary>
+        /// <summary>
+        /// Opens or closes the menu. Identical to LanguageMenu.Open - same control type, same
+        /// placement call, same fade - because this IS a ContextMenu now. It used to be a Popup
+        /// with its own chrome and its own open animation, which is why it never matched the
+        /// locale menu no matter how many times the two were tuned by hand.
+        /// (Steve, 2026-07-30: "make the menus the same".)
+        /// </summary>
         internal void Toggle()
         {
-            _popup.IsOpen = !_popup.IsOpen;
-            if (_popup.IsOpen && _popup.Child is UIElement child) Anim.SlideInX(child, -12);
+            if (_menu.IsOpen) { _menu.IsOpen = false; return; }
+
+            FlyoutPlacement.Attach(_menu, _button);
+            _menu.IsOpen = true;
+            Anim.FadeIn(_menu);
         }
 
         /// <summary>Applies the theme named on a swatch's Tag.</summary>

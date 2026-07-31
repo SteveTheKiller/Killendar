@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<script>(function(){var d=document.documentElement,t=null;try{t=localStorage.getItem('kcal-theme');if(t){d.setAttribute('data-theme',t);if({dark:1,light:1,black:1}[t]){var v=localStorage.getItem('kcal-accent');if(v)d.style.setProperty('--accent',v);}}}catch(e){}
+var bg={dark:'#1c1c1c',light:'#dcdcdc',black:'#000000',blood:'#240c0d',greed:'#002115',cyanotic:'#001a28'};d.style.backgroundColor=bg[t]||bg.dark;})();</script>
+<link rel="preload" href="brand/Typewriter_a602_Dead_Postman.ttf" as="font" type="font/ttf" crossorigin>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="darkreader-lock">
+<title>About - Killendar</title>
+<link rel="canonical" href="https://killendar.net/about.html">
+<meta name="description" content="Why Killendar exists, what it will never do, and who makes it. Free and open source under GPLv3, part of Killer Tools.">
+<link rel="icon" type="image/x-icon" href="brand/kd-icon.ico">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://killendar.net/about.html">
+<meta property="og:title" content="About - Killendar">
+<meta property="og:description" content="Why Killendar exists, what it will never do, and who makes it.">
+<meta property="og:image" content="https://killendar.net/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<script defer src="https://koya.thekiller.net/script.js" data-website-id="158a903b-5f16-45b9-98c6-9c8eab4a519f"></script>
+<link rel="stylesheet" href="kd.css?v=1">
+<style>
+.page-hero { text-align: center; padding: 44px 16px 8px; }
+.page-hero .wm-logo { height: clamp(46px, 8vw, 76px); width: auto; margin: 0 auto 8px; display: block; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.55)); }
+.page-hero p { color: var(--muted); font-size: 15px; margin-top: 4px; }
+.content-inner { max-width: 880px; margin: 0 auto; padding: 0 28px 56px; }
+.sb-tabs .on { border-bottom: 0; }
+/* Also try (cross-promo): chrome follows the page theme, wordmark swaps light/dark */
+.also-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 12px; margin-top: 4px; }
+#also h2 { white-space: nowrap; }
+.also-card { display: flex; align-items: center; gap: 16px; padding: 10px 12px; border-radius: 10px; transition: background 0.15s; }
+.also-card:hover { background: color-mix(in srgb, var(--accent) 10%, transparent); filter: none; }
+.also-icon { width: 46px; height: 46px; border-radius: 9px; flex-shrink: 0; }
+.also-body { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; min-width: 0; }
+/* One height for all four. Every app's SVG shares a 996-unit viewBox height, so this renders
+   "Killer" at the same size in each - no per-app fudge. The old .ks { height: 26px } override
+   was papering over the fact that these were mixed PNG and SVG art with different padding. */
+.also-wm { height: 30px; width: auto; display: block; max-width: 100%; object-fit: contain; object-position: left center; }
+.also-wm.light { display: none; }
+html[data-theme="light"] .also-wm.dark { display: none; }
+html[data-theme="light"] .also-wm.light { display: block; }
+.also-tag { font-size: 12.5px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+<a href="index.html" class="tb-home" title="Killendar">
+<img class="tb-icon" src="brand/kd-logo.png" alt="Killendar" width="36" height="36">
+<img class="wm-logo tb-wm" src="brand/killendar-logo-dark-red.svg" alt="The Killendar">
+</a>
+<!-- PRE-RELEASE: restore the download link below once 1.0.0 is tagged.
+<a class="tb-dl" href="https://github.com/SteveTheKiller/Killendar/releases/latest"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h3l-4 5-4-5h3V4zM5 18h14v2H5z"/></svg><span>Download</span></a>
+-->
+<span class="tb-soon"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h3l-4 5-4-5h3V4zM5 18h14v2H5z"/></svg><span>Coming soon</span></span>
+<span class="tb-spacer"></span>
+<nav class="tb-nav">
+<a href="technical.html">Technical</a>
+<a href="about.html" class="on">About</a>
+</nav>
+<div class="tgrp" role="group" aria-label="Theme">
+<button class="swatch sw-dark"     data-theme="dark"     title="Dark"></button>
+<button class="swatch sw-light"    data-theme="light"    title="Light"></button>
+<button class="swatch sw-black"    data-theme="black"    title="Black"></button>
+<button class="swatch sw-blood"    data-theme="blood"    title="Blood"></button>
+<button class="swatch sw-greed"    data-theme="greed"    title="Greed"></button>
+<button class="swatch sw-cyanotic" data-theme="cyanotic" title="Cyanotic"></button>
+</div>
+<div class="acc-fly accent-switch" id="accentSwitch">
+<button class="acc-toggle" id="accentToggle" aria-haspopup="true" aria-expanded="false" title="Accent color"></button>
+<div class="acc-pop" id="accentPop" hidden role="group" aria-label="Accent color">
+<span class="acc-pop-label">accent:</span>
+<button class="acc" data-accent="Red"    title="Red"></button>
+<button class="acc" data-accent="Orange" title="Orange"></button>
+<button class="acc" data-accent="Green"  title="Green"></button>
+<button class="acc" data-accent="Teal"   title="Teal"></button>
+<button class="acc" data-accent="Blue"   title="Blue"></button>
+<button class="acc" data-accent="Purple" title="Purple"></button>
+</div>
+</div>
+</div>
+
+<div class="shell">
+<div class="content">
+<div class="content-scroll">
+<div class="content-inner">
+
+<section class="page-hero">
+<span class="page-title">About</span>
+<img class="wm-logo" src="brand/killendar-logo-dark-red.svg" alt="The Killendar">
+<p>The story behind the calendar, and the field tech who built it.</p>
+</section>
+
+<div class="about-card" id="maker">
+<h2>The maker</h2>
+<p class="about-quote">"It started off as a joke. I could not think of a killer feature worth releasing it for. Then it occurred to me that being lightweight, and not wanting anything from you, might be the feature."</p>
+<p>I'm <b>Steve the Killer</b>, a field technician and systems administrator at a large MSP. I had been building websites since the 90s and spent roughly eight years as a full-stack developer before I moved into IT, so writing the tool I need comes as naturally to me as fixing the machine in front of me.</p>
+<p>Killendar sat on my drive for a while as a thing I had made for myself. Every calendar I could have used instead wanted an account, and I did not want to hand a login to something whose only job is to remember that the dentist is on Thursday. So the app that had no killer feature turned out to have one after all: it does not want anything from you.</p>
+</div>
+
+<div class="about-card" id="app">
+<h2>The app</h2>
+<p><b>Killendar</b> is a native Windows calendar that ships as a single self-contained executable. Install it or run it portable. There is no service to register, no account, and no subscription. Hand someone the .exe and they have a calendar.</p>
+<p>Your appointments live in one <b>.kcal</b> file in your own profile. It is an ordinary SQLite database, so it is yours to read, back up, move, or open with any SQLite tool. Set a password and the whole file is encrypted at rest with SQLCipher; leave it off and it stays plain SQLite. Either way nothing leaves the machine, because there is nowhere for it to go.</p>
+<p>It does month, week, day and agenda views, color categories you define yourself, and iCalendar import and export so whatever you put in can come back out. Six themes, ten languages, and a keyboard shortcut for everything, because a tool you have to go looking for with the mouse costs you the time it was meant to save.</p>
+<p>Much of what it does next will be driven by what people ask for. The <a href="https://github.com/SteveTheKiller/Killendar/issues" target="_blank" rel="noopener">GitHub issues</a> page is open to anyone, and suggestions genuinely shape where it goes. Killendar is free software under the <b>GPL-3.0</b> license, and the <a href="technical.html">Technical</a> page has the deep details.</p>
+</div>
+
+<div class="about-card" id="contact">
+<h2>Contact &amp; links</h2>
+<p>Find me, file a bug, or just say hi:</p>
+<div class="contact-grid">
+<a href="https://thekiller.net" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm6.9 8h-3a16 16 0 00-1-4.2A8 8 0 0118.9 10zM12 4c.8 0 2 1.7 2.5 4.5h-5C10 5.7 11.2 4 12 4zM4.6 14a8 8 0 010-4h3.2a18 18 0 000 4H4.6zm.5 2h3a16 16 0 001 4.2A8 8 0 015.1 16zM7.8 10H4.6a8 8 0 013.2-4.2 16 16 0 00-1 4.2zM12 20c-.8 0-2-1.7-2.5-4.5h5C14 18.3 12.8 20 12 20zm3.7-3.8a16 16 0 001-4.2h3.2a8 8 0 01-4.2 4.2z"/></svg><span>Steve the Killer<span class="sub">thekiller.net</span></span></a>
+<a href="https://killertools.net" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z"/></svg><span>KillerTools<span class="sub">killertools<wbr>.net</span></span></a>
+<a href="https://github.com/SteveTheKiller/Killendar" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.29 3.44 9.77 8.2 11.36.6.11.82-.26.82-.58v-2.04c-3.34.72-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.17 0 0 1.01-.32 3.3 1.23A11.5 11.5 0 0112 6.8c1.02 0 2.05.14 3 .4 2.29-1.55 3.3-1.23 3.3-1.23.65 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58A12 12 0 0024 12.5C24 5.87 18.63.5 12 .5z"/></svg><span>Source on GitHub<span class="sub">github.com/<wbr>SteveTheKiller</span></span></a>
+<a href="https://github.com/SteveTheKiller/Killendar/issues" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M20 8h-2.8a5 5 0 00-1.2-1.6l1.3-1.3-1.4-1.4-1.6 1.6a5 5 0 00-4.6 0L8.1 3.7 6.7 5.1 8 6.4A5 5 0 006.8 8H4v2h2.1a5 5 0 000 1H4v2h2.1a5 5 0 00.5 1.6L5 17.3l1.4 1.4 1.6-1.6a5 5 0 008 0l1.6 1.6 1.4-1.4-1.6-1.7a5 5 0 00.5-1.6H20v-2h-2.1a5 5 0 000-1H20V8zm-7 8h-2v-5h2v5z"/></svg><span>Report an issue<span class="sub">github issues</span></span></a>
+<a href="https://reddit.com/u/smilaise" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 012 2v9a2 2 0 01-2 2H9l-5 4V6a2 2 0 012-2zm3 6h10V8H7v2zm0 4h7v-2H7v2z"/></svg><span>Reddit<span class="sub">u/smilaise</span></span></a>
+<a href="https://facebook.com/StevetheKiller" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M13 22v-8h2.7l.4-3H13V9c0-.9.3-1.5 1.6-1.5H16V4.9A22 22 0 0013.7 4.8C11.4 4.8 10 6.2 10 8.7V11H7.4v3H10v8h3z"/></svg><span>Facebook<span class="sub">StevetheKiller</span></span></a>
+<a href="mailto:steve@thekiller.net" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm0 2v.4l8 5 8-5V6H4zm16 2.8l-8 5-8-5V18h16V8.8z"/></svg><span>Email<span class="sub">steve<wbr>@thekiller.net</span></span></a>
+<a href="https://buymeacoffee.com/StevetheKiller" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M20 3H4v10a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4v-3h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 5h-2V5h2v3zM4 19h12v2H4z"/></svg><span>Buy me a coffee<span class="sub">buymeacoffee<wbr>.com</span></span></a>
+<a href="https://t.me/StevetheKiller" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg><span>Telegram<span class="sub">@StevetheKiller</span></span></a>
+</div>
+</div>
+
+<div class="about-card" id="also">
+<h2>Also try...</h2>
+<div class="also-grid">
+<a class="also-card" href="https://killerpdf.net" target="_blank" rel="noopener">
+<img class="also-icon" src="brand/kp-icon.png" alt="KillerPDF" width="46" height="46">
+<span class="also-body">
+<img class="also-wm dark" src="brand/killerpdf-logo-brand-dark.svg" alt="KillerPDF">
+<img class="also-wm light" src="brand/killerpdf-logo-brand-light.svg" alt="KillerPDF">
+<span class="also-tag">Open-source PDF editor for Windows</span>
+</span>
+</a>
+<a class="also-card" href="https://killerscan.net" target="_blank" rel="noopener">
+<img class="also-icon" src="brand/ks-icon.png" alt="KillerScan" width="46" height="46">
+<span class="also-body">
+<img class="also-wm dark" src="brand/killerscan-logo-brand-dark.svg" alt="KillerScan">
+<img class="also-wm light" src="brand/killerscan-logo-brand-light.svg" alt="KillerScan">
+<span class="also-tag">Open-source network scanner for Windows</span>
+</span>
+</a>
+<a class="also-card" href="https://killernotes.net" target="_blank" rel="noopener">
+<img class="also-icon" src="brand/kn-icon.png" alt="KillerNotes" width="46" height="46">
+<span class="also-body">
+<img class="also-wm dark" src="brand/killernotes-logo-brand-dark.svg" alt="KillerNotes">
+<img class="also-wm light" src="brand/killernotes-logo-brand-light.svg" alt="KillerNotes">
+<span class="also-tag">Open-source note taker for Windows</span>
+</span>
+</a>
+<a class="also-card" href="https://killershell.net" target="_blank" rel="noopener">
+<img class="also-icon" src="brand/ksh-icon.png" alt="KillerShell" width="46" height="46">
+<span class="also-body">
+<img class="also-wm dark" src="brand/killershell-logo-brand-dark.svg" alt="KillerShell">
+<img class="also-wm light" src="brand/killershell-logo-brand-light.svg" alt="KillerShell">
+<span class="also-tag">File browser, terminal and editor in one exe</span>
+</span>
+</a>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<aside class="sidebar">
+<div class="sb-tabs"><span class="on">About</span></div>
+<div class="sb-thumbs" id="sbThumbs">
+<div class="sb-empty">Screenshots<br>coming soon</div>
+</div>
+<div class="sb-fade sb-fade-top" aria-hidden="true"></div>
+<div class="sb-fade sb-fade-bottom" aria-hidden="true"></div>
+</aside>
+</div>
+
+<footer class="statusbar">
+<span class="left"><a href="https://github.com/SteveTheKiller/Killendar" target="_blank" rel="noopener">Source on GitHub</a> &middot; GPLv3 &middot; Part of <a href="https://killertools.net" target="_blank" rel="noopener">killertools.net</a></span>
+<span class="right"><span id="verEgg" title="click me">v1.0.0</span> &middot; &copy; 2026 <b><a href="https://thekiller.net" target="_blank" rel="noopener">Steve the Killer</a></b></span>
+</footer>
+
+<div class="lightbox" id="lightbox"><img id="lightboxImg" src="" alt="Killendar screenshot"></div>
+<div class="egg-toast" id="eggToast"></div>
+
+<script src="kd.js?v=1"></script>
+</body>
+</html>

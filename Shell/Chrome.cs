@@ -23,8 +23,10 @@ namespace Killendar.Shell
     public partial class MainWindow
     {
         // Grain brush layers in MainWindow.xaml. All optional - Apply skips the ones absent.
+        // FlyoutGrainBrush is gone: flyouts share the GrainTileBrush resource through the
+        // FlyoutGrain style (Controls.xaml), so they no longer need a private brush wired up here.
         private static readonly string[] GrainBrushNames =
-            { "GrainBrush", "TitleGrainBrush", "ToolbarGrainBrush", "StatusGrainBrush", "FlyoutGrainBrush" };
+            { "GrainBrush", "TitleGrainBrush", "ToolbarGrainBrush", "StatusGrainBrush" };
 
         private void MainWindow_SourceInitialized(object? sender, EventArgs e)
         {
@@ -69,6 +71,13 @@ namespace Killendar.Shell
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
+            // First: swallow the two messages that raise Windows' stock white system menu and
+            // show the themed one instead. (SystemMenu.cs)
+            if (TryHandleSystemMenu(msg, wParam, lParam))
+            {
+                handled = true;
+                return IntPtr.Zero;
+            }
             if (msg == WM_ERASEBKGND)
             {
                 // WPF paints the whole client area itself, so nothing should erase the background to
@@ -86,7 +95,7 @@ namespace Killendar.Shell
             return IntPtr.Zero;
         }
 
-        private static void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
+        private void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
         {
             var mmi = Marshal.PtrToStructure<MINMAXINFO>(lParam);
             IntPtr monitor = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
@@ -103,6 +112,25 @@ namespace Killendar.Shell
             mmi.ptMaxSize.y = Math.Abs(work.bottom - work.top);
             mmi.ptMaxTrackSize.x = mmi.ptMaxSize.x;
             mmi.ptMaxTrackSize.y = mmi.ptMaxSize.y;
+
+            // ptMinTrackSize MUST be filled in here too. This handler sets handled = true, which
+            // takes WM_GETMINMAXINFO away from WPF - and WM_GETMINMAXINFO is exactly how WPF
+            // enforces MinWidth/MinHeight during a drag-resize. Leaving these two fields at the OS
+            // default let the window be dragged far below MinWidth 820 / MinHeight 560, at which
+            // point the fixed chrome (36px title + 42px toolbar + 24px footer, and the 330px
+            // appointment panel) no longer fits and the calendar card is clipped rather than
+            // resized. That is the "resizing cuts off the content" bug. (Steve, 2026-07-30.)
+            //
+            // MINMAXINFO is in DEVICE pixels and MinWidth/MinHeight are in DIPs, so this has to go
+            // through the window's own transform or the limit is wrong on any display that is not
+            // at 100%.
+            var src = PresentationSource.FromVisual(this);
+            double sx = src?.CompositionTarget?.TransformToDevice.M11 ?? 1.0;
+            double sy = src?.CompositionTarget?.TransformToDevice.M22 ?? 1.0;
+            if (!double.IsNaN(MinWidth) && MinWidth > 0)
+                mmi.ptMinTrackSize.x = (int)Math.Ceiling(MinWidth * sx);
+            if (!double.IsNaN(MinHeight) && MinHeight > 0)
+                mmi.ptMinTrackSize.y = (int)Math.Ceiling(MinHeight * sy);
 
             Marshal.StructureToPtr(mmi, lParam, true);
         }

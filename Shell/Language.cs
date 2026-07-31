@@ -15,7 +15,9 @@ namespace Killendar.Shell
         private void InitLanguageMenu()
         {
             _languageMenu = new Controls.LanguageMenu(
-                LangMenu, RailFlyoutAnchor, RelocalizeDynamicUi, ReformatOpenEditor);
+                // LangButton, not RailFlyoutAnchor: a flyout hangs off its own button (family rule,
+                // see the ThemePopup note in MainWindow.xaml).
+                LangMenu, LangButton, RelocalizeDynamicUi, ReformatOpenEditor);
         }
 
         private void LangButton_Click(object sender, RoutedEventArgs e) => _languageMenu.Open();
@@ -45,6 +47,10 @@ namespace Killendar.Shell
 
             // The panel's own dynamic bits: heading and the all-day toggle.
             _appointments.RefreshLocalizedText();
+
+            // Toolbar captions and its right-click menu are built in code, so they do not follow
+            // a DynamicResource on their own.
+            RelocalizeToolbar();
 
             // The status line is transient by nature; put it back to a neutral, translated idle
             // rather than leaving the previous language's sentence sitting there.

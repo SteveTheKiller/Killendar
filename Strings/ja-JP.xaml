@@ -4,7 +4,7 @@
 
     <!-- Japanese. Layered over en-US, so any key omitted here falls back to English. -->
 
-    <sys:String x:Key="Str_Btn_New">+ 新規</sys:String>
+    <sys:String x:Key="Str_Btn_New">新規</sys:String>
     <sys:String x:Key="Str_Btn_Import">.ics を読み込む</sys:String>
     <sys:String x:Key="Str_Btn_Export">.ics を書き出す</sys:String>
     <sys:String x:Key="Str_Btn_Today">今日</sys:String>
@@ -28,6 +28,22 @@
     <sys:String x:Key="Str_Fld_Starts">開始</sys:String>
     <sys:String x:Key="Str_Fld_Ends">終了</sys:String>
     <sys:String x:Key="Str_Fld_Location">場所</sys:String>
+
+    <sys:String x:Key="Str_Sys_Restore">元のサイズに戻す</sys:String>
+    <sys:String x:Key="Str_Sys_Move">移動</sys:String>
+    <sys:String x:Key="Str_Sys_Size">サイズ変更</sys:String>
+    <sys:String x:Key="Str_Sys_Minimize">最小化</sys:String>
+    <sys:String x:Key="Str_Sys_Maximize">最大化</sys:String>
+    <sys:String x:Key="Str_Sys_Close">閉じる</sys:String>
+
+    <sys:String x:Key="Str_Toolbar_Header">ツールバー</sys:String>
+    <sys:String x:Key="Str_Toolbar_SmallIcons">アイコン</sys:String>
+    <sys:String x:Key="Str_Toolbar_LargeIcons">大きいアイコン</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextNone">文字なし</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextBeside">アイコンの横に文字</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextUnder">アイコンの下に文字</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextOnly">文字のみ</sys:String>
+    <sys:String x:Key="Str_TT_OpenInMaps">この場所を地図で開く</sys:String>
     <sys:String x:Key="Str_Fld_Description">説明</sys:String>
     <sys:String x:Key="Str_Fld_Attendees">参加者</sys:String>
     <sys:String x:Key="Str_Hint_Attendees">カンマ区切り</sys:String>
@@ -50,12 +66,40 @@
     <sys:String x:Key="Str_Dlg_DeleteMsg">"{0}" を削除しますか?</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteDetail">この操作は元に戻せません。</sys:String>
 
+    <sys:String x:Key="Str_Fld_Repeats">繰り返し</sys:String>
+    <sys:String x:Key="Str_Rep_Never">なし</sys:String>
+    <sys:String x:Key="Str_Rep_Daily">毎日</sys:String>
+    <sys:String x:Key="Str_Rep_Weekly">毎週</sys:String>
+    <sys:String x:Key="Str_Rep_Monthly">毎月</sys:String>
+    <sys:String x:Key="Str_Rep_Yearly">毎年</sys:String>
+    <sys:String x:Key="Str_Rep_Every">間隔</sys:String>
+    <sys:String x:Key="Str_Rep_UnitDays">日ごと</sys:String>
+    <sys:String x:Key="Str_Rep_UnitWeeks">週ごと</sys:String>
+    <sys:String x:Key="Str_Rep_UnitMonths">か月ごと</sys:String>
+    <sys:String x:Key="Str_Rep_UnitYears">年ごと</sys:String>
+    <sys:String x:Key="Str_Rep_Ends">終了</sys:String>
+    <sys:String x:Key="Str_Rep_EndNever">なし</sys:String>
+    <sys:String x:Key="Str_Rep_EndAfter">回数で</sys:String>
+    <sys:String x:Key="Str_Rep_EndOn">日付で</sys:String>
+    <sys:String x:Key="Str_Rep_HintCount">繰り返す回数</sys:String>
+    <sys:String x:Key="Str_Rep_SummaryNext">次回: {0}</sys:String>
+    <sys:String x:Key="Str_Rep_SummaryNone">一度も発生しません。日付を確認してください。</sys:String>
+    <sys:String x:Key="Str_Rep_Scope">これは繰り返しの予定です</sys:String>
+    <sys:String x:Key="Str_Btn_ThisDate">この日だけ</sys:String>
+    <sys:String x:Key="Str_Btn_WholeSeries">すべての予定</sys:String>
+    <sys:String x:Key="Str_Err_RepeatEnd">繰り返しの終わりを指定するか、終わらない設定にしてください。</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">この日だけ削除されます。ほかの予定はそのままです。</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">この繰り返しの予定がすべて削除されます。元に戻せません。</sys:String>
+
     <sys:String x:Key="Str_Status_Ready">準備完了</sys:String>
     <sys:String x:Key="Str_Status_Added">{0} を追加しました</sys:String>
     <sys:String x:Key="Str_Status_Saved">{0} を保存しました</sys:String>
     <sys:String x:Key="Str_Status_Deleted">{0} を削除しました</sys:String>
     <sys:String x:Key="Str_Status_Imported">{0} 件の予定を読み込みました</sys:String>
     <sys:String x:Key="Str_Status_ImportedSkipped">{0} 件の予定を読み込み、既存の {1} 件をスキップしました</sys:String>
+    <sys:String x:Key="Str_Status_ImportRepeat">。{0} 件は繰り返しの予定で、最初の日付のみ追加されました</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnreadable">。{0} 件は日付を読み取れずスキップしました</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnsupported">。{0} 件はタスクやメモで、Killendar では保存できません</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">読み込みに失敗しました: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} 件の予定を書き出しました</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">書き出しに失敗しました: {0}</sys:String>
@@ -83,7 +127,7 @@
     <sys:String x:Key="Str_About_Unsigned">(署名なし、または検証に失敗)</sys:String>
     <sys:String x:Key="Str_About_UpdateAvailable">更新があります: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">ダウンロード中...</sys:String>
-    <sys:String x:Key="Str_About_DescA" xml:space="preserve">月・週・日・予定一覧の表示、iCalendar の読み込みと書き出し、そして自分のマシンから出ていかない予定。GPLv3 の </sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">アカウントなし、同期なし、どこにも通信しないカレンダー。予定は自分のマシンにある一つのファイルに収まり、望むなら暗号化されます。GPLv3 の </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> ユーティリティです。</sys:String>
 
     <sys:String x:Key="Str_Dlg_UpdateMsg">Killendar {0} をダウンロードしてインストールしますか?</sys:String>
@@ -151,7 +195,7 @@
     <!-- Manage Killendars: the .kcal file list, its context menu and the rail
          button. {0} is a file name or an error; Str_Kc_Renamed takes {0} old, {1} new. -->
     <sys:String x:Key="Str_Kc_Title">Killendar</sys:String>
-    <sys:String x:Key="Str_Kc_Hint">データフォルダー内のすべての .kcal です。名前をダブルクリックすると変更できます。</sys:String>
+    <sys:String x:Key="Str_Kc_Hint">データフォルダー内のすべての .kcal です。ダブルクリックで開き、右クリックで名前の変更や削除ができます。</sys:String>
     <sys:String x:Key="Str_Kc_FlagEncrypted">暗号化</sys:String>
     <sys:String x:Key="Str_Kc_FlagActive">使用中</sys:String>
     <sys:String x:Key="Str_Kc_SelectFirst">先に Killendar を選んでください。</sys:String>
@@ -222,5 +266,78 @@
     <sys:String x:Key="Str_TT_ViewList">一覧表示</sys:String>
     <sys:String x:Key="Str_TT_ViewIcons">アイコン表示</sys:String>
     <sys:String x:Key="Str_TT_ViewDetails">詳細表示</sys:String>
+    <sys:String x:Key="Str_TT_ShowHidden">隠しファイルとシステム項目を表示</sys:String>
+    <sys:String x:Key="Str_TT_RecentLocations">最近の場所</sys:String>
+    <sys:String x:Key="Str_Menu_PinPlace">場所にピン留め</sys:String>
+    <sys:String x:Key="Str_Menu_UnpinPlace">場所から削除</sys:String>
+    <sys:String x:Key="Str_Btn_Edit">編集</sys:String>
+    <sys:String x:Key="Str_Side_NoAppointments">この日に予定はありません</sys:String>
+
+    <!-- ポータブルインストール -->
+    <sys:String x:Key="Str_Portable">ポータブル</sys:String>
+    <sys:String x:Key="Str_Btn_Install">Killendar をインストール...</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallMsg">Killendar をこのコンピューターにインストールしますか？</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallBullets">Killendar がプログラムフォルダーにコピーされ、スタートメニューに項目が追加されます。&#x0a;お使いの Killendar ファイルには手を加えず、この exe のコピーもそのまま残ります。&#x0a;Killendar はインストール先から再起動します。</sys:String>
+    <sys:String x:Key="Str_Btn_DoInstall">インストール</sys:String>
+    <sys:String x:Key="Str_Chk_Desktop">デスクトップショートカットを追加</sys:String>
+    <sys:String x:Key="Str_Chk_AllUsers">このコンピューターのすべてのユーザーにインストール（管理者権限が必要）</sys:String>
+    <sys:String x:Key="Str_Status_InstallFailed">インストールは完了しませんでした。Killendar はポータブルのまま動作しています。</sys:String>
+
+    <!-- カテゴリ -->
+    <sys:String x:Key="Str_KS_Title">キーボードショートカット</sys:String>
+    <sys:String x:Key="Str_KS_ViewList">リスト</sys:String>
+    <sys:String x:Key="Str_KS_ViewMap">キーボード</sys:String>
+    <sys:String x:Key="Str_KS_Hint">入力中は単独キーのショートカットが無効になります</sys:String>
+    <sys:String x:Key="Str_TT_Shortcuts">キーボードショートカット (F1)</sys:String>
+    <sys:String x:Key="Str_KS_GrpViews">表示</sys:String>
+    <sys:String x:Key="Str_KS_GrpNav">ナビゲーション</sys:String>
+    <sys:String x:Key="Str_KS_GrpAppt">予定</sys:String>
+    <sys:String x:Key="Str_KS_GrpFile">ファイル</sys:String>
+    <sys:String x:Key="Str_KS_GrpHelp">ヘルプ</sys:String>
+    <sys:String x:Key="Str_KS_Month">月表示</sys:String>
+    <sys:String x:Key="Str_KS_Week">週表示</sys:String>
+    <sys:String x:Key="Str_KS_Day">日表示</sys:String>
+    <sys:String x:Key="Str_KS_Agenda">予定一覧表示</sys:String>
+    <sys:String x:Key="Str_KS_Prev">前の月、週または日</sys:String>
+    <sys:String x:Key="Str_KS_Next">次の月、週または日</sys:String>
+    <sys:String x:Key="Str_KS_Today">今日に移動</sys:String>
+    <sys:String x:Key="Str_KS_New">ここに新しい予定</sys:String>
+    <sys:String x:Key="Str_KS_Panel">予定パネル</sys:String>
+    <sys:String x:Key="Str_KS_Import">.ics ファイルを読み込む</sys:String>
+    <sys:String x:Key="Str_KS_Export">.ics に書き出す</sys:String>
+    <sys:String x:Key="Str_KS_ThisList">このショートカット一覧</sys:String>
+    <sys:String x:Key="Str_KS_About">バージョン情報カード</sys:String>
+    <sys:String x:Key="Str_KS_Close">パネルまたはカードを閉じる</sys:String>
+
+    <sys:String x:Key="Str_Fld_Categories">カテゴリ</sys:String>
+    <sys:String x:Key="Str_Hint_NoCategories">カテゴリがまだありません。サイドバーから追加してください。</sys:String>
+    <sys:String x:Key="Str_TT_Categories">カテゴリ</sys:String>
+    <sys:String x:Key="Str_TT_Density">グリッド密度 - クリックまたはスクロール</sys:String>
+    <sys:String x:Key="Str_St_Density">グリッド密度: 1時間あたり{0}本</sys:String>
+    <sys:String x:Key="Str_Cat_Title">カテゴリ</sys:String>
+    <sys:String x:Key="Str_Cat_Hint">この Killendar の色です。予定は複数のカテゴリを持つことができ、最初のカテゴリの色が使われます。</sys:String>
+    <sys:String x:Key="Str_Cat_NeedName">カテゴリ名を入力してください。</sys:String>
+    <sys:String x:Key="Str_Cat_Exists">その名前のカテゴリはすでにあります。</sys:String>
+    <sys:String x:Key="Str_Cat_DeleteHead">{0} を削除しますか？</sys:String>
+    <sys:String x:Key="Str_Cat_DeleteBody">このカテゴリが付いたすべての予定から取り除かれます。予定そのものはそのまま残ります。</sys:String>
+    <sys:String x:Key="Str_Btn_CatAdd">追加</sys:String>
+    <sys:String x:Key="Str_Btn_Done">完了</sys:String>
+    <sys:String x:Key="Str_TT_CatPickColor">新しいカテゴリの色を選ぶ</sys:String>
+    <sys:String x:Key="Str_TT_CatRecolor">色を変更</sys:String>
+    <sys:String x:Key="Str_TT_CatRename">名前の変更</sys:String>
+    <sys:String x:Key="Str_TT_CatDelete">削除</sys:String>
+
+    <!-- カラーピッカー -->
+    <sys:String x:Key="Str_Dlg_PickColor">色を選ぶ</sys:String>
+    <sys:String x:Key="Str_TT_Eyedropper">画面上のどこからでも色を取得します</sys:String>
+    <sys:String x:Key="Str_Btn_Reset">リセット</sys:String>
+    <sys:String x:Key="Str_TT_ReplaceSwatch">クリックしてから見本をクリックすると、その見本が現在の色になります</sys:String>
+    <sys:String x:Key="Str_TT_ResetSwatches">見本を既定値に戻します</sys:String>
+    <sys:String x:Key="Str_TT_SwatchReplace">クリックすると、この見本が現在の色になります</sys:String>
+    <sys:String x:Key="Str_TT_SwatchUse">クリックするとこの色を使います</sys:String>
+
+    <!-- コンテキストメニュー -->
+    <sys:String x:Key="Str_Ctx_AddAppointment">予定を追加</sys:String>
+    <sys:String x:Key="Str_Ctx_Open">開く</sys:String>
 
 </ResourceDictionary>

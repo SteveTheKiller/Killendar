@@ -14,5 +14,19 @@ namespace Killendar.Features
 
         /// <summary>Marks one of Month / Week / Day / Agenda as the active tab.</summary>
         void HighlightTab(string which);
+
+        /// <summary>
+        /// Ctrl+wheel over a time grid asked for a density step (+1 or -1). The shell owns the
+        /// setting because it is persisted and shared by Week and Day, and the rail button reaches
+        /// the same code.
+        /// </summary>
+        void StepDensity(int direction);
+
+        /// <summary>
+        /// Opens the sidebar showing DAY's appointments - viewing first, editing behind each
+        /// row's Edit action (Steve, 2026-07-30). <paramref name="highlight"/> marks the
+        /// appointment that was clicked, or null when a bare day was.
+        /// </summary>
+        void ShowDayAgenda(System.DateTime day, Killendar.Models.CalendarEvent? highlight);
     }
 }

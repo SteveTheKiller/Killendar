@@ -51,6 +51,11 @@ namespace Killendar.Features
             _view.FieldLocation = "";
             _view.FieldDescription = "";
             _view.FieldAttendees = "";
+            _view.FieldCategories = "";
+
+            _view.ResetRepeat();
+            _view.RepeatSectionVisible = true;
+            _view.SeriesScopeVisible = false;
 
             var end = when.AddHours(1);
             _view.FieldStartDate = DateFormatManager.Format(when);
@@ -75,6 +80,23 @@ namespace Killendar.Features
             _view.FieldLocation = ev.Location;
             _view.FieldDescription = ev.Description;
             _view.FieldAttendees = string.Join(", ", ev.Attendees);
+            _view.FieldCategories = ev.Categories;
+
+            // Which of the three kinds of appointment this is decides what the panel offers.
+            //   - a plain one: the pattern controls, no scope question;
+            //   - one date OF a series: the scope chips, and the pattern belongs to the series so
+            //     it is shown only once "the whole series" is chosen (LoadRepeatFrom does that);
+            //   - a series master opened directly: the pattern controls, no scope question.
+            _view.ResetRepeat();
+
+            var master = ev.IsOccurrence ? _store.GetSeriesMaster(ev) : null;
+            bool oneDateOfASeries = master != null;
+
+            _view.SeriesScopeVisible = oneDateOfASeries;
+            _view.EditWholeSeries = false;
+            _view.RepeatSectionVisible = !oneDateOfASeries;
+
+            LoadRepeatFrom(master ?? ev);
 
             _view.FieldStartDate = DateFormatManager.Format(ev.Start);
             _view.FieldStartTime = ev.Start.ToString("h:mm tt");
@@ -91,12 +113,35 @@ namespace Killendar.Features
             _view.DateHint = DateFormatManager.Hint;
             ApplyAllDay();
             _view.OpenPanel();
+            SyncHighlightedSelection();
         }
+
+        /// <summary>
+        /// Points the calendar's marker at whatever the START boxes currently say. Called when the
+        /// panel opens and on every edit of either box, so correcting the date or the time moves
+        /// the marker.
+        ///
+        /// An unparseable half-typed value clears its half rather than leaving the last value that
+        /// happened to parse - a stale marker is worse than none. An all-day appointment reports no
+        /// time at all, so the day stays marked and no time band is drawn.
+        /// </summary>
+        internal void SyncHighlightedSelection()
+        {
+            DateTime? day = TryParseDate(_view.FieldStartDate, out var d) ? d : (DateTime?)null;
+            TimeSpan? time = null;
+            if (!_allDay && TryParseTime(_view.FieldStartTime, out var t)) time = t;
+            _view.HighlightSelection(day, time);
+        }
+
+        /// <summary>Either start box was edited. Wired to TextChanged by the shell.</summary>
+        internal void StartEdited() => SyncHighlightedSelection();
 
         internal void ToggleAllDay()
         {
             _allDay = !_allDay;
             ApplyAllDay();
+            // All-day has no slot, so the time band has to go (and come back on un-toggling).
+            SyncHighlightedSelection();
         }
 
         /// <summary>All-day hides the time fields rather than disabling them: a greyed-out box you
@@ -182,6 +227,14 @@ namespace Killendar.Features
                 .Where(a => a.Length > 0)
                 .ToList();
 
+            // "Ends after N times" or "ends on a date" with nothing readable in the box would fall
+            // through as "repeats forever", which is the one surprise this must never spring.
+            if (_view.RepeatEndIncomplete)
+            {
+                Reject("Str_Err_RepeatEnd", AppointmentField.Title);
+                return;
+            }
+
             if (_editing == null)
             {
                 var ev = new CalendarEvent
@@ -192,8 +245,10 @@ namespace Killendar.Features
                     AllDay      = _allDay,
                     Location    = _view.FieldLocation.Trim(),
                     Description = _view.FieldDescription.Trim(),
-                    Attendees   = attendees
+                    Attendees   = attendees,
+                    Categories  = EventStore.NormalizeCategories(_view.FieldCategories)
                 };
+                ApplyRepeatFromPanel(ev);
                 _store.Add(ev);
                 _view.SetStatus(string.Format(_view.Loc("Str_Status_Added"), ev.Title));
             }
@@ -206,7 +261,27 @@ namespace Killendar.Features
                 _editing.Location    = _view.FieldLocation.Trim();
                 _editing.Description = _view.FieldDescription.Trim();
                 _editing.Attendees   = attendees;
-                _store.Update(_editing);
+                _editing.Categories  = EventStore.NormalizeCategories(_view.FieldCategories);
+
+                bool oneDateOfASeries = _store.GetSeriesMaster(_editing) != null;
+
+                if (!oneDateOfASeries)
+                {
+                    // A plain appointment given a pattern BECOMES a series here, and a series
+                    // whose pattern is set back to Never becomes a plain appointment again.
+                    ApplyRepeatFromPanel(_editing);
+                    _store.Update(_editing);
+                }
+                else if (_view.EditWholeSeries)
+                {
+                    ApplyRepeatFromPanel(_editing);
+                    _store.UpdateSeries(_editing);
+                }
+                else
+                {
+                    _store.SaveOccurrence(_editing);
+                }
+
                 _view.SetStatus(string.Format(_view.Loc("Str_Status_Saved"), _editing.Title));
             }
 
@@ -217,18 +292,68 @@ namespace Killendar.Features
         {
             if (_editing == null) return;
 
+            var master = _store.GetSeriesMaster(_editing);
+            bool oneDateOfASeries = master != null;
+
+            // The scope chips are already on screen and already say which it is, so the confirm
+            // only has to state plainly what is about to go - it does not ask the question again.
+            string detail = _view.Loc("Str_Dlg_DeleteDetail");
+            if (oneDateOfASeries)
+                detail = _view.Loc(_view.EditWholeSeries
+                    ? "Str_Dlg_DeleteSeriesDetail"
+                    : "Str_Dlg_DeleteOneDateDetail");
+
             // Themed confirm, not a stock MessageBox.
             var dlg = new ConfirmDialog(
                 string.Format(_view.Loc("Str_Dlg_DeleteMsg"), _editing.Title),
-                _view.Loc("Str_Dlg_DeleteDetail"),
+                detail,
                 _view.Loc("Str_Btn_Delete")) { Owner = _view.Window };
             dlg.ShowDialog();
             if (!dlg.Confirmed) return;
 
             var title = _editing.Title;
-            _store.Delete(_editing.Id);
+
+            if (oneDateOfASeries && _view.EditWholeSeries) _store.DeleteSeries(master!.Id);
+            else if (oneDateOfASeries)                     _store.DeleteOccurrence(_editing);
+            else if (_editing.IsSeries)                    _store.DeleteSeries(_editing.Id);
+            else                                           _store.Delete(_editing.Id);
+
             _view.SetStatus(string.Format(_view.Loc("Str_Status_Deleted"), title));
             _view.ClosePanel();
+        }
+
+        /// <summary>Copies the panel's repeat settings onto an appointment.</summary>
+        private void ApplyRepeatFromPanel(CalendarEvent ev)
+        {
+            ev.Repeat         = _view.FieldRepeat;
+            ev.RepeatInterval = _view.FieldRepeatEveryN;
+            ev.RepeatDays     = _view.FieldRepeat == RepeatFreq.Weekly
+                                    ? _view.FieldRepeatDays
+                                    : new System.Collections.Generic.List<DayOfWeek>();
+            ev.RepeatCount    = _view.FieldRepeatCount;
+            ev.RepeatUntil    = _view.FieldRepeatUntil;
+
+            // No pattern means no leftovers. A series turned back into a plain appointment must
+            // not keep the dates it used to skip, or turning the repeat back on later resurrects
+            // deletions the user made in a schedule that no longer exists.
+            if (ev.Repeat == RepeatFreq.None)
+            {
+                ev.RepeatInterval = 1;
+                ev.RepeatCount    = 0;
+                ev.RepeatUntil    = null;
+                ev.SkipDates      = new System.Collections.Generic.List<DateTime>();
+            }
+        }
+
+        /// <summary>Fills the panel's repeat controls from an appointment (the series master when
+        /// one date of a series is being edited).</summary>
+        private void LoadRepeatFrom(CalendarEvent ev)
+        {
+            _view.FieldRepeat      = ev.Repeat;
+            _view.FieldRepeatEveryN = ev.RepeatInterval > 0 ? ev.RepeatInterval : 1;
+            _view.FieldRepeatDays  = new System.Collections.Generic.List<DayOfWeek>(ev.RepeatDays ?? new System.Collections.Generic.List<DayOfWeek>());
+            if (ev.RepeatCount > 0) _view.FieldRepeatCount = ev.RepeatCount;
+            else if (ev.RepeatUntil.HasValue) _view.FieldRepeatUntil = ev.RepeatUntil;
         }
 
         private void Reject(string key, AppointmentField field)

@@ -55,26 +55,8 @@
                             </StackPanel>
                             <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15"><Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}"/></TextBlock>
                         </Grid>
-                        <Button Content="&#x2715;" Click="Cancel_Click"
-                                HorizontalAlignment="Right"
-                                Width="28" FontSize="10"
-                                Foreground="{StaticResource MutedTextBrush}"
-                                Background="Transparent" BorderThickness="0"
-                                Cursor="Hand">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="bg" Background="Transparent" CornerRadius="3">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="bg" Property="Background" Value="#C42B1C"/>
-                                            <Setter Property="Foreground" Value="White"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
+                        <Button Content="&#xE711;" Click="Cancel_Click" Style="{StaticResource DangerCloseButton}"
+                                HorizontalAlignment="Right"/>
                     </Grid>
                 </Border>
 

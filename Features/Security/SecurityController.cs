@@ -137,8 +137,15 @@ namespace Killendar.Features
         /// </summary>
         internal void ShowKillendars()
         {
-            _host.CloseSidebar();
-
+            // The panel is NOT closed here. It used to be, unconditionally, which meant merely
+            // LOOKING at the Killendars list threw away whatever you were composing - and on a
+            // narrow window it also gave back the width the panel had borrowed, so the main window
+            // resized itself behind the dialog. (Steve, 2026-07-30.)
+            //
+            // It is closed further down, and only if the active file actually changed: a half-typed
+            // appointment belongs to the store it was started in, and saving it into a different
+            // Killendar would be wrong. Cancelling, or picking the file already open, leaves the
+            // panel exactly as it was.
             string previous = EventStore.ActiveFile;
             _store.Close();
 
@@ -160,6 +167,11 @@ namespace Killendar.Features
                 _password = null;
                 Open(exitOnCancel: false);
             }
+
+            // Only now, and only if we actually landed on a different Killendar - see the note at
+            // the top. Anything being composed belongs to the store it was started in.
+            if (!string.Equals(EventStore.ActiveFile, previous, StringComparison.OrdinalIgnoreCase))
+                _host.CloseSidebar();
 
             _host.RefreshView();
             RefreshActiveLabel();
