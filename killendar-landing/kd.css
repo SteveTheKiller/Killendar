@@ -280,3 +280,13 @@ html[data-theme="black"] .spec-table tr:nth-child(even) td { background: #050505
   .tb-nav a { padding: 6px 8px; font-size: 13px; }
   .hero-info { flex: 1 1 auto; min-width: 0; }
 }
+
+/* Language flyout - the accent flyout's shape with text instead of dots (kd.js applyLang). */
+.lang-fly { position: relative; display: inline-flex; align-items: center; margin-left: 8px; }
+.lang-toggle { min-width: 36px; height: 22px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text2); font-family: Consolas, monospace; font-size: 11px; cursor: pointer; padding: 0 7px; letter-spacing: .5px; }
+.lang-toggle:hover { color: var(--text); border-color: var(--accent); }
+.lang-pop { position: absolute; top: 152%; right: 0; background: var(--modal); border: 1px solid var(--border); border-radius: 9px; padding: 7px; box-shadow: 0 12px 28px rgba(0,0,0,0.5); z-index: 110; display: flex; flex-direction: column; gap: 2px; min-width: 132px; }
+.lang-pop[hidden] { display: none; }
+.lang-pop .lang { background: transparent; border: 0; color: var(--text2); font-size: 12.5px; text-align: left; padding: 5px 9px; border-radius: 6px; cursor: pointer; }
+.lang-pop .lang:hover { color: var(--text); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.lang-pop .lang[aria-pressed="true"] { color: var(--accent); }
