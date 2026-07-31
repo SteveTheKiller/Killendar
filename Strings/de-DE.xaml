@@ -5,8 +5,8 @@
     <!-- German. Layered over en-US, so any key omitted here falls back to English. -->
 
     <sys:String x:Key="Str_Btn_New">Neu</sys:String>
-    <sys:String x:Key="Str_Btn_Import">.ics importieren</sys:String>
-    <sys:String x:Key="Str_Btn_Export">.ics exportieren</sys:String>
+    <sys:String x:Key="Str_Btn_Import">Importieren</sys:String>
+    <sys:String x:Key="Str_Btn_Export">Exportieren</sys:String>
     <sys:String x:Key="Str_Btn_Today">Heute</sys:String>
     <sys:String x:Key="Str_View_Month">Monat</sys:String>
     <sys:String x:Key="Str_View_Week">Woche</sys:String>
@@ -107,10 +107,17 @@
     <sys:String x:Key="Str_Status_LoadError">Dieser Killendar konnte nicht geöffnet werden: {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">{0} Termine in Ihren Killendar übertragen</sys:String>
 
-    <sys:String x:Key="Str_Dlg_ImportTitle">iCalendar importieren</sys:String>
-    <sys:String x:Key="Str_Dlg_ExportTitle">iCalendar exportieren</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsFilter">iCalendar-Dateien (*.ics)|*.ics|Alle Dateien (*.*)|*.*</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsSaveFilter">iCalendar-Dateien (*.ics)|*.ics</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportTitle">Termine importieren</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">Termine exportieren</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportFilter">Kalenderdateien (*.ics, *.csv, *.eml)|*.ics;*.csv;*.eml|iCalendar-Dateien (*.ics)|*.ics|CSV-Dateien (*.csv)|*.csv|E-Mail-Einladungen (*.eml)|*.eml|Alle Dateien (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportFilter">iCalendar-Dateien (*.ics)|*.ics|CSV-Dateien (*.csv)|*.csv|Webseite (*.html)|*.html</sys:String>
+    <sys:String x:Key="Str_Status_CsvBadHeader">Diese CSV-Datei ist nicht im Outlook-Format. Die erste Zeile muss die Spalten nennen: Subject, Start Date, Start Time, End Date, End Time, All day event, Description, Location</sys:String>
+    <sys:String x:Key="Str_Status_NoInvite">Keine Kalendereinladung in dieser E-Mail gefunden</sys:String>
+    <sys:String x:Key="Str_Exp_Whole">Ganzer Kalender</sys:String>
+    <sys:String x:Key="Str_Exp_Range">Zeitraum</sys:String>
+    <sys:String x:Key="Str_Exp_From">VON</sys:String>
+    <sys:String x:Key="Str_Exp_To">BIS</sys:String>
+    <sys:String x:Key="Str_Exp_BadRange">Daten prüfen</sys:String>
 
     <sys:String x:Key="Str_Cal_AllDay">ganztägig</sys:String>
     <sys:String x:Key="Str_Cal_NoTitle">(ohne Titel)</sys:String>
@@ -303,8 +310,8 @@
     <sys:String x:Key="Str_KS_Today">Zu heute springen</sys:String>
     <sys:String x:Key="Str_KS_New">Neuer Termin hier</sys:String>
     <sys:String x:Key="Str_KS_Panel">Terminbereich</sys:String>
-    <sys:String x:Key="Str_KS_Import">Eine .ics-Datei importieren</sys:String>
-    <sys:String x:Key="Str_KS_Export">Nach .ics exportieren</sys:String>
+    <sys:String x:Key="Str_KS_Import">Eine Kalenderdatei importieren</sys:String>
+    <sys:String x:Key="Str_KS_Export">Den Kalender exportieren</sys:String>
     <sys:String x:Key="Str_KS_ThisList">Diese Kürzelliste</sys:String>
     <sys:String x:Key="Str_KS_About">Info-Karte</sys:String>
     <sys:String x:Key="Str_KS_Close">Bereich oder Karte schließen</sys:String>
@@ -314,6 +321,10 @@
     <sys:String x:Key="Str_TT_Categories">Kategorien</sys:String>
     <sys:String x:Key="Str_TT_Density">Rasterdichte - klicken oder scrollen</sys:String>
     <sys:String x:Key="Str_St_Density">Rasterdichte: {0} Linie(n) pro Stunde</sys:String>
+    <sys:String x:Key="Str_TT_WorkWeek">5-Tage-Arbeitswoche</sys:String>
+    <sys:String x:Key="Str_Btn_WorkWeek">5 Tage</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOn">Wochenansicht zeigt die Arbeitswoche (Mo - Fr)</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOff">Wochenansicht zeigt die volle Woche</sys:String>
     <sys:String x:Key="Str_Cat_Title">Kategorien</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Farben für diesen Killendar. Ein Termin kann mehrere tragen; die erste färbt ihn.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Geben Sie der Kategorie einen Namen.</sys:String>
@@ -338,6 +349,7 @@
 
     <!-- Kontextmenüs -->
     <sys:String x:Key="Str_Ctx_AddAppointment">Termin hinzufügen</sys:String>
+    <sys:String x:Key="Str_Ctx_EditSeries">Serie bearbeiten</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Öffnen</sys:String>
 
 </ResourceDictionary>

@@ -83,8 +83,8 @@ namespace Killendar.Shell
         private void InitToolbarOverflow()
         {
             // Declaration order IS shed order - see the header.
-            _shed = new List<ShedItem>
-            {
+            _shed =
+            [
                 // No glyph literals here. One() looks the glyph up in ToolbarStyle.cs's
                 // ToolbarItems() - the same table that draws the button - so a codepoint can only
                 // ever be changed in one place. Hardcoding them here meant that moving Today's
@@ -94,7 +94,7 @@ namespace Killendar.Shell
                 new ShedItem { Element = ImportBtn,    MenuItems = () => One(ImportBtn,   ImportBtn_Click) },
                 new ShedItem { Element = TodayBtn,     MenuItems = () => One(TodayBtn,    TodayBtn_Click) },
                 new ShedItem { Element = NewEventBtn,  MenuItems = () => One(NewEventBtn, NewEventBtn_Click) },
-            };
+            ];
 
             RebuildOverflowMenu();
             // SizeChanged covers the panel opening, the window resizing and a display-mode switch,
@@ -247,10 +247,14 @@ namespace Killendar.Shell
                     Tag = tag,
                     InputGestureText = tag switch
                     {
-                        "Month" => "M", "Week" => "W", "Day" => "D", "Agenda" => "A", _ => "",
+                        "Month" => "M",
+                        "Week" => "W",
+                        "Day" => "D",
+                        "Agenda" => "A",
+                        _ => "",
                     },
+                    Icon = GlyphFor(btn)
                 };
-                mi.Icon = GlyphFor(btn);
                 mi.Click += (_, _) => { if (tag != null) _calendar.SelectView(tag); };
                 yield return mi;
             }
@@ -260,8 +264,11 @@ namespace Killendar.Shell
         /// comes from ToolbarItems(), never a literal - see the note in InitToolbarOverflow.</summary>
         private IEnumerable<MenuItem> One(Button btn, RoutedEventHandler click)
         {
-            var mi = new MenuItem { Header = ToolbarButtonLabel(btn) };
-            mi.Icon = GlyphFor(btn);
+            var mi = new MenuItem
+            {
+                Header = ToolbarButtonLabel(btn),
+                Icon = GlyphFor(btn)
+            };
             mi.Click += (s, e) => click(btn, e);
             yield return mi;
         }

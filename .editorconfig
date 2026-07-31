@@ -1,0 +1,15 @@
+root = true
+
+[*.cs]
+# The Features tree deliberately shares ONE namespace, Killendar.Features: the folders are an
+# organizational boundary, not a namespace boundary, and the interfaces (ICalendarHost,
+# IAppointmentView, ...) are consumed across them. Do not flag the folder mismatch.
+dotnet_style_namespace_match_folder = false
+dotnet_diagnostic.IDE0130.severity = none
+
+# net48: the System.Index / System.Range types behind the ^ and .. operators are not in the
+# framework and are not polyfilled here, so "Substring can be simplified" and "Indexing can be
+# simplified" suggest code that does not compile. Same reason IcsService.cs carries its local
+# IDE0057 pragma.
+dotnet_diagnostic.IDE0056.severity = none
+dotnet_diagnostic.IDE0057.severity = none

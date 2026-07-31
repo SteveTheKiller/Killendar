@@ -26,7 +26,7 @@ namespace Killendar.Shell
         // FlyoutGrainBrush is gone: flyouts share the GrainTileBrush resource through the
         // FlyoutGrain style (Controls.xaml), so they no longer need a private brush wired up here.
         private static readonly string[] GrainBrushNames =
-            { "GrainBrush", "TitleGrainBrush", "ToolbarGrainBrush", "StatusGrainBrush" };
+            ["GrainBrush", "TitleGrainBrush", "ToolbarGrainBrush", "StatusGrainBrush"];
 
         private void MainWindow_SourceInitialized(object? sender, EventArgs e)
         {

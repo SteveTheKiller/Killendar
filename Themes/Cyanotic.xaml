@@ -31,6 +31,8 @@
     <SolidColorBrush x:Key="RowAltBrush"         Color="#18FFFFFF" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowHoverBrush"       Color="#0a5478" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowSelectedBrush"    Color="#44ffffff" po:Freeze="True"/>
+    <!-- Untagged appointment chips - neutral gray, see the note in Greed.xaml. -->
+    <SolidColorBrush x:Key="ChipBrush"           Color="#4a4a4a" po:Freeze="True"/>
     <!-- Selection pair - see the note in Dark.xaml. Translucent white, as KillerPDF does. -->
     <SolidColorBrush x:Key="SelectionBg"         Color="#44ffffff" po:Freeze="True"/>
     <SolidColorBrush x:Key="SelectionFg"         Color="#ffffff" po:Freeze="True"/>

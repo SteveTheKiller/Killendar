@@ -100,7 +100,7 @@ namespace Killendar.Views
                 var key = ev.Start.Date < from ? from : ev.Start.Date;
                 if (!byDay.TryGetValue(key, out var bucket))
                 {
-                    bucket = new List<CalendarEvent>();
+                    bucket = [];
                     byDay[key] = bucket;
                 }
                 bucket.Add(ev);

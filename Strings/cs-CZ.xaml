@@ -5,8 +5,8 @@
     <!-- Czech. Layered over en-US, so any key omitted here falls back to English. -->
 
     <sys:String x:Key="Str_Btn_New">Nová</sys:String>
-    <sys:String x:Key="Str_Btn_Import">Importovat .ics</sys:String>
-    <sys:String x:Key="Str_Btn_Export">Exportovat .ics</sys:String>
+    <sys:String x:Key="Str_Btn_Import">Importovat</sys:String>
+    <sys:String x:Key="Str_Btn_Export">Exportovat</sys:String>
     <sys:String x:Key="Str_Btn_Today">Dnes</sys:String>
     <sys:String x:Key="Str_View_Month">Měsíc</sys:String>
     <sys:String x:Key="Str_View_Week">Týden</sys:String>
@@ -107,10 +107,17 @@
     <sys:String x:Key="Str_Status_LoadError">Tento Killendar nelze otevřít: {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">Přeneseno {0} schůzek do vašeho Killendaru</sys:String>
 
-    <sys:String x:Key="Str_Dlg_ImportTitle">Importovat iCalendar</sys:String>
-    <sys:String x:Key="Str_Dlg_ExportTitle">Exportovat iCalendar</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsFilter">Soubory iCalendar (*.ics)|*.ics|Všechny soubory (*.*)|*.*</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsSaveFilter">Soubory iCalendar (*.ics)|*.ics</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportTitle">Importovat schůzky</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">Exportovat schůzky</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportFilter">Soubory kalendáře (*.ics, *.csv, *.eml)|*.ics;*.csv;*.eml|Soubory iCalendar (*.ics)|*.ics|Soubory CSV (*.csv)|*.csv|E-mailové pozvánky (*.eml)|*.eml|Všechny soubory (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportFilter">Soubory iCalendar (*.ics)|*.ics|Soubory CSV (*.csv)|*.csv|Webová stránka (*.html)|*.html</sys:String>
+    <sys:String x:Key="Str_Status_CsvBadHeader">Tento CSV není ve formátu Outlooku. První řádek musí obsahovat sloupce: Subject, Start Date, Start Time, End Date, End Time, All day event, Description, Location</sys:String>
+    <sys:String x:Key="Str_Status_NoInvite">V tomto e-mailu nebyla nalezena žádná pozvánka do kalendáře</sys:String>
+    <sys:String x:Key="Str_Exp_Whole">Celý kalendář</sys:String>
+    <sys:String x:Key="Str_Exp_Range">Rozsah dat</sys:String>
+    <sys:String x:Key="Str_Exp_From">OD</sys:String>
+    <sys:String x:Key="Str_Exp_To">DO</sys:String>
+    <sys:String x:Key="Str_Exp_BadRange">Zkontrolujte data</sys:String>
 
     <sys:String x:Key="Str_Cal_AllDay">celý den</sys:String>
     <sys:String x:Key="Str_Cal_NoTitle">(bez názvu)</sys:String>
@@ -303,8 +310,8 @@
     <sys:String x:Key="Str_KS_Today">Přejít na dnešek</sys:String>
     <sys:String x:Key="Str_KS_New">Nová schůzka zde</sys:String>
     <sys:String x:Key="Str_KS_Panel">Panel schůzky</sys:String>
-    <sys:String x:Key="Str_KS_Import">Importovat soubor .ics</sys:String>
-    <sys:String x:Key="Str_KS_Export">Exportovat do .ics</sys:String>
+    <sys:String x:Key="Str_KS_Import">Importovat soubor kalendáře</sys:String>
+    <sys:String x:Key="Str_KS_Export">Exportovat kalendář</sys:String>
     <sys:String x:Key="Str_KS_ThisList">Tento seznam zkratek</sys:String>
     <sys:String x:Key="Str_KS_About">Karta O aplikaci</sys:String>
     <sys:String x:Key="Str_KS_Close">Zavřít panel nebo kartu</sys:String>
@@ -314,6 +321,10 @@
     <sys:String x:Key="Str_TT_Categories">Kategorie</sys:String>
     <sys:String x:Key="Str_TT_Density">Hustota mřížky - klik nebo kolečko</sys:String>
     <sys:String x:Key="Str_St_Density">Hustota mřížky: {0} čar za hodinu</sys:String>
+    <sys:String x:Key="Str_TT_WorkWeek">Pětidenní pracovní týden</sys:String>
+    <sys:String x:Key="Str_Btn_WorkWeek">5 dní</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOn">Zobrazení týdne ukazuje pracovní týden (po - pá)</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOff">Zobrazení týdne ukazuje celý týden</sys:String>
     <sys:String x:Key="Str_Cat_Title">Kategorie</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Barvy pro tento Killendar. Schůzka jich může nést více; první ji obarví.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Zadejte název kategorie.</sys:String>
@@ -338,6 +349,7 @@
 
     <!-- Místní nabídky -->
     <sys:String x:Key="Str_Ctx_AddAppointment">Přidat schůzku</sys:String>
+    <sys:String x:Key="Str_Ctx_EditSeries">Upravit sérii</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Otevřít</sys:String>
 
 </ResourceDictionary>

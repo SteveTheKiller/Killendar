@@ -44,6 +44,10 @@
     <SolidColorBrush x:Key="RowAltBrush"         Color="#18FFFFFF" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowHoverBrush"       Color="#404040" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowSelectedBrush"    Color="#0d2a18" po:Freeze="True"/>
+    <!-- Untagged appointment chips - a neutral of its own, NOT repointed by any accent overlay,
+         so it can never collide with the accent-colored selection or hover fills. See the note
+         in Greed.xaml. Lighter than RowHoverBrush so a chip still reads inside a hovered cell. -->
+    <SolidColorBrush x:Key="ChipBrush"           Color="#4a4a4a" po:Freeze="True"/>
     <!-- SELECTION PAIR - the family's "this one is active" treatment, copied value-for-value from
          KillerPDF, which is the source of truth. A selected toolbar button, tool or tab is a solid
          SelectionBg fill with SelectionFg text; it is NEVER accent-coloured text on a faint fill,

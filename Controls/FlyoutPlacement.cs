@@ -41,6 +41,20 @@ namespace Killendar.Controls
                 (popupSize, targetSize, __) => BottomLeftOfPane(popupSize, targetSize);
         }
 
+        /// <summary>
+        /// The export scope flyout's spot: the TOP-LEFT corner of the content pane - the same
+        /// one-place rule as the rail flyouts' bottom-left, mirrored because its opener lives in
+        /// the toolbar above the pane, so the flyout reads as dropping out of it. Same reasons
+        /// apply: inside the window, clear of the toolbar, clear of the rail. (Steve, 2026-07-31.)
+        /// </summary>
+        internal static void AttachTopLeft(Popup popup)
+        {
+            popup.PlacementTarget = _pane;
+            popup.Placement = PlacementMode.Custom;
+            popup.CustomPopupPlacementCallback =
+                (_, _, _) => [new CustomPopupPlacement(new Point(0, 0), PopupPrimaryAxis.None)];
+        }
+
         internal static void Attach(ContextMenu menu, UIElement _)
         {
             menu.PlacementTarget = _pane;
@@ -62,7 +76,7 @@ namespace Killendar.Controls
             // toolbar; pin it to the pane's top instead and let it use the height it has.
             if (y < 0) y = 0;
 
-            return new[] { new CustomPopupPlacement(new Point(0, y), PopupPrimaryAxis.None) };
+            return [new CustomPopupPlacement(new Point(0, y), PopupPrimaryAxis.None)];
         }
     }
 }

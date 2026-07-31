@@ -48,6 +48,7 @@ namespace Killendar.Shell
             // Before InitCalendar: the views read CalendarChrome.HourHeight while they build, so the
             // saved density has to be in place or the first paint uses the default and then jumps.
             InitDensity();
+            InitWorkWeek();
 
             _about = new AboutController(this);
             VersionLabel.Text = "v" + Services.AppInfo.Version;

@@ -45,6 +45,16 @@ namespace Killendar.Services
 
             var store = new EventStore();
             store.Open(path, null);
+
+            // The seeded set is named for its colors; a demo calendar should read like a real
+            // one. Renamed here rather than added fresh so the demo also proves rename works,
+            // and keeps the family palette. Generate's category strings must match these.
+            foreach (var (from, to) in DemoCategoryNames) store.RenameCategory(from, to);
+
+            // No recoloring: the demo keeps the seeded palette exactly, and the single-hue
+            // themes get their readable tag colors from CategoryManager's theme-aware display
+            // overrides - the same path a real calendar takes.
+
             int n = store.ImportEvents(Generate(DateTime.Today));
             store.Close();
 
@@ -73,9 +83,14 @@ namespace Killendar.Services
 
                 // Standup: short, every weekday. The stress case for a 15-minute block in the
                 // hour grid, and for a month cell that has to show the same title 20 times.
+                // Categories use the demo names (see DemoCategoryNames), so the demo exercises
+                // the colored chips, the black-text flip on the pale Admin yellow, and the plain
+                // themed fallback (Lunch carries none on purpose - an uncategorized event must
+                // still look right).
                 Add(list, "Morning standup", d.AddHours(9), d.AddHours(9).AddMinutes(15),
                     location: "Teams",
-                    attendees: new[] { "dispatch@example.com", "nate@example.com" });
+                    attendees: ["dispatch@example.com", "nate@example.com"],
+                    categories: "Internal");
 
                 // Lunch, most days but not all, so the grid is not a perfect comb.
                 if (rng.Next(100) < 80)
@@ -92,13 +107,15 @@ namespace Killendar.Services
                         location: site,
                         description: "Ticket #" + (10000 + rng.Next(89999)) +
                                      "\nBadge in at reception. Ask for the IDF key.",
-                        attendees: new[] { "helpdesk@example.com" });
+                        attendees: ["helpdesk@example.com"],
+                        categories: "Client site");
                 }
 
                 // Ticket triage most afternoons, deliberately abutting the 16:00 slot so
                 // back-to-back rendering (no gap, no overlap) gets exercised.
                 if (rng.Next(100) < 45)
-                    Add(list, "Ticket triage", d.AddHours(15).AddMinutes(30), d.AddHours(16));
+                    Add(list, "Ticket triage", d.AddHours(15).AddMinutes(30), d.AddHours(16),
+                        categories: "Admin");
             }
 
             // ---------- on-call: multi-day all-day runs, one week in three ----------
@@ -106,7 +123,8 @@ namespace Killendar.Services
             {
                 var s = monday.AddDays(w * 7);
                 AddAllDay(list, "On-call rotation", s, s.AddDays(7),
-                          description: "Primary. Escalation path: dispatch, then the duty manager.");
+                          description: "Primary. Escalation path: dispatch, then the duty manager.",
+                          categories: "On-call");
             }
 
             // ---------- monthly Saturday maintenance window: the 8-hour extreme ----------
@@ -117,9 +135,11 @@ namespace Killendar.Services
                 while (sat.DayOfWeek != DayOfWeek.Saturday) sat = sat.AddDays(1);
                 sat = sat.AddDays(14);                                  // third Saturday
                 if (sat.Month != first.Month) sat = sat.AddDays(-7);
+                // Two categories: the first one (Maintenance) paints it, and the editor shows both.
                 Add(list, "Maintenance window - firmware and reboots", sat.AddHours(8), sat.AddHours(16),
                     location: "Remote",
-                    description: "Change window approved. Comms out to all sites the Thursday before.");
+                    description: "Change window approved. Comms out to all sites the Thursday before.",
+                    categories: "Maintenance, On-call");
             }
 
             // ---------- patch nights: 23:30 to 01:30, the crossing-midnight case ----------
@@ -128,35 +148,39 @@ namespace Killendar.Services
                 var wed = monday.AddDays(w * 7 + 2);
                 Add(list, "Patch window", wed.AddHours(23).AddMinutes(30), wed.AddDays(1).AddHours(1).AddMinutes(30),
                     location: "Remote",
-                    description: "Reboot ring 2. Verify backups completed before starting.");
+                    description: "Reboot ring 2. Verify backups completed before starting.",
+                    categories: "Maintenance");
             }
 
             // ---------- a 00:00 start: the top edge of the hour grid ----------
             var midnightDay = monday.AddDays(3);
             Add(list, "Overnight restore test", midnightDay, midnightDay.AddHours(3),
-                location: "DR site");
+                location: "DR site", categories: "Maintenance");
 
             // ---------- deliberate three-deep overlap on one afternoon ----------
             var clash = monday.AddDays(1);
             Add(list, "Change advisory board", clash.AddHours(14), clash.AddHours(15),
-                location: "Room 2", attendees: new[] { "cab@example.com" });
+                location: "Room 2", attendees: ["cab@example.com"], categories: "Internal");
             Add(list, "Vendor call - switch RMA", clash.AddHours(14), clash.AddHours(14).AddMinutes(30),
-                location: "Phone");
+                location: "Phone", categories: "Client site");
             Add(list, "1:1", clash.AddHours(14).AddMinutes(30), clash.AddHours(15).AddMinutes(30),
-                location: "Room 4");
+                location: "Room 4", categories: "Personal");
 
             // ---------- two-deep overlap, offset rather than aligned ----------
             var clash2 = monday.AddDays(9);
-            Add(list, "Cutover planning", clash2.AddHours(10), clash2.AddHours(12));
+            Add(list, "Cutover planning", clash2.AddHours(10), clash2.AddHours(12),
+                categories: "Maintenance");
             Add(list, "Interview - tier 2 candidate", clash2.AddHours(11), clash2.AddHours(12),
-                location: "Teams");
+                location: "Teams", categories: "Personal");
 
             // ---------- one deliberately overloaded day: month-cell overflow ----------
+            // Mixed colors on the overloaded day, cycling with gaps, so the overflowing cell
+            // shows chips of several colors AND plain ones together.
             var heavy = monday.AddDays(16);
             for (int i = 0; i < 9; i++)
             {
                 var s = heavy.AddHours(8 + i);
-                Add(list, HeavyDay[i], s, s.AddMinutes(45));
+                Add(list, HeavyDay[i], s, s.AddMinutes(45), categories: HeavyDayCats[i]);
             }
 
             // ---------- title long enough to force ellipsis everywhere ----------
@@ -165,27 +189,35 @@ namespace Killendar.Services
                       "external auditors, including the remediation plan walkthrough",
                 longDay.AddHours(13), longDay.AddHours(14).AddMinutes(30),
                 location: "Client HQ, 14th floor, the long conference room past the kitchen",
-                attendees: new[] { "audit@example.com", "security@example.com", "pm@example.com" });
+                attendees: ["audit@example.com", "security@example.com", "pm@example.com"],
+                categories: "Client site");
 
             // ---------- font fallback: accented and CJK ----------
             var intl = monday.AddDays(11);
-            Add(list, "Réunion d'équipe - déploiement réseau", intl.AddHours(9).AddMinutes(30), intl.AddHours(10));
-            Add(list, "顧客ミーティング - 移行計画", intl.AddHours(10).AddMinutes(30), intl.AddHours(11));
-            Add(list, "Zálohování - kontrola obnovy", intl.AddHours(11).AddMinutes(30), intl.AddHours(12));
+            Add(list, "Réunion d'équipe - déploiement réseau", intl.AddHours(9).AddMinutes(30), intl.AddHours(10),
+                categories: "Internal");
+            Add(list, "顧客ミーティング - 移行計画", intl.AddHours(10).AddMinutes(30), intl.AddHours(11),
+                categories: "Client site");
+            Add(list, "Zálohování - kontrola obnovy", intl.AddHours(11).AddMinutes(30), intl.AddHours(12),
+                categories: "Maintenance");
 
             // ---------- all-day singles scattered about ----------
-            AddAllDay(list, "Company holiday", monday.AddDays(-10), monday.AddDays(-9));
+            AddAllDay(list, "Company holiday", monday.AddDays(-10), monday.AddDays(-9),
+                      categories: "Personal");
             AddAllDay(list, "Cert renewal deadline", monday.AddDays(24), monday.AddDays(25),
-                      description: "CompTIA. Book the test centre before this drops off.");
-            AddAllDay(list, "Inventory audit", monday.AddDays(31), monday.AddDays(32));
+                      description: "CompTIA. Book the test centre before this drops off.",
+                      categories: "Admin");
+            AddAllDay(list, "Inventory audit", monday.AddDays(31), monday.AddDays(32),
+                      categories: "Admin");
 
             // ---------- PTO: a multi-day all-day run in the future ----------
             AddAllDay(list, "PTO", monday.AddDays(38), monday.AddDays(45),
-                      description: "Phone off. Coverage arranged with the other field techs.");
+                      description: "Phone off. Coverage arranged with the other field techs.",
+                      categories: "Personal");
 
             // ---------- a couple in the past, so paging backwards is not empty ----------
             AddAllDay(list, "Conference", monday.AddDays(-45), monday.AddDays(-42),
-                      location: "Convention centre");
+                      location: "Convention centre", categories: "Internal");
 
             return list;
         }
@@ -195,7 +227,8 @@ namespace Killendar.Services
         // ------------------------------------------------------------------
 
         private static void Add(List<CalendarEvent> list, string title, DateTime start, DateTime end,
-                                string location = "", string description = "", string[]? attendees = null)
+                                string location = "", string description = "", string[]? attendees = null,
+                                string categories = "")
             => list.Add(new CalendarEvent
             {
                 Title = title,
@@ -204,7 +237,8 @@ namespace Killendar.Services
                 AllDay = false,
                 Location = location,
                 Description = description,
-                Attendees = attendees != null ? attendees.ToList() : new List<string>()
+                Attendees = attendees != null ? [.. attendees] : [],
+                Categories = categories
             });
 
         /// <summary>
@@ -212,7 +246,7 @@ namespace Killendar.Services
         /// all-day on the 5th is (5th, 6th). Getting this off by one slides every all-day bar.
         /// </summary>
         private static void AddAllDay(List<CalendarEvent> list, string title, DateTime start, DateTime end,
-                                      string location = "", string description = "")
+                                      string location = "", string description = "", string categories = "")
             => list.Add(new CalendarEvent
             {
                 Title = title,
@@ -221,11 +255,12 @@ namespace Killendar.Services
                 AllDay = true,
                 Location = location,
                 Description = description,
-                Attendees = new List<string>()
+                Attendees = [],
+                Categories = categories
             });
 
         private static readonly (string Client, string Site)[] Sites =
-        {
+        [
             ("Northgate Dental",     "412 Northgate Ave, Suite 200"),
             ("Prairie Credit Union", "88 Main St - branch 3"),
             ("Hollis Manufacturing", "Plant 2, receiving door"),
@@ -234,10 +269,10 @@ namespace Killendar.Services
             ("Bell & Fisk Accounting","221 River Rd"),
             ("Summit Orthopedics",   "Clinic B, IT closet behind reception"),
             ("Ridgeline Logistics",  "Yard office, gate 4"),
-        };
+        ];
 
         private static readonly string[] Jobs =
-        {
+        [
             "workstation swap",
             "AP replacement",
             "switch stack firmware",
@@ -248,10 +283,10 @@ namespace Killendar.Services
             "UPS battery replacement",
             "cabling drop",
             "server room walkthrough",
-        };
+        ];
 
         private static readonly string[] HeavyDay =
-        {
+        [
             "Standup",
             "Handover notes",
             "Prairie CU - AP replacement",
@@ -261,6 +296,25 @@ namespace Killendar.Services
             "Escalation review",
             "Timesheets",
             "End of day wrap",
-        };
+        ];
+
+        // Parallel to HeavyDay. Deliberately a mix of every category and a few blanks.
+        private static readonly string[] HeavyDayCats =
+        [
+            "Internal", "", "Client site", "", "Client site", "Maintenance", "On-call", "Admin", "Personal",
+        ];
+
+        // Seeded name -> demo name, colors untouched: On-call keeps the red, Client site the
+        // orange, Admin the pale yellow (the black-text flip case), Personal the green,
+        // Internal the blue, Maintenance the purple.
+        private static readonly (string From, string To)[] DemoCategoryNames =
+        [
+            ("Red",    "On-call"),
+            ("Orange", "Client site"),
+            ("Yellow", "Admin"),
+            ("Green",  "Personal"),
+            ("Blue",   "Internal"),
+            ("Purple", "Maintenance"),
+        ];
     }
 }

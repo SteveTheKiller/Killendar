@@ -31,6 +31,14 @@
     <SolidColorBrush x:Key="RowAltBrush"         Color="#18FFFFFF" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowHoverBrush"       Color="#00593a" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowSelectedBrush"    Color="#44ffffff" po:Freeze="True"/>
+    <!-- Untagged appointment chips. Filled with RowSelectedBrush they VANISHED inside a selected
+         or hovered day - on this theme that brush IS SelectionBg, and on Black the two were one
+         shade apart (Steve, 2026-07-31, caught on Black + green). So EVERY theme defines
+         ChipBrush, and deliberately NO accent overlay repoints it: untagged is NEUTRAL GRAY in
+         all six themes, so it cannot collide with the accent-colored selection under any accent.
+         Gray, not a theme-secondary: the gold/amber/sand first cut read as mud on these dark
+         grounds (Steve, 2026-07-31, "an ugly brown color"). -->
+    <SolidColorBrush x:Key="ChipBrush"           Color="#4a4a4a" po:Freeze="True"/>
     <!-- Selection pair - see the note in Dark.xaml. Translucent white, as KillerPDF does. -->
     <SolidColorBrush x:Key="SelectionBg"         Color="#44ffffff" po:Freeze="True"/>
     <SolidColorBrush x:Key="SelectionFg"         Color="#ffffff" po:Freeze="True"/>

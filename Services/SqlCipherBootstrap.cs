@@ -21,7 +21,7 @@ namespace Killendar.Services
     {
         private const string ResourceName = "Killendar.SqlCipherNative.e_sqlcipher.dll";
 
-        private static readonly object _gate = new object();
+        private static readonly object _gate = new();
         private static bool _ready;
 
         [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Unicode)]

@@ -5,8 +5,8 @@
     <!-- Turkish. Layered over en-US, so any key omitted here falls back to English. -->
 
     <sys:String x:Key="Str_Btn_New">Yeni</sys:String>
-    <sys:String x:Key="Str_Btn_Import">.ics içe aktar</sys:String>
-    <sys:String x:Key="Str_Btn_Export">.ics dışa aktar</sys:String>
+    <sys:String x:Key="Str_Btn_Import">İçe aktar</sys:String>
+    <sys:String x:Key="Str_Btn_Export">Dışa aktar</sys:String>
     <sys:String x:Key="Str_Btn_Today">Bugün</sys:String>
     <sys:String x:Key="Str_View_Month">Ay</sys:String>
     <sys:String x:Key="Str_View_Week">Hafta</sys:String>
@@ -107,10 +107,17 @@
     <sys:String x:Key="Str_Status_LoadError">Bu Killendar açılamadı: {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">{0} randevu Killendar'ınıza taşındı</sys:String>
 
-    <sys:String x:Key="Str_Dlg_ImportTitle">iCalendar içe aktar</sys:String>
-    <sys:String x:Key="Str_Dlg_ExportTitle">iCalendar dışa aktar</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsFilter">iCalendar dosyaları (*.ics)|*.ics|Tüm dosyalar (*.*)|*.*</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsSaveFilter">iCalendar dosyaları (*.ics)|*.ics</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportTitle">Randevuları içe aktar</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">Randevuları dışa aktar</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportFilter">Takvim dosyaları (*.ics, *.csv, *.eml)|*.ics;*.csv;*.eml|iCalendar dosyaları (*.ics)|*.ics|CSV dosyaları (*.csv)|*.csv|E-posta davetleri (*.eml)|*.eml|Tüm dosyalar (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportFilter">iCalendar dosyaları (*.ics)|*.ics|CSV dosyaları (*.csv)|*.csv|Web sayfası (*.html)|*.html</sys:String>
+    <sys:String x:Key="Str_Status_CsvBadHeader">Bu CSV, Outlook biçiminde değil. İlk satır şu sütunları içermelidir: Subject, Start Date, Start Time, End Date, End Time, All day event, Description, Location</sys:String>
+    <sys:String x:Key="Str_Status_NoInvite">Bu e-postada takvim daveti bulunamadı</sys:String>
+    <sys:String x:Key="Str_Exp_Whole">Tüm takvim</sys:String>
+    <sys:String x:Key="Str_Exp_Range">Tarih aralığı</sys:String>
+    <sys:String x:Key="Str_Exp_From">BAŞLANGIÇ</sys:String>
+    <sys:String x:Key="Str_Exp_To">BİTİŞ</sys:String>
+    <sys:String x:Key="Str_Exp_BadRange">Tarihleri kontrol edin</sys:String>
 
     <sys:String x:Key="Str_Cal_AllDay">tüm gün</sys:String>
     <sys:String x:Key="Str_Cal_NoTitle">(başlıksız)</sys:String>
@@ -303,8 +310,8 @@
     <sys:String x:Key="Str_KS_Today">Bugüne git</sys:String>
     <sys:String x:Key="Str_KS_New">Buraya yeni randevu</sys:String>
     <sys:String x:Key="Str_KS_Panel">Randevu paneli</sys:String>
-    <sys:String x:Key="Str_KS_Import">Bir .ics dosyası içe aktar</sys:String>
-    <sys:String x:Key="Str_KS_Export">.ics olarak dışa aktar</sys:String>
+    <sys:String x:Key="Str_KS_Import">Bir takvim dosyası içe aktar</sys:String>
+    <sys:String x:Key="Str_KS_Export">Takvimi dışa aktar</sys:String>
     <sys:String x:Key="Str_KS_ThisList">Bu kısayol listesi</sys:String>
     <sys:String x:Key="Str_KS_About">Hakkında kartı</sys:String>
     <sys:String x:Key="Str_KS_Close">Paneli veya kartı kapat</sys:String>
@@ -314,6 +321,10 @@
     <sys:String x:Key="Str_TT_Categories">Kategoriler</sys:String>
     <sys:String x:Key="Str_TT_Density">Izgara yoğunluğu - tıklayın veya kaydırın</sys:String>
     <sys:String x:Key="Str_St_Density">Izgara yoğunluğu: saatte {0} çizgi</sys:String>
+    <sys:String x:Key="Str_TT_WorkWeek">5 günlük iş haftası</sys:String>
+    <sys:String x:Key="Str_Btn_WorkWeek">5 gün</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOn">Hafta görünümü iş haftasını gösterir (Pzt - Cum)</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOff">Hafta görünümü tüm haftayı gösterir</sys:String>
     <sys:String x:Key="Str_Cat_Title">Kategoriler</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Bu Killendar için renkler. Bir randevu birden fazla taşıyabilir; ilki onu renklendirir.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Kategoriye bir ad verin.</sys:String>
@@ -338,6 +349,7 @@
 
     <!-- Bağlam menüleri -->
     <sys:String x:Key="Str_Ctx_AddAppointment">Randevu ekle</sys:String>
+    <sys:String x:Key="Str_Ctx_EditSeries">Seriyi düzenle</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Aç</sys:String>
 
 </ResourceDictionary>

@@ -5,8 +5,8 @@
     <!-- Simplified Chinese. Layered over en-US, so any key omitted here falls back to English. -->
 
     <sys:String x:Key="Str_Btn_New">新建</sys:String>
-    <sys:String x:Key="Str_Btn_Import">导入 .ics</sys:String>
-    <sys:String x:Key="Str_Btn_Export">导出 .ics</sys:String>
+    <sys:String x:Key="Str_Btn_Import">导入</sys:String>
+    <sys:String x:Key="Str_Btn_Export">导出</sys:String>
     <sys:String x:Key="Str_Btn_Today">今天</sys:String>
     <sys:String x:Key="Str_View_Month">月</sys:String>
     <sys:String x:Key="Str_View_Week">周</sys:String>
@@ -107,10 +107,17 @@
     <sys:String x:Key="Str_Status_LoadError">无法打开此 Killendar：{0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">已将 {0} 个约会迁移到你的 Killendar</sys:String>
 
-    <sys:String x:Key="Str_Dlg_ImportTitle">导入 iCalendar</sys:String>
-    <sys:String x:Key="Str_Dlg_ExportTitle">导出 iCalendar</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsFilter">iCalendar 文件 (*.ics)|*.ics|所有文件 (*.*)|*.*</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsSaveFilter">iCalendar 文件 (*.ics)|*.ics</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportTitle">导入日程</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">导出日程</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportFilter">日历文件 (*.ics, *.csv, *.eml)|*.ics;*.csv;*.eml|iCalendar 文件 (*.ics)|*.ics|CSV 文件 (*.csv)|*.csv|邮件邀请 (*.eml)|*.eml|所有文件 (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportFilter">iCalendar 文件 (*.ics)|*.ics|CSV 文件 (*.csv)|*.csv|网页 (*.html)|*.html</sys:String>
+    <sys:String x:Key="Str_Status_CsvBadHeader">此 CSV 不是 Outlook 格式。第一行必须包含这些列名: Subject, Start Date, Start Time, End Date, End Time, All day event, Description, Location</sys:String>
+    <sys:String x:Key="Str_Status_NoInvite">在此邮件中未找到日历邀请</sys:String>
+    <sys:String x:Key="Str_Exp_Whole">整个日历</sys:String>
+    <sys:String x:Key="Str_Exp_Range">日期范围</sys:String>
+    <sys:String x:Key="Str_Exp_From">从</sys:String>
+    <sys:String x:Key="Str_Exp_To">至</sys:String>
+    <sys:String x:Key="Str_Exp_BadRange">请检查日期</sys:String>
 
     <sys:String x:Key="Str_Cal_AllDay">全天</sys:String>
     <sys:String x:Key="Str_Cal_NoTitle">(无标题)</sys:String>
@@ -303,8 +310,8 @@
     <sys:String x:Key="Str_KS_Today">跳到今天</sys:String>
     <sys:String x:Key="Str_KS_New">在此新建约会</sys:String>
     <sys:String x:Key="Str_KS_Panel">约会面板</sys:String>
-    <sys:String x:Key="Str_KS_Import">导入 .ics 文件</sys:String>
-    <sys:String x:Key="Str_KS_Export">导出为 .ics</sys:String>
+    <sys:String x:Key="Str_KS_Import">导入日历文件</sys:String>
+    <sys:String x:Key="Str_KS_Export">导出日历</sys:String>
     <sys:String x:Key="Str_KS_ThisList">此快捷键列表</sys:String>
     <sys:String x:Key="Str_KS_About">关于卡片</sys:String>
     <sys:String x:Key="Str_KS_Close">关闭面板或卡片</sys:String>
@@ -314,6 +321,10 @@
     <sys:String x:Key="Str_TT_Categories">类别</sys:String>
     <sys:String x:Key="Str_TT_Density">网格密度 - 单击或滚动</sys:String>
     <sys:String x:Key="Str_St_Density">网格密度：每小时 {0} 条线</sys:String>
+    <sys:String x:Key="Str_TT_WorkWeek">5 天工作周</sys:String>
+    <sys:String x:Key="Str_Btn_WorkWeek">5 天</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOn">周视图显示工作周 (周一 - 周五)</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOff">周视图显示整周</sys:String>
     <sys:String x:Key="Str_Cat_Title">类别</sys:String>
     <sys:String x:Key="Str_Cat_Hint">这个 Killendar 的颜色。一个约会可以带多个类别，第一个决定它的颜色。</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">请为类别取个名字。</sys:String>
@@ -338,6 +349,7 @@
 
     <!-- 右键菜单 -->
     <sys:String x:Key="Str_Ctx_AddAppointment">添加约会</sys:String>
+    <sys:String x:Key="Str_Ctx_EditSeries">编辑系列</sys:String>
     <sys:String x:Key="Str_Ctx_Open">打开</sys:String>
 
 </ResourceDictionary>

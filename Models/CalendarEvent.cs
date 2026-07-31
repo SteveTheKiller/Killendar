@@ -38,7 +38,7 @@ namespace Killendar.Models
         public bool         AllDay      { get; set; }
         public string       Location    { get; set; } = "";
         public string       Description { get; set; } = "";
-        public List<string> Attendees   { get; set; } = new List<string>();
+        public List<string> Attendees   { get; set; } = [];
         public DateTime     Created     { get; set; } = DateTime.UtcNow;
         public DateTime     Modified    { get; set; } = DateTime.UtcNow;
 
@@ -58,7 +58,7 @@ namespace Killendar.Models
         public int RepeatInterval { get; set; } = 1;
 
         /// <summary>Weekly only: which days are ticked. Empty means "the day the series starts on".</summary>
-        public List<DayOfWeek> RepeatDays { get; set; } = new List<DayOfWeek>();
+        public List<DayOfWeek> RepeatDays { get; set; } = [];
 
         /// <summary>Repeat until this date inclusive. Null with RepeatCount 0 means forever.</summary>
         public DateTime? RepeatUntil { get; set; }
@@ -68,7 +68,7 @@ namespace Killendar.Models
 
         /// <summary>Occurrence start dates the user deleted one at a time. Compared by DATE, so a
         /// "just this one" delete survives the series later being moved to a different time.</summary>
-        public List<DateTime> SkipDates { get; set; } = new List<DateTime>();
+        public List<DateTime> SkipDates { get; set; } = [];
 
         /// <summary>Set on an override row: the Id of the master whose occurrence this replaces.</summary>
         public Guid? SeriesId { get; set; }
@@ -116,7 +116,7 @@ namespace Killendar.Models
             return Start < dayEnd && End > dayStart;
         }
 
-        public CalendarEvent Clone() => new CalendarEvent
+        public CalendarEvent Clone() => new()
         {
             Id          = Id,
             Title       = Title,
@@ -125,7 +125,7 @@ namespace Killendar.Models
             AllDay      = AllDay,
             Location    = Location,
             Description = Description,
-            Attendees   = new List<string>(Attendees),
+            Attendees   = [.. Attendees],
             Categories  = Categories,
             Created     = Created,
             Modified    = Modified,
@@ -134,10 +134,10 @@ namespace Killendar.Models
             // its master, and a view that edited a shared list would rewrite the series.
             Repeat          = Repeat,
             RepeatInterval  = RepeatInterval,
-            RepeatDays      = new List<DayOfWeek>(RepeatDays),
+            RepeatDays      = [.. RepeatDays],
             RepeatUntil     = RepeatUntil,
             RepeatCount     = RepeatCount,
-            SkipDates       = new List<DateTime>(SkipDates),
+            SkipDates       = [.. SkipDates],
             SeriesId        = SeriesId,
             OccurrenceStart = OccurrenceStart
         };

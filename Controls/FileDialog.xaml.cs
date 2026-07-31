@@ -179,7 +179,7 @@ namespace Killendar.Controls
             string seedName = "";
             if (!string.IsNullOrWhiteSpace(FileName))
             {
-                if (FileName.IndexOfAny(new[] { '\\', '/' }) >= 0)
+                if (FileName.IndexOfAny(['\\', '/']) >= 0)
                 {
                     var d = Path.GetDirectoryName(FileName);
                     if (!string.IsNullOrEmpty(d) && Directory.Exists(d)) startDir = d!;
@@ -235,7 +235,7 @@ namespace Killendar.Controls
             if (FilterCombo.Items.Count == 0)
             {
                 FilterCombo.Items.Add(Loc("Str_Dlg_AllFiles"));
-                _filterPatterns.Add(new[] { "*.*" });
+                _filterPatterns.Add(["*.*"]);
             }
 
             int idx = FilterIndex - 1;
@@ -248,7 +248,47 @@ namespace Killendar.Controls
         {
             if (!_built) return;
             FilterIndex = FilterCombo.SelectedIndex + 1;
+
+            // Save mode follows the Win32 dialogs: switching the type swaps the typed name's
+            // extension - but only when the current one belongs to another entry of THIS filter.
+            // An extension the user typed by hand is theirs and is left alone.
+            if (_mode == FileDialogMode.Save)
+            {
+                string? newExt = ActiveFilterExt();
+                string  name   = FileNameBox.Text?.Trim() ?? "";
+                string  cur    = name.Length == 0 ? "" : Path.GetExtension(name);
+                if (newExt != null && cur.Length > 0 &&
+                    !cur.Equals(newExt, StringComparison.OrdinalIgnoreCase) &&
+                    AllFilterExts().Contains(cur, StringComparer.OrdinalIgnoreCase))
+                {
+                    FileNameBox.Text = Path.ChangeExtension(name, newExt);
+                }
+            }
+
             ApplySort();
+        }
+
+        /// <summary>
+        /// The active filter entry's own extension (".csv"), or null when its first pattern is a
+        /// wildcard-any or a multi-pattern catch-all that names no single extension.
+        /// </summary>
+        private string? ActiveFilterExt()
+        {
+            int i = FilterCombo.SelectedIndex;
+            if (i < 0 || i >= _filterPatterns.Count) return null;
+            string p = _filterPatterns[i][0];
+            if (p.Length > 2 && p.StartsWith("*.") && p.IndexOfAny(['*', '?'], 2) < 0)
+                return p.Substring(1);
+            return null;
+        }
+
+        /// <summary>Every concrete extension the filter list names, for the swap test above.</summary>
+        private IEnumerable<string> AllFilterExts()
+        {
+            foreach (var pats in _filterPatterns)
+                foreach (var p in pats)
+                    if (p.Length > 2 && p.StartsWith("*.") && p.IndexOfAny(['*', '?'], 2) < 0)
+                        yield return p.Substring(1);
         }
 
         /// <summary>True when the name passes the active filter. Folders are never filtered out.</summary>
@@ -299,16 +339,16 @@ namespace Killendar.Controls
         {
             string? saved = Services.ThemeManager.GetSetting(PinnedKey);
             if (saved != null)
-                return saved.Split('|').Where(s => s.Length > 0).ToList();
+                return [.. saved.Split('|').Where(s => s.Length > 0)];
 
-            return new List<string>
+            return [.. new List<string>
             {
                 Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
                 Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
                 Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"),
                 Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
-            }.Where(p => !string.IsNullOrEmpty(p)).ToList();
+            }.Where(p => !string.IsNullOrEmpty(p))];
         }
 
         /// <summary>Localized label for the five standard folders, plain folder name otherwise.</summary>
@@ -696,15 +736,15 @@ namespace Killendar.Controls
         private static IEnumerable<string> RelativeSegments(string rootPath, string fullPath)
         {
             string rest = fullPath.Substring(rootPath.Length);
-            return rest.Split(new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar },
+            return rest.Split([Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar],
                               StringSplitOptions.RemoveEmptyEntries);
         }
 
         // ── Recent locations ─────────────────────────────────────────────────────
 
         private static List<string> LoadRecents()
-            => (Services.ThemeManager.GetSetting(RecentsKey) ?? "")
-               .Split('|').Where(s => s.Length > 0).ToList();
+            => [.. (Services.ThemeManager.GetSetting(RecentsKey) ?? "")
+               .Split('|').Where(s => s.Length > 0)];
 
         private static void RecordRecent(string dir)
         {
@@ -806,9 +846,9 @@ namespace Killendar.Controls
             }
 
             // A wildcard retargets the listing rather than naming a file.
-            if (typed.IndexOfAny(new[] { '*', '?' }) >= 0)
+            if (typed.IndexOfAny(['*', '?']) >= 0)
             {
-                _filterPatterns.Insert(0, new[] { typed });
+                _filterPatterns.Insert(0, [typed]);
                 FilterCombo.Items.Insert(0, typed);
                 FilterCombo.SelectedIndex = 0;
                 FileNameBox.Clear();
@@ -941,10 +981,15 @@ namespace Killendar.Controls
 
             if (_mode == FileDialogMode.Save)
             {
-                if (AddExtension && !string.IsNullOrEmpty(DefaultExt) &&
-                    string.IsNullOrEmpty(Path.GetExtension(full)))
+                // The extension follows the ACTIVE filter, so picking "CSV files" in the type
+                // combo is enough to get a .csv - DefaultExt only decides when the filter names
+                // no single extension (a wildcard or a multi-pattern entry).
+                if (AddExtension && string.IsNullOrEmpty(Path.GetExtension(full)))
                 {
-                    full += DefaultExt.StartsWith(".") ? DefaultExt : "." + DefaultExt;
+                    string? ext = ActiveFilterExt();
+                    if (ext == null && !string.IsNullOrEmpty(DefaultExt))
+                        ext = DefaultExt.StartsWith(".") ? DefaultExt : "." + DefaultExt;
+                    if (ext != null) full += ext;
                 }
 
                 // The directory must exist; we do not silently create trees on the user's behalf.

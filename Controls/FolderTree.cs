@@ -41,7 +41,7 @@ namespace Killendar.Controls
         // their label is "Local Disk (C:)" rather than a bare folder name.
         public bool IsDrive { get; }
 
-        public ObservableCollection<FolderNode> Children { get; } = new();
+        public ObservableCollection<FolderNode> Children { get; } = [];
 
         public FolderNode(string path, string name, bool mayHaveChildren)
         {

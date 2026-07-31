@@ -20,6 +20,13 @@ namespace Killendar.Services
     /// SetResourceReference bindings, which is the opposite of the rule in CalendarChrome. That
     /// rule exists so THEME colors follow a theme switch; a category color is user data and must
     /// not change when the palette does.
+    ///
+    /// The one refinement to that rule (Steve, 2026-07-31): on the three single-hue themes, a
+    /// SEEDED tag color that shares the theme's hue drowns in it - the green tag vanished into
+    /// Greed. The stored color still never changes; the DISPLAYED color swaps to a same-family
+    /// neighbor while such a theme is up. Same pattern and the same replacement hexes as
+    /// KillerScan's per-theme device-type overrides. Only the seeded hexes are mapped: a custom
+    /// color is the user's exact pick and stays exact.
     /// </summary>
     internal static class CategoryManager
     {
@@ -29,14 +36,14 @@ namespace Killendar.Services
         internal const string OrphanHex = "#9A9A9A";
 
         private static Dictionary<string, string> _defs =
-            new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            new(StringComparer.OrdinalIgnoreCase);
 
         private static readonly Dictionary<string, SolidColorBrush> _brushes =
-            new Dictionary<string, SolidColorBrush>(StringComparer.OrdinalIgnoreCase);
+            new(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>Definitions in the order the store returns them, for the pickers.</summary>
         internal static List<(string Name, string Color)> Order { get; private set; } =
-            new List<(string, string)>();
+            [];
 
         /// <summary>Raised when a live preview repoints a color, so the views can repaint without
         /// anything being written. Deliberately NOT raised by Refresh: Refresh runs inside
@@ -81,7 +88,30 @@ namespace Killendar.Services
             return brush;
         }
 
-        internal static Color ColorOf(string name) => ParseHex(HexOf(name));
+        internal static Color ColorOf(string name) => ParseHex(Displayed(HexOf(name)));
+
+        // ── Theme-aware display (see the header) ────────────────────────────────
+        // Lime on Greed, salmon on Blood, pale blue on Cyanotic - KillerScan's picks, proven on
+        // the same panes. The neutral themes need no map: their surfaces are gray.
+        private static readonly Dictionary<Theme, (string From, string To)[]> ThemeOverrides = new()
+        {
+            [Theme.Greed]    = [("#1EA54C", "#7BE06A")],
+            [Theme.Blood]    = [("#DD504B", "#F08A5A")],
+            [Theme.Cyanotic] = [("#50AEE8", "#8FC4FF")],
+        };
+
+        private static string Displayed(string hex)
+        {
+            if (ThemeOverrides.TryGetValue(ThemeManager.Current, out var map))
+                foreach (var (from, to) in map)
+                    if (string.Equals(hex, from, StringComparison.OrdinalIgnoreCase))
+                        return to;
+            return hex;
+        }
+
+        /// <summary>Theme switched: the display overrides just changed, so cached brushes are
+        /// stale. The caller repaints the views afterwards (CalendarHost owns that order).</summary>
+        internal static void OnThemeChanged() => _brushes.Clear();
 
         /// <summary>A malformed hex must not throw mid-render - a hand-edited database or a
         /// future format change lands here, and a gray chip is a better outcome than a crash.</summary>

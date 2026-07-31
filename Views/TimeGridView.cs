@@ -34,12 +34,17 @@ namespace Killendar.Views
         private Border _allDayHost = null!;
         private Grid _bodyGrid = null!;
         private ScrollViewer _scroller = null!;
-        private readonly List<Canvas> _dayCanvases = new List<Canvas>();
+        private readonly List<Canvas> _dayCanvases = [];
 
         public event Action<CalendarEvent>? EventSelected;
         public event Action<DateTime>? DaySelected;
         public event Action<DateTime>? SlotSelected;
         public event Action<int>? DensityStepped;
+
+        /// <summary>A chip was dragged to a new slot: the appointment and the start it was
+        /// dropped on. The controller commits it - for a series date that means an override,
+        /// never the series (Steve, 2026-07-31, "by default just move the occurrence").</summary>
+        public event Action<CalendarEvent, DateTime>? EventDropped;
 
         protected TimeGridView(int dayCount)
         {
@@ -60,6 +65,14 @@ namespace Killendar.Views
         /// <summary>First day shown. Week starts on the culture's first day; Day is just the anchor.</summary>
         protected abstract DateTime FirstVisibleDay(DateTime anchor);
 
+        /// <summary>How many day columns to build. Virtual, and read on every rebuild rather than
+        /// captured, so WeekView can answer 5 or 7 as the work-week toggle changes without the
+        /// view being reconstructed.</summary>
+        protected virtual int Days => _dayCount;
+
+        /// <summary>True where the work-week toggle belongs in the header corner - Week only.</summary>
+        protected virtual bool OffersWorkWeekToggle => false;
+
         public DateTime Anchor
         {
             get => _anchor;
@@ -67,7 +80,7 @@ namespace Killendar.Views
         }
 
         // date -> that column's selection band. Rebuilt with the columns.
-        private readonly Dictionary<DateTime, Border> _selectionBands = new Dictionary<DateTime, Border>();
+        private readonly Dictionary<DateTime, Border> _selectionBands = [];
 
         // Today's decoration, when today is in range. Null otherwise.
         private Border? _todayTint;   // the column fill
@@ -145,7 +158,6 @@ namespace Killendar.Views
         public abstract DateTime Step(DateTime from, int direction);
 
         protected DateTime RangeStart => FirstVisibleDay(_anchor);
-        protected int DayCount => _dayCount;
 
         public void Initialize(EventStore store)
         {
@@ -244,7 +256,7 @@ namespace Killendar.Views
         {
             g.ColumnDefinitions.Clear();
             g.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(56) });   // time gutter
-            for (int i = 0; i < _dayCount; i++)
+            for (int i = 0; i < Days; i++)
                 g.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         }
 
@@ -270,8 +282,38 @@ namespace Killendar.Views
             var start = RangeStart;
             var today = DateTime.Today;
 
+            // The work-week toggle sits in the header's gutter corner, left of the first day -
+            // where the thing it changes is (Steve, 2026-07-31; it was on the rail first, which
+            // put it a whole window away from the columns it drops). Rebuilt with the header, so
+            // its lit state always matches the columns beside it.
+            if (OffersWorkWeekToggle)
+            {
+                // A labeled button, not a bare glyph (Steve, 2026-07-31, "a button that says
+                // 5-Day"). The STYLE is the state (Steve, same day): off it is the gray
+                // SurfaceButton, the Cancel treatment; on it is the accent OutlineButton, the
+                // OK treatment - which also means the moment it is clicked it shows solid under
+                // the pointer (OutlineButton's hover fill) and settles to the accent outline
+                // when the mouse leaves. The header rebuilds on every toggle, so the style swap
+                // is just picking the right key at build.
+                var ww = new Button
+                {
+                    Content = LocaleManager.Loc("Str_Btn_WorkWeek"),
+                    FontSize = 11,
+                    Padding = new Thickness(7, 1, 7, 1),
+                    Margin = new Thickness(4, 3, 4, 3),
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    ToolTip = LocaleManager.Loc("Str_TT_WorkWeek"),
+                };
+                ww.SetResourceReference(StyleProperty,
+                    CalendarChrome.WorkWeek ? "OutlineButton" : "SurfaceButton");
+                ww.Click += (_, _) => CalendarChrome.WorkWeekToggle?.Invoke();
+                Grid.SetColumn(ww, 0);
+                _headerRow.Children.Add(ww);
+            }
+
             // ---- day headers ----
-            for (int i = 0; i < _dayCount; i++)
+            for (int i = 0; i < Days; i++)
             {
                 var date = start.AddDays(i);
                 bool isToday = date == today;
@@ -309,7 +351,7 @@ namespace Killendar.Views
                 // The header is the "whole day" surface a time grid has, so clicking it opens the
                 // day's agenda in the sidebar - the empty slots below stay the explicit create.
                 // Transparent, not null: a null Background gets no mouse events. (Steve, 2026-07-30.)
-                if (head.Background == null) head.Background = Brushes.Transparent;
+                head.Background ??= Brushes.Transparent;
                 head.Cursor = System.Windows.Input.Cursors.Hand;
                 var headDate = date;
                 head.MouseLeftButtonDown += (_, e) =>
@@ -331,7 +373,7 @@ namespace Killendar.Views
 
             // ---- all-day strip ----
             var allDay = new List<CalendarEvent>();
-            for (int i = 0; i < _dayCount; i++)
+            for (int i = 0; i < Days; i++)
             {
                 foreach (var ev in _store.GetOnDay(start.AddDays(i)))
                     if (ev.AllDay && !allDay.Contains(ev)) allDay.Add(ev);
@@ -369,7 +411,7 @@ namespace Killendar.Views
             Grid.SetRow(gutter, 0);
             _bodyGrid.Children.Add(gutter);
 
-            for (int i = 0; i < _dayCount; i++)
+            for (int i = 0; i < Days; i++)
             {
                 var date = start.AddDays(i);
                 var canvas = BuildDayCanvas(date, fullHeight);
@@ -460,7 +502,9 @@ namespace Killendar.Views
                 Height = slot,
                 Visibility = Visibility.Collapsed,
                 IsHitTestVisible = false,
-                BorderThickness = new Thickness(0, 1, 0, 1),
+                // All four edges, not just top and bottom (Steve, 2026-07-31): with open sides
+                // the band read as a stripe across the column rather than a marked slot.
+                BorderThickness = new Thickness(1),
             };
             selected.Themed(Border.BackgroundProperty, "SelectionBg");
             selected.Themed(Border.BorderBrushProperty, "PrimaryBrush");
@@ -570,7 +614,27 @@ namespace Killendar.Views
                 else laneEnds[lane] = ev.End;
                 lanes[i] = lane;
             }
-            int laneCount = Math.Max(1, laneEnds.Count);
+            // Overlap CLUSTERS: a chip only shares its width with events it actually collides
+            // with, transitively. The lane count used to be day-global, so one 2 PM collision
+            // halved the lone 9 AM standup too (Steve, 2026-07-31). timed is sorted by Start, so
+            // a cluster is a run of events whose spans chain together; a gap starts a new one.
+            var clusterOf    = new int[timed.Count];
+            var clusterLanes = new List<int>();
+            int cluster = -1;
+            var clusterEnd = DateTime.MinValue;
+            for (int i = 0; i < timed.Count; i++)
+            {
+                if (timed[i].Start >= clusterEnd)
+                {
+                    cluster++;
+                    clusterLanes.Add(0);
+                    clusterEnd = timed[i].End;
+                }
+                else if (timed[i].End > clusterEnd) clusterEnd = timed[i].End;
+
+                clusterOf[i] = cluster;
+                clusterLanes[cluster] = Math.Max(clusterLanes[cluster], lanes[i] + 1);
+            }
 
             for (int i = 0; i < timed.Count; i++)
             {
@@ -583,18 +647,123 @@ namespace Killendar.Views
                 double top = (visStart - dayStart).TotalHours * CalendarChrome.HourHeight;
                 double height = Math.Max(16, (visEnd - visStart).TotalHours * CalendarChrome.HourHeight - 2);
 
-                var chip = CalendarChrome.Chip(ev, e => EventSelected?.Invoke(e), compact: false, showTime: true);
+                int myLanes = Math.Max(1, clusterLanes[clusterOf[i]]);
+
+                // The time prefix only in Day view with no overlap: in a time grid the chip's
+                // POSITION already says the time, and in Week's seventh-width columns the prefix
+                // was eating the title down to "9:00 Morni" (Steve, 2026-07-31). The tooltip
+                // carries the full time either way.
+                bool showTime = Days == 1 && myLanes == 1;
+                var chip = CalendarChrome.Chip(ev, e => EventSelected?.Invoke(e), compact: false, showTime: showTime);
                 chip.Height = height;
                 chip.Margin = new Thickness(0);
+                // A short appointment's box is thinner than the text plus the chip's 3px vertical
+                // padding, so a 15-minute standup clipped its own title. Below 24px the padding
+                // goes and the single line gets the whole box.
+                if (height < 24) chip.Padding = new Thickness(6, 0, 6, 0);
                 Canvas.SetTop(chip, top);
 
                 int lane = lanes[i];
                 // Width is a fraction of the column, resolved on layout since the column is star-sized.
-                canvas.SizeChanged += (_, _) => PositionChip(chip, canvas, lane, laneCount);
-                PositionChip(chip, canvas, lane, laneCount);
+                canvas.SizeChanged += (_, _) => PositionChip(chip, canvas, lane, myLanes);
+                PositionChip(chip, canvas, lane, myLanes);
 
+                WireDrag(chip, ev, top, canvas);
                 canvas.Children.Add(chip);
             }
+        }
+
+        /// <summary>
+        /// Drag a chip to another slot or another day (Steve, 2026-07-31). The chip follows the
+        /// pointer on a RenderTransform; on release the drop is snapped to the visible
+        /// subdivision - the same snap a click gets - and raised as EventDropped for the
+        /// controller to commit. A press that never travels a drag's worth stays a click, which
+        /// Chip itself fires on release. Down and up register handledEventsToo because Chip has
+        /// already Handled both to keep them off the day canvas.
+        /// </summary>
+        private void WireDrag(Border chip, CalendarEvent ev, double chipTop, Canvas canvas)
+        {
+            var move = new TranslateTransform();
+            chip.RenderTransform = move;
+
+            Point start = default;
+            bool dragging = false;
+
+            void Reset()
+            {
+                dragging = false;
+                move.X = move.Y = 0;
+                chip.Opacity = 1.0;
+                Panel.SetZIndex(chip, 0);
+                // Undo the in-flight lift - see MouseMove.
+                canvas.ClipToBounds = true;
+                Panel.SetZIndex(canvas, 0);
+            }
+
+            chip.AddHandler(MouseLeftButtonDownEvent, new MouseButtonEventHandler((_, e) =>
+            {
+                start = e.GetPosition(_bodyGrid);
+                dragging = false;
+                chip.CaptureMouse();
+            }), handledEventsToo: true);
+
+            chip.MouseMove += (_, e) =>
+            {
+                if (!chip.IsMouseCaptured) return;
+                var p = e.GetPosition(_bodyGrid);
+                double dx = p.X - start.X, dy = p.Y - start.Y;
+                if (!dragging &&
+                    (Math.Abs(dx) >= SystemParameters.MinimumHorizontalDragDistance ||
+                     Math.Abs(dy) >= SystemParameters.MinimumVerticalDragDistance))
+                {
+                    dragging = true;
+                    chip.Opacity = 0.7;              // lifted, and the grid reads through it
+                    Panel.SetZIndex(chip, 99);       // over its neighbors while in flight
+                    // The chip lives INSIDE its day canvas, which clips its children and sits at
+                    // default z among its sibling columns - so a cross-day drag vanished at its
+                    // own column edge (Steve, 2026-07-31). While in flight the CANVAS is unclipped
+                    // and lifted; Reset restores both.
+                    canvas.ClipToBounds = false;
+                    Panel.SetZIndex(canvas, 99);
+                }
+                if (dragging) { move.X = dx; move.Y = dy; }
+            };
+
+            chip.AddHandler(MouseLeftButtonUpEvent, new MouseButtonEventHandler((_, e) =>
+            {
+                if (!chip.IsMouseCaptured) return;
+
+                // Read EVERYTHING before releasing capture: ReleaseMouseCapture fires
+                // LostMouseCapture synchronously, and that runs Reset - which zeroes dragging.
+                // Checking dragging after the release is why every drop used to snap back
+                // committed-nothing (Steve, 2026-07-31).
+                bool wasDragging = dragging;
+                var p = e.GetPosition(_bodyGrid);
+                double dy = p.Y - start.Y;
+
+                chip.ReleaseMouseCapture();          // fires LostMouseCapture -> Reset()
+                if (!wasDragging) return;            // a click - Chip's own release handler fires it
+
+                // Column from the pointer, time from where the chip's TOP landed - so the grab
+                // point inside the chip does not shift the drop by however far down you grabbed.
+                double dayW = Math.Max(1, (_bodyGrid.ActualWidth - 56) / Days);
+                int col = (int)Math.Max(0, Math.Min(Days - 1, (p.X - 56) / dayW));
+
+                // Drag snaps at least as fine as the HALF hour, even when the grid is at its
+                // loosest. A click follows the visible lines because it creates where a line
+                // promised - but a drag moves something that exists, and hour-only drops made
+                // half-hour appointments unplaceable at density 0 (Steve, 2026-07-31). A denser
+                // grid still gives its finer snap.
+                int snap = Math.Min(30, CalendarChrome.SnapMinutes);
+                double topMins = (chipTop + dy) / CalendarChrome.HourHeight * 60;
+                int mins = (int)Math.Round(topMins / snap) * snap;
+                mins = Math.Max(0, Math.Min(24 * 60 - snap, mins));
+
+                EventDropped?.Invoke(ev, RangeStart.AddDays(col).AddMinutes(mins));
+            }), handledEventsToo: true);
+
+            // Capture stolen mid-drag (a dialog, focus loss): the chip snaps home, nothing commits.
+            chip.LostMouseCapture += (_, _) => Reset();
         }
 
         private static void PositionChip(Border chip, Canvas canvas, int lane, int laneCount)
@@ -606,13 +775,25 @@ namespace Killendar.Views
         }
     }
 
-    /// <summary>Seven days, starting on the culture's first day of the week.</summary>
+    /// <summary>Seven days starting on the culture's first day of the week - or Monday to Friday
+    /// when the work-week toggle is on (Steve, 2026-07-31).</summary>
     internal sealed class WeekView : TimeGridView
     {
         public WeekView() : base(7) { }
 
+        protected override int Days => CalendarChrome.WorkWeek ? 5 : 7;
+
+        protected override bool OffersWorkWeekToggle => true;
+
         protected override DateTime FirstVisibleDay(DateTime anchor)
         {
+            if (CalendarChrome.WorkWeek)
+            {
+                // Monday, whatever day the culture starts its week on - a work week is Mon to
+                // Fri. A weekend anchor shows the week it belongs to (the Monday before it).
+                int shiftM = ((int)anchor.DayOfWeek + 6) % 7;
+                return anchor.Date.AddDays(-shiftM);
+            }
             var first = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
             int shift = ((int)anchor.DayOfWeek - (int)first + 7) % 7;
             return anchor.Date.AddDays(-shift);
@@ -623,7 +804,7 @@ namespace Killendar.Views
             get
             {
                 var s = RangeStart;
-                var e = s.AddDays(6);
+                var e = s.AddDays(Days - 1);
                 return s.Year == e.Year && s.Month == e.Month
                     ? $"{s:MMM d} - {e:d}, {e:yyyy}"
                     : $"{s:MMM d} - {e:MMM d}, {e:yyyy}";

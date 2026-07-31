@@ -5,8 +5,8 @@
     <!-- French. Layered over en-US, so any key omitted here falls back to English. -->
 
     <sys:String x:Key="Str_Btn_New">Nouveau</sys:String>
-    <sys:String x:Key="Str_Btn_Import">Importer .ics</sys:String>
-    <sys:String x:Key="Str_Btn_Export">Exporter .ics</sys:String>
+    <sys:String x:Key="Str_Btn_Import">Importer</sys:String>
+    <sys:String x:Key="Str_Btn_Export">Exporter</sys:String>
     <sys:String x:Key="Str_Btn_Today">Aujourd'hui</sys:String>
     <sys:String x:Key="Str_View_Month">Mois</sys:String>
     <sys:String x:Key="Str_View_Week">Semaine</sys:String>
@@ -107,10 +107,17 @@
     <sys:String x:Key="Str_Status_LoadError">Impossible d'ouvrir ce Killendar : {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">{0} rendez-vous migrés vers votre Killendar</sys:String>
 
-    <sys:String x:Key="Str_Dlg_ImportTitle">Importer iCalendar</sys:String>
-    <sys:String x:Key="Str_Dlg_ExportTitle">Exporter iCalendar</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsFilter">Fichiers iCalendar (*.ics)|*.ics|Tous les fichiers (*.*)|*.*</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsSaveFilter">Fichiers iCalendar (*.ics)|*.ics</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportTitle">Importer des rendez-vous</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">Exporter des rendez-vous</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportFilter">Fichiers calendrier (*.ics, *.csv, *.eml)|*.ics;*.csv;*.eml|Fichiers iCalendar (*.ics)|*.ics|Fichiers CSV (*.csv)|*.csv|Invitations par e-mail (*.eml)|*.eml|Tous les fichiers (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportFilter">Fichiers iCalendar (*.ics)|*.ics|Fichiers CSV (*.csv)|*.csv|Page web (*.html)|*.html</sys:String>
+    <sys:String x:Key="Str_Status_CsvBadHeader">Ce CSV n'est pas au format Outlook. La première ligne doit nommer les colonnes : Subject, Start Date, Start Time, End Date, End Time, All day event, Description, Location</sys:String>
+    <sys:String x:Key="Str_Status_NoInvite">Aucune invitation de calendrier trouvée dans cet e-mail</sys:String>
+    <sys:String x:Key="Str_Exp_Whole">Tout le calendrier</sys:String>
+    <sys:String x:Key="Str_Exp_Range">Plage de dates</sys:String>
+    <sys:String x:Key="Str_Exp_From">DU</sys:String>
+    <sys:String x:Key="Str_Exp_To">AU</sys:String>
+    <sys:String x:Key="Str_Exp_BadRange">Vérifiez les dates</sys:String>
 
     <sys:String x:Key="Str_Cal_AllDay">toute la journée</sys:String>
     <sys:String x:Key="Str_Cal_NoTitle">(sans titre)</sys:String>
@@ -303,8 +310,8 @@
     <sys:String x:Key="Str_KS_Today">Aller à aujourd'hui</sys:String>
     <sys:String x:Key="Str_KS_New">Nouveau rendez-vous ici</sys:String>
     <sys:String x:Key="Str_KS_Panel">Panneau des rendez-vous</sys:String>
-    <sys:String x:Key="Str_KS_Import">Importer un fichier .ics</sys:String>
-    <sys:String x:Key="Str_KS_Export">Exporter en .ics</sys:String>
+    <sys:String x:Key="Str_KS_Import">Importer un fichier calendrier</sys:String>
+    <sys:String x:Key="Str_KS_Export">Exporter le calendrier</sys:String>
     <sys:String x:Key="Str_KS_ThisList">Cette liste de raccourcis</sys:String>
     <sys:String x:Key="Str_KS_About">Carte À propos</sys:String>
     <sys:String x:Key="Str_KS_Close">Fermer le panneau ou une carte</sys:String>
@@ -314,6 +321,10 @@
     <sys:String x:Key="Str_TT_Categories">Catégories</sys:String>
     <sys:String x:Key="Str_TT_Density">Densité de la grille - clic ou molette</sys:String>
     <sys:String x:Key="Str_St_Density">Densité de la grille : {0} ligne(s) par heure</sys:String>
+    <sys:String x:Key="Str_TT_WorkWeek">Semaine de travail de 5 jours</sys:String>
+    <sys:String x:Key="Str_Btn_WorkWeek">5 jours</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOn">La vue semaine affiche la semaine de travail (lun - ven)</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOff">La vue semaine affiche la semaine complète</sys:String>
     <sys:String x:Key="Str_Cat_Title">Catégories</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Couleurs de ce Killendar. Un rendez-vous peut en porter plusieurs ; la première le colore.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Donnez un nom à la catégorie.</sys:String>
@@ -338,6 +349,7 @@
 
     <!-- Menus contextuels -->
     <sys:String x:Key="Str_Ctx_AddAppointment">Ajouter un rendez-vous</sys:String>
+    <sys:String x:Key="Str_Ctx_EditSeries">Modifier la série</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Ouvrir</sys:String>
 
 </ResourceDictionary>

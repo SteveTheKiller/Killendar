@@ -28,14 +28,30 @@ namespace Killendar.Views
         // 4 = quarter hours. HourHeight rises with it because a 48px hour cut into quarters gives
         // 12px rows, which is thinner than the text that has to sit in them.
         private static readonly (double Height, int Subdivisions)[] DensitySteps =
-        {
+        [
             (48,  1),   // 0 - hour lines only
             (64,  2),   // 1 - half hours
             (84,  3),   // 2 - thirds
             (108, 4),   // 3 - quarter hours
-        };
+        ];
 
         internal const int MaxDensity = 3;
+
+        /// <summary>Week view shows Monday to Friday when set (Steve, 2026-07-31). Owned by the
+        /// shell like Density (WorkWeek.cs): persisted there, read here by WeekView on rebuild.</summary>
+        internal static bool WorkWeek;
+
+        /// <summary>Flips the work-week setting. Set by the shell (WorkWeek.cs), invoked by the
+        /// toggle WeekView builds into its own header - the view cannot reach Settings or the
+        /// status line, and this one hook is cheaper than routing an event through the
+        /// controller for a single button.</summary>
+        internal static Action? WorkWeekToggle;
+
+        /// <summary>Opens the series MASTER in the editor - the chip context menu's "Edit the
+        /// series" (Steve, 2026-07-31, Outlook's reschedule-the-series: a drag or an edit only
+        /// ever touches one date, so the whole series needs its own door). Set by the
+        /// controller, which owns the store and the editor; same shape as WorkWeekToggle.</summary>
+        internal static Action<CalendarEvent>? EditSeriesRequested;
 
         private static int _density;
 
@@ -85,7 +101,7 @@ namespace Killendar.Views
         /// keep the themed look described above.
         /// </summary>
         internal static Border Chip(CalendarEvent ev, Action<CalendarEvent> onClick,
-                                    bool compact = true, bool showTime = false)
+                                    bool compact = true, bool showTime = false, bool wrap = false)
         {
             string? category = Services.CategoryManager.PrimaryOf(ev);
             var chip = new Border
@@ -113,21 +129,70 @@ namespace Killendar.Views
             }
             else
             {
-                chip.Themed(Border.BackgroundProperty, "RowSelectedBrush");
+                // ChipBrush, not RowSelectedBrush: every theme gives untagged chips a color of
+                // their OWN that no accent overlay repoints, because the row/selection brushes
+                // collided with the day fills - on Black the chip was one shade off SelectionBg
+                // and vanished inside the selected day (Steve, 2026-07-31). Hover dims like the
+                // categorized chips instead of swapping to RowHoverBrush, which would make the
+                // chip match the hovered cell it is sitting on.
+                chip.Themed(Border.BackgroundProperty, "ChipBrush");
                 chip.Themed(Border.BorderBrushProperty, "PrimaryBrush");
 
-                chip.MouseEnter += (_, _) => chip.SetResourceReference(Border.BackgroundProperty, "RowHoverBrush");
-                chip.MouseLeave += (_, _) => chip.SetResourceReference(Border.BackgroundProperty, "RowSelectedBrush");
+                chip.MouseEnter += (_, _) => chip.Opacity = 0.82;
+                chip.MouseLeave += (_, _) => chip.Opacity = 1.0;
             }
+            // Click fires on RELEASE, and only when the pointer has not moved a drag's worth:
+            // the grid views move chips by dragging (Steve, 2026-07-31), and firing on press
+            // opened the day agenda at the start of every drag. A view's drag wiring registers
+            // with handledEventsToo, so Handled here stops the cell underneath, not the drag.
+            //
+            // Measured against the WINDOW (GetPosition(null)), never against the chip: during a
+            // drag the chip rides the pointer, so chip-relative distance stays near zero and a
+            // finished drag read as a click - which reopened the day agenda on the OLD day the
+            // moment a month drop landed.
+            Point pressedAt = default;
+            bool pressed = false;
             chip.MouseLeftButtonDown += (_, e) =>
             {
                 e.Handled = true;   // do not let the day cell underneath also fire
-                onClick(ev);
+                pressed = true;
+                pressedAt = e.GetPosition(null);
+            };
+            chip.MouseLeftButtonUp += (_, e) =>
+            {
+                if (!pressed) return;
+                pressed = false;
+                e.Handled = true;
+                var p = e.GetPosition(null);
+                if (Math.Abs(p.X - pressedAt.X) < SystemParameters.MinimumHorizontalDragDistance &&
+                    Math.Abs(p.Y - pressedAt.Y) < SystemParameters.MinimumVerticalDragDistance)
+                    onClick(ev);
             };
 
+            // One date of a series carries "Edit the series" on right-click: dragging or editing
+            // a chip only ever moves that date, so rescheduling the SERIES gets its own door
+            // (Steve, 2026-07-31). The chip's own menu wins over the day cell's add-appointment
+            // menu because it is the closer one.
+            if (ev.SeriesId != null)
+            {
+                var menu = new ContextMenu();
+                var edit = new MenuItem
+                {
+                    Header = Services.LocaleManager.Loc("Str_Ctx_EditSeries"),
+                    Icon   = MenuGlyph(0xE70F),
+                };
+                edit.Click += (_, _) => EditSeriesRequested?.Invoke(ev);
+                menu.Items.Add(edit);
+                chip.ContextMenu = menu;
+            }
+
+            // wrap: the whole title, however long, instead of one trimmed line. The sidebar day
+            // agenda asks for this at higher densities; the grid views never do - a wrapping
+            // chip in a month cell would push its neighbors out of the cell.
             var line = new TextBlock
             {
-                TextTrimming = TextTrimming.CharacterEllipsis,
+                TextTrimming = wrap ? TextTrimming.None : TextTrimming.CharacterEllipsis,
+                TextWrapping = wrap ? TextWrapping.Wrap : TextWrapping.NoWrap,
                 FontSize     = compact ? 10 : 11.5
             };
             if (category != null)

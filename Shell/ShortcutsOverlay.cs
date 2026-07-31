@@ -34,16 +34,13 @@ namespace Killendar.Shell
         /// KbRows), so a single action can own several keys - M and 1 are both Month view.
         /// LabelKey is a Str_* resource key so the overlay follows the active locale.
         /// </summary>
-        private readonly struct KsBinding
+        private readonly struct KsBinding(string keys, string labelKey, MainWindow.KsCat cat, bool ctrl, params string[] caps)
         {
-            public readonly string Keys;        // how it reads on the list, e.g. "M or 1"
-            public readonly string LabelKey;    // Str_* resource key
-            public readonly KsCat  Cat;
-            public readonly bool   Ctrl;        // lives on the Ctrl layer of the map
-            public readonly string[] Caps;      // map key ids to light
-
-            public KsBinding(string keys, string labelKey, KsCat cat, bool ctrl, params string[] caps)
-            { Keys = keys; LabelKey = labelKey; Cat = cat; Ctrl = ctrl; Caps = caps; }
+            public readonly string Keys = keys;        // how it reads on the list, e.g. "M or 1"
+            public readonly string LabelKey = labelKey;    // Str_* resource key
+            public readonly KsCat Cat = cat;
+            public readonly bool Ctrl = ctrl;        // lives on the Ctrl layer of the map
+            public readonly string[] Caps = caps;      // map key ids to light
         }
 
         // ---- THE table. Mirrors Shell/Shortcuts.cs exactly; if a key changes there, change it
@@ -226,7 +223,7 @@ namespace Killendar.Shell
                         panel.Children.Add(new Border { Width = KbUnit * w });
                         continue;
                     }
-                    panel.Children.Add(BuildKeyCap(id, cap, w, lit.TryGetValue(id, out var b) ? b : (KsBinding?)null));
+                    panel.Children.Add(BuildKeyCap(cap, w, lit.TryGetValue(id, out var b) ? b : (KsBinding?)null));
                 }
                 KsMapRows.Children.Add(panel);
             }
@@ -269,7 +266,7 @@ namespace Killendar.Shell
         /// The one deliberate difference is colour: KillerPDF has a single Accent, Killendar tints
         /// each key by its category (the neon set shared with the website map).
         /// </summary>
-        private Border BuildKeyCap(string id, string cap, double w, KsBinding? bound)
+        private Border BuildKeyCap(string cap, double w, KsBinding? bound)
         {
             var capText = new TextBlock
             {

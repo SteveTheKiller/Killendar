@@ -26,7 +26,7 @@ namespace Killendar.Shell
 
         private RepeatFreq   _repeatFreq = RepeatFreq.None;
         private RepeatEndMode _repeatEnd = RepeatEndMode.Never;
-        private readonly HashSet<DayOfWeek> _repeatDays = new HashSet<DayOfWeek>();
+        private readonly HashSet<DayOfWeek> _repeatDays = [];
 
         /// <summary>True when the panel is editing ONE date of a series and the user has chosen to
         /// apply the edit to all of them.</summary>
@@ -52,11 +52,11 @@ namespace Killendar.Shell
 
         List<DayOfWeek> IAppointmentView.FieldRepeatDays
         {
-            get => _repeatDays.OrderBy(d => d).ToList();
+            get => [.. _repeatDays.OrderBy(d => d)];
             set
             {
                 _repeatDays.Clear();
-                foreach (var d in value ?? new List<DayOfWeek>()) _repeatDays.Add(d);
+                foreach (var d in value ?? []) _repeatDays.Add(d);
                 BuildRepeatChips();
             }
         }
@@ -309,30 +309,30 @@ namespace Killendar.Shell
         // called or which patterns exist.
 
         private static readonly (RepeatFreq Freq, string Key)[] RepeatOptions =
-        {
+        [
             (RepeatFreq.None,    "Str_Rep_Never"),
             (RepeatFreq.Daily,   "Str_Rep_Daily"),
             (RepeatFreq.Weekly,  "Str_Rep_Weekly"),
             (RepeatFreq.Monthly, "Str_Rep_Monthly"),
             (RepeatFreq.Yearly,  "Str_Rep_Yearly"),
-        };
+        ];
 
         private static readonly (RepeatEndMode Mode, string Key)[] EndOptions =
-        {
+        [
             (RepeatEndMode.Never, "Str_Rep_EndNever"),
             (RepeatEndMode.After, "Str_Rep_EndAfter"),
             (RepeatEndMode.On,    "Str_Rep_EndOn"),
-        };
+        ];
 
         private static string UnitKey(RepeatFreq f)
         {
-            switch (f)
+            return f switch
             {
-                case RepeatFreq.Daily:   return "Str_Rep_UnitDays";
-                case RepeatFreq.Weekly:  return "Str_Rep_UnitWeeks";
-                case RepeatFreq.Monthly: return "Str_Rep_UnitMonths";
-                default:                 return "Str_Rep_UnitYears";
-            }
+                RepeatFreq.Daily => "Str_Rep_UnitDays",
+                RepeatFreq.Weekly => "Str_Rep_UnitWeeks",
+                RepeatFreq.Monthly => "Str_Rep_UnitMonths",
+                _ => "Str_Rep_UnitYears",
+            };
         }
     }
 }

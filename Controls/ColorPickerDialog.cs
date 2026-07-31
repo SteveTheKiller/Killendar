@@ -50,7 +50,7 @@ namespace Killendar.Controls
         // First-run / Reset palette: the family accent hexes plus useful extras, white last. The
         // first six are the same values EventStore seeds the default categories with.
         private static readonly Color[] DefaultSwatches =
-        {
+        [
             (Color)ColorConverter.ConvertFromString("#DD504B"),
             (Color)ColorConverter.ConvertFromString("#E8962C"),
             (Color)ColorConverter.ConvertFromString("#E8D44B"),
@@ -60,7 +60,7 @@ namespace Killendar.Controls
             (Color)ColorConverter.ConvertFromString("#E85CA8"),
             (Color)ColorConverter.ConvertFromString("#9A9A9A"),
             Colors.White,
-        };
+        ];
 
         private static SolidColorBrush R(string key) => (SolidColorBrush)Application.Current.Resources[key];
         private static string L(string key, string fallback) =>
@@ -200,7 +200,7 @@ namespace Killendar.Controls
             _replaceBtn.MouseLeftButtonUp += (_, _) => { _replaceArmed = !_replaceArmed; UpdateReplaceChip(); RebuildSavedRow(); };
             var resetBtn = Chip(L("Str_Btn_Reset", "Reset"), L("Str_TT_ResetSwatches", "Reset swatches to defaults"));
             resetBtn.HorizontalAlignment = HorizontalAlignment.Right;
-            resetBtn.MouseLeftButtonUp += (_, _) => { StoreSaved(new List<Color>(DefaultSwatches)); _replaceArmed = false; UpdateReplaceChip(); RebuildSavedRow(); };
+            resetBtn.MouseLeftButtonUp += (_, _) => { StoreSaved([.. DefaultSwatches]); _replaceArmed = false; UpdateReplaceChip(); RebuildSavedRow(); };
             swHeader.Children.Add(_replaceBtn);
             swHeader.Children.Add(resetBtn);
             panel.Children.Add(swHeader);
@@ -290,11 +290,11 @@ namespace Killendar.Controls
         public static List<Color> UserSwatches()
         {
             var raw = Settings.Get(SavedKey);
-            if (string.IsNullOrWhiteSpace(raw)) return new List<Color>(DefaultSwatches);   // first run = defaults
+            if (string.IsNullOrWhiteSpace(raw)) return [.. DefaultSwatches];   // first run = defaults
             var list = new List<Color>();
             foreach (var part in raw!.Split(','))
                 if (TryParseHex(part.Trim(), out Color c)) list.Add(c);
-            return list.Count > 0 ? list : new List<Color>(DefaultSwatches);
+            return list.Count > 0 ? list : [.. DefaultSwatches];
         }
 
         private List<Color> LoadSaved() => UserSwatches();
@@ -357,7 +357,7 @@ namespace Killendar.Controls
             return b;
         }
 
-        private TextBox MakeTextBox(double width) => new TextBox
+        private TextBox MakeTextBox(double width) => new()
         {
             Width = width, Height = 22, VerticalContentAlignment = VerticalAlignment.Center,
             Background = R("BackgroundBrush"), Foreground = R("TextBrush"),

@@ -31,6 +31,9 @@
     <SolidColorBrush x:Key="RowAltBrush"         Color="#14000000" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowHoverBrush"       Color="#b2b2b2" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowSelectedBrush"    Color="#c8f5d8" po:Freeze="True"/>
+    <!-- Untagged appointment chips - accent-free neutral, see the note in Greed.xaml. Brighter
+         than the page and the hover gray, so it reads as a card on both. -->
+    <SolidColorBrush x:Key="ChipBrush"           Color="#f7f7f7" po:Freeze="True"/>
     <!-- Selection pair - see the note in Dark.xaml. Values from KillerPDF. Deliberately a DARK
          fill on the light theme: the text on it is white in every theme. -->
     <SolidColorBrush x:Key="SelectionBg"         Color="#1b5e20" po:Freeze="True"/>

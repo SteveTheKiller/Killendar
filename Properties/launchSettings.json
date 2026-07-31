@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Killendar": {
+      "commandName": "Project"
+    },
+    "Demo": {
+      "commandName": "Project",
+      "commandLineArgs": "--demo"
+    }
+  }
+}

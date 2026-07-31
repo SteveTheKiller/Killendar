@@ -208,10 +208,27 @@
                     <!-- The date, in its own flexible column. TextTrimming, because this is the one
                          element allowed to shrink - it would rather lose its tail than push the
                          next arrow off the bar. -->
-                    <TextBlock x:Name="PeriodLabel" Grid.Column="1" VerticalAlignment="Center"
-                               Margin="12,0,6,0" TextTrimming="CharacterEllipsis"
-                               FontFamily="{DynamicResource WordmarkFont}" FontSize="22"
-                               Foreground="{DynamicResource TextBrush}"/>
+                    <!-- PrimaryBrush, not TextBrush (Steve, 2026-07-31): the period label is the
+                         one thing on the toolbar that says WHERE you are, and the accent is how
+                         this app marks the thing that matters - the same weight the wordmark's
+                         "Killendar" run carries.
+                         The shadow is the wordmark's exact recipe (Steve, same day, "pops the
+                         same"): a blurred dark TWIN behind the label, offset 1,2, blur 3, never
+                         an effect on the text itself - a bitmap effect on the real label would
+                         cost it ClearType (family rule). The twin's Text follows PeriodLabel by
+                         binding, so the code keeps writing one element. -->
+                    <Grid Grid.Column="1" Margin="12,0,6,0" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding Text, ElementName=PeriodLabel}"
+                                   FontFamily="{DynamicResource WordmarkFont}" FontSize="22"
+                                   Margin="1,2,0,0" IsHitTestVisible="False"
+                                   TextTrimming="CharacterEllipsis" Foreground="#C0000000"
+                                   Opacity="{DynamicResource IconShadowOpacity}">
+                            <TextBlock.Effect><BlurEffect Radius="3"/></TextBlock.Effect>
+                        </TextBlock>
+                        <TextBlock x:Name="PeriodLabel" TextTrimming="CharacterEllipsis"
+                                   FontFamily="{DynamicResource WordmarkFont}" FontSize="22"
+                                   Foreground="{DynamicResource PrimaryBrush}"/>
+                    </Grid>
 
                     <!-- Overflow. Shown INSTEAD of the four view buttons when the toolbar runs out
                          of room, which happens as soon as the appointment sidebar opens on a
@@ -300,6 +317,11 @@
                                         Click="DensityBtn_Click" PreviewMouseWheel="DensityBtn_MouseWheel"
                                         Content="&#xE8A1;" Margin="0,0,0,6"
                                         ToolTip="{DynamicResource Str_TT_Density}"/>
+
+                                <!-- The 5-day work-week toggle is NOT here: it lives in Week
+                                     view's own header corner (TimeGridView.cs), beside the
+                                     columns it drops. It sat on this rail for about an hour on
+                                     2026-07-31. -->
 
                                 <!-- Shortcuts. A literal ? in Consolas at 18, the family's rail
                                      standard - not a Segoe MDL2 glyph. Same overlay as F1. -->
@@ -599,15 +621,17 @@
                                  closing the panel. Same two sidebar rows, visibility-swapped. -->
                             <ScrollViewer x:Name="AgendaScroll" Grid.Row="1" Visibility="Collapsed"
                                           VerticalScrollBarVisibility="Auto" Padding="0,0,4,0">
-                                <StackPanel x:Name="AgendaListHost" Margin="14,0,10,10"/>
+                                <!-- IsSharedSizeScope: every row's time column is in one shared
+                                     size group (DayAgendaPanel.cs), so all the chips share one
+                                     left edge instead of each row raggedly following its own
+                                     time label's width. (Steve, 2026-07-31.) -->
+                                <StackPanel x:Name="AgendaListHost" Margin="14,0,10,10"
+                                            Grid.IsSharedSizeScope="True"/>
                             </ScrollViewer>
-                            <Border x:Name="AgendaActions" Grid.Row="2" Visibility="Collapsed">
-                                <Grid Margin="14,10,10,12">
-                                    <Button Content="{DynamicResource Str_Ctx_AddAppointment}" Click="AgendaNew_Click"
-                                            Style="{StaticResource OutlineButton}" Padding="16,5"
-                                            HorizontalAlignment="Right"/>
-                                </Grid>
-                            </Border>
+                            <!-- No add button down here (Steve, 2026-07-31): the toolbar's New
+                                 button is always visible beside the panel, and a second door to
+                                 the same action just competed with the rail. Composing on the
+                                 shown day still works from the day's right-click menu. -->
                         </Grid>
                     </Border>
         </Grid>

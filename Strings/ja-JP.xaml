@@ -5,8 +5,8 @@
     <!-- Japanese. Layered over en-US, so any key omitted here falls back to English. -->
 
     <sys:String x:Key="Str_Btn_New">新規</sys:String>
-    <sys:String x:Key="Str_Btn_Import">.ics を読み込む</sys:String>
-    <sys:String x:Key="Str_Btn_Export">.ics を書き出す</sys:String>
+    <sys:String x:Key="Str_Btn_Import">読み込む</sys:String>
+    <sys:String x:Key="Str_Btn_Export">書き出す</sys:String>
     <sys:String x:Key="Str_Btn_Today">今日</sys:String>
     <sys:String x:Key="Str_View_Month">月</sys:String>
     <sys:String x:Key="Str_View_Week">週</sys:String>
@@ -107,10 +107,17 @@
     <sys:String x:Key="Str_Status_LoadError">この Killendar を開けませんでした: {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">{0} 件の予定を Killendar に移行しました</sys:String>
 
-    <sys:String x:Key="Str_Dlg_ImportTitle">iCalendar を読み込む</sys:String>
-    <sys:String x:Key="Str_Dlg_ExportTitle">iCalendar を書き出す</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsFilter">iCalendar ファイル (*.ics)|*.ics|すべてのファイル (*.*)|*.*</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsSaveFilter">iCalendar ファイル (*.ics)|*.ics</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportTitle">予定を読み込む</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">予定を書き出す</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportFilter">カレンダー ファイル (*.ics, *.csv, *.eml)|*.ics;*.csv;*.eml|iCalendar ファイル (*.ics)|*.ics|CSV ファイル (*.csv)|*.csv|メール招待 (*.eml)|*.eml|すべてのファイル (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportFilter">iCalendar ファイル (*.ics)|*.ics|CSV ファイル (*.csv)|*.csv|Web ページ (*.html)|*.html</sys:String>
+    <sys:String x:Key="Str_Status_CsvBadHeader">この CSV は Outlook 形式ではありません。1 行目に次の列名が必要です: Subject, Start Date, Start Time, End Date, End Time, All day event, Description, Location</sys:String>
+    <sys:String x:Key="Str_Status_NoInvite">このメールにカレンダーの招待は見つかりませんでした</sys:String>
+    <sys:String x:Key="Str_Exp_Whole">カレンダー全体</sys:String>
+    <sys:String x:Key="Str_Exp_Range">期間を指定</sys:String>
+    <sys:String x:Key="Str_Exp_From">開始</sys:String>
+    <sys:String x:Key="Str_Exp_To">終了</sys:String>
+    <sys:String x:Key="Str_Exp_BadRange">日付を確認してください</sys:String>
 
     <sys:String x:Key="Str_Cal_AllDay">終日</sys:String>
     <sys:String x:Key="Str_Cal_NoTitle">(タイトルなし)</sys:String>
@@ -303,8 +310,8 @@
     <sys:String x:Key="Str_KS_Today">今日に移動</sys:String>
     <sys:String x:Key="Str_KS_New">ここに新しい予定</sys:String>
     <sys:String x:Key="Str_KS_Panel">予定パネル</sys:String>
-    <sys:String x:Key="Str_KS_Import">.ics ファイルを読み込む</sys:String>
-    <sys:String x:Key="Str_KS_Export">.ics に書き出す</sys:String>
+    <sys:String x:Key="Str_KS_Import">カレンダー ファイルを読み込む</sys:String>
+    <sys:String x:Key="Str_KS_Export">カレンダーを書き出す</sys:String>
     <sys:String x:Key="Str_KS_ThisList">このショートカット一覧</sys:String>
     <sys:String x:Key="Str_KS_About">バージョン情報カード</sys:String>
     <sys:String x:Key="Str_KS_Close">パネルまたはカードを閉じる</sys:String>
@@ -314,6 +321,10 @@
     <sys:String x:Key="Str_TT_Categories">カテゴリ</sys:String>
     <sys:String x:Key="Str_TT_Density">グリッド密度 - クリックまたはスクロール</sys:String>
     <sys:String x:Key="Str_St_Density">グリッド密度: 1時間あたり{0}本</sys:String>
+    <sys:String x:Key="Str_TT_WorkWeek">週5日制</sys:String>
+    <sys:String x:Key="Str_Btn_WorkWeek">週5日</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOn">週表示は平日のみ表示します (月 - 金)</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOff">週表示は週全体を表示します</sys:String>
     <sys:String x:Key="Str_Cat_Title">カテゴリ</sys:String>
     <sys:String x:Key="Str_Cat_Hint">この Killendar の色です。予定は複数のカテゴリを持つことができ、最初のカテゴリの色が使われます。</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">カテゴリ名を入力してください。</sys:String>
@@ -338,6 +349,7 @@
 
     <!-- コンテキストメニュー -->
     <sys:String x:Key="Str_Ctx_AddAppointment">予定を追加</sys:String>
+    <sys:String x:Key="Str_Ctx_EditSeries">シリーズを編集</sys:String>
     <sys:String x:Key="Str_Ctx_Open">開く</sys:String>
 
 </ResourceDictionary>

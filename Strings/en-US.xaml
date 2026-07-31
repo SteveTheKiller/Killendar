@@ -9,8 +9,8 @@
     <!-- No leading "+". ToolbarStyle.cs draws the E710 Add glyph in front of every caption, so a
          plus in the string renders as "+ + New". (Steve, 2026-07-30.) -->
     <sys:String x:Key="Str_Btn_New">New</sys:String>
-    <sys:String x:Key="Str_Btn_Import">Import .ics</sys:String>
-    <sys:String x:Key="Str_Btn_Export">Export .ics</sys:String>
+    <sys:String x:Key="Str_Btn_Import">Import</sys:String>
+    <sys:String x:Key="Str_Btn_Export">Export</sys:String>
     <sys:String x:Key="Str_Btn_Today">Today</sys:String>
     <sys:String x:Key="Str_View_Month">Month</sys:String>
     <sys:String x:Key="Str_View_Week">Week</sys:String>
@@ -123,11 +123,21 @@
     <sys:String x:Key="Str_Status_LoadError">Could not open this Killendar: {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">Migrated {0} appointments into your Killendar</sys:String>
 
-    <!-- File dialogs -->
-    <sys:String x:Key="Str_Dlg_ImportTitle">Import iCalendar</sys:String>
-    <sys:String x:Key="Str_Dlg_ExportTitle">Export iCalendar</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsFilter">iCalendar files (*.ics)|*.ics|All files (*.*)|*.*</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsSaveFilter">iCalendar files (*.ics)|*.ics</sys:String>
+    <!-- File dialogs. The CSV column names inside Str_Status_CsvBadHeader stay in English in
+         EVERY locale: they are Outlook's literal header words, matched by name, not labels. -->
+    <sys:String x:Key="Str_Dlg_ImportTitle">Import appointments</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">Export appointments</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportFilter">Calendar files (*.ics, *.csv, *.eml)|*.ics;*.csv;*.eml|iCalendar files (*.ics)|*.ics|CSV files (*.csv)|*.csv|Email invites (*.eml)|*.eml|All files (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportFilter">iCalendar files (*.ics)|*.ics|CSV files (*.csv)|*.csv|Web page (*.html)|*.html</sys:String>
+    <sys:String x:Key="Str_Status_CsvBadHeader">This is not an Outlook-format CSV. The first line must name the columns: Subject, Start Date, Start Time, End Date, End Time, All day event, Description, Location</sys:String>
+    <sys:String x:Key="Str_Status_NoInvite">No calendar invite found in this email</sys:String>
+
+    <!-- Export scope flyout -->
+    <sys:String x:Key="Str_Exp_Whole">Whole calendar</sys:String>
+    <sys:String x:Key="Str_Exp_Range">Date range</sys:String>
+    <sys:String x:Key="Str_Exp_From">FROM</sys:String>
+    <sys:String x:Key="Str_Exp_To">TO</sys:String>
+    <sys:String x:Key="Str_Exp_BadRange">Check the dates</sys:String>
 
     <!-- Views -->
     <sys:String x:Key="Str_Cal_AllDay">all day</sys:String>
@@ -236,6 +246,7 @@
     <sys:String x:Key="Str_Kc_Copied">{0} is on the clipboard - paste it anywhere that takes a file</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">Copy failed: {0}</sys:String>
     <sys:String x:Key="Str_Ctx_AddAppointment">Add appointment</sys:String>
+    <sys:String x:Key="Str_Ctx_EditSeries">Edit the series</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Open</sys:String>
     <sys:String x:Key="Str_Ctx_Rename">Rename</sys:String>
     <sys:String x:Key="Str_Ctx_Delete">Delete</sys:String>
@@ -327,8 +338,8 @@
     <sys:String x:Key="Str_KS_Today">Jump to today</sys:String>
     <sys:String x:Key="Str_KS_New">New appointment here</sys:String>
     <sys:String x:Key="Str_KS_Panel">Appointment panel</sys:String>
-    <sys:String x:Key="Str_KS_Import">Import an .ics file</sys:String>
-    <sys:String x:Key="Str_KS_Export">Export to .ics</sys:String>
+    <sys:String x:Key="Str_KS_Import">Import a calendar file</sys:String>
+    <sys:String x:Key="Str_KS_Export">Export the calendar</sys:String>
     <sys:String x:Key="Str_KS_ThisList">This shortcut list</sys:String>
     <sys:String x:Key="Str_KS_About">About card</sys:String>
     <sys:String x:Key="Str_KS_Close">Close the panel or a card</sys:String>
@@ -341,6 +352,10 @@
          "Grid density - click or scroll  (2)". {0} in the status line is that same number. -->
     <sys:String x:Key="Str_TT_Density">Grid density - click or scroll</sys:String>
     <sys:String x:Key="Str_St_Density">Grid density: {0} line(s) per hour</sys:String>
+    <sys:String x:Key="Str_TT_WorkWeek">5-day work week</sys:String>
+    <sys:String x:Key="Str_Btn_WorkWeek">5-Day</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOn">Week view shows the work week (Mon - Fri)</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOff">Week view shows the full week</sys:String>
     <sys:String x:Key="Str_Cat_Title">Categories</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Colors for this Killendar. An appointment can carry more than one; the first one colors it.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Give the category a name.</sys:String>

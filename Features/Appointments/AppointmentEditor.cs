@@ -222,7 +222,7 @@ namespace Killendar.Features
             }
 
             var attendees = _view.FieldAttendees
-                .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
+                .Split([',', ';'], StringSplitOptions.RemoveEmptyEntries)
                 .Select(a => a.Trim())
                 .Where(a => a.Length > 0)
                 .ToList();
@@ -329,7 +329,7 @@ namespace Killendar.Features
             ev.RepeatInterval = _view.FieldRepeatEveryN;
             ev.RepeatDays     = _view.FieldRepeat == RepeatFreq.Weekly
                                     ? _view.FieldRepeatDays
-                                    : new System.Collections.Generic.List<DayOfWeek>();
+                                    : [];
             ev.RepeatCount    = _view.FieldRepeatCount;
             ev.RepeatUntil    = _view.FieldRepeatUntil;
 
@@ -341,7 +341,7 @@ namespace Killendar.Features
                 ev.RepeatInterval = 1;
                 ev.RepeatCount    = 0;
                 ev.RepeatUntil    = null;
-                ev.SkipDates      = new System.Collections.Generic.List<DateTime>();
+                ev.SkipDates      = [];
             }
         }
 
@@ -351,7 +351,7 @@ namespace Killendar.Features
         {
             _view.FieldRepeat      = ev.Repeat;
             _view.FieldRepeatEveryN = ev.RepeatInterval > 0 ? ev.RepeatInterval : 1;
-            _view.FieldRepeatDays  = new System.Collections.Generic.List<DayOfWeek>(ev.RepeatDays ?? new System.Collections.Generic.List<DayOfWeek>());
+            _view.FieldRepeatDays  = [.. ev.RepeatDays ?? []];
             if (ev.RepeatCount > 0) _view.FieldRepeatCount = ev.RepeatCount;
             else if (ev.RepeatUntil.HasValue) _view.FieldRepeatUntil = ev.RepeatUntil;
         }
@@ -381,10 +381,10 @@ namespace Killendar.Features
             if (raw.Length == 0) return false;
 
             string[] formats =
-            {
+            [
                 "h:mm tt", "hh:mm tt", "h:mmtt", "hh:mmtt", "h tt", "htt",
                 "H:mm", "HH:mm", "Hmm", "HHmm", "H", "HH"
-            };
+            ];
             if (DateTime.TryParseExact(raw, formats, CultureInfo.CurrentCulture,
                                        DateTimeStyles.None, out var dt) ||
                 DateTime.TryParse(raw, CultureInfo.CurrentCulture, DateTimeStyles.NoCurrentDateDefault, out dt))

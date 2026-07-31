@@ -5,8 +5,8 @@
     <!-- Spanish. Layered over en-US, so any key omitted here falls back to English. -->
 
     <sys:String x:Key="Str_Btn_New">Nueva</sys:String>
-    <sys:String x:Key="Str_Btn_Import">Importar .ics</sys:String>
-    <sys:String x:Key="Str_Btn_Export">Exportar .ics</sys:String>
+    <sys:String x:Key="Str_Btn_Import">Importar</sys:String>
+    <sys:String x:Key="Str_Btn_Export">Exportar</sys:String>
     <sys:String x:Key="Str_Btn_Today">Hoy</sys:String>
     <sys:String x:Key="Str_View_Month">Mes</sys:String>
     <sys:String x:Key="Str_View_Week">Semana</sys:String>
@@ -107,10 +107,17 @@
     <sys:String x:Key="Str_Status_LoadError">No se pudo abrir este Killendar: {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">Se migraron {0} citas a tu Killendar</sys:String>
 
-    <sys:String x:Key="Str_Dlg_ImportTitle">Importar iCalendar</sys:String>
-    <sys:String x:Key="Str_Dlg_ExportTitle">Exportar iCalendar</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsFilter">Archivos iCalendar (*.ics)|*.ics|Todos los archivos (*.*)|*.*</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsSaveFilter">Archivos iCalendar (*.ics)|*.ics</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportTitle">Importar citas</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">Exportar citas</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportFilter">Archivos de calendario (*.ics, *.csv, *.eml)|*.ics;*.csv;*.eml|Archivos iCalendar (*.ics)|*.ics|Archivos CSV (*.csv)|*.csv|Invitaciones de correo (*.eml)|*.eml|Todos los archivos (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportFilter">Archivos iCalendar (*.ics)|*.ics|Archivos CSV (*.csv)|*.csv|Página web (*.html)|*.html</sys:String>
+    <sys:String x:Key="Str_Status_CsvBadHeader">Este CSV no tiene el formato de Outlook. La primera línea debe nombrar las columnas: Subject, Start Date, Start Time, End Date, End Time, All day event, Description, Location</sys:String>
+    <sys:String x:Key="Str_Status_NoInvite">No se encontró ninguna invitación de calendario en este correo</sys:String>
+    <sys:String x:Key="Str_Exp_Whole">Todo el calendario</sys:String>
+    <sys:String x:Key="Str_Exp_Range">Rango de fechas</sys:String>
+    <sys:String x:Key="Str_Exp_From">DESDE</sys:String>
+    <sys:String x:Key="Str_Exp_To">HASTA</sys:String>
+    <sys:String x:Key="Str_Exp_BadRange">Revisa las fechas</sys:String>
 
     <sys:String x:Key="Str_Cal_AllDay">todo el día</sys:String>
     <sys:String x:Key="Str_Cal_NoTitle">(sin título)</sys:String>
@@ -303,8 +310,8 @@
     <sys:String x:Key="Str_KS_Today">Ir a hoy</sys:String>
     <sys:String x:Key="Str_KS_New">Nueva cita aquí</sys:String>
     <sys:String x:Key="Str_KS_Panel">Panel de citas</sys:String>
-    <sys:String x:Key="Str_KS_Import">Importar un archivo .ics</sys:String>
-    <sys:String x:Key="Str_KS_Export">Exportar a .ics</sys:String>
+    <sys:String x:Key="Str_KS_Import">Importar un archivo de calendario</sys:String>
+    <sys:String x:Key="Str_KS_Export">Exportar el calendario</sys:String>
     <sys:String x:Key="Str_KS_ThisList">Esta lista de atajos</sys:String>
     <sys:String x:Key="Str_KS_About">Tarjeta Acerca de</sys:String>
     <sys:String x:Key="Str_KS_Close">Cerrar el panel o una tarjeta</sys:String>
@@ -314,6 +321,10 @@
     <sys:String x:Key="Str_TT_Categories">Categorías</sys:String>
     <sys:String x:Key="Str_TT_Density">Densidad de la cuadrícula - clic o rueda</sys:String>
     <sys:String x:Key="Str_St_Density">Densidad de la cuadrícula: {0} línea(s) por hora</sys:String>
+    <sys:String x:Key="Str_TT_WorkWeek">Semana laboral de 5 días</sys:String>
+    <sys:String x:Key="Str_Btn_WorkWeek">5 días</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOn">La vista de semana muestra la semana laboral (lun - vie)</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOff">La vista de semana muestra la semana completa</sys:String>
     <sys:String x:Key="Str_Cat_Title">Categorías</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Colores para este Killendar. Una cita puede llevar más de una; la primera la colorea.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Ponle un nombre a la categoría.</sys:String>
@@ -338,6 +349,7 @@
 
     <!-- Menús contextuales -->
     <sys:String x:Key="Str_Ctx_AddAppointment">Añadir cita</sys:String>
+    <sys:String x:Key="Str_Ctx_EditSeries">Editar la serie</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Abrir</sys:String>
 
 </ResourceDictionary>

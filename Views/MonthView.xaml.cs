@@ -18,6 +18,10 @@ namespace Killendar.Views
         public event Action<DateTime>? DaySelected;
         public event Action<DateTime>? SlotSelected;
 
+        /// <summary>A chip dragged to another day (Steve, 2026-07-31). Month keeps the clock and
+        /// moves the DATE; the controller commits - an occurrence as an override, never the series.</summary>
+        public event Action<CalendarEvent, DateTime>? EventDropped;
+
         /// <summary>
         /// Never raised - a month cell is a day, with no hour grid to make denser. Declared with
         /// empty accessors rather than as a field: a field-like event that nothing raises is
@@ -220,7 +224,9 @@ namespace Killendar.Views
             foreach (var ev in events)
             {
                 if (shown >= maxChips) break;
-                sp.Children.Add(CalendarChrome.Chip(ev, OnChipClick));
+                var chip = CalendarChrome.Chip(ev, OnChipClick);
+                WireDrag(chip, ev, cell);
+                sp.Children.Add(chip);
                 shown++;
             }
             if (events.Count > shown)
@@ -255,8 +261,8 @@ namespace Killendar.Views
 
         // date -> the cell and what it is, so a selection change can repaint two cells instead of
         // rebuilding all 42 (each of which re-queries the store for its events).
-        private readonly System.Collections.Generic.Dictionary<DateTime, (Border Cell, bool InMonth, bool IsToday)> _cells = new();
-        private readonly System.Collections.Generic.Dictionary<DateTime, Border> _rings = new();
+        private readonly System.Collections.Generic.Dictionary<DateTime, (Border Cell, bool InMonth, bool IsToday)> _cells = [];
+        private readonly System.Collections.Generic.Dictionary<DateTime, Border> _rings = [];
 
         /// <summary>
         /// The cell's resting appearance for the current selection. Called on build, on mouse
@@ -290,5 +296,75 @@ namespace Killendar.Views
         }
 
         private void OnChipClick(CalendarEvent ev) => EventSelected?.Invoke(ev);
+
+        /// <summary>
+        /// Drag a chip to another day (Steve, 2026-07-31). Same shape as TimeGridView.WireDrag:
+        /// the chip rides a RenderTransform, a press that never travels stays a click, and
+        /// everything is read BEFORE ReleaseMouseCapture - that release fires LostMouseCapture,
+        /// which resets the drag state (the lesson the week grid taught the same day). The drop
+        /// cell is plain arithmetic: uniform star rows and columns over StartOfGrid.
+        /// The chip's z-order is per-panel, so the CELL is lifted while in flight - lifting only
+        /// the chip would slide it underneath every later-built neighbor cell.
+        /// </summary>
+        private void WireDrag(Border chip, CalendarEvent ev, Border cell)
+        {
+            var move = new TranslateTransform();
+            chip.RenderTransform = move;
+
+            Point start = default;
+            bool dragging = false;
+
+            void Reset()
+            {
+                dragging = false;
+                move.X = move.Y = 0;
+                chip.Opacity = 1.0;
+                Panel.SetZIndex(cell, 0);
+            }
+
+            chip.AddHandler(MouseLeftButtonDownEvent, new MouseButtonEventHandler((_, e) =>
+            {
+                start = e.GetPosition(CalGrid);
+                dragging = false;
+                chip.CaptureMouse();
+            }), handledEventsToo: true);
+
+            chip.MouseMove += (_, e) =>
+            {
+                if (!chip.IsMouseCaptured) return;
+                var p = e.GetPosition(CalGrid);
+                double dx = p.X - start.X, dy = p.Y - start.Y;
+                if (!dragging &&
+                    (Math.Abs(dx) >= SystemParameters.MinimumHorizontalDragDistance ||
+                     Math.Abs(dy) >= SystemParameters.MinimumVerticalDragDistance))
+                {
+                    dragging = true;
+                    chip.Opacity = 0.7;
+                    Panel.SetZIndex(cell, 99);
+                }
+                if (dragging) { move.X = dx; move.Y = dy; }
+            };
+
+            chip.AddHandler(MouseLeftButtonUpEvent, new MouseButtonEventHandler((_, e) =>
+            {
+                if (!chip.IsMouseCaptured) return;
+                bool wasDragging = dragging;
+                var p = e.GetPosition(CalGrid);
+                chip.ReleaseMouseCapture();          // fires LostMouseCapture -> Reset()
+                if (!wasDragging) return;
+
+                if (CalGrid.ActualWidth < 1 || CalGrid.ActualHeight < 1) return;
+                int rows = Math.Max(1, CalGrid.RowDefinitions.Count);
+                int c = (int)Math.Max(0, Math.Min(6, p.X / (CalGrid.ActualWidth / 7)));
+                int r = (int)Math.Max(0, Math.Min(rows - 1, p.Y / (CalGrid.ActualHeight / rows)));
+                var target = StartOfGrid(_anchor).AddDays(r * 7 + c).Date;
+
+                // Month moves the DATE and keeps the clock; an all-day event lands on the date
+                // itself and the controller keeps its span.
+                EventDropped?.Invoke(ev, target + (ev.AllDay ? TimeSpan.Zero : ev.Start.TimeOfDay));
+            }), handledEventsToo: true);
+
+            chip.LostMouseCapture += (_, _) => Reset();
+        }
     }
 }

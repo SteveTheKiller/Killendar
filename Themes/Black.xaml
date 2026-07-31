@@ -35,6 +35,10 @@
     <SolidColorBrush x:Key="RowAltBrush"         Color="#14FFFFFF" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowHoverBrush"       Color="#242424" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowSelectedBrush"    Color="#003322" po:Freeze="True"/>
+    <!-- Untagged appointment chips - accent-free neutral, see the note in Greed.xaml. This is
+         the theme the collision was caught on: RowSelectedBrush #003322 against SelectionBg
+         #003314 made an untagged chip invisible inside the selected day. -->
+    <SolidColorBrush x:Key="ChipBrush"           Color="#303030" po:Freeze="True"/>
     <!-- Selection pair - see the note in Dark.xaml. Values from KillerPDF. -->
     <SolidColorBrush x:Key="SelectionBg"         Color="#003314" po:Freeze="True"/>
     <SolidColorBrush x:Key="SelectionFg"         Color="#ffffff" po:Freeze="True"/>

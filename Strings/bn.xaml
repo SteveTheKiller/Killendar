@@ -5,8 +5,8 @@
     <!-- Bengali. Layered over en-US, so any key omitted here falls back to English. -->
 
     <sys:String x:Key="Str_Btn_New">নতুন</sys:String>
-    <sys:String x:Key="Str_Btn_Import">.ics ইমপোর্ট</sys:String>
-    <sys:String x:Key="Str_Btn_Export">.ics এক্সপোর্ট</sys:String>
+    <sys:String x:Key="Str_Btn_Import">ইমপোর্ট</sys:String>
+    <sys:String x:Key="Str_Btn_Export">এক্সপোর্ট</sys:String>
     <sys:String x:Key="Str_Btn_Today">আজ</sys:String>
     <sys:String x:Key="Str_View_Month">মাস</sys:String>
     <sys:String x:Key="Str_View_Week">সপ্তাহ</sys:String>
@@ -107,10 +107,17 @@
     <sys:String x:Key="Str_Status_LoadError">এই Killendar খোলা যায়নি: {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">{0} টি অ্যাপয়েন্টমেন্ট আপনার Killendar-এ স্থানান্তর করা হয়েছে</sys:String>
 
-    <sys:String x:Key="Str_Dlg_ImportTitle">iCalendar ইমপোর্ট</sys:String>
-    <sys:String x:Key="Str_Dlg_ExportTitle">iCalendar এক্সপোর্ট</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsFilter">iCalendar ফাইল (*.ics)|*.ics|সব ফাইল (*.*)|*.*</sys:String>
-    <sys:String x:Key="Str_Dlg_IcsSaveFilter">iCalendar ফাইল (*.ics)|*.ics</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportTitle">অ্যাপয়েন্টমেন্ট ইমপোর্ট</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">অ্যাপয়েন্টমেন্ট এক্সপোর্ট</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportFilter">ক্যালেন্ডার ফাইল (*.ics, *.csv, *.eml)|*.ics;*.csv;*.eml|iCalendar ফাইল (*.ics)|*.ics|CSV ফাইল (*.csv)|*.csv|ইমেইল আমন্ত্রণ (*.eml)|*.eml|সব ফাইল (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportFilter">iCalendar ফাইল (*.ics)|*.ics|CSV ফাইল (*.csv)|*.csv|ওয়েব পেজ (*.html)|*.html</sys:String>
+    <sys:String x:Key="Str_Status_CsvBadHeader">এই CSV Outlook ফরম্যাটে নেই। প্রথম লাইনে এই কলামগুলির নাম থাকতে হবে: Subject, Start Date, Start Time, End Date, End Time, All day event, Description, Location</sys:String>
+    <sys:String x:Key="Str_Status_NoInvite">এই ইমেইলে কোনো ক্যালেন্ডার আমন্ত্রণ পাওয়া যায়নি</sys:String>
+    <sys:String x:Key="Str_Exp_Whole">পুরো ক্যালেন্ডার</sys:String>
+    <sys:String x:Key="Str_Exp_Range">তারিখের পরিসর</sys:String>
+    <sys:String x:Key="Str_Exp_From">থেকে</sys:String>
+    <sys:String x:Key="Str_Exp_To">পর্যন্ত</sys:String>
+    <sys:String x:Key="Str_Exp_BadRange">তারিখগুলি পরীক্ষা করুন</sys:String>
 
     <sys:String x:Key="Str_Cal_AllDay">সারাদিন</sys:String>
     <sys:String x:Key="Str_Cal_NoTitle">(শিরোনামহীন)</sys:String>
@@ -303,8 +310,8 @@
     <sys:String x:Key="Str_KS_Today">আজকে যান</sys:String>
     <sys:String x:Key="Str_KS_New">এখানে নতুন অ্যাপয়েন্টমেন্ট</sys:String>
     <sys:String x:Key="Str_KS_Panel">অ্যাপয়েন্টমেন্ট প্যানেল</sys:String>
-    <sys:String x:Key="Str_KS_Import">একটি .ics ফাইল ইমপোর্ট করুন</sys:String>
-    <sys:String x:Key="Str_KS_Export">.ics এ এক্সপোর্ট করুন</sys:String>
+    <sys:String x:Key="Str_KS_Import">একটি ক্যালেন্ডার ফাইল ইমপোর্ট করুন</sys:String>
+    <sys:String x:Key="Str_KS_Export">ক্যালেন্ডার এক্সপোর্ট করুন</sys:String>
     <sys:String x:Key="Str_KS_ThisList">এই শর্টকাট তালিকা</sys:String>
     <sys:String x:Key="Str_KS_About">সম্পর্কে কার্ড</sys:String>
     <sys:String x:Key="Str_KS_Close">প্যানেল বা কার্ড বন্ধ করুন</sys:String>
@@ -314,6 +321,10 @@
     <sys:String x:Key="Str_TT_Categories">বিভাগ</sys:String>
     <sys:String x:Key="Str_TT_Density">গ্রিড ঘনত্ব - ক্লিক বা স্ক্রল</sys:String>
     <sys:String x:Key="Str_St_Density">গ্রিড ঘনত্ব: প্রতি ঘণ্টায় {0}টি লাইন</sys:String>
+    <sys:String x:Key="Str_TT_WorkWeek">৫ দিনের কর্মসপ্তাহ</sys:String>
+    <sys:String x:Key="Str_Btn_WorkWeek">৫ দিন</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOn">সপ্তাহ ভিউ কর্মসপ্তাহ দেখায় (সোম - শুক্র)</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOff">সপ্তাহ ভিউ পুরো সপ্তাহ দেখায়</sys:String>
     <sys:String x:Key="Str_Cat_Title">বিভাগ</sys:String>
     <sys:String x:Key="Str_Cat_Hint">এই Killendar-এর রং। একটি অ্যাপয়েন্টমেন্ট একাধিক বিভাগ নিতে পারে; প্রথমটি তার রং ঠিক করে।</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">বিভাগের একটি নাম দিন।</sys:String>
@@ -338,6 +349,7 @@
 
     <!-- কনটেক্সট মেনু -->
     <sys:String x:Key="Str_Ctx_AddAppointment">অ্যাপয়েন্টমেন্ট যোগ করুন</sys:String>
+    <sys:String x:Key="Str_Ctx_EditSeries">সিরিজ সম্পাদনা করুন</sys:String>
     <sys:String x:Key="Str_Ctx_Open">খুলুন</sys:String>
 
 </ResourceDictionary>

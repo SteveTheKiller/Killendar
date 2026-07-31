@@ -14,7 +14,7 @@ namespace Killendar.Shell
     /// </summary>
     public partial class MainWindow : IAboutHost
     {
-        private AboutController _about = null!;
+        private readonly AboutController _about = null!;
 
         private void ShowAboutOverlay() => _about.Show();
 

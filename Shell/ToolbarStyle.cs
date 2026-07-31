@@ -84,20 +84,20 @@ namespace Killendar.Shell
         }
 
         private static readonly (IconSize Size, string LabelKey)[] IconSizes =
-        {
+        [
             (IconSize.Small, "Str_Toolbar_SmallIcons"),
             (IconSize.Large, "Str_Toolbar_LargeIcons"),
-        };
+        ];
 
         private static readonly (LabelMode Mode, string LabelKey)[] LabelModes =
-        {
+        [
             (LabelMode.None,   "Str_Toolbar_TextNone"),
             (LabelMode.Beside, "Str_Toolbar_TextBeside"),
             (LabelMode.Under,  "Str_Toolbar_TextUnder"),
             (LabelMode.Only,   "Str_Toolbar_TextOnly"),
-        };
+        ];
 
-        private static readonly FontFamily MdlFont = new FontFamily("Segoe MDL2 Assets");
+        private static readonly FontFamily MdlFont = new("Segoe MDL2 Assets");
 
         // ---- apply ----
 

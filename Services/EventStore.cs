@@ -824,16 +824,16 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
             master.Title       = edited.Title;
             master.Location    = edited.Location;
             master.Description = edited.Description;
-            master.Attendees   = new List<string>(edited.Attendees ?? []);
+            master.Attendees   = [.. edited.Attendees ?? []];
             master.Categories  = edited.Categories;
             master.AllDay      = edited.AllDay;
 
-            master.Start = master.Start + delta;
+            master.Start += delta;
             master.End   = master.Start + duration;
 
             master.Repeat         = edited.Repeat;
             master.RepeatInterval = edited.RepeatInterval > 0 ? edited.RepeatInterval : 1;
-            master.RepeatDays     = new List<DayOfWeek>(edited.RepeatDays ?? []);
+            master.RepeatDays     = [.. edited.RepeatDays ?? []];
             master.RepeatUntil    = edited.RepeatUntil;
             master.RepeatCount    = edited.RepeatCount;
 

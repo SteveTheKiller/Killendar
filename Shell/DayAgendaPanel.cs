@@ -50,7 +50,6 @@ namespace Killendar.Shell
             EditorScroll.Visibility  = agenda ? Visibility.Collapsed : Visibility.Visible;
             EditorActions.Visibility = agenda ? Visibility.Collapsed : Visibility.Visible;
             AgendaScroll.Visibility  = agenda ? Visibility.Visible : Visibility.Collapsed;
-            AgendaActions.Visibility = agenda ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void BuildDayAgendaRows()
@@ -84,23 +83,68 @@ namespace Killendar.Shell
 
         private FrameworkElement BuildDayAgendaRow(CalendarEvent ev)
         {
+            // The rail's density button drives this list too (Steve, 2026-07-31): the same knob
+            // that packs the hour grid tighter makes these rows say more, so the whole title and
+            // the appointment's info are readable without hovering for the tooltip.
+            //   0 - one trimmed line, as always
+            //   1 - the title wraps instead of trimming
+            //   2 - and the location shows under it
+            //   3 - and the description and attendees too
+            int detail = Views.CalendarChrome.Density;
+
             var row = new Grid();
-            row.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });                       // time
+            // The time column is SHARED across every row (AgendaListHost is the size scope), so
+            // the widest label sets one column width for the whole list and every chip starts at
+            // the same x - without it each row followed its own time label and the chips came
+            // out three different widths (Steve, 2026-07-31).
+            row.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto, SharedSizeGroup = "AgendaTime" });
             row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // chip
             row.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });                       // edit
+            row.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });                            // chip row
+            row.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });                            // details
 
-            var time = Views.CalendarChrome.Text(ev.TimeLabel, "MutedTextBrush", 10.5, null, "Consolas");
-            time.VerticalAlignment = VerticalAlignment.Center;
-            time.Margin = new Thickness(0, 0, 8, 0);
+            // A multi-day label ("7/15 11:30 PM - 7/16 1:30 AM") is the one that grows long
+            // enough to starve the chip column - the column is Auto, so one patch window
+            // squeezed every chip in the list (Steve, 2026-07-31). Stacked into two lines it
+            // is never wider than an ordinary same-day time.
+            string timeText = !ev.AllDay && ev.SpansMultipleDays
+                ? ev.Start.ToString("M/d h:mm tt") + " -\n" + ev.End.ToString("M/d h:mm tt")
+                : ev.TimeLabel;
+            var time = Views.CalendarChrome.Text(timeText, "MutedTextBrush", 10.5, null, "Consolas");
+            time.VerticalAlignment = detail >= 1 ? VerticalAlignment.Top : VerticalAlignment.Center;
+            time.Margin = new Thickness(0, detail >= 1 ? 5 : 0, 8, 0);
             Grid.SetColumn(time, 0);
             row.Children.Add(time);
 
             // Chip click only marks the row - viewing, not editing (Steve, 2026-07-30).
             var chip = Views.CalendarChrome.Chip(ev,
-                e => { _agendaHighlight = e.Id; BuildDayAgendaRows(); }, compact: false);
+                e => { _agendaHighlight = e.Id; BuildDayAgendaRows(); }, compact: false,
+                wrap: detail >= 1);
             chip.HorizontalAlignment = HorizontalAlignment.Stretch;
             Grid.SetColumn(chip, 1);
             row.Children.Add(chip);
+
+            if (detail >= 2)
+            {
+                // Under the chip, aligned to it, dimmer than the title. Only lines that have
+                // something to say are added - no empty-label placeholders.
+                var info = new StackPanel { Margin = new Thickness(2, 2, 0, 2) };
+                Grid.SetRow(info, 1);
+                Grid.SetColumn(info, 1);
+
+                if (!string.IsNullOrWhiteSpace(ev.Location))
+                    info.Children.Add(DetailLine(ev.Location, "MutedTextBrush"));
+
+                if (detail >= 3)
+                {
+                    if (!string.IsNullOrWhiteSpace(ev.Description))
+                        info.Children.Add(DetailLine(ev.Description, "DimTextBrush"));
+                    if (ev.Attendees.Count > 0)
+                        info.Children.Add(DetailLine(string.Join(", ", ev.Attendees), "DimTextBrush"));
+                }
+
+                if (info.Children.Count > 0) row.Children.Add(info);
+            }
 
             // Glyph with a tooltip, not a text button (Steve, 2026-07-30). E70F is the pencil,
             // shipped and proven in KillerNotes' and KillerShell's rails; codepoint, never a
@@ -135,11 +179,18 @@ namespace Killendar.Shell
             return wrap;
         }
 
-        /// <summary>The agenda's action row: compose on the day being shown.</summary>
-        private void AgendaNew_Click(object sender, RoutedEventArgs e)
+        /// <summary>One wrapped info line under a chip - location, description or attendees.</summary>
+        private static TextBlock DetailLine(string text, string brushKey)
         {
-            if (_agendaDay == null) return;
-            _appointments.NewAt(_agendaDay.Value.AddHours(9));   // OpenPanel swaps the mode
+            var tb = new TextBlock
+            {
+                Text         = text,
+                FontSize     = 11,
+                TextWrapping = TextWrapping.Wrap,
+                Margin       = new Thickness(0, 1, 0, 0)
+            };
+            tb.SetResourceReference(TextBlock.ForegroundProperty, brushKey);
+            return tb;
         }
 
         /// <summary>

@@ -22,7 +22,7 @@ namespace Killendar.Shell
     public partial class MainWindow
     {
         private readonly HashSet<string> _selectedCategories =
-            new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+            new(System.StringComparer.OrdinalIgnoreCase);
 
         // ---- Manage dialog ----
 
@@ -103,6 +103,28 @@ namespace Killendar.Shell
             chip.MouseLeftButtonUp += (_, _) =>
             {
                 if (!_selectedCategories.Remove(name)) _selectedCategories.Add(name);
+                PaintCategoryChip(chip, name);
+            };
+            // Hover (Steve, 2026-07-31): an unselected chip washes in a faint tint of its own
+            // color - a preview of the fill a click would apply - and its text brightens; a
+            // selected one dims, the same 0.82 the calendar chips use. Leave repaints from
+            // state, which also resets the dim.
+            chip.MouseEnter += (_, _) =>
+            {
+                if (_selectedCategories.Contains(name))
+                {
+                    chip.Opacity = 0.82;
+                }
+                else
+                {
+                    var c = CategoryManager.ColorOf(name);
+                    chip.Background = new SolidColorBrush(Color.FromArgb(0x30, c.R, c.G, c.B));
+                    ((TextBlock)chip.Child).SetResourceReference(TextBlock.ForegroundProperty, "TextBrush");
+                }
+            };
+            chip.MouseLeave += (_, _) =>
+            {
+                chip.Opacity = 1.0;
                 PaintCategoryChip(chip, name);
             };
             // Right-click a chip to manage the definitions: left-click assigns, right-click edits

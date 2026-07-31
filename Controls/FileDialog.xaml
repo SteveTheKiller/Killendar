@@ -445,9 +445,13 @@
 
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Str_Dlg_FileName}" VerticalAlignment="Center"
                            Margin="0,0,10,0" Foreground="{DynamicResource MutedTextBrush}" FontFamily="Consolas" FontSize="11"/>
+                <!-- Left padding 5, not 8: a TextBox's content host carries its own ~2px inset
+                     (WPF's TextBoxView), so at 8 the name started visibly right of the filter
+                     combo's text directly below it (combo padding is 7 with no inherent inset).
+                     5 + 2 lines the two up. (Steve, 2026-07-31.) -->
                 <TextBox x:Name="FileNameBox" Grid.Row="0" Grid.Column="1" Height="28"
                          Style="{StaticResource DarkTextBox}"
-                         FontFamily="Consolas" FontSize="12" Padding="8,0"
+                         FontFamily="Consolas" FontSize="12" Padding="5,0,8,0"
                          VerticalContentAlignment="Center" KeyDown="FileNameBox_KeyDown"/>
 
                 <TextBlock x:Name="FilterLabel" Grid.Row="1" Grid.Column="0" Text="{DynamicResource Str_Dlg_FileType}" VerticalAlignment="Center"

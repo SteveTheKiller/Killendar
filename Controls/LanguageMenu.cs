@@ -18,7 +18,7 @@ namespace Killendar.Controls
     {
         // English pinned first; the rest alphabetical by locale code. Native name left, code right.
         private static readonly (Locale Loc, string Name, string Code)[] Languages =
-        {
+        [
             (Locale.EnUS, "English",    "en-US"),
             (Locale.Bn,   "বাংলা", "bn"),
             (Locale.Cs,   "Čeština", "cs-CZ"),
@@ -29,15 +29,15 @@ namespace Killendar.Controls
             (Locale.TrTR, "Türkçe", "tr-TR"),
             (Locale.ZhCN, "中文 (简体)", "zh-CN"),
             (Locale.ZhTW, "中文 (繁體)", "zh-TW"),
-        };
+        ];
 
         private static readonly (DateStyle Style, string Key)[] DateStyles =
-        {
+        [
             (DateStyle.FollowWindows, "Str_Date_FollowWindows"),
             (DateStyle.Iso,           "Str_Date_Iso"),
             (DateStyle.US,            "Str_Date_US"),
             (DateStyle.EU,            "Str_Date_EU"),
-        };
+        ];
 
         private readonly ContextMenu _menu;
         private readonly UIElement _anchor;

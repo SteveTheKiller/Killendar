@@ -23,11 +23,20 @@ machine with a copy and paste. No service to sign up for, no telemetry, no ads.
   dates are worked out as the calendar draws them, so editing a weekly standup is one edit and a
   series with no end date costs nothing. Editing or deleting one date asks whether you mean just
   that date or the whole series.
-- **iCalendar import and export** (RFC 5545), written from scratch with no external dependencies.
-  Repeats survive the round trip, including dates you deleted from a series or edited on their own.
-  Import skips anything already in your calendar, and says what it could not keep rather than
-  swallowing it: repeat rules too exotic to draw, entries with no readable date, and tasks or
-  journal entries Killendar has nowhere to put are all counted and reported.
+- **Drag to move** - drag an appointment to another time or day in the week and day grids, or to
+  another date in month view. One date of a series moves on its own, as an exception; right-click
+  any of its dates for "Edit the series" when you mean the whole thing.
+- **A 5-day work week toggle** in the week header drops Saturday and Sunday, and the grid density
+  control steps the hour grid from hour lines down to quarter hours.
+- **Import and export in the formats people actually hand you** - iCalendar (.ics, RFC 5545,
+  written from scratch with no external dependencies) both ways; CSV both ways in Outlook's
+  column format, one row per date; a saved email invite (.eml) in; and a month-by-month web page
+  out, carrying all six themes and a print stylesheet so print-to-PDF covers printing. Export
+  asks whether you mean the whole calendar or a date range. Repeats survive the .ics round trip,
+  including dates you deleted from a series or edited on their own. Import skips anything already
+  in your calendar, and says what it could not keep rather than swallowing it: repeat rules too
+  exotic to draw, entries with no readable date, and tasks or journal entries Killendar has
+  nowhere to put are all counted and reported.
 - **Optional encryption** - the lock button in the title bar puts a password on your Killendar and
   it is encrypted at rest with SQLCipher (AES-256). Opt-in: no password means a plain SQLite file.
 - **As many Killendars as you like** - work, on-call, family. Create, rename, delete, load and
@@ -64,9 +73,10 @@ Uninstalling never deletes your appointments.
 | `Left` / `Right`, or `,` / `.` | Previous / next period |
 | `M` `W` `D` `A`, or `1` `2` `3` `4` | Month / week / day / agenda |
 | `B` | Show or hide the appointment panel |
-| `F1` | About |
+| `F1` | Keyboard shortcuts overlay |
+| `F12` | About |
 | `Esc` | Close the panel or overlay |
-| `Ctrl+I` / `Ctrl+E` | Import / export .ics |
+| `Ctrl+I` / `Ctrl+E` | Import / export |
 
 Single keys only fire when you are not typing in a field. `Esc` always works.
 
@@ -122,6 +132,6 @@ dotnet build Killendar.csproj -c Release
 `brand/` holds the working artwork and is not tracked. Everything the app consumes is generated out
 of it into `Resources/`, which is tracked, so a fresh clone builds without it.
 
-## Licence
+## License
 
 GPLv3. See [LICENSE](LICENSE).

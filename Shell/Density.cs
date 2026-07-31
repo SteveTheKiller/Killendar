@@ -19,7 +19,11 @@ using Killendar.Views;
 //   * Ctrl+wheel anywhere over the grid. TimeGridView raises DensityStepped; plain wheel still
 //     scrolls the day.
 //
-// Persisted as "TimeGridDensity". Month and Agenda ignore it - neither has an hour grid.
+// Persisted as "TimeGridDensity". Month and the Agenda VIEW ignore it - neither has an hour
+// grid. The sidebar's day agenda follows it too (Steve, 2026-07-31), reading it as detail per
+// row rather than lines per hour: step 0 is one trimmed line, then the title wraps, then the
+// location shows, then description and attendees - so at the top step everything the hover
+// tooltip says is on the row itself.
 // ============================================================
 namespace Killendar.Shell
 {
@@ -59,6 +63,9 @@ namespace Killendar.Shell
             // Every hour position on screen just moved, so this one genuinely needs a full rebuild -
             // unlike the selection marker, which repaints two cells.
             _calendar.Refresh();
+
+            // The sidebar's day agenda reads density as detail per row; rebuild it if showing.
+            if (_agendaDay != null) BuildDayAgendaRows();
             // StatusText directly, NOT SetStatus: that is an EXPLICIT IShellServices implementation
             // and so is not callable unqualified from inside the class. Language.cs writes the
             // status the same way; Install.cs casts instead. (CS0103.)

@@ -117,7 +117,7 @@ namespace Killendar.Controls
         private void KcList_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             var d = e.OriginalSource as DependencyObject;
-            while (d != null && !(d is ListBoxItem))
+            while (d != null && d is not ListBoxItem)
                 d = VisualTreeHelper.GetParent(d);
             if (d is ListBoxItem item) item.IsSelected = true;
         }
@@ -129,7 +129,7 @@ namespace Killendar.Controls
 
         private void BeginRename(ListBoxItem item)
         {
-            if (!(item.Tag is string oldName) || !(item.Content is StackPanel row)) return;
+            if (item.Tag is not string oldName || item.Content is not StackPanel row) return;
 
             var box = new TextBox
             {
@@ -218,7 +218,7 @@ namespace Killendar.Controls
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            if (!(SelectedFile is string name)) { DlgStatus.Text = Loc("Str_Kc_SelectFirst"); return; }
+            if (SelectedFile is not string name) { DlgStatus.Text = Loc("Str_Kc_SelectFirst"); return; }
 
             var confirm = new ConfirmDialog(
                 string.Format(Loc("Str_Kc_DeleteHead"), name),
@@ -275,7 +275,7 @@ namespace Killendar.Controls
         /// Teams or an email copies or attaches the file itself.</summary>
         private void CopyFileMenu_Click(object sender, RoutedEventArgs e)
         {
-            if (!(SelectedFile is string name)) { DlgStatus.Text = Loc("Str_Kc_SelectFirst"); return; }
+            if (SelectedFile is not string name) { DlgStatus.Text = Loc("Str_Kc_SelectFirst"); return; }
             try
             {
                 var files = new System.Collections.Specialized.StringCollection
@@ -291,7 +291,7 @@ namespace Killendar.Controls
 
         private void RevealMenu_Click(object sender, RoutedEventArgs e)
         {
-            if (!(SelectedFile is string name)) { Explorer_Click(sender, e); return; }
+            if (SelectedFile is not string name) { Explorer_Click(sender, e); return; }
             try
             {
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(
@@ -314,7 +314,7 @@ namespace Killendar.Controls
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
-            if (!(SelectedFile is string name)) { DlgStatus.Text = Loc("Str_Kc_SelectFirst"); return; }
+            if (SelectedFile is not string name) { DlgStatus.Text = Loc("Str_Kc_SelectFirst"); return; }
             Selected = name;
             Close();
         }

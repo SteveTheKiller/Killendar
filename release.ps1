@@ -358,10 +358,9 @@ git push origin $Tag
 if ($LASTEXITCODE -ne 0) { Fail 'Tag push failed' }
 
 # --- 10. GitHub release ---
-# Publishing this release is also what fires .github/workflows/winget-release.yml, which
-# submits to winget-pkgs via komac. Do NOT add a komac call here - it would double-submit.
-# That workflow uses `komac update`, which only works once the package already exists in
-# winget-pkgs; the very first submission has to be `komac new` by hand (see the workflow).
+# No winget submission happens here or anywhere: this repo has NO .github/workflows (see the
+# header note). If Killendar is ever listed on winget, copy KillerScan's winget-release.yml -
+# which fires on release publish and uses komac - rather than adding a komac call here.
 Step "Creating GitHub release"
 gh release create $Tag $exe $srcZip $sumsFile --title "Killendar $Tag" --notes-file $notesFile --verify-tag
 if ($LASTEXITCODE -ne 0) { Fail 'gh release create failed' }
@@ -412,5 +411,5 @@ Step "Done"
 Write-Host "Release $Tag published:"
 gh release view $Tag --json url --jq '.url'
 Write-Host ""
-Write-Host "  winget: submitted by .github/workflows/winget-release.yml (needs the WINGET_TOKEN secret)" -ForegroundColor Yellow
+Write-Host "  winget: NOT submitted - this repo has no workflow. Copy KillerScan's winget-release.yml if Killendar gets listed." -ForegroundColor Yellow
 Write-Host "  site  : killendar-landing/ is committed and current - drag it into Cloudflare Pages to deploy." -ForegroundColor Yellow

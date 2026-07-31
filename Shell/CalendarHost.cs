@@ -31,6 +31,17 @@ namespace Killendar.Shell
             // A color picker previewing a category repaints the calendar without writing, so it
             // cannot come through _store.Changed.
             Services.CategoryManager.Previewed += () => _calendar.Refresh();
+            // Tag colors are theme-aware on the single-hue themes (CategoryManager.Displayed),
+            // and chips carry literal brushes, so a theme switch must drop the brush cache and
+            // repaint - in that order, or the repaint would rebuild from the stale cache.
+            Services.ThemeManager.ThemeChanged += () =>
+            {
+                Services.CategoryManager.OnThemeChanged();
+                _calendar.Refresh();
+                // The sidebar's day list carries the same literal category brushes, so it must
+                // rebuild too - _calendar.Refresh only repaints the views.
+                if (_agendaDay != null) BuildDayAgendaRows();
+            };
 
             _calendar.Initialize();         // builds the views, shows Month
             _security.RefreshLockState();   // so the title-bar lock is never blank before the open

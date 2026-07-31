@@ -17,7 +17,7 @@ namespace Killendar.Services
     public sealed class IcsParseResult
     {
         /// <summary>The appointments Killendar can actually store.</summary>
-        public List<CalendarEvent> Events = new List<CalendarEvent>();
+        public List<CalendarEvent> Events = [];
 
         /// <summary>VEVENTs dropped for having no readable start date.</summary>
         public int Unreadable;
@@ -364,31 +364,31 @@ namespace Killendar.Services
         /// <summary>"MO" through "SU", or null for the ordinal form ("3MO") this cannot draw.</summary>
         private static DayOfWeek? ParseWeekday(string s)
         {
-            switch (s.ToUpperInvariant())
+            return s.ToUpperInvariant() switch
             {
-                case "SU": return DayOfWeek.Sunday;
-                case "MO": return DayOfWeek.Monday;
-                case "TU": return DayOfWeek.Tuesday;
-                case "WE": return DayOfWeek.Wednesday;
-                case "TH": return DayOfWeek.Thursday;
-                case "FR": return DayOfWeek.Friday;
-                case "SA": return DayOfWeek.Saturday;
-                default:   return null;
-            }
+                "SU" => (DayOfWeek?)DayOfWeek.Sunday,
+                "MO" => (DayOfWeek?)DayOfWeek.Monday,
+                "TU" => (DayOfWeek?)DayOfWeek.Tuesday,
+                "WE" => (DayOfWeek?)DayOfWeek.Wednesday,
+                "TH" => (DayOfWeek?)DayOfWeek.Thursday,
+                "FR" => (DayOfWeek?)DayOfWeek.Friday,
+                "SA" => (DayOfWeek?)DayOfWeek.Saturday,
+                _ => null,
+            };
         }
 
         private static string WeekdayCode(DayOfWeek d)
         {
-            switch (d)
+            return d switch
             {
-                case DayOfWeek.Sunday:    return "SU";
-                case DayOfWeek.Monday:    return "MO";
-                case DayOfWeek.Tuesday:   return "TU";
-                case DayOfWeek.Wednesday: return "WE";
-                case DayOfWeek.Thursday:  return "TH";
-                case DayOfWeek.Friday:    return "FR";
-                default:                  return "SA";
-            }
+                DayOfWeek.Sunday => "SU",
+                DayOfWeek.Monday => "MO",
+                DayOfWeek.Tuesday => "TU",
+                DayOfWeek.Wednesday => "WE",
+                DayOfWeek.Thursday => "TH",
+                DayOfWeek.Friday => "FR",
+                _ => "SA",
+            };
         }
 
         private static (string name, string param, string value) SplitProperty(string line)

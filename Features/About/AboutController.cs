@@ -88,7 +88,7 @@ namespace Killendar.Features
             _host.UpdateEnabled = false;
             _host.UpdateText    = _host.Loc("Str_About_Downloading");
 
-            string? newExe = null;
+            string? newExe;
             try
             {
                 newExe = await UpdateService.DownloadAsync(tag!);

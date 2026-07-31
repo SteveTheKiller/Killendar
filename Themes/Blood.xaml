@@ -32,6 +32,8 @@
     <SolidColorBrush x:Key="RowAltBrush"         Color="#18FFFFFF" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowHoverBrush"       Color="#54201f" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowSelectedBrush"    Color="#44ffffff" po:Freeze="True"/>
+    <!-- Untagged appointment chips - neutral gray, see the note in Greed.xaml. -->
+    <SolidColorBrush x:Key="ChipBrush"           Color="#4a4a4a" po:Freeze="True"/>
     <!-- Selection pair - see the note in Dark.xaml. The monochrome themes use a translucent white
          fill rather than a colour, exactly as KillerPDF does. -->
     <SolidColorBrush x:Key="SelectionBg"         Color="#44ffffff" po:Freeze="True"/>
