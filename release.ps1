@@ -291,7 +291,10 @@ if ($DryRun) {
     if ($indexNew -ne $indexRaw) { [System.IO.File]::WriteAllText($indexPath, $indexNew) }
 
     foreach ($page in 'index.html', 'about.html', 'technical.html', 'howto.html') {
-        $p   = Join-Path $siteDir $page
+        $p = Join-Path $siteDir $page
+        # The site went out index-first; about/technical/howto appear as they get built. A page
+        # that does not exist yet is not an error - v1.0.0 failed right here assuming all four.
+        if (-not (Test-Path $p)) { continue }
         $raw = [System.IO.File]::ReadAllText($p)
         $new = $raw -replace '(id="verEgg"[^>]*>)v[0-9]+\.[0-9]+\.[0-9]+', ('${1}' + "v$Version")
         if ($new -ne $raw) { [System.IO.File]::WriteAllText($p, $new) }
