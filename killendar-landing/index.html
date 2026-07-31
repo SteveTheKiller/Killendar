@@ -124,22 +124,24 @@ html[data-theme="light"] .blurb h3, html[data-theme="light"] .feature-card h3 { 
 <button class="acc" data-accent="Purple" title="Purple"></button>
 </div>
 </div>
-<!-- Language flyout (kd.js). English lives in the page itself and is snapshotted at boot;
-     the other nine live in kd.js I18N. The hero-info card is deliberately NOT translated:
-     release.ps1 rewrites it by matching the literal English label spans. -->
-<div class="lang-fly lang-switch" id="langSwitch">
-<button class="lang-toggle" id="langToggle" aria-haspopup="true" aria-expanded="false" title="Language">EN</button>
-<div class="lang-pop" id="langPop" hidden role="group" aria-label="Language">
-<button class="lang" data-lang="en">English</button>
-<button class="lang" data-lang="es">Espa&ntilde;ol</button>
-<button class="lang" data-lang="fr">Fran&ccedil;ais</button>
-<button class="lang" data-lang="de">Deutsch</button>
-<button class="lang" data-lang="cs">&Ccaron;e&scaron;tina</button>
-<button class="lang" data-lang="tr">T&uuml;rk&ccedil;e</button>
-<button class="lang" data-lang="ja">&#26085;&#26412;&#35486;</button>
-<button class="lang" data-lang="bn">&#2476;&#2494;&#2434;&#2482;&#2494;</button>
-<button class="lang" data-lang="zh-CN">&#31616;&#20307;&#20013;&#25991;</button>
-<button class="lang" data-lang="zh-TW">&#32321;&#39636;&#20013;&#25991;</button>
+<!-- Language switch: KillerPDF's pdf-landing pattern VERBATIM (kp.js is the reference) - a
+     globe that becomes the chosen language's flag, over a grain-textured menu. English lives
+     in the page itself and is snapshotted at boot; the other nine live in kd.js I18N. The
+     hero-info card is deliberately NOT translated: release.ps1 rewrites it by matching the
+     literal English label spans. -->
+<div class="lang-switch" role="group" aria-label="Language">
+<button class="lang-toggle" id="langToggle" aria-haspopup="true" aria-expanded="false" title="Language" aria-label="Language">&#127760;</button>
+<div class="lang-menu" id="langMenu" hidden>
+<button class="lang-item" data-lang="en">English</button>
+<button class="lang-item" data-lang="bn">&#2476;&#2494;&#2434;&#2482;&#2494;</button>
+<button class="lang-item" data-lang="cs">Cestina</button>
+<button class="lang-item" data-lang="de">Deutsch</button>
+<button class="lang-item" data-lang="es">Espanol</button>
+<button class="lang-item" data-lang="fr">Francais</button>
+<button class="lang-item" data-lang="ja">&#26085;&#26412;&#35486;</button>
+<button class="lang-item" data-lang="tr">Turkce</button>
+<button class="lang-item" data-lang="zh-CN">&#20013;&#25991; (&#31616;&#20307;)</button>
+<button class="lang-item" data-lang="zh-TW">&#20013;&#25991; (&#32321;&#39636;)</button>
 </div>
 </div>
 </div>

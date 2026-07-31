@@ -164,7 +164,20 @@
   // the literal English label spans. Values may contain markup; they are our own strings.
 
   var LANGS = ['en', 'es', 'fr', 'de', 'cs', 'tr', 'ja', 'bn', 'zh-CN', 'zh-TW'];
-  var LANG_BADGE = { en: 'EN', es: 'ES', fr: 'FR', de: 'DE', cs: 'CS', tr: 'TR', ja: 'JA', bn: 'BN', 'zh-CN': '简', 'zh-TW': '繁' };
+
+  // Flag SVGs, KillerPDF's kp.js set verbatim; the toggle wears the chosen language's flag.
+  var FLAGS = {
+    en: '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#fff"/><g fill="#b22234"><rect width="24" height="1.85"/><rect y="3.7" width="24" height="1.85"/><rect y="7.4" width="24" height="1.85"/><rect y="11.1" width="24" height="1.85"/><rect y="14.8" width="24" height="1.85"/><rect y="18.5" width="24" height="1.85"/><rect y="22.2" width="24" height="1.8"/></g><rect width="11" height="12.95" fill="#3c3b6e"/></svg>',
+    es: '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#c60b1e"/><rect y="6" width="24" height="12" fill="#ffc400"/></svg>',
+    de: '<svg viewBox="0 0 24 24"><rect width="24" height="8" fill="#000"/><rect y="8" width="24" height="8" fill="#dd0000"/><rect y="16" width="24" height="8" fill="#ffce00"/></svg>',
+    fr: '<svg viewBox="0 0 24 24"><rect width="8" height="24" fill="#0055a4"/><rect x="8" width="8" height="24" fill="#fff"/><rect x="16" width="8" height="24" fill="#ef4135"/></svg>',
+    ja: '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#fff"/><circle cx="12" cy="12" r="7" fill="#bc002d"/></svg>',
+    tr: '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#e30a17"/><circle cx="9.5" cy="12" r="5" fill="#fff"/><circle cx="11" cy="12" r="4" fill="#e30a17"/><polygon points="15.5,9.4 16.12,11.15 17.97,11.2 16.5,12.32 17.03,14.1 15.5,13.05 13.97,14.1 14.5,12.32 13.03,11.2 14.88,11.15" fill="#fff"/></svg>',
+    'zh-TW': '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#fe0000"/><rect width="12" height="12" fill="#000095"/><polygon points="6,3 7.2,6.6 11,6.6 7.9,8.8 9.1,12.4 6,10.2 2.9,12.4 4.1,8.8 1,6.6 4.8,6.6" fill="#fff"/></svg>',
+    'zh-CN': '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#de2910"/><polygon points="4,3 4.9,5.6 7.6,5.6 5.4,7.3 6.2,9.9 4,8.3 1.8,9.9 2.6,7.3 0.4,5.6 3.1,5.6" fill="#ffde00"/></svg>',
+    bn: '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#006a4e"/><circle cx="10.5" cy="12" r="6" fill="#f42a41"/></svg>',
+    cs: '<svg viewBox="0 0 24 24"><rect width="24" height="12" fill="#fff"/><rect y="12" width="24" height="12" fill="#d7141a"/><polygon points="0,0 12,12 0,24" fill="#11457e"/></svg>'
+  };
 
   var I18N = {
     en: {},   // filled from the DOM at boot
@@ -556,11 +569,11 @@
       var k = el.getAttribute('data-i18n');
       el.innerHTML = dict[k] || I18N.en[k] || el.innerHTML;
     });
-    root.setAttribute('lang', l);
+    root.setAttribute('lang', l === 'zh-TW' ? 'zh-Hant' : (l === 'zh-CN' ? 'zh-Hans' : l));
     store('kcal-lang', l);
     var tog = $('langToggle');
-    if (tog) tog.textContent = LANG_BADGE[l] || l.toUpperCase();
-    all('.lang[data-lang]').forEach(function (b) {
+    if (tog) tog.innerHTML = FLAGS[l] || FLAGS.en;
+    all('.lang-item[data-lang]').forEach(function (b) {
       b.setAttribute('aria-pressed', b.getAttribute('data-lang') === l ? 'true' : 'false');
     });
   }
@@ -606,24 +619,26 @@
     });
   }
 
-  // Language flyout: same open/close manners as the accent flyout above.
-  all('.lang[data-lang]').forEach(function (b) {
-    b.addEventListener('click', function () { applyLang(b.getAttribute('data-lang')); });
-  });
-  var ltog = $('langToggle'), lpop = $('langPop');
-  if (ltog && lpop) {
+  // Language menu: KillerPDF's manners verbatim - picking a language also closes the menu.
+  var ltog = $('langToggle'), lmenu = $('langMenu');
+  function closeLangMenu() {
+    if (lmenu) { lmenu.hidden = true; if (ltog) ltog.setAttribute('aria-expanded', 'false'); }
+  }
+  if (ltog && lmenu) {
     ltog.addEventListener('click', function (e) {
       e.stopPropagation();
-      var opening = lpop.hidden;
-      lpop.hidden = !opening;
-      ltog.setAttribute('aria-expanded', opening ? 'true' : 'false');
+      var willOpen = lmenu.hidden;
+      lmenu.hidden = !willOpen;
+      ltog.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
     });
-    lpop.addEventListener('click', function (e) { e.stopPropagation(); });
-    document.addEventListener('click', function () {
-      lpop.hidden = true; ltog.setAttribute('aria-expanded', 'false');
+    all('.lang-item[data-lang]').forEach(function (b) {
+      b.addEventListener('click', function () { applyLang(b.getAttribute('data-lang')); closeLangMenu(); });
+    });
+    document.addEventListener('click', function (e) {
+      if (!lmenu.hidden && !e.target.closest('.lang-switch')) closeLangMenu();
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { lpop.hidden = true; ltog.setAttribute('aria-expanded', 'false'); }
+      if (e.key === 'Escape') closeLangMenu();
     });
   }
 

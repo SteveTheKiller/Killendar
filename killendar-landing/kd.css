@@ -281,12 +281,18 @@ html[data-theme="black"] .spec-table tr:nth-child(even) td { background: #050505
   .hero-info { flex: 1 1 auto; min-width: 0; }
 }
 
-/* Language flyout - the accent flyout's shape with text instead of dots (kd.js applyLang). */
-.lang-fly { position: relative; display: inline-flex; align-items: center; margin-left: 8px; }
-.lang-toggle { min-width: 36px; height: 22px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text2); font-family: Consolas, monospace; font-size: 11px; cursor: pointer; padding: 0 7px; letter-spacing: .5px; }
-.lang-toggle:hover { color: var(--text); border-color: var(--accent); }
-.lang-pop { position: absolute; top: 152%; right: 0; background: var(--modal); border: 1px solid var(--border); border-radius: 9px; padding: 7px; box-shadow: 0 12px 28px rgba(0,0,0,0.5); z-index: 110; display: flex; flex-direction: column; gap: 2px; min-width: 132px; }
-.lang-pop[hidden] { display: none; }
-.lang-pop .lang { background: transparent; border: 0; color: var(--text2); font-size: 12.5px; text-align: left; padding: 5px 9px; border-radius: 6px; cursor: pointer; }
-.lang-pop .lang:hover { color: var(--text); background: color-mix(in srgb, var(--accent) 12%, transparent); }
-.lang-pop .lang[aria-pressed="true"] { color: var(--accent); }
+/* Language switch - KillerPDF's pdf-landing styles verbatim (kp.css is the reference):
+   round flag toggle, grain-textured menu. .topbar .lang-switch order lives up at line ~82. */
+.lang-switch { position: relative; display: inline-flex; align-items: center; }
+.lang-toggle { width: 26px; height: 26px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(255,255,255,0.3); background: none; padding: 0; cursor: pointer; line-height: 0; }
+.lang-toggle svg { width: 100%; height: 100%; display: block; }
+.lang-toggle:hover { border-color: var(--accent); }
+.lang-menu { position: absolute; top: 140%; right: 0; min-width: 168px; background: var(--modal); border: 1px solid var(--border); border-radius: 8px; padding: 5px; box-shadow: 0 12px 28px rgba(0,0,0,0.5); z-index: 110; }
+.lang-menu::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: url('grain.png?v=2') repeat; background-size: 256px 256px; opacity: 1; border-radius: inherit; }
+.lang-menu > * { position: relative; z-index: 1; }
+.lang-menu[hidden] { display: none; }
+.lang-item { display: block; width: 100%; text-align: left; background: none; border: 0; color: var(--text); font: inherit; font-size: 13px; padding: 7px 12px; border-radius: 6px; cursor: pointer; white-space: nowrap; }
+/* kp.css says var(--accent-dim), which this stylesheet does not define; the same 12% accent
+   mix the nav hover uses is this site's equivalent. */
+.lang-item:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.lang-item[aria-pressed="true"] { color: var(--accent); font-weight: 600; }
