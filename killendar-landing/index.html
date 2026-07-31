@@ -26,7 +26,7 @@ var bg={dark:'#1c1c1c',light:'#dcdcdc',black:'#000000',blood:'#240c0d',greed:'#0
 <meta name="twitter:description" content="A calendar you can encrypt, with no account, no sync, and nothing phoning home. Free and open source, GPLv3.">
 <meta name="twitter:image" content="https://killendar.net/og-image.png">
 <script defer src="https://koya.thekiller.net/script.js" data-website-id="158a903b-5f16-45b9-98c6-9c8eab4a519f"></script>
-<link rel="stylesheet" href="kd.css?v=1">
+<link rel="stylesheet" href="kd.css?v=2">
 <style>
 /* ---- Page-specific (landing) ---- */
 .content-inner { max-width: 1100px; margin: 0 auto; padding: 0 28px 50px; }
@@ -127,7 +127,7 @@ html[data-theme="light"] .blurb h3, html[data-theme="light"] .feature-card h3 { 
 <!-- Language flyout (kd.js). English lives in the page itself and is snapshotted at boot;
      the other nine live in kd.js I18N. The hero-info card is deliberately NOT translated:
      release.ps1 rewrites it by matching the literal English label spans. -->
-<div class="lang-fly" id="langSwitch">
+<div class="lang-fly lang-switch" id="langSwitch">
 <button class="lang-toggle" id="langToggle" aria-haspopup="true" aria-expanded="false" title="Language">EN</button>
 <div class="lang-pop" id="langPop" hidden role="group" aria-label="Language">
 <button class="lang" data-lang="en">English</button>
