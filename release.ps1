@@ -9,9 +9,9 @@
 #   .\release.ps1 -SkipSign    # local test build only - never release unsigned
 #   .\release.ps1 -Choco       # also pack/push the Chocolatey package after the release
 #
-# Unlike KillerScan, this repo has no .github/workflows, so nothing is submitted to winget
-# automatically. If Killendar is ever listed there, copy KillerScan's winget-release.yml
-# rather than adding a komac call here, so the two stay consistent.
+# winget is NOT submitted from here. Like KillerScan, this repo has
+# .github/workflows/winget-release.yml, which fires on "release: published" and runs komac
+# itself - so adding a komac call here would double-submit. Do not add one.
 #
 # The site is NOT deployed from here. killendar.net is a manual Cloudflare Pages drop, so
 # this script rewrites killendar-landing/ with the real release facts and commits it; you drag the
@@ -361,9 +361,11 @@ git push origin $Tag
 if ($LASTEXITCODE -ne 0) { Fail 'Tag push failed' }
 
 # --- 10. GitHub release ---
-# No winget submission happens here or anywhere: this repo has NO .github/workflows (see the
-# header note). If Killendar is ever listed on winget, copy KillerScan's winget-release.yml -
-# which fires on release publish and uses komac - rather than adding a komac call here.
+# Publishing this release is also what fires .github/workflows/winget-release.yml, which
+# submits to winget-pkgs via komac. Do NOT add a komac call here - it would double-submit.
+# That workflow uses `komac update`, which only works once the package already exists in
+# winget-pkgs; Killendar's first submission was microsoft/winget-pkgs#412769 (v1.0.0, by hand
+# with `komac new`), so the workflow only works for releases after that merged.
 Step "Creating GitHub release"
 gh release create $Tag $exe $srcZip $sumsFile --title "Killendar $Tag" --notes-file $notesFile --verify-tag
 if ($LASTEXITCODE -ne 0) { Fail 'gh release create failed' }
@@ -414,5 +416,5 @@ Step "Done"
 Write-Host "Release $Tag published:"
 gh release view $Tag --json url --jq '.url'
 Write-Host ""
-Write-Host "  winget: NOT submitted - this repo has no workflow. Copy KillerScan's winget-release.yml if Killendar gets listed." -ForegroundColor Yellow
+Write-Host "  winget: submitted by .github/workflows/winget-release.yml (needs the WINGET_TOKEN secret)" -ForegroundColor Yellow
 Write-Host "  site  : killendar-landing/ is committed and current - drag it into Cloudflare Pages to deploy." -ForegroundColor Yellow
