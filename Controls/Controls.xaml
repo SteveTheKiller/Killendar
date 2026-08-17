@@ -884,11 +884,16 @@
                         <!-- Selected view: the glyph goes crisp; the coloured squircle becomes
                              the raised object and therefore owns the shadow. -->
                         <Trigger Property="CommandParameter" Value="selected">
+                            <!-- This setter deliberately comes after IsMouseOver. A selected tab
+                                 keeps its selection tile on hover; otherwise RowHoverBrush replaces
+                                 the tile while SelectionFg remains active (dark-on-dark in
+                                 Ectoplasm, making the glyph appear to vanish). -->
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource SelectionBg}"/>
                             <Setter TargetName="toolbarContent" Property="Effect" Value="{x:Null}"/>
                             <Setter TargetName="Bd" Property="Effect">
                                 <Setter.Value>
-                                    <DropShadowEffect Color="Black" BlurRadius="7" ShadowDepth="2"
-                                                      Direction="270" Opacity="{DynamicResource IconShadowOpacity}"/>
+                                    <DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="2"
+                                                      Direction="270" Opacity="{DynamicResource SelectedTileShadowOpacity}"/>
                                 </Setter.Value>
                             </Setter>
                         </Trigger>

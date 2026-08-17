@@ -226,6 +226,17 @@ namespace Killendar.Services
             bool square = theme == Theme.SE98;
             d["TitleBarGridLength"] = new GridLength(square ? 22 : 36);
             d["ContentPaneMargin"] = square ? new Thickness(0) : new Thickness(0, 0, 8, 0);
+            // Modern sidebars are transparent so the app gradient/grain continues through them.
+            // 98SE uses a white client pane instead of exposing the gray window/button face.
+            d["SidebarPaneBrush"] = square ? d["PaneBrush"] : Brushes.Transparent;
+            // A hosted view can paint over a Border's normal border rendering. Keep the classic
+            // border in layout for its bevel, but draw modern themes' single-pixel outline above
+            // the view so it cannot disappear.
+            d["ContentPaneBaseBorderThickness"] = square ? new Thickness(1) : new Thickness(0);
+            d["ContentPaneOutlineThickness"] = square ? new Thickness(0) : new Thickness(1);
+            // A shadow cast by the whole selected tile covers far more area than an icon shadow;
+            // use a lighter opacity so the two read at the same visual weight.
+            d["SelectedTileShadowOpacity"] = square ? 0d : 0.45d;
             d["GripDotsVisibility"] = square ? Visibility.Collapsed : Visibility.Visible;
             d["GripHatchVisibility"] = square ? Visibility.Visible : Visibility.Collapsed;
             d["SidebarHeadingFont"] = square

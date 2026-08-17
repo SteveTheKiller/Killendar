@@ -28,13 +28,10 @@ namespace Killendar.Controls
             _menu = menu;
             _button = themeButton;
             // This is a palette tester, not a one-shot command menu. Both flags matter: StaysOpen
-            // keeps the ContextMenu alive, while StaysOpenOnClick prevents its generated MenuItem
-            // container from dismissing it after a RadioButton click.
+            // keeps the ContextMenu alive. StaysOpenOnClick belongs to the chrome-free generated
+            // MenuItem wrapper in MainWindow.xaml; replacing ItemContainerStyle here restores the
+            // normal hover fill and icon gutter around the entire palette.
             _menu.StaysOpen = true;
-            var baseMenuItem = Application.Current.TryFindResource(typeof(MenuItem)) as Style;
-            var keepOpenItems = new Style(typeof(MenuItem), baseMenuItem);
-            keepOpenItems.Setters.Add(new Setter(MenuItem.StaysOpenOnClickProperty, true));
-            _menu.ItemContainerStyle = keepOpenItems;
         }
 
         /// <summary>Themes that carry a user-chosen accent. The rest are fixed palettes, so their

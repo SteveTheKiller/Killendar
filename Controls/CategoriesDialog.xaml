@@ -99,7 +99,7 @@
                                                         <Setter TargetName="bg" Property="Background" Value="{DynamicResource RowHoverBrush}"/>
                                                     </Trigger>
                                                     <Trigger Property="IsSelected" Value="True">
-                                                        <Setter TargetName="bg" Property="Background" Value="{DynamicResource RowSelectedBrush}"/>
+                                                        <Setter TargetName="bg" Property="Background" Value="{DynamicResource SelectionBg}"/>
                                                         <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
                                                     </Trigger>
                                                 </ControlTemplate.Triggers>
@@ -111,9 +111,6 @@
                             <!-- Rows are built in code (CategoriesDialog.xaml.cs Refresh) so the
                                  swatch, name and per-row buttons can carry the category name. -->
                         </ListBox>
-                                <Border IsHitTestVisible="False" CornerRadius="{DynamicResource ControlCornerRadius}"
-                                        Background="{DynamicResource GrainTileBrush}"
-                                        Opacity="{DynamicResource GrainOpacity}"/>
                             </Grid>
                         </Border>
                         <Border IsHitTestVisible="False" BorderBrush="{DynamicResource PaneBevelDarkBrush}"

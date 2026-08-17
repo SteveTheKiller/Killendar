@@ -89,6 +89,10 @@ namespace Killendar.Controls
             grid.Children.Add(actions);
 
             var row = new ListBoxItem { Content = grid, Tag = name, HorizontalContentAlignment = HorizontalAlignment.Stretch };
+            // Buttons inside a ListBoxItem consume the mouse gesture before ListBox can select its
+            // container. Mark the row first so recolor/delete clicks still show which category the
+            // action belongs to.
+            row.PreviewMouseLeftButtonDown += (_, _) => row.IsSelected = true;
             // The name itself is the rename affordance. A deliberate click on it edits in place;
             // double-click and F2 remain available for keyboard/Explorer familiarity.
             label.MouseLeftButtonDown += (_, e) =>

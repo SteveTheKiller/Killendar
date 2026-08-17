@@ -16,7 +16,7 @@ Internals, formats, storage details, and limits live on the [technical page](htt
 - Import and export in the formats people actually hand you: iCalendar (.ics, RFC 5545) both ways, CSV in Outlook's column format both ways, saved email invites (.eml) in, and a themed month-by-month web page out with a print stylesheet
 - Optional encryption: the lock button puts a password on a Killendar and it is encrypted at rest with SQLCipher (AES-256, per-page HMAC-SHA512); opt-in, so no password means a plain readable SQLite file
 - As many Killendars as you like - work, on-call, family - each its own `.kcal` file with its own password or none; keep them in the default profile folder, another folder you choose, or beside the portable executable
-- Six themes - Dark, Light, Black, Blood, Greed and Cyanotic - with six accent hues on the first three; eleven languages switchable without a restart (contribute via `TRANSLATING.md`)
+- Thirteen themes - Dark, Light, Black, 98SE, Blood, Greed, Cyanotic, Ectoplasm, Decay, Mourning, Sepulchre, Delirium and Malaise - four of them (Dark, Light, Black and 98SE) take six accent hues each, so 33 looks in all; eleven languages switchable without a restart (contribute via `TRANSLATING.md`)
 - Keyboard driven with single-key shortcuts; full keyboard shortcut overlay on F1 with list and visual keyboard views
 - Runs portable, or self-installs per-user (no UAC) or machine-wide (`/silent` for scripted deployment); uninstalls cleanly and never deletes your appointments
 - Verified code signing shown in the About card, checked with WinVerifyTrust rather than just read off the file
@@ -26,8 +26,8 @@ Internals, formats, storage details, and limits live on the [technical page](htt
 
 | | |
 | --- | --- |
-| ![Killendar showing month view with color categories](docs/month-view.png)<br>**Month view** - Color categories painting a busy month, on the Dark theme. | ![Killendar showing a full work week in week view](docs/week-view.png)<br>**Week view** - A full work week of appointments, on the Black theme. |
-| ![Killendar showing day view with the appointment editor open](docs/day-view-editor.png)<br>**Appointment editor** - The sidebar panel and language menu in day view, on the Light theme. | ![Killendar showing the keyboard shortcuts map in Turkish](docs/shortcuts-map.png)<br>**Shortcuts map** - The F1 overlay's visual keyboard view, localized into Turkish. |
+| ![Killendar month view, a full August of color-coded appointments](docs/month-view.png)<br>**Month view** - A full August of appointments, with all-day runs banded across the top of each day, on the Delirium theme. | ![Killendar week view showing a five-day work week](docs/week-view.png)<br>**Week view** - A five-day work week, overlapping appointments packed into lanes, on the Decay theme. |
+| ![Killendar day view with the hour grid and day list](docs/day-view-editor.png)<br>**Day view** - One wall-to-wall day in the hour grid beside the day list, on the 98SE theme. | ![Killendar keyboard shortcuts overlay showing every binding on a drawn keyboard](docs/shortcuts-map.png)<br>**Shortcuts map** - The F1 overlay's keyboard view, every bound key lit and labeled, on the Black theme. |
 
 ## Requirements
 

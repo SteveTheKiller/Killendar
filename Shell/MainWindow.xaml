@@ -309,7 +309,8 @@
                      it; that was the original reason a depth was needed at all. -->
                 <Border x:Name="ContentPane"
                         Grid.Row="1" Background="{DynamicResource PaneBrush}" BorderBrush="{DynamicResource PaneBorderBrush}"
-                        BorderThickness="1" CornerRadius="{DynamicResource PanelCornerRadius}" Margin="{DynamicResource ContentPaneMargin}" Panel.ZIndex="10">
+                        BorderThickness="{DynamicResource ContentPaneBaseBorderThickness}"
+                        CornerRadius="{DynamicResource PanelCornerRadius}" Margin="{DynamicResource ContentPaneMargin}" Panel.ZIndex="10">
                     <Border.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="16" ShadowDepth="0" Opacity="{DynamicResource PaneShadowOpacity}"/>
                     </Border.Effect>
@@ -321,6 +322,13 @@
                             </Border.Background>
                         </Border>
                         <ContentControl x:Name="ViewHost"/>
+                        <!-- The modern pane outline must sit above the hosted view. Drawing it on
+                             the outer Border lets a full-bleed view obscure it; 98SE uses the four
+                             dedicated bevel rings below instead. -->
+                        <Border Panel.ZIndex="99" IsHitTestVisible="False"
+                                BorderBrush="{DynamicResource PaneBorderBrush}"
+                                BorderThickness="{DynamicResource ContentPaneOutlineThickness}"
+                                CornerRadius="{DynamicResource PanelCornerRadius}"/>
                         <!-- 98SE's calendar is a sunken client area. These four one-pixel rings
                              collapse to transparent zero-thickness borders on modern themes. -->
                         <Border x:Name="ContentPaneBevel1" Panel.ZIndex="100" IsHitTestVisible="False"
@@ -424,7 +432,9 @@
                                                  (2026-07-30) -->
                                             <ContextMenu.ItemContainerStyle>
                                                 <Style TargetType="MenuItem">
+                                                    <Setter Property="StaysOpenOnClick" Value="True"/>
                                                     <Setter Property="Padding" Value="0"/>
+                                                    <Setter Property="Margin" Value="0"/>
                                                     <Setter Property="Template">
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="MenuItem">
@@ -445,7 +455,7 @@
                          separate dialog window. The column animates 0 to 330 rather than the panel
                          toggling Visibility, so it slides instead of popping. -->
                     <Border x:Name="AppointmentSidebar" Grid.Column="0" ClipToBounds="True"
-                            Background="Transparent">
+                            Background="{DynamicResource SidebarPaneBrush}">
                         <!-- Fixed width inside the clipped border: the column animates, the content
                              does not reflow, so nothing reflows mid-slide. Pinned right so it slides
                              out from under the rail rather than crawling in from the window edge. -->
