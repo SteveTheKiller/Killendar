@@ -4,6 +4,7 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using Killendar.Features;
 using Killendar.Services;
+using Killendar.Views;
 
 // MainWindow's side of the calendar surface: it satisfies ICalendarHost, wires the toolbar, and
 // composes the feature objects. The behavior lives in Features/Calendar/.
@@ -73,7 +74,16 @@ namespace Killendar.Shell
 
         string ICalendarHost.PeriodLabel { set => PeriodLabel.Text = value; }
 
-        void ICalendarHost.ShowView(object view) => ViewHost.Content = view;
+        void ICalendarHost.ShowView(object view)
+        {
+            ViewHost.Content = view;
+            // Month view owns a stepped silhouette: its spillover days and weekday axis are
+            // deliberately transparent. The generic pane frame boxed those hollow regions back
+            // in, while Week/Day/Agenda still need the normal full-rectangle outline.
+            ContentPaneOutline.Visibility = view is MonthView
+                ? Visibility.Collapsed
+                : Visibility.Visible;
+        }
 
         void ICalendarHost.StepDensity(int direction) => DensityStepped(direction);   // Density.cs
 

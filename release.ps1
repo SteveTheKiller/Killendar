@@ -43,6 +43,21 @@ function Step([string]$Message) {
     Write-Host "==> $Message" -ForegroundColor Cyan
 }
 
+# Landing-page find/replace that refuses to silently do nothing. If a page's markup changes,
+# a plain -replace leaves stale release facts behind while the release appears successful.
+function Edit-SiteFact {
+    param(
+        [Parameter(Mandatory)][AllowEmptyString()][string]$Text,
+        [Parameter(Mandatory)][string]$Pattern,
+        [Parameter(Mandatory)][AllowEmptyString()][string]$Replacement,
+        [Parameter(Mandatory)][string]$What
+    )
+    if ($Text -notmatch $Pattern) {
+        Fail "Landing page: could not find $What. The markup changed - update its pattern in release.ps1."
+    }
+    return ($Text -replace $Pattern, $Replacement)
+}
+
 # Resolve the repo's default branch instead of hardcoding it, so the same script works across
 # the Killer family. origin/HEAD is the best hint but it can go stale - it keeps naming a
 # branch that was renamed away - so a candidate is only accepted if it still exists on the
@@ -127,13 +142,85 @@ Write-Host 'Preflight OK'
 # --- 3. Vulnerable package scan (required at every release) ---
 Step "Scanning for vulnerable packages"
 dotnet restore | Out-Null
+if ($LASTEXITCODE -ne 0) { Fail 'Package restore failed' }
 $scan = dotnet list package --vulnerable --include-transitive 2>&1 | Out-String
+$scanExit = $LASTEXITCODE
 Write-Host $scan
+if ($scanExit -ne 0) { Fail 'Vulnerable-package scan failed' }
 if ($scan -match 'has the following vulnerable packages') {
     Fail 'Vulnerable packages found. Resolve before releasing.'
 }
 
-# --- 4. Clean Release publish (FolderProfile: net48, win-x64) ---
+# --- 4. Release tests ---
+Step "Running Release tests"
+dotnet test 'Killendar.sln' -c Release --no-restore --nologo
+if ($LASTEXITCODE -ne 0) { Fail 'Release tests failed' }
+
+# Every localization must contain the complete English key set. Matching placeholders are
+# required because a translated string can load successfully and still fail at runtime when
+# string.Format receives a value the translation discarded or renumbered.
+Step "Checking translations"
+function Read-StringMap([string]$Path) {
+    [xml]$document = Get-Content -Path $Path -Raw
+    $map = @{}
+    foreach ($node in $document.ResourceDictionary.ChildNodes) {
+        if ($node.NodeType -ne [System.Xml.XmlNodeType]::Element) { continue }
+        $key = $node.GetAttribute('Key', 'http://schemas.microsoft.com/winfx/2006/xaml')
+        if ($key) { $map[$key] = [string]$node.InnerText }
+    }
+    return $map
+}
+
+$englishStrings = Read-StringMap (Join-Path $PSScriptRoot 'Strings\en-US.xaml')
+if ($englishStrings.Count -eq 0) { Fail 'English translation file contains no resource keys' }
+foreach ($localeFile in Get-ChildItem (Join-Path $PSScriptRoot 'Strings') -Filter '*.xaml') {
+    if ($localeFile.Name -eq 'en-US.xaml') { continue }
+    $localized = Read-StringMap $localeFile.FullName
+    $missing = @($englishStrings.Keys | Where-Object { -not $localized.ContainsKey($_) })
+    $extra = @($localized.Keys | Where-Object { -not $englishStrings.ContainsKey($_) })
+    $empty = @($localized.Keys | Where-Object { [string]::IsNullOrWhiteSpace($localized[$_]) })
+    $placeholderMismatch = @()
+    foreach ($key in $englishStrings.Keys) {
+        if (-not $localized.ContainsKey($key)) { continue }
+        $englishPlaceholders = @([regex]::Matches($englishStrings[$key], '\{\d+(?::[^}]*)?\}') |
+            ForEach-Object Value | Sort-Object)
+        $localizedPlaceholders = @([regex]::Matches($localized[$key], '\{\d+(?::[^}]*)?\}') |
+            ForEach-Object Value | Sort-Object)
+        if ([string]::Join('|', $englishPlaceholders) -ne
+            [string]::Join('|', $localizedPlaceholders)) {
+            $placeholderMismatch += $key
+        }
+    }
+    if ($missing.Count -or $extra.Count -or $empty.Count -or $placeholderMismatch.Count) {
+        Fail "$($localeFile.Name) is incomplete: missing=$($missing.Count), extra=$($extra.Count), empty=$($empty.Count), placeholder mismatches=$($placeholderMismatch.Count)"
+    }
+}
+Write-Host "Translations OK: $($englishStrings.Count) keys across $((Get-ChildItem (Join-Path $PSScriptRoot 'Strings') -Filter '*.xaml').Count) languages"
+
+# English release text must use ordinary hyphens. Translation dictionaries are excluded because
+# their punctuation follows the target language. At release time the clean-tree check guarantees
+# every candidate file is tracked, so git grep covers the complete candidate.
+Step "Checking English punctuation"
+$dashMatches = @(git grep -n -I -P '[\x{2013}\x{2014}]' -- . `
+    ':(exclude)Strings/bn.xaml' `
+    ':(exclude)Strings/cs-CZ.xaml' `
+    ':(exclude)Strings/de-DE.xaml' `
+    ':(exclude)Strings/es.xaml' `
+    ':(exclude)Strings/fr-FR.xaml' `
+    ':(exclude)Strings/ja-JP.xaml' `
+    ':(exclude)Strings/pl-PL.xaml' `
+    ':(exclude)Strings/tr-TR.xaml' `
+    ':(exclude)Strings/zh-CN.xaml' `
+    ':(exclude)Strings/zh-TW.xaml' `
+    ':(exclude)killendar-landing/kd.js' 2>$null)
+$dashGrepExit = $LASTEXITCODE
+if ($dashGrepExit -notin 0, 1) { Fail "English punctuation scan failed with exit code $dashGrepExit" }
+if ($dashMatches.Count -gt 0) {
+    Fail "English text contains an en or em dash:`n$($dashMatches -join "`n")"
+}
+Write-Host 'English punctuation OK'
+
+# --- 5. Clean Release publish (FolderProfile: net48, win-x64) ---
 Step "Building Release (publish)"
 if (Test-Path 'bin\Release') { Remove-Item 'bin\Release' -Recurse -Force }
 
@@ -164,7 +251,18 @@ if ($fileVersion -notlike "$Version*") {
     Fail "Built FileVersion $fileVersion does not match csproj version $Version"
 }
 
-# --- 5. Sign (Certum via SimplySign, same flow as the other Killer release scripts) ---
+# --- 6. Single-exe check ---
+# Costura embeds every managed dependency and SqlCipherBootstrap carries the native library,
+# so Killendar.exe alone is the release asset. A small file means the embedding step failed.
+Step "Verifying single-exe packaging"
+$exeSize = (Get-Item $exe).Length
+$unsignedMB = '{0:N2} MB' -f ($exeSize / 1MB)
+if ($exeSize -lt 3MB) {
+    Fail "Killendar.exe is only $unsignedMB - Costura does not appear to have embedded the dependencies."
+}
+Write-Host "Killendar.exe is $unsignedMB (unsigned)"
+
+# --- 7. Sign (Certum via SimplySign, same flow as the other Killer release scripts) ---
 if ($SkipSign) {
     Write-Host ""
     Write-Host 'SkipSign: Killendar.exe will be UNSIGNED - do not release this build' -ForegroundColor Red
@@ -214,7 +312,7 @@ if ($SkipSign) {
     Write-Host 'Signed, timestamped, and chain-verified' -ForegroundColor Green
 }
 
-# --- 6. Source bundle (GPL3 family convention) ---
+# --- 8. Source bundle (GPL3 family convention) ---
 # The Publish target already runs bundle-source.ps1, but call it again as a safety net:
 # it never overwrites an existing bundle, so this is a no-op when the zip is already there.
 Step "Bundling source"
@@ -224,7 +322,7 @@ if (-not (Test-Path $srcZip)) { Fail "Source bundle not produced: $srcZip (is gi
 $srcZipMB = '{0:N2} MB' -f ((Get-Item $srcZip).Length / 1MB)
 Write-Host "Source bundle: $srcZip ($srcZipMB)"
 
-# --- 6b. Checksums (SHA256SUMS.txt) ---
+# --- 9. Checksums (SHA256SUMS.txt) ---
 # About.cs DoSelfUpdateAsync downloads this asset from the release, next to the exe, and
 # verifies the download against it. WITHOUT it the Update button falls back to just opening
 # the releases page. The updater matches the line starting with Killendar.exe and takes the
@@ -244,7 +342,7 @@ $sumsLines = @(
 Set-Content -Path $sumsFile -Value $sumsLines -Encoding ascii
 Write-Host ($sumsLines -join "`n")
 
-# --- 7. Landing page + README release info ---
+# --- 10. Landing page + README release info ---
 # killendar.net is a MANUAL Cloudflare Pages drop, so nothing here deploys. The hero block
 # (version, released, size, sha256), the verEgg footer on every page, and the README's GPL3
 # source-zip link all carry release facts the script already knows, so they are rewritten and
@@ -263,18 +361,25 @@ $siteDir     = Join-Path (Get-Location).Path 'killendar-landing'
 $indexPath = Join-Path $siteDir 'index.html'
 $indexRaw  = [System.IO.File]::ReadAllText($indexPath)
 $indexNew  = $indexRaw
-$indexNew  = $indexNew -replace '(<span class="k">version</span>&nbsp;<span class="v">)Killendar v[0-9]+\.[0-9]+\.[0-9]+', ('${1}' + "Killendar v$Version")
-$indexNew  = $indexNew -replace '(<span class="k">released</span>&nbsp;<span class="v">)[0-9]{4}-[0-9]{2}-[0-9]{2}', ('${1}' + $releaseDate)
-$indexNew  = $indexNew -replace '(<span class="k">size</span>&nbsp;<span class="v">)[^<]*', ('${1}' + $exeMB + ' exe')
-$indexNew  = $indexNew -replace '(<span class="v hash">)[0-9A-Fa-f]{32}<br>[0-9A-Fa-f]{32}', ('${1}' + $hashUpper.Substring(0, 32) + '<br>' + $hashUpper.Substring(32, 32))
-if ($indexNew -eq $indexRaw) {
-    Write-Warning 'index.html hero block did not change - check the release-info markup still matches the patterns in this script.'
-}
+$indexNew  = Edit-SiteFact $indexNew '(<span class="k">version</span>&nbsp;<span class="v">)Killendar v[0-9]+\.[0-9]+\.[0-9]+' ('${1}' + "Killendar v$Version") 'the hero version'
+$indexNew  = Edit-SiteFact $indexNew '(<span class="k">released</span>&nbsp;<span class="v">)[0-9]{4}-[0-9]{2}-[0-9]{2}' ('${1}' + $releaseDate) 'the hero released date'
+$indexNew  = Edit-SiteFact $indexNew '(<span class="k">size</span>&nbsp;<span class="v">)[^<]*' ('${1}' + $exeMB + ' exe') 'the hero size row'
+$indexNew  = Edit-SiteFact $indexNew '(<span class="v hash">)[0-9A-Fa-f]{32}<br>[0-9A-Fa-f]{32}' ('${1}' + $hashUpper.Substring(0, 32) + '<br>' + $hashUpper.Substring(32, 32)) 'the hero sha256 block'
 
 # README: the GPL3 corresponding-source link must point at THIS release's zip.
 $readmePath = Join-Path (Get-Location).Path 'README.md'
 $readmeRaw  = [System.IO.File]::ReadAllText($readmePath)
-$readmeNew  = $readmeRaw -replace '/releases/download/v[0-9]+\.[0-9]+\.[0-9]+/Killendar-[0-9]+\.[0-9]+\.[0-9]+-src\.zip', "/releases/download/$Tag/Killendar-$Version-src.zip"
+$readmeNew  = Edit-SiteFact $readmeRaw '/releases/download/v[0-9]+\.[0-9]+\.[0-9]+/Killendar-[0-9]+\.[0-9]+\.[0-9]+-src\.zip' "/releases/download/$Tag/Killendar-$Version-src.zip" 'the README corresponding-source link'
+
+# Validate every footer during DryRun too. A stale or renamed footer is a release failure,
+# not a warning after publication.
+$footerUpdates = @{}
+foreach ($page in 'index.html', 'about.html', 'technical.html') {
+    $p = Join-Path $siteDir $page
+    if (-not (Test-Path $p)) { Fail "Landing page is missing required file: $page" }
+    $raw = if ($page -eq 'index.html') { $indexNew } else { [System.IO.File]::ReadAllText($p) }
+    $footerUpdates[$p] = Edit-SiteFact $raw '(id="verEgg"[^>]*>)v[0-9]+\.[0-9]+\.[0-9]+' ('${1}' + "v$Version") "the verEgg footer version in $page"
+}
 
 # DryRun must not touch the working tree. Writing here would leave the tree dirty, and the
 # preflight on the NEXT (real) run would then fail on the very files this run modified.
@@ -288,31 +393,60 @@ if ($DryRun) {
     Write-Host "  README   : source zip link -> $Tag$(if ($readmeNew -eq $readmeRaw) { ' (already current)' })"
     Write-Host "DryRun: working tree left untouched." -ForegroundColor Yellow
 } else {
-    if ($indexNew -ne $indexRaw) { [System.IO.File]::WriteAllText($indexPath, $indexNew) }
-
-    foreach ($page in 'index.html', 'about.html', 'technical.html', 'howto.html') {
-        $p = Join-Path $siteDir $page
-        # The site went out index-first; about/technical/howto appear as they get built. A page
-        # that does not exist yet is not an error - v1.0.0 failed right here assuming all four.
-        if (-not (Test-Path $p)) { continue }
+    foreach ($p in $footerUpdates.Keys) {
         $raw = [System.IO.File]::ReadAllText($p)
-        $new = $raw -replace '(id="verEgg"[^>]*>)v[0-9]+\.[0-9]+\.[0-9]+', ('${1}' + "v$Version")
+        $new = $footerUpdates[$p]
         if ($new -ne $raw) { [System.IO.File]::WriteAllText($p, $new) }
     }
 
     if ($readmeNew -ne $readmeRaw) { [System.IO.File]::WriteAllText($readmePath, $readmeNew) }
 }
 
-# Claim check: the README language count is written by hand, so it silently goes stale the
-# moment a locale is added. Compare it against the shipping Strings/*.xaml count and warn.
-# Non-fatal - it is a docs claim, not a build input - but it should never be wrong at a tag.
-$localeCount = (Get-ChildItem (Join-Path $PSScriptRoot 'Strings') -Filter '*.xaml' -ErrorAction SilentlyContinue).Count
-if ($localeCount -gt 0 -and $readmeNew -match '([0-9]+) languages') {
-    $claimed = [int]$Matches[1]
-    if ($claimed -ne $localeCount) {
-        Write-Warning "README says '$claimed languages' but Strings/ has $localeCount locale files. Fix the README (and the language list next to it) before releasing."
+# Check counts written by hand in the README and site. These are release claims, so a mismatch
+# stops publication instead of leaving incorrect documentation attached to the tag.
+$numberWords = @{
+    1 = 'one'; 2 = 'two'; 3 = 'three'; 4 = 'four'; 5 = 'five'; 6 = 'six'; 7 = 'seven'
+    8 = 'eight'; 9 = 'nine'; 10 = 'ten'; 11 = 'eleven'; 12 = 'twelve'; 13 = 'thirteen'
+    14 = 'fourteen'; 15 = 'fifteen'; 16 = 'sixteen'
+}
+
+function Test-CountClaim {
+    param([string]$Label, [int]$Actual, [string]$Noun, [string[]]$Paths)
+
+    $word = $numberWords[$Actual]
+    foreach ($p in $Paths) {
+        if (-not (Test-Path $p)) { continue }
+        $text = [System.IO.File]::ReadAllText($p)
+        $name = Split-Path $p -Leaf
+        $num = '([0-9]+|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen)'
+        $patterns = @(
+            "(?i)\b$num\s+(?:killer\s+)?$Noun\b",
+            "(?i)\b$Noun\b\s*(?:</b>)?\s*[-:：]\s*$num\b"
+        )
+        foreach ($pattern in $patterns) {
+            foreach ($match in [regex]::Matches($text, $pattern)) {
+                $said = $match.Groups[1].Value
+                $ok = if ($said -match '^[0-9]+$') {
+                    [int]$said -eq $Actual
+                } else {
+                    $said.ToLower() -eq $word
+                }
+                if (-not $ok) {
+                    Fail "$name claims '$($match.Value.Trim())' but the repo ships $Actual $Label."
+                }
+            }
+        }
     }
 }
+
+$docFiles = @($readmePath) + @('index.html', 'about.html', 'technical.html', 'kd.js') |
+    ForEach-Object { if ([System.IO.Path]::IsPathRooted($_)) { $_ } else { Join-Path $siteDir $_ } }
+
+$localeCount = (Get-ChildItem (Join-Path $PSScriptRoot 'Strings') -Filter '*.xaml' -ErrorAction SilentlyContinue).Count
+if ($localeCount -gt 0) { Test-CountClaim 'languages' $localeCount 'languages' $docFiles }
+
+$themeCount = (Get-ChildItem (Join-Path $PSScriptRoot 'Themes') -Filter '*.xaml' -ErrorAction SilentlyContinue).Count
+if ($themeCount -gt 0) { Test-CountClaim 'themes' $themeCount 'themes' $docFiles }
 
 if ($DryRun) {
     Write-Host "DryRun: would commit and push killendar-landing + README for v$Version"
@@ -320,7 +454,9 @@ if ($DryRun) {
     $siteDirty = git status --porcelain killendar-landing README.md
     if ($siteDirty) {
         git add killendar-landing README.md
+        if ($LASTEXITCODE -ne 0) { Fail 'Could not stage landing page / README updates' }
         git commit -m "v${Version}: site and README release info" --quiet
+        if ($LASTEXITCODE -ne 0) { Fail 'Could not commit landing page / README updates' }
         git push origin $defaultBranch --quiet
         if ($LASTEXITCODE -ne 0) { Fail 'Landing page / README commit failed to push' }
         Write-Host "killendar-landing and README updated to v$Version and pushed"
@@ -330,7 +466,7 @@ if ($DryRun) {
     }
 }
 
-# --- 8. Release notes from the CHANGELOG section ---
+# --- 11. Release notes from the CHANGELOG section ---
 Step "Extracting release notes from CHANGELOG.md"
 $lines = Get-Content -Path 'CHANGELOG.md'
 $notes = New-Object System.Collections.Generic.List[string]
@@ -354,13 +490,14 @@ if ($DryRun) {
     exit 0
 }
 
-# --- 9. Tag and push ---
+# --- 12. Tag and push ---
 Step "Tagging $Tag"
 git tag -a $Tag -m "Killendar $Tag"
+if ($LASTEXITCODE -ne 0) { Fail 'Tag creation failed' }
 git push origin $Tag
 if ($LASTEXITCODE -ne 0) { Fail 'Tag push failed' }
 
-# --- 10. GitHub release ---
+# --- 13. GitHub release ---
 # Publishing this release is also what fires .github/workflows/winget-release.yml, which
 # submits to winget-pkgs via komac. Do NOT add a komac call here - it would double-submit.
 # That workflow uses `komac update`, which only works once the package already exists in
@@ -370,7 +507,7 @@ Step "Creating GitHub release"
 gh release create $Tag $exe $srcZip $sumsFile --title "Killendar $Tag" --notes-file $notesFile --verify-tag
 if ($LASTEXITCODE -ne 0) { Fail 'gh release create failed' }
 
-# --- 11. Chocolatey pack/push (opt-in) ---
+# --- 14. Chocolatey pack/push (opt-in) ---
 # Runs AFTER the release is published so the package never points at a release that failed.
 # Non-fatal: the GitHub release is already out, so a choco hiccup must not fail the run.
 if ($Choco) {

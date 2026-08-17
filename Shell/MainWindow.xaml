@@ -325,7 +325,7 @@
                         <!-- The modern pane outline must sit above the hosted view. Drawing it on
                              the outer Border lets a full-bleed view obscure it; 98SE uses the four
                              dedicated bevel rings below instead. -->
-                        <Border Panel.ZIndex="99" IsHitTestVisible="False"
+                        <Border x:Name="ContentPaneOutline" Panel.ZIndex="99" IsHitTestVisible="False"
                                 BorderBrush="{DynamicResource PaneBorderBrush}"
                                 BorderThickness="{DynamicResource ContentPaneOutlineThickness}"
                                 CornerRadius="{DynamicResource PanelCornerRadius}"/>

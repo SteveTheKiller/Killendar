@@ -4,32 +4,31 @@ All notable changes to Killendar are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.0] - Unreleased
+## [1.1.0] - 2026-08-17
 
-1.1.0 expands Killendar's theme set, completes its separation from the private KillerUI folder, and resolves the issues reported after the first release.
+1.1.0 adds seven themes, scalable interface sizing and more flexible month and sidebar layouts. It also fixes all-day editing, calendar layout, localization and machine-wide uninstall.
 
 ### Added
-- Polish translation, bringing the UI to eleven languages.
-- Seven additional Killer Tools themes: 98SE, Ectoplasm, Decay, Mourning, Sepulchre, Delirium and Malaise. Together with Dark, Light, Black, Blood, Greed and Cyanotic, Killendar now ships all thirteen shared palettes. 98SE also carries its own six classic accent colors.
-- App-wide accessibility sizing from 80% to 150% by scrolling the title-bar wordmark, with the calendar and sidebar protected by scale-aware minimum dimensions.
-- F5 reloads the open `.kcal` file from disk, including encrypted Killendars already unlocked in the current session.
-- The Killendar folder can be changed from Manage Killendars with the themed folder picker, including a one-click portable mode beside the executable.
+- Seven themes: 98SE, Ectoplasm, Decay, Mourning, Sepulchre, Delirium and Malaise. Killendar now includes all thirteen Killer Tools palettes, with six classic accent colors for 98SE.
+- Interface scaling from 80% to 150% by scrolling the title-bar wordmark. Scale-aware minimum sizes keep the calendar and sidebar usable.
+- A folder picker in Manage Killendars for changing the data folder, including one-click portable storage beside the executable.
+- F5 reloads the open `.kcal` file from disk, including an encrypted Killendar already unlocked in the current session.
+- Polish translation, bringing the interface to eleven languages.
 
 ### Changed
-- The theme menu now uses KillerPDF's full-height theme list with one vertical, family-colored accent strip beside it, keeping the menu stable while switching palettes.
-- The appointment sidebar now has KillerPDF's slim resize grip beside the permanent rail. Its width can be dragged between compact and wide layouts, down to a practical 250-pixel minimum, and is remembered between runs.
-- Various UI and theme improvements, including more compact menus and overlays, textured hover states, clearer selected and unselected icon depth, improved sidebar appointment layout, consistent rounded corners, and closer visual alignment with the other Killer Tools apps.
-- The themed file picker now remembers separate open and save folders, includes Explorer Quick Access, and scrolls its column view horizontally with the mouse wheel. Loading an external Killendar uses this picker too.
 - Ctrl+wheel over Month view zooms between one and six visible weeks, increasing appointment capacity as the cells grow.
+- The appointment sidebar can be resized down to 250 pixels and remembers its width between runs.
+- The themed file picker remembers separate open and save folders, includes Explorer Quick Access, supports horizontal mouse-wheel scrolling, and is now used when loading an external Killendar.
+- The theme picker now uses a stable full-height list with a separate accent strip. Menus, overlays, selection states, sidebar layout and rounded corners have also been tightened across the interface.
 
 ### Fixed
-- Machine-wide uninstall now requests administrator access and removes the Program Files copy, Common Start Menu shortcut and HKLM registration instead of silently reporting success after permission failures.
-- Month-view date numbers now change foreground together with selected, today, hover and pressed fills, keeping both bright selection colors and dark unfilled cells readable.
 - Editing an all-day appointment no longer shows its exclusive stored boundary as the visible end date or adds another day each time the appointment is saved.
-- Themes are entirely owned by the Killendar repository again. The project no longer imports a private sibling `KillerUI` folder or overlays its resources at runtime, so a standalone clone contains every theme resource it builds and displays.
-- Week view now places all-day appointments beneath their actual dates instead of stretching every appointment across the full visible week.
-- Calendar-generated weekday and month names now follow the selected interface language rather than the Windows display culture.
+- Machine-wide uninstall now requests administrator access and correctly removes the Program Files copy, Common Start Menu shortcut and HKLM registration.
 - Multi-day and ordinary appointments now share the same sorted, scrollable stack inside each Month-view day, eliminating the competing overlay lanes that caused overlaps and misalignment.
+- Week view now places all-day appointments under their actual dates instead of stretching each one across the visible week.
+- Calendar-generated weekday and month names now follow the selected interface language instead of the Windows display culture.
+- Month-view date numbers remain readable across selected, today, hover and pressed states.
+- Killendar now owns all of its theme resources and no longer depends on or loads files from a private sibling `KillerUI` folder, so a standalone clone builds with every theme intact.
 
 ## [1.0.0] - 2026-07-31
 

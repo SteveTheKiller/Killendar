@@ -250,12 +250,15 @@ namespace Killendar.Views
                 {
                     var date = start.AddDays(r * 7 + c);
                     bool inMonth = date.Month == _anchor.Month;
-                    bool leftBoundary = inMonth &&
-                        (c == 0 || start.AddDays(r * 7 + c - 1).Month != _anchor.Month);
-                    bool topBoundary = inMonth &&
-                        (r == 0 || start.AddDays((r - 1) * 7 + c).Month != _anchor.Month);
+                    // Draw separators only where another real day of this month follows. Edges
+                    // against spillover dates are the silhouette perimeter, not grid lines; a
+                    // stroke there puts the unwanted box back around the hollowed-out days.
+                    bool rightSeparator = inMonth && c < 6 &&
+                        start.AddDays(r * 7 + c + 1).Month == _anchor.Month;
+                    bool bottomSeparator = inMonth && r < rows - 1 &&
+                        start.AddDays((r + 1) * 7 + c).Month == _anchor.Month;
                     var cell = BuildDayCell(date, inMonth, date == today,
-                                            c, leftBoundary, topBoundary);
+                                            c, rightSeparator, bottomSeparator);
                     Grid.SetRow(cell, r);
                     Grid.SetColumn(cell, c);
                     CalGrid.Children.Add(cell);
@@ -312,7 +315,7 @@ namespace Killendar.Views
 
         private Border BuildDayCell(DateTime date, bool inMonth, bool isToday,
                                     int displayColumn,
-                                    bool leftBoundary, bool topBoundary)
+                                    bool rightSeparator, bool bottomSeparator)
         {
             // Every event uses the same per-day stack. Multi-day appointments used to live in a
             // second Grid overlay spanning columns, which could neither scroll with the cell nor
@@ -328,7 +331,7 @@ namespace Killendar.Views
             var cell = new Border
             {
                 BorderThickness = inMonth
-                    ? new Thickness(leftBoundary ? 1 : 0, topBoundary ? 1 : 0, 1, 1)
+                    ? new Thickness(0, 0, rightSeparator ? 1 : 0, bottomSeparator ? 1 : 0)
                     : new Thickness(0),
                 Cursor = Cursors.Hand,
                 Tag = date
