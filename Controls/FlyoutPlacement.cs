@@ -7,7 +7,7 @@ namespace Killendar.Controls
 {
     /// <summary>
     /// Every rail flyout opens in ONE place: the BOTTOM-LEFT CORNER OF THE CONTENT PANE.
-    /// (Steve, 2026-07-30, after this was got wrong repeatedly here and in KillerNotes.)
+    /// (2026-07-30, after this was got wrong repeatedly here and in KillerNotes)
     ///
     /// That corner is the answer because of what it avoids, and all three matter:
     ///   - it is INSIDE the window, so the flyout never hangs over the desktop;
@@ -45,7 +45,7 @@ namespace Killendar.Controls
         /// The export scope flyout's spot: the TOP-LEFT corner of the content pane - the same
         /// one-place rule as the rail flyouts' bottom-left, mirrored because its opener lives in
         /// the toolbar above the pane, so the flyout reads as dropping out of it. Same reasons
-        /// apply: inside the window, clear of the toolbar, clear of the rail. (Steve, 2026-07-31.)
+        /// apply: inside the window, clear of the toolbar, clear of the rail. (2026-07-31)
         /// </summary>
         internal static void AttachTopLeft(Popup popup)
         {
@@ -59,6 +59,11 @@ namespace Killendar.Controls
         {
             menu.PlacementTarget = _pane;
             menu.Placement = PlacementMode.Custom;
+            // The shared ContextMenu style offsets ordinary pointer menus to compensate for
+            // FlyoutCard's enlarged shadow halo. Rail menus use exact pane-corner coordinates,
+            // so clear those offsets here and account for the halo below, as KillerPDF does.
+            menu.HorizontalOffset = 0;
+            menu.VerticalOffset = 0;
             menu.CustomPopupPlacementCallback =
                 (popupSize, targetSize, __) => BottomLeftOfPane(popupSize, targetSize);
         }
@@ -70,13 +75,16 @@ namespace Killendar.Controls
         /// </summary>
         private static CustomPopupPlacement[] BottomLeftOfPane(Size popupSize, Size targetSize)
         {
-            double y = targetSize.Height - popupSize.Height;
+            // FlyoutCard reserves 22px left, 18px top and 26px bottom for its shadow. Keep the
+            // visible card six pixels inside the content pane while its invisible halo may extend.
+            const double x = -16;
+            double y = targetSize.Height - popupSize.Height + 20;
 
             // A flyout taller than the pane would otherwise start above it and run over the
             // toolbar; pin it to the pane's top instead and let it use the height it has.
             if (y < 0) y = 0;
 
-            return [new CustomPopupPlacement(new Point(0, y), PopupPrimaryAxis.None)];
+            return [new CustomPopupPlacement(new Point(x, y), PopupPrimaryAxis.None)];
         }
     }
 }

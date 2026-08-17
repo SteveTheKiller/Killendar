@@ -10,18 +10,18 @@ using System.Windows.Media;
 // It used to be one five-way enum (SmallIcons | LargeIcons | TextBeside | TextUnder | TextOnly),
 // copied from KillerPDF. That shape cannot express "large icons WITH text" or "small icons with
 // text", because choosing any text option threw the size choice away - the two were never
-// really one axis, they only looked like one. (Steve, 2026-07-30.)
+// really one axis, they only looked like one. (2026-07-30)
 //
 //   icon size:  Small | Large
 //   text:       None | Beside | Under | Only
 //
 // Every combination is legal. "Only" is the one that ignores the size, because there is no icon
-// to size - the picker greys the size options out rather than hiding them, so the setting is
+// to size - the picker grays the size options out rather than hiding them, so the setting is
 // still visibly there and comes back when text moves off Only.
 //
 // Where the picker lives: right-click the toolbar. KillerPDF puts it in a settings panel and
 // Killendar has no such panel, and a right-click menu on a toolbar is the Windows convention
-// anyway (Steve, 2026-07-30).
+// anyway (2026-07-30).
 //
 // Two things that will break this if changed carelessly:
 //   * The view buttons carry their view name in Tag ("Month", "Week", ...) and ViewTab_Click
@@ -37,10 +37,10 @@ namespace Killendar.Shell
         private enum IconSize { Small, Large }
         private enum LabelMode { None, Beside, Under, Only }
 
-        // Large icons with the text underneath, by default (Steve, 2026-07-30: "I think it looks
-        // best"). It is also the combination that only exists because the two axes were split -
-        // the old five-way enum had a TextUnder mode but no way to say it was the LARGE icons
-        // underneath, so this exact bar could not be reached at all.
+        // Large icons with the text underneath, by default (2026-07-30). It is also the
+        // combination that only exists because the two axes were split - the old five-way enum
+        // had a TextUnder mode but no way to say it was the LARGE icons underneath, so this
+        // exact bar could not be reached at all.
         private IconSize _iconSize = IconSize.Large;
         private LabelMode _labelMode = LabelMode.Under;
 
@@ -66,17 +66,17 @@ namespace Killendar.Shell
         private IEnumerable<(Button Btn, int Glyph, string LabelKey)> ToolbarItems()
         {
             yield return (NewEventBtn, 0xE710, "Str_Btn_New");      // Add
-            // E8B5 / EDE1, Steve's picks from a build. The old E8DA / E8E5 pair was the
+            // E8B5 / EDE1, picked from a build. The old E8DA / E8E5 pair was the
             // arrow-into-page and arrow-out-of-page glyphs - correct in meaning, but they render as
             // two nearly identical pages and read as one button drawn twice.
-            yield return (ImportBtn,   0xE8B5, "Str_Btn_Import");   // Import            (Steve's pick)
-            yield return (ExportBtn,   0xEDE1, "Str_Btn_Export");   // Export            (Steve's pick)
-            // E787 is the calendar - Steve confirmed from a build that it renders as one, so it
+            yield return (ImportBtn,   0xE8B5, "Str_Btn_Import");   // Import
+            yield return (ExportBtn,   0xEDE1, "Str_Btn_Export");   // Export
+            // E787 is the calendar - confirmed from a build that it renders as one, so it
             // belongs on MONTH. It was on Today, and E736 (guessed as GridView) was on Month and
-            // actually draws an open book. Today moved to E8D1. (Steve, 2026-07-30, both picked
+            // actually draws an open book. Today moved to E8D1. (2026-07-30, both picked
             // by looking at a real render rather than trusting the glyph docs - the rule this
             // file got wrong twice.)
-            yield return (TodayBtn,    0xE8D1, "Str_Btn_Today");    // Today             (Steve's pick)
+            yield return (TodayBtn,    0xE8D1, "Str_Btn_Today");    // Today
             yield return (TabMonth,    0xE787, "Str_View_Month");   // Calendar          (confirmed)
             yield return (TabWeek,     0xE8C0, "Str_View_Week");    // CalendarWeek      (confirmed)
             yield return (TabDay,      0xE8BF, "Str_View_Day");     // CalendarDay       (confirmed)
@@ -155,7 +155,7 @@ namespace Killendar.Shell
                 if (mi.Tag is IconSize szTag)
                 {
                     mi.IsChecked = szTag == _iconSize;
-                    // Text-only has no icon to size. Grey the choice rather than hiding it, so the
+                    // Text-only has no icon to size. Gray the choice rather than hiding it, so the
                     // setting stays visible and comes back when text moves off Only.
                     mi.IsEnabled = _labelMode != LabelMode.Only;
                 }
@@ -172,8 +172,8 @@ namespace Killendar.Shell
         //
         // Killendar was drawing its icons at 14/20 with 9,4 padding and no explicit button size,
         // so the same bar came out visibly smaller and tighter than KillerPDF's. These are the
-        // values that were actually settled on there. (Steve, 2026-07-30: "PLEASE MAKE THE ICONS
-        // LOOK LIKE KILLERPDF WHICH WE SPENT A LONG TIME PERFECTING".)
+        // values that were actually settled on there, and the bar must match KillerPDF's
+        // exactly. (2026-07-30)
         //
         //   glyph    small 14   large 20   beside 16   under 20
         //   caption  beside 12  under 10
@@ -181,7 +181,7 @@ namespace Killendar.Shell
         //   padding  icon-only 10,6   beside/under 8,5   text-only 8,5 with auto width
         //
         // The one deviation is deliberate: KillerPDF derives the GLYPH SIZE from the text mode
-        // (under forces 20, beside forces 16), which is the very coupling Steve asked to break.
+        // (under forces 20, beside forces 16), which is the very coupling that had to be broken.
         // Here the size axis wins and the text mode only decides layout - so "small icons with
         // text under" is a real combination rather than being silently promoted to large.
 

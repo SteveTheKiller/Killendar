@@ -9,10 +9,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources\kd-icon.ico</ApplicationIcon>
-    <Version>1.0.0</Version>
-    <FileVersion>1.0.0.0</FileVersion>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <InformationalVersion>1.0.0</InformationalVersion>
+    <Version>1.1.0</Version>
+    <FileVersion>1.1.0.0</FileVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <InformationalVersion>1.1.0</InformationalVersion>
     <AssemblyTitle>Killendar</AssemblyTitle>
     <Product>Killendar</Product>
     <Company>killertools.net</Company>
@@ -20,7 +20,7 @@
     <!-- Bump with the version, same pass as the CHANGELOG section. Services/AppInfo.cs reads this
          back so a user can see how old their build is. release.ps1 preflight fails the release
          if this and the CHANGELOG section date disagree. -->
-    <ReleaseDate>2026-07-31</ReleaseDate>
+    <ReleaseDate>2026-08-10</ReleaseDate>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
 
@@ -41,9 +41,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Killendar.Tests\**\*.cs" />
+    <EmbeddedResource Remove="Killendar.Tests\**\*" />
+    <None Remove="Killendar.Tests\**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Costura.Fody" Version="5.7.0">
       <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Fody" Version="6.8.1">
       <PrivateAssets>all</PrivateAssets>

@@ -13,6 +13,8 @@
         AllowsTransparency="True"
         ResizeMode="NoResize"
         Background="Transparent"
+        TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType"
+        UseLayoutRounding="True" SnapsToDevicePixels="True"
         ShowInTaskbar="False">
 
     <!-- Dark tier, so the fields and list rows on top of it read as raised. -->
@@ -20,55 +22,75 @@
             Background="{StaticResource BackgroundBrush}"
             BorderBrush="{StaticResource CardBorderBrush}"
             BorderThickness="1"
-            CornerRadius="6"
-            Margin="10">
+            CornerRadius="{DynamicResource PanelCornerRadius}"
+            Margin="{DynamicResource DialogHaloMargin}">
         <Border.Effect>
-            <DropShadowEffect Color="Black" BlurRadius="18" ShadowDepth="3" Direction="270" Opacity="0.6"/>
+            <DropShadowEffect Color="Black" BlurRadius="18" ShadowDepth="3" Direction="270" Opacity="{DynamicResource AboutShadowOpacity}"/>
         </Border.Effect>
         <Grid>
-            <Border IsHitTestVisible="False" CornerRadius="6"
+            <Border IsHitTestVisible="False" CornerRadius="{DynamicResource PanelCornerRadius}"
                     Opacity="{DynamicResource GrainOpacity}"
                     Background="{DynamicResource GrainTileBrush}"/>
 
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="36"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" Background="Transparent"
+                <Border Grid.Row="0" Background="{DynamicResource DialogTitleBarBrush}"
+                        Height="{DynamicResource DialogTitleBarHeight}"
+                        CornerRadius="{DynamicResource DialogTitleCornerRadius}"
                         MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
-                    <Grid Margin="14,0">
-                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Grid>
+                        <Border IsHitTestVisible="False" CornerRadius="{DynamicResource DialogTitleCornerRadius}"
+                                Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
+                        <Grid Margin="{DynamicResource DialogTitleTextMargin}" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="{DynamicResource WordmarkVisibility}">
                             <StackPanel Orientation="Horizontal" Margin="1,2,0,0"
                                         Opacity="{DynamicResource IconShadowOpacity}">
                                 <StackPanel.Effect><BlurEffect Radius="3"/></StackPanel.Effect>
-                                <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15"><Run Text="The " Foreground="#D8000000"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="#D8000000"/></TextBlock>
+                                <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15"><Run Text="The " Foreground="#D8000000"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="#D8000000"/><Run Text="  "/><Run Text="{DynamicResource Str_Cat_Title}"/></TextBlock>
                             </StackPanel>
-                            <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15"><Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}"/></TextBlock>
+                            <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15"><Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}"/><Run Text="  "/><Run Text="{DynamicResource Str_Cat_Title}" Foreground="{DynamicResource MutedTextBrush}"/></TextBlock>
                         </Grid>
-                        <Button Content="&#xE711;" Click="Close_Click" Style="{StaticResource DangerCloseButton}"
-                                HorizontalAlignment="Right"/>
+                        <TextBlock Text="{DynamicResource Str_Cat_Title}" Visibility="{DynamicResource PlainTitleVisibility}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                                   Margin="{DynamicResource DialogTitleTextMargin}"
+                                   FontFamily="{DynamicResource ChromeFontFamily}" FontSize="11" FontWeight="Bold"
+                                   Foreground="{DynamicResource ChromeTextBrush}"/>
+                        <Button Content="&#xE8BB;" Click="Close_Click" Style="{StaticResource ChromeCloseButton}"
+                                HorizontalAlignment="Right" VerticalAlignment="Center"
+                                Margin="{DynamicResource DialogCaptionCloseMargin}"/>
                     </Grid>
                 </Border>
 
-                <StackPanel Grid.Row="1" Margin="24,16,24,12">
-                    <TextBlock Text="{DynamicResource Str_Cat_Title}" Foreground="{StaticResource TextBrush}"
-                               FontFamily="Consolas" FontSize="14" FontWeight="Bold" Margin="0,0,0,4"/>
+                <StackPanel Grid.Row="1" Margin="24,14,24,12">
                     <TextBlock Text="{DynamicResource Str_Cat_Hint}" Foreground="{DynamicResource MutedTextBrush}"
                                FontSize="11" TextWrapping="Wrap" Margin="0,0,0,8"/>
-                    <Border Background="{DynamicResource PaneBrush}"
-                            BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1" CornerRadius="4">
+                    <Grid>
+                        <Border Background="{DynamicResource PaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="12" ShadowDepth="2"
+                                                  Direction="270" Opacity="{DynamicResource PaneShadowOpacity}"/>
+                            </Border.Effect>
+                        </Border>
+                        <Border Background="{DynamicResource PaneBrush}"
+                                BorderBrush="{DynamicResource PaneBorderBrush}" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                            <Grid>
+                        <Border IsHitTestVisible="False" CornerRadius="{DynamicResource ControlCornerRadius}"
+                                Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
                         <ListBox x:Name="CategoryList" Height="200" Background="Transparent" BorderThickness="0"
-                                 HorizontalContentAlignment="Stretch" Margin="4">
+                                 HorizontalContentAlignment="Stretch" Margin="4"
+                                 PreviewKeyDown="CategoryList_PreviewKeyDown">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Setter Property="Padding" Value="6,4"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="ListBoxItem">
-                                                <Border x:Name="bg" Background="Transparent" CornerRadius="4"
+                                                <Border x:Name="bg" Background="Transparent" CornerRadius="{DynamicResource SmallCornerRadius}"
                                                         Padding="{TemplateBinding Padding}">
                                                     <ContentPresenter/>
                                                 </Border>
@@ -78,6 +100,7 @@
                                                     </Trigger>
                                                     <Trigger Property="IsSelected" Value="True">
                                                         <Setter TargetName="bg" Property="Background" Value="{DynamicResource RowSelectedBrush}"/>
+                                                        <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
                                                     </Trigger>
                                                 </ControlTemplate.Triggers>
                                             </ControlTemplate>
@@ -88,7 +111,16 @@
                             <!-- Rows are built in code (CategoriesDialog.xaml.cs Refresh) so the
                                  swatch, name and per-row buttons can carry the category name. -->
                         </ListBox>
-                    </Border>
+                                <Border IsHitTestVisible="False" CornerRadius="{DynamicResource ControlCornerRadius}"
+                                        Background="{DynamicResource GrainTileBrush}"
+                                        Opacity="{DynamicResource GrainOpacity}"/>
+                            </Grid>
+                        </Border>
+                        <Border IsHitTestVisible="False" BorderBrush="{DynamicResource PaneBevelDarkBrush}"
+                                BorderThickness="{DynamicResource BevelLightThickness}"/>
+                        <Border IsHitTestVisible="False" BorderBrush="{DynamicResource PaneBevelLightBrush}"
+                                BorderThickness="{DynamicResource BevelDarkThickness}"/>
+                    </Grid>
 
                     <!-- Add row: name box + color swatch button + Add -->
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
@@ -99,7 +131,7 @@
                                  Style="{StaticResource DarkTextBox}"
                                  FontSize="12" Padding="6,0" VerticalContentAlignment="Center"
                                  KeyDown="NewNameBox_KeyDown"/>
-                        <Border x:Name="NewColorSwatch" Width="26" Height="26" CornerRadius="3" Margin="8,0,0,0"
+                        <Border x:Name="NewColorSwatch" Width="26" Height="26" CornerRadius="{DynamicResource SmallCornerRadius}" Margin="8,0,0,0"
                                 Cursor="Hand" BorderBrush="{DynamicResource InputBorderBrush}" BorderThickness="1"
                                 MouseLeftButtonUp="NewColorSwatch_Click" ToolTip="{DynamicResource Str_TT_CatPickColor}"/>
                         <Button x:Name="AddBtn" Content="{DynamicResource Str_Btn_CatAdd}" Click="Add_Click"
@@ -116,6 +148,10 @@
                     </StackPanel>
                 </Grid>
             </Grid>
+            <Border Panel.ZIndex="9000" IsHitTestVisible="False" BorderBrush="{DynamicResource OverlayBevelOuterLightBrush}" BorderThickness="{DynamicResource OverlayBevelLightThickness}"/>
+            <Border Panel.ZIndex="9000" IsHitTestVisible="False" BorderBrush="{DynamicResource OverlayBevelOuterDarkBrush}" BorderThickness="{DynamicResource OverlayBevelDarkThickness}"/>
+            <Border Panel.ZIndex="9001" IsHitTestVisible="False" Margin="{DynamicResource OverlayBevelInnerMargin}" BorderBrush="{DynamicResource OverlayBevelInnerLightBrush}" BorderThickness="{DynamicResource OverlayBevelLightThickness}"/>
+            <Border Panel.ZIndex="9001" IsHitTestVisible="False" Margin="{DynamicResource OverlayBevelInnerMargin}" BorderBrush="{DynamicResource OverlayBevelInnerDarkBrush}" BorderThickness="{DynamicResource OverlayBevelDarkThickness}"/>
         </Grid>
     </Border>
 </Window>

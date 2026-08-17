@@ -12,14 +12,14 @@ namespace Killendar.Views
     {
         void Initialize(EventStore store);
 
-        /// <summary>The date the view is centred on. Setting it repaints.</summary>
+        /// <summary>The date the view is centered on. Setting it repaints.</summary>
         DateTime Anchor { get; set; }
 
         /// <summary>
         /// What the appointment panel is currently talking about, or (null, null) when it is shut.
         /// The view marks it so there is always something on screen saying WHICH slot you are
         /// typing about, and it follows the date and time boxes, so correcting either moves the
-        /// marker. (Steve, 2026-07-30.)
+        /// marker. (2026-07-30)
         ///
         /// Two parts rather than one DateTime because the time is genuinely optional: an all-day
         /// appointment, or a half-typed time box, has a day but no meaningful slot - and midnight
@@ -37,7 +37,7 @@ namespace Killendar.Views
         DateTime Step(DateTime from, int direction);
 
         /// <summary>An existing appointment was clicked. Opens that day's agenda in the sidebar
-        /// with the appointment highlighted (Steve, 2026-07-30 - edit is behind an Edit action,
+        /// with the appointment highlighted (2026-07-30 - edit is behind an Edit action,
         /// never the default).</summary>
         event Action<CalendarEvent> EventSelected;
 

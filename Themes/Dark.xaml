@@ -7,13 +7,13 @@
     <sys:Double x:Key="IconShadowOpacity">0.9</sys:Double>
 
     <!-- ================================================================
-         DARK theme (colours + brushes only). Tiered surface
+         DARK theme (colors + brushes only). Tiered surface
          hierarchy:
            Background = chrome   (#1c1c1c) - window, titlebar, footer (blend)
            Surface    = bar      (#333333) - scan config bar, table header
            Pane       = content  (#3a3a3a) - devices pane + grid rows (lightest)
          Borders (CardBorder) separate the tiers. ThemeManager swaps this
-         dictionary's keys in place at runtime - colours/brushes only here.
+         dictionary's keys in place at runtime - colors/brushes only here.
          ================================================================ -->
 
     <!-- Accent -->
@@ -21,7 +21,10 @@
     <SolidColorBrush x:Key="PrimaryHoverBrush"   Color="#1ea54c" po:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#1ea54c" po:Freeze="True"/>
     <SolidColorBrush x:Key="HeaderLineBrush"     Color="#1ea54c" po:Freeze="True"/>
-    <SolidColorBrush x:Key="OnPrimaryBrush"      Color="#FFFFFF" po:Freeze="True"/>
+    <!-- Near-black, matching the Black family. This is the text ON a filled accent button, and
+         Dark's accents are mid-tone rather than deep: white measures 2.38 to 3.94 across the six
+         (blue, teal, orange and purple all under 3), near-black measures 5.32 to 8.83. -->
+    <SolidColorBrush x:Key="OnPrimaryBrush"      Color="#0a0a0a" po:Freeze="True"/>
     <SolidColorBrush x:Key="OutlineBtnBrush"     Color="#1ea54c" po:Freeze="True"/>
     <SolidColorBrush x:Key="InputHoverBrush"     Color="#707070" po:Freeze="True"/>
     <SolidColorBrush x:Key="TextFooter"          Color="#6a6a6a" po:Freeze="True"/>
@@ -33,6 +36,7 @@
     <SolidColorBrush x:Key="TableHeaderBrush"    Color="#333333" po:Freeze="True"/>
     <SolidColorBrush x:Key="CardBorderBrush"     Color="#2e2e2e" po:Freeze="True"/>
     <SolidColorBrush x:Key="PaneBorderBrush"     Color="#3f3f3f" po:Freeze="True"/>
+    <SolidColorBrush x:Key="AppBorderBrush"      Color="#3f3f3f" po:Freeze="True"/>
 
     <!-- Text -->
     <SolidColorBrush x:Key="TextBrush"           Color="#e0e0e0" po:Freeze="True"/>
@@ -48,25 +52,9 @@
          so it can never collide with the accent-colored selection or hover fills. See the note
          in Greed.xaml. Lighter than RowHoverBrush so a chip still reads inside a hovered cell. -->
     <SolidColorBrush x:Key="ChipBrush"           Color="#4a4a4a" po:Freeze="True"/>
-    <!-- SELECTION PAIR - the family's "this one is active" treatment, copied value-for-value from
-         KillerPDF, which is the source of truth. A selected toolbar button, tool or tab is a solid
-         SelectionBg fill with SelectionFg text; it is NEVER accent-coloured text on a faint fill,
-         and never an outline. Killendar had neither key and marked its active view button with
-         PrimaryBrush text on RowHoverBrush, so it looked nothing like the other apps.
-         (Steve, 2026-07-30.)
-         Distinct from RowSelectedBrush, which is the much fainter tint behind a selected LIST row. -->
     <SolidColorBrush x:Key="SelectionBg"         Color="#1c5e38" po:Freeze="True"/>
     <SolidColorBrush x:Key="SelectionFg"         Color="#ffffff" po:Freeze="True"/>
-    <!-- KillerShell's value verbatim: the file dialog's tree sits flat on BackgroundBrush,
-         the same surface KillerShell's tree sits on. (Steve, 2026-07-30.) -->
     <SolidColorBrush x:Key="TreeLineBrush"       Color="#3d3d3d" po:Freeze="True"/>
-
-    <!-- SHORTCUT CATEGORY COLOURS, for the F1 keyboard map. Theme brushes, not hardcoded hex:
-         the neon set is right on the dark themes and unreadable on Light, which is exactly why
-         KillerPDF has always declared these per theme. Values copied from KillerPDF verbatim -
-         a category has to mean the same colour in every app or the colour says nothing.
-         KsCatAppt is Killendar's app-specific action category and takes the same yellow as
-         KillerPDF's KsCatTools. (Steve, 2026-07-30.) -->
     <SolidColorBrush x:Key="KsCatFile"           Color="#00fff9" po:Freeze="True"/>
     <SolidColorBrush x:Key="KsCatView"           Color="#f222ff" po:Freeze="True"/>
     <SolidColorBrush x:Key="KsCatNav"            Color="#8c1eff" po:Freeze="True"/>
@@ -75,9 +63,6 @@
 
     <!-- Inputs / menus / scrollbar -->
     <SolidColorBrush x:Key="InputBorderBrush"    Color="#2e2e2e" po:Freeze="True"/>
-    <!-- Menu surface: KillerPDF's values, which are the family source of truth for colour
-         (Steve, 2026-07-30). It sits CLOSE to the window background rather than a tier above it;
-         #363636 over a #1c1c1c window read as a pale slab floating on a dark app. -->
     <SolidColorBrush x:Key="MenuBackgroundBrush" Color="#1e1e1e" po:Freeze="True"/>
     <SolidColorBrush x:Key="MenuBorderBrush"     Color="#404040" po:Freeze="True"/>
     <SolidColorBrush x:Key="MenuTextBrush"       Color="#a0a0a0" po:Freeze="True"/>
@@ -85,23 +70,6 @@
     <SolidColorBrush x:Key="OutlinePressedBrush" Color="#0d2a18" po:Freeze="True"/>
     <SolidColorBrush x:Key="ScrollThumbBrush"    Color="#551ea54c" po:Freeze="True"/>
     <SolidColorBrush x:Key="ScrollThumbHoverBrush" Color="#1ea54c" po:Freeze="True"/>
-
-    <!-- Device-type label colours (bright, for dark panes) -->
-    <SolidColorBrush x:Key="TypeRouter"     Color="#F0A030" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeWindows"    Color="#60A0F0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypePrinter"    Color="#D080A0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeSwitch"     Color="#C0C0C0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeHypervisor" Color="#E06060" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeNas"        Color="#40C080" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeIot"        Color="#B060D0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeServer"     Color="#E08050" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeLinux"      Color="#D0C050" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeDns"        Color="#50B0D0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeHa"         Color="#50D0A0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeMobile"     Color="#A0A0F0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeCamera"     Color="#F0C060" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeSmarttv"    Color="#E0A0E0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeMedia"      Color="#70C0E0" po:Freeze="True"/>
 
 
     <!-- Stroke behind white-on-accent label text in picker rows. Theme-varied because the effect

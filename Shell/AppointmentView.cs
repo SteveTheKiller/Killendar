@@ -40,7 +40,15 @@ namespace Killendar.Shell
 
         void IAppointmentView.SetAllDay(string caption, bool timesVisible)
         {
-            AllDayToggle.Content = caption;
+            // The localized strings predate the real checkbox and carry their own ASCII box.
+            // Keep the translated words but let the themed CheckBox draw the state.
+            AllDayToggle.Content = caption.StartsWith("[x] ") || caption.StartsWith("[ ] ")
+                ? caption.Substring(4) : caption;
+            AllDayToggle.IsChecked = !timesVisible;
+            FieldStartLabel.SetResourceReference(System.Windows.Controls.TextBlock.TextProperty,
+                timesVisible ? "Str_Fld_Starts" : "Str_Fld_From");
+            FieldEndLabel.SetResourceReference(System.Windows.Controls.TextBlock.TextProperty,
+                timesVisible ? "Str_Fld_Ends" : "Str_Fld_Through");
             // Hidden, not Collapsed: the boxes keep their space so the rows do not jump.
             var vis = timesVisible ? Visibility.Visible : Visibility.Hidden;
             FieldStartTime.Visibility = vis;

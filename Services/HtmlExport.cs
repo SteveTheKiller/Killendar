@@ -109,7 +109,7 @@ namespace Killendar.Services
                 {
                     if (cell.Month != monthStart.Month)
                     {
-                        // Out-of-month cells stay empty rather than showing the neighbour month's
+                        // Out-of-month cells stay empty rather than showing the neighbor month's
                         // appointments again - on paper a duplicate reads as a second appointment.
                         sb.Append("<td class=\"out\"></td>");
                         continue;

@@ -3,7 +3,7 @@ using System.Windows.Input;
 using Killendar.Features;
 
 // MainWindow's side of the security feature: it satisfies ISecurityHost and forwards the two
-// button clicks. All the behaviour lives in Features/Security/SecurityController.cs.
+// button clicks. All the behavior lives in Features/Security/SecurityController.cs.
 namespace Killendar.Shell
 {
     public partial class MainWindow : ISecurityHost
@@ -20,7 +20,7 @@ namespace Killendar.Shell
 
         void ISecurityHost.ShowActiveKillendar(string name, bool visible)
         {
-            // TITLE BAR ONLY - there is no footer copy (Steve, 2026-07-30).
+            // TITLE BAR ONLY - there is no footer copy (2026-07-30).
             TitleKillendarLabel.Text = name;
             TitleKillendarLabel.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
         }

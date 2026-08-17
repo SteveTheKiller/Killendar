@@ -171,7 +171,7 @@ namespace Killendar.Features
             grain.SetResourceReference(Border.BackgroundProperty, "GrainTileBrush");
             grain.SetResourceReference(UIElement.OpacityProperty, "GrainOpacity");
 
-            // Two buttons, no separate confirm (Steve, 2026-07-31): "Whole calendar" goes
+            // Two buttons, no separate confirm (2026-07-31): "Whole calendar" goes
             // straight to the save dialog; "Date range" reveals the from/to boxes, and Enter in
             // either box proceeds - the dates are the only reason range cannot be one click too.
             _chipWhole = Chip("Str_Exp_Whole");
@@ -471,7 +471,7 @@ namespace Killendar.Features
             dlg.ShowDialog();
 
             // Only remember the choice if the export actually went ahead. Ticking the box and then
-            // cancelling means "not this time", not "never warn me again".
+            // canceling means "not this time", not "never warn me again".
             if (!dlg.Confirmed) return false;
             if (dlg.Check1Checked) Settings.Set(SuppressExportWarningKey, "1");
             return true;

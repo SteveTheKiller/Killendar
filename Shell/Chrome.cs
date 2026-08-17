@@ -22,6 +22,11 @@ namespace Killendar.Shell
 {
     public partial class MainWindow
     {
+        // The first close request is held while the whole window fades. The helper sets this
+        // before issuing its own deferred Close(), so Alt+F4, the caption button, the system
+        // menu and Application.Shutdown all share the same exit animation without recursion.
+        private bool _closeFaded;
+
         // Grain brush layers in MainWindow.xaml. All optional - Apply skips the ones absent.
         // FlyoutGrainBrush is gone: flyouts share the GrainTileBrush resource through the
         // FlyoutGrain style (Controls.xaml), so they no longer need a private brush wired up here.
@@ -32,7 +37,8 @@ namespace Killendar.Shell
         {
             var hwnd = new WindowInteropHelper(this).Handle;
             HwndSource.FromHwnd(hwnd)?.AddHook(WndProc);
-            DwmChrome.SetRoundedCorners(this, rounded: WindowState == WindowState.Normal);
+            DwmChrome.SetRoundedCorners(this, rounded: Services.ThemeManager.Current != Services.Theme.SE98
+                                                       && WindowState == WindowState.Normal);
             DwmChrome.SetThemeBorder(this);
         }
 
@@ -50,11 +56,22 @@ namespace Killendar.Shell
             base.OnClosed(e);
         }
 
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            if (Anim.FadeOutAndClose(this, ref _closeFaded))
+            {
+                e.Cancel = true;
+                return;
+            }
+            base.OnClosing(e);
+        }
+
         protected override void OnStateChanged(EventArgs e)
         {
             base.OnStateChanged(e);
             // Square the corners when maximized (flush to the screen edges), round when floating.
-            DwmChrome.SetRoundedCorners(this, rounded: WindowState == WindowState.Normal);
+            DwmChrome.SetRoundedCorners(this, rounded: Services.ThemeManager.Current != Services.Theme.SE98
+                                                       && WindowState == WindowState.Normal);
             // Maximize glyph (Segoe MDL2) toggles to a restore glyph when maximized.
             if (MaximizeBtn != null)
                 MaximizeBtn.Content = WindowState == WindowState.Maximized ? "\uE923" : "\uE922";
@@ -119,7 +136,7 @@ namespace Killendar.Shell
             // default let the window be dragged far below MinWidth 820 / MinHeight 560, at which
             // point the fixed chrome (36px title + 42px toolbar + 24px footer, and the 330px
             // appointment panel) no longer fits and the calendar card is clipped rather than
-            // resized. That is the "resizing cuts off the content" bug. (Steve, 2026-07-30.)
+            // resized. That is the "resizing cuts off the content" bug. (2026-07-30)
             //
             // MINMAXINFO is in DEVICE pixels and MinWidth/MinHeight are in DIPs, so this has to go
             // through the window's own transform or the limit is wrong on any display that is not
@@ -156,7 +173,7 @@ namespace Killendar.Shell
 
         /// <summary>Lets the toolbar drag the window like the title bar. Interactive controls handle
         /// their own clicks, so only the bar's empty space bubbles up here. Native HTCAPTION also
-        /// gives correct restore-from-maximized-and-drag behaviour for free.</summary>
+        /// gives correct restore-from-maximized-and-drag behavior for free.</summary>
         private void Toolbar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton != MouseButton.Left) return;

@@ -21,7 +21,7 @@ namespace Killendar.Views
         // ---- time-grid density ----
         //
         // One scale drives BOTH the hour height and the number of gridlines inside an hour, so a
-        // denser grid is also a taller one (Steve, 2026-07-30). Level 0 is the original 48px hour
+        // denser grid is also a taller one (2026-07-30). Level 0 is the original 48px hour
         // with no interior lines; each step up adds a line and more room to fit it in.
         //
         // Subdivisions are lines-per-hour: 1 = the hour line only, 2 = a :30 line, 3 = :20 and :40,
@@ -37,7 +37,7 @@ namespace Killendar.Views
 
         internal const int MaxDensity = 3;
 
-        /// <summary>Week view shows Monday to Friday when set (Steve, 2026-07-31). Owned by the
+        /// <summary>Week view shows Monday to Friday when set (2026-07-31). Owned by the
         /// shell like Density (WorkWeek.cs): persisted there, read here by WeekView on rebuild.</summary>
         internal static bool WorkWeek;
 
@@ -48,7 +48,7 @@ namespace Killendar.Views
         internal static Action? WorkWeekToggle;
 
         /// <summary>Opens the series MASTER in the editor - the chip context menu's "Edit the
-        /// series" (Steve, 2026-07-31, Outlook's reschedule-the-series: a drag or an edit only
+        /// series" (2026-07-31, Outlook's reschedule-the-series: a drag or an edit only
         /// ever touches one date, so the whole series needs its own door). Set by the
         /// controller, which owns the store and the editor; same shape as WorkWeekToggle.</summary>
         internal static Action<CalendarEvent>? EditSeriesRequested;
@@ -101,16 +101,19 @@ namespace Killendar.Views
         /// keep the themed look described above.
         /// </summary>
         internal static Border Chip(CalendarEvent ev, Action<CalendarEvent> onClick,
-                                    bool compact = true, bool showTime = false, bool wrap = false)
+                                    bool compact = true, bool showTime = false, bool wrap = false,
+                                    bool showEndTime = false)
         {
             string? category = Services.CategoryManager.PrimaryOf(ev);
             var chip = new Border
             {
-                CornerRadius    = new CornerRadius(2),
+                CornerRadius    = Services.ThemeManager.Current == Services.Theme.SE98
+                                    ? new CornerRadius(0) : new CornerRadius(2),
                 Margin          = new Thickness(0, 1, 0, 1),
                 Padding         = compact ? new Thickness(4, 1, 4, 1) : new Thickness(6, 3, 6, 3),
                 BorderThickness = new Thickness(2, 0, 0, 0),
                 Cursor          = Cursors.Hand,
+                Focusable       = true,
                 Tag             = ev,
                 ToolTip         = string.IsNullOrWhiteSpace(ev.Location)
                                     ? ev.Title + "\n" + ev.TimeLabel
@@ -132,7 +135,7 @@ namespace Killendar.Views
                 // ChipBrush, not RowSelectedBrush: every theme gives untagged chips a color of
                 // their OWN that no accent overlay repoints, because the row/selection brushes
                 // collided with the day fills - on Black the chip was one shade off SelectionBg
-                // and vanished inside the selected day (Steve, 2026-07-31). Hover dims like the
+                // and vanished inside the selected day (2026-07-31). Hover dims like the
                 // categorized chips instead of swapping to RowHoverBrush, which would make the
                 // chip match the hovered cell it is sitting on.
                 chip.Themed(Border.BackgroundProperty, "ChipBrush");
@@ -142,7 +145,7 @@ namespace Killendar.Views
                 chip.MouseLeave += (_, _) => chip.Opacity = 1.0;
             }
             // Click fires on RELEASE, and only when the pointer has not moved a drag's worth:
-            // the grid views move chips by dragging (Steve, 2026-07-31), and firing on press
+            // the grid views move chips by dragging (2026-07-31), and firing on press
             // opened the day agenda at the start of every drag. A view's drag wiring registers
             // with handledEventsToo, so Handled here stops the cell underneath, not the drag.
             //
@@ -169,13 +172,31 @@ namespace Killendar.Views
                     onClick(ev);
             };
 
-            // One date of a series carries "Edit the series" on right-click: dragging or editing
+            chip.MouseRightButtonDown += (_, _) => chip.Focus();
+            chip.KeyDown += (_, e) =>
+            {
+                if (e.Key != Key.Enter) return;
+                e.Handled = true;
+                onClick(ev);
+            };
+
+            // Every appointment menu starts with the ordinary open action. One date of a series
+            // also carries "Edit the series": dragging or editing
             // a chip only ever moves that date, so rescheduling the SERIES gets its own door
-            // (Steve, 2026-07-31). The chip's own menu wins over the day cell's add-appointment
+            // (2026-07-31). The chip's own menu wins over the day cell's add-appointment
             // menu because it is the closer one.
+            var menu = new ContextMenu();
+            var open = new MenuItem
+            {
+                Header = Services.LocaleManager.Loc("Str_Ctx_OpenAppointment"),
+                Icon = MenuGlyph(0xE8E5),
+                InputGestureText = "Enter",
+            };
+            open.Click += (_, _) => onClick(ev);
+            menu.Items.Add(open);
+
             if (ev.SeriesId != null)
             {
-                var menu = new ContextMenu();
                 var edit = new MenuItem
                 {
                     Header = Services.LocaleManager.Loc("Str_Ctx_EditSeries"),
@@ -183,8 +204,8 @@ namespace Killendar.Views
                 };
                 edit.Click += (_, _) => EditSeriesRequested?.Invoke(ev);
                 menu.Items.Add(edit);
-                chip.ContextMenu = menu;
             }
+            chip.ContextMenu = menu;
 
             // wrap: the whole title, however long, instead of one trimmed line. The sidebar day
             // agenda asks for this at higher densities; the grid views never do - a wrapping
@@ -202,7 +223,12 @@ namespace Killendar.Views
                 line.Themed(TextBlock.ForegroundProperty, "TextBrush");
 
             if (showTime && !ev.AllDay)
-                line.Inlines.Add(new Run(ev.Start.ToString("h:mm") + "  "));
+            {
+                string time = showEndTime
+                    ? ev.Start.ToString("h:mm") + "-" + ev.End.ToString("h:mm")
+                    : ev.Start.ToString("h:mm");
+                line.Inlines.Add(new Run(time + "  "));
+            }
 
             line.Inlines.Add(new Run(string.IsNullOrWhiteSpace(ev.Title) ? Services.LocaleManager.Loc("Str_Cal_NoTitle") : ev.Title));
             chip.Child = line;
@@ -235,7 +261,7 @@ namespace Killendar.Views
         /// <summary>
         /// A Segoe MDL2 glyph ready to hand to MenuItem.Icon. A TextBlock rather than a bare
         /// string so the glyph carries its own font and its own muted brush - and so the menu
-        /// template's highlight, which recolours by inheritance, still reaches it.
+        /// template's highlight, which recolors by inheritance, still reaches it.
         /// Built from the codepoint, never a literal private-use character: those do not survive
         /// tooling (the same trap that corrupted Sidebar.cs's chevrons twice).
         /// </summary>
@@ -248,7 +274,6 @@ namespace Killendar.Views
                 FontSize = 12,
                 VerticalAlignment = VerticalAlignment.Center,
             };
-            tb.SetResourceReference(TextBlock.ForegroundProperty, "DimTextBrush");
             return tb;
         }
 

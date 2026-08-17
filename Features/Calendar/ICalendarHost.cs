@@ -24,7 +24,7 @@ namespace Killendar.Features
 
         /// <summary>
         /// Opens the sidebar showing DAY's appointments - viewing first, editing behind each
-        /// row's Edit action (Steve, 2026-07-30). <paramref name="highlight"/> marks the
+        /// row's Edit action (2026-07-30). <paramref name="highlight"/> marks the
         /// appointment that was clicked, or null when a bare day was.
         /// </summary>
         void ShowDayAgenda(System.DateTime day, Killendar.Models.CalendarEvent? highlight);

@@ -140,13 +140,15 @@ namespace Killendar.Features
             // The panel is NOT closed here. It used to be, unconditionally, which meant merely
             // LOOKING at the Killendars list threw away whatever you were composing - and on a
             // narrow window it also gave back the width the panel had borrowed, so the main window
-            // resized itself behind the dialog. (Steve, 2026-07-30.)
+            // resized itself behind the dialog. (2026-07-30)
             //
             // It is closed further down, and only if the active file actually changed: a half-typed
             // appointment belongs to the store it was started in, and saving it into a different
-            // Killendar would be wrong. Cancelling, or picking the file already open, leaves the
+            // Killendar would be wrong. Canceling, or picking the file already open, leaves the
             // panel exactly as it was.
             string previous = EventStore.ActiveFile;
+            string previousDir = EventStore.DataDir;
+            string previousPath = EventStore.ActivePath;
             _store.Close();
 
             var dlg = new KillendarsDialog { Owner = _host.Window };
@@ -161,8 +163,9 @@ namespace Killendar.Features
 
             if (!Open(exitOnCancel: false))
             {
-                // Unlocking the chosen Killendar was cancelled - fall back to the previous one
+                // Unlocking the chosen Killendar was canceled - fall back to the previous one
                 // rather than leaving the app with nothing open.
+                EventStore.SetDataDir(previousDir);
                 EventStore.SetActive(previous);
                 _password = null;
                 Open(exitOnCancel: false);
@@ -170,7 +173,7 @@ namespace Killendar.Features
 
             // Only now, and only if we actually landed on a different Killendar - see the note at
             // the top. Anything being composed belongs to the store it was started in.
-            if (!string.Equals(EventStore.ActiveFile, previous, StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(EventStore.ActivePath, previousPath, StringComparison.OrdinalIgnoreCase))
                 _host.CloseSidebar();
 
             _host.RefreshView();
@@ -180,7 +183,7 @@ namespace Killendar.Features
         }
 
         /// <summary>Adopts an external .kcal: copies it into the data folder, switches to the copy
-        /// and opens it, falling back to what was open before if that is cancelled or fails.
+        /// and opens it, falling back to what was open before if that is canceled or fails.
         /// Returns the status text to show.</summary>
         internal string AdoptFile(string path)
         {
@@ -321,6 +324,17 @@ namespace Killendar.Features
                                              StringComparison.OrdinalIgnoreCase)
                                && EventStore.ListKillendars().Count <= 1;
             _host.ShowActiveKillendar(name, !(string.IsNullOrEmpty(name) || onlyDefault));
+        }
+
+        /// <summary>Reopens the active file from disk so changes made by another program become
+        /// visible immediately. The session password is retained for encrypted Killendars.</summary>
+        internal void ReloadActive()
+        {
+            _host.CloseSidebar();
+            _store.Close();
+            if (!Open(exitOnCancel: false)) return;
+            _host.RefreshView();
+            _host.SetStatus(_host.Loc("Str_Status_Reloaded"));
         }
     }
 }

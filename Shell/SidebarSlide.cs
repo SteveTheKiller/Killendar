@@ -5,16 +5,17 @@ using System.Windows.Media;              // CompositionTarget - the per-frame wi
 using System.Windows.Media.Animation;
 using Killendar.Controls;
 
-// The appointment panel's slide. Pure view behaviour, so it stays with the window rather than
+// The appointment panel's slide. Pure view behavior, so it stays with the window rather than
 // moving into the feature: the panel is never hidden with Visibility, the SidebarCol column width
-// is animated between 0 and SidebarW instead, so the calendar reflows with the slide rather than
+// is animated between 0 and the saved sidebar width instead, so the calendar reflows with the slide rather than
 // snapping after it. The rail beside it is permanent, which is the point of a rail.
 namespace Killendar.Shell
 {
     public partial class MainWindow
     {
         /// <summary>Open width of the appointment panel. Matches the fixed content width in XAML.</summary>
-        private const double SidebarW = 330;
+        private const double DefaultSidebarW = 330;
+        private double _sidebarWidth = DefaultSidebarW;
 
         /// <summary>
         /// The narrowest the CALENDAR is allowed to get. This, not the window, is the real
@@ -24,7 +25,7 @@ namespace Killendar.Shell
         /// The window's own MinWidth is deliberately much smaller than sidebar + rail + this, so
         /// the app can still be made small when the panel is shut. The panel opening is what has to
         /// respect the calendar's minimum, and it does it by GROWING THE WINDOW rather than by
-        /// squeezing the calendar. (Steve, 2026-07-30.)
+        /// squeezing the calendar. (2026-07-30)
         /// </summary>
         private const double CalendarMinW = 460;
 
@@ -61,12 +62,13 @@ namespace Killendar.Shell
             // width and then get eaten as the panel slid in over it - the calendar visibly
             // stretched before the panel arrived. In lockstep, the extra window width appears at
             // exactly the rate the panel consumes it, so the calendar simply rides along.
-            // (Steve, 2026-07-30.)
+            // (2026-07-30)
             // _sidebarOpen goes true FIRST: EndWidthRide reads it to know it should raise MinWidth
             // to the open minimum once the panel is fully out.
             bool was = _sidebarOpen;
             _sidebarOpen = true;
-            if (!was) { GrowForSidebar(); SlideSidebar(SidebarW); }
+            if (!was) { GrowForSidebar(); SlideSidebar(_sidebarWidth); }
+            else SidebarSplitter.IsEnabled = true;
             SidebarToggleBtn.Content = ChevronClose;
             SidebarToggleBtn.Tag = "on";                  // lights the rail icon in the accent
             SidebarToggleBtn.ToolTip = Loc("Str_TT_PanelHide");
@@ -82,6 +84,7 @@ namespace Killendar.Shell
             // reads the flag to decide whether to raise it again at the end of the slide.
             bool was = _sidebarOpen;
             _sidebarOpen = false;
+            SidebarSplitter.IsEnabled = false;
             if (was) { ShrinkAfterSidebar(); SlideSidebar(0); }
             SidebarToggleBtn.Content = ChevronOpen;
             SidebarToggleBtn.Tag = null;
@@ -102,7 +105,7 @@ namespace Killendar.Shell
         // a frame behind the layout, the calendar's star column absorbs the difference, and the
         // calendar visibly breathes for the length of the slide. Subtle, but it is there, and no
         // amount of matching the duration and easing fixes it because the lag is not in the curve.
-        // (Steve, 2026-07-30.)
+        // (2026-07-30)
         //
         // Instead the window width is DERIVED from the panel's width every frame:
         //
@@ -116,10 +119,11 @@ namespace Killendar.Shell
         private bool _riding;
 
         /// <summary>Window minimum with the panel shut: rail + calendar + card slack.</summary>
-        private double ClosedMinWidth => RailCol.ActualWidth + CalendarMinW + WindowChromeSlack();
+        private double ClosedMinWidth =>
+            (RailCol.Width.Value + CalendarMinW + WindowChromeSlack()) * _appScale;
 
         /// <summary>Window minimum with the panel OPEN - the panel's width on top.</summary>
-        private double OpenMinWidth => ClosedMinWidth + SidebarW;
+        private double OpenMinWidth => ClosedMinWidth + _sidebarWidth * _appScale;
 
         /// <summary>
         /// Start the window riding the panel open, if the panel would otherwise push the calendar
@@ -136,7 +140,8 @@ namespace Killendar.Shell
             if (WindowState != WindowState.Normal) return;
             if (ActualWidth >= OpenMinWidth) return;      // already room; the calendar can just shrink
 
-            double grow = Math.Min(SidebarW, SystemParameters.WorkArea.Width - ActualWidth);
+            double grow = Math.Min(_sidebarWidth * _appScale,
+                                   SystemParameters.WorkArea.Width - ActualWidth);
             if (grow <= 0) return;
 
             _rideBase = ActualWidth;
@@ -185,7 +190,7 @@ namespace Killendar.Shell
         private void RideWidth(object? sender, EventArgs e)
         {
             // Same frame as the layout that produced ActualWidth, so the two cannot separate.
-            Width = _rideBase + SidebarCol.ActualWidth * (_rideGrow / SidebarW);
+            Width = _rideBase + SidebarCol.ActualWidth * (_rideGrow / _sidebarWidth);
         }
 
         /// <summary>Detach the per-frame sync and settle on an exact value. Called when the slide
@@ -196,7 +201,7 @@ namespace Killendar.Shell
             {
                 CompositionTarget.Rendering -= RideWidth;
                 _riding = false;
-                Width = _rideBase + sidebarWidth * (_rideGrow / SidebarW);
+                Width = _rideBase + sidebarWidth * (_rideGrow / _sidebarWidth);
 
                 // Put the window back where it was if growing had to nudge it off the right edge.
                 // Without this it walks left a little on every open/close.
@@ -231,6 +236,7 @@ namespace Killendar.Shell
 
         private void SlideSidebar(double to)
         {
+            SidebarSplitter.IsEnabled = false;
             double from = SidebarCol.ActualWidth;
             var anim = new GridLengthAnimation
             {
@@ -247,6 +253,8 @@ namespace Killendar.Shell
             {
                 SidebarCol.BeginAnimation(ColumnDefinition.WidthProperty, null);
                 SidebarCol.Width = new GridLength(to);
+                SidebarContent.Width = _sidebarWidth;
+                SidebarSplitter.IsEnabled = _sidebarOpen;
                 // The window has been deriving its width from this column every frame; settle it
                 // on the exact final value and detach. (See the width-ride block above.)
                 EndWidthRide(to);

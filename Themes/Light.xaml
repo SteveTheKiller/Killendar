@@ -22,6 +22,7 @@
     <SolidColorBrush x:Key="TableHeaderBrush"    Color="#d2d2d2" po:Freeze="True"/>
     <SolidColorBrush x:Key="CardBorderBrush"     Color="#b0b0b0" po:Freeze="True"/>
     <SolidColorBrush x:Key="PaneBorderBrush"     Color="#b0b0b0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="AppBorderBrush"      Color="#b0b0b0" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="TextBrush"           Color="#1a1a1a" po:Freeze="True"/>
     <SolidColorBrush x:Key="MutedTextBrush"      Color="#555555" po:Freeze="True"/>
@@ -30,19 +31,19 @@
 
     <SolidColorBrush x:Key="RowAltBrush"         Color="#14000000" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowHoverBrush"       Color="#b2b2b2" po:Freeze="True"/>
-    <SolidColorBrush x:Key="RowSelectedBrush"    Color="#c8f5d8" po:Freeze="True"/>
+    <!-- SelectionBg's color. This was #c8f5d8, the pale mint that belongs on a focused button
+         (OutlinePressedBrush, below) - as a selected-row fill it read as a highlighter stripe.
+         Light's selection is DARK on light. -->
+    <SolidColorBrush x:Key="RowSelectedBrush"    Color="#1b5e20" po:Freeze="True"/>
     <!-- Untagged appointment chips - accent-free neutral, see the note in Greed.xaml. Brighter
          than the page and the hover gray, so it reads as a card on both. -->
     <SolidColorBrush x:Key="ChipBrush"           Color="#f7f7f7" po:Freeze="True"/>
-    <!-- Selection pair - see the note in Dark.xaml. Values from KillerPDF. Deliberately a DARK
-         fill on the light theme: the text on it is white in every theme. -->
     <SolidColorBrush x:Key="SelectionBg"         Color="#1b5e20" po:Freeze="True"/>
     <SolidColorBrush x:Key="SelectionFg"         Color="#ffffff" po:Freeze="True"/>
-    <!-- KillerShell's value verbatim - see the note in Dark.xaml. -->
     <SolidColorBrush x:Key="TreeLineBrush"       Color="#c2c2c2" po:Freeze="True"/>
 
-    <!-- Shortcut category colours - see the note in Dark.xaml. DARKENED for the light theme,
-         KillerPDF's Light values verbatim: the neon set is designed to glow on a dark panel and
+    <!-- Shortcut category colors - see the note in Dark.xaml. DARKENED for the light theme,
+         The product shortcut set is designed to glow on a dark panel and
          is close to invisible on a pale one. -->
     <SolidColorBrush x:Key="KsCatFile"           Color="#009e99" po:Freeze="True"/>
     <SolidColorBrush x:Key="KsCatView"           Color="#a316b5" po:Freeze="True"/>
@@ -51,7 +52,6 @@
     <SolidColorBrush x:Key="KsCatHelp"           Color="#128c07" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="InputBorderBrush"    Color="#c0c0c0" po:Freeze="True"/>
-    <!-- Menu surface: KillerPDF's values, the family source of truth for colour. -->
     <SolidColorBrush x:Key="MenuBackgroundBrush" Color="#ffffff" po:Freeze="True"/>
     <SolidColorBrush x:Key="MenuBorderBrush"     Color="#a8a8a8" po:Freeze="True"/>
     <SolidColorBrush x:Key="MenuTextBrush"       Color="#555555" po:Freeze="True"/>
@@ -59,23 +59,6 @@
     <SolidColorBrush x:Key="OutlinePressedBrush" Color="#c8f5d8" po:Freeze="True"/>
     <SolidColorBrush x:Key="ScrollThumbBrush"    Color="#8818843d" po:Freeze="True"/>
     <SolidColorBrush x:Key="ScrollThumbHoverBrush" Color="#1b5e20" po:Freeze="True"/>
-
-    <!-- Device-type label colours (darkened, for the light pane) -->
-    <SolidColorBrush x:Key="TypeRouter"     Color="#B06000" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeWindows"    Color="#1D5FB0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypePrinter"    Color="#9C3F66" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeSwitch"     Color="#5A5A5A" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeHypervisor" Color="#B02A2A" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeNas"        Color="#157A45" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeIot"        Color="#6A2A9C" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeServer"     Color="#B0481A" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeLinux"      Color="#7A6A10" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeDns"        Color="#1A6A8C" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeHa"         Color="#157A4F" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeMobile"     Color="#4040A8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeCamera"     Color="#9A6800" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeSmarttv"    Color="#864A86" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeMedia"      Color="#256A9C" po:Freeze="True"/>
 
 
     <!-- No stroke on Light: the effect rasterizes ClearType and blurs the label, and dark text on

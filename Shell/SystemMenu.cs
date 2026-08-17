@@ -19,7 +19,7 @@ using System.Windows.Interop;
 //
 // The ContextMenu it pops picks up the app's implicit ContextMenu / MenuItem / Separator styles,
 // so it themes itself. Each item posts back the exact WM_SYSCOMMAND the native menu would have
-// sent, so behaviour is unchanged - including Move and Size, which hand off to Windows' own
+// sent, so behavior is unchanged - including Move and Size, which hand off to Windows' own
 // modal drag loops.
 // ============================================================
 namespace Killendar.Shell
@@ -77,7 +77,7 @@ namespace Killendar.Shell
             _sysMenu ??= BuildSystemMenu();
 
             bool maximized = WindowState == WindowState.Maximized;
-            // Windows greys out what does not apply: you cannot Restore a normal window, cannot
+            // Windows grays out what does not apply: you cannot Restore a normal window, cannot
             // Maximize an already-maximized one, and cannot Move or Size while maximized.
             foreach (object o in _sysMenu.Items)
             {
@@ -149,7 +149,8 @@ namespace Killendar.Shell
             Add("Str_Sys_Minimize", "Minimize", SC_MINIMIZE, 0xE921);
             Add("Str_Sys_Maximize", "Maximize", SC_MAXIMIZE, 0xE922);
             menu.Items.Add(new Separator());
-            Add("Str_Sys_Close",    "Close",    SC_CLOSE,    0xE8BB, danger: true);
+            var close = Add("Str_Sys_Close", "Close", SC_CLOSE, 0xE8BB, danger: true);
+            close.InputGestureText = "Alt+F4";
             return menu;
         }
 

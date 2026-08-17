@@ -13,18 +13,10 @@ namespace Killendar.Shell
         /// keeps them in step with a theme changed from anywhere else.</summary>
         private void InitThemePicker()
         {
-            _themePicker = new Controls.ThemePicker(
-                this, ThemeMenu, ThemeButton, ThemeSwatches, AccentSwatches, AccentLabel);
-            _themePicker.Refresh();
-            Services.ThemeManager.ThemeChanged += () => _themePicker.Refresh();
+            _themePicker = new Controls.ThemePicker(this, ThemeMenu, ThemeButton);
         }
 
         private void ThemeButton_Click(object sender, RoutedEventArgs e) => _themePicker.Toggle();
 
-        private void ThemeSwatch_Click(object sender, RoutedEventArgs e) =>
-            _themePicker.PickTheme((sender as FrameworkElement)?.Tag);
-
-        private void AccentSwatch_Click(object sender, RoutedEventArgs e) =>
-            _themePicker.PickAccent((sender as FrameworkElement)?.Tag);
     }
 }

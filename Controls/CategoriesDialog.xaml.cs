@@ -16,12 +16,11 @@ namespace Killendar.Controls
     /// </summary>
     public partial class CategoriesDialog : Window
     {
-        // Row action glyphs: E790 paint roller, E8AC rename, E74D delete. Built from codepoints,
+        // Row action glyphs: E790 paint roller and E74D delete. Built from codepoints,
         // NEVER pasted as literal private-use characters - a literal PUA glyph does not survive
         // tooling, which is the same rule the sidebar rail chevrons follow. This file must stay
         // 0 non-ASCII bytes.
         private static readonly string GlyphRecolor = ((char)0xE790).ToString();
-        private static readonly string GlyphRename  = ((char)0xE8AC).ToString();
         private static readonly string GlyphDelete  = ((char)0xE74D).ToString();
 
         private readonly EventStore _store;
@@ -59,7 +58,7 @@ namespace Killendar.Controls
                     if ((string)item.Tag == select) { item.IsSelected = true; break; }
         }
 
-        // swatch + name + [recolor] [rename] [delete], all carrying the category name.
+        // swatch + directly editable name + [recolor] [delete], all carrying the category name.
         private ListBoxItem BuildRow(string name, string colorHex)
         {
             var grid = new Grid();
@@ -75,30 +74,49 @@ namespace Killendar.Controls
             };
             grid.Children.Add(swatch);
 
-            var label = new TextBlock { Text = name, VerticalAlignment = VerticalAlignment.Center };
-            label.SetResourceReference(TextBlock.ForegroundProperty, "TextBrush");
+            var label = new TextBlock
+            {
+                Text = name, VerticalAlignment = VerticalAlignment.Center,
+                Cursor = Cursors.IBeam, ToolTip = Loc("Str_TT_CatRename")
+            };
             Grid.SetColumn(label, 1);
             grid.Children.Add(label);
 
             var actions = new StackPanel { Orientation = Orientation.Horizontal };
             Grid.SetColumn(actions, 2);
             actions.Children.Add(RowButton(GlyphRecolor, Loc("Str_TT_CatRecolor"), () => RecolorCategory(name)));
-            actions.Children.Add(RowButton(GlyphRename,  Loc("Str_TT_CatRename"),  () => BeginRename(grid, label, name)));
             actions.Children.Add(RowButton(GlyphDelete,  Loc("Str_TT_CatDelete"),  () => DeleteCategory(name)));
             grid.Children.Add(actions);
 
             var row = new ListBoxItem { Content = grid, Tag = name, HorizontalContentAlignment = HorizontalAlignment.Stretch };
-            // Double-click the row to rename inline (as well as the rename button).
+            // The name itself is the rename affordance. A deliberate click on it edits in place;
+            // double-click and F2 remain available for keyboard/Explorer familiarity.
+            label.MouseLeftButtonDown += (_, e) =>
+            {
+                e.Handled = true;
+                row.IsSelected = true;
+                BeginRename(grid, label, name);
+            };
             row.MouseDoubleClick += (_, _) => BeginRename(grid, label, name);
 
-            // Right-click menu. No Icon values: Killendar's MenuItem template presents Header
-            // only, so an icon would be silently dropped.
             var menu = new ContextMenu();
-            var miRename = new MenuItem { Header = Loc("Str_TT_CatRename") };
+            var miRename = new MenuItem
+            {
+                Header = Loc("Str_TT_CatRename"), InputGestureText = "F2",
+                Icon = Views.CalendarChrome.MenuGlyph(0xE70F)
+            };
             miRename.Click += (_, _) => BeginRename(grid, label, name);
-            var miColor = new MenuItem { Header = Loc("Str_TT_CatRecolor") };
+            var miColor = new MenuItem
+            {
+                Header = Loc("Str_TT_CatRecolor"),
+                Icon = Views.CalendarChrome.MenuGlyph(0xE790)
+            };
             miColor.Click += (_, _) => RecolorCategory(name);
-            var miDelete = new MenuItem { Header = Loc("Str_TT_CatDelete") };
+            var miDelete = new MenuItem
+            {
+                Header = Loc("Str_TT_CatDelete"), InputGestureText = "Delete",
+                Icon = Views.CalendarChrome.MenuGlyph(0xE74D)
+            };
             miDelete.Click += (_, _) => DeleteCategory(name);
             menu.Items.Add(miRename);
             menu.Items.Add(miColor);
@@ -117,6 +135,24 @@ namespace Killendar.Controls
             };
             b.Click += (_, _) => onClick();
             return b;
+        }
+
+        private void CategoryList_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (CategoryList.SelectedItem is not ListBoxItem row ||
+                row.Content is not Grid grid || row.Tag is not string name)
+                return;
+
+            if (e.Key == Key.F2 && grid.Children.OfType<TextBlock>().FirstOrDefault() is { } label)
+            {
+                BeginRename(grid, label, name);
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Delete)
+            {
+                DeleteCategory(name);
+                e.Handled = true;
+            }
         }
 
         // ---- Add ----
@@ -202,7 +238,7 @@ namespace Killendar.Controls
             // DarkTextBox is FontSize 14 with Padding 8,6, which does not fit a 22px row: the
             // content host fills top-down and the text line scrolls out of sight, leaving what
             // looks like an empty box. The style's own template comment describes this. So the
-            // row overrides all three - smaller text, flat vertical padding, centred content.
+            // row overrides all three - smaller text, flat vertical padding, centered content.
             var box = new TextBox
             {
                 Text = name, Height = 22,

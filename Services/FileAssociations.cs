@@ -28,15 +28,15 @@ namespace Killendar.Services
 
         /// <summary>Registers the extension under HKCU. Best-effort: a failure costs the double-click
         /// convenience, never the ability to open a Killendar from inside the app.</summary>
-        internal static void Register()
+        internal static void Register() => Register(Registry.CurrentUser, ExePath);
+
+        internal static void Register(RegistryKey root, string exe)
         {
             try
             {
-                string exe = ExePath;
-
-                using (var k = Registry.CurrentUser.CreateSubKey(@"Software\Classes\" + EventStore.Extension))
+                using (var k = root.CreateSubKey(@"Software\Classes\" + EventStore.Extension))
                     k.SetValue("", ProgId);
-                using (var k = Registry.CurrentUser.CreateSubKey(@"Software\Classes\" + ProgId))
+                using (var k = root.CreateSubKey(@"Software\Classes\" + ProgId))
                 {
                     k.SetValue("", DisplayName);
                     k.SetValue("FriendlyTypeName", DisplayName);
@@ -44,11 +44,11 @@ namespace Killendar.Services
                 // The exe's own icon rather than a dedicated icon: Explorer's DefaultIcon needs a
                 // real file path, and extracting a second .ico buys nothing until there is artwork
                 // that actually differs from the app icon.
-                using (var k = Registry.CurrentUser.CreateSubKey(@"Software\Classes\" + ProgId + @"\DefaultIcon"))
+                using (var k = root.CreateSubKey(@"Software\Classes\" + ProgId + @"\DefaultIcon"))
                     k.SetValue("", exe + ",0");
-                using (var k = Registry.CurrentUser.CreateSubKey(@"Software\Classes\" + ProgId + @"\shell\open"))
+                using (var k = root.CreateSubKey(@"Software\Classes\" + ProgId + @"\shell\open"))
                     k.SetValue("FriendlyAppName", DisplayName);
-                using (var k = Registry.CurrentUser.CreateSubKey(@"Software\Classes\" + ProgId + @"\shell\open\command"))
+                using (var k = root.CreateSubKey(@"Software\Classes\" + ProgId + @"\shell\open\command"))
                     k.SetValue("", "\"" + exe + "\" \"%1\"");
 
                 SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, IntPtr.Zero, IntPtr.Zero);
@@ -59,13 +59,15 @@ namespace Killendar.Services
         /// <summary>Takes it back out, from both uninstall paths. A ProgID pointing at a deleted exe
         /// is how you get a broken Open With list that nothing in the UI will offer to clean up.
         /// </summary>
-        internal static void Unregister()
+        internal static void Unregister() => Unregister(Registry.CurrentUser);
+
+        internal static void Unregister(RegistryKey root)
         {
             try
             {
-                Registry.CurrentUser.DeleteSubKeyTree(
+                root.DeleteSubKeyTree(
                     @"Software\Classes\" + ProgId, throwOnMissingSubKey: false);
-                using (var k = Registry.CurrentUser.OpenSubKey(
+                using (var k = root.OpenSubKey(
                            @"Software\Classes\" + EventStore.Extension, writable: true))
                 {
                     // Only drop the default if it is still ours - another app may have taken it.

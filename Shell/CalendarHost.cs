@@ -1,10 +1,12 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Effects;
 using Killendar.Features;
 using Killendar.Services;
 
 // MainWindow's side of the calendar surface: it satisfies ICalendarHost, wires the toolbar, and
-// composes the feature objects. The behaviour lives in Features/Calendar/.
+// composes the feature objects. The behavior lives in Features/Calendar/.
 namespace Killendar.Shell
 {
     public partial class MainWindow : ICalendarHost
@@ -51,7 +53,7 @@ namespace Killendar.Shell
         /// Opens the active Killendar and repaints. Deliberately NOT called from the constructor: an
         /// encrypted Killendar prompts for its password, and a modal dialog needs an Owner that has
         /// already been shown, or it throws "Cannot set Owner property to a Window that has not been
-        /// shown previously". Cancelling the prompt also calls Close(), and a reentrant Close()
+        /// shown previously". Canceling the prompt also calls Close(), and a reentrant Close()
         /// inside Show() throws as well - which is why MainWindow dispatches this at Background
         /// priority from Loaded rather than calling it inline.
         /// </summary>
@@ -79,10 +81,10 @@ namespace Killendar.Shell
         /// The active tab gets the family's selection treatment: a solid SelectionBg fill with
         /// SelectionFg (white) text, exactly as KillerPDF marks its selected tool.
         ///
-        /// It used to be PrimaryBrush text on a RowHoverBrush fill - accent-coloured text on a
+        /// It used to be PrimaryBrush text on a RowHoverBrush fill - accent-colored text on a
         /// tint, which is the hover treatment wearing the selected state's job and looked nothing
-        /// like the rest of the family. (Steve, 2026-07-30: "SELECTIONBG with white is how
-        /// killerpdf looks.") Killendar had no SelectionBg/SelectionFg keys at all; they are in
+        /// like the rest of the family. SelectionBg with white text is how KillerPDF looks.
+        /// (2026-07-30) Killendar had no SelectionBg/SelectionFg keys at all; they are in
         /// the theme files now, with KillerPDF's values.
         /// </summary>
         void ICalendarHost.HighlightTab(string which)
@@ -94,9 +96,38 @@ namespace Killendar.Shell
             {
                 bool on = tag == which;
                 btn.SetResourceReference(ForegroundProperty, on ? "SelectionFg" : "TextBrush");
+                btn.CommandParameter = on ? "selected" : null;
                 if (on) btn.SetResourceReference(BackgroundProperty, "SelectionBg");
                 else    btn.Background = System.Windows.Media.Brushes.Transparent;
             }
+
+            // Month and the time grids own their actual calendar surfaces. This leaves Month's
+            // weekday axis and Week's day labels directly on the window background instead of
+            // trapping them in a second full-size card. Agenda still uses the ordinary card.
+            bool ownsSurface = which is "Month" or "Week" or "Day";
+            if (ownsSurface)
+            {
+                ContentPane.Background = Brushes.Transparent;
+                ContentPane.BorderThickness = new Thickness(0);
+                ContentPaneGrain.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                ContentPane.SetResourceReference(Border.BackgroundProperty, "PaneBrush");
+                ContentPane.BorderThickness = new Thickness(1);
+                ContentPaneGrain.Visibility = Visibility.Visible;
+            }
+
+            if (ContentPane.Effect is DropShadowEffect shadow)
+                shadow.Opacity = ownsSurface ? 0 :
+                    TryFindResource("PaneShadowOpacity") is double opacity ? opacity : 0.6;
+
+            var bevelVisibility = ownsSurface ? Visibility.Collapsed : Visibility.Visible;
+            ContentPaneBevel1.Visibility = bevelVisibility;
+            ContentPaneBevel2.Visibility = bevelVisibility;
+            ContentPaneBevel3.Visibility = bevelVisibility;
+            ContentPaneBevel4.Visibility = bevelVisibility;
+            RefreshDensityTooltip();
         }
 
         // ---- toolbar ----
@@ -105,6 +136,19 @@ namespace Killendar.Shell
         {
             if (sender is Button b && b.Tag is string tag) _calendar.SelectView(tag);
         }
+
+        private void MonthModeMenu_Opened(object sender, RoutedEventArgs e)
+        {
+            bool rolling = _calendar.MonthRollingMode;
+            MonthCalendarModeItem.IsChecked = !rolling;
+            MonthRollingModeItem.IsChecked = rolling;
+        }
+
+        private void MonthCalendarMode_Click(object sender, RoutedEventArgs e)
+            => _calendar.SetMonthRollingMode(false);
+
+        private void MonthRollingMode_Click(object sender, RoutedEventArgs e)
+            => _calendar.SetMonthRollingMode(true);
 
         private void PrevBtn_Click(object sender, RoutedEventArgs e) => _calendar.Move(-1);
 

@@ -105,22 +105,13 @@ namespace Killendar.Shell
                 if (!_selectedCategories.Remove(name)) _selectedCategories.Add(name);
                 PaintCategoryChip(chip, name);
             };
-            // Hover (Steve, 2026-07-31): an unselected chip washes in a faint tint of its own
+            // Hover (2026-07-31): an unselected chip washes in a faint tint of its own
             // color - a preview of the fill a click would apply - and its text brightens; a
             // selected one dims, the same 0.82 the calendar chips use. Leave repaints from
             // state, which also resets the dim.
             chip.MouseEnter += (_, _) =>
             {
-                if (_selectedCategories.Contains(name))
-                {
-                    chip.Opacity = 0.82;
-                }
-                else
-                {
-                    var c = CategoryManager.ColorOf(name);
-                    chip.Background = new SolidColorBrush(Color.FromArgb(0x30, c.R, c.G, c.B));
-                    ((TextBlock)chip.Child).SetResourceReference(TextBlock.ForegroundProperty, "TextBrush");
-                }
+                chip.Opacity = 0.82;
             };
             chip.MouseLeave += (_, _) =>
             {
@@ -143,15 +134,17 @@ namespace Killendar.Shell
             var text  = (TextBlock)chip.Child;
 
             chip.BorderBrush = fill;
+            chip.Background = fill;
+            text.Foreground = CategoryManager.ForegroundFor(color);
             if (on)
             {
-                chip.Background = fill;
-                text.Foreground = CategoryManager.ForegroundFor(color);
+                chip.BorderThickness = new Thickness(2);
+                chip.Padding = new Thickness(6, 1, 6, 1);
             }
             else
             {
-                chip.Background = Brushes.Transparent;
-                text.SetResourceReference(TextBlock.ForegroundProperty, "MutedTextBrush");
+                chip.BorderThickness = new Thickness(1);
+                chip.Padding = new Thickness(7, 2, 7, 2);
             }
         }
     }

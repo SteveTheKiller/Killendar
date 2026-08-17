@@ -14,8 +14,8 @@ namespace Killendar.Controls
     // caller). The store is CLOSED while this dialog is up, so file operations - the active file
     // included - are safe.
     //
-    // There is deliberately no change-data-folder picker: Killendars are per-user under %APPDATA%
-    // by design.
+    // The folder controls can switch the whole catalog or place it beside the executable for a
+    // genuinely self-contained portable copy.
     public partial class KillendarsDialog : Window
     {
         /// <summary>File name the user chose to open, or null if they just closed.</summary>
@@ -35,7 +35,7 @@ namespace Killendar.Controls
             NewBtn.Content      = ((char)0xE710).ToString();
             DeleteBtn.Content   = ((char)0xE711).ToString();
             LoadBtn.Content     = ((char)0xE8DA).ToString();
-            ExplorerBtn.Content = ((char)0xE838).ToString();
+            StorageBtn.Content  = ((char)0xE838).ToString();
 
             Loaded += (_, _) => Anim.FadeIn(RootBorder);
             RefreshList();
@@ -86,16 +86,18 @@ namespace Killendar.Controls
         // meta stay readable - in the Light accents the fill and the accent text are the same hue,
         // which leaves a selected row unreadable without this. Unselected:
         // the active Killendar's name in the accent, the rest normal. SetResourceReference rather
-        // than a cached brush, so the colours follow a theme switch.
+        // than a cached brush, so the colors follow a theme switch.
         private static void SetRowColors(TextBlock name, TextBlock meta, bool active, bool selected)
         {
             if (selected)
             {
-                name.Foreground = Brushes.White;
-                meta.Foreground = new SolidColorBrush(Color.FromArgb(0xC8, 0xFF, 0xFF, 0xFF));
+                name.SetResourceReference(TextBlock.ForegroundProperty, "SelectionFg");
+                meta.SetResourceReference(TextBlock.ForegroundProperty, "SelectionFg");
+                meta.Opacity = 0.78;
             }
             else
             {
+                meta.Opacity = 1;
                 name.SetResourceReference(TextBlock.ForegroundProperty, active ? "PrimaryBrush" : "TextBrush");
                 meta.SetResourceReference(TextBlock.ForegroundProperty, "MutedTextBrush");
             }
@@ -120,6 +122,16 @@ namespace Killendar.Controls
             while (d != null && d is not ListBoxItem)
                 d = VisualTreeHelper.GetParent(d);
             if (d is ListBoxItem item) item.IsSelected = true;
+        }
+
+        private void KcList_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (SelectedItem == null) return;
+            if (e.Key == Key.Enter) Open_Click(sender, e);
+            else if (e.Key == Key.F2) BeginRename(SelectedItem);
+            else if (e.Key == Key.Delete) Delete_Click(sender, e);
+            else return;
+            e.Handled = true;
         }
 
         private void RenameMenu_Click(object sender, RoutedEventArgs e)
@@ -252,7 +264,7 @@ namespace Killendar.Controls
         /// Downloads folder or a network share is not what "Load" should mean.</summary>
         private void Load_Click(object sender, RoutedEventArgs e)
         {
-            var dlg = new Microsoft.Win32.OpenFileDialog
+            var dlg = new FileDialog(FileDialogMode.Open)
             {
                 Title = Loc("Str_Kc_LoadTitle"),
                 Filter = Loc("Str_Kc_Filter"),
@@ -310,6 +322,39 @@ namespace Killendar.Controls
                     "explorer.exe", EventStore.DataDir) { UseShellExecute = true });
             }
             catch { /* best-effort */ }
+        }
+
+        private void Storage_Click(object sender, RoutedEventArgs e)
+        {
+            StorageMenu.PlacementTarget = StorageBtn;
+            StorageMenu.IsOpen = true;
+        }
+
+        private void Folder_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new FileDialog(FileDialogMode.Folder)
+            {
+                Title = Loc("Str_Kc_DataFolderTitle"),
+                InitialDirectory = EventStore.DataDir,
+            };
+            if (dlg.ShowDialog(this) == true) ChangeDataFolder(dlg.FileName);
+        }
+
+        private void PortableFolder_Click(object sender, RoutedEventArgs e)
+            => ChangeDataFolder(AppDomain.CurrentDomain.BaseDirectory);
+
+        private void ChangeDataFolder(string path)
+        {
+            try
+            {
+                EventStore.SetDataDir(path);
+                RefreshList();
+                DlgStatus.Text = string.Format(Loc("Str_Kc_DataFolderChanged"), EventStore.DataDir);
+            }
+            catch (Exception ex)
+            {
+                DlgStatus.Text = string.Format(Loc("Str_Kc_DataFolderFailed"), ex.Message);
+            }
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)

@@ -6,7 +6,7 @@ using System.Windows.Media;
 using Killendar.Features;
 using Killendar.Models;
 
-// The sidebar's DAY AGENDA mode (Steve, 2026-07-30): clicking a day or an appointment shows the
+// The sidebar's DAY AGENDA mode (2026-07-30): clicking a day or an appointment shows the
 // day's appointments here FIRST - viewing is the default, and the edit form sits behind each
 // row's Edit button. The editor's Save/Cancel/Delete return here rather than closing the panel;
 // only the rail chevron and Esc close outright (SidebarSlide.cs / Shortcuts.cs).
@@ -83,7 +83,7 @@ namespace Killendar.Shell
 
         private FrameworkElement BuildDayAgendaRow(CalendarEvent ev)
         {
-            // The rail's density button drives this list too (Steve, 2026-07-31): the same knob
+            // The rail's density button drives this list too (2026-07-31): the same knob
             // that packs the hour grid tighter makes these rows say more, so the whole title and
             // the appointment's info are readable without hovering for the tooltip.
             //   0 - one trimmed line, as always
@@ -93,35 +93,32 @@ namespace Killendar.Shell
             int detail = Views.CalendarChrome.Density;
 
             var row = new Grid();
-            // The time column is SHARED across every row (AgendaListHost is the size scope), so
-            // the widest label sets one column width for the whole list and every chip starts at
-            // the same x - without it each row followed its own time label and the chips came
-            // out three different widths (Steve, 2026-07-31).
-            row.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto, SharedSizeGroup = "AgendaTime" });
-            row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // chip
+            row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // content
             row.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });                       // edit
-            row.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });                            // chip row
+            row.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });                            // time
+            row.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });                            // chip
             row.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });                            // details
 
             // A multi-day label ("7/15 11:30 PM - 7/16 1:30 AM") is the one that grows long
             // enough to starve the chip column - the column is Auto, so one patch window
-            // squeezed every chip in the list (Steve, 2026-07-31). Stacked into two lines it
+            // squeezed every chip in the list (2026-07-31). Stacked into two lines it
             // is never wider than an ordinary same-day time.
             string timeText = !ev.AllDay && ev.SpansMultipleDays
                 ? ev.Start.ToString("M/d h:mm tt") + " -\n" + ev.End.ToString("M/d h:mm tt")
                 : ev.TimeLabel;
             var time = Views.CalendarChrome.Text(timeText, "MutedTextBrush", 10.5, null, "Consolas");
-            time.VerticalAlignment = detail >= 1 ? VerticalAlignment.Top : VerticalAlignment.Center;
-            time.Margin = new Thickness(0, detail >= 1 ? 5 : 0, 8, 0);
+            time.Margin = new Thickness(2, 2, 0, 3);
             Grid.SetColumn(time, 0);
+            Grid.SetColumnSpan(time, 2);
             row.Children.Add(time);
 
-            // Chip click only marks the row - viewing, not editing (Steve, 2026-07-30).
+            // Chip click only marks the row - viewing, not editing (2026-07-30).
             var chip = Views.CalendarChrome.Chip(ev,
                 e => { _agendaHighlight = e.Id; BuildDayAgendaRows(); }, compact: false,
                 wrap: detail >= 1);
             chip.HorizontalAlignment = HorizontalAlignment.Stretch;
-            Grid.SetColumn(chip, 1);
+            Grid.SetRow(chip, 1);
+            Grid.SetColumn(chip, 0);
             row.Children.Add(chip);
 
             if (detail >= 2)
@@ -129,8 +126,8 @@ namespace Killendar.Shell
                 // Under the chip, aligned to it, dimmer than the title. Only lines that have
                 // something to say are added - no empty-label placeholders.
                 var info = new StackPanel { Margin = new Thickness(2, 2, 0, 2) };
-                Grid.SetRow(info, 1);
-                Grid.SetColumn(info, 1);
+                Grid.SetRow(info, 2);
+                Grid.SetColumn(info, 0);
 
                 if (!string.IsNullOrWhiteSpace(ev.Location))
                     info.Children.Add(DetailLine(ev.Location, "MutedTextBrush"));
@@ -146,7 +143,7 @@ namespace Killendar.Shell
                 if (info.Children.Count > 0) row.Children.Add(info);
             }
 
-            // Glyph with a tooltip, not a text button (Steve, 2026-07-30). E70F is the pencil,
+            // Glyph with a tooltip, not a text button (2026-07-30). E70F is the pencil,
             // shipped and proven in KillerNotes' and KillerShell's rails; codepoint, never a
             // literal PUA char (family rule).
             var edit = new Button
@@ -162,7 +159,8 @@ namespace Killendar.Shell
             // Load switches the panel to editor mode itself (IAppointmentView.OpenPanel);
             // _agendaDay stays set, so Save/Cancel land back on this day's list.
             edit.Click += (_, _) => { _agendaHighlight = ev.Id; _appointments.Load(ev); };
-            Grid.SetColumn(edit, 2);
+            Grid.SetRow(edit, 1);
+            Grid.SetColumn(edit, 1);
             row.Children.Add(edit);
 
             // The marked row wears the family SelectionBg fill, on a wrapper so the fill gets
@@ -175,7 +173,17 @@ namespace Killendar.Shell
                 Margin       = new Thickness(0, 1, 0, 1)
             };
             if (_agendaHighlight == ev.Id)
+            {
                 wrap.SetResourceReference(Border.BackgroundProperty, "SelectionBg");
+                // The highlight fill and its foreground are one state. Ectoplasm deliberately
+                // pairs yellow with near-black SelectionFg, so leaving the time/details on their
+                // resting white/muted brushes made "all day" disappear into the selection.
+                time.SetResourceReference(TextBlock.ForegroundProperty, "SelectionFg");
+                edit.SetResourceReference(Control.ForegroundProperty, "SelectionFg");
+                foreach (var panel in row.Children.OfType<StackPanel>())
+                    foreach (var detailLine in panel.Children.OfType<TextBlock>())
+                        detailLine.SetResourceReference(TextBlock.ForegroundProperty, "SelectionFg");
+            }
             return wrap;
         }
 
@@ -210,7 +218,7 @@ namespace Killendar.Shell
         /// Deliberately does NOT call SidebarMode. CloseSidebar runs while the panel's column is
         /// mid-animation, and flipping the four content rows' Visibility there re-measures the
         /// whole panel on the frames the slide is trying to use - which is exactly the jerky close
-        /// Steve caught on 2026-07-30. Nothing needs the swap here anyway: whichever mode opens
+        /// observed on 2026-07-30. Nothing needs the swap here anyway: whichever mode opens
         /// next sets it (ShowDayAgenda -> agenda, IAppointmentView.OpenPanel -> editor), and the
         /// panel is invisible in between.
         /// </remarks>

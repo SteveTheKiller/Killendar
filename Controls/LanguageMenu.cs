@@ -26,6 +26,7 @@ namespace Killendar.Controls
             (Locale.Es,   "Español", "es"),
             (Locale.Fr,   "Français", "fr-FR"),
             (Locale.Ja,   "日本語", "ja-JP"),
+            (Locale.PlPL, "Polski", "pl-PL"),
             (Locale.TrTR, "Türkçe", "tr-TR"),
             (Locale.ZhCN, "中文 (简体)", "zh-CN"),
             (Locale.ZhTW, "中文 (繁體)", "zh-TW"),
@@ -60,7 +61,7 @@ namespace Killendar.Controls
             // Beside the button that opens it and clamped inside the window - FlyoutPlacement.cs
             // does both. PlacementMode.Right alone is not enough: WPF only avoids the SCREEN edge,
             // so with the rail near the window's right side the menu opened over the desktop.
-            // (Steve, 2026-07-30.)
+            // (2026-07-30)
             FlyoutPlacement.Attach(_menu, _anchor);
             _menu.IsOpen = true;
             Anim.FadeIn(_menu);
@@ -72,52 +73,79 @@ namespace Killendar.Controls
         {
             _menu.Items.Clear();
             var current = LocaleManager.Current;
-
+            // Content-sized and deliberately narrow: the old 190px body plus the flyout's shadow
+            // room made this compact picker read like a dialog. The longest native name and locale
+            // code still fit at 160px without forcing the menu across the calendar.
+            var panel = new StackPanel { Width = 160, Margin = new Thickness(10, 10, 10, 10) };
             foreach (var (loc, name, code) in Languages)
             {
-                var grid = new Grid { MinWidth = 160 };
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                var grid = new Grid();
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
                 var nameBlock = new TextBlock { Text = name, VerticalAlignment = VerticalAlignment.Center };
                 var codeBlock = new TextBlock
                 {
-                    Text = "(" + code + ")",
-                    Opacity = 0.5,
-                    Margin = new Thickness(22, 0, 0, 0),
+                    Text = code,
+                    Margin = new Thickness(12, 0, 0, 0),
                     VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Right,
                 };
+                codeBlock.SetResourceReference(TextBlock.ForegroundProperty, "MutedTextBrush");
                 Grid.SetColumn(codeBlock, 1);
                 grid.Children.Add(nameBlock);
                 grid.Children.Add(codeBlock);
 
-                var item = new MenuItem
+                var item = new RadioButton
                 {
-                    Header = grid,
+                    Content = grid,
                     Tag = loc.ToString(),
-                    HorizontalContentAlignment = HorizontalAlignment.Stretch,
+                    GroupName = "LangGroup",
+                    Style = (Style)Application.Current.FindResource("ThemeRadio"),
                     IsChecked = loc == current,
                 };
-                if (loc == current && Accent is Brush accent)
-                {
-                    nameBlock.Foreground = accent;
-                    nameBlock.FontWeight = FontWeights.SemiBold;
-                    codeBlock.Foreground = accent;
-                    codeBlock.Opacity    = 0.85;
-                }
-                item.Click += LocaleItem_Click;
-                _menu.Items.Add(item);
+                item.Checked += LocaleItem_Click;
+                panel.Children.Add(item);
             }
-
-            AppendDateFormatSection();
+            panel.Children.Add(new Border
+            {
+                Height = 1, Margin = new Thickness(0, 2, 0, 8),
+                Background = Application.Current.TryFindResource("MenuBorderBrush") as Brush
+            });
+            panel.Children.Add(new TextBlock
+            {
+                Text = LocaleManager.Loc("Str_Lbl_DateFormat"), FontSize = 10,
+                Margin = new Thickness(0, 0, 0, 6)
+            });
+            foreach (var (style, key) in DateStyles)
+            {
+                var date = new RadioButton
+                {
+                    Content = LocaleManager.Loc(key), Tag = style.ToString(), GroupName = "DateGroup",
+                    Style = (Style)Application.Current.FindResource("ThemeRadio"),
+                    IsChecked = style == DateFormatManager.Current,
+                };
+                date.Checked += DateStyleItem_Click;
+                panel.Children.Add(date);
+            }
+            // A raw panel added to ContextMenu is auto-wrapped in the normal MenuItem template,
+            // which reserves an icon gutter and row padding around the WHOLE picker. This is a
+            // custom menu panel, like the theme swatches, so use the shared gutter-free container.
+            _menu.Items.Add(new MenuItem
+            {
+                Header = panel,
+                StaysOpenOnClick = true,
+                Style = (Style)Application.Current.FindResource("PanelMenuItem"),
+            });
         }
 
         private void LocaleItem_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is MenuItem mi && mi.Tag is string tag && Enum.TryParse<Locale>(tag, out var loc))
+            if (sender is RadioButton mi && mi.Tag is string tag && Enum.TryParse<Locale>(tag, out var loc))
             {
                 LocaleManager.Apply(loc);
                 _localeChanged();
+                _menu.IsOpen = false;
             }
         }
 
@@ -160,7 +188,7 @@ namespace Killendar.Controls
 
         private void DateStyleItem_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is MenuItem mi && mi.Tag is string tag &&
+            if (sender is RadioButton mi && mi.Tag is string tag &&
                 Enum.TryParse<DateStyle>(tag, out var style))
             {
                 DateFormatManager.Apply(style);

@@ -11,17 +11,17 @@ using System.Windows.Threading;
 // the flexible middle, the four view buttons pinned right - and nothing in it used to shed when
 // the row got narrow. Open the appointment panel on anything but a wide window and the buttons
 // ran off the right edge, cut in half; narrower still and the period label itself was sliced,
-// which is the one thing that says WHERE YOU ARE. (Steve, 2026-07-30.)
+// which is the one thing that says WHERE YOU ARE. (2026-07-30)
 //
 // So the bar sheds, in a fixed order, into one "..." menu. What is shed is always reachable -
 // nothing is ever merely hidden.
 //
 // SHED ORDER (first to go, last to go). The rule is: the further something is from "what am I
 // looking at", the earlier it goes.
-//   1. the four view buttons   - a whole group, and the biggest single win
-//   2. Export .ics             - rarest action
-//   3. Import .ics
-//   4. Today                   - the arrows still navigate without it
+//   1. Export .ics             - rarest action
+//   2. Import .ics
+//   3. Today                   - the arrows still navigate without it
+//   4. the four view buttons   - important context, retained until file actions are gone
 //   5. New                     - the primary action, so it holds on longest
 // Prev, Next and the period label NEVER shed. They are the answer to "where am I and how do I
 // move", and a calendar with neither is not a calendar.
@@ -32,8 +32,8 @@ using System.Windows.Threading;
 // The first version called Measure(infinity) inside the SizeChanged handler. That starts a layout
 // pass from inside a layout pass: WPF re-measures with the real constraint straight afterwards,
 // which raises SizeChanged again, which measures again. The toolbar flickered continuously and the
-// loop pinned the UI thread, which made every other interaction feel laggy. (Steve, 2026-07-30:
-// "blinking on and off like a disco ball".)
+// loop pinned the UI thread, which made every other interaction feel laggy - the whole bar
+// blinked on and off continuously. (2026-07-30)
 //
 // Nothing here measures. It reads ActualWidth - a value layout has already computed - caches each
 // item's width from a frame where that item was visible, and runs dispatched at Loaded priority,
@@ -52,7 +52,7 @@ namespace Killendar.Shell
         /// <summary>
         /// The narrowest the date label may be squeezed before the bar sheds instead. The label
         /// lives in the star column and trims rather than pushing anything off, so without a floor
-        /// it would silently ellipsise down to "Wed..." while four buttons sat beside it at full
+        /// it would silently ellipsize down to "Wed..." while four buttons sat beside it at full
         /// width. Shedding a button the user is not looking at beats destroying the one label that
         /// says where they are.
         /// </summary>
@@ -88,11 +88,11 @@ namespace Killendar.Shell
                 // No glyph literals here. One() looks the glyph up in ToolbarStyle.cs's
                 // ToolbarItems() - the same table that draws the button - so a codepoint can only
                 // ever be changed in one place. Hardcoding them here meant that moving Today's
-                // glyph left the overflow menu still drawing the old one. (Steve, 2026-07-30.)
-                new ShedItem { Element = ViewTabs,     MenuItems = ViewMenuItems },
+                // glyph left the overflow menu still drawing the old one. (2026-07-30)
                 new ShedItem { Element = ExportBtn,    MenuItems = () => One(ExportBtn,   ExportBtn_Click) },
                 new ShedItem { Element = ImportBtn,    MenuItems = () => One(ImportBtn,   ImportBtn_Click) },
                 new ShedItem { Element = TodayBtn,     MenuItems = () => One(TodayBtn,    TodayBtn_Click) },
+                new ShedItem { Element = ViewTabs,     MenuItems = ViewMenuItems },
                 new ShedItem { Element = NewEventBtn,  MenuItems = () => One(NewEventBtn, NewEventBtn_Click) },
             ];
 

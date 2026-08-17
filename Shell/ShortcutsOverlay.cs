@@ -25,7 +25,7 @@ namespace Killendar.Shell
 {
     public partial class MainWindow
     {
-        /// <summary>What a binding belongs to. Drives the colour of the bar under a key on the
+        /// <summary>What a binding belongs to. Drives the color of the bar under a key on the
         /// map and the group it lands in on the list. Same five the website map uses.</summary>
         private enum KsCat { View, Nav, Appt, File, Help }
 
@@ -59,19 +59,25 @@ namespace Killendar.Shell
             new("N",        "Str_KS_New",      KsCat.Appt, false, "N"),
             new("B",        "Str_KS_Panel",    KsCat.Appt, false, "B"),
             new("Ctrl+N",   "Str_KS_New",      KsCat.Appt, true,  "N"),
+            new("Ctrl+Enter", "Str_KS_SaveAppt", KsCat.Appt, true, "Enter"),
+            new("Ctrl+Delete", "Str_KS_DeleteAppt", KsCat.Appt, true, "Delete"),
+            new("Alt+A",    "Str_KS_AllDay",   KsCat.Appt, false),
+            new("Alt+R",    "Str_KS_Repeats",  KsCat.Appt, false),
+            new("Ctrl+Shift+M", "Str_KS_ShrinkAppt", KsCat.Appt, true, "M"),
 
             new("Ctrl+I",   "Str_KS_Import",   KsCat.File, true,  "I"),
             new("Ctrl+E",   "Str_KS_Export",   KsCat.File, true,  "E"),
+            new("F5",       "Str_KS_Reload",   KsCat.File, false, "F5"),
 
             new("F1",       "Str_KS_ThisList", KsCat.Help, false, "F1"),
             new("F12",      "Str_KS_About",    KsCat.Help, false, "F12"),
             new("Esc",      "Str_KS_Close",    KsCat.Help, false, "Esc"),
         ];
 
-        // Category colours are the KsCat* THEME BRUSHES in Themes/*.xaml - "KsCat" + the enum name.
+        // Category colors are the KsCat* THEME BRUSHES in Themes/*.xaml - "KsCat" + the enum name.
         // They are not listed here any more: a hardcoded table cannot be retuned per theme, and the
         // neon set that is right on Dark is close to invisible on Light. Same mechanism, same
-        // values and same per-theme retune as KillerPDF and KillerShell. (Steve, 2026-07-30.)
+        // values and same per-theme retune as KillerPDF and KillerShell. (2026-07-30)
 
         private static readonly (KsCat Cat, string TitleKey)[] KsGroups =
         [
@@ -86,31 +92,36 @@ namespace Killendar.Shell
         // These MUST be declared before KbRows, because static field initializers run in
         // declaration order and KbRows reads them.
         private static readonly string CapLeft  = ((char)0x2190).ToString();   // left arrow
+        private static readonly string CapUp    = ((char)0x2191).ToString();   // up arrow
         private static readonly string CapRight = ((char)0x2192).ToString();   // right arrow
         private static readonly string CapDown  = ((char)0x2193).ToString();   // down arrow
+        private static readonly string CapBack  = ((char)0x232B).ToString();   // erase to the left
         private static readonly string CapMenu  = ((char)0x2630).ToString();   // trigram, the menu key
 
         // Keyboard rows for the map: (id, cap, width units). An empty id is a gap.
         private static readonly (string Id, string Cap, double W)[][] KbRows =
         [
-            [("Esc","Esc",1), ("","",0.6), ("F1","F1",1), ("F2","F2",1), ("F3","F3",1), ("F4","F4",1), ("","",0.4),
-             ("F5","F5",1), ("F6","F6",1), ("F7","F7",1), ("F8","F8",1), ("","",0.4),
+            [("Esc","Esc",1), ("","",0.8), ("F1","F1",1), ("F2","F2",1), ("F3","F3",1), ("F4","F4",1), ("","",0.6),
+             ("F5","F5",1), ("F6","F6",1), ("F7","F7",1), ("F8","F8",1), ("","",0.6),
              ("F9","F9",1), ("F10","F10",1), ("F11","F11",1), ("F12","F12",1)],
             [("Grave","`",1), ("D1","1",1), ("D2","2",1), ("D3","3",1), ("D4","4",1), ("D5","5",1), ("D6","6",1),
-             ("D7","7",1), ("D8","8",1), ("D9","9",1), ("D0","0",1), ("Minus","-",1), ("Equals","=",1), ("Back",CapLeft,2)],
+             ("D7","7",1), ("D8","8",1), ("D9","9",1), ("D0","0",1), ("Minus","-",1), ("Equals","=",1), ("Back",CapBack,2),
+             ("","",0.6), ("Ins","Ins",1), ("Home","Home",1), ("PgUp","PgUp",1)],
             [("Tab","Tab",1.5), ("Q","Q",1), ("W","W",1), ("E","E",1), ("R","R",1), ("T","T",1), ("Y","Y",1),
-             ("U","U",1), ("I","I",1), ("O","O",1), ("P","P",1), ("LBr","[",1), ("RBr","]",1), ("BSl","\\",1.5)],
+             ("U","U",1), ("I","I",1), ("O","O",1), ("P","P",1), ("LBr","[",1), ("RBr","]",1), ("BSl","\\",1.5),
+             ("","",0.6), ("Del","Del",1), ("End","End",1), ("PgDn","PgDn",1)],
             [("Caps","Caps",1.8), ("A","A",1), ("S","S",1), ("D","D",1), ("F","F",1), ("G","G",1), ("H","H",1),
              ("J","J",1), ("K","K",1), ("L","L",1), ("Semi",";",1), ("Quote","'",1), ("Enter","Enter",2.2)],
             [("Shift","Shift",2.3), ("Z","Z",1), ("X","X",1), ("C","C",1), ("V","V",1), ("B","B",1), ("N","N",1),
-             ("M","M",1), ("Comma",",",1), ("Period",".",1), ("Slash","/",1), ("RShift","Shift",2.7)],
+             ("M","M",1), ("Comma",",",1), ("Period",".",1), ("Slash","/",1), ("RShift","Shift",2.7),
+             ("","",1.6), ("Up",CapUp,1)],
             [("Ctrl","Ctrl",1.5), ("Win","Win",1.2), ("Alt","Alt",1.5), ("Space","",6.8), ("RAlt","Alt",1.5),
-             ("Menu",CapMenu,1), ("RCtrl","Ctrl",1.5), ("","",0.4),
+             ("Menu",CapMenu,1), ("RCtrl","Ctrl",1.5), ("","",0.6),
              ("Left",CapLeft,1), ("Down",CapDown,1), ("Right",CapRight,1)],
         ];
 
         // 46, matching KillerPDF's U. Killendar was drawing at 42, so the same keyboard came out
-        // ~9% smaller than the reference for no reason. (Steve, 2026-07-30.)
+        // ~9% smaller than the reference for no reason. (2026-07-30)
         private const double KbUnit = 46;
         private bool _ksMapView;
 
@@ -125,8 +136,7 @@ namespace Killendar.Shell
             // Only one overlay at a time - About and this one would otherwise stack.
             if (AboutOverlay.Visibility == Visibility.Visible) AboutOverlay.Visibility = Visibility.Collapsed;
             ApplyShortcutView(read: true);
-            ShortcutsOverlay.Visibility = Visibility.Visible;
-            Controls.Anim.FadeIn(ShortcutsOverlay);
+            FadeOverlayIn(ShortcutsOverlay);
         }
 
         private void ShortcutsButton_Click(object sender, RoutedEventArgs e) => ToggleShortcutsOverlay();
@@ -165,41 +175,70 @@ namespace Killendar.Shell
         private void BuildShortcutsList()
         {
             KsListHost.Children.Clear();
-            bool first = true;
-            foreach (var (cat, titleKey) in KsGroups)
+
+            // The map needs one binding per physical key, but the readable list should not repeat
+            // an action merely because it has a compatibility alias. In particular N and Ctrl+N
+            // become one row here while remaining separate keys on the two map layers.
+            var display = KsAll
+                .GroupBy(x => (x.Cat, x.LabelKey))
+                .ToDictionary(g => g.Key, g => (Keys: string.Join(" / ", g.Select(x => x.Keys)), Binding: g.First()));
+
+            var columns = new Grid();
+            columns.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            columns.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(28) });
+            columns.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            var left = new StackPanel();
+            var right = new StackPanel();
+            Grid.SetColumn(left, 0);
+            Grid.SetColumn(right, 2);
+            columns.Children.Add(left);
+            columns.Children.Add(right);
+
+            for (int groupIndex = 0; groupIndex < KsGroups.Length; groupIndex++)
             {
+                var (cat, titleKey) = KsGroups[groupIndex];
+                // File belongs beneath navigation on the left; appointments and help balance it
+                // on the right. Groups stay intact rather than splitting at an arbitrary row.
+                var host = cat is KsCat.View or KsCat.Nav or KsCat.File ? left : right;
                 var header = new TextBlock
                 {
                     Text = Loc(titleKey),
                     FontFamily = new FontFamily("Consolas"),
                     FontSize = 11,
                     FontWeight = FontWeights.SemiBold,
-                    Margin = new Thickness(0, first ? 0 : 14, 0, 5),
+                    Margin = new Thickness(0, host.Children.Count == 0 ? 0 : 14, 0, 6),
                 };
                 // Theme brush, like the map - the LIST's section headings are the same category
-                // colours, which is what ties the two views together.
+                // colors, which is what ties the two views together.
                 header.SetResourceReference(TextBlock.ForegroundProperty, "KsCat" + cat);
-                KsListHost.Children.Add(header);
-                first = false;
+                host.Children.Add(header);
 
-                foreach (var b in KsAll.Where(x => x.Cat == cat))
+                foreach (var row in display.Where(x => x.Key.Cat == cat).Select(x => x.Value))
                 {
-                    var dock = new DockPanel { Margin = new Thickness(0, 0, 0, 4) };
+                    var grid = new Grid { Margin = new Thickness(0, 0, 0, 6) };
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(104) });
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                     var keys = new TextBlock
                     {
-                        Text = b.Keys, FontFamily = new FontFamily("Consolas"),
-                        FontSize = 11.5, Width = 96,
+                        Text = row.Keys, FontFamily = new FontFamily("Consolas"),
+                        FontSize = 11.5, Margin = new Thickness(0, 0, 10, 0),
                     };
-                    keys.SetResourceReference(TextBlock.ForegroundProperty, "MutedTextBrush");
-                    dock.Children.Add(keys);
+                    keys.SetResourceReference(TextBlock.ForegroundProperty, "PrimaryBrush");
+                    grid.Children.Add(keys);
 
-                    var label = new TextBlock { Text = Loc(b.LabelKey), FontSize = 12.5, TextWrapping = TextWrapping.Wrap };
-                    label.SetResourceReference(TextBlock.ForegroundProperty, "TextBrush");
-                    dock.Children.Add(label);
+                    var label = new TextBlock
+                    {
+                        Text = Loc(row.Binding.LabelKey), FontSize = 11.5,
+                        TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 1, 0, 0)
+                    };
+                    label.SetResourceReference(TextBlock.ForegroundProperty, "MutedTextBrush");
+                    Grid.SetColumn(label, 1);
+                    grid.Children.Add(label);
 
-                    KsListHost.Children.Add(dock);
+                    host.Children.Add(grid);
                 }
             }
+            KsListHost.Children.Add(columns);
         }
 
         // ---- MAP view ----
@@ -230,7 +269,7 @@ namespace Killendar.Shell
 
             // The detail line under the board - KillerPDF's _kbDetail. The hovered key's shortcut
             // and full action, at a size you can actually read, so a caption that had to be
-            // ellipsised on a narrow cap is still recoverable.
+            // ellipsized on a narrow cap is still recoverable.
             _kbDetail = new TextBlock
             {
                 Text = " ", FontFamily = new FontFamily("Consolas"), FontSize = 12.5,
@@ -258,12 +297,12 @@ namespace Killendar.Shell
         ///
         ///   * a Grid, not a StackPanel. The cap letter is pinned TOP and the action caption pinned
         ///     BOTTOM, so both sit at the same height on every key whatever the caption's length.
-        ///     Stacked, they centred as a group and the letters wandered up and down the row.
+        ///     Stacked, they centered as a group and the letters wandered up and down the row.
         ///   * the action caption lives in a ClipToBounds Border so a long one can marquee on hover
-        ///     instead of being silently ellipsised - that caption is the whole point of the map.
+        ///     instead of being silently ellipsized - that caption is the whole point of the map.
         ///   * hover lifts the cap 3px, the same lift the killertools.net cards use.
         ///
-        /// The one deliberate difference is colour: KillerPDF has a single Accent, Killendar tints
+        /// The one deliberate difference is color: KillerPDF has a single Accent, Killendar tints
         /// each key by its category (the neon set shared with the website map).
         /// </summary>
         private Border BuildKeyCap(string cap, double w, KsBinding? bound)
@@ -313,7 +352,7 @@ namespace Killendar.Shell
                 // KillerPDF and KillerShell do it. These used to be hardcoded hex in KsColors,
                 // which meant the neon set was painted on the Light theme too, where it is close to
                 // invisible, and a live theme switch left the board on the old palette.
-                // (Steve, 2026-07-30.)
+                // (2026-07-30)
                 string catKey = "KsCat" + b.Cat;
                 key.SetResourceReference(Border.BorderBrushProperty, catKey);
                 act.Text = Loc(b.LabelKey);

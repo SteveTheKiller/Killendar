@@ -3,13 +3,14 @@
    Shared by index.html, technical.html and about.html.
 
    The theme list and the accent hexes are the app's own, from Themes/*.xaml. Accents exist
-   only on the three neutral families (dark, light, black); blood, greed and cyanotic carry
-   their own built-in accent, so the flyout hides on those - the same rule the app's theme
-   flyout follows. */
+   only on the three neutral families (dark, light, black); every other theme carries its own
+   built-in accent, so the flyout hides on those - the same rule the app's theme flyout
+   follows. The six grunge palettes are ported from pdf-landing's kp.css. */
 (function () {
   'use strict';
 
-  var THEMES = ['dark', 'light', 'black', 'blood', 'greed', 'cyanotic'];
+  var THEMES = ['dark', 'light', 'black', 'blood', 'greed', 'cyanotic', 'ectoplasm', 'decay', 'malaise', 'sepulchre', 'delirium', 'mourning'];
+  var THEMED = ['ectoplasm', 'decay', 'malaise', 'sepulchre', 'delirium', 'mourning'];  // have their own wordmark art
 
   // Per-family accents. Each neutral defines its own red, and Dark's #DD504B is the one the
   // wordmark and the og-image are built on, which is why Red is the default.
@@ -57,12 +58,20 @@
   // accent of their own, so they fall back to Red, which is what the app and the icon use.
   function updateLogos() {
     var t = theme();
-    // Three variants, not two. Black is its own family with its own six hexes (its red is
-    // #FF2929, not dark's #DD504B), so using the dark art there would put a wordmark on the
-    // page whose accent disagreed with every other accent on it.
-    var variant = (t === 'light') ? 'light' : (t === 'black') ? 'black' : 'dark';
-    var color = hasAccents(t) ? accentName().toLowerCase() : DEFAULT_ACCENT.toLowerCase();
-    var src = 'brand/killendar-logo-' + variant + '-' + color + '.svg';
+    var src;
+    if (THEMED.indexOf(t) >= 0) {
+      // The grunge themes carry their own wordmark art, colored with the theme's in-app
+      // wordmark color (make-logo-svgs.py --themes). Blood/greed/cyanotic stay on the Red
+      // fallback below, matching the app.
+      src = 'brand/killendar-logo-' + t + '.svg';
+    } else {
+      // Three variants, not two. Black is its own family with its own six hexes (its red is
+      // #FF2929, not dark's #DD504B), so using the dark art there would put a wordmark on the
+      // page whose accent disagreed with every other accent on it.
+      var variant = (t === 'light') ? 'light' : (t === 'black') ? 'black' : 'dark';
+      var color = hasAccents(t) ? accentName().toLowerCase() : DEFAULT_ACCENT.toLowerCase();
+      src = 'brand/killendar-logo-' + variant + '-' + color + '.svg';
+    }
     all('img.wm-logo').forEach(function (img) { img.src = src; });
   }
 
@@ -94,7 +103,42 @@
     });
   }
 
-  // ---- Screenshot strip: fade the top/bottom edge while there is more to scroll ----
+  // ---- Screenshot strip: populate the sidebar thumbnails, then fade the top/bottom edge
+  // while there is more to scroll (KillerPDF's pdf-landing pattern) ----
+
+  function wireScreenshots() {
+    var strip = $('sbThumbs');
+    if (!strip) return;
+    var placeholder = strip.querySelector('.sb-empty');
+    if (placeholder) placeholder.remove();
+    // One line per screenshot, describing what it actually shows - the tooltip on hover.
+    var SHOTS = [
+      { src: 'screenshots/01.png', desc: 'Month view, Dark theme - color categories on a busy August' },
+      { src: 'screenshots/02.png', desc: 'Killendars: switching between calendar files from the library dialog' },
+      { src: 'screenshots/03.png', desc: 'HTML export - a standalone calendar page with its own theme and accent picker' },
+      { src: 'screenshots/04.png', desc: 'Agenda view - importing appointments from a file' },
+      { src: 'screenshots/05.png', desc: 'Agenda view, Greed theme - the category color editor' },
+      { src: 'screenshots/06.png', desc: 'Week view, Dark theme - the keyboard shortcuts map, in Turkish' },
+      { src: 'screenshots/07.png', desc: 'Day view, Light theme - the new appointment editor and language menu' },
+      { src: 'screenshots/08.png', desc: 'Week view, Black theme - a full work week of appointments' }
+    ];
+    SHOTS.forEach(function (shot, idx) {
+      var b = document.createElement('button');
+      b.className = 'sb-thumb';
+      b.title = shot.desc;
+      var img = document.createElement('img');
+      img.src = shot.src;
+      img.alt = shot.desc;
+      img.loading = 'lazy';
+      // Fires after wireStrip() is wired below - nudge its scroll/resize listener to
+      // recompute once each image has its real height, since the strip's scrollHeight
+      // isn't accurate until then.
+      img.addEventListener('load', function () { window.dispatchEvent(new Event('resize')); });
+      img.addEventListener('error', function () { window.dispatchEvent(new Event('resize')); });
+      b.appendChild(img);
+      strip.appendChild(b);
+    });
+  }
 
   function wireStrip() {
     var strip = $('sbThumbs');
@@ -130,6 +174,23 @@
     });
   }
 
+  // ---- Scroll-spy outline nav (technical, about) - KillerPDF's pdf-landing pattern verbatim.
+  // Highlights the sidebar link for whichever section is currently in view. ----
+
+  function wireOutline() {
+    var links = all('.outline a');
+    if (!links.length) return;
+    var secs = links.map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+    var sc = document.querySelector('.content-scroll');
+    function onScroll() {
+      var y = (sc ? sc.scrollTop : window.scrollY) + 100, cur = secs[0];
+      secs.forEach(function (s) { if (s && s.offsetTop <= y) cur = s; });
+      links.forEach(function (a) { a.classList.toggle('on', !!cur && a.getAttribute('href') === '#' + cur.id); });
+    }
+    (sc || window).addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
   // ---- Easter egg: click the version number. The family one - it rains, then it quips. ----
 
   function wireEgg() {
@@ -157,13 +218,13 @@
     });
   }
 
-  // ---- Language (Steve, 2026-07-31: the page speaks the app's ten) ----
+  // ---- Language (Steve, 2026-07-31: the page speaks the app's languages) ----
   // English is not in this table: it IS the page, snapshotted off the DOM at boot, so the
   // markup stays the single source of truth for en and switching back restores it exactly.
   // The hero-info card carries no data-i18n on purpose - release.ps1 rewrites it by matching
   // the literal English label spans. Values may contain markup; they are our own strings.
 
-  var LANGS = ['en', 'es', 'fr', 'de', 'cs', 'tr', 'ja', 'bn', 'zh-CN', 'zh-TW'];
+  var LANGS = ['en', 'es', 'fr', 'de', 'cs', 'tr', 'ja', 'pl', 'bn', 'zh-CN', 'zh-TW'];
 
   // Flag SVGs, KillerPDF's kp.js set verbatim; the toggle wears the chosen language's flag.
   var FLAGS = {
@@ -176,7 +237,8 @@
     'zh-TW': '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#fe0000"/><rect width="12" height="12" fill="#000095"/><polygon points="6,3 7.2,6.6 11,6.6 7.9,8.8 9.1,12.4 6,10.2 2.9,12.4 4.1,8.8 1,6.6 4.8,6.6" fill="#fff"/></svg>',
     'zh-CN': '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#de2910"/><polygon points="4,3 4.9,5.6 7.6,5.6 5.4,7.3 6.2,9.9 4,8.3 1.8,9.9 2.6,7.3 0.4,5.6 3.1,5.6" fill="#ffde00"/></svg>',
     bn: '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#006a4e"/><circle cx="10.5" cy="12" r="6" fill="#f42a41"/></svg>',
-    cs: '<svg viewBox="0 0 24 24"><rect width="24" height="12" fill="#fff"/><rect y="12" width="24" height="12" fill="#d7141a"/><polygon points="0,0 12,12 0,24" fill="#11457e"/></svg>'
+    cs: '<svg viewBox="0 0 24 24"><rect width="24" height="12" fill="#fff"/><rect y="12" width="24" height="12" fill="#d7141a"/><polygon points="0,0 12,12 0,24" fill="#11457e"/></svg>',
+    pl: '<svg viewBox="0 0 24 24"><rect width="24" height="12" fill="#fff"/><rect y="12" width="24" height="12" fill="#dc143c"/></svg>'
   };
 
   var I18N = {
@@ -197,7 +259,7 @@
       b3a: "Mes, semana, día y agenda, compartiendo un solo anterior / siguiente / hoy.",
       b3b: "Las citas solapadas se colocan lado a lado, nunca ocultas.",
       b3c: "<b>Categorías de color</b> que tú defines, pintando cada vista.",
-      b3d: "Seis temas, diez idiomas, atajos de una sola tecla.",
+      b3d: "Seis temas, once idiomas, atajos de una sola tecla.",
       dl: "Descargar", dlwin: "Descargar para Windows", gh: "Código en GitHub",
       navTech: "Técnico", navAbout: "Acerca de",
       note: "Instálalo o úsalo portátil. Gratis, código abierto, GPLv3.<br>Sin cuenta, sin suscripción, sin servicio de sincronización.<br>No se envía telemetría y no hay anuncios... nunca.",
@@ -212,13 +274,12 @@
       f4p: "SQLCipher en reposo: AES-256, HMAC-SHA512 por página, su propia derivación de clave. Opcional: sin contraseña el archivo sigue siendo SQLite normal.",
       f5h: "iCalendar de entrada y salida",
       f5p: "Importación y exportación escritas contra RFC 5545 sin dependencias externas. Las categorías viajan con la cita en ambas direcciones. Importa / exporta <code>.ics</code>",
-      f6h: "Seis temas, diez idiomas",
+      f6h: "Seis temas, once idiomas",
       f6p: "Cada tema se cambia en marcha, con seis acentos en tres de ellos. Atajos de una tecla que se apartan mientras escribes en un campo.",
       f7h: "Portátil o instalado",
       f7p: "Ejecútalo desde un USB, o deja que se instale por usuario o para todos en la máquina. Hay una ruta silenciosa para winget, Chocolatey y RMM.",
       f8h: "Firmado y comprobable",
       f8p: "La tarjeta Acerca de muestra el editor, la huella del certificado y el SHA-256 del exe en ejecución, validado con WinVerifyTrust en lugar de solo leerlo del archivo.",
-      shots: "Capturas<br>próximamente",
       foot: "<a href=\"https://github.com/SteveTheKiller/Killendar\" target=\"_blank\" rel=\"noopener\">Código en GitHub</a> &middot; GPLv3 &middot; Parte de <a href=\"https://killertools.net\" target=\"_blank\" rel=\"noopener\">killertools.net</a>",
       egg: "Sin cuenta. Sin sincronización. Sin servidor. Tus citas nunca salen de esta máquina."
     },
@@ -238,7 +299,7 @@
       b3a: "Mois, semaine, jour et agenda, partageant un seul précédent / suivant / aujourd'hui.",
       b3b: "Les rendez-vous qui se chevauchent s'affichent côte à côte, jamais cachés.",
       b3c: "Des <b>catégories de couleur</b> que vous définissez, peignant chaque vue.",
-      b3d: "Six thèmes, dix langues, raccourcis à une seule touche.",
+      b3d: "Six thèmes, onze langues, raccourcis à une seule touche.",
       dl: "Télécharger", dlwin: "Télécharger pour Windows", gh: "Source sur GitHub",
       navTech: "Technique", navAbout: "À propos",
       note: "Installez-le ou utilisez-le portable. Gratuit, open source, GPLv3.<br>Sans compte, sans abonnement, sans service de synchronisation.<br>Aucune télémétrie envoyée et aucune pub... jamais.",
@@ -253,13 +314,12 @@
       f4p: "SQLCipher au repos : AES-256, HMAC-SHA512 par page, sa propre dérivation de clé. Optionnel : sans mot de passe, le fichier reste du SQLite ordinaire.",
       f5h: "iCalendar en entrée et en sortie",
       f5p: "Import et export écrits contre la RFC 5545 sans dépendances externes. Les catégories voyagent avec le rendez-vous dans les deux sens. Import / export <code>.ics</code>",
-      f6h: "Six thèmes, dix langues",
+      f6h: "Six thèmes, onze langues",
       f6p: "Chaque thème se change en cours d'exécution, avec six accents sur trois d'entre eux. Des raccourcis à une touche qui s'effacent pendant que vous tapez dans un champ.",
       f7h: "Portable ou installé",
       f7p: "Lancez-le depuis une clé USB, ou laissez-le s'installer par utilisateur ou pour toute la machine. Un chemin silencieux existe pour winget, Chocolatey et RMM.",
       f8h: "Signé, et vérifiable",
       f8p: "La carte À propos montre l'éditeur, l'empreinte du certificat et le SHA-256 de l'exe en cours, validé avec WinVerifyTrust plutôt que simplement lu dans le fichier.",
-      shots: "Captures<br>bientôt",
       foot: "<a href=\"https://github.com/SteveTheKiller/Killendar\" target=\"_blank\" rel=\"noopener\">Source sur GitHub</a> &middot; GPLv3 &middot; Membre de <a href=\"https://killertools.net\" target=\"_blank\" rel=\"noopener\">killertools.net</a>",
       egg: "Pas de compte. Pas de synchro. Pas de serveur. Vos rendez-vous ne quittent jamais cette machine."
     },
@@ -279,7 +339,7 @@
       b3a: "Monat, Woche, Tag und Agenda mit einem gemeinsamen Zurück / Weiter / Heute.",
       b3b: "Überlappende Termine stehen nebeneinander, nie versteckt.",
       b3c: "<b>Farbkategorien</b>, die Sie selbst anlegen und die jede Ansicht färben.",
-      b3d: "Sechs Designs, zehn Sprachen, Einzeltasten-Kürzel.",
+      b3d: "Sechs Designs, elf Sprachen, Einzeltasten-Kürzel.",
       dl: "Download", dlwin: "Download für Windows", gh: "Quellcode auf GitHub",
       navTech: "Technik", navAbout: "Über",
       note: "Installieren oder portabel nutzen. Kostenlos, Open Source, GPLv3.<br>Kein Konto, kein Abo, kein Sync-Dienst.<br>Keine Telemetrie und keine Werbung... niemals.",
@@ -294,13 +354,12 @@
       f4p: "SQLCipher im Ruhezustand: AES-256, HMAC-SHA512 pro Seite, eigene Schlüsselableitung. Opt-in - ohne Passwort bleibt die Datei normales SQLite.",
       f5h: "iCalendar rein und raus",
       f5p: "Import und Export gegen RFC 5545 geschrieben, ohne externe Abhängigkeiten. Kategorien reisen in beide Richtungen mit dem Termin. <code>.ics</code> Import / Export",
-      f6h: "Sechs Designs, zehn Sprachen",
+      f6h: "Sechs Designs, elf Sprachen",
       f6p: "Jedes Design zur Laufzeit wechselbar, mit sechs Akzentfarben auf dreien davon. Einzeltasten-Kürzel, die pausieren, während Sie in ein Feld tippen.",
       f7h: "Portabel oder installiert",
       f7p: "Vom USB-Stick starten oder pro Benutzer bzw. für alle auf der Maschine installieren. Ein stiller Pfad existiert für winget, Chocolatey und RMM.",
       f8h: "Signiert und nachprüfbar",
       f8p: "Die Info-Karte zeigt Herausgeber, Zertifikat-Fingerabdruck und den SHA-256 der laufenden Exe, validiert mit WinVerifyTrust statt nur aus der Datei gelesen.",
-      shots: "Screenshots<br>folgen bald",
       foot: "<a href=\"https://github.com/SteveTheKiller/Killendar\" target=\"_blank\" rel=\"noopener\">Quellcode auf GitHub</a> &middot; GPLv3 &middot; Teil von <a href=\"https://killertools.net\" target=\"_blank\" rel=\"noopener\">killertools.net</a>",
       egg: "Kein Konto. Kein Sync. Kein Server. Ihre Termine verlassen diese Maschine nie."
     },
@@ -320,7 +379,7 @@
       b3a: "Měsíc, týden, den a agenda se společným předchozí / další / dnes.",
       b3b: "Překrývající se schůzky leží vedle sebe, nikdy skryté.",
       b3c: "<b>Barevné kategorie</b>, které si definujete a které barví každé zobrazení.",
-      b3d: "Šest motivů, deset jazyků, jednoklávesové zkratky.",
+      b3d: "Šest motivů, jedenáct jazyků, jednoklávesové zkratky.",
       dl: "Stáhnout", dlwin: "Stáhnout pro Windows", gh: "Zdroj na GitHubu",
       navTech: "Technika", navAbout: "O aplikaci",
       note: "Nainstalujte, nebo používejte přenosně. Zdarma, open source, GPLv3.<br>Bez účtu, bez předplatného, bez synchronizační služby.<br>Žádná telemetrie, žádné reklamy... nikdy.",
@@ -335,13 +394,12 @@
       f4p: "SQLCipher v klidu: AES-256, HMAC-SHA512 na stránku, vlastní odvození klíče. Volitelné - bez hesla zůstává soubor obyčejné SQLite.",
       f5h: "iCalendar dovnitř i ven",
       f5p: "Import a export napsané podle RFC 5545 bez externích závislostí. Kategorie cestují se schůzkou oběma směry. Import / export <code>.ics</code>",
-      f6h: "Šest motivů, deset jazyků",
+      f6h: "Šest motivů, jedenáct jazyků",
       f6p: "Každý motiv lze přepnout za běhu, tři z nich mají šest akcentových barev. Jednoklávesové zkratky, které se odmlčí, když píšete do pole.",
       f7h: "Přenosný nebo nainstalovaný",
       f7p: "Spusťte z USB, nebo jej nechte nainstalovat pro uživatele či pro celý stroj. Tichá cesta existuje pro winget, Chocolatey a RMM.",
       f8h: "Podepsaný a ověřitelný",
       f8p: "Karta O aplikaci ukazuje vydavatele, otisk certifikátu a SHA-256 běžícího exe, ověřené přes WinVerifyTrust, ne jen přečtené ze souboru.",
-      shots: "Snímky<br>již brzy",
       foot: "<a href=\"https://github.com/SteveTheKiller/Killendar\" target=\"_blank\" rel=\"noopener\">Zdroj na GitHubu</a> &middot; GPLv3 &middot; Součást <a href=\"https://killertools.net\" target=\"_blank\" rel=\"noopener\">killertools.net</a>",
       egg: "Žádný účet. Žádná synchronizace. Žádný server. Vaše schůzky nikdy neopustí tento stroj."
     },
@@ -361,7 +419,7 @@
       b3a: "Ay, hafta, gün ve ajanda; tek bir önceki / sonraki / bugün paylaşır.",
       b3b: "Çakışan randevular yan yana dizilir, asla gizlenmez.",
       b3c: "Kendi tanımladığınız <b>renk kategorileri</b> her görünümü boyar.",
-      b3d: "Altı tema, on dil, tek tuşlu kısayollar.",
+      b3d: "Altı tema, on bir dil, tek tuşlu kısayollar.",
       dl: "İndir", dlwin: "Windows için indir", gh: "GitHub'da kaynak",
       navTech: "Teknik", navAbout: "Hakkında",
       note: "Kurun ya da taşınabilir çalıştırın. Ücretsiz, açık kaynak, GPLv3.<br>Hesap yok, abonelik yok, senkronizasyon servisi yok.<br>Telemetri gönderilmez ve reklam yok... asla.",
@@ -376,13 +434,12 @@
       f4p: "Beklemede SQLCipher: AES-256, sayfa başına HMAC-SHA512, kendi anahtar türetmesi. İsteğe bağlı - parola yoksa dosya düz SQLite kalır.",
       f5h: "iCalendar girer ve çıkar",
       f5p: "İçe ve dışa aktarma, harici bağımlılık olmadan RFC 5545'e göre yazıldı. Kategoriler randevuyla iki yönde de yolculuk eder. <code>.ics</code> içe / dışa aktarma",
-      f6h: "Altı tema, on dil",
+      f6h: "Altı tema, on bir dil",
       f6p: "Her tema çalışırken değiştirilebilir; üçünde altı vurgu rengi var. Bir alana yazarken kenara çekilen tek tuşlu kısayollar.",
       f7h: "Taşınabilir veya kurulu",
       f7p: "USB bellekten çalıştırın ya da kullanıcı başına veya makinedeki herkes için kurulsun. winget, Chocolatey ve RMM için sessiz bir yol var.",
       f8h: "İmzalı ve doğrulanabilir",
       f8p: "Hakkında kartı yayımcıyı, sertifika parmak izini ve çalışan exe'nin SHA-256'sını gösterir; dosyadan okunmak yerine WinVerifyTrust ile doğrulanır.",
-      shots: "Ekran görüntüleri<br>yakında",
       foot: "<a href=\"https://github.com/SteveTheKiller/Killendar\" target=\"_blank\" rel=\"noopener\">GitHub'da kaynak</a> &middot; GPLv3 &middot; <a href=\"https://killertools.net\" target=\"_blank\" rel=\"noopener\">killertools.net</a> ailesinden",
       egg: "Hesap yok. Senkronizasyon yok. Sunucu yok. Randevularınız bu makineden asla ayrılmaz."
     },
@@ -402,7 +459,7 @@
       b3a: "月・週・日・予定一覧が、前へ / 次へ / 今日を共有します。",
       b3b: "重なる予定は横に並び、隠れません。",
       b3c: "自分で定義する<b>カラーカテゴリ</b>がすべての表示を彩ります。",
-      b3d: "テーマ六種、十か国語、ワンキーのショートカット。",
+      b3d: "テーマ六種、十一か国語、ワンキーのショートカット。",
       dl: "ダウンロード", dlwin: "Windows 版をダウンロード", gh: "GitHub でソースを見る",
       navTech: "技術情報", navAbout: "について",
       note: "インストールしてもポータブルでも。無料、オープンソース、GPLv3。<br>アカウントなし、サブスクなし、同期サービスなし。<br>テレメトリは送信せず、広告も... 永遠になし。",
@@ -417,15 +474,54 @@
       f4p: "保存時は SQLCipher：AES-256、ページごとの HMAC-SHA512、独自の鍵導出。任意選択なのでパスワードなしなら普通の SQLite のまま。",
       f5h: "iCalendar の出入り",
       f5p: "読み書きは外部依存なしで RFC 5545 に沿って実装。カテゴリは双方向で予定と一緒に移動します。<code>.ics</code> の読み込み / 書き出し",
-      f6h: "テーマ六種、十か国語",
+      f6h: "テーマ六種、十一か国語",
       f6p: "どのテーマも実行中に切り替え可能、うち三種には六色のアクセント。入力中は遠慮するワンキーショートカット。",
       f7h: "ポータブルもインストールも",
       f7p: "USB メモリから実行しても、ユーザー単位・全員向けにインストールしても。winget、Chocolatey、RMM 向けのサイレントパスもあります。",
       f8h: "署名済み、検証可能",
       f8p: "バージョン情報カードは発行元、証明書の拇印、実行中の exe の SHA-256 を表示し、ファイルから読むだけでなく WinVerifyTrust で検証します。",
-      shots: "スクリーンショットは<br>近日公開",
       foot: "<a href=\"https://github.com/SteveTheKiller/Killendar\" target=\"_blank\" rel=\"noopener\">GitHub のソース</a> &middot; GPLv3 &middot; <a href=\"https://killertools.net\" target=\"_blank\" rel=\"noopener\">killertools.net</a> ファミリー",
       egg: "アカウントなし。同期なし。サーバーなし。予定がこのマシンを離れることはありません。"
+    },
+    pl: {
+      tag: "Kalendarz, który możesz zaszyfrować - bez konta, bez synchronizacji i bez niczego, co dzwoni do domu.",
+      b1h: "Szyfrowany, jeśli chcesz",
+      b1a: "Ustaw hasło, a plik jest <b>szyfrowany w spoczynku</b> przez SQLCipher.",
+      b1b: "AES-256, HMAC-SHA512 na stronę i własna derywacja klucza SQLCipher.",
+      b1c: "Opcjonalnie: bez hasła plik pozostaje zwykłym SQLite, czytelnym dla wszystkiego.",
+      b1d: "Jedno hasło na kalendarz - służbowy zamknięty, rodzinny otwarty.",
+      b2h: "To tylko plik",
+      b2a: "Jeden plik <b>.kcal</b> to cały twój kalendarz, w twoim własnym profilu.",
+      b2b: "Zwykła baza SQLite - kopia zapasowa przez zwykłe skopiowanie.",
+      b2c: "Czytelny dla każdego narzędzia SQLite, z tą aplikacją lub bez niej.",
+      b2d: "Import i eksport <b>.ics</b> do całej reszty.",
+      b3h: "Cztery widoki, jedno sterowanie",
+      b3a: "Miesiąc, tydzień, dzień i agenda ze wspólnym poprzedni / następny / dziś.",
+      b3b: "Nakładające się spotkania stają obok siebie, nigdy nie są ukryte.",
+      b3c: "<b>Kolorowe kategorie</b>, które sam definiujesz, malują każdy widok.",
+      b3d: "Sześć motywów, jedenaście języków, skróty jednym klawiszem.",
+      dl: "Pobierz", dlwin: "Pobierz dla Windows", gh: "Źródło na GitHubie",
+      navTech: "Techniczne", navAbout: "O aplikacji",
+      note: "Zainstaluj lub uruchom przenośnie. Za darmo, open source, GPLv3.<br>Bez konta, bez subskrypcji, bez usługi synchronizacji.<br>Żadna telemetria nie jest wysyłana i żadnych reklam... nigdy.",
+      feats: "Co potrafi",
+      f1h: "Miesiąc, tydzień, dzień, agenda",
+      f1p: "Nakładające się spotkania układają się obok siebie w pasach, więc podwójnie zajęta godzina pokazuje oba. Wpisy całodniowe mają własny pasek nad siatką godzin.",
+      f2h: "Kolorowe kategorie",
+      f2p: "Zdefiniuj własne, nazwij je i wybierz kolory. Spotkanie może nosić kilka, a pierwsza koloruje je w każdym widoku. Zmiana nazwy aktualizuje wszystkie spotkania naraz.",
+      f3h: "Tyle kalendarzy, ile chcesz",
+      f3p: "Jeden do pracy, jeden na dyżury, jeden dla rodziny. Każdy jest osobnym plikiem z własnym hasłem lub bez. Pliki <code>.kcal</code>",
+      f4h: "Opcjonalne szyfrowanie",
+      f4p: "SQLCipher w spoczynku: AES-256, HMAC-SHA512 na stronę, własna derywacja klucza. Opcjonalne - bez hasła plik pozostaje zwykłym SQLite.",
+      f5h: "iCalendar w obie strony",
+      f5p: "Import i eksport napisane według RFC 5545 bez zewnętrznych zależności. Kategorie podróżują ze spotkaniem w obu kierunkach. Import / eksport <code>.ics</code>",
+      f6h: "Sześć motywów, jedenaście języków",
+      f6p: "Każdy motyw przełączysz w trakcie działania, trzy z nich mają sześć kolorów akcentu. Skróty jednym klawiszem, które ustępują, gdy piszesz w polu.",
+      f7h: "Przenośny lub zainstalowany",
+      f7p: "Uruchom z pendrive'a albo pozwól mu zainstalować się dla użytkownika lub dla wszystkich na maszynie. Cicha ścieżka istnieje dla winget, Chocolatey i RMM.",
+      f8h: "Podpisany i sprawdzalny",
+      f8p: "Karta O aplikacji pokazuje wydawcę, odcisk certyfikatu i SHA-256 działającego exe, zweryfikowane przez WinVerifyTrust, a nie tylko odczytane z pliku.",
+      foot: "<a href=\"https://github.com/SteveTheKiller/Killendar\" target=\"_blank\" rel=\"noopener\">Źródło na GitHubie</a> &middot; GPLv3 &middot; Część <a href=\"https://killertools.net\" target=\"_blank\" rel=\"noopener\">killertools.net</a>",
+      egg: "Bez konta. Bez synchronizacji. Bez serwera. Twoje spotkania nigdy nie opuszczają tej maszyny."
     },
     bn: {
       tag: "এমন একটি ক্যালেন্ডার যা আপনি এনক্রিপ্ট করতে পারেন - অ্যাকাউন্ট নেই, সিঙ্ক নেই, বাইরে কিছু পাঠায় না।",
@@ -443,7 +539,7 @@
       b3a: "মাস, সপ্তাহ, দিন ও সূচি - একই আগের / পরের / আজ ভাগ করে নেয়।",
       b3b: "ওভারল্যাপ অ্যাপয়েন্টমেন্ট পাশাপাশি বসে, কখনও লুকায় না।",
       b3c: "আপনার সংজ্ঞায়িত <b>রঙের বিভাগ</b> প্রতিটি ভিউ রাঙায়।",
-      b3d: "ছয়টি থিম, দশটি ভাষা, এক-কী শর্টকাট।",
+      b3d: "ছয়টি থিম, এগারোটি ভাষা, এক-কী শর্টকাট।",
       dl: "ডাউনলোড", dlwin: "Windows-এর জন্য ডাউনলোড", gh: "GitHub-এ সোর্স",
       navTech: "টেকনিক্যাল", navAbout: "সম্পর্কে",
       note: "ইনস্টল করুন বা পোর্টেবল চালান। ফ্রি, ওপেন সোর্স, GPLv3।<br>অ্যাকাউন্ট নেই, সাবস্ক্রিপশন নেই, সিঙ্ক সার্ভিস নেই।<br>কোনো টেলিমেট্রি পাঠানো হয় না, বিজ্ঞাপনও নেই... কখনও না।",
@@ -458,13 +554,12 @@
       f4p: "স্টোরেজে SQLCipher: AES-256, প্রতি পৃষ্ঠায় HMAC-SHA512, নিজস্ব কী ডেরিভেশন। ঐচ্ছিক - পাসওয়ার্ড না থাকলে ফাইল সাধারণ SQLite থাকে।",
       f5h: "iCalendar আসা-যাওয়া",
       f5p: "ইমপোর্ট ও এক্সপোর্ট RFC 5545 অনুযায়ী লেখা, কোনো বাইরের ডিপেন্ডেন্সি নেই। বিভাগগুলো দুদিকেই অ্যাপয়েন্টমেন্টের সঙ্গে যায়। <code>.ics</code> ইমপোর্ট / এক্সপোর্ট",
-      f6h: "ছয়টি থিম, দশটি ভাষা",
+      f6h: "ছয়টি থিম, এগারোটি ভাষা",
       f6p: "প্রতিটি থিম চলন্ত অবস্থায় বদলানো যায়, তিনটিতে ছয়টি অ্যাকসেন্ট রঙ। এক-কী শর্টকাট, যা ফিল্ডে টাইপ করার সময় সরে দাঁড়ায়।",
       f7h: "পোর্টেবল বা ইনস্টলড",
       f7p: "USB থেকে চালান, বা প্রতি ব্যবহারকারী কিংবা সবার জন্য ইনস্টল হতে দিন। winget, Chocolatey ও RMM-এর জন্য সাইলেন্ট পথ আছে।",
       f8h: "স্বাক্ষরিত এবং যাচাইযোগ্য",
       f8p: "সম্পর্কে কার্ডে প্রকাশক, সার্টিফিকেটের থাম্বপ্রিন্ট ও চলন্ত exe-এর SHA-256 দেখায়, শুধু ফাইল থেকে পড়ে নয়, WinVerifyTrust দিয়ে যাচাই করে।",
-      shots: "স্ক্রিনশট<br>শীঘ্রই আসছে",
       foot: "<a href=\"https://github.com/SteveTheKiller/Killendar\" target=\"_blank\" rel=\"noopener\">GitHub-এ সোর্স</a> &middot; GPLv3 &middot; <a href=\"https://killertools.net\" target=\"_blank\" rel=\"noopener\">killertools.net</a>-এর অংশ",
       egg: "অ্যাকাউন্ট নেই। সিঙ্ক নেই। সার্ভার নেই। আপনার অ্যাপয়েন্টমেন্ট এই মেশিন ছেড়ে যায় না।"
     },
@@ -484,7 +579,7 @@
       b3a: "月、周、日、日程，共用一组上一个 / 下一个 / 今天。",
       b3b: "重叠的约会并排显示，从不遮挡。",
       b3c: "你自己定义的<b>颜色类别</b>，给每个视图上色。",
-      b3d: "六套主题、十种语言、单键快捷键。",
+      b3d: "六套主题、十一种语言、单键快捷键。",
       dl: "下载", dlwin: "下载 Windows 版", gh: "GitHub 源码",
       navTech: "技术", navAbout: "关于",
       note: "安装或便携运行。免费、开源、GPLv3。<br>无账户、无订阅、无同步服务。<br>不发送遥测，没有广告... 永远。",
@@ -499,13 +594,12 @@
       f4p: "静态 SQLCipher：AES-256、每页 HMAC-SHA512、自带密钥派生。可选 - 不设密码文件仍是普通 SQLite。",
       f5h: "iCalendar 进出自如",
       f5p: "导入导出按 RFC 5545 从零实现，无外部依赖。类别随约会双向同行。<code>.ics</code> 导入 / 导出",
-      f6h: "六套主题，十种语言",
+      f6h: "六套主题，十一种语言",
       f6p: "每套主题运行中即可切换，其中三套有六种强调色。单键快捷键在你输入时自动避让。",
       f7h: "便携或安装",
       f7p: "从U盘直接运行，或按用户、按整机安装。为 winget、Chocolatey 和 RMM 提供静默安装路径。",
       f8h: "已签名，可验证",
       f8p: "关于卡片显示发布者、证书指纹和运行中 exe 的 SHA-256，用 WinVerifyTrust 验证而不是只从文件里读。",
-      shots: "截图<br>即将推出",
       foot: "<a href=\"https://github.com/SteveTheKiller/Killendar\" target=\"_blank\" rel=\"noopener\">GitHub 源码</a> &middot; GPLv3 &middot; <a href=\"https://killertools.net\" target=\"_blank\" rel=\"noopener\">killertools.net</a> 成员",
       egg: "无账户。无同步。无服务器。你的约会永远不离开这台机器。"
     },
@@ -525,7 +619,7 @@
       b3a: "月、週、日、行程，共用一組上一個 / 下一個 / 今天。",
       b3b: "重疊的約會並排顯示，從不遮擋。",
       b3c: "你自己定義的<b>顏色類別</b>，給每個檢視上色。",
-      b3d: "六套佈景主題、十種語言、單鍵快速鍵。",
+      b3d: "六套佈景主題、十一種語言、單鍵快速鍵。",
       dl: "下載", dlwin: "下載 Windows 版", gh: "GitHub 原始碼",
       navTech: "技術", navAbout: "關於",
       note: "安裝或隨身執行。免費、開源、GPLv3。<br>無帳戶、無訂閱、無同步服務。<br>不傳送遙測，沒有廣告... 永遠。",
@@ -540,13 +634,12 @@
       f4p: "靜態 SQLCipher：AES-256、每頁 HMAC-SHA512、自帶金鑰派生。可選 - 不設密碼檔案仍是普通 SQLite。",
       f5h: "iCalendar 進出自如",
       f5p: "匯入匯出按 RFC 5545 從零實作，無外部相依。類別隨約會雙向同行。<code>.ics</code> 匯入 / 匯出",
-      f6h: "六套主題，十種語言",
+      f6h: "六套主題，十一種語言",
       f6p: "每套主題執行中即可切換，其中三套有六種強調色。單鍵快速鍵在你輸入時自動讓開。",
       f7h: "隨身或安裝",
       f7p: "從隨身碟直接執行，或按使用者、按整機安裝。為 winget、Chocolatey 和 RMM 提供靜默安裝路徑。",
       f8h: "已簽署，可驗證",
       f8p: "關於卡片顯示發行者、憑證指紋和執行中 exe 的 SHA-256，用 WinVerifyTrust 驗證而不是只從檔案裡讀。",
-      shots: "截圖<br>即將推出",
       foot: "<a href=\"https://github.com/SteveTheKiller/Killendar\" target=\"_blank\" rel=\"noopener\">GitHub 原始碼</a> &middot; GPLv3 &middot; <a href=\"https://killertools.net\" target=\"_blank\" rel=\"noopener\">killertools.net</a> 成員",
       egg: "無帳戶。無同步。無伺服器。你的約會永遠不離開這台機器。"
     }
@@ -642,8 +735,10 @@
     });
   }
 
+  wireScreenshots();
   wireStrip();
   wireLightbox();
+  wireOutline();
   wireEgg();
   applyTheme(theme());
   applyLang(defaultLang());

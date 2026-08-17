@@ -28,7 +28,7 @@ namespace Killendar.Services
 
         /// <summary>VEVENTs carrying RRULE or RDATE - a repeating appointment. Killendar has no
         /// repeat concept, so ONLY THE FIRST OCCURRENCE was imported and every later one is lost.
-        /// Counted so the import can say so out loud. Remove this when repeats are modelled.</summary>
+        /// Counted so the import can say so out loud. Remove this when repeats are modeled.</summary>
         public int Repeating;
     }
 

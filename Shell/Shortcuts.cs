@@ -19,6 +19,38 @@ namespace Killendar.Shell
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             bool ctrl = (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control;
+            bool alt = (Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt;
+
+            // Appointment-editor accelerators remain available while a text box owns focus.
+            // Ctrl+Enter is used instead of Ctrl+S so a multiline description keeps its normal
+            // editing behavior; destructive delete retains the editor's confirmation path.
+            bool editingAppointment = _sidebarOpen && EditorScroll.Visibility == Visibility.Visible;
+            if (editingAppointment && ctrl && e.Key == Key.Enter)
+            {
+                SaveAppointment_Click(this, new RoutedEventArgs());
+                e.Handled = true;
+                return;
+            }
+            if (editingAppointment && ctrl && e.Key == Key.Delete &&
+                DeleteAppointmentBtn.Visibility == Visibility.Visible)
+            {
+                DeleteAppointment_Click(this, new RoutedEventArgs());
+                e.Handled = true;
+                return;
+            }
+            if (editingAppointment && alt && e.SystemKey == Key.A)
+            {
+                AllDayToggle.IsChecked = !AllDayToggle.IsChecked;
+                AllDayToggle_Click(AllDayToggle, new RoutedEventArgs());
+                e.Handled = true;
+                return;
+            }
+            if (editingAppointment && alt && e.SystemKey == Key.R)
+            {
+                RepeatFreqButton_Click(RepeatFreqButton, new RoutedEventArgs());
+                e.Handled = true;
+                return;
+            }
 
             // ---- modified: safe while typing ----
             if (ctrl)
@@ -36,7 +68,8 @@ namespace Killendar.Shell
             // half-filled form is exactly when you press it.
             if (e.Key == Key.Escape)
             {
-                if (AboutOverlay.Visibility == Visibility.Visible) { AboutClose_Click(this, new RoutedEventArgs()); }
+                if (ShortcutsOverlay.Visibility == Visibility.Visible) { FadeOverlayOut(ShortcutsOverlay); }
+                else if (AboutOverlay.Visibility == Visibility.Visible) { AboutClose_Click(this, new RoutedEventArgs()); }
                 else if (_sidebarOpen) { CloseSidebar(); }
                 e.Handled = true;
                 return;
@@ -64,6 +97,7 @@ namespace Killendar.Shell
                 case Key.D4: _calendar.SelectView("Agenda"); break;
 
                 case Key.B:      SidebarToggle_Click(this, new RoutedEventArgs()); break;
+                case Key.F5:     _security.ReloadActive(); break;
 
                 // Family standard, and it is the same in every app: F1 is the shortcuts overlay,
                 // F12 is About. Killendar had F1 on About until 2026-07-30, which was the odd one

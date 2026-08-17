@@ -44,19 +44,24 @@ namespace Killendar.Shell
 
         // ---- Overlay fade ----
 
-        private static void FadeOverlayIn(UIElement o)
+        private void FadeOverlayIn(UIElement o)
         {
+            ClassicFrameChrome.Opacity = 0.42;
             o.Visibility = Visibility.Visible;
             Anim.FadeIn(o);
         }
 
-        private static void FadeOverlayOut(UIElement o)
+        private void FadeOverlayOut(UIElement o)
         {
             var a = new DoubleAnimation(o.Opacity, 0, new Duration(TimeSpan.FromMilliseconds(Anim.FadeMs)))
             {
                 EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseIn }
             };
-            a.Completed += (_, _) => o.Visibility = Visibility.Collapsed;
+            a.Completed += (_, _) =>
+            {
+                o.Visibility = Visibility.Collapsed;
+                ClassicFrameChrome.Opacity = 1;
+            };
             o.BeginAnimation(UIElement.OpacityProperty, a);
         }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Media;
 using Killendar.Models;
 
@@ -21,7 +22,7 @@ namespace Killendar.Services
     /// rule exists so THEME colors follow a theme switch; a category color is user data and must
     /// not change when the palette does.
     ///
-    /// The one refinement to that rule (Steve, 2026-07-31): on the three single-hue themes, a
+    /// The one refinement to that rule (2026-07-31): on the three single-hue themes, a
     /// SEEDED tag color that shares the theme's hue drowns in it - the green tag vanished into
     /// Greed. The stored color still never changes; the DISPLAYED color swaps to a same-family
     /// neighbor while such a theme is up. Same pattern and the same replacement hexes as
@@ -88,7 +89,27 @@ namespace Killendar.Services
             return brush;
         }
 
-        internal static Color ColorOf(string name) => ParseHex(Displayed(HexOf(name)));
+        internal static Color ColorOf(string name) => GuardAgainstPane(ParseHex(Displayed(HexOf(name))));
+
+        /// <summary>98SE uses a white client area. If a stored category is effectively the same
+        /// color, tint only its displayed brush toward the active accent so the appointment does
+        /// not vanish; the database value remains untouched.</summary>
+        private static Color GuardAgainstPane(Color color)
+        {
+            if (ThemeManager.Current != Theme.SE98) return color;
+            if (Application.Current.TryFindResource("PaneBrush") is not SolidColorBrush pane)
+                return color;
+            Color bg = pane.Color;
+            int distance = Math.Abs(color.R - bg.R) + Math.Abs(color.G - bg.G) + Math.Abs(color.B - bg.B);
+            if (distance >= 54) return color;
+            if (Application.Current.TryFindResource("PrimaryBrush") is not SolidColorBrush accent)
+                return Color.FromRgb(0xD9, 0xD9, 0xD9);
+            Color a = accent.Color;
+            return Color.FromRgb(
+                (byte)(bg.R * 0.76 + a.R * 0.24),
+                (byte)(bg.G * 0.76 + a.G * 0.24),
+                (byte)(bg.B * 0.76 + a.B * 0.24));
+        }
 
         // ── Theme-aware display (see the header) ────────────────────────────────
         // Lime on Greed, salmon on Blood, pale blue on Cyanotic - KillerScan's picks, proven on

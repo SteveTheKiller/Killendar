@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script>(function(){var d=document.documentElement,t=null;try{t=localStorage.getItem('kcal-theme');if(t){d.setAttribute('data-theme',t);if({dark:1,light:1,black:1}[t]){var v=localStorage.getItem('kcal-accent');if(v)d.style.setProperty('--accent',v);}}}catch(e){}
-var bg={dark:'#1c1c1c',light:'#dcdcdc',black:'#000000',blood:'#240c0d',greed:'#002115',cyanotic:'#001a28'};d.style.backgroundColor=bg[t]||bg.dark;})();</script>
+var bg={dark:'#1c1c1c',light:'#dcdcdc',black:'#000000',blood:'#240c0d',greed:'#002115',cyanotic:'#001a28',ectoplasm:'#314548',decay:'#514e48',malaise:'#3f4947',sepulchre:'#454039',delirium:'#3e3c50',mourning:'#3b3642'};d.style.backgroundColor=bg[t]||bg.dark;})();</script>
 <link rel="preload" href="brand/Typewriter_a602_Dead_Postman.ttf" as="font" type="font/ttf" crossorigin>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="darkreader-lock">
@@ -18,7 +18,7 @@ var bg={dark:'#1c1c1c',light:'#dcdcdc',black:'#000000',blood:'#240c0d',greed:'#0
 <meta property="og:image" content="https://killendar.net/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <script defer src="https://koya.thekiller.net/script.js" data-website-id="158a903b-5f16-45b9-98c6-9c8eab4a519f"></script>
-<link rel="stylesheet" href="kd.css?v=1">
+<link rel="stylesheet" href="kd.css?v=6">
 <style>
 .page-hero { text-align: center; padding: 44px 16px 8px; }
 .page-hero .wm-logo { height: clamp(46px, 8vw, 76px); width: auto; margin: 0 auto 8px; display: block; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.55)); }
@@ -49,10 +49,7 @@ html[data-theme="light"] .also-wm.light { display: block; }
 <img class="tb-icon" src="brand/kd-logo.png" alt="Killendar" width="36" height="36">
 <img class="wm-logo tb-wm" src="brand/killendar-logo-dark-red.svg" alt="The Killendar">
 </a>
-<!-- PRE-RELEASE: restore the download link below once 1.0.0 is tagged.
-<a class="tb-dl" href="https://github.com/SteveTheKiller/Killendar/releases/latest"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h3l-4 5-4-5h3V4zM5 18h14v2H5z"/></svg><span>Download</span></a>
--->
-<span class="tb-soon"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h3l-4 5-4-5h3V4zM5 18h14v2H5z"/></svg><span>Coming soon</span></span>
+<a class="tb-dl" href="https://github.com/SteveTheKiller/Killendar/releases/latest/download/Killendar.exe"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h3l-4 5-4-5h3V4zM5 18h14v2H5z"/></svg><span>Download</span></a>
 <span class="tb-spacer"></span>
 <nav class="tb-nav">
 <a href="technical.html">Technical</a>
@@ -65,6 +62,12 @@ html[data-theme="light"] .also-wm.light { display: block; }
 <button class="swatch sw-blood"    data-theme="blood"    title="Blood"></button>
 <button class="swatch sw-greed"    data-theme="greed"    title="Greed"></button>
 <button class="swatch sw-cyanotic" data-theme="cyanotic" title="Cyanotic"></button>
+<button class="swatch sw-ectoplasm" data-theme="ectoplasm" title="Ectoplasm"></button>
+<button class="swatch sw-decay" data-theme="decay" title="Decay"></button>
+<button class="swatch sw-malaise" data-theme="malaise" title="Malaise"></button>
+<button class="swatch sw-sepulchre" data-theme="sepulchre" title="Sepulchre"></button>
+<button class="swatch sw-delirium" data-theme="delirium" title="Delirium"></button>
+<button class="swatch sw-mourning" data-theme="mourning" title="Mourning"></button>
 </div>
 <div class="acc-fly accent-switch" id="accentSwitch">
 <button class="acc-toggle" id="accentToggle" aria-haspopup="true" aria-expanded="false" title="Accent color"></button>
@@ -102,7 +105,7 @@ html[data-theme="light"] .also-wm.light { display: block; }
 <h2>The app</h2>
 <p><b>Killendar</b> is a native Windows calendar that ships as a single self-contained executable. Install it or run it portable. There is no service to register, no account, and no subscription. Hand someone the .exe and they have a calendar.</p>
 <p>Your appointments live in one <b>.kcal</b> file in your own profile. It is an ordinary SQLite database, so it is yours to read, back up, move, or open with any SQLite tool. Set a password and the whole file is encrypted at rest with SQLCipher; leave it off and it stays plain SQLite. Either way nothing leaves the machine, because there is nowhere for it to go.</p>
-<p>It does month, week, day and agenda views, color categories you define yourself, and iCalendar import and export so whatever you put in can come back out. Six themes, ten languages, and a keyboard shortcut for everything, because a tool you have to go looking for with the mouse costs you the time it was meant to save.</p>
+<p>It does month, week, day and agenda views, color categories you define yourself, and iCalendar import and export so whatever you put in can come back out. Six themes, eleven languages, and a keyboard shortcut for everything, because a tool you have to go looking for with the mouse costs you the time it was meant to save.</p>
 <p>Much of what it does next will be driven by what people ask for. The <a href="https://github.com/SteveTheKiller/Killendar/issues" target="_blank" rel="noopener">GitHub issues</a> page is open to anyone, and suggestions genuinely shape where it goes. Killendar is free software under the <b>GPL-3.0</b> license, and the <a href="technical.html">Technical</a> page has the deep details.</p>
 </div>
 
@@ -166,11 +169,12 @@ html[data-theme="light"] .also-wm.light { display: block; }
 
 <aside class="sidebar">
 <div class="sb-tabs"><span class="on">About</span></div>
-<div class="sb-thumbs" id="sbThumbs">
-<div class="sb-empty">Screenshots<br>coming soon</div>
-</div>
-<div class="sb-fade sb-fade-top" aria-hidden="true"></div>
-<div class="sb-fade sb-fade-bottom" aria-hidden="true"></div>
+<nav class="outline">
+<a href="#maker" class="on">The maker</a>
+<a href="#app">The app</a>
+<a href="#contact">Contact &amp; links</a>
+<a href="#also">Also try...</a>
+</nav>
 </aside>
 </div>
 
@@ -179,7 +183,6 @@ html[data-theme="light"] .also-wm.light { display: block; }
 <span class="right"><span id="verEgg" title="click me">v1.0.0</span> &middot; &copy; 2026 <b><a href="https://thekiller.net" target="_blank" rel="noopener">Steve the Killer</a></b></span>
 </footer>
 
-<div class="lightbox" id="lightbox"><img id="lightboxImg" src="" alt="Killendar screenshot"></div>
 <div class="egg-toast" id="eggToast"></div>
 
 <script src="kd.js?v=1"></script>

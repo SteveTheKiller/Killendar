@@ -13,8 +13,10 @@ namespace Killendar.Shell
         public MainWindow()
         {
             InitializeComponent();
+            InitSidebarResize();
 
             RestoreWindowPlacement();
+            InitAppScale();
             SourceInitialized += MainWindow_SourceInitialized;
             ApplyGrainTexture();
             Loaded += (_, _) =>
@@ -49,6 +51,7 @@ namespace Killendar.Shell
             // saved density has to be in place or the first paint uses the default and then jumps.
             InitDensity();
             InitWorkWeek();
+            InitLocationLookup();
 
             _about = new AboutController(this);
             VersionLabel.Text = "v" + Services.AppInfo.Version;

@@ -110,8 +110,12 @@ namespace Killendar.Shell
         {
             set
             {
-                RepeatFreqRow.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
-                if (!value) RepeatDetail.Visibility = Visibility.Collapsed;
+                RepeatFreqButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+                if (!value)
+                {
+                    RepeatDetail.Visibility = Visibility.Collapsed;
+                    RepeatIntervalRow.Visibility = Visibility.Collapsed;
+                }
                 else BuildRepeatChips();
             }
         }
@@ -142,24 +146,56 @@ namespace Killendar.Shell
             return b;
         }
 
+        private void RepeatFreqButton_Click(object sender, RoutedEventArgs e)
+        {
+            BuildRepeatMenu();
+            RepeatFreqMenu.PlacementTarget = RepeatFreqButton;
+            RepeatFreqMenu.Placement = PlacementMode.Bottom;
+            RepeatFreqMenu.IsOpen = true;
+        }
+
+        /// <summary>One stable-width selector replaces the five wrapping frequency chips. The
+        /// detailed controls below still expand for the selected pattern.</summary>
+        private void BuildRepeatMenu()
+        {
+            if (RepeatFreqMenu == null) return;
+            RepeatFreqMenu.Items.Clear();
+            foreach (var (freq, key) in RepeatOptions)
+            {
+                var selected = freq == _repeatFreq;
+                var item = new MenuItem
+                {
+                    Header = Loc(key),
+                    IsChecked = selected,
+                    StaysOpenOnClick = false,
+                };
+                item.Click += (_, _) =>
+                {
+                    if (_loadingRepeat) return;
+                    _repeatFreq = freq;
+                    BuildRepeatChips();
+                };
+                RepeatFreqMenu.Items.Add(item);
+            }
+        }
+
         /// <summary>The pattern row, the interval unit, the weekday row and the end row. Rebuilt
         /// whole on every change: there are fifteen small buttons, and rebuilding is how the
         /// captions stay correct after a language switch without a second refresh path.</summary>
         private void BuildRepeatChips()
         {
-            if (RepeatFreqRow == null) return;   // called before InitializeComponent
+            if (RepeatFreqButton == null) return;   // called before InitializeComponent
 
             bool wasLoading = _loadingRepeat;
             _loadingRepeat = true;
             try
             {
-                RepeatFreqRow.Children.Clear();
-                foreach (var (freq, key) in RepeatOptions)
-                    RepeatFreqRow.Children.Add(Chip(Loc(key), _repeatFreq == freq,
-                        () => { _repeatFreq = freq; BuildRepeatChips(); }));
+                RepeatFreqButton.Content = Loc(RepeatOptions.First(o => o.Freq == _repeatFreq).Key);
+                BuildRepeatMenu();
 
                 bool repeats = _repeatFreq != RepeatFreq.None;
                 RepeatDetail.Visibility = repeats ? Visibility.Visible : Visibility.Collapsed;
+                RepeatIntervalRow.Visibility = repeats ? Visibility.Visible : Visibility.Collapsed;
                 if (!repeats) return;
 
                 RepeatUnitLabel.Text = Loc(UnitKey(_repeatFreq));
@@ -230,9 +266,10 @@ namespace Killendar.Shell
                 // set a pattern on a single occurrence, which is not a thing.
                 if (SeriesScopeRow.Visibility == Visibility.Visible)
                 {
-                    RepeatFreqRow.Visibility = _editWholeSeries ? Visibility.Visible : Visibility.Collapsed;
+                    RepeatFreqButton.Visibility = _editWholeSeries ? Visibility.Visible : Visibility.Collapsed;
                     RepeatDetail.Visibility  = _editWholeSeries && _repeatFreq != RepeatFreq.None
-                        ? Visibility.Visible : Visibility.Collapsed;
+                                               ? Visibility.Visible : Visibility.Collapsed;
+                    RepeatIntervalRow.Visibility = RepeatDetail.Visibility;
                 }
             }
             finally { _loadingRepeat = wasLoading; }

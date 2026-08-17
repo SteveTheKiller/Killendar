@@ -60,7 +60,7 @@ namespace Killendar.Features
             foreach (ICalendarView v in new ICalendarView[] { _month, _week, _day, _agenda })
             {
                 // Clicking an appointment or a day opens the day's AGENDA in the sidebar - the
-                // editor is behind each row's Edit action, never the default (Steve, 2026-07-30).
+                // editor is behind each row's Edit action, never the default (2026-07-30).
                 // Only SlotSelected, the explicit create gesture, still goes straight to the form.
                 v.EventSelected += ev => _host.ShowDayAgenda(ev.Start.Date, ev);
                 v.DaySelected += d => _host.ShowDayAgenda(d, null);
@@ -72,7 +72,11 @@ namespace Killendar.Features
                 // Drag and drop, wired by type rather than through ICalendarView so Agenda - a
                 // list with nowhere to drop - does not have to carry a dead event.
                 if (v is TimeGridView grid) grid.EventDropped += MoveDropped;
-                if (v is MonthView month) month.EventDropped += MoveDropped;
+                if (v is MonthView month)
+                {
+                    month.EventDropped += MoveDropped;
+                    month.ZoomChanged += RefreshPeriodLabel;
+                }
             }
 
             // The chip context menu's "Edit the series": load the MASTER, which the editor
@@ -119,6 +123,14 @@ namespace Killendar.Features
 
         internal void RefreshPeriodLabel() => _host.PeriodLabel = _active.PeriodLabel;
 
+        internal bool MonthRollingMode => _month.IsRollingMode;
+
+        internal void SetMonthRollingMode(bool rolling)
+        {
+            _month.SetRollingMode(rolling);
+            if (_active == _month) RefreshPeriodLabel();
+        }
+
         internal void GoToday()
         {
             _anchor = DateTime.Today;
@@ -135,7 +147,7 @@ namespace Killendar.Features
 
         /// <summary>"+ New" starts on the SELECTED day when one is marked - clicking July 15 and
         /// pressing New must compose on July 15, and every day click moves the mark with it
-        /// (Steve, 2026-07-31). With nothing selected it starts on whatever the view is showing,
+        /// (2026-07-31). With nothing selected it starts on whatever the view is showing,
         /// not always today: composing for a week you are looking at should not silently jump
         /// back to this week.</summary>
         internal void NewAtAnchor()
@@ -148,7 +160,7 @@ namespace Killendar.Features
         /// Commits a drag: same start-of-day slot arithmetic the views already did, duration
         /// kept. A generated series date (its Id still carries the master's) becomes a
         /// "just this date" override via SaveOccurrence - dragging never reshapes the series
-        /// (Steve, 2026-07-31); a plain appointment or an existing override just moves. The
+        /// (2026-07-31); a plain appointment or an existing override just moves. The
         /// store raises Changed, which repaints every view.
         /// </summary>
         private void MoveDropped(CalendarEvent ev, DateTime newStart)

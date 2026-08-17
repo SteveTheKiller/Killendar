@@ -4,6 +4,33 @@ All notable changes to Killendar are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - Unreleased
+
+1.1.0 expands Killendar's theme set, completes its separation from the private KillerUI folder, and resolves the issues reported after the first release.
+
+### Added
+- Polish translation, bringing the UI to eleven languages.
+- Seven additional Killer Tools themes: 98SE, Ectoplasm, Decay, Mourning, Sepulchre, Delirium and Malaise. Together with Dark, Light, Black, Blood, Greed and Cyanotic, Killendar now ships all thirteen shared palettes. 98SE also carries its own six classic accent colors.
+- App-wide accessibility sizing from 80% to 150% by scrolling the title-bar wordmark, with the calendar and sidebar protected by scale-aware minimum dimensions.
+- F5 reloads the open `.kcal` file from disk, including encrypted Killendars already unlocked in the current session.
+- The Killendar folder can be changed from Manage Killendars with the themed folder picker, including a one-click portable mode beside the executable.
+
+### Changed
+- The theme menu now uses KillerPDF's full-height theme list with one vertical, family-colored accent strip beside it, keeping the menu stable while switching palettes.
+- The appointment sidebar now has KillerPDF's slim resize grip beside the permanent rail. Its width can be dragged between compact and wide layouts, down to a practical 250-pixel minimum, and is remembered between runs.
+- Various UI and theme improvements, including more compact menus and overlays, textured hover states, clearer selected and unselected icon depth, improved sidebar appointment layout, consistent rounded corners, and closer visual alignment with the other Killer Tools apps.
+- The themed file picker now remembers separate open and save folders, includes Explorer Quick Access, and scrolls its column view horizontally with the mouse wheel. Loading an external Killendar uses this picker too.
+- Ctrl+wheel over Month view zooms between one and six visible weeks, increasing appointment capacity as the cells grow.
+
+### Fixed
+- Machine-wide uninstall now requests administrator access and removes the Program Files copy, Common Start Menu shortcut and HKLM registration instead of silently reporting success after permission failures.
+- Month-view date numbers now change foreground together with selected, today, hover and pressed fills, keeping both bright selection colors and dark unfilled cells readable.
+- Editing an all-day appointment no longer shows its exclusive stored boundary as the visible end date or adds another day each time the appointment is saved.
+- Themes are entirely owned by the Killendar repository again. The project no longer imports a private sibling `KillerUI` folder or overlays its resources at runtime, so a standalone clone contains every theme resource it builds and displays.
+- Week view now places all-day appointments beneath their actual dates instead of stretching every appointment across the full visible week.
+- Calendar-generated weekday and month names now follow the selected interface language rather than the Windows display culture.
+- Multi-day and ordinary appointments now share the same sorted, scrollable stack inside each Month-view day, eliminating the competing overlay lanes that caused overlaps and misalignment.
+
 ## [1.0.0] - 2026-07-31
 
 1.0.0 is the first release of Killendar: a desktop calendar for Windows with month, week, day and agenda views, iCalendar import and export, and appointments that live in a file on your own machine instead of somebody else's server.
@@ -18,7 +45,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - A map button beside the location field opens whatever you typed as a maps search in your browser. It is not a lookup and there is no autocomplete: nothing is sent anywhere until you click it, so the calendar still talks to nobody while you are just typing an address.
 - Color categories, defined per Killendar and stored inside the `.kcal` so they travel with it. An appointment can carry as many as you like, and the first one colors it in every view, with the title flipping to black or white so it stays readable on a pale color. On the three single-hue themes, a starter color that shares the theme's hue is shown as a same-family neighbor - lime on Greed, salmon on Blood, pale blue on Cyanotic - so a green tag does not drown in a green theme; the stored color never changes, and a color you picked yourself is always shown exactly. Appointments with no category get a chip color of their own in every theme, one no accent uses, so an untagged appointment cannot vanish into the selected or hovered day. Manage them from the sidebar rail: add, rename, recolor or delete. Renaming rewrites the category on every appointment that carries it, and deleting removes it from them without touching the appointments themselves. Six are there to start with, in the Killer Tools palette, and they are only seeded into a brand new Killendar - once you have deleted one it stays deleted.
 - Categories are assigned by clicking them rather than typing, so a name can never be misspelled into a category that does not exist. A category on an appointment imported from a Killendar you do not have the definition for still shows, in neutral gray, rather than being silently dropped.
-- Full color picker for category colors: saturation and hue, RGB and hex entry, an eyedropper that samples anywhere on screen, and nine swatch slots you can overwrite and reset. Picking a color previews it live on the calendar behind the dialog, so you can see how it looks against real appointments before committing; cancelling puts the old color straight back.
+- Full color picker for category colors: saturation and hue, RGB and hex entry, an eyedropper that samples anywhere on screen, and nine swatch slots you can overwrite and reset. Picking a color previews it live on the calendar behind the dialog, so you can see how it looks against real appointments before committing; canceling puts the old color straight back.
 - Right-click a day in month view, an hour in week or day view, or a heading in the agenda to add an appointment there.
 - Overlapping appointments in the week and day views are laid out side by side in lanes, so a double-booked hour shows both.
 - All-day appointments get their own strip above the hour grid.
@@ -36,7 +63,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Appointments stored in a single `.kcal` file - a Killendar - in `%APPDATA%\Killendar`. It is an ordinary SQLite database, so it is yours to read, back up, move or open with any SQLite tool. No account, no sync, no telemetry. Times are stored in UTC, so a calendar carried to another timezone still says the right thing; all-day entries stay on the date you put them on.
 - Optional encryption. The lock button in the title bar sets a password, and the Killendar is then encrypted at rest with SQLCipher (AES-256, per-page HMAC-SHA512, SQLCipher's own PBKDF2 key derivation). Encryption is opt-in: with no password the file is plain SQLite. The same button changes the password, or removes it and stores the file unencrypted again. An encrypted Killendar asks for its password on launch; a wrong one just asks again.
 - There is no password recovery, and the app says so before you commit to one. If a password is lost, the locked Killendar is renamed aside and kept on disk rather than destroyed, and a new empty one opens in its place.
-- Exporting an encrypted Killendar warns you first that the file it writes - `.ics`, CSV or HTML alike - is plain text. It never blocks the export - handing someone an `.ics` is what the feature is for - and a "Don't remind me again" box turns the warning off for good. Plaintext Killendars never see it, and ticking the box then cancelling means "not this time", not "never again".
+- Exporting an encrypted Killendar warns you first that the file it writes - `.ics`, CSV or HTML alike - is plain text. It never blocks the export - handing someone an `.ics` is what the feature is for - and a "Don't remind me again" box turns the warning off for good. Plaintext Killendars never see it, and ticking the box then canceling means "not this time", not "never again".
 - Keep as many Killendars as you like - one for work, one for on-call, one for the family. The Killendars button in the title bar lists every `.kcal` in your data folder with its size, when it changed and whether it is encrypted, and lets you create, rename, delete, load one from a file, or switch to it. Double-click a Killendar to open it; renaming is inline, from the right-click menu or F2. Each file has its own password, or none. The name of the open Killendar shows in the title bar once you have more than one.
 - Double-click a `.kcal` and Killendar opens it. A copy is added to your data folder and opened; the file you double-clicked is left where it is, because a Killendar is written to constantly and that is not something to do to a file on a network share or in Downloads. The association is registered for your user only, needs no elevation, and is removed when you uninstall.
 - Only one Killendar runs at a time. A second launch hands its file to the window already open and exits, rather than leaving two copies of the app writing to the same calendar.

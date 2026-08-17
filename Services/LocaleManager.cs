@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Windows;
 
 namespace Killendar.Services
@@ -8,7 +9,7 @@ namespace Killendar.Services
     //
     // Append new members at the END: the value is persisted by NAME, not by ordinal, but keeping
     // the order stable also keeps the language menu's order stable.
-    public enum Locale { EnUS, Es, ZhTW, ZhCN, Bn, TrTR, De, Fr, Ja, Cs }
+    public enum Locale { EnUS, Es, ZhTW, ZhCN, Bn, TrTR, De, Fr, Ja, Cs, PlPL }
 
     public static class LocaleManager
     {
@@ -49,6 +50,15 @@ namespace Killendar.Services
 
         private static void ApplyInternal(Locale locale)
         {
+            // Resource dictionaries translate fixed interface strings; .NET culture supplies the
+            // generated ones (Monday, August, first day of week). Keeping these separate was why
+            // choosing English on a Polish Windows installation left Polish calendar headings.
+            var culture = CultureFor(locale);
+            CultureInfo.CurrentCulture = culture;
+            CultureInfo.CurrentUICulture = culture;
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+
             var merged = Application.Current.Resources.MergedDictionaries;
 
             // Re-assert the English base so a partial locale falls back to English for missing keys.
@@ -66,6 +76,7 @@ namespace Killendar.Services
                 Locale.De   => new Uri("pack://application:,,,/Strings/de-DE.xaml"),
                 Locale.Ja   => new Uri("pack://application:,,,/Strings/ja-JP.xaml"),
                 Locale.Cs   => new Uri("pack://application:,,,/Strings/cs-CZ.xaml"),
+                Locale.PlPL => new Uri("pack://application:,,,/Strings/pl-PL.xaml"),
                 _           => null,   // English: base only
             };
 
@@ -87,5 +98,21 @@ namespace Killendar.Services
                 merged.RemoveAt(OverrideIndex);
             }
         }
+
+        internal static CultureInfo CultureFor(Locale locale) => new(locale switch
+        {
+            Locale.EnUS => "en-US",
+            Locale.Es   => "es-ES",
+            Locale.ZhTW => "zh-TW",
+            Locale.ZhCN => "zh-CN",
+            Locale.Bn   => "bn-BD",
+            Locale.TrTR => "tr-TR",
+            Locale.De   => "de-DE",
+            Locale.Fr   => "fr-FR",
+            Locale.Ja   => "ja-JP",
+            Locale.Cs   => "cs-CZ",
+            Locale.PlPL => "pl-PL",
+            _           => "en-US",
+        });
     }
 }

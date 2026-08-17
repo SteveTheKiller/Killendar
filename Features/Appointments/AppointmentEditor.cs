@@ -69,7 +69,7 @@ namespace Killendar.Features
 
         internal void Load(CalendarEvent ev)
         {
-            // Edit a copy: cancelling must not leave half-typed changes on the stored object.
+            // Edit a copy: canceling must not leave half-typed changes on the stored object.
             _editing = ev.Clone();
             _allDay = ev.AllDay;
 
@@ -100,7 +100,13 @@ namespace Killendar.Features
 
             _view.FieldStartDate = DateFormatManager.Format(ev.Start);
             _view.FieldStartTime = ev.Start.ToString("h:mm tt");
-            _view.FieldEndDate = DateFormatManager.Format(ev.End);
+            // The model keeps all-day ranges half-open (the stored end is the midnight after the
+            // last covered day), while the editor asks for the last day the user can see. Showing
+            // the stored boundary here made every edit-save cycle extend the event by one day.
+            var displayedEnd = ev.AllDay
+                ? CalendarDateSpan.VisibleAllDayEnd(ev.Start, ev.End)
+                : ev.End;
+            _view.FieldEndDate = DateFormatManager.Format(displayedEnd);
             _view.FieldEndTime = ev.End.ToString("h:mm tt");
 
             Show();
@@ -144,7 +150,7 @@ namespace Killendar.Features
             SyncHighlightedSelection();
         }
 
-        /// <summary>All-day hides the time fields rather than disabling them: a greyed-out box you
+        /// <summary>All-day hides the time fields rather than disabling them: a grayed-out box you
         /// cannot use is just clutter once the dates carry the whole meaning.</summary>
         private void ApplyAllDay()
             => _view.SetAllDay(_view.Loc(_allDay ? "Str_Chk_AllDayOn" : "Str_Chk_AllDayOff"),
@@ -197,7 +203,7 @@ namespace Killendar.Features
             {
                 start = startDate.Date;
                 // All-day is stored half-open, so a one-day event ends at the next midnight.
-                end = endDate.Date <= startDate.Date ? startDate.Date.AddDays(1) : endDate.Date.AddDays(1);
+                end = CalendarDateSpan.ExclusiveAllDayEnd(startDate, endDate);
             }
             else
             {

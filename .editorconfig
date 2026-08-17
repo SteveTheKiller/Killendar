@@ -1,5 +1,9 @@
 root = true
 
+[*.md]
+end_of_line = crlf
+insert_final_newline = true
+
 [*.cs]
 # The Features tree deliberately shares ONE namespace, Killendar.Features: the folders are an
 # organizational boundary, not a namespace boundary, and the interfaces (ICalendarHost,

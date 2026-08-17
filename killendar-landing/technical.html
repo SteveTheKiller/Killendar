@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script>(function(){var d=document.documentElement,t=null;try{t=localStorage.getItem('kcal-theme');if(t){d.setAttribute('data-theme',t);if({dark:1,light:1,black:1}[t]){var v=localStorage.getItem('kcal-accent');if(v)d.style.setProperty('--accent',v);}}}catch(e){}
-var bg={dark:'#1c1c1c',light:'#dcdcdc',black:'#000000',blood:'#240c0d',greed:'#002115',cyanotic:'#001a28'};d.style.backgroundColor=bg[t]||bg.dark;})();</script>
+var bg={dark:'#1c1c1c',light:'#dcdcdc',black:'#000000',blood:'#240c0d',greed:'#002115',cyanotic:'#001a28',ectoplasm:'#314548',decay:'#514e48',malaise:'#3f4947',sepulchre:'#454039',delirium:'#3e3c50',mourning:'#3b3642'};d.style.backgroundColor=bg[t]||bg.dark;})();</script>
 <link rel="preload" href="brand/Typewriter_a602_Dead_Postman.ttf" as="font" type="font/ttf" crossorigin>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="darkreader-lock">
@@ -18,12 +18,12 @@ var bg={dark:'#1c1c1c',light:'#dcdcdc',black:'#000000',blood:'#240c0d',greed:'#0
 <meta property="og:image" content="https://killendar.net/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <script defer src="https://koya.thekiller.net/script.js" data-website-id="158a903b-5f16-45b9-98c6-9c8eab4a519f"></script>
-<link rel="stylesheet" href="kd.css?v=1">
+<link rel="stylesheet" href="kd.css?v=6">
 <style>
 .content-inner { max-width: 880px; margin: 0 auto; padding: 26px 28px 50px; }
 .page-sub { text-align: center; color: var(--muted); font-size: 14.5px; margin: 0 0 30px; }
 /* Interactive keyboard map - same treatment as killerpdf.net/help.html, driven by the same
-   binding table the app uses. Neon category colours, layer tabs, hover for the action. */
+   binding table the app uses. Neon category colors, layer tabs, hover for the action. */
 .kbmap { --kc-file:#00fff9; --kc-view:#f222ff; --kc-nav:#8c1eff; --kc-appt:#ffd319; --kc-help:#39ff14; margin: 0 0 30px; }
 html[data-theme="black"] .kbmap { --kc-nav:#a64dff; }
 html[data-theme="light"] .kbmap { --kc-file:#009e99; --kc-view:#a316b5; --kc-nav:#6a11cc; --kc-appt:#a67c00; --kc-help:#128c07; }
@@ -66,10 +66,7 @@ html[data-theme="light"] .kbd-group h4 { text-shadow: none; }
 <img class="tb-icon" src="brand/kd-logo.png" alt="Killendar" width="36" height="36">
 <img class="wm-logo tb-wm" src="brand/killendar-logo-dark-red.svg" alt="The Killendar">
 </a>
-<!-- PRE-RELEASE: restore the download link below once 1.0.0 is tagged.
-<a class="tb-dl" href="https://github.com/SteveTheKiller/Killendar/releases/latest"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h3l-4 5-4-5h3V4zM5 18h14v2H5z"/></svg><span>Download</span></a>
--->
-<span class="tb-soon"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h3l-4 5-4-5h3V4zM5 18h14v2H5z"/></svg><span>Coming soon</span></span>
+<a class="tb-dl" href="https://github.com/SteveTheKiller/Killendar/releases/latest/download/Killendar.exe"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h3l-4 5-4-5h3V4zM5 18h14v2H5z"/></svg><span>Download</span></a>
 <span class="tb-spacer"></span>
 <nav class="tb-nav">
 <a href="technical.html" class="on">Technical</a>
@@ -82,6 +79,12 @@ html[data-theme="light"] .kbd-group h4 { text-shadow: none; }
 <button class="swatch sw-blood"    data-theme="blood"    title="Blood"></button>
 <button class="swatch sw-greed"    data-theme="greed"    title="Greed"></button>
 <button class="swatch sw-cyanotic" data-theme="cyanotic" title="Cyanotic"></button>
+<button class="swatch sw-ectoplasm" data-theme="ectoplasm" title="Ectoplasm"></button>
+<button class="swatch sw-decay" data-theme="decay" title="Decay"></button>
+<button class="swatch sw-malaise" data-theme="malaise" title="Malaise"></button>
+<button class="swatch sw-sepulchre" data-theme="sepulchre" title="Sepulchre"></button>
+<button class="swatch sw-delirium" data-theme="delirium" title="Delirium"></button>
+<button class="swatch sw-mourning" data-theme="mourning" title="Mourning"></button>
 </div>
 <div class="acc-fly accent-switch" id="accentSwitch">
 <button class="acc-toggle" id="accentToggle" aria-haspopup="true" aria-expanded="false" title="Accent color"></button>
@@ -105,7 +108,7 @@ html[data-theme="light"] .kbd-group h4 { text-shadow: none; }
 <span class="page-title">Technical</span>
 <p class="page-sub">What the file is, where it lives, and what the encryption actually covers.</p>
 
-<section class="tech-sec">
+<section class="tech-sec" id="file">
 <h2>The file</h2>
 <p>One <b>.kcal</b> file is one Killendar. It is an ordinary SQLite database, opened and written
 in place, so you can read it with any SQLite tool without going through the app. There is no
@@ -115,11 +118,11 @@ proprietary container and no index to rebuild.</p>
 <tr><td>.kcal</td><td>A Killendar. The live database, written in place.</td></tr>
 <tr><td>.ics</td><td>Interchange only. Import and export.</td></tr>
 </table>
-<p>Killendars live in <b>%APPDATA%\Killendar</b>, per user, always. A machine-wide install makes
-the app available to everyone on the box; each Windows account still gets its own Killendar.
-Nothing is written outside your profile.</p>
+<p>Killendars default to <b>%APPDATA%\Killendar</b>. Manage Killendars can switch the catalog to
+any writable local folder, or place it beside <b>Killendar.exe</b> for a self-contained portable
+copy. A machine-wide install still defaults to a separate profile folder for each Windows account.</p>
 
-<h3>What is inside it</h3>
+<h3 id="file-inside">What is inside it</h3>
 <ul class="blurb-list">
 <li><b>events</b> - one row per appointment.</li>
 <li><b>categories</b> - the color definitions. They live in the Killendar rather than in
@@ -129,7 +132,7 @@ file that turns up years later.</li>
 </ul>
 </section>
 
-<section class="tech-sec">
+<section class="tech-sec" id="time">
 <h2>Time</h2>
 <p>Timed appointments are stored in UTC and converted at the edges, so a calendar carried to
 another timezone still says the right thing.</p>
@@ -143,7 +146,7 @@ to the previous day for everyone east of UTC.</p>
 </table>
 </section>
 
-<section class="tech-sec">
+<section class="tech-sec" id="encryption">
 <h2>Encryption</h2>
 <p>Encryption is opt-in. With no password the file is plain SQLite. Set one from the lock button
 in the title bar and the whole file is encrypted at rest with SQLCipher.</p>
@@ -157,12 +160,12 @@ in the title bar and the whole file is encrypted at rest with SQLCipher.</p>
 <p>The same button changes the password, or removes it and writes the file back out as plain
 SQLite. An encrypted Killendar asks for its password on launch; a wrong one just asks again.</p>
 
-<h3>There is no password recovery</h3>
+<h3 id="encryption-recovery">There is no password recovery</h3>
 <p>The app says so before you commit to one. If a password is lost the locked Killendar is
 renamed aside and kept on disk rather than destroyed, and a new empty one opens in its place -
 so a forgotten password costs you access, not the file.</p>
 
-<h3>What the encryption does not protect</h3>
+<h3 id="encryption-limits">What the encryption does not protect</h3>
 <p>Worth stating plainly rather than implying otherwise:</p>
 <ul class="blurb-list">
 <li>Nothing is protected while the app is open and unlocked.</li>
@@ -174,7 +177,7 @@ writes an unencrypted copy, and the app warns you at the moment of export rather
 </ul>
 </section>
 
-<section class="tech-sec">
+<section class="tech-sec" id="icalendar">
 <h2>iCalendar</h2>
 <p>Import and export are written against RFC 5545 directly, with no external dependencies.
 Import skips appointments already in the calendar and reports how many were added and how many
@@ -185,7 +188,7 @@ in neutral gray rather than being dropped or silently created - deleting a categ
 stick, and an import should not quietly undo that.</p>
 </section>
 
-<section class="tech-sec">
+<section class="tech-sec" id="keyboard">
 <h2>Keyboard</h2>
 <p>Almost everything is a <b>single key</b>, no modifier. That is only safe because of one rule:
 a bare-letter shortcut never fires while you are typing. The moment focus is in a text field
@@ -205,10 +208,11 @@ collide with typing.</p>
 
 <script>
 (function(){
-// Same binding table the app uses (Shell/Shortcuts.cs). Killendar has no Shift, Alt or
+// Same complete binding table the app uses (Shell/ShortcutsOverlay.cs), verified against
+// Shell/Shortcuts.cs. Killendar has no Shift, Alt or
 // Ctrl+Shift bindings, so unlike KillerPDF there are only two layers to show.
 var KBL = {
-base: { Esc:['help','Close the panel or a card'], F1:['help','This shortcut list'], F12:['help','About card'],
+base: { Esc:['help','Close the shortcut overlay, About card or appointment panel'], F1:['help','This shortcut list'], F5:['file','Reload the open Killendar from disk'], F12:['help','About card'],
   D1:['view','Month view'], D2:['view','Week view'], D3:['view','Day view'], D4:['view','Agenda view'],
   M:['view','Month view'], W:['view','Week view'], D:['view','Day view'], A:['view','Agenda view'],
   N:['appt','New appointment here'], B:['appt','Appointment panel'],
@@ -319,21 +323,29 @@ window.addEventListener('resize', fit);
 <div class="kbd-group"><h4>APPOINTMENTS</h4>
 <div class="kbd-row"><span class="k">N / Ctrl+N</span><span class="d">New appointment on the day you are looking at</span></div>
 <div class="kbd-row"><span class="k">B</span><span class="d">Open the appointment panel composing a new one, or close it</span></div>
+<div class="kbd-row"><span class="k">Ctrl+Enter</span><span class="d">Save the appointment being edited</span></div>
+<div class="kbd-row"><span class="k">Ctrl+Delete</span><span class="d">Delete the appointment being edited, with confirmation</span></div>
+<div class="kbd-row"><span class="k">Alt+A</span><span class="d">Toggle all day while editing</span></div>
+<div class="kbd-row"><span class="k">Alt+R</span><span class="d">Open repeat options while editing</span></div>
+<div class="kbd-row"><span class="k">Ctrl+Shift+M</span><span class="d">Shrink or expand the focused appointment in month view</span></div>
 </div>
 <div class="kbd-group"><h4>FILE</h4>
 <div class="kbd-row"><span class="k">Ctrl+I</span><span class="d">Import an .ics file</span></div>
 <div class="kbd-row"><span class="k">Ctrl+E</span><span class="d">Export to .ics</span></div>
+<div class="kbd-row"><span class="k">F5</span><span class="d">Reload the open .kcal file from disk</span></div>
 </div>
 <div class="kbd-group"><h4>HELP</h4>
 <div class="kbd-row"><span class="k">F1</span><span class="d">The shortcuts overlay, with this same map and list in the app</span></div>
 <div class="kbd-row"><span class="k">F12</span><span class="d">About card - version, signature, exe hash, update check</span></div>
-<div class="kbd-row"><span class="k">Esc</span><span class="d">Close whichever card or panel is open. Works even mid-typing, because bailing out of a half-filled form is exactly when you reach for it.</span></div>
+<div class="kbd-row"><span class="k">Esc</span><span class="d">Close the shortcut overlay, About card or appointment panel. Works even while typing.</span></div>
 </div>
 </div>
 </div>
+<p><b>Mouse:</b> Ctrl+wheel over Month view changes the visible range from one to six weeks,
+giving busy days more vertical room. Ctrl+wheel over Week or Day changes time-grid density.</p>
 </section>
 
-<section class="tech-sec">
+<section class="tech-sec" id="running">
 <h2>Running it</h2>
 <table class="spec-table">
 <tr><th>requirement</th><th>detail</th></tr>
@@ -352,7 +364,7 @@ the original where it is. A Killendar is written to constantly, and SQLite over 
 is a well known way to lose a database.</p>
 </section>
 
-<section class="tech-sec">
+<section class="tech-sec" id="signing">
 <h2>Signing</h2>
 <p>Releases are Authenticode signed. The About card shows the publisher, the certificate
 thumbprint and the SHA-256 of the running exe, and it validates the signature with
@@ -361,7 +373,7 @@ cannot display a signer it does not own. The chain check is cache-only, so openi
 stalls waiting on the network.</p>
 </section>
 
-<section class="tech-sec">
+<section class="tech-sec" id="glossary">
 <h2>Glossary</h2>
 <table class="spec-table">
 <tr><th>term</th><th>what it means here</th></tr>
@@ -402,11 +414,19 @@ Blood, Greed and Cyanotic carry their own.</td></tr>
 
 <aside class="sidebar">
 <div class="sb-tabs"><span class="on">Technical</span></div>
-<div class="sb-thumbs" id="sbThumbs">
-<div class="sb-empty">Screenshots<br>coming soon</div>
-</div>
-<div class="sb-fade sb-fade-top" aria-hidden="true"></div>
-<div class="sb-fade sb-fade-bottom" aria-hidden="true"></div>
+<nav class="outline">
+<a href="#file" class="on">The file</a>
+<a href="#file-inside" class="sub">What is inside it</a>
+<a href="#time">Time</a>
+<a href="#encryption">Encryption</a>
+<a href="#encryption-recovery" class="sub">No password recovery</a>
+<a href="#encryption-limits" class="sub">What it does not protect</a>
+<a href="#icalendar">iCalendar</a>
+<a href="#keyboard">Keyboard</a>
+<a href="#running">Running it</a>
+<a href="#signing">Signing</a>
+<a href="#glossary">Glossary</a>
+</nav>
 </aside>
 </div>
 
@@ -415,7 +435,6 @@ Blood, Greed and Cyanotic carry their own.</td></tr>
 <span class="right"><span id="verEgg" title="click me">v1.0.0</span> &middot; &copy; 2026 <b><a href="https://thekiller.net" target="_blank" rel="noopener">Steve the Killer</a></b></span>
 </footer>
 
-<div class="lightbox" id="lightbox"><img id="lightboxImg" src="" alt="Killendar screenshot"></div>
 <div class="egg-toast" id="eggToast"></div>
 
 <script src="kd.js?v=1"></script>

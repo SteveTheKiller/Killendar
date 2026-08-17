@@ -1,7 +1,7 @@
 <!-- Themed replacement for Microsoft.Win32.OpenFileDialog / SaveFileDialog.
      Same chrome, places rail, view modes and sortable columns as FolderPickerDialog - the row
      styles and templates are shared from Controls.xaml - plus a file name box, a filter combo
-     and Open/Save behaviour. The property surface deliberately mirrors the Win32 dialogs
+     and Open/Save behavior. The property surface deliberately mirrors the Win32 dialogs
      (Title, Filter, FilterIndex, FileName, InitialDirectory, DefaultExt, ...) so a call site
      changes by one word. -->
 <Window x:Class="Killendar.Controls.FileDialog"
@@ -37,23 +37,23 @@
          content Border, and this is the only dialog with a ComboBox, whose dropdown is an
          AllowsTransparency Popup; a WPF Effect over a subtree containing one renders as a filled
          rectangle. That is fixed below and is a real bug, it just was not this one.
-         (Steve, 2026-07-30, four attempts.) -->
+         (2026-07-30, four attempts) -->
     <Grid Background="#01000000"
           MouseMove="Resize_MouseMove" MouseLeftButtonDown="Resize_MouseDown">
 
         <!-- Shadow layer: same geometry, NO content, not hit-testable. -->
-        <Border Margin="10" CornerRadius="6" Background="{DynamicResource BackgroundBrush}"
+        <Border Margin="{DynamicResource DialogHaloMargin}" CornerRadius="{DynamicResource PanelCornerRadius}" Background="{DynamicResource BackgroundBrush}"
                 IsHitTestVisible="False">
             <Border.Effect>
-                <DropShadowEffect Color="Black" BlurRadius="18" ShadowDepth="3" Direction="270" Opacity="0.6"/>
+                <DropShadowEffect Color="Black" BlurRadius="18" ShadowDepth="3" Direction="270" Opacity="{DynamicResource FlyoutShadowOpacity}"/>
             </Border.Effect>
         </Border>
 
         <Border x:Name="RootBorder" Opacity="0" BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1"
-                Background="{DynamicResource BackgroundBrush}" CornerRadius="6" Margin="10">
+                Background="{DynamicResource BackgroundBrush}" CornerRadius="{DynamicResource PanelCornerRadius}" Margin="{DynamicResource DialogHaloMargin}">
             <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>    <!-- title bar -->
+                <RowDefinition Height="Auto"/>  <!-- title bar -->
                 <RowDefinition Height="Auto"/>  <!-- heading -->
                 <RowDefinition Height="Auto"/>  <!-- path row -->
                 <RowDefinition Height="*"/>     <!-- places | entries -->
@@ -66,9 +66,15 @@
                     Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
 
             <!-- Title bar -->
-            <Border Grid.Row="0" Background="Transparent" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
-                <Grid Margin="16,0">
-                    <Grid VerticalAlignment="Center" HorizontalAlignment="Left" IsHitTestVisible="False">
+            <Border Grid.Row="0" Background="{DynamicResource DialogTitleBarBrush}"
+                    Height="{DynamicResource DialogTitleBarHeight}"
+                    CornerRadius="{DynamicResource DialogTitleCornerRadius}" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <Grid>
+                    <Border IsHitTestVisible="False" CornerRadius="{DynamicResource DialogTitleCornerRadius}"
+                            Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Left" IsHitTestVisible="False"
+                          Margin="{DynamicResource DialogTitleTextMargin}"
+                          Visibility="{DynamicResource WordmarkVisibility}">
                         <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15" Margin="1,2,0,0" Opacity="{DynamicResource IconShadowOpacity}">
                             <TextBlock.Effect><BlurEffect Radius="3"/></TextBlock.Effect>
                             <Run Text="The " Foreground="#D8000000"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="#D8000000"/>
@@ -77,32 +83,14 @@
                             <Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}"/>
                         </TextBlock>
                     </Grid>
-                    <Button Content="&#xE8BB;" Click="Cancel_Click" HorizontalAlignment="Right" Width="30" Height="26" FontSize="10"
-                            FontFamily="Segoe MDL2 Assets" Background="Transparent" BorderThickness="0" Cursor="Hand">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Foreground" Value="{DynamicResource ChromeTextBrush}"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border x:Name="xb" Background="Transparent" CornerRadius="3">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Foreground" Value="{DynamicResource DangerRed}"/>
-                                                </Trigger>
-                                                <Trigger Property="IsPressed" Value="True">
-                                                    <Setter Property="Foreground" Value="{DynamicResource DangerRed}"/>
-                                                    <Setter TargetName="xb" Property="Background" Value="#33C42B1C"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Button.Style>
-                    </Button>
+                    <TextBlock Text="Killendar" Visibility="{DynamicResource PlainTitleVisibility}"
+                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                               Margin="{DynamicResource DialogTitleTextMargin}"
+                               FontFamily="{DynamicResource ChromeFontFamily}" FontSize="11" FontWeight="Bold"
+                               Foreground="{DynamicResource ChromeTextBrush}"/>
+                    <Button Content="&#xE8BB;" Click="Cancel_Click" HorizontalAlignment="Right"
+                            VerticalAlignment="Center" Margin="{DynamicResource DialogCaptionCloseMargin}"
+                            Style="{StaticResource ChromeCloseButton}"/>
                 </Grid>
             </Border>
 
@@ -123,7 +111,7 @@
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="ub" Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource InputBorderBrush}"
-                                    BorderThickness="1" CornerRadius="4">
+                                    BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
@@ -170,15 +158,15 @@
                            Placement="Bottom" StaysOpen="False" AllowsTransparency="True"
                            VerticalOffset="2" HorizontalOffset="-8">
                         <Grid Margin="8">
-                            <Border Background="{DynamicResource BackgroundBrush}" CornerRadius="4" IsHitTestVisible="False">
+                            <Border Background="{DynamicResource BackgroundBrush}" CornerRadius="{DynamicResource FlyoutCornerRadius}" IsHitTestVisible="False">
                                 <Border.Effect>
-                                    <DropShadowEffect Color="Black" BlurRadius="14" ShadowDepth="2" Direction="270" Opacity="0.5"/>
+                                    <DropShadowEffect Color="Black" BlurRadius="14" ShadowDepth="2" Direction="270" Opacity="{DynamicResource FlyoutShadowOpacity}"/>
                                 </Border.Effect>
                             </Border>
                             <Border Background="{DynamicResource BackgroundBrush}" BorderBrush="{DynamicResource MenuBorderBrush}"
-                                    BorderThickness="1" CornerRadius="4">
+                                    BorderThickness="1" CornerRadius="{DynamicResource FlyoutCornerRadius}">
                                 <Grid>
-                                    <Border IsHitTestVisible="False" CornerRadius="4"
+                                    <Border IsHitTestVisible="False" CornerRadius="{DynamicResource FlyoutCornerRadius}"
                                             Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
                                     <ListBox x:Name="RecentsList" Background="Transparent" BorderThickness="0" Padding="2,4"
                                              Width="{Binding ActualWidth, ElementName=PathBox}" MaxHeight="260"
@@ -192,9 +180,13 @@
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
-                                </Grid>
-                            </Border>
-                        </Grid>
+                   </Grid>
+                   </Border>
+                   <Border IsHitTestVisible="False" BorderBrush="{DynamicResource PaneBevelDarkBrush}"
+                           BorderThickness="{DynamicResource BevelLightThickness}"/>
+                   <Border IsHitTestVisible="False" BorderBrush="{DynamicResource PaneBevelLightBrush}"
+                           BorderThickness="{DynamicResource BevelDarkThickness}"/>
+                 </Grid>
                     </Popup>
                 </Grid>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="8,0,0,0" VerticalAlignment="Center">
@@ -214,7 +206,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- NOT a raised pane, deliberately (Steve, 2026-07-30): KillerShell's sidebar
+                <!-- NOT a raised pane, deliberately (2026-07-30): KillerShell's sidebar
                      sits flat on the chrome background, and this one matches - only the file
                      LIST is the lifted card. No fill, no shadow, no grain of its own; the
                      dialog card's shared grain shows through.
@@ -224,17 +216,22 @@
                      so the two apps read identically. Draggable divider between. -->
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" MinHeight="56"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition x:Name="PlacesRow" Height="185" MinHeight="56"/>
+                        <RowDefinition Height="0"/>
+                        <RowDefinition Height="0"/>
+                        <RowDefinition x:Name="PlacesRow" Height="*" MinHeight="56"/>
                     </Grid.RowDefinitions>
+                    <Border Grid.Row="2" Background="{DynamicResource PaneBrush}"
+                            BorderBrush="{DynamicResource PaneBorderBrush}" BorderThickness="1"
+                            CornerRadius="{DynamicResource PanelCornerRadius}"/>
                     <ListBox x:Name="PlacesList" Grid.Row="2" Background="Transparent" BorderThickness="0" Padding="2,4"
-                             ItemContainerStyle="{StaticResource PickerRow}" SelectionChanged="Places_SelectionChanged"
+                             ItemContainerStyle="{StaticResource PickerPlaceRow}" SelectionChanged="Places_SelectionChanged"
                              ContextMenuOpening="Places_ContextMenuOpening"
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <ListBox.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="{DynamicResource Str_Menu_UnpinPlace}" Click="UnpinPlace_Click"/>
+                                <MenuItem Header="{DynamicResource Str_Menu_UnpinPlace}" Click="UnpinPlace_Click">
+                                    <MenuItem.Icon><TextBlock Text="&#xE77A;" FontFamily="Segoe MDL2 Assets"/></MenuItem.Icon>
+                                </MenuItem>
                             </ContextMenu>
                         </ListBox.ContextMenu>
                         <ListBox.ItemTemplate>
@@ -252,7 +249,7 @@
                     <!-- KillerShell's divider verbatim (MainWindow.xaml, terms/filters split):
                          invisible grab band, 1px CardBorderBrush line, accent on hover and
                          while dragging. -->
-                    <GridSplitter Grid.Row="1" Height="7" HorizontalAlignment="Stretch" Background="Transparent"
+                    <GridSplitter Grid.Row="1" Height="0" Visibility="Collapsed" HorizontalAlignment="Stretch" Background="Transparent"
                                   ResizeBehavior="PreviousAndNext" ResizeDirection="Rows"
                                   Cursor="SizeNS" ShowsPreview="False" Focusable="False">
                         <GridSplitter.Template>
@@ -271,15 +268,17 @@
                     <!-- Left margin 0, not 4: the 16px expander gutter already provides the
                          inset, and the extra margin pushed the root icons visibly right of the
                          places icons below - dead space that cost horizontal room.
-                         (Steve, 2026-07-30.) -->
-                    <TreeView x:Name="FolderTreeCtl" Grid.Row="0" Style="{StaticResource FolderTreeView}"
+                         (2026-07-30) -->
+                    <TreeView x:Name="FolderTreeCtl" Grid.Row="0" Style="{StaticResource FolderTreeView}" Visibility="Collapsed"
                               Margin="0,3,2,4"
                               TreeViewItem.Expanded="FolderTree_Expanded"
                               ContextMenuOpening="FolderTree_ContextMenuOpening"
                               SelectedItemChanged="FolderTree_SelectedItemChanged">
                         <TreeView.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="{DynamicResource Str_Menu_PinPlace}" Click="TreePin_Click"/>
+                                <MenuItem Header="{DynamicResource Str_Menu_PinPlace}" Click="TreePin_Click">
+                                    <MenuItem.Icon><TextBlock Text="&#xE718;" FontFamily="Segoe MDL2 Assets"/></MenuItem.Icon>
+                                </MenuItem>
                             </ContextMenu>
                         </TreeView.ContextMenu>
                         <TreeView.ItemContainerStyle>
@@ -303,6 +302,10 @@
                             </HierarchicalDataTemplate>
                         </TreeView.ItemTemplate>
                     </TreeView>
+                    <Border Grid.Row="2" IsHitTestVisible="False"
+                            BorderBrush="{DynamicResource PaneBevelDarkBrush}" BorderThickness="{DynamicResource BevelLightThickness}"/>
+                    <Border Grid.Row="2" IsHitTestVisible="False"
+                            BorderBrush="{DynamicResource PaneBevelLightBrush}" BorderThickness="{DynamicResource BevelDarkThickness}"/>
                     <!-- Edge fades, KillerShell's tree pattern verbatim (MainWindow.xaml): the
                          overlay IS the surface - BackgroundBrush plus the same grain, exactly as
                          KillerShell's, now that the pane is flat on the card - under an opacity
@@ -338,7 +341,7 @@
                             <Border Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
                         </Grid>
                     </Border>
-                    <!-- Same edge fades for the places list (Steve, 2026-07-30): rows dissolve
+                    <!-- Same edge fades for the places list (2026-07-30): rows dissolve
                          at both ends unless the list is flush there. Same surface, same ramp
                          (SyncPlacesEdgeFades); no scrollbar lift needed - horizontal scrolling
                          is disabled on this list. -->
@@ -371,14 +374,14 @@
                 </Grid>
 
                 <Grid Grid.Column="2">
-                  <Border Background="{DynamicResource PaneBrush}" CornerRadius="4" IsHitTestVisible="False">
+                  <Border Background="{DynamicResource PaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}" IsHitTestVisible="False">
                     <Border.Effect>
-                      <DropShadowEffect Color="Black" BlurRadius="14" ShadowDepth="2" Direction="270" Opacity="0.5"/>
+                      <DropShadowEffect Color="Black" BlurRadius="14" ShadowDepth="2" Direction="270" Opacity="{DynamicResource PaneShadowOpacity}"/>
                     </Border.Effect>
                   </Border>
-                  <Border Background="{DynamicResource PaneBrush}" CornerRadius="4">
+                  <Border Background="{DynamicResource PaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}">
                   <Grid>
-                    <Border IsHitTestVisible="False" CornerRadius="4"
+                    <Border IsHitTestVisible="False" CornerRadius="{DynamicResource ControlCornerRadius}"
                             Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
                     <DockPanel>
                         <Grid DockPanel.Dock="Top" x:Name="DetailsHeader" Visibility="Collapsed" Margin="12,4,26,0">
@@ -412,11 +415,14 @@
                                      ItemTemplate="{StaticResource RowTemplate}"
                                      ItemsPanel="{StaticResource PanelStack}"
                                      SelectionChanged="Files_SelectionChanged" MouseDoubleClick="Files_DoubleClick"
+                                     PreviewMouseWheel="FileList_PreviewMouseWheel"
                                      ContextMenuOpening="Files_ContextMenuOpening"
                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                 <ListBox.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="{DynamicResource Str_Menu_PinPlace}" Click="FilePin_Click"/>
+                                        <MenuItem Header="{DynamicResource Str_Menu_PinPlace}" Click="FilePin_Click">
+                                            <MenuItem.Icon><TextBlock Text="&#xE718;" FontFamily="Segoe MDL2 Assets"/></MenuItem.Icon>
+                                        </MenuItem>
                                     </ContextMenu>
                                 </ListBox.ContextMenu>
                             </ListBox>
@@ -433,7 +439,7 @@
 
             <!-- File name + filter. Labels are DimTextBrush on the dark card: 3.15:1, the tier
                  these brushes are calibrated for. -->
-            <Grid Grid.Row="4" Margin="16,12,16,0">
+            <Grid x:Name="FileFields" Grid.Row="4" Margin="16,12,16,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -448,7 +454,7 @@
                 <!-- Left padding 5, not 8: a TextBox's content host carries its own ~2px inset
                      (WPF's TextBoxView), so at 8 the name started visibly right of the filter
                      combo's text directly below it (combo padding is 7 with no inherent inset).
-                     5 + 2 lines the two up. (Steve, 2026-07-31.) -->
+                     5 + 2 lines the two up. (2026-07-31) -->
                 <TextBox x:Name="FileNameBox" Grid.Row="0" Grid.Column="1" Height="28"
                          Style="{StaticResource DarkTextBox}"
                          FontFamily="Consolas" FontSize="12" Padding="5,0,8,0"
@@ -477,6 +483,10 @@
                     <Button x:Name="AcceptButton" Style="{StaticResource OutlineButton}" MinWidth="90" Click="OK_Click"/>
                 </StackPanel>
             </Grid>
+            <Border Grid.RowSpan="6" Panel.ZIndex="9000" IsHitTestVisible="False" BorderBrush="{DynamicResource OverlayBevelOuterLightBrush}" BorderThickness="{DynamicResource OverlayBevelLightThickness}"/>
+            <Border Grid.RowSpan="6" Panel.ZIndex="9000" IsHitTestVisible="False" BorderBrush="{DynamicResource OverlayBevelOuterDarkBrush}" BorderThickness="{DynamicResource OverlayBevelDarkThickness}"/>
+            <Border Grid.RowSpan="6" Panel.ZIndex="9001" IsHitTestVisible="False" Margin="{DynamicResource OverlayBevelInnerMargin}" BorderBrush="{DynamicResource OverlayBevelInnerLightBrush}" BorderThickness="{DynamicResource OverlayBevelLightThickness}"/>
+            <Border Grid.RowSpan="6" Panel.ZIndex="9001" IsHitTestVisible="False" Margin="{DynamicResource OverlayBevelInnerMargin}" BorderBrush="{DynamicResource OverlayBevelInnerDarkBrush}" BorderThickness="{DynamicResource OverlayBevelDarkThickness}"/>
             </Grid>
         </Border>
     </Grid>

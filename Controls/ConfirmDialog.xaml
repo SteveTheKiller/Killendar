@@ -11,31 +11,33 @@
         AllowsTransparency="True"
         ResizeMode="NoResize"
         Background="Transparent"
+        TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType"
+        UseLayoutRounding="True" SnapsToDevicePixels="True"
         ShowInTaskbar="False">
 
     <!-- Margin is a transparent halo so the drop shadow has room to render (AllowsTransparency window,
          so WPF draws the shadow rather than the OS). -->
     <!-- Dialog cards sit on the dark tier. Inputs and DimTextBrush are calibrated against it;
-         on SurfaceBrush a field is the same colour as the card behind it. -->
+         on SurfaceBrush a field is the same color as the card behind it. -->
     <Border x:Name="RootBorder" Opacity="0"
             Background="{StaticResource BackgroundBrush}"
             BorderBrush="{StaticResource CardBorderBrush}"
             BorderThickness="1"
-            CornerRadius="6"
-            Margin="10">
+            CornerRadius="{DynamicResource PanelCornerRadius}"
+            Margin="{DynamicResource DialogHaloMargin}">
         <Border.Effect>
-            <DropShadowEffect Color="Black" BlurRadius="18" ShadowDepth="3" Direction="270" Opacity="0.6"/>
+            <DropShadowEffect Color="Black" BlurRadius="18" ShadowDepth="3" Direction="270" Opacity="{DynamicResource AboutShadowOpacity}"/>
         </Border.Effect>
         <Grid>
             <!-- Film grain over the whole dialog (behind content), so it reads as one continuous
                  surface like the main window chrome. -->
-            <Border IsHitTestVisible="False" CornerRadius="6"
+            <Border IsHitTestVisible="False" CornerRadius="{DynamicResource PanelCornerRadius}"
                     Opacity="{DynamicResource GrainOpacity}"
                     Background="{DynamicResource GrainTileBrush}"/>
 
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="36"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
@@ -43,11 +45,14 @@
                 <!-- Title bar: transparent so the dialog grain + surface show through and the bar blends
                      into the window instead of reading as a separate strip. Carries the app wordmark
                      (Killer in text color, second word bold in the accent) like the main title bar. -->
-                <Border Grid.Row="0" Background="Transparent"
+                <Border Grid.Row="0" Background="{DynamicResource DialogTitleBarBrush}"
+                        Height="{DynamicResource DialogTitleBarHeight}"
                         MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
-                    <Grid Margin="14,0">
+                    <Grid>
                         <!-- Wordmark with the same soft dark shadow copy the main title bar uses. -->
-                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center"
+                              Margin="{DynamicResource DialogTitleTextMargin}"
+                              Visibility="{DynamicResource WordmarkVisibility}">
                             <StackPanel Orientation="Horizontal" Margin="1,2,0,0"
                                         Opacity="{DynamicResource IconShadowOpacity}">
                                 <StackPanel.Effect><BlurEffect Radius="3"/></StackPanel.Effect>
@@ -55,8 +60,14 @@
                             </StackPanel>
                             <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15"><Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}"/></TextBlock>
                         </Grid>
-                        <Button Content="&#xE711;" Click="Cancel_Click" Style="{StaticResource DangerCloseButton}"
-                                HorizontalAlignment="Right"/>
+                        <TextBlock Text="Killendar" Visibility="{DynamicResource PlainTitleVisibility}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                                   Margin="{DynamicResource DialogTitleTextMargin}"
+                                   FontFamily="{DynamicResource ChromeFontFamily}" FontSize="11" FontWeight="Bold"
+                                   Foreground="{DynamicResource ChromeTextBrush}"/>
+                        <Button Content="&#xE8BB;" Click="Cancel_Click" Style="{StaticResource ChromeCloseButton}"
+                                HorizontalAlignment="Right" VerticalAlignment="Center"
+                                Margin="{DynamicResource DialogCaptionCloseMargin}"/>
                     </Grid>
                 </Border>
 
@@ -94,6 +105,10 @@
                             MinWidth="80"/>
                 </StackPanel>
             </Grid>
+            <Border Panel.ZIndex="9000" IsHitTestVisible="False" BorderBrush="{DynamicResource OverlayBevelOuterLightBrush}" BorderThickness="{DynamicResource OverlayBevelLightThickness}"/>
+            <Border Panel.ZIndex="9000" IsHitTestVisible="False" BorderBrush="{DynamicResource OverlayBevelOuterDarkBrush}" BorderThickness="{DynamicResource OverlayBevelDarkThickness}"/>
+            <Border Panel.ZIndex="9001" IsHitTestVisible="False" Margin="{DynamicResource OverlayBevelInnerMargin}" BorderBrush="{DynamicResource OverlayBevelInnerLightBrush}" BorderThickness="{DynamicResource OverlayBevelLightThickness}"/>
+            <Border Panel.ZIndex="9001" IsHitTestVisible="False" Margin="{DynamicResource OverlayBevelInnerMargin}" BorderBrush="{DynamicResource OverlayBevelInnerDarkBrush}" BorderThickness="{DynamicResource OverlayBevelDarkThickness}"/>
         </Grid>
     </Border>
 </Window>

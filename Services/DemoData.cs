@@ -16,6 +16,8 @@ namespace Killendar.Services
     /// break calendar layout. Anything added here should earn its place by exercising something.
     ///   - lane packing:      two- and three-deep overlaps at the same hour
     ///   - month-cell overflow: one day with nine events
+    ///   - full days:         07:00-22:00 wall to wall, two per month for three months, so the
+    ///                        day and agenda views must scroll
     ///   - midnight edges:    a 00:00 start, and a 23:30 patch window crossing into the next day
     ///   - multi-day:         all-day runs (on-call, PTO) that must draw as continuous bars
     ///   - extremes:          a 15-minute call and an 8-hour maintenance window
@@ -183,6 +185,36 @@ namespace Killendar.Services
                 Add(list, HeavyDay[i], s, s.AddMinutes(45), categories: HeavyDayCats[i]);
             }
 
+            // ---------- totally full days: day and agenda views must SCROLL ----------
+            // Two per month across three months, so the case survives paging at least two
+            // months forward. 07:00 to 22:00 wall to wall with no gaps, every category in the
+            // cycle (blanks included), plus two overlaps laid over the solid run and an all-day
+            // bar on top - whatever the window height, the hour grid overflows and the agenda
+            // list runs well past a screen.
+            for (int m = 0; m <= 2; m++)
+            {
+                var packedBase = monday.AddDays(m * 28 + 8);            // a Tuesday
+                foreach (var day in new[] { packedBase, packedBase.AddDays(9) })   // Tue + next Thu
+                {
+                    var t = day.AddHours(7);
+                    int slot = 0;
+                    while (t < day.AddHours(22))
+                    {
+                        int mins = FullDaySlots[slot % FullDaySlots.Length];
+                        Add(list, FullDayTitles[slot % FullDayTitles.Length], t, t.AddMinutes(mins),
+                            location: slot % 3 == 0 ? "Teams" : "",
+                            categories: FullDayCats[slot % FullDayCats.Length]);
+                        t = t.AddMinutes(mins);
+                        slot++;
+                    }
+                    Add(list, "Escalation bridge - all hands", day.AddHours(10), day.AddHours(11).AddMinutes(30),
+                        location: "Bridge line", categories: "On-call");
+                    Add(list, "Recruiter screen", day.AddHours(16), day.AddHours(16).AddMinutes(30),
+                        categories: "Personal");
+                    AddAllDay(list, "Change freeze", day, day.AddDays(1), categories: "Maintenance");
+                }
+            }
+
             // ---------- title long enough to force ellipsis everywhere ----------
             var longDay = monday.AddDays(4);
             Add(list, "Quarterly infrastructure review with the client's security team and their " +
@@ -205,7 +237,7 @@ namespace Killendar.Services
             AddAllDay(list, "Company holiday", monday.AddDays(-10), monday.AddDays(-9),
                       categories: "Personal");
             AddAllDay(list, "Cert renewal deadline", monday.AddDays(24), monday.AddDays(25),
-                      description: "CompTIA. Book the test centre before this drops off.",
+                      description: "CompTIA. Book the test center before this drops off.",
                       categories: "Admin");
             AddAllDay(list, "Inventory audit", monday.AddDays(31), monday.AddDays(32),
                       categories: "Admin");
@@ -217,7 +249,7 @@ namespace Killendar.Services
 
             // ---------- a couple in the past, so paging backwards is not empty ----------
             AddAllDay(list, "Conference", monday.AddDays(-45), monday.AddDays(-42),
-                      location: "Convention centre", categories: "Internal");
+                      location: "Convention center", categories: "Internal");
 
             return list;
         }
@@ -302,6 +334,33 @@ namespace Killendar.Services
         private static readonly string[] HeavyDayCats =
         [
             "Internal", "", "Client site", "", "Client site", "Maintenance", "On-call", "Admin", "Personal",
+        ];
+
+        // The wall-to-wall day. Titles, slot lengths and categories cycle independently
+        // (13 / 5 / 7 entries), so consecutive packed days never repeat the same pairing.
+        private static readonly string[] FullDayTitles =
+        [
+            "Morning standup",
+            "Northgate Dental - workstation swap",
+            "Ticket queue sweep",
+            "Vendor call - firewall renewal",
+            "Prairie CU - new hire setup",
+            "Lunch (working)",
+            "Summit Ortho - printer mapping",
+            "Change advisory board",
+            "Backup verification",
+            "Ridgeline - AP replacement",
+            "Documentation catch-up",
+            "Ticket triage",
+            "End of day handover",
+        ];
+
+        private static readonly int[] FullDaySlots = [45, 30, 60, 30, 90];
+
+        // Category cycle for the packed days: every demo category plus blanks, like HeavyDayCats.
+        private static readonly string[] FullDayCats =
+        [
+            "Internal", "Client site", "", "Admin", "Maintenance", "Personal", "On-call",
         ];
 
         // Seeded name -> demo name, colors untouched: On-call keeps the red, Client site the

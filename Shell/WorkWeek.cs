@@ -2,7 +2,7 @@ using System.Windows;
 using Killendar.Views;
 
 // ============================================================
-// 5-DAY WORK WEEK (Steve, 2026-07-31)
+// 5-DAY WORK WEEK (2026-07-31)
 //
 // A rail toggle that drops Saturday and Sunday from Week view: five wider columns instead of
 // seven cramped ones, which is most of what made the week grid unreadable. WeekView reads
@@ -18,7 +18,7 @@ namespace Killendar.Shell
         private void InitWorkWeek()
         {
             CalendarChrome.WorkWeek = Settings.Get("WorkWeek") == "1";
-            // The toggle button lives in WeekView's own header corner (Steve, 2026-07-31 - it
+            // The toggle button lives in WeekView's own header corner (2026-07-31 - it
             // was on the rail first, a whole window away from the columns it drops), so the view
             // invokes this hook rather than the shell owning a button.
             CalendarChrome.WorkWeekToggle = ToggleWorkWeek;

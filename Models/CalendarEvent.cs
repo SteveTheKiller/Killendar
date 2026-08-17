@@ -16,7 +16,7 @@ namespace Killendar.Models
 
     /// <summary>
     /// One appointment. Field names are load-bearing: IcsService maps them straight onto
-    /// RFC-5545 VEVENT properties, and EventStore serialises them as-is, so renaming a
+    /// RFC-5545 VEVENT properties, and EventStore serializes them as-is, so renaming a
     /// property silently breaks both ICS round-tripping and every previously saved file.
     ///
     /// REPEATS. There are three kinds of row in the store, and every repeat question comes back

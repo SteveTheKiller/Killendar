@@ -7,7 +7,7 @@
     <sys:Double x:Key="IconShadowOpacity">1.0</sys:Double>
 
     <!-- BLOOD theme.
-         Primary = HeaderAccent so the accent reads as colour, not the white base Accent. -->
+         Primary = HeaderAccent so the accent reads as color, not the white base Accent. -->
     <SolidColorBrush x:Key="PrimaryBrush"        Color="#e8485a" po:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryHoverBrush"   Color="#e8485a" po:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#e8485a" po:Freeze="True"/>
@@ -23,6 +23,7 @@
     <SolidColorBrush x:Key="TableHeaderBrush"    Color="#2c1012" po:Freeze="True"/>
     <SolidColorBrush x:Key="CardBorderBrush"     Color="#401d1d" po:Freeze="True"/>
     <SolidColorBrush x:Key="PaneBorderBrush"     Color="#401d1d" po:Freeze="True"/>
+    <SolidColorBrush x:Key="AppBorderBrush"      Color="#401d1d" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="TextBrush"           Color="#fffde8" po:Freeze="True"/>
     <SolidColorBrush x:Key="MutedTextBrush"      Color="#f8c99e" po:Freeze="True"/>
@@ -34,13 +35,11 @@
     <SolidColorBrush x:Key="RowSelectedBrush"    Color="#44ffffff" po:Freeze="True"/>
     <!-- Untagged appointment chips - neutral gray, see the note in Greed.xaml. -->
     <SolidColorBrush x:Key="ChipBrush"           Color="#4a4a4a" po:Freeze="True"/>
-    <!-- Selection pair - see the note in Dark.xaml. The monochrome themes use a translucent white
-         fill rather than a colour, exactly as KillerPDF does. -->
     <SolidColorBrush x:Key="SelectionBg"         Color="#44ffffff" po:Freeze="True"/>
     <SolidColorBrush x:Key="SelectionFg"         Color="#ffffff" po:Freeze="True"/>
     <SolidColorBrush x:Key="TreeLineBrush"       Color="#552626" po:Freeze="True"/>
 
-    <!-- Shortcut category colours - see the note in Dark.xaml. -->
+    <!-- Shortcut category colors - see the note in Dark.xaml. -->
     <SolidColorBrush x:Key="KsCatFile"           Color="#00fff9" po:Freeze="True"/>
     <SolidColorBrush x:Key="KsCatView"           Color="#f222ff" po:Freeze="True"/>
     <SolidColorBrush x:Key="KsCatNav"            Color="#8c1eff" po:Freeze="True"/>
@@ -48,7 +47,6 @@
     <SolidColorBrush x:Key="KsCatHelp"           Color="#39ff14" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="InputBorderBrush"    Color="#401d1d" po:Freeze="True"/>
-    <!-- Menu surface: KillerPDF's values, the family source of truth for colour. -->
     <SolidColorBrush x:Key="MenuBackgroundBrush" Color="#1e0a0b" po:Freeze="True"/>
     <SolidColorBrush x:Key="MenuBorderBrush"     Color="#4a2429" po:Freeze="True"/>
     <SolidColorBrush x:Key="MenuTextBrush"       Color="#f8c99e" po:Freeze="True"/>
@@ -56,23 +54,6 @@
     <SolidColorBrush x:Key="OutlinePressedBrush" Color="#44ffffff" po:Freeze="True"/>
     <SolidColorBrush x:Key="ScrollThumbBrush"    Color="#aaf8c99e" po:Freeze="True"/>
     <SolidColorBrush x:Key="ScrollThumbHoverBrush" Color="#fce6d2" po:Freeze="True"/>
-
-    <!-- Device-type label colours (bright, for dark panes) -->
-    <SolidColorBrush x:Key="TypeRouter"     Color="#F0A030" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeWindows"    Color="#60A0F0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypePrinter"    Color="#D080A0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeSwitch"     Color="#C0C0C0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeHypervisor" Color="#E83C50" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeNas"        Color="#40C080" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeIot"        Color="#B060D0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeServer"     Color="#E08050" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeLinux"      Color="#D0C050" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeDns"        Color="#50B0D0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeHa"         Color="#50D0A0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeMobile"     Color="#A0A0F0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeCamera"     Color="#F0C060" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeSmarttv"    Color="#E0A0E0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TypeMedia"      Color="#70C0E0" po:Freeze="True"/>
 
 
     <!-- Stroke behind white-on-accent label text in picker rows. Theme-varied because the effect

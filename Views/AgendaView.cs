@@ -114,7 +114,7 @@ namespace Killendar.Views
 
                 // The day heading opens that day's agenda in the sidebar, same as a Month cell
                 // or a Week/Day column header; the context menu keeps the explicit create.
-                // (Steve, 2026-07-30.)
+                // (2026-07-30)
                 var head = new StackPanel
                 {
                     Orientation = Orientation.Horizontal,

@@ -282,7 +282,7 @@
 
     <!-- Přenosná instalace -->
     <sys:String x:Key="Str_Portable">PŘENOSNÁ</sys:String>
-    <sys:String x:Key="Str_Btn_Install">Nainstalovat Killendar...</sys:String>
+    <sys:String x:Key="Str_Btn_Install">Nainstalovat Killendar</sys:String>
     <sys:String x:Key="Str_Dlg_InstallMsg">Nainstalovat Killendar do tohoto počítače?</sys:String>
     <sys:String x:Key="Str_Dlg_InstallBullets">Killendar se zkopíruje do složky s programy a přidá se zástupce do nabídky Start.&#x0a;Vaše Killendary zůstanou nedotčené a tato kopie souboru exe zůstane tam, kde je.&#x0a;Killendar se restartuje z nainstalovaného umístění.</sys:String>
     <sys:String x:Key="Str_Btn_DoInstall">Nainstalovat</sys:String>
@@ -352,4 +352,45 @@
     <sys:String x:Key="Str_Ctx_EditSeries">Upravit sérii</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Otevřít</sys:String>
 
+    <sys:String x:Key="Str_Theme_Dark">Tmavý</sys:String>
+    <sys:String x:Key="Str_Theme_Light">Světlý</sys:String>
+    <sys:String x:Key="Str_Theme_Black">Černý</sys:String>
+    <sys:String x:Key="Str_Theme_98SE">98SE</sys:String>
+    <sys:String x:Key="Str_Theme_Blood">Krvavý</sys:String>
+    <sys:String x:Key="Str_Theme_Greed">Chamtivý</sys:String>
+    <sys:String x:Key="Str_Theme_Cyanotic">Kyanotický</sys:String>
+    <sys:String x:Key="Str_Theme_Ectoplasm">Ectoplasm</sys:String>
+    <sys:String x:Key="Str_Theme_Decay">Decay</sys:String>
+    <sys:String x:Key="Str_Theme_Malaise">Malaise</sys:String>
+    <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
+    <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
+    <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Btn_Select">Vybrat</sys:String>
+    <sys:String x:Key="Str_TT_DataFolder">Změnit datovou složku, kde jsou uloženy databáze</sys:String>
+    <sys:String x:Key="Str_Fld_From">FROM</sys:String>
+    <sys:String x:Key="Str_Fld_Through">THROUGH</sys:String>
+    <sys:String x:Key="Str_About_PhotonLookup">Address suggestions</sys:String>
+    <sys:String x:Key="Str_About_PhotonPrivacy">Use Photon/Komoot service</sys:String>
+    <sys:String x:Key="Str_Location_NoResults">No address suggestions</sys:String>
+    <sys:String x:Key="Str_TT_ChooseDate">Choose a date</sys:String>
+    <sys:String x:Key="Str_Ctx_OpenAppointment">Open appointment</sys:String>
+    <sys:String x:Key="Str_Ctx_Shrink">Shrink</sys:String>
+    <sys:String x:Key="Str_Ctx_Expand">Expand</sys:String>
+    <sys:String x:Key="Str_MonthMode_Calendar">Calendar month</sys:String>
+    <sys:String x:Key="Str_MonthMode_Rolling">Rolling weeks</sys:String>
+    <sys:String x:Key="Str_KS_SaveAppt">Save the appointment being edited</sys:String>
+    <sys:String x:Key="Str_KS_DeleteAppt">Delete the appointment being edited</sys:String>
+    <sys:String x:Key="Str_KS_AllDay">Toggle all day while editing</sys:String>
+    <sys:String x:Key="Str_KS_Repeats">Open repeat options while editing</sys:String>
+    <sys:String x:Key="Str_KS_ShrinkAppt">Shrink or expand the focused month appointment</sys:String>
+    <sys:String x:Key="Str_KS_Reload">Reload the open Killendar</sys:String>
+    <sys:String x:Key="Str_Status_Reloaded">Reloaded the open Killendar from disk.</sys:String>
+    <sys:String x:Key="Str_TT_PortableFolder">Use the folder beside Killendar.exe</sys:String>
+    <sys:String x:Key="Str_TT_StorageOptions">Killendar folder options</sys:String>
+    <sys:String x:Key="Str_Menu_OpenDataFolder">Open current Killendar folder</sys:String>
+    <sys:String x:Key="Str_Menu_ChooseDataFolder">Choose another folder...</sys:String>
+    <sys:String x:Key="Str_Menu_PortableDataFolder">Use the folder beside Killendar.exe</sys:String>
+    <sys:String x:Key="Str_Kc_DataFolderTitle">Choose the Killendar folder</sys:String>
+    <sys:String x:Key="Str_Kc_DataFolderChanged">Killendar folder: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_DataFolderFailed">Could not use that folder: {0}</sys:String>
 </ResourceDictionary>
