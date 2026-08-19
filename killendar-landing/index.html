@@ -26,7 +26,7 @@ var bg={dark:'#1c1c1c',light:'#dcdcdc',black:'#000000',blood:'#240c0d',greed:'#0
 <meta name="twitter:description" content="A calendar you can encrypt, with no account, no sync, and nothing phoning home. Free and open source, GPLv3.">
 <meta name="twitter:image" content="https://killendar.net/og-image.png">
 <script defer src="https://koya.thekiller.net/script.js" data-website-id="158a903b-5f16-45b9-98c6-9c8eab4a519f"></script>
-<link rel="stylesheet" href="kd.css?v=6">
+<link rel="stylesheet" href="kd.css?v=9">
 <style>
 /* ---- Page-specific (landing) ---- */
 .content-inner { max-width: 1100px; margin: 0 auto; padding: 0 28px 50px; }
@@ -291,9 +291,14 @@ SHA-256, validated with WinVerifyTrust rather than just read off the file.</p>
 <span class="right"><span id="verEgg" title="click me">v1.1.0</span> &middot; &copy; 2026 <b><a href="https://thekiller.net" target="_blank" rel="noopener">Steve the Killer</a></b></span>
 </footer>
 
-<div class="lightbox" id="lightbox"><img id="lightboxImg" src="" alt="Killendar screenshot"></div>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Expanded Killendar screenshot" aria-hidden="true" tabindex="-1">
+  <figure class="lightbox-figure">
+    <img id="lightboxImg" src="" alt="">
+    <figcaption id="lightboxCaption"></figcaption>
+  </figure>
+</div>
 <div class="egg-toast" id="eggToast"></div>
 
-<script src="kd.js?v=3"></script>
+<script src="kd.js?v=5"></script>
 </body>
 </html>

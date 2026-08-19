@@ -10,7 +10,7 @@
   'use strict';
 
   var THEMES = ['dark', 'light', 'black', 'blood', 'greed', 'cyanotic', 'ectoplasm', 'decay', 'malaise', 'sepulchre', 'delirium', 'mourning'];
-  var THEMED = ['ectoplasm', 'decay', 'malaise', 'sepulchre', 'delirium', 'mourning'];  // have their own wordmark art
+  var THEMED = ['blood', 'greed', 'cyanotic', 'ectoplasm', 'decay', 'malaise', 'sepulchre', 'delirium', 'mourning'];  // fixed-color wordmark art
 
   // Per-family accents. Each neutral defines its own red, and Dark's #DD504B is the one the
   // wordmark and the og-image are built on, which is why Red is the default.
@@ -39,7 +39,7 @@
     if (!hasAccents(t)) {
       root.style.removeProperty('--accent');
       if (sw) sw.hidden = true;    // .accent-switch[hidden] keeps the layout slot, so nothing shifts
-      updateLogos();               // still needed here: blood/greed/cyanotic fall back to Red
+      updateLogos();
       return;
     }
     if (sw) sw.hidden = false;
@@ -54,15 +54,13 @@
   // ---- Wordmark ----
 
   // The wordmark is an SVG with the accent baked in, so it is swapped rather than recolored.
-  // Files come from Killer Branding/make-logo-svgs.py. The three non-neutral themes have no
-  // accent of their own, so they fall back to Red, which is what the app and the icon use.
+  // Files come from Killer Branding/make-logo-svgs.py and mirror the app's live wordmark color.
   function updateLogos() {
     var t = theme();
     var src;
     if (THEMED.indexOf(t) >= 0) {
-      // The grunge themes carry their own wordmark art, colored with the theme's in-app
-      // wordmark color (make-logo-svgs.py --themes). Blood/greed/cyanotic stay on the Red
-      // fallback below, matching the app.
+      // Fixed-color themes carry their own wordmark art, colored with the theme's in-app
+      // PrimaryBrush (make-logo-svgs.py --themes).
       src = 'brand/killendar-logo-' + t + '.svg';
     } else {
       // Three variants, not two. Black is its own family with its own six hexes (its red is
@@ -125,9 +123,11 @@
       var b = document.createElement('button');
       b.className = 'sb-thumb';
       b.title = shot.desc;
+      b.setAttribute('aria-label', shot.desc);
       var img = document.createElement('img');
       img.src = shot.src;
       img.alt = shot.desc;
+      img.title = shot.desc;
       img.loading = 'lazy';
       // Fires after wireStrip() is wired below - nudge its scroll/resize listener to
       // recompute once each image has its real height, since the strip's scrollHeight
@@ -159,17 +159,34 @@
 
   function wireLightbox() {
     var box = $('lightbox'), img = $('lightboxImg'), strip = $('sbThumbs');
+    var caption = $('lightboxCaption');
+    var lastTrigger = null;
     if (!box || !img || !strip) return;
     strip.addEventListener('click', function (e) {
       var t = e.target;
       if (t.tagName !== 'IMG') return;
+      var description = t.alt || 'Killendar screenshot';
+      lastTrigger = t.closest('button');
       img.src = t.getAttribute('data-full') || t.src;
-      img.alt = t.alt || 'Killendar screenshot';
+      img.alt = description;
+      img.title = description;
+      if (caption) caption.textContent = description;
+      box.setAttribute('aria-hidden', 'false');
       box.classList.add('show');
+      box.focus();
     });
-    box.addEventListener('click', function () { box.classList.remove('show'); });
+    function closeBox() {
+      if (!box.classList.contains('show')) return;
+      box.classList.remove('show');
+      box.setAttribute('aria-hidden', 'true');
+      if (lastTrigger) lastTrigger.focus();
+    }
+    box.addEventListener('click', closeBox);
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') box.classList.remove('show');
+      if (e.key === 'Escape' && box.classList.contains('show')) {
+        closeBox();
+        e.preventDefault();
+      }
     });
   }
 

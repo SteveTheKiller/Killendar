@@ -106,7 +106,11 @@ namespace Killendar.Shell
             LocationSuggestionsList.Items.Clear();
             foreach (string address in results)
                 LocationSuggestionsList.Items.Add(address);
-            if (results.Count == 0) return;
+            if (results.Count == 0)
+            {
+                LocationSuggestionsPopup.IsOpen = false;
+                return;
+            }
             LocationSuggestionsList.SelectedIndex = -1;
             LocationSuggestionsPopup.IsOpen = true;
         }
