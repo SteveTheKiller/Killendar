@@ -116,7 +116,7 @@
       { src: 'screenshots/03.png', desc: 'Week view, Decay theme - a five-day work week with overlapping appointments packed into lanes' },
       { src: 'screenshots/04.png', desc: 'Keyboard shortcuts, Black theme - the F1 overlay showing every binding on a drawn keyboard' },
       { src: 'screenshots/05.png', desc: 'Day view, 98SE theme - one wall-to-wall day in the hour grid, beside the day list' },
-      { src: 'screenshots/06.png', desc: 'Agenda view, Blood theme - the language menu with eleven languages and the date format picker' },
+      { src: 'screenshots/06.png', desc: 'Agenda view, Blood theme - the language menu with twelve languages and the date format picker' },
       { src: 'screenshots/07.png', desc: 'Multi-week view, Ectoplasm theme - switching view mode from the toolbar' }
     ];
     SHOTS.forEach(function (shot, idx) {
@@ -240,7 +240,7 @@
   // The hero-info card carries no data-i18n on purpose - release.ps1 rewrites it by matching
   // the literal English label spans. Values may contain markup; they are our own strings.
 
-  var LANGS = ['en', 'es', 'fr', 'de', 'cs', 'tr', 'ja', 'pl', 'bn', 'zh-CN', 'zh-TW'];
+  var LANGS = ['en', 'es', 'fr', 'de', 'cs', 'tr', 'ja', 'pl', 'bn', 'zh-CN', 'zh-TW', 'hu'];
 
   // Flag SVGs, KillerPDF's kp.js set verbatim; the toggle wears the chosen language's flag.
   var FLAGS = {
@@ -254,11 +254,55 @@
     'zh-CN': '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#de2910"/><polygon points="4,3 4.9,5.6 7.6,5.6 5.4,7.3 6.2,9.9 4,8.3 1.8,9.9 2.6,7.3 0.4,5.6 3.1,5.6" fill="#ffde00"/></svg>',
     bn: '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#006a4e"/><circle cx="10.5" cy="12" r="6" fill="#f42a41"/></svg>',
     cs: '<svg viewBox="0 0 24 24"><rect width="24" height="12" fill="#fff"/><rect y="12" width="24" height="12" fill="#d7141a"/><polygon points="0,0 12,12 0,24" fill="#11457e"/></svg>',
-    pl: '<svg viewBox="0 0 24 24"><rect width="24" height="12" fill="#fff"/><rect y="12" width="24" height="12" fill="#dc143c"/></svg>'
+    pl: '<svg viewBox="0 0 24 24"><rect width="24" height="12" fill="#fff"/><rect y="12" width="24" height="12" fill="#dc143c"/></svg>',
+    hu: '<svg viewBox="0 0 24 24"><rect width="24" height="8" fill="#ce2939"/><rect y="8" width="24" height="8" fill="#fff"/><rect y="16" width="24" height="8" fill="#477050"/></svg>'
   };
 
   var I18N = {
     en: {},   // filled from the DOM at boot
+    hu: {
+      "tag": "Titkosítható naptár fiók, szinkronizálás és otthoni telefonálás nélkül.",
+      "b1h": "Titkosítva, ha akarod",
+      "b1a": "Állítson be egy jelszót, és a fájl <b>nyugalmi állapotban titkosítva lesz</b> az SQLCipher segítségével.",
+      "b1b": "AES-256, oldalankénti HMAC-SHA512, az SQLCipher saját kulcsának levezetése.",
+      "b1c": "Opt-in: semmilyen jelszó nem hagyja sima SQLite-t, bármivel olvasható.",
+      "b1d": "Naptáronként egy jelszó – a munka zárva legyen, a család pedig nyitva.",
+      "b2h": "Ez csak egy fájl",
+      "b2a": "Egy <b>.kcal</b> fájl a teljes naptár, a profilodban vagy egy kiválasztott mappában.",
+      "b2b": "Egy közönséges SQLite adatbázis – készítsen biztonsági másolatot másolással.",
+      "b2c": "Bármely SQLite eszközzel olvasható, ezzel az alkalmazással vagy anélkül.",
+      "b2d": "Importálja és exportálja az <b>.ics</b> fájlt minden máshoz.",
+      "b3h": "Négy nézet, egy vezérlő",
+      "b3a": "Hónap, hét, nap és napirend, egy előző / következő / mai megosztása.",
+      "b3b": "Az egymást átfedő találkozók egymás mellett helyezkednek el, soha nem rejtve.",
+      "b3c": "Az Ön által meghatározott <b>színkategóriák</b> minden nézetet lefestenek.",
+      "b3d": "Tizenhárom téma, tizenkét nyelv, egygombos gyorsbillentyűk.",
+      "dl": "Letöltés",
+      "dlwin": "Letöltés Windowshoz",
+      "gh": "Forrás a GitHubon",
+      "navTech": "Műszaki",
+      "navAbout": "Körülbelül",
+      "note": "Telepítse vagy futtassa a hordozható eszközt. Ingyenes, nyílt forráskódú, GPLv3.<br>Nincs fiók, nincs előfizetés, nincs szinkronizálási szolgáltatás.<br>Nem küldenek telemetriát és nincsenek hirdetések... soha.",
+      "feats": "Mit csinál",
+      "f1h": "Hónap, hét, nap, napirend",
+      "f1p": "Az egymást átfedő időpontok sávokban egymás mellett helyezkednek el, így a dupla lefoglalt óra mindkettőt mutatja.\nAz egész napos bejegyzések saját sávot kapnak az órarács felett. A havi nézet egy hétről hat hétre nagyít, és többnapos futásokat is összeköt.",
+      "f2h": "Színkategóriák",
+      "f2p": "Határozza meg a sajátját, nevezze el őket, és válassza ki a színüket. Egy találkozó több, és a\naz első színezi minden nézetben. Az átnevezés minden találkozót egyszerre frissít.",
+      "f3h": "Annyi naptár, amennyit csak akar",
+      "f3p": "Egy a munkához, egy az ügyelethez, egy a családhoz. Mindegyik saját fájl a sajátjával\njelszót, vagy semmilyen.<code>.kcal</code> fájlokat",
+      "f4h": "Opcionális titkosítás",
+      "f4p": "SQLCipher nyugalmi állapotban: AES-256, oldalanként HMAC-SHA512, saját kulcs származtatása. Feliratkozás, tehát nem\njelszóval a fájl sima SQLite marad.",
+      "f5h": "iCalendar be és ki",
+      "f5p": "Az RFC 5545-re írt import és exportálás külső függőségek nélkül. Kategóriák utazás\nidőpont egyeztetéssel mindkettőn keresztül.<code>.ics</code> import / export",
+      "f6h": "Tizenhárom téma, tizenkét nyelv",
+      "f6p": "Minden téma váltható futás közben. A Sötét, Világos, Fekete és a 98SE mindegyik hat hangsúlyos árnyalattal rendelkezik, így összesen 33 megjelenés érhető el. Egygombos\nparancsikonok, amelyek leállnak a mezőbe való beírás közben.",
+      "f7h": "Hordozható vagy telepített",
+      "f7p": "Futtassa USB-meghajtóról, vagy hagyja, hogy felhasználónként vagy mindenki számára telepítse magát a gépen.\nTartsa a naptárt a végrehajtható fájl mellett egy önálló másolathoz. Csendes telepítési útvonal létezik a winget, a Chocolatey és az RMM számára.",
+      "f8h": "Aláírva, ellenőrizhető",
+      "f8p": "A Névjegy kártya a kiadót, a tanúsítvány ujjlenyomatát és a futó exe-ket mutatja\nSHA-256, a WinVerifyTrust segítségével érvényesítve, nem csak a fájlt olvasva.",
+      "foot": "<a href=\"https://github.com/SteveTheKiller/Killendar\" target=\"_blank\" rel=\"noopener\">Forrás a GitHubon</a> · GPLv3 · A <a href=\"https://killertools.net\" target=\"_blank\" rel=\"noopener\">killertools.net</a> része",
+      "egg": "Nincs fiók. Nincs szinkronizálás. Nincs szerver. Az Ön árajánlatai soha nem hagyják el ezt a gépet."
+    },
     es: {
       tag: "Un calendario que puedes cifrar, sin cuenta, sin sincronización y sin nada que llame a casa.",
       b1h: "Cifrado, si lo quieres",

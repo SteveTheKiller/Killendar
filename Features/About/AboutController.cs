@@ -105,7 +105,7 @@ namespace Killendar.Features
             {
                 // Declining UAC throws, so the shutdown only happens once the helper is actually
                 // running - otherwise the app would close without updating.
-                UpdateService.StartSwap(newExe);
+                UpdateService.StartSwap(newExe, tag!.TrimStart('v', 'V'));
                 System.Windows.Application.Current.Shutdown();
             }
             catch
