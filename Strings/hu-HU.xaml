@@ -226,11 +226,11 @@
     <sys:String x:Key="Str_Btn_StartNew">Kezdj újat</sys:String>
     <sys:String x:Key="Str_Dlg_FreshHead">Indít egy új Killendart?</sys:String>
     <sys:String x:Key="Str_Dlg_FreshBody">A zárolt Killendart átnevezi és lemezen tartja, de jelszava nélkül a benne lévő találkozók nem olvashatók. Egy új üres Killendar nyílik meg a helyén.</sys:String>
-    <sys:String x:Key="Str_Tip_LockOn">Titkosított – kattintson a jelszó módosításához vagy eltávolításához</sys:String>
-    <sys:String x:Key="Str_Tip_LockOff">Nincs titkosítva – kattintson a jelszó beállításához</sys:String>
+    <sys:String x:Key="Str_Tip_LockOn">Titkosított - kattintson a jelszó módosításához vagy eltávolításához</sys:String>
+    <sys:String x:Key="Str_Tip_LockOff">Nincs titkosítva - kattintson a jelszó beállításához</sys:String>
     <sys:String x:Key="Str_Status_Encrypted">Ez a Killendar most titkosítva van</sys:String>
     <sys:String x:Key="Str_Status_PwChanged">Jelszó megváltozott</sys:String>
-    <sys:String x:Key="Str_Status_PwRemoved">Jelszó eltávolítva – ez a Killendar már nincs titkosítva</sys:String>
+    <sys:String x:Key="Str_Status_PwRemoved">Jelszó eltávolítva - ez a Killendar már nincs titkosítva</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">A két jelszó nem egyezik</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">Nem sikerült megváltoztatni a jelszót: {0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">Új Killendar indult; a zárolt a következőként maradt meg: {0}</sys:String>
@@ -262,7 +262,7 @@
     <sys:String x:Key="Str_Kc_Filter">Killendar-fájlok (*.kcal)|*.kcal|Minden fájl (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">Másolat betöltve mint {0}</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">Sikertelen betöltés: {0}</sys:String>
-    <sys:String x:Key="Str_Kc_Copied">A {0} a vágólapon van – illessze be bárhová, ahol fájl van</sys:String>
+    <sys:String x:Key="Str_Kc_Copied">A {0} a vágólapon van - illessze be bárhová, ahol fájl van</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">A másolás nem sikerült: {0}</sys:String>
     <sys:String x:Key="Str_Ctx_AddAppointment">Találkozó hozzáadása</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">Szerkessze a sorozatot</sys:String>
@@ -290,7 +290,7 @@
     <!-- Double-clicked .kcal: the confirm before a copy is added and opened.
          {0} is the file name. -->
     <sys:String x:Key="Str_Kc_AddHead">Megnyitja a következőt: {0} a Killendarban?</sys:String>
-    <sys:String x:Key="Str_Kc_AddBody">A rendszer hozzáad egy másolatot az adatmappához, és megnyílik. A fájl, amelyre duplán kattintott, érintetlenül marad ott, ahol van – a Killendar folyamatosan íródik, és ez nem történik meg a hálózati megosztáson vagy a Letöltések között található fájlokkal.</sys:String>
+    <sys:String x:Key="Str_Kc_AddBody">A rendszer hozzáad egy másolatot az adatmappához, és megnyílik. A fájl, amelyre duplán kattintott, érintetlenül marad ott, ahol van - a Killendar folyamatosan íródik, és ez nem történik meg a hálózati megosztáson vagy a Letöltések között található fájlokkal.</sys:String>
     <sys:String x:Key="Str_Btn_Add">Hozzáadás</sys:String>
 
 
@@ -342,7 +342,7 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Btn_DoInstall">Telepítés</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">Adjon hozzá egy asztali parancsikont</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">Telepítés mindenki számára ezen a számítógépen (rendszergazda szükséges)</sys:String>
-    <sys:String x:Key="Str_Status_InstallFailed">A telepítés nem fejeződött be – a Killendar továbbra is hordozható.</sys:String>
+    <sys:String x:Key="Str_Status_InstallFailed">A telepítés nem fejeződött be - a Killendar továbbra is hordozható.</sys:String>
 
     <!-- Shortcuts overlay (F1). One binding table in Shell/ShortcutsOverlay.cs feeds both the
          list and the keyboard map, so each of these is used in exactly one place. -->
@@ -393,7 +393,7 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategóriák</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads
          "Grid density - click or scroll  (2)". {0} in the status line is that same number. -->
-    <sys:String x:Key="Str_TT_Density">Rács sűrűsége – kattintson vagy görgessen</sys:String>
+    <sys:String x:Key="Str_TT_Density">Rács sűrűsége - kattintson vagy görgessen</sys:String>
     <sys:String x:Key="Str_St_Density">Rácssűrűség: {0} sor/óra</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">5 napos munkahét</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5-napos</sys:String>

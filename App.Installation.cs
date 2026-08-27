@@ -266,7 +266,7 @@ namespace Killendar
             {
                 key.SetValue("DisplayName", AppName);
                 key.SetValue("DisplayVersion", version);
-                key.SetValue("Publisher", "Steve / thekiller.net");
+                key.SetValue("Publisher", "Steve the Killer");
                 key.SetValue("InstallLocation", installDir);
                 key.SetValue("DisplayIcon", installExe + ",0");
                 key.SetValue("UninstallString", "\"" + installExe + "\" /uninstall");
@@ -339,14 +339,13 @@ namespace Killendar
                                          MachineInstallExe, StringComparison.OrdinalIgnoreCase);
             if (RelaunchMachineUninstallElevatedIfNeeded(machine)) return;
 
-            // A stock MessageBox on purpose: this path runs with no main window, so none of the
-            // themed chrome (or its resource dictionaries) is loaded to draw a ConfirmDialog.
-            var res = MessageBox.Show(
-                "Uninstall Killendar from this computer?",
-                AppName + " Uninstall",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
-            if (res != MessageBoxResult.Yes) return;
+            var confirm = new Controls.ConfirmDialog(
+                "Uninstall Killendar?",
+                "Your appointments will be kept.",
+                "Uninstall",
+                "Cancel");
+            confirm.ShowDialog();
+            if (!confirm.Confirmed) return;
 
             string startMenuDir = machine
                 ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms), AppName)
@@ -388,8 +387,6 @@ namespace Killendar
                 UseShellExecute = true
             });
 
-            MessageBox.Show("Killendar has been uninstalled. Your appointments were left in place.",
-                AppName, MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

@@ -73,8 +73,7 @@ namespace Killendar.Shell
             DwmChrome.SetRoundedCorners(this, rounded: Services.ThemeManager.Current != Services.Theme.SE98
                                                        && WindowState == WindowState.Normal);
             // Maximize glyph (Segoe MDL2) toggles to a restore glyph when maximized.
-            if (MaximizeBtn != null)
-                MaximizeBtn.Content = WindowState == WindowState.Maximized ? "\uE923" : "\uE922";
+            MaximizeBtn?.Content = WindowState == WindowState.Maximized ? "\uE923" : "\uE922";
         }
 
         // ---- window messages ----

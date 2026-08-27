@@ -57,6 +57,19 @@ html[data-theme="light"] .kbd-group h4 { text-shadow: none; }
 .kbd-row .k { font-family: Consolas, monospace; font-size: 12.5px; color: var(--text); white-space: nowrap; }
 .kbd-row .d { font-size: 13.5px; color: var(--muted); line-height: 1.5; }
 @media (max-width: 900px) { .content-inner { padding: 22px 16px 42px; } .kbd-cols { grid-template-columns: 1fr; gap: 0; } }
+/* Collapsible outline. Subsections are hidden until their section is the one being read or is
+   opened by hand; the chevron sits on the row rather than in the link, so clicking the title
+   still navigates. */
+.ol-head { display: flex; align-items: stretch; }
+.ol-head > a { flex: 1 1 auto; min-width: 0; }
+.ol-chev { flex: 0 0 auto; width: 26px; padding: 0; margin: 0; border: 0; background: none;
+  color: var(--text2); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.ol-chev:hover { color: var(--accent); }
+.ol-chev svg { transition: transform .15s ease; }
+.ol-group.open .ol-chev svg { transform: rotate(90deg); }
+.ol-subs { display: none; }
+.ol-group.open .ol-subs { display: block; }
+@media (max-width: 900px) { .ol-subs, .ol-chev { display: none; } .ol-head { display: block; } }
 </style>
 </head>
 <body>
@@ -66,11 +79,11 @@ html[data-theme="light"] .kbd-group h4 { text-shadow: none; }
 <img class="tb-icon" src="brand/kd-logo.png" alt="Killendar" width="36" height="36">
 <img class="wm-logo tb-wm" src="brand/killendar-logo-dark-red.svg" alt="The Killendar">
 </a>
-<a class="tb-dl" href="https://github.com/SteveTheKiller/Killendar/releases/latest/download/Killendar.exe"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h3l-4 5-4-5h3V4zM5 18h14v2H5z"/></svg><span>Download</span></a>
+<a class="tb-dl" href="https://github.com/SteveTheKiller/Killendar/releases/latest/download/Killendar.exe"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h3l-4 5-4-5h3V4zM5 18h14v2H5z"/></svg><span data-i18n="dl">Download</span></a>
 <span class="tb-spacer"></span>
 <nav class="tb-nav">
-<a href="technical.html" class="on">Technical</a>
-<a href="about.html">About</a>
+<a href="technical.html" class="on" data-i18n="navTech">Technical</a>
+<a href="about.html" data-i18n="navAbout">About</a>
 </nav>
 <div class="tgrp" role="group" aria-label="Theme">
 <button class="swatch sw-dark"     data-theme="dark"     title="Dark"></button>
@@ -98,6 +111,23 @@ html[data-theme="light"] .kbd-group h4 { text-shadow: none; }
 <button class="acc" data-accent="Purple" title="Purple"></button>
 </div>
 </div>
+<div class="lang-switch" role="group" aria-label="Language">
+<button class="lang-toggle" id="langToggle" aria-haspopup="true" aria-expanded="false" title="Language" aria-label="Language">&#127760;</button>
+<div class="lang-menu" id="langMenu" hidden>
+<button class="lang-item" data-lang="en">English</button>
+<button class="lang-item" data-lang="bn">&#2476;&#2494;&#2434;&#2482;&#2494;</button>
+<button class="lang-item" data-lang="cs">Cestina</button>
+<button class="lang-item" data-lang="de">Deutsch</button>
+<button class="lang-item" data-lang="es">Espanol</button>
+<button class="lang-item" data-lang="fr">Francais</button>
+<button class="lang-item" data-lang="ja">&#26085;&#26412;&#35486;</button>
+<button class="lang-item" data-lang="pl">Polski</button>
+<button class="lang-item" data-lang="hu">Magyar</button>
+<button class="lang-item" data-lang="tr">Turkce</button>
+<button class="lang-item" data-lang="zh-CN">&#20013;&#25991; (&#31616;&#20307;)</button>
+<button class="lang-item" data-lang="zh-TW">&#20013;&#25991; (&#32321;&#39636;)</button>
+</div>
+</div>
 </div>
 
 <div class="shell">
@@ -105,92 +135,92 @@ html[data-theme="light"] .kbd-group h4 { text-shadow: none; }
 <div class="content-scroll">
 <div class="content-inner">
 
-<span class="page-title">Technical</span>
-<p class="page-sub">What the file is, where it lives, and what the encryption actually covers.</p>
+<span class="page-title" data-i18n="tk_1">Technical</span>
+<p class="page-sub" data-i18n="tk_2">What the file is, where it lives, and what the encryption actually covers.</p>
 
 <section class="tech-sec" id="file">
-<h2>The file</h2>
-<p>One <b>.kcal</b> file is one Killendar. It is an ordinary SQLite database, opened and written
+<h2 data-i18n="tk_3">The file</h2>
+<p data-i18n="tk_4">One <b>.kcal</b> file is one Killendar. It is an ordinary SQLite database, opened and written
 in place, so you can read it with any SQLite tool without going through the app. There is no
 proprietary container and no index to rebuild.</p>
 <table class="spec-table">
-<tr><th>file</th><th>what it is for</th></tr>
-<tr><td>.kcal</td><td>A Killendar. The live database, written in place.</td></tr>
-<tr><td>.ics</td><td>Interchange only. Import and export.</td></tr>
+<tr><th data-i18n="tk_5">file</th><th data-i18n="tk_6">what it is for</th></tr>
+<tr><td>.kcal</td><td data-i18n="tk_7">A Killendar. The live database, written in place.</td></tr>
+<tr><td>.ics</td><td data-i18n="tk_8">Interchange only. Import and export.</td></tr>
 </table>
-<p>Killendars default to <b>%APPDATA%\Killendar</b>. Manage Killendars can switch the catalog to
+<p data-i18n="tk_9">Killendars default to <b>%APPDATA%\Killendar</b>. Manage Killendars can switch the catalog to
 any writable local folder, or place it beside <b>Killendar.exe</b> for a self-contained portable
 copy. A machine-wide install still defaults to a separate profile folder for each Windows account.</p>
 
-<h3 id="file-inside">What is inside it</h3>
+<h3 id="file-inside" data-i18n="tk_10">What is inside it</h3>
 <ul class="blurb-list">
-<li><b>events</b> - one row per appointment.</li>
-<li><b>categories</b> - the color definitions. They live in the Killendar rather than in
+<li data-i18n="tk_11"><b>events</b> - one row per appointment.</li>
+<li data-i18n="tk_12"><b>categories</b> - the color definitions. They live in the Killendar rather than in
 settings, so they travel with the file when you move or share it.</li>
-<li><b>meta</b> - schema version and the app version that created the file, for forensics on a
+<li data-i18n="tk_13"><b>meta</b> - schema version and the app version that created the file, for forensics on a
 file that turns up years later.</li>
 </ul>
 </section>
 
 <section class="tech-sec" id="time">
-<h2>Time</h2>
-<p>Timed appointments are stored in UTC and converted at the edges, so a calendar carried to
+<h2 data-i18n="tk_14">Time</h2>
+<p data-i18n="tk_15">Timed appointments are stored in UTC and converted at the edges, so a calendar carried to
 another timezone still says the right thing.</p>
-<p>All-day entries are the exception, and deliberately so: they are floating calendar dates,
+<p data-i18n="tk_16">All-day entries are the exception, and deliberately so: they are floating calendar dates,
 stored unconverted with no <b>Z</b>. Converting them to UTC would slide an all-day appointment
 to the previous day for everyone east of UTC.</p>
 <table class="spec-table">
-<tr><th>what you entered</th><th>what is on disk</th></tr>
-<tr><td>14:00 local, in PDT</td><td>2026-08-03T21:00:00.0000000Z</td></tr>
-<tr><td>All-day, Sep 7</td><td>2026-09-07T00:00:00.0000000 - no Z, unconverted</td></tr>
+<tr><th data-i18n="tk_17">what you entered</th><th data-i18n="tk_18">what is on disk</th></tr>
+<tr><td data-i18n="tk_19">14:00 local, in PDT</td><td>2026-08-03T21:00:00.0000000Z</td></tr>
+<tr><td data-i18n="tk_20">All-day, Sep 7</td><td data-i18n="tk_21">2026-09-07T00:00:00.0000000 - no Z, unconverted</td></tr>
 </table>
 </section>
 
 <section class="tech-sec" id="encryption">
-<h2>Encryption</h2>
-<p>Encryption is opt-in. With no password the file is plain SQLite. Set one from the lock button
+<h2 data-i18n="tk_22">Encryption</h2>
+<p data-i18n="tk_23">Encryption is opt-in. With no password the file is plain SQLite. Set one from the lock button
 in the title bar and the whole file is encrypted at rest with SQLCipher.</p>
 <table class="spec-table">
-<tr><th>property</th><th>value</th></tr>
-<tr><td>Cipher</td><td>AES-256 in CBC mode</td></tr>
-<tr><td>Integrity</td><td>Per-page HMAC-SHA512</td></tr>
-<tr><td>Key derivation</td><td>SQLCipher's own PBKDF2, not a hand-rolled one</td></tr>
-<tr><td>Unit of locking</td><td>One password per Killendar - the file</td></tr>
+<tr><th data-i18n="tk_24">property</th><th data-i18n="tk_25">value</th></tr>
+<tr><td data-i18n="tk_26">Cipher</td><td data-i18n="tk_27">AES-256 in CBC mode</td></tr>
+<tr><td data-i18n="tk_28">Integrity</td><td data-i18n="tk_29">Per-page HMAC-SHA512</td></tr>
+<tr><td data-i18n="tk_30">Key derivation</td><td data-i18n="tk_31">SQLCipher's own PBKDF2, not a hand-rolled one</td></tr>
+<tr><td data-i18n="tk_32">Unit of locking</td><td data-i18n="tk_33">One password per Killendar - the file</td></tr>
 </table>
-<p>The same button changes the password, or removes it and writes the file back out as plain
+<p data-i18n="tk_34">The same button changes the password, or removes it and writes the file back out as plain
 SQLite. An encrypted Killendar asks for its password on launch; a wrong one just asks again.</p>
 
-<h3 id="encryption-recovery">There is no password recovery</h3>
-<p>The app says so before you commit to one. If a password is lost the locked Killendar is
+<h3 id="encryption-recovery" data-i18n="tk_35">There is no password recovery</h3>
+<p data-i18n="tk_36">The app says so before you commit to one. If a password is lost the locked Killendar is
 renamed aside and kept on disk rather than destroyed, and a new empty one opens in its place -
 so a forgotten password costs you access, not the file.</p>
 
-<h3 id="encryption-limits">What the encryption does not protect</h3>
-<p>Worth stating plainly rather than implying otherwise:</p>
+<h3 id="encryption-limits" data-i18n="tk_37">What the encryption does not protect</h3>
+<p data-i18n="tk_38">Worth stating plainly rather than implying otherwise:</p>
 <ul class="blurb-list">
-<li>Nothing is protected while the app is open and unlocked.</li>
-<li>It is no defense against a keylogger, a memory dump, or someone who has your password.</li>
-<li><b>settings.json</b> stays plaintext. It holds the theme, locale, window position and which
+<li data-i18n="tk_39">Nothing is protected while the app is open and unlocked.</li>
+<li data-i18n="tk_40">It is no defense against a keylogger, a memory dump, or someone who has your password.</li>
+<li data-i18n="tk_41"><b>settings.json</b> stays plaintext. It holds the theme, locale, window position and which
 Killendar is active.</li>
-<li>An <b>.ics</b> export is plain text by definition. Exporting from an encrypted Killendar
+<li data-i18n="tk_42">An <b>.ics</b> export is plain text by definition. Exporting from an encrypted Killendar
 writes an unencrypted copy, and the app warns you at the moment of export rather than after.</li>
 </ul>
 </section>
 
 <section class="tech-sec" id="icalendar">
-<h2>iCalendar</h2>
-<p>Import and export are written against RFC 5545 directly, with no external dependencies.
+<h2 data-i18n="tk_43">iCalendar</h2>
+<p data-i18n="tk_44">Import and export are written against RFC 5545 directly, with no external dependencies.
 Import skips appointments already in the calendar and reports how many were added and how many
 were skipped.</p>
-<p>Categories travel through both, using the standard <b>CATEGORIES</b> property, so they
+<p data-i18n="tk_45">Categories travel through both, using the standard <b>CATEGORIES</b> property, so they
 survive a trip through another calendar app. A category you import but have never defined shows
 in neutral gray rather than being dropped or silently created - deleting a category is meant to
 stick, and an import should not quietly undo that.</p>
 </section>
 
 <section class="tech-sec" id="keyboard">
-<h2>Keyboard</h2>
-<p>Almost everything is a <b>single key</b>, no modifier. That is only safe because of one rule:
+<h2 data-i18n="tk_46">Keyboard</h2>
+<p data-i18n="tk_47">Almost everything is a <b>single key</b>, no modifier. That is only safe because of one rule:
 a bare-letter shortcut never fires while you are typing. The moment focus is in a text field
 every single-key binding stands down, so a <b>w</b> in a title is a <b>w</b> and not a jump to
 week view. The modified combinations are checked first and work regardless, because they cannot
@@ -200,7 +230,7 @@ collide with typing.</p>
 <div class="kbmap-layers">
 <button data-kblayer="base" class="on">BASE</button>
 <button data-kblayer="ctrl">CTRL</button>
-<span class="kbmap-hint">Hold Ctrl to preview that layer - hover a lit key for its action</span>
+<span class="kbmap-hint" data-i18n="tk_48">Hold Ctrl to preview that layer - hover a lit key for its action</span>
 </div>
 <div class="kbmap-scroll"><div class="kbmap-board" id="kbmapBoard"></div></div>
 <div class="kbmap-detail" id="kbmapDetail">&nbsp;</div>
@@ -307,66 +337,66 @@ window.addEventListener('resize', fit);
 
 <div class="kbd-cols">
 <div class="kbd-col">
-<div class="kbd-group"><h4>VIEWS</h4>
-<div class="kbd-row"><span class="k">M or 1</span><span class="d">Month view</span></div>
-<div class="kbd-row"><span class="k">W or 2</span><span class="d">Week view</span></div>
-<div class="kbd-row"><span class="k">D or 3</span><span class="d">Day view</span></div>
-<div class="kbd-row"><span class="k">A or 4</span><span class="d">Agenda view</span></div>
+<div class="kbd-group"><h4 data-i18n="tk_49">VIEWS</h4>
+<div class="kbd-row"><span class="k">M or 1</span><span class="d" data-i18n="tk_50">Month view</span></div>
+<div class="kbd-row"><span class="k">W or 2</span><span class="d" data-i18n="tk_51">Week view</span></div>
+<div class="kbd-row"><span class="k">D or 3</span><span class="d" data-i18n="tk_52">Day view</span></div>
+<div class="kbd-row"><span class="k">A or 4</span><span class="d" data-i18n="tk_53">Agenda view</span></div>
 </div>
-<div class="kbd-group"><h4>NAVIGATION</h4>
-<div class="kbd-row"><span class="k">&#8592; / &#8594;</span><span class="d">Previous / next month, week or day - whichever view is open</span></div>
-<div class="kbd-row"><span class="k">, / .</span><span class="d">Same as the arrows, without leaving the home row</span></div>
-<div class="kbd-row"><span class="k">T</span><span class="d">Jump to today</span></div>
+<div class="kbd-group"><h4 data-i18n="tk_54">NAVIGATION</h4>
+<div class="kbd-row"><span class="k">&#8592; / &#8594;</span><span class="d" data-i18n="tk_55">Previous / next month, week or day - whichever view is open</span></div>
+<div class="kbd-row"><span class="k">, / .</span><span class="d" data-i18n="tk_56">Same as the arrows, without leaving the home row</span></div>
+<div class="kbd-row"><span class="k">T</span><span class="d" data-i18n="tk_57">Jump to today</span></div>
 </div>
 </div>
 <div class="kbd-col">
-<div class="kbd-group"><h4>APPOINTMENTS</h4>
-<div class="kbd-row"><span class="k">N / Ctrl+N</span><span class="d">New appointment on the day you are looking at</span></div>
-<div class="kbd-row"><span class="k">B</span><span class="d">Open the appointment panel composing a new one, or close it</span></div>
-<div class="kbd-row"><span class="k">Ctrl+Enter</span><span class="d">Save the appointment being edited</span></div>
-<div class="kbd-row"><span class="k">Ctrl+Delete</span><span class="d">Delete the appointment being edited, with confirmation</span></div>
-<div class="kbd-row"><span class="k">Alt+A</span><span class="d">Toggle all day while editing</span></div>
-<div class="kbd-row"><span class="k">Alt+R</span><span class="d">Open repeat options while editing</span></div>
-<div class="kbd-row"><span class="k">Ctrl+Shift+M</span><span class="d">Shrink or expand the focused appointment in month view</span></div>
+<div class="kbd-group"><h4 data-i18n="tk_58">APPOINTMENTS</h4>
+<div class="kbd-row"><span class="k">N / Ctrl+N</span><span class="d" data-i18n="tk_59">New appointment on the day you are looking at</span></div>
+<div class="kbd-row"><span class="k">B</span><span class="d" data-i18n="tk_60">Open the appointment panel composing a new one, or close it</span></div>
+<div class="kbd-row"><span class="k">Ctrl+Enter</span><span class="d" data-i18n="tk_61">Save the appointment being edited</span></div>
+<div class="kbd-row"><span class="k">Ctrl+Delete</span><span class="d" data-i18n="tk_62">Delete the appointment being edited, with confirmation</span></div>
+<div class="kbd-row"><span class="k">Alt+A</span><span class="d" data-i18n="tk_63">Toggle all day while editing</span></div>
+<div class="kbd-row"><span class="k">Alt+R</span><span class="d" data-i18n="tk_64">Open repeat options while editing</span></div>
+<div class="kbd-row"><span class="k">Ctrl+Shift+M</span><span class="d" data-i18n="tk_65">Shrink or expand the focused appointment in month view</span></div>
 </div>
-<div class="kbd-group"><h4>FILE</h4>
-<div class="kbd-row"><span class="k">Ctrl+I</span><span class="d">Import an .ics file</span></div>
-<div class="kbd-row"><span class="k">Ctrl+E</span><span class="d">Export to .ics</span></div>
-<div class="kbd-row"><span class="k">F5</span><span class="d">Reload the open .kcal file from disk</span></div>
+<div class="kbd-group"><h4 data-i18n="tk_66">FILE</h4>
+<div class="kbd-row"><span class="k">Ctrl+I</span><span class="d" data-i18n="tk_67">Import an .ics file</span></div>
+<div class="kbd-row"><span class="k">Ctrl+E</span><span class="d" data-i18n="tk_68">Export to .ics</span></div>
+<div class="kbd-row"><span class="k">F5</span><span class="d" data-i18n="tk_69">Reload the open .kcal file from disk</span></div>
 </div>
-<div class="kbd-group"><h4>HELP</h4>
-<div class="kbd-row"><span class="k">F1</span><span class="d">The shortcuts overlay, with this same map and list in the app</span></div>
-<div class="kbd-row"><span class="k">F12</span><span class="d">About card - version, signature, exe hash, update check</span></div>
-<div class="kbd-row"><span class="k">Esc</span><span class="d">Close the shortcut overlay, About card or appointment panel. Works even while typing.</span></div>
+<div class="kbd-group"><h4 data-i18n="tk_70">HELP</h4>
+<div class="kbd-row"><span class="k">F1</span><span class="d" data-i18n="tk_71">The shortcuts overlay, with this same map and list in the app</span></div>
+<div class="kbd-row"><span class="k">F12</span><span class="d" data-i18n="tk_72">About card - version, signature, exe hash, update check</span></div>
+<div class="kbd-row"><span class="k">Esc</span><span class="d" data-i18n="tk_73">Close the shortcut overlay, About card or appointment panel. Works even while typing.</span></div>
 </div>
 </div>
 </div>
-<p><b>Mouse:</b> Ctrl+wheel over Month view changes the visible range from one to six weeks,
+<p data-i18n="tk_74"><b>Mouse:</b> Ctrl+wheel over Month view changes the visible range from one to six weeks,
 giving busy days more vertical room. Ctrl+wheel over Week or Day changes time-grid density.</p>
 </section>
 
 <section class="tech-sec" id="running">
-<h2>Running it</h2>
+<h2 data-i18n="tk_75">Running it</h2>
 <table class="spec-table">
-<tr><th>requirement</th><th>detail</th></tr>
-<tr><td>Platform</td><td>Windows 10 / 11, x64</td></tr>
-<tr><td>Runtime</td><td>.NET Framework 4.8, already present on a current Windows</td></tr>
-<tr><td>Install</td><td>Portable, per-user, or all-users. A silent path exists for winget,
+<tr><th data-i18n="tk_76">requirement</th><th data-i18n="tk_77">detail</th></tr>
+<tr><td data-i18n="tk_78">Platform</td><td data-i18n="tk_79">Windows 10 / 11, x64</td></tr>
+<tr><td data-i18n="tk_80">Runtime</td><td data-i18n="tk_81">.NET Framework 4.8, already present on a current Windows</td></tr>
+<tr><td data-i18n="tk_82">Install</td><td data-i18n="tk_83">Portable, per-user, or all-users. A silent path exists for winget,
 Chocolatey and RMM deployment.</td></tr>
-<tr><td>Uninstall</td><td>Leaves your appointments in place and removes the file association
+<tr><td data-i18n="tk_84">Uninstall</td><td data-i18n="tk_85">Leaves your appointments in place and removes the file association
 it added.</td></tr>
 </table>
-<p>Only one instance runs at a time. A second launch hands its file to the window already open
+<p data-i18n="tk_86">Only one instance runs at a time. A second launch hands its file to the window already open
 and exits, rather than leaving two copies of the app writing to one database - which is the
 quickest way to corrupt SQLite.</p>
-<p>Double-clicking a <b>.kcal</b> copies it into your data folder and opens the copy, leaving
+<p data-i18n="tk_87">Double-clicking a <b>.kcal</b> copies it into your data folder and opens the copy, leaving
 the original where it is. A Killendar is written to constantly, and SQLite over a network share
 is a well known way to lose a database.</p>
 </section>
 
 <section class="tech-sec" id="signing">
-<h2>Signing</h2>
-<p>Releases are Authenticode signed. The About card shows the publisher, the certificate
+<h2 data-i18n="tk_88">Signing</h2>
+<p data-i18n="tk_89">Releases are Authenticode signed. The About card shows the publisher, the certificate
 thumbprint and the SHA-256 of the running exe, and it validates the signature with
 <b>WinVerifyTrust</b> rather than merely reading the embedded certificate - so a tampered build
 cannot display a signer it does not own. The chain check is cache-only, so opening About never
@@ -374,36 +404,36 @@ stalls waiting on the network.</p>
 </section>
 
 <section class="tech-sec" id="glossary">
-<h2>Glossary</h2>
+<h2 data-i18n="tk_90">Glossary</h2>
 <table class="spec-table">
-<tr><th>term</th><th>what it means here</th></tr>
-<tr><td>Killendar</td><td>Both the app and one calendar file. "Open another Killendar" means
+<tr><th data-i18n="tk_91">term</th><th data-i18n="tk_92">what it means here</th></tr>
+<tr><td>Killendar</td><td data-i18n="tk_93">Both the app and one calendar file. "Open another Killendar" means
 switch to a different <b>.kcal</b>.</td></tr>
-<tr><td>.kcal</td><td>Killendar's file. A SQLite database holding your appointments and your
+<tr><td>.kcal</td><td data-i18n="tk_94">Killendar's file. A SQLite database holding your appointments and your
 category definitions, encrypted or not.</td></tr>
-<tr><td>.ics</td><td>iCalendar, the interchange format every other calendar reads. Import and
+<tr><td>.ics</td><td data-i18n="tk_95">iCalendar, the interchange format every other calendar reads. Import and
 export only - Killendar never runs from one.</td></tr>
-<tr><td>Category</td><td>A named color you define. An appointment can carry several; the first
+<tr><td data-i18n="tk_96">Category</td><td data-i18n="tk_97">A named color you define. An appointment can carry several; the first
 one paints it. Definitions live in the file, so they travel with it.</td></tr>
-<tr><td>Orphan category</td><td>A category on an appointment that this Killendar has no
+<tr><td data-i18n="tk_98">Orphan category</td><td data-i18n="tk_99">A category on an appointment that this Killendar has no
 definition for, usually from an import. It shows in neutral gray rather than disappearing.</td></tr>
-<tr><td>All-day</td><td>An appointment with no time, held as a floating date. It never shifts
+<tr><td data-i18n="tk_100">All-day</td><td data-i18n="tk_101">An appointment with no time, held as a floating date. It never shifts
 with a timezone.</td></tr>
-<tr><td>Floating date</td><td>A date with no timezone attached. September 7th is September 7th
+<tr><td data-i18n="tk_102">Floating date</td><td data-i18n="tk_103">A date with no timezone attached. September 7th is September 7th
 wherever you open it.</td></tr>
-<tr><td>SQLCipher</td><td>The extension to SQLite that encrypts the whole database file at rest,
+<tr><td>SQLCipher</td><td data-i18n="tk_104">The extension to SQLite that encrypts the whole database file at rest,
 page by page.</td></tr>
-<tr><td>At rest</td><td>Encrypted on disk. It says nothing about the app while it is open and
+<tr><td data-i18n="tk_105">At rest</td><td data-i18n="tk_106">Encrypted on disk. It says nothing about the app while it is open and
 unlocked, which is why that limit is spelled out above.</td></tr>
-<tr><td>Portable</td><td>Running the exe from wherever it sits, with no install. The footer says
+<tr><td data-i18n="tk_107">Portable</td><td data-i18n="tk_108">Running the exe from wherever it sits, with no install. The footer says
 PORTABLE and offers to install it.</td></tr>
-<tr><td>Per-user install</td><td>Into your own profile. No administrator needed, and only your
+<tr><td data-i18n="tk_109">Per-user install</td><td data-i18n="tk_110">Into your own profile. No administrator needed, and only your
 account gets it.</td></tr>
-<tr><td>All-users install</td><td>Into Program Files. Needs an administrator, and every account
+<tr><td data-i18n="tk_111">All-users install</td><td data-i18n="tk_112">Into Program Files. Needs an administrator, and every account
 on the machine gets the app - though each still gets its own separate Killendar.</td></tr>
-<tr><td>Authenticode</td><td>Microsoft's code signing. It proves the exe came from the signer
+<tr><td>Authenticode</td><td data-i18n="tk_113">Microsoft's code signing. It proves the exe came from the signer
 and has not been altered since.</td></tr>
-<tr><td>Accent</td><td>The highlight color of a theme. Dark, Light, Black and 98SE each offer
+<tr><td data-i18n="tk_114">Accent</td><td data-i18n="tk_115">The highlight color of a theme. Dark, Light, Black and 98SE each offer
 six, so the thirteen themes come to 33 looks in all; the other nine carry their own.</td></tr>
 </table>
 </section>
@@ -413,30 +443,86 @@ six, so the thirteen themes come to 33 looks in all; the other nine carry their 
 </div>
 
 <aside class="sidebar">
-<div class="sb-tabs"><span class="on">Technical</span></div>
+<div class="sb-tabs"><span class="on" data-i18n="navTech">Technical</span></div>
 <nav class="outline">
-<a href="#file" class="on">The file</a>
-<a href="#file-inside" class="sub">What is inside it</a>
-<a href="#time">Time</a>
-<a href="#encryption">Encryption</a>
-<a href="#encryption-recovery" class="sub">No password recovery</a>
-<a href="#encryption-limits" class="sub">What it does not protect</a>
-<a href="#icalendar">iCalendar</a>
-<a href="#keyboard">Keyboard</a>
-<a href="#running">Running it</a>
-<a href="#signing">Signing</a>
-<a href="#glossary">Glossary</a>
+<a href="#file" class="on" data-i18n="tk_3">The file</a>
+<a href="#file-inside" class="sub" data-i18n="tk_10">What is inside it</a>
+<a href="#time" data-i18n="tk_14">Time</a>
+<a href="#encryption" data-i18n="tk_22">Encryption</a>
+<a href="#encryption-recovery" class="sub" data-i18n="tk_116">No password recovery</a>
+<a href="#encryption-limits" class="sub" data-i18n="tk_117">What it does not protect</a>
+<a href="#icalendar" data-i18n="tk_43">iCalendar</a>
+<a href="#keyboard" data-i18n="tk_46">Keyboard</a>
+<a href="#running" data-i18n="tk_75">Running it</a>
+<a href="#signing" data-i18n="tk_88">Signing</a>
+<a href="#glossary" data-i18n="tk_90">Glossary</a>
 </nav>
 </aside>
 </div>
 
 <footer class="statusbar">
-<span class="left"><a href="https://github.com/SteveTheKiller/Killendar" target="_blank" rel="noopener">Source on GitHub</a> &middot; GPLv3 &middot; Part of <a href="https://killertools.net" target="_blank" rel="noopener">killertools.net</a></span>
+<span class="left" data-i18n="foot"><a href="https://github.com/SteveTheKiller/Killendar" target="_blank" rel="noopener">Source on GitHub</a> &middot; GPLv3 &middot; Part of <a href="https://killertools.net" target="_blank" rel="noopener">killertools.net</a></span>
 <span class="right"><span id="verEgg" title="click me">v1.1.0</span> &middot; &copy; 2026 <b><a href="https://thekiller.net" target="_blank" rel="noopener">Steve the Killer</a></b></span>
 </footer>
 
 <div class="egg-toast" id="eggToast"></div>
 
-<script src="kd.js?v=5"></script>
+<script>
+// COLLAPSIBLE OUTLINE. The page has eight sections and three subsections, and listing
+// all eleven flat made the sidebar a wall you had to read to navigate.
+//
+// The grouping is built HERE, at runtime, rather than by nesting the markup: the eleven
+// link labels must stay byte-identical to the headings they name, so the safest structure is
+// one that never edits them. Wrapping moves the existing nodes, so the scroll-spy in kd.js
+// still finds all eleven through .outline a, in document order. This block must stay ABOVE
+// the kd.js include, which runs its spy the moment it loads.
+(function(){
+  var nav=document.querySelector('.outline');
+  if(!nav) return;
+  var kids=[].slice.call(nav.children), groups=[], cur=null;
+  kids.forEach(function(a){
+    if(a.tagName!=='A') return;
+    if(a.classList.contains('sub')){
+      if(cur){ cur.subs.appendChild(a); }
+      return;
+    }
+    var g=document.createElement('div'); g.className='ol-group';
+    var head=document.createElement('div'); head.className='ol-head';
+    var subs=document.createElement('div'); subs.className='ol-subs';
+    nav.insertBefore(g,a); head.appendChild(a); g.appendChild(head); g.appendChild(subs);
+    cur={el:g,subs:subs,head:head};
+    groups.push(cur);
+  });
+  // A section with no subsections gets no chevron - an empty disclosure that opens onto
+  // nothing is worse than none at all.
+  groups.forEach(function(g){
+    if(!g.subs.children.length){ g.el.classList.add('ol-leaf'); return; }
+    var t=document.createElement('button');
+    t.className='ol-chev'; t.type='button'; t.setAttribute('aria-expanded','false');
+    t.setAttribute('aria-label','Expand section');
+    t.innerHTML='<svg viewBox="0 0 10 10" width="10" height="10" aria-hidden="true"><path d="M3 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
+    t.addEventListener('click',function(e){
+      e.preventDefault(); e.stopPropagation();
+      var open=g.el.classList.toggle('open');
+      t.setAttribute('aria-expanded',open?'true':'false');
+      g.el.dataset.manual='1';   // a hand-opened section is not auto-closed by scrolling
+    });
+    g.head.appendChild(t);
+  });
+  // Reading a section opens it. Sections you opened by hand stay open; the rest close, so the
+  // sidebar keeps showing where you are rather than growing as you scroll.
+  window.knOutlineReveal=function(a){
+    var g=a&&a.closest?a.closest('.ol-group'):null;
+    groups.forEach(function(x){
+      var open=(x.el===g)||x.el.dataset.manual==='1';
+      x.el.classList.toggle('open',open);
+      var c=x.head.querySelector('.ol-chev');
+      if(c) c.setAttribute('aria-expanded',open?'true':'false');
+    });
+  };
+})();
+</script>
+<script src="kd-i18n.js?v=1"></script>
+<script src="kd.js?v=7"></script>
 </body>
 </html>

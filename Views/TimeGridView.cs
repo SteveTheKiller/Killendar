@@ -134,10 +134,8 @@ namespace Killendar.Views
             // otherwise the accent edge. Selecting today itself keeps the fill - it is the
             // selected day.
             bool todayFilled = _selDay == null || _selDay == DateTime.Today;
-            if (_todayTint != null)
-                _todayTint.Visibility = todayFilled ? Visibility.Visible : Visibility.Collapsed;
-            if (_todayEdge != null)
-                _todayEdge.Visibility = Visibility.Collapsed;
+            _todayTint?.Visibility = todayFilled ? Visibility.Visible : Visibility.Collapsed;
+            _todayEdge?.Visibility = Visibility.Collapsed;
 
             if (_todayHead != null)
             {

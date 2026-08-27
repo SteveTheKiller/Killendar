@@ -55,7 +55,7 @@ namespace Killendar.Views
             _rollingStart = _visibleWeeks > 0 ? StartOfWeek(_anchor) : StartOfGrid(_anchor);
 
             foreach (string value in (Settings.Get(ShrunkAppointmentsSetting) ?? "")
-                         .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                         .Split([','], StringSplitOptions.RemoveEmptyEntries))
                 if (Guid.TryParse(value, out var id)) _shrunkAppointments.Add(id);
 
             PreviewMouseWheel += (_, e) =>

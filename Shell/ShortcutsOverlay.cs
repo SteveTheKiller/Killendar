@@ -367,13 +367,13 @@ namespace Killendar.Shell
                 key.RenderTransform = lift;
                 key.MouseEnter += (_, _2) =>
                 {
-                    if (_kbDetail != null) _kbDetail.Text = b.Keys + "   " + Loc(b.LabelKey);
+                    _kbDetail?.Text = b.Keys + "   " + Loc(b.LabelKey);
                     lift.BeginAnimation(TranslateTransform.YProperty,
                         new DoubleAnimation(-3, TimeSpan.FromMilliseconds(90)));
                 };
                 key.MouseLeave += (_, _2) =>
                 {
-                    if (_kbDetail != null) _kbDetail.Text = " ";
+                    _kbDetail?.Text = " ";
                     lift.BeginAnimation(TranslateTransform.YProperty,
                         new DoubleAnimation(0, TimeSpan.FromMilliseconds(130)));
                 };

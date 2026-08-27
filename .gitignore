@@ -1,6 +1,8 @@
 # Build output
 bin/
 obj/
+artifacts/
+TestResults/
 
 # Visual Studio
 .vs/

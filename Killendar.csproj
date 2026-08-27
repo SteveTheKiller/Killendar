@@ -20,7 +20,7 @@
     <!-- Bump with the version, same pass as the CHANGELOG section. Services/AppInfo.cs reads this
          back so a user can see how old their build is. release.ps1 preflight fails the release
          if this and the CHANGELOG section date disagree. -->
-    <ReleaseDate>2026-08-17</ReleaseDate>
+    <ReleaseDate>2026-08-27</ReleaseDate>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
 
@@ -44,6 +44,22 @@
     <Compile Remove="Killendar.Tests\**\*.cs" />
     <EmbeddedResource Remove="Killendar.Tests\**\*" />
     <None Remove="Killendar.Tests\**\*" />
+  </ItemGroup>
+
+  <!-- artifacts\ is test and coverage OUTPUT, not source. Keep the whole tree out of this
+       project's SDK default globs, the same way KillerPDF excludes KillerPDF.Tests\**: left in,
+       the assemblies sitting there become items in this project and get considered during
+       reference resolution, which is where the MSB3277 System.ValueTuple conflict came from -
+       the 4.0.3.0 copy in artifacts\ against the 4.0.5.0 that System.Text.Json 10 unifies to.
+       Nothing here is referenced on purpose, so removing the folder from the globs costs
+       nothing and stops a stale build output from steering the reference graph. -->
+  <ItemGroup>
+    <Compile Remove="artifacts\**" />
+    <EmbeddedResource Remove="artifacts\**" />
+    <None Remove="artifacts\**" />
+    <Content Remove="artifacts\**" />
+    <Resource Remove="artifacts\**" />
+    <Page Remove="artifacts\**" />
   </ItemGroup>
 
   <ItemGroup>

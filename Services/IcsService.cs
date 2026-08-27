@@ -5,8 +5,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Killendar.Models;
 
-#pragma warning disable IDE0057 // range operator not polyfilled on net48
-
 namespace Killendar.Services
 {
     /// <summary>
