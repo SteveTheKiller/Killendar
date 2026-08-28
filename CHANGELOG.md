@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.1.1] - Unreleased
 
 ### Added
+- Italian localization for the complete app interface and killendar.net, bringing both to thirteen languages.
 - Hungarian localization for the complete app interface and killendar.net, bringing both to twelve languages.
 - Optional address suggestions for the appointment location field, powered by Photon. The network lookup is off by default and can be enabled from the About card; typed locations stay on the machine unless the user opts in.
 

@@ -4,12 +4,12 @@ using System.Windows;
 
 namespace Killendar.Services
 {
-    // 10 UI languages. en-US is always the base layer so any locale that omits a key falls back to
+    // 13 UI languages. en-US is always the base layer so any locale that omits a key falls back to
     // English; the chosen locale's file layers on top.
     //
     // Append new members at the END: the value is persisted by NAME, not by ordinal, but keeping
     // the order stable also keeps the language menu's order stable.
-    public enum Locale { EnUS, Es, ZhTW, ZhCN, Bn, TrTR, De, Fr, Ja, Cs, PlPL, HuHU }
+    public enum Locale { EnUS, Es, ZhTW, ZhCN, Bn, TrTR, De, Fr, Ja, Cs, PlPL, HuHU, It }
 
     public static class LocaleManager
     {
@@ -78,6 +78,7 @@ namespace Killendar.Services
                 Locale.Cs   => new Uri("pack://application:,,,/Strings/cs-CZ.xaml"),
                 Locale.PlPL => new Uri("pack://application:,,,/Strings/pl-PL.xaml"),
                 Locale.HuHU => new Uri("pack://application:,,,/Strings/hu-HU.xaml"),
+                Locale.It   => new Uri("pack://application:,,,/Strings/it-IT.xaml"),
                 _           => null,   // English: base only
             };
 
@@ -114,6 +115,7 @@ namespace Killendar.Services
             Locale.Cs   => "cs-CZ",
             Locale.PlPL => "pl-PL",
             Locale.HuHU => "hu-HU",
+            Locale.It   => "it-IT",
             _           => "en-US",
         });
     }
