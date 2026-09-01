@@ -23,6 +23,7 @@ namespace Killendar.Views
         private int _gridRows;
         private readonly System.Collections.Generic.Dictionary<DateTime, double> _dayScrollOffsets = [];
         private readonly System.Collections.Generic.HashSet<Guid> _shrunkAppointments = [];
+        private Guid? _focusedAppointmentKey;
         private const string ShrunkAppointmentsSetting = "MonthShrunkAppointments";
 
         public event Action<CalendarEvent>? EventSelected;
@@ -498,15 +499,7 @@ namespace Killendar.Views
                 Icon = CalendarChrome.MenuGlyph(shrunk ? 0xE70D : 0xE70E),
                 InputGestureText = "Ctrl+Shift+M",
             };
-            void ToggleSize()
-            {
-                if (shrunk) _shrunkAppointments.Remove(shrinkKey);
-                else _shrunkAppointments.Add(shrinkKey);
-                Settings.Set(ShrunkAppointmentsSetting,
-                    string.Join(",", _shrunkAppointments.OrderBy(x => x)));
-                Rebuild();
-            }
-            sizeItem.Click += (_, _) => ToggleSize();
+            sizeItem.Click += (_, _) => ToggleAppointmentSize(shrinkKey);
             menu.Items.Add(sizeItem);
             menu.PreviewKeyDown += (_, e) =>
             {
@@ -515,7 +508,7 @@ namespace Killendar.Views
                     (ModifierKeys.Control | ModifierKeys.Shift)) return;
                 e.Handled = true;
                 menu.IsOpen = false;
-                ToggleSize();
+                ToggleAppointmentSize(shrinkKey);
             };
             chip.ContextMenu = menu;
             chip.KeyDown += (_, e) =>
@@ -524,7 +517,7 @@ namespace Killendar.Views
                     (Keyboard.Modifiers & (ModifierKeys.Control | ModifierKeys.Shift)) !=
                     (ModifierKeys.Control | ModifierKeys.Shift)) return;
                 e.Handled = true;
-                ToggleSize();
+                ToggleAppointmentSize(shrinkKey);
             };
 
             if (detail == 0)
@@ -618,7 +611,26 @@ namespace Killendar.Views
                 ApplyRest(e.Cell, e.DayNum, d.Date, e.InMonth, e.IsToday, e.RestBrush);
         }
 
-        private void OnChipClick(CalendarEvent ev) => EventSelected?.Invoke(ev);
+        internal bool ToggleFocusedAppointmentSize()
+        {
+            if (_focusedAppointmentKey is not Guid key) return false;
+            ToggleAppointmentSize(key);
+            return true;
+        }
+
+        private void ToggleAppointmentSize(Guid key)
+        {
+            if (!_shrunkAppointments.Remove(key)) _shrunkAppointments.Add(key);
+            Settings.Set(ShrunkAppointmentsSetting,
+                string.Join(",", _shrunkAppointments.OrderBy(x => x)));
+            Rebuild();
+        }
+
+        private void OnChipClick(CalendarEvent ev)
+        {
+            _focusedAppointmentKey = ev.SeriesKey;
+            EventSelected?.Invoke(ev);
+        }
 
         /// <summary>
         /// Drag a chip to another day (2026-07-31). Same shape as TimeGridView.WireDrag:

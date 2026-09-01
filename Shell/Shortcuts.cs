@@ -20,6 +20,7 @@ namespace Killendar.Shell
         {
             bool ctrl = (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control;
             bool alt = (Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt;
+            bool shift = (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
             bool ctrlShortcut = ctrl && !alt;
 
             // Appointment-editor accelerators remain available while a text box owns focus.
@@ -49,6 +50,13 @@ namespace Killendar.Shell
             if (editingAppointment && alt && e.SystemKey == Key.R)
             {
                 RepeatFreqButton_Click(RepeatFreqButton, new RoutedEventArgs());
+                e.Handled = true;
+                return;
+            }
+
+            if (ctrlShortcut && shift && e.Key == Key.M &&
+                _calendar.ToggleFocusedMonthAppointment())
+            {
                 e.Handled = true;
                 return;
             }

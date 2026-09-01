@@ -145,6 +145,9 @@ namespace Killendar.Features
             RefreshPeriodLabel();
         }
 
+        internal bool ToggleFocusedMonthAppointment()
+            => _active == _month && _month.ToggleFocusedAppointmentSize();
+
         /// <summary>"+ New" starts on the SELECTED day when one is marked - clicking July 15 and
         /// pressing New must compose on July 15, and every day click moves the mark with it
         /// (2026-07-31). With nothing selected it starts on whatever the view is showing,
