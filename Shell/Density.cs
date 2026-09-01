@@ -105,8 +105,7 @@ namespace Killendar.Shell
 
         private void RefreshSidebarDensityTooltip()
         {
-            if (SidebarDensityBtn != null)
-                SidebarDensityBtn.ToolTip = Loc("Str_TT_Density") + "  (" + (_sidebarDensity + 1) + "/4)";
+            SidebarDensityBtn?.ToolTip = Loc("Str_TT_Density") + "  (" + (_sidebarDensity + 1) + "/4)";
         }
 
         private static int ClampDensity(int level)
