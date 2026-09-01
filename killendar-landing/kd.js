@@ -82,6 +82,12 @@
 
   function applyAccent(name) {
     var t = theme(), sw = $('accentSwitch');
+    ['dark', 'light', 'black'].forEach(function (neutralTheme) {
+      var preview = ACCENTS[neutralTheme][name] || ACCENTS[neutralTheme][DEFAULT_ACCENT];
+      document.querySelectorAll('.sw-' + neutralTheme).forEach(function (dot) {
+        dot.style.setProperty('--sw-accent', preview);
+      });
+    });
     if (!hasAccents(t)) {
       root.style.removeProperty('--accent');
       if (sw) sw.hidden = true;    // .accent-switch[hidden] keeps the layout slot, so nothing shifts
