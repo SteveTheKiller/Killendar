@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.1.1] - Unreleased
 
 ### Added
+- Multi-day appointments now appear as one continuous block across the Month view (#1).
 - Rolling Month view now has separate one-week and full-range navigation buttons (#11).
 - Calendar-grid and appointment-sidebar density can now be adjusted independently (#10).
 - The appointment sidebar remembers whether it was open across launches and F5 reloads (#12).

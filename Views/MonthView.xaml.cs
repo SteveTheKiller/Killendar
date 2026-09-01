@@ -25,6 +25,8 @@ namespace Killendar.Views
         private readonly System.Collections.Generic.HashSet<Guid> _shrunkAppointments = [];
         private Guid? _focusedAppointmentKey;
         private const string ShrunkAppointmentsSetting = "MonthShrunkAppointments";
+        private const double MultiDayLaneHeight = 18;
+        private const double MultiDayTop = 24;
 
         public event Action<CalendarEvent>? EventSelected;
         public event Action<DateTime>? DaySelected;
@@ -245,8 +247,13 @@ namespace Killendar.Views
                 CalGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
 
             var today = DateTime.Today;
+            var visibleEvents = _store.GetInRange(start, start.AddDays(rows * 7));
             for (int r = 0; r < rows; r++)
             {
+                var weekStart = start.AddDays(r * 7);
+                var multiDay = CalendarLayout.PlaceMultiDayRange(visibleEvents, weekStart, 7);
+                int multiDayLanes = multiDay.Count == 0 ? 0 : multiDay.Max(p => p.Row) + 1;
+
                 for (int c = 0; c < 7; c++)
                 {
                     var date = start.AddDays(r * 7 + c);
@@ -259,10 +266,30 @@ namespace Killendar.Views
                     bool bottomSeparator = inMonth && r < rows - 1 &&
                         start.AddDays((r + 1) * 7 + c).Month == _anchor.Month;
                     var cell = BuildDayCell(date, inMonth, date == today,
-                                            c, rightSeparator, bottomSeparator);
+                                            c, rightSeparator, bottomSeparator, multiDayLanes);
                     Grid.SetRow(cell, r);
                     Grid.SetColumn(cell, c);
                     CalGrid.Children.Add(cell);
+                }
+
+                foreach (var placement in multiDay)
+                {
+                    DateTime visibleEventStart = placement.Event.Start.Date < start
+                        ? start : placement.Event.Start.Date;
+                    bool showTitle = weekStart.AddDays(placement.StartColumn) == visibleEventStart;
+                    var chip = BuildMonthChip(placement.Event, spanning: true, showTitle);
+                    chip.Margin = new Thickness(
+                        placement.StartColumn == 0 ? 0 : 4,
+                        MultiDayTop + placement.Row * MultiDayLaneHeight,
+                        placement.StartColumn + placement.ColumnSpan == 7 ? 0 : 4,
+                        0);
+                    chip.VerticalAlignment = VerticalAlignment.Top;
+                    Panel.SetZIndex(chip, 10);
+                    Grid.SetRow(chip, r);
+                    Grid.SetColumn(chip, placement.StartColumn);
+                    Grid.SetColumnSpan(chip, placement.ColumnSpan);
+                    WireDrag(chip, placement.Event, chip);
+                    CalGrid.Children.Add(chip);
                 }
             }
             UpdateMonthSilhouette();
@@ -316,14 +343,11 @@ namespace Killendar.Views
 
         private Border BuildDayCell(DateTime date, bool inMonth, bool isToday,
                                     int displayColumn,
-                                    bool rightSeparator, bool bottomSeparator)
+                                    bool rightSeparator, bool bottomSeparator,
+                                    int multiDayLanes)
         {
-            // Every event uses the same per-day stack. Multi-day appointments used to live in a
-            // second Grid overlay spanning columns, which could neither scroll with the cell nor
-            // share its lanes; that is what caused overlap and vertical misalignment. Repeating a
-            // multi-day appointment in each covered day is less ornamental and much more honest:
-            // one grid, one sorter, one scrollbar, one density system.
             var events = _store!.GetOnDay(date)
+                .Where(e => !CalendarLayout.IsMultiDay(e))
                 .OrderBy(e => !e.AllDay)
                 .ThenBy(e => e.Start)
                 .ThenBy(e => e.End)
@@ -383,6 +407,7 @@ namespace Killendar.Views
             var eventScroll = new ScrollViewer
             {
                 Content = eventList,
+                Margin = new Thickness(0, multiDayLanes * MultiDayLaneHeight, 0, 0),
                 VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
                 HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
                 PanningMode = PanningMode.VerticalOnly,
@@ -473,7 +498,7 @@ namespace Killendar.Views
         /// rail control a visible purpose without pretending a month grid has hourly subdivisions.
         /// Tooltips retain the full title/time/location at every level.
         /// </summary>
-        private Border BuildMonthChip(CalendarEvent ev)
+        private Border BuildMonthChip(CalendarEvent ev, bool spanning = false, bool showTitle = true)
         {
             Guid shrinkKey = ev.SeriesKey;
             bool shrunk = _shrunkAppointments.Contains(shrinkKey);
@@ -520,6 +545,11 @@ namespace Killendar.Views
                 ToggleAppointmentSize(shrinkKey);
             };
 
+            if (!showTitle)
+            {
+                chip.Child = null;
+            }
+
             if (detail == 0)
             {
                 chip.Child = null;
@@ -528,7 +558,7 @@ namespace Killendar.Views
                 chip.Padding = new Thickness(0);
                 chip.Margin = new Thickness(0, 2, 0, 2);
             }
-            else if (detail == 3)
+            else if (detail == 3 && !spanning)
             {
                 // The previous top two settings differed only by a few characters at the start
                 // of the same tiny line, so in practice month view appeared to have two density
@@ -557,6 +587,13 @@ namespace Killendar.Views
                 });
                 chip.Child = lines;
                 chip.Padding = new Thickness(4, 1, 4, 2);
+            }
+
+            if (spanning && detail > 0)
+            {
+                chip.Height = 16;
+                chip.MinHeight = 16;
+                chip.Padding = new Thickness(4, 1, 4, 1);
             }
 
             return chip;
@@ -641,7 +678,7 @@ namespace Killendar.Views
         /// The chip's z-order is per-panel, so the CELL is lifted while in flight - lifting only
         /// the chip would slide it underneath every later-built neighbor cell.
         /// </summary>
-        private void WireDrag(Border chip, CalendarEvent ev, Border cell)
+        private void WireDrag(Border chip, CalendarEvent ev, UIElement dragLayer)
         {
             var move = new TranslateTransform();
             chip.RenderTransform = move;
@@ -654,7 +691,7 @@ namespace Killendar.Views
                 dragging = false;
                 move.X = move.Y = 0;
                 chip.Opacity = 1.0;
-                Panel.SetZIndex(cell, 0);
+                Panel.SetZIndex(dragLayer, dragLayer == chip ? 10 : 0);
             }
 
             chip.AddHandler(MouseLeftButtonDownEvent, new MouseButtonEventHandler((_, e) =>
@@ -675,7 +712,7 @@ namespace Killendar.Views
                 {
                     dragging = true;
                     chip.Opacity = 0.7;
-                    Panel.SetZIndex(cell, 99);
+                    Panel.SetZIndex(dragLayer, 99);
                 }
                 if (dragging) { move.X = dx; move.Y = dy; }
             };
