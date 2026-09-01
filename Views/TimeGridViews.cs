@@ -30,7 +30,7 @@ namespace Killendar.Views
                 int shiftM = ((int)anchor.DayOfWeek + 6) % 7;
                 return anchor.Date.AddDays(-shiftM);
             }
-            var first = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+            var first = WeekStartManager.FirstDay;
             int shift = ((int)anchor.DayOfWeek - (int)first + 7) % 7;
             return anchor.Date.AddDays(-shift);
         }

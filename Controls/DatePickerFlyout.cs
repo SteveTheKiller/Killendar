@@ -52,7 +52,7 @@ namespace Killendar.Controls
             for (int r = 0; r < 7; r++)
                 days.RowDefinitions.Add(new RowDefinition { Height = new GridLength(r == 0 ? 20 : 26) });
 
-            var firstDay = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+            var firstDay = WeekStartManager.FirstDay;
             var names = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames;
             for (int c = 0; c < 7; c++)
             {

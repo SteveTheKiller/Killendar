@@ -198,7 +198,7 @@ namespace Killendar.Views
         public void Refresh() => Rebuild();
 
         /// <summary>First day of the week for the current culture, so this is not hardcoded to Sunday.</summary>
-        private static DayOfWeek FirstDay => CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+        private static DayOfWeek FirstDay => WeekStartManager.FirstDay;
 
         private static DateTime StartOfGrid(DateTime anchor)
         {

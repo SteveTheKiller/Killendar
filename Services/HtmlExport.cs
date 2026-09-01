@@ -41,7 +41,7 @@ namespace Killendar.Services
 
             // Month/weekday names and week start all come from Windows' culture, the same way the
             // in-app views get them - so the page reads like the app on the machine it came from.
-            DayOfWeek weekStart = culture.DateTimeFormat.FirstDayOfWeek;
+            DayOfWeek weekStart = WeekStartManager.FirstDay;
 
             var sb = new StringBuilder();
             string rangeLabel = DateFormatManager.Format(from) + " - "

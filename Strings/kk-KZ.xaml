@@ -202,6 +202,7 @@
     <!-- Date format picker (in the language menu). The three samples are format examples,
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">күн пішімі</sys:String>
+    <sys:String x:Key="Str_Lbl_WeekStart">аптаның басталуы</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Windows бойынша</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>

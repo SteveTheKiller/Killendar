@@ -17,7 +17,8 @@ namespace Killendar.Shell
             _languageMenu = new Controls.LanguageMenu(
                 // LangButton, not RailFlyoutAnchor: a flyout hangs off its own button (family rule,
                 // see the ThemePopup note in MainWindow.xaml).
-                LangMenu, LangButton, RelocalizeDynamicUi, ReformatOpenEditor);
+                LangMenu, LangButton, RelocalizeDynamicUi, ReformatOpenEditor,
+                RelocalizeDynamicUi);
         }
 
         private void LangButton_Click(object sender, RoutedEventArgs e) => _languageMenu.Open();

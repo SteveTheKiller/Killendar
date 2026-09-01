@@ -209,7 +209,7 @@ namespace Killendar.Shell
                 {
                     RepeatDaysRow.Children.Clear();
                     var fmt   = CultureInfo.CurrentCulture.DateTimeFormat;
-                    int first = (int)fmt.FirstDayOfWeek;
+                    int first = (int)WeekStartManager.FirstDay;
                     for (int i = 0; i < 7; i++)
                     {
                         var day = (DayOfWeek)((first + i) % 7);

@@ -37,5 +37,24 @@ namespace Killendar.Tests
             Assert.StartsWith("ponied", date.ToString("dddd", polish));
             Assert.Equal(DayOfWeek.Monday, polish.DateTimeFormat.FirstDayOfWeek);
         }
+
+        [Fact]
+        public void WeekStartCanFollowWindowsIndependentlyFromLanguage()
+        {
+            WeekStartManager.GetSetting = _ => null;
+            WeekStartManager.Initialize(DayOfWeek.Monday);
+
+            Assert.Equal(WeekStartStyle.FollowWindows, WeekStartManager.Current);
+            Assert.Equal(DayOfWeek.Monday, WeekStartManager.FirstDay);
+        }
+
+        [Fact]
+        public void ExplicitWeekStartOverridesWindows()
+        {
+            WeekStartManager.GetSetting = _ => WeekStartStyle.Sunday.ToString();
+            WeekStartManager.Initialize(DayOfWeek.Monday);
+
+            Assert.Equal(DayOfWeek.Sunday, WeekStartManager.FirstDay);
+        }
     }
 }

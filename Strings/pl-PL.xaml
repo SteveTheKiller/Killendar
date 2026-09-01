@@ -47,6 +47,7 @@
     <sys:String x:Key="Str_Cal_Today">DZISIAJ</sys:String>
     <sys:String x:Key="Str_Sc_Title">Skróty klawiaturowe</sys:String>
     <sys:String x:Key="Str_Lbl_DateFormat">format daty</sys:String>
+    <sys:String x:Key="Str_Lbl_WeekStart">początek tygodnia</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Zgodnie z Windows</sys:String>
     <sys:String x:Key="Str_Btn_Unlock">Odblokuj</sys:String>
     <sys:String x:Key="Str_Btn_Encrypt">Zaszyfruj</sys:String>

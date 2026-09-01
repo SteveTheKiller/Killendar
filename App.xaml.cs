@@ -138,6 +138,11 @@ namespace Killendar
             // default palette. With nothing saved this lands on Black + Red.
             Services.ThemeManager.Initialize();
 
+            // Capture the regional week start before the selected interface locale changes the
+            // process culture used for generated month and weekday names.
+            DayOfWeek windowsFirstDay = System.Globalization.CultureInfo.CurrentCulture
+                .DateTimeFormat.FirstDayOfWeek;
+
             // Locale after the theme, and still before the window: the string dictionary has to be
             // in place before any {DynamicResource Str_*} in MainWindow.xaml is first resolved.
             Services.LocaleManager.GetSetting = Settings.Get;
@@ -147,6 +152,10 @@ namespace Killendar
             Services.DateFormatManager.GetSetting = Settings.Get;
             Services.DateFormatManager.SetSetting = Settings.Set;
             Services.DateFormatManager.Initialize();
+
+            Services.WeekStartManager.GetSetting = Settings.Get;
+            Services.WeekStartManager.SetSetting = Settings.Set;
+            Services.WeekStartManager.Initialize(windowsFirstDay);
 
             // Killendar.exe --demo
             // Rebuilds Demo.kcal with a full test calendar and switches to it, so the views can be
