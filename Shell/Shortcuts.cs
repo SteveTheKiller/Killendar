@@ -20,18 +20,19 @@ namespace Killendar.Shell
         {
             bool ctrl = (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control;
             bool alt = (Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt;
+            bool ctrlShortcut = ctrl && !alt;
 
             // Appointment-editor accelerators remain available while a text box owns focus.
             // Ctrl+Enter is used instead of Ctrl+S so a multiline description keeps its normal
             // editing behavior; destructive delete retains the editor's confirmation path.
             bool editingAppointment = _sidebarOpen && EditorScroll.Visibility == Visibility.Visible;
-            if (editingAppointment && ctrl && e.Key == Key.Enter)
+            if (editingAppointment && ctrlShortcut && e.Key == Key.Enter)
             {
                 SaveAppointment_Click(this, new RoutedEventArgs());
                 e.Handled = true;
                 return;
             }
-            if (editingAppointment && ctrl && e.Key == Key.Delete &&
+            if (editingAppointment && ctrlShortcut && e.Key == Key.Delete &&
                 DeleteAppointmentBtn.Visibility == Visibility.Visible)
             {
                 DeleteAppointment_Click(this, new RoutedEventArgs());
@@ -53,7 +54,7 @@ namespace Killendar.Shell
             }
 
             // ---- modified: safe while typing ----
-            if (ctrl)
+            if (ctrlShortcut)
             {
                 switch (e.Key)
                 {
