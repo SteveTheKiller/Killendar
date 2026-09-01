@@ -175,36 +175,6 @@ html[data-theme="light"] .blurb h3, html[data-theme="light"] .feature-card h3 { 
 </div>
 <p class="tagline" data-i18n="tag">A calendar you can encrypt, with no account, no sync, and nothing phoning home.</p>
 
-<div class="hero-blurbs">
-<div class="blurb">
-<h3 data-i18n="b1h">Encrypted, if you want it</h3>
-<ul class="blurb-list">
-<li data-i18n="b1a">Set a password and the file is <b>encrypted at rest</b> with SQLCipher.</li>
-<li data-i18n="b1b">AES-256, per-page HMAC-SHA512, SQLCipher's own key derivation.</li>
-<li data-i18n="b1c">Opt-in: no password leaves it plain SQLite, readable by anything.</li>
-<li data-i18n="b1d">One password per calendar - keep work locked and the family one open.</li>
-</ul>
-</div>
-<div class="blurb">
-<h3 data-i18n="b2h">It is just a file</h3>
-<ul class="blurb-list">
-<li data-i18n="b2a">One <b>.kcal</b> file is your whole calendar, in your profile or a folder you choose.</li>
-<li data-i18n="b2b">An ordinary SQLite database - back it up by copying it.</li>
-<li data-i18n="b2c">Readable with any SQLite tool, with or without this app.</li>
-<li data-i18n="b2d">Import and export <b>.ics</b> for everything else.</li>
-</ul>
-</div>
-<div class="blurb">
-<h3 data-i18n="b3h">Four views, one control</h3>
-<ul class="blurb-list">
-<li data-i18n="b3a">Month, week, day and agenda, sharing one prev / next / today.</li>
-<li data-i18n="b3b">Overlapping appointments lay out side by side, never hidden.</li>
-<li data-i18n="b3c"><b>Color categories</b> you define, painting every view.</li>
-<li data-i18n="b3d">Thirteen themes, fifteen languages, single-key shortcuts.</li>
-</ul>
-</div>
-</div>
-
 <div class="hero-grid">
 <div class="hero-cta">
 <div class="cta-row">
@@ -223,6 +193,35 @@ html[data-theme="light"] .blurb h3, html[data-theme="light"] .feature-card h3 { 
 <p class="note" data-i18n="note">Install or run portable. Free, open source, GPLv3.<br>No account, no subscription, no sync service.<br>No telemetry is sent and no ads... ever.</p>
 </div>
 </div>
+<div class="hero-blurbs">
+<div class="blurb">
+<h3 data-i18n="b3h">Four views, one control</h3>
+<ul class="blurb-list">
+<li data-i18n="b3a">Month, week, day and agenda, sharing one prev / next / today.</li>
+<li data-i18n="b3b">Overlapping appointments lay out side by side, never hidden.</li>
+<li data-i18n="b3c"><b>Color categories</b> you define, painting every view.</li>
+<li data-i18n="b3d">Thirteen themes, fifteen languages, single-key shortcuts.</li>
+</ul>
+</div>
+<div class="blurb">
+<h3 data-i18n="b1h">Encrypted, if you want it</h3>
+<ul class="blurb-list">
+<li data-i18n="b1a">Set a password and the file is <b>encrypted at rest</b> with SQLCipher.</li>
+<li data-i18n="b1b">AES-256, per-page HMAC-SHA512, SQLCipher's own key derivation.</li>
+<li data-i18n="b1c">Opt-in: no password leaves it plain SQLite, readable by anything.</li>
+<li data-i18n="b1d">One password per calendar - keep work locked and the family one open.</li>
+</ul>
+</div>
+<div class="blurb">
+<h3 data-i18n="b2h">It is just a file</h3>
+<ul class="blurb-list">
+<li data-i18n="b2a">One <b>.kcal</b> file is your whole calendar, in your profile or a folder you choose.</li>
+<li data-i18n="b2b">An ordinary SQLite database - back it up by copying it.</li>
+<li data-i18n="b2c">Readable with any SQLite tool, with or without this app.</li>
+<li data-i18n="b2d">Import and export <b>.ics</b> for everything else.</li>
+</ul>
+</div>
+</div>
 </section>
 
 <section class="features">
@@ -236,9 +235,9 @@ All-day entries get their own strip above the hour grid. Month view zooms from o
 </div>
 
 <div class="feature-card">
-<h3 data-i18n="f2h">Color categories</h3>
-<p data-i18n="f2p">Define your own, name them and pick their colors. An appointment can carry several, and the
-first one colors it in every view. Renaming updates every appointment at once.</p>
+<h3 data-i18n="f4h">Optional encryption</h3>
+<p data-i18n="f4p">SQLCipher at rest: AES-256, per-page HMAC-SHA512, its own key derivation. Opt-in, so with no
+password the file stays plain SQLite.</p>
 </div>
 
 <div class="feature-card">
@@ -248,9 +247,9 @@ password, or none.<code>.kcal</code> files</p>
 </div>
 
 <div class="feature-card">
-<h3 data-i18n="f4h">Optional encryption</h3>
-<p data-i18n="f4p">SQLCipher at rest: AES-256, per-page HMAC-SHA512, its own key derivation. Opt-in, so with no
-password the file stays plain SQLite.</p>
+<h3 data-i18n="f2h">Color categories</h3>
+<p data-i18n="f2p">Define your own, name them and pick their colors. An appointment can carry several, and the
+first one colors it in every view. Renaming updates every appointment at once.</p>
 </div>
 
 <div class="feature-card">
@@ -260,9 +259,9 @@ with an appointment through both.<code>.ics</code> import / export</p>
 </div>
 
 <div class="feature-card">
-<h3 data-i18n="f6h">Thirteen themes, fifteen languages</h3>
-<p data-i18n="f6p">Every theme switchable while it runs. Dark, Light, Black and 98SE each take six accent hues, so there are 33 looks in all. Single-key
-shortcuts that stand down while you are typing in a field.</p>
+<h3 data-i18n="f8h">Signed, and checkable</h3>
+<p data-i18n="f8p">The About card shows the publisher, the certificate thumbprint and the running exe's
+SHA-256, validated with WinVerifyTrust rather than just read off the file.</p>
 </div>
 
 <div class="feature-card">
@@ -272,9 +271,9 @@ Keep the calendar beside the executable for a self-contained copy. A silent inst
 </div>
 
 <div class="feature-card">
-<h3 data-i18n="f8h">Signed, and checkable</h3>
-<p data-i18n="f8p">The About card shows the publisher, the certificate thumbprint and the running exe's
-SHA-256, validated with WinVerifyTrust rather than just read off the file.</p>
+<h3 data-i18n="f6h">Thirteen themes, fifteen languages</h3>
+<p data-i18n="f6p">Every theme switchable while it runs. Dark, Light, Black and 98SE each take six accent hues, so there are 33 looks in all. Single-key
+shortcuts that stand down while you are typing in a field.</p>
 </div>
 
 </div>
