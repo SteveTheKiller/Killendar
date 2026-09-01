@@ -1,0 +1,423 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Russian (ru-RU). Layered over en-US, so any key omitted here falls back to English.
+         House style: plain hyphens only, never an en or em dash, even where Russian typography
+         would normally take one - release.ps1 gates on it. -->
+
+    <!-- Toolbar -->
+    <!-- No leading "+". ToolbarStyle.cs draws the E710 Add glyph in front of every caption, so a
+         plus in the string renders as "+ + New". (2026-07-30) -->
+    <sys:String x:Key="Str_Btn_New">Создать</sys:String>
+    <sys:String x:Key="Str_Btn_Import">Импорт</sys:String>
+    <sys:String x:Key="Str_Btn_Export">Экспорт</sys:String>
+    <sys:String x:Key="Str_Btn_Today">Сегодня</sys:String>
+    <sys:String x:Key="Str_View_Month">Месяц</sys:String>
+    <sys:String x:Key="Str_View_Week">Неделя</sys:String>
+    <sys:String x:Key="Str_View_Day">День</sys:String>
+    <sys:String x:Key="Str_View_Agenda">Расписание</sys:String>
+    <sys:String x:Key="Str_TT_Prev">Назад</sys:String>
+    <sys:String x:Key="Str_TT_Next">Вперёд</sys:String>
+
+    <!-- Rail -->
+    <sys:String x:Key="Str_TT_Theme">Тема</sys:String>
+    <sys:String x:Key="Str_TT_Language">Язык</sys:String>
+    <sys:String x:Key="Str_TT_PanelShow">Показать панель встреч</sys:String>
+    <sys:String x:Key="Str_TT_PanelHide">Скрыть панель встреч</sys:String>
+    <sys:String x:Key="Str_Lbl_Theme">тема</sys:String>
+    <sys:String x:Key="Str_Lbl_Accent">акцент</sys:String>
+    <sys:String x:Key="Str_Theme_Dark">Тёмная</sys:String>
+    <sys:String x:Key="Str_Theme_Light">Светлая</sys:String>
+    <sys:String x:Key="Str_Theme_Black">Чёрная</sys:String>
+    <sys:String x:Key="Str_Theme_98SE">98SE</sys:String>
+    <sys:String x:Key="Str_Theme_Blood">Кровь</sys:String>
+    <sys:String x:Key="Str_Theme_Greed">Алчность</sys:String>
+    <sys:String x:Key="Str_Theme_Cyanotic">Цианоз</sys:String>
+    <sys:String x:Key="Str_Theme_Ectoplasm">Эктоплазма</sys:String>
+    <sys:String x:Key="Str_Theme_Decay">Распад</sys:String>
+    <sys:String x:Key="Str_Theme_Malaise">Недомогание</sys:String>
+    <sys:String x:Key="Str_Theme_Sepulchre">Склеп</sys:String>
+    <sys:String x:Key="Str_Theme_Delirium">Бред</sys:String>
+    <sys:String x:Key="Str_Theme_Mourning">Траур</sys:String>
+
+    <!-- Appointment sidebar -->
+    <sys:String x:Key="Str_Side_New">Новая встреча</sys:String>
+    <sys:String x:Key="Str_Side_Edit">Изменить встречу</sys:String>
+    <sys:String x:Key="Str_Fld_Title">НАЗВАНИЕ</sys:String>
+    <sys:String x:Key="Str_Fld_Starts">НАЧАЛО</sys:String>
+    <sys:String x:Key="Str_Fld_Ends">ОКОНЧАНИЕ</sys:String>
+    <sys:String x:Key="Str_Fld_From">С</sys:String>
+    <sys:String x:Key="Str_Fld_Through">ПО</sys:String>
+    <sys:String x:Key="Str_Fld_Location">МЕСТО</sys:String>
+
+    <!-- Themed Windows system menu (Shell/SystemMenu.cs). Same wording as KillerScan's. -->
+    <sys:String x:Key="Str_Sys_Restore">Восстановить</sys:String>
+    <sys:String x:Key="Str_Sys_Move">Переместить</sys:String>
+    <sys:String x:Key="Str_Sys_Size">Размер</sys:String>
+    <sys:String x:Key="Str_Sys_Minimize">Свернуть</sys:String>
+    <sys:String x:Key="Str_Sys_Maximize">Развернуть</sys:String>
+    <sys:String x:Key="Str_Sys_Close">Закрыть</sys:String>
+
+    <sys:String x:Key="Str_Toolbar_Header">Панель инструментов</sys:String>
+    <!-- Two independent groups now: icon size, then where the text goes. "Icons" was the caption
+         for the whole small-icons MODE; as a size it reads better as "Small icons". -->
+    <sys:String x:Key="Str_Toolbar_SmallIcons">Мелкие значки</sys:String>
+    <sys:String x:Key="Str_Toolbar_LargeIcons">Крупные значки</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextNone">Без подписей</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextBeside">Подписи рядом со значками</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextUnder">Подписи под значками</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextOnly">Только подписи</sys:String>
+    <sys:String x:Key="Str_TT_OpenInMaps">Открыть это место на карте</sys:String>
+    <sys:String x:Key="Str_About_PhotonLookup">Подсказки адресов</sys:String>
+    <sys:String x:Key="Str_About_PhotonPrivacy">Использовать сервис Photon/Komoot</sys:String>
+    <sys:String x:Key="Str_Location_NoResults">Нет подсказок адресов</sys:String>
+    <sys:String x:Key="Str_Fld_Description">ОПИСАНИЕ</sys:String>
+    <sys:String x:Key="Str_Fld_Attendees">УЧАСТНИКИ</sys:String>
+    <sys:String x:Key="Str_Hint_Attendees">через запятую</sys:String>
+    <sys:String x:Key="Str_Hint_Date">гггг-мм-дд</sys:String>
+    <sys:String x:Key="Str_TT_ChooseDate">Выберите дату</sys:String>
+    <sys:String x:Key="Str_Hint_Time">ч:мм am/pm или 24 ч</sys:String>
+    <sys:String x:Key="Str_Hint_AttendeesTip">Адреса электронной почты через запятую</sys:String>
+    <sys:String x:Key="Str_Chk_AllDayOff">[ ] весь день</sys:String>
+    <sys:String x:Key="Str_Chk_AllDayOn">[x] весь день</sys:String>
+    <sys:String x:Key="Str_Btn_Save">Сохранить</sys:String>
+    <sys:String x:Key="Str_Btn_Cancel">Отмена</sys:String>
+    <sys:String x:Key="Str_Btn_Delete">Удалить</sys:String>
+
+    <!-- Validation -->
+    <sys:String x:Key="Str_Err_NoTitle">Укажите название.</sys:String>
+    <sys:String x:Key="Str_Err_StartDate">Дата начала должна выглядеть так: 2026-07-29.</sys:String>
+    <sys:String x:Key="Str_Err_EndDate">Дата окончания должна выглядеть так: 2026-07-29.</sys:String>
+    <sys:String x:Key="Str_Err_StartTime">Время начала должно выглядеть так: 9:30 am или 21:30.</sys:String>
+    <sys:String x:Key="Str_Err_EndTime">Время окончания должно выглядеть так: 9:30 am или 21:30.</sys:String>
+    <sys:String x:Key="Str_Err_EndBeforeStart">Окончание должно быть позже начала.</sys:String>
+
+    <!-- Delete confirmation. {0} is the appointment title. -->
+    <sys:String x:Key="Str_Dlg_DeleteMsg">Удалить "{0}"?</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteDetail">Это действие нельзя отменить.</sys:String>
+
+    <!-- Status line. {0} is a title or a count. -->
+    <!-- Repeats. Weekday letters are NOT here: they come from the culture, along with the order
+         they appear in, so a week that starts on Monday needs no translation at all. -->
+    <sys:String x:Key="Str_Fld_Repeats">ПОВТОР</sys:String>
+    <sys:String x:Key="Str_Rep_Never">Никогда</sys:String>
+    <sys:String x:Key="Str_Rep_Daily">Ежедневно</sys:String>
+    <sys:String x:Key="Str_Rep_Weekly">Еженедельно</sys:String>
+    <sys:String x:Key="Str_Rep_Monthly">Ежемесячно</sys:String>
+    <sys:String x:Key="Str_Rep_Yearly">Ежегодно</sys:String>
+    <sys:String x:Key="Str_Rep_Every">Каждые</sys:String>
+    <sys:String x:Key="Str_Rep_UnitDays">дн.</sys:String>
+    <sys:String x:Key="Str_Rep_UnitWeeks">нед.</sys:String>
+    <sys:String x:Key="Str_Rep_UnitMonths">мес.</sys:String>
+    <sys:String x:Key="Str_Rep_UnitYears">лет</sys:String>
+    <sys:String x:Key="Str_Rep_Ends">ЗАВЕРШЕНИЕ</sys:String>
+    <sys:String x:Key="Str_Rep_EndNever">Никогда</sys:String>
+    <sys:String x:Key="Str_Rep_EndAfter">После</sys:String>
+    <sys:String x:Key="Str_Rep_EndOn">В дату</sys:String>
+    <sys:String x:Key="Str_Rep_HintCount">Сколько раз</sys:String>
+    <sys:String x:Key="Str_Rep_SummaryNext">Далее: {0}</sys:String>
+    <sys:String x:Key="Str_Rep_SummaryNone">Это никогда не произойдёт. Проверьте даты.</sys:String>
+    <sys:String x:Key="Str_Rep_Scope">ЭТО ПОВТОРЯЮЩАЯСЯ ВСТРЕЧА</sys:String>
+    <sys:String x:Key="Str_Btn_ThisDate">Только эту дату</sys:String>
+    <sys:String x:Key="Str_Btn_WholeSeries">Всю серию</sys:String>
+    <sys:String x:Key="Str_Err_RepeatEnd">Укажите, когда повтор заканчивается, или сделайте его бесконечным.</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Удаляется только эта дата. Остальная серия остаётся.</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">Удаляются все даты этой серии. Это действие нельзя отменить.</sys:String>
+
+    <sys:String x:Key="Str_Status_Ready">Готово</sys:String>
+    <sys:String x:Key="Str_Status_Added">Добавлено {0}</sys:String>
+    <sys:String x:Key="Str_Status_Saved">Сохранено {0}</sys:String>
+    <sys:String x:Key="Str_Status_Deleted">Удалено {0}</sys:String>
+    <sys:String x:Key="Str_Status_Imported">Импортировано встреч: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportedSkipped">Импортировано встреч: {0}, пропущено уже имеющихся: {1}</sys:String>
+    <!-- Import caveats, appended to the line above. Each carries its OWN leading sentence break,
+         because that mark is not "." in every language. -->
+    <sys:String x:Key="Str_Status_ImportRepeat">. Повторяющихся: {0}, добавлена только первая дата</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnreadable">. Без читаемой даты: {0}, они пропущены</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnsupported">. Задач или заметок: {0}, Killendar их не хранит</sys:String>
+    <sys:String x:Key="Str_Status_ImportFailed">Импорт не удался: {0}</sys:String>
+    <sys:String x:Key="Str_Status_Exported">Экспортировано встреч: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ExportFailed">Экспорт не удался: {0}</sys:String>
+    <sys:String x:Key="Str_Status_NothingToExport">Нечего экспортировать</sys:String>
+    <sys:String x:Key="Str_Status_LoadError">Не удалось открыть этот Killendar: {0}</sys:String>
+    <sys:String x:Key="Str_Status_Migrated">Перенесено встреч в ваш Killendar: {0}</sys:String>
+
+    <!-- File dialogs. The CSV column names inside Str_Status_CsvBadHeader stay in English in
+         EVERY locale: they are Outlook's literal header words, matched by name, not labels. -->
+    <sys:String x:Key="Str_Dlg_ImportTitle">Импорт встреч</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">Экспорт встреч</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportFilter">Файлы календаря (*.ics, *.csv, *.eml)|*.ics;*.csv;*.eml|Файлы iCalendar (*.ics)|*.ics|Файлы CSV (*.csv)|*.csv|Приглашения по почте (*.eml)|*.eml|Все файлы (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportFilter">Файлы iCalendar (*.ics)|*.ics|Файлы CSV (*.csv)|*.csv|Веб-страница (*.html)|*.html</sys:String>
+    <sys:String x:Key="Str_Status_CsvBadHeader">Это не CSV в формате Outlook. В первой строке должны быть названы столбцы: Subject, Start Date, Start Time, End Date, End Time, All day event, Description, Location</sys:String>
+    <sys:String x:Key="Str_Status_NoInvite">В этом письме не найдено приглашение календаря</sys:String>
+
+    <!-- Export scope flyout -->
+    <sys:String x:Key="Str_Exp_Whole">Весь календарь</sys:String>
+    <sys:String x:Key="Str_Exp_Range">Диапазон дат</sys:String>
+    <sys:String x:Key="Str_Exp_From">С</sys:String>
+    <sys:String x:Key="Str_Exp_To">ПО</sys:String>
+    <sys:String x:Key="Str_Exp_BadRange">Проверьте даты</sys:String>
+
+    <!-- Views -->
+    <sys:String x:Key="Str_Cal_AllDay">весь день</sys:String>
+    <sys:String x:Key="Str_Cal_NoTitle">(без названия)</sys:String>
+    <sys:String x:Key="Str_Cal_Today">СЕГОДНЯ</sys:String>
+    <sys:String x:Key="Str_Cal_MoreCount">+{0} ещё</sys:String>
+    <sys:String x:Key="Str_Cal_AgendaEmpty">В этом промежутке ничего не запланировано.</sys:String>
+    <sys:String x:Key="Str_TT_NewOnDay">Новая встреча в этот день</sys:String>
+
+    <!-- About card -->
+    <sys:String x:Key="Str_About_Version">ВЕРСИЯ</sys:String>
+    <sys:String x:Key="Str_About_Publisher">ИЗДАТЕЛЬ</sys:String>
+    <sys:String x:Key="Str_About_Thumbprint">ОТПЕЧАТОК</sys:String>
+    <sys:String x:Key="Str_About_Sha">SHA-256 EXE</sys:String>
+    <sys:String x:Key="Str_About_Computing">вычисление...</sys:String>
+    <sys:String x:Key="Str_About_Unsigned">(не подписано или цепочка не проверена)</sys:String>
+    <sys:String x:Key="Str_About_UpdateAvailable">Доступно обновление: {0}</sys:String>
+    <sys:String x:Key="Str_About_Downloading">Загрузка...</sys:String>
+    <!-- Tagline is split so the GPLv3 license and the Killer Tools link stay untranslated. -->
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Календарь без учётной записи, без синхронизации и без обращений на сторону. Ваши встречи лежат в одном файле на вашей собственной машине, зашифрованном, если вы этого хотите. Утилита GPLv3 от </sys:String>
+    <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>
+
+    <!-- Self-update prompt -->
+    <sys:String x:Key="Str_Dlg_UpdateMsg">Загрузить и установить Killendar {0}?</sys:String>
+    <sys:String x:Key="Str_Dlg_UpdateBullets">Приложение закроется и откроется заново автоматически.</sys:String>
+    <sys:String x:Key="Str_Btn_Update">Обновить</sys:String>
+
+    <!-- Keyboard shortcuts overlay -->
+    <sys:String x:Key="Str_Sc_Title">Сочетания клавиш</sys:String>
+    <sys:String x:Key="Str_Sc_New">Новая встреча</sys:String>
+    <sys:String x:Key="Str_Sc_Today">Перейти к сегодняшнему дню</sys:String>
+    <sys:String x:Key="Str_Sc_Prev">Предыдущий период</sys:String>
+    <sys:String x:Key="Str_Sc_Next">Следующий период</sys:String>
+    <sys:String x:Key="Str_Sc_Month">Вид месяца</sys:String>
+    <sys:String x:Key="Str_Sc_Week">Вид недели</sys:String>
+    <sys:String x:Key="Str_Sc_Day">Вид дня</sys:String>
+    <sys:String x:Key="Str_Sc_Agenda">Вид расписания</sys:String>
+    <sys:String x:Key="Str_Sc_Panel">Показать или скрыть панель встреч</sys:String>
+    <sys:String x:Key="Str_Sc_About">О программе</sys:String>
+    <sys:String x:Key="Str_Sc_Close">Закрыть панель или карточку</sys:String>
+    <sys:String x:Key="Str_Sc_Hint">Одиночные клавиши работают, когда вы не печатаете в поле.</sys:String>
+
+    <!-- Date format picker (in the language menu). The three samples are format examples,
+         so they read the same in every language. -->
+    <sys:String x:Key="Str_Lbl_DateFormat">формат даты</sys:String>
+    <sys:String x:Key="Str_Date_FollowWindows">Как в Windows</sys:String>
+    <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
+    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+
+
+    <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
+         and the forgotten-password escape hatch. {0} is a file name or an error. -->
+    <sys:String x:Key="Str_Pw_UnlockHead">Разблокировать этот Killendar</sys:String>
+    <sys:String x:Key="Str_Pw_WrongPw">Этот пароль не подошёл. Попробуйте ещё раз.</sys:String>
+    <sys:String x:Key="Str_Pw_Protected">{0} зашифрован. Введите пароль, чтобы открыть его.</sys:String>
+    <sys:String x:Key="Str_Pw_NewKcalBtn">Новый Killendar...</sys:String>
+    <sys:String x:Key="Str_Pw_SetHead">Зашифровать этот Killendar</sys:String>
+    <sys:String x:Key="Str_Pw_SetBody">Ваши встречи будут зашифрованы на диске алгоритмом AES-256. Этот пароль будет запрашиваться при каждом запуске Killendar.</sys:String>
+    <sys:String x:Key="Str_Pw_ChangeHead">Изменить или убрать пароль</sys:String>
+    <sys:String x:Key="Str_Pw_ChangeBody">Введите новый пароль или оставьте оба поля пустыми, чтобы снять шифрование и хранить этот Killendar как обычную базу SQLite.</sys:String>
+    <sys:String x:Key="Str_Pw_ConfirmLbl">ПОДТВЕРЖДЕНИЕ</sys:String>
+    <sys:String x:Key="Str_Pw_NoRecovery">Восстановления нет. Потеряете пароль - и встречи в этом Killendar пропадут навсегда.</sys:String>
+    <sys:String x:Key="Str_Btn_Unlock">Разблокировать</sys:String>
+    <sys:String x:Key="Str_Btn_Encrypt">Зашифровать</sys:String>
+    <sys:String x:Key="Str_Btn_Apply">Применить</sys:String>
+    <sys:String x:Key="Str_Btn_StartNew">Начать заново</sys:String>
+    <sys:String x:Key="Str_Dlg_FreshHead">Начать новый Killendar?</sys:String>
+    <sys:String x:Key="Str_Dlg_FreshBody">Заблокированный Killendar переименовывается и остаётся на диске, но без пароля встречи внутри прочитать нельзя. Вместо него открывается новый пустой Killendar.</sys:String>
+    <sys:String x:Key="Str_Tip_LockOn">Зашифровано - нажмите, чтобы изменить или убрать пароль</sys:String>
+    <sys:String x:Key="Str_Tip_LockOff">Не зашифровано - нажмите, чтобы задать пароль</sys:String>
+    <sys:String x:Key="Str_Status_Encrypted">Этот Killendar теперь зашифрован</sys:String>
+    <sys:String x:Key="Str_Status_PwChanged">Пароль изменён</sys:String>
+    <sys:String x:Key="Str_Status_PwRemoved">Пароль убран - этот Killendar больше не зашифрован</sys:String>
+    <sys:String x:Key="Str_Status_PwMismatch">Пароли не совпадают</sys:String>
+    <sys:String x:Key="Str_Status_PwFailed">Не удалось изменить пароль: {0}</sys:String>
+    <sys:String x:Key="Str_Status_FreshKcal">Начат новый Killendar; заблокированный сохранён как {0}</sys:String>
+
+    <!-- Exporting an encrypted Killendar to .ics writes plain text, which quietly undoes the
+         encryption for whatever leaves the app. Warned once, then suppressible. -->
+    <sys:String x:Key="Str_Exp_WarnHead">Экспортировать из зашифрованного Killendar?</sys:String>
+    <sys:String x:Key="Str_Exp_WarnBody">Файл .ics - это обычный текст. Всё, что вы экспортируете, сможет прочитать любой, кто его откроет, и пароль этого Killendar его больше не защищает.</sys:String>
+    <sys:String x:Key="Str_Exp_WarnCheck">Больше не напоминать</sys:String>
+
+
+    <!-- Manage Killendars: the .kcal file list, its context menu and the rail
+         button. {0} is a file name or an error; Str_Kc_Renamed takes {0} old, {1} new. -->
+    <sys:String x:Key="Str_Kc_Title">Killendar-файлы</sys:String>
+    <sys:String x:Key="Str_Kc_Hint">Все файлы .kcal в вашей папке данных. Дважды щёлкните, чтобы открыть; щёлкните правой кнопкой, чтобы переименовать или удалить.</sys:String>
+    <sys:String x:Key="Str_Kc_FlagEncrypted">зашифрован</sys:String>
+    <sys:String x:Key="Str_Kc_FlagActive">открыт</sys:String>
+    <sys:String x:Key="Str_Kc_SelectFirst">Сначала выберите Killendar.</sys:String>
+    <sys:String x:Key="Str_Kc_BadName">В этом имени есть символы, недопустимые в имени файла.</sys:String>
+    <sys:String x:Key="Str_Kc_Exists">{0} уже существует.</sys:String>
+    <sys:String x:Key="Str_Kc_Renamed">{0} переименован в {1}</sys:String>
+    <sys:String x:Key="Str_Kc_RenameFailed">Переименование не удалось: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_CreateFailed">Не удалось создать Killendar: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteHead">Удалить {0}?</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteBody">Файл и все встречи в нём удаляются с диска. Это действие нельзя отменить.</sys:String>
+    <sys:String x:Key="Str_Kc_Deleted">Удалён {0}</sys:String>
+    <sys:String x:Key="Str_Kc_DeleteFailed">Удаление не удалось: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_LoadTitle">Загрузить Killendar</sys:String>
+    <sys:String x:Key="Str_Kc_Filter">Файлы Killendar (*.kcal)|*.kcal|Все файлы (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Kc_Loaded">Копия загружена как {0}</sys:String>
+    <sys:String x:Key="Str_Kc_LoadFailed">Загрузка не удалась: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Copied">{0} в буфере обмена - вставьте куда угодно, где принимают файл</sys:String>
+    <sys:String x:Key="Str_Kc_CopyFailed">Копирование не удалось: {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_AddAppointment">Добавить встречу</sys:String>
+    <sys:String x:Key="Str_Ctx_EditSeries">Изменить серию</sys:String>
+    <sys:String x:Key="Str_Ctx_OpenAppointment">Открыть встречу</sys:String>
+    <sys:String x:Key="Str_Ctx_Shrink">Свернуть</sys:String>
+    <sys:String x:Key="Str_Ctx_Expand">Развернуть</sys:String>
+    <sys:String x:Key="Str_MonthMode_Calendar">Календарный месяц</sys:String>
+    <sys:String x:Key="Str_MonthMode_Rolling">Скользящие недели</sys:String>
+    <sys:String x:Key="Str_Ctx_Open">Открыть</sys:String>
+    <sys:String x:Key="Str_Ctx_Rename">Переименовать</sys:String>
+    <sys:String x:Key="Str_Ctx_Delete">Удалить</sys:String>
+    <sys:String x:Key="Str_Ctx_CopyFile">Копировать файл</sys:String>
+    <sys:String x:Key="Str_Ctx_Reveal">Показать в Explorer</sys:String>
+    <sys:String x:Key="Str_TT_CopyFile">Положить файл в буфер обмена, готовый к вставке в Explorer или в письмо</sys:String>
+    <sys:String x:Key="Str_TT_NewKcal">Новый Killendar</sys:String>
+    <sys:String x:Key="Str_TT_DeleteKcal">Удалить выбранный Killendar</sys:String>
+    <sys:String x:Key="Str_TT_LoadKcal">Загрузить Killendar из файла</sys:String>
+    <sys:String x:Key="Str_TT_Explorer">Открыть папку данных</sys:String>
+    <sys:String x:Key="Str_TT_Killendars">Killendar-файлы</sys:String>
+    <sys:String x:Key="Str_Btn_Open">Открыть</sys:String>
+    <sys:String x:Key="Str_Btn_Select">Выбрать папку</sys:String>
+    <sys:String x:Key="Str_Status_Opened">Открыт {0}</sys:String>
+
+
+    <!-- Double-clicked .kcal: the confirm before a copy is added and opened.
+         {0} is the file name. -->
+    <sys:String x:Key="Str_Kc_AddHead">Открыть {0} в Killendar?</sys:String>
+    <sys:String x:Key="Str_Kc_AddBody">Копия добавляется в вашу папку данных и открывается. Файл, который вы дважды щёлкнули, остаётся на месте нетронутым - в Killendar запись идёт постоянно, а так не стоит поступать с файлом на сетевом ресурсе или в папке Downloads.</sys:String>
+    <sys:String x:Key="Str_Btn_Add">Добавить</sys:String>
+
+
+    <!-- Text-input context menu (replaces WPF's built-in Cut/Copy/Paste, which
+         ignores app-level menu styling). -->
+    <sys:String x:Key="Str_Ctx_Cut">Вырезать</sys:String>
+    <sys:String x:Key="Str_Ctx_Copy">Копировать</sys:String>
+    <sys:String x:Key="Str_Ctx_Paste">Вставить</sys:String>
+    <sys:String x:Key="Str_Ctx_SelectAll">Выделить всё</sys:String>
+
+
+    <!-- Themed file dialog (FileDialog.xaml), replacing the Win32 open/save boxes.
+         Str_Sum_Counts takes {0} folders, {1} files. -->
+    <sys:String x:Key="Str_Btn_Replace">Заменить</sys:String>
+    <sys:String x:Key="Str_Dlg_FileName">Имя файла:</sys:String>
+    <sys:String x:Key="Str_Dlg_FileType">Тип файла:</sys:String>
+    <sys:String x:Key="Str_Dlg_AllFiles">Все файлы</sys:String>
+    <sys:String x:Key="Str_Dlg_NoMatchingFiles">Здесь ничего не подходит под текущий тип файла.</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFolder">Такой папки не существует.</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFile">Такого файла не существует.</sys:String>
+    <sys:String x:Key="Str_Dlg_OverwriteMsg">Заменить {0}?</sys:String>
+    <sys:String x:Key="Str_Sum_Counts">папок: {0}, файлов: {1}</sys:String>
+    <sys:String x:Key="Str_QA_Home">Домашняя папка</sys:String>
+    <sys:String x:Key="Str_QA_Desktop">Рабочий стол</sys:String>
+    <sys:String x:Key="Str_QA_Documents">Документы</sys:String>
+    <sys:String x:Key="Str_QA_Downloads">Загрузки</sys:String>
+    <sys:String x:Key="Str_QA_Pictures">Изображения</sys:String>
+    <sys:String x:Key="Str_Col_Name">имя</sys:String>
+    <sys:String x:Key="Str_Col_Size">размер</sys:String>
+    <sys:String x:Key="Str_Col_Modified">изменён</sys:String>
+    <sys:String x:Key="Str_TT_Up">На папку вверх</sys:String>
+    <sys:String x:Key="Str_TT_ViewList">Список</sys:String>
+    <sys:String x:Key="Str_TT_ViewIcons">Значки</sys:String>
+    <sys:String x:Key="Str_TT_ViewDetails">Таблица</sys:String>
+    <sys:String x:Key="Str_TT_ShowHidden">Показывать скрытые и системные элементы</sys:String>
+    <sys:String x:Key="Str_TT_RecentLocations">Недавние места</sys:String>
+    <sys:String x:Key="Str_Menu_PinPlace">Закрепить в местах</sys:String>
+    <sys:String x:Key="Str_Menu_UnpinPlace">Убрать из мест</sys:String>
+    <sys:String x:Key="Str_Btn_Edit">Изменить</sys:String>
+    <sys:String x:Key="Str_Side_NoAppointments">В этот день встреч нет</sys:String>
+
+    <!-- Portable install (family install system) -->
+    <sys:String x:Key="Str_Portable">ПОРТАТИВНЫЙ</sys:String>
+    <sys:String x:Key="Str_Btn_Install">Установить Killendar</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallMsg">Установить Killendar на этот компьютер?</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallBullets">Killendar копируется в папку программ, и добавляется пункт в меню Пуск.&#x0a;Ваши Killendar-файлы не затрагиваются, а эта копия exe остаётся на месте.&#x0a;Killendar перезапускается из установленного расположения.</sys:String>
+    <sys:String x:Key="Str_Btn_DoInstall">Установить</sys:String>
+    <sys:String x:Key="Str_Chk_Desktop">Добавить ярлык на рабочий стол</sys:String>
+    <sys:String x:Key="Str_Chk_AllUsers">Установить для всех на этом компьютере (нужны права администратора)</sys:String>
+    <sys:String x:Key="Str_Status_InstallFailed">Установка не завершилась - Killendar по-прежнему работает портативно.</sys:String>
+
+    <!-- Shortcuts overlay (F1). One binding table in Shell/ShortcutsOverlay.cs feeds both the
+         list and the keyboard map, so each of these is used in exactly one place. -->
+    <sys:String x:Key="Str_KS_Title">Сочетания клавиш</sys:String>
+    <sys:String x:Key="Str_KS_ViewList">СПИСОК</sys:String>
+    <sys:String x:Key="Str_KS_ViewMap">КЛАВИАТУРА</sys:String>
+    <sys:String x:Key="Str_KS_Hint">Одиночные клавиши отступают, пока вы печатаете</sys:String>
+    <sys:String x:Key="Str_TT_Shortcuts">Сочетания клавиш (F1)</sys:String>
+    <sys:String x:Key="Str_KS_GrpViews">ВИДЫ</sys:String>
+    <sys:String x:Key="Str_KS_GrpNav">НАВИГАЦИЯ</sys:String>
+    <sys:String x:Key="Str_KS_GrpAppt">ВСТРЕЧИ</sys:String>
+    <sys:String x:Key="Str_KS_GrpFile">ФАЙЛ</sys:String>
+    <sys:String x:Key="Str_KS_GrpHelp">СПРАВКА</sys:String>
+    <sys:String x:Key="Str_KS_Month">Вид месяца</sys:String>
+    <sys:String x:Key="Str_KS_Week">Вид недели</sys:String>
+    <sys:String x:Key="Str_KS_Day">Вид дня</sys:String>
+    <sys:String x:Key="Str_KS_Agenda">Вид расписания</sys:String>
+    <sys:String x:Key="Str_KS_Prev">Предыдущий месяц, неделя или день</sys:String>
+    <sys:String x:Key="Str_KS_Next">Следующий месяц, неделя или день</sys:String>
+    <sys:String x:Key="Str_KS_Today">Перейти к сегодняшнему дню</sys:String>
+    <sys:String x:Key="Str_KS_New">Новая встреча здесь</sys:String>
+    <sys:String x:Key="Str_KS_Panel">Панель встреч</sys:String>
+    <sys:String x:Key="Str_KS_SaveAppt">Сохранить редактируемую встречу</sys:String>
+    <sys:String x:Key="Str_KS_DeleteAppt">Удалить редактируемую встречу</sys:String>
+    <sys:String x:Key="Str_KS_AllDay">Переключить весь день при редактировании</sys:String>
+    <sys:String x:Key="Str_KS_Repeats">Открыть параметры повтора при редактировании</sys:String>
+    <sys:String x:Key="Str_KS_ShrinkAppt">Свернуть или развернуть выбранную встречу в месяце</sys:String>
+    <sys:String x:Key="Str_KS_Import">Импортировать файл календаря</sys:String>
+    <sys:String x:Key="Str_KS_Export">Экспортировать календарь</sys:String>
+    <sys:String x:Key="Str_KS_Reload">Перезагрузить открытый Killendar</sys:String>
+    <sys:String x:Key="Str_KS_ThisList">Этот список сочетаний</sys:String>
+    <sys:String x:Key="Str_KS_About">Карточка о программе</sys:String>
+    <sys:String x:Key="Str_KS_Close">Закрыть панель или карточку</sys:String>
+    <sys:String x:Key="Str_Status_Reloaded">Открытый Killendar перезагружен с диска.</sys:String>
+    <sys:String x:Key="Str_TT_DataFolder">Сменить папку Killendar</sys:String>
+    <sys:String x:Key="Str_TT_PortableFolder">Использовать папку рядом с Killendar.exe</sys:String>
+    <sys:String x:Key="Str_TT_StorageOptions">Параметры папки Killendar</sys:String>
+    <sys:String x:Key="Str_Menu_OpenDataFolder">Открыть текущую папку Killendar</sys:String>
+    <sys:String x:Key="Str_Menu_ChooseDataFolder">Выбрать другую папку...</sys:String>
+    <sys:String x:Key="Str_Menu_PortableDataFolder">Использовать папку рядом с Killendar.exe</sys:String>
+    <sys:String x:Key="Str_Kc_DataFolderTitle">Выберите папку Killendar</sys:String>
+    <sys:String x:Key="Str_Kc_DataFolderChanged">Папка Killendar: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_DataFolderFailed">Не удалось использовать эту папку: {0}</sys:String>
+
+    <!-- Categories -->
+    <sys:String x:Key="Str_Fld_Categories">КАТЕГОРИИ</sys:String>
+    <sys:String x:Key="Str_Hint_NoCategories">Категорий пока нет. Добавьте их на боковой панели.</sys:String>
+    <sys:String x:Key="Str_TT_Categories">Категории</sys:String>
+    <!-- Density.cs appends the current lines-per-hour in brackets, so this reads
+         "Grid density - click or scroll  (2)". {0} in the status line is that same number. -->
+    <sys:String x:Key="Str_TT_Density">Плотность сетки - нажмите или прокрутите</sys:String>
+    <sys:String x:Key="Str_St_Density">Плотность сетки: {0} линий в час</sys:String>
+    <sys:String x:Key="Str_TT_WorkWeek">5-дневная рабочая неделя</sys:String>
+    <sys:String x:Key="Str_Btn_WorkWeek">5 дней</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOn">Вид недели показывает рабочую неделю (пн - пт)</sys:String>
+    <sys:String x:Key="Str_St_WorkWeekOff">Вид недели показывает всю неделю</sys:String>
+    <sys:String x:Key="Str_Cat_Title">Категории</sys:String>
+    <sys:String x:Key="Str_Cat_Hint">Цвета для этого Killendar. У встречи может быть несколько категорий; цвет задаёт первая.</sys:String>
+    <sys:String x:Key="Str_Cat_NeedName">Дайте категории имя.</sys:String>
+    <sys:String x:Key="Str_Cat_Exists">Категория с таким именем уже есть.</sys:String>
+    <sys:String x:Key="Str_Cat_DeleteHead">Удалить {0}?</sys:String>
+    <sys:String x:Key="Str_Cat_DeleteBody">Она будет убрана из каждой встречи, где она стоит. Сами встречи останутся нетронутыми.</sys:String>
+    <sys:String x:Key="Str_Btn_CatAdd">Добавить</sys:String>
+    <sys:String x:Key="Str_Btn_Done">Готово</sys:String>
+    <sys:String x:Key="Str_TT_CatPickColor">Выберите цвет для новой категории</sys:String>
+    <sys:String x:Key="Str_TT_CatRecolor">Изменить цвет</sys:String>
+    <sys:String x:Key="Str_TT_CatRename">Переименовать</sys:String>
+    <sys:String x:Key="Str_TT_CatDelete">Удалить</sys:String>
+
+    <!-- Color picker -->
+    <sys:String x:Key="Str_Dlg_PickColor">Выберите цвет</sys:String>
+    <sys:String x:Key="Str_TT_Eyedropper">Взять цвет с любого места экрана</sys:String>
+    <sys:String x:Key="Str_Btn_Reset">Сбросить</sys:String>
+    <sys:String x:Key="Str_TT_ReplaceSwatch">Нажмите, затем нажмите образец, чтобы задать ему текущий цвет</sys:String>
+    <sys:String x:Key="Str_TT_ResetSwatches">Сбросить образцы к значениям по умолчанию</sys:String>
+    <sys:String x:Key="Str_TT_SwatchReplace">Нажмите, чтобы задать этому образцу текущий цвет</sys:String>
+    <sys:String x:Key="Str_TT_SwatchUse">Нажмите, чтобы использовать этот цвет</sys:String>
+
+</ResourceDictionary>
