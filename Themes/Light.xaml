@@ -13,14 +13,14 @@
     <SolidColorBrush x:Key="HeaderLineBrush"     Color="#1b5e20" po:Freeze="True"/>
     <SolidColorBrush x:Key="OnPrimaryBrush"      Color="#FFFFFF" po:Freeze="True"/>
     <SolidColorBrush x:Key="OutlineBtnBrush"     Color="#1b5e20" po:Freeze="True"/>
-    <SolidColorBrush x:Key="InputHoverBrush"     Color="#888888" po:Freeze="True"/>
+    <SolidColorBrush x:Key="InputHoverBrush"     Color="#8a8a8a" po:Freeze="True"/>
     <SolidColorBrush x:Key="TextFooter"          Color="#888888" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="BackgroundBrush"     Color="#dcdcdc" po:Freeze="True"/>
     <SolidColorBrush x:Key="SurfaceBrush"        Color="#f0f0f0" po:Freeze="True"/>
-    <SolidColorBrush x:Key="PaneBrush"           Color="#c8c8c8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TableHeaderBrush"    Color="#d2d2d2" po:Freeze="True"/>
-    <SolidColorBrush x:Key="CardBorderBrush"     Color="#b0b0b0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PaneBrush"           Color="#e8e8e8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TableHeaderBrush"    Color="#f0f0f0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="CardBorderBrush"     Color="#c0c0c0" po:Freeze="True"/>
     <SolidColorBrush x:Key="PaneBorderBrush"     Color="#b0b0b0" po:Freeze="True"/>
     <SolidColorBrush x:Key="AppBorderBrush"      Color="#b0b0b0" po:Freeze="True"/>
 
