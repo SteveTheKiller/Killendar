@@ -207,6 +207,7 @@ namespace Killendar.Services
             }
 
             Alias("ChipBrush", "RowHoverBrush");
+            Alias("SurfaceHoverBrush", "RowHoverBrush");
             Alias("KsCatAppt", "PrimaryBrush");
             Alias("AppBorderBrush", "CardBorderBrush");
             Alias("OutlineRestBrush", "OutlineBtnBrush");
