@@ -75,7 +75,11 @@ namespace Killendar.Features
                 if (v is MonthView month)
                 {
                     month.EventDropped += MoveDropped;
-                    month.ZoomChanged += RefreshPeriodLabel;
+                    month.ZoomChanged += () =>
+                    {
+                        RefreshPeriodLabel();
+                        _host.ShowFineMonthNavigation(_active == _month && _month.IsRollingMode);
+                    };
                 }
             }
 
@@ -108,6 +112,7 @@ namespace Killendar.Features
 
             _host.ShowView(_active);
             _host.HighlightTab(which);
+            _host.ShowFineMonthNavigation(_active == _month && _month.IsRollingMode);
             RefreshPeriodLabel();
         }
 
@@ -128,7 +133,11 @@ namespace Killendar.Features
         internal void SetMonthRollingMode(bool rolling)
         {
             _month.SetRollingMode(rolling);
-            if (_active == _month) RefreshPeriodLabel();
+            if (_active == _month)
+            {
+                RefreshPeriodLabel();
+                _host.ShowFineMonthNavigation(_month.IsRollingMode);
+            }
         }
 
         internal void GoToday()
@@ -141,6 +150,14 @@ namespace Killendar.Features
         internal void Move(int direction)
         {
             _anchor = _active.Step(_anchor, direction);
+            _active.Anchor = _anchor;
+            RefreshPeriodLabel();
+        }
+
+        internal void MoveOneWeek(int direction)
+        {
+            if (_active != _month || !_month.IsRollingMode) return;
+            _anchor = _anchor.AddDays(7 * direction);
             _active.Anchor = _anchor;
             RefreshPeriodLabel();
         }

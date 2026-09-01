@@ -15,6 +15,8 @@ namespace Killendar.Features
         /// <summary>Marks one of Month / Week / Day / Agenda as the active tab.</summary>
         void HighlightTab(string which);
 
+        void ShowFineMonthNavigation(bool visible);
+
         /// <summary>
         /// Ctrl+wheel over a time grid asked for a density step (+1 or -1). The shell owns the
         /// setting because it is persisted and shared by Week and Day, and the rail button reaches

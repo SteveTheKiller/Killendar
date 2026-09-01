@@ -219,8 +219,16 @@
                         <Button x:Name="PrevBtn" Content="&#xE76B;" FontFamily="Segoe MDL2 Assets" FontSize="10"
                                 Style="{StaticResource ToolbarButton}" Padding="8,5" Margin="0,0,2,0"
                                 Click="PrevBtn_Click" ToolTip="{DynamicResource Str_TT_Prev}"/>
+                        <Button x:Name="PrevWeekBtn" Content="&#x2039;" FontSize="17"
+                                Style="{StaticResource ToolbarButton}" Padding="8,5" Margin="0,0,2,0"
+                                Visibility="Collapsed" Click="PrevWeekBtn_Click"
+                                ToolTip="{DynamicResource Str_TT_Prev}"/>
                         <Button x:Name="TodayBtn" Content="{DynamicResource Str_Btn_Today}" Style="{StaticResource ToolbarButton}"
                                 Click="TodayBtn_Click"/>
+                        <Button x:Name="NextWeekBtn" Content="&#x203A;" FontSize="17"
+                                Style="{StaticResource ToolbarButton}" Padding="8,5" Margin="2,0,0,0"
+                                Visibility="Collapsed" Click="NextWeekBtn_Click"
+                                ToolTip="{DynamicResource Str_TT_Next}"/>
                         <Button x:Name="NextBtn" Content="&#xE76C;" FontFamily="Segoe MDL2 Assets" FontSize="10"
                                 Style="{StaticResource ToolbarButton}" Padding="8,5" Margin="2,0,0,0"
                                 Click="NextBtn_Click" ToolTip="{DynamicResource Str_TT_Next}"/>

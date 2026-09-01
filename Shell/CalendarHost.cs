@@ -140,6 +140,17 @@ namespace Killendar.Shell
             RefreshDensityTooltip();
         }
 
+        void ICalendarHost.ShowFineMonthNavigation(bool visible)
+        {
+            var state = visible ? Visibility.Visible : Visibility.Collapsed;
+            PrevWeekBtn.Visibility = state;
+            NextWeekBtn.Visibility = state;
+            PrevBtn.Content = visible ? "«" : ((char)0xE76B).ToString();
+            NextBtn.Content = visible ? "»" : ((char)0xE76C).ToString();
+            PrevBtn.FontFamily = visible ? SystemFonts.MessageFontFamily : new FontFamily("Segoe MDL2 Assets");
+            NextBtn.FontFamily = visible ? SystemFonts.MessageFontFamily : new FontFamily("Segoe MDL2 Assets");
+        }
+
         // ---- toolbar ----
 
         private void ViewTab_Click(object sender, RoutedEventArgs e)
@@ -162,7 +173,11 @@ namespace Killendar.Shell
 
         private void PrevBtn_Click(object sender, RoutedEventArgs e) => _calendar.Move(-1);
 
+        private void PrevWeekBtn_Click(object sender, RoutedEventArgs e) => _calendar.MoveOneWeek(-1);
+
         private void NextBtn_Click(object sender, RoutedEventArgs e) => _calendar.Move(1);
+
+        private void NextWeekBtn_Click(object sender, RoutedEventArgs e) => _calendar.MoveOneWeek(1);
 
         private void TodayBtn_Click(object sender, RoutedEventArgs e) => _calendar.GoToday();
 
