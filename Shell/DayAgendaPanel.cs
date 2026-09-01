@@ -50,6 +50,7 @@ namespace Killendar.Shell
             EditorScroll.Visibility  = agenda ? Visibility.Collapsed : Visibility.Visible;
             EditorActions.Visibility = agenda ? Visibility.Collapsed : Visibility.Visible;
             AgendaScroll.Visibility  = agenda ? Visibility.Visible : Visibility.Collapsed;
+            SidebarDensityBtn.Visibility = agenda ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void BuildDayAgendaRows()
@@ -83,14 +84,12 @@ namespace Killendar.Shell
 
         private FrameworkElement BuildDayAgendaRow(CalendarEvent ev)
         {
-            // The rail's density button drives this list too (2026-07-31): the same knob
-            // that packs the hour grid tighter makes these rows say more, so the whole title and
-            // the appointment's info are readable without hovering for the tooltip.
+            // The sidebar has its own density button, independent from calendar grid spacing.
             //   0 - one trimmed line, as always
             //   1 - the title wraps instead of trimming
             //   2 - and the location shows under it
             //   3 - and the description and attendees too
-            int detail = Views.CalendarChrome.Density;
+            int detail = _sidebarDensity;
 
             var row = new Grid();
             row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // content

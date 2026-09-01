@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.1.1] - Unreleased
 
 ### Added
+- Calendar-grid and appointment-sidebar density can now be adjusted independently (#10).
 - The appointment sidebar remembers whether it was open across launches and F5 reloads (#12).
 - Week start can follow Windows or be set independently to Sunday or Monday (#6).
 - Italian localization for the complete app interface and killendar.net, bringing both to thirteen languages.

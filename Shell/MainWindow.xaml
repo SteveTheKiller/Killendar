@@ -486,6 +486,13 @@
                                                VerticalAlignment="Center" Foreground="{DynamicResource PrimaryBrush}"/>
                                 </Grid>
                             </Viewbox>
+                            <Button x:Name="SidebarDensityBtn" Grid.Row="0"
+                                    Style="{StaticResource RailButton}" Content="&#xE8A1;"
+                                    FontFamily="Segoe MDL2 Assets" FontSize="13"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center"
+                                    Margin="0,8,10,6" Visibility="Collapsed"
+                                    Click="SidebarDensityBtn_Click"
+                                    MouseWheel="SidebarDensityBtn_MouseWheel"/>
 
                             <ScrollViewer x:Name="EditorScroll" Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,2,0">
                                 <StackPanel Margin="10,0,6,10">

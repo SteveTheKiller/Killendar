@@ -20,21 +20,23 @@ using Killendar.Views;
 //     scrolls the day.
 //
 // Persisted as "TimeGridDensity". Month reads the same four steps as event detail: colored stripe,
-// title, start time + title, then full time range + title. The Agenda VIEW has no compact cells.
-// The sidebar's day agenda follows it too (2026-07-31), reading it as detail per
-// row rather than lines per hour: step 0 is one trimmed line, then the title wraps, then the
-// location shows, then description and attendees - so at the top step everything the hover
-// tooltip says is on the row itself.
+// title, start time + title, then full time range + title. The sidebar has its own persisted detail
+// level because calendar spacing and appointment detail are separate choices.
 // ============================================================
 namespace Killendar.Shell
 {
     public partial class MainWindow
     {
+        private int _sidebarDensity = CalendarChrome.MaxDensity;
+
         private void InitDensity()
         {
             CalendarChrome.Density =
                 int.TryParse(Settings.Get("TimeGridDensity"), out int d) ? d : 0;   // the property clamps
+            if (int.TryParse(Settings.Get("SidebarDensity"), out int sidebar))
+                _sidebarDensity = ClampDensity(sidebar);
             RefreshDensityTooltip();
+            RefreshSidebarDensityTooltip();
         }
 
         /// <summary>Click cycles forward and wraps, so the button alone can reach every step.</summary>
@@ -65,8 +67,6 @@ namespace Killendar.Shell
             // unlike the selection marker, which repaints two cells.
             _calendar.Refresh();
 
-            // The sidebar's day agenda reads density as detail per row; rebuild it if showing.
-            if (_agendaDay != null) BuildDayAgendaRows();
             // StatusText directly, NOT SetStatus: that is an EXPLICIT IShellServices implementation
             // and so is not callable unqualified from inside the class. Language.cs writes the
             // status the same way; Install.cs casts instead. (CS0103.)
@@ -83,5 +83,33 @@ namespace Killendar.Shell
                 ? Loc("Str_TT_Density") + "  (" + (CalendarChrome.Density + 1) + "/4)"
                 : Loc("Str_TT_Density") + "  (" + CalendarChrome.Subdivisions + ")";
         }
+
+        private void SidebarDensityBtn_Click(object sender, RoutedEventArgs e)
+            => ApplySidebarDensity((_sidebarDensity + 1) % (CalendarChrome.MaxDensity + 1));
+
+        private void SidebarDensityBtn_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            e.Handled = true;
+            ApplySidebarDensity(_sidebarDensity + (e.Delta > 0 ? 1 : -1));
+        }
+
+        private void ApplySidebarDensity(int level)
+        {
+            int next = ClampDensity(level);
+            if (next == _sidebarDensity) return;
+            _sidebarDensity = next;
+            Settings.Set("SidebarDensity", _sidebarDensity.ToString());
+            RefreshSidebarDensityTooltip();
+            if (_agendaDay != null) BuildDayAgendaRows();
+        }
+
+        private void RefreshSidebarDensityTooltip()
+        {
+            if (SidebarDensityBtn != null)
+                SidebarDensityBtn.ToolTip = Loc("Str_TT_Density") + "  (" + (_sidebarDensity + 1) + "/4)";
+        }
+
+        private static int ClampDensity(int level)
+            => level < 0 ? 0 : level > CalendarChrome.MaxDensity ? CalendarChrome.MaxDensity : level;
     }
 }
