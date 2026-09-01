@@ -7,13 +7,13 @@
     <sys:Double x:Key="IconShadowOpacity">1.0</sys:Double>
 
     <!-- CYANOTIC theme. -->
-    <SolidColorBrush x:Key="PrimaryBrush"        Color="#3aa0d8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="PrimaryHoverBrush"   Color="#3aa0d8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#3aa0d8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryBrush"        Color="#ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryHoverBrush"   Color="#ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#ffffff" po:Freeze="True"/>
     <SolidColorBrush x:Key="HeaderLineBrush"     Color="#2a7099" po:Freeze="True"/>
-    <SolidColorBrush x:Key="OnPrimaryBrush"      Color="#04222e" po:Freeze="True"/>
-    <SolidColorBrush x:Key="OutlineBtnBrush"     Color="#e0d49a" po:Freeze="True"/>
-    <SolidColorBrush x:Key="InputHoverBrush"     Color="#6a8092" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OnPrimaryBrush"      Color="#00263a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OutlineBtnBrush"     Color="#3aa0d8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="InputHoverBrush"     Color="#2f6f9c" po:Freeze="True"/>
     <SolidColorBrush x:Key="TextFooter"          Color="#4a88bb" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="BackgroundBrush"     Color="#001a28" po:Freeze="True"/>
