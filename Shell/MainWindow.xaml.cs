@@ -31,6 +31,9 @@ namespace Killendar.Shell
                 {
                     OpenCalendarData();        // opens, unlocks if needed, paints
                     HandlePendingOpenFile();   // a double-clicked .kcal, if any
+                    if (string.Equals(Settings.Get("AppointmentSidebarOpen"), "1",
+                                      System.StringComparison.Ordinal))
+                        RestoreSidebarPanel();
                 }), System.Windows.Threading.DispatcherPriority.Background);
             };
 

@@ -17,6 +17,10 @@ namespace Killendar.Features
         /// <summary>Repaints the current calendar view after the store changes underneath it.</summary>
         void RefreshView();
 
+        bool IsSidebarOpen { get; }
+
+        void RestoreSidebar();
+
         /// <summary>Closes the appointment sidebar; what it was editing may be about to disappear
         /// with the Killendar being closed.</summary>
         void CloseSidebar();

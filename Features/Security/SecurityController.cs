@@ -330,10 +330,12 @@ namespace Killendar.Features
         /// visible immediately. The session password is retained for encrypted Killendars.</summary>
         internal void ReloadActive()
         {
+            bool restoreSidebar = _host.IsSidebarOpen;
             _host.CloseSidebar();
             _store.Close();
             if (!Open(exitOnCancel: false)) return;
             _host.RefreshView();
+            if (restoreSidebar) _host.RestoreSidebar();
             _host.SetStatus(_host.Loc("Str_Status_Reloaded"));
         }
     }

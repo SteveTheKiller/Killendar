@@ -67,6 +67,7 @@ namespace Killendar.Shell
             // to the open minimum once the panel is fully out.
             bool was = _sidebarOpen;
             _sidebarOpen = true;
+            Settings.Set("AppointmentSidebarOpen", "1");
             if (!was) { GrowForSidebar(); SlideSidebar(_sidebarWidth); }
             else SidebarSplitter.IsEnabled = true;
             SidebarToggleBtn.Content = ChevronClose;
@@ -84,6 +85,7 @@ namespace Killendar.Shell
             // reads the flag to decide whether to raise it again at the end of the slide.
             bool was = _sidebarOpen;
             _sidebarOpen = false;
+            Settings.Set("AppointmentSidebarOpen", "0");
             SidebarSplitter.IsEnabled = false;
             if (was) { ShrinkAfterSidebar(); SlideSidebar(0); }
             SidebarToggleBtn.Content = ChevronOpen;
@@ -97,6 +99,9 @@ namespace Killendar.Shell
             // panel goes. Today's own fill comes back on its own once nothing is selected.
             _calendar.SetSelection(null, null);
         }
+
+        private void RestoreSidebarPanel()
+            => ShowDayAgenda(_calendar.Anchor.Date, null);
 
         // ---- window width while the panel slides ----
         //

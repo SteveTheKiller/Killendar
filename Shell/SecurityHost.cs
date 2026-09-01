@@ -27,6 +27,10 @@ namespace Killendar.Shell
 
         void ISecurityHost.RefreshView() => _calendar.Refresh();
 
+        bool ISecurityHost.IsSidebarOpen => _sidebarOpen;
+
+        void ISecurityHost.RestoreSidebar() => RestoreSidebarPanel();
+
         void ISecurityHost.CloseSidebar() => CloseSidebar();
 
         /// <summary>Routes a double-clicked .kcal after the active Killendar has opened. Internal:
