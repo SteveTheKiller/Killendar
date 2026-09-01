@@ -250,7 +250,7 @@
   // The hero-info card carries no data-i18n on purpose - release.ps1 rewrites it by matching
   // the literal English label spans. Values may contain markup; they are our own strings.
 
-  var LANGS = ['en', 'es', 'fr', 'de', 'cs', 'tr', 'ja', 'pl', 'bn', 'zh-CN', 'zh-TW', 'hu', 'it'];
+  var LANGS = ['en', 'es', 'fr', 'de', 'cs', 'tr', 'ja', 'pl', 'bn', 'zh-CN', 'zh-TW', 'hu', 'it', 'ru', 'kk'];
 
   // Flag SVGs, KillerPDF's kp.js set verbatim; the toggle wears the chosen language's flag.
   var FLAGS = {
@@ -266,7 +266,11 @@
     cs: '<svg viewBox="0 0 24 24"><rect width="24" height="12" fill="#fff"/><rect y="12" width="24" height="12" fill="#d7141a"/><polygon points="0,0 12,12 0,24" fill="#11457e"/></svg>',
     pl: '<svg viewBox="0 0 24 24"><rect width="24" height="12" fill="#fff"/><rect y="12" width="24" height="12" fill="#dc143c"/></svg>',
     hu: '<svg viewBox="0 0 24 24"><rect width="24" height="8" fill="#ce2939"/><rect y="8" width="24" height="8" fill="#fff"/><rect y="16" width="24" height="8" fill="#477050"/></svg>',
-    it: '<svg viewBox="0 0 24 24"><rect width="8" height="24" fill="#009246"/><rect x="8" width="8" height="24" fill="#fff"/><rect x="16" width="8" height="24" fill="#ce2b37"/></svg>'
+    it: '<svg viewBox="0 0 24 24"><rect width="8" height="24" fill="#009246"/><rect x="8" width="8" height="24" fill="#fff"/><rect x="16" width="8" height="24" fill="#ce2b37"/></svg>',
+    ru: '<svg viewBox="0 0 24 24"><rect width="24" height="8" fill="#fff"/><rect y="8" width="24" height="8" fill="#0039a6"/><rect y="16" width="24" height="8" fill="#d52b1e"/></svg>',
+    // Sun over a soaring steppe eagle: four crossed bars make the rays, the disc covers their
+    // middle, and the bird is one polygon - the same trick the tr star uses.
+    kk: '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#00AFCA"/><g fill="#FEC50C"><rect x="11.65" y="5.2" width="0.7" height="9.6"/><rect x="11.65" y="5.2" width="0.7" height="9.6" transform="rotate(45 12 10)"/><rect x="11.65" y="5.2" width="0.7" height="9.6" transform="rotate(90 12 10)"/><rect x="11.65" y="5.2" width="0.7" height="9.6" transform="rotate(135 12 10)"/><circle cx="12" cy="10" r="3.4"/><polygon points="12,16.2 14,17.2 18,17 21.5,17.8 17.5,18.4 14.5,19.2 12.6,18.6 12,19.8 11.4,18.6 9.5,19.2 6.5,18.4 2.5,17.8 6,17 10,17.2"/></g></svg>'
   };
 
   // kd-i18n.js sets a plain global. Falling back to an empty table means a page that somehow
