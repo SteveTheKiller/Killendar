@@ -213,14 +213,14 @@ namespace Killendar.Shell
                 header.SetResourceReference(TextBlock.ForegroundProperty, "KsCat" + cat);
                 host.Children.Add(header);
 
-                foreach (var row in display.Where(x => x.Key.Cat == cat).Select(x => x.Value))
+                foreach (var (shortcutKeys, binding) in display.Where(x => x.Key.Cat == cat).Select(x => x.Value))
                 {
                     var grid = new Grid { Margin = new Thickness(0, 0, 0, 6) };
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(104) });
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                     var keys = new TextBlock
                     {
-                        Text = row.Keys, FontFamily = new FontFamily("Consolas"),
+                        Text = shortcutKeys, FontFamily = new FontFamily("Consolas"),
                         FontSize = 11.5, Margin = new Thickness(0, 0, 10, 0),
                     };
                     keys.SetResourceReference(TextBlock.ForegroundProperty, "PrimaryBrush");
@@ -228,7 +228,7 @@ namespace Killendar.Shell
 
                     var label = new TextBlock
                     {
-                        Text = Loc(row.Binding.LabelKey), FontSize = 11.5,
+                        Text = Loc(binding.LabelKey), FontSize = 11.5,
                         TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 1, 0, 0)
                     };
                     label.SetResourceReference(TextBlock.ForegroundProperty, "MutedTextBrush");
