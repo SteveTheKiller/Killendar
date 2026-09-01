@@ -42,7 +42,7 @@ namespace Killendar.Views
                 var s = RangeStart;
                 var e = s.AddDays(Days - 1);
                 return s.Year == e.Year && s.Month == e.Month
-                    ? $"{s:MMM d} - {e:d}, {e:yyyy}"
+                    ? $"{s:MMM d} - {e.Day}, {e:yyyy}"
                     : $"{s:MMM d} - {e:MMM d}, {e:yyyy}";
             }
         }

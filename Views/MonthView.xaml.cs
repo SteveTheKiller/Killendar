@@ -186,7 +186,7 @@ namespace Killendar.Views
                 var start = _rollingStart;
                 var end = start.AddDays(_visibleWeeks * 7 - 1);
                 return start.Year == end.Year && start.Month == end.Month
-                    ? $"{start:MMMM d} - {end:d}, {end:yyyy}"
+                    ? $"{start:MMMM d} - {end.Day}, {end:yyyy}"
                     : $"{start:MMM d} - {end:MMM d}, {end:yyyy}";
             }
         }
