@@ -20,7 +20,7 @@
     <!-- Bump with the version, same pass as the CHANGELOG section. Services/AppInfo.cs reads this
          back so a user can see how old their build is. release.ps1 preflight fails the release
          if this and the CHANGELOG section date disagree. -->
-    <ReleaseDate>2026-08-27</ReleaseDate>
+    <ReleaseDate>2026-09-01</ReleaseDate>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
 
