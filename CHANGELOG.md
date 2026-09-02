@@ -6,7 +6,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ## [1.1.1] - 2026-09-01
 
-1.1.1 answers the first round of user reports: multi-day blocks in Month view, separate grid and sidebar density, a week start setting, Hungarian and Italian, optional address suggestions and a crash log, plus fixes for the time box crash, AltGr shortcuts and the theme picker on Sepulchre and Mourning.
+1.1.1 is a bug fix and polish release answering the first round of user reports.
 
 ### Added
 - Multi-day appointments now appear as one continuous block across the Month view (#1).
