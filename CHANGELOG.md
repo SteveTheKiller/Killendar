@@ -8,6 +8,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 1.1.2 improves the calendar layout.
 
+### Added
+- Agenda automatically shows two columns in wide windows and one column in narrow windows.
+
 ### Fixed
 - The sidebar density button no longer overlaps the date and matches the other controls' size (#10).
 

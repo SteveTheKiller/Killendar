@@ -15,10 +15,15 @@ namespace Killendar.Views
     internal sealed class AgendaView : UserControl, ICalendarView
     {
         private const int WindowDays = 60;
+        private const double ColumnMinWidth = 480;
+        private const double ColumnGap = 24;
 
         private EventStore? _store;
         private DateTime _anchor = DateTime.Today;
-        private readonly StackPanel _list;
+        private readonly Grid _list;
+        private readonly ScrollViewer _scroller;
+        private readonly List<StackPanel> _dayGroups = [];
+        private int _columns = 1;
 
         public event Action<CalendarEvent>? EventSelected;
         public event Action<DateTime>? DaySelected;
@@ -33,13 +38,15 @@ namespace Killendar.Views
 
         public AgendaView()
         {
-            _list = new StackPanel { Margin = new Thickness(16, 10, 16, 16) };
-            Content = new ScrollViewer
+            _list = new Grid { Margin = new Thickness(16, 10, 16, 16) };
+            _scroller = new ScrollViewer
             {
                 VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
                 HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
                 Content = _list
             };
+            _scroller.SizeChanged += (_, _) => ArrangeDays();
+            Content = _scroller;
         }
 
         public DateTime Anchor
@@ -78,6 +85,7 @@ namespace Killendar.Views
         {
             if (_store == null) return;
             _list.Children.Clear();
+            _dayGroups.Clear();
 
             var from = _anchor.Date;
             var to = from.AddDays(WindowDays);
@@ -89,6 +97,7 @@ namespace Killendar.Views
                 empty.Margin = new Thickness(0, 24, 0, 0);
                 empty.HorizontalAlignment = HorizontalAlignment.Center;
                 _list.Children.Add(empty);
+                ArrangeDays(force: true);
                 return;
             }
 
@@ -109,6 +118,9 @@ namespace Killendar.Views
             var today = DateTime.Today;
             foreach (var kv in byDay)
             {
+                var group = new StackPanel { VerticalAlignment = VerticalAlignment.Top };
+                _dayGroups.Add(group);
+                _list.Children.Add(group);
                 var date = kv.Key;
                 bool isToday = date == today;
 
@@ -140,15 +152,43 @@ namespace Killendar.Views
                 dayDate.VerticalAlignment = VerticalAlignment.Center;
                 head.Children.Add(dayName);
                 head.Children.Add(dayDate);
-                _list.Children.Add(head);
+                group.Children.Add(head);
 
                 var rule = new Border { BorderThickness = new Thickness(0, 0, 0, 1), Margin = new Thickness(0, 0, 0, 4) };
                 rule.Themed(Border.BorderBrushProperty, "CardBorderBrush");
-                _list.Children.Add(rule);
+                group.Children.Add(rule);
 
                 foreach (var ev in kv.Value)
-                    _list.Children.Add(BuildRow(ev));
+                    group.Children.Add(BuildRow(ev));
             }
+            ArrangeDays(force: true);
+        }
+
+        private void ArrangeDays(bool force = false)
+        {
+            // Reserve the scrollbar width even when it is hidden, so changing the number of
+            // columns cannot repeatedly cross the breakpoint by changing scrollbar visibility.
+            double available = _scroller.ActualWidth - SystemParameters.VerticalScrollBarWidth - 32;
+            int columns = available >= ColumnMinWidth * 2 + ColumnGap ? 2 : 1;
+            if (!force && columns == _columns) return;
+            _columns = columns;
+            _list.ColumnDefinitions.Clear();
+            _list.RowDefinitions.Clear();
+            _list.ColumnDefinitions.Add(new ColumnDefinition());
+            if (columns == 2)
+            {
+                _list.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ColumnGap) });
+                _list.ColumnDefinitions.Add(new ColumnDefinition());
+            }
+            for (int i = 0; i < _dayGroups.Count; i++)
+            {
+                if (i % columns == 0)
+                    _list.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                Grid.SetRow(_dayGroups[i], i / columns);
+                Grid.SetColumn(_dayGroups[i], (i % columns) * 2);
+            }
+            if (_dayGroups.Count == 0 && _list.Children.Count != 0)
+                Grid.SetColumnSpan(_list.Children[0], _list.ColumnDefinitions.Count);
         }
 
         private Grid BuildRow(CalendarEvent ev)
@@ -159,6 +199,8 @@ namespace Killendar.Views
 
             var time = CalendarChrome.Text(ev.TimeLabel, "MutedTextBrush", 11, null, "Consolas");
             time.VerticalAlignment = VerticalAlignment.Center;
+            time.TextWrapping = TextWrapping.Wrap;
+            time.Margin = new Thickness(0, 0, 8, 0);
             Grid.SetColumn(time, 0);
             row.Children.Add(time);
 
