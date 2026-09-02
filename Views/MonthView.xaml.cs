@@ -197,7 +197,13 @@ namespace Killendar.Views
             ? _rollingStart.AddDays(7 * _visibleWeeks * direction)
             : from.AddMonths(direction);
 
-        public void Refresh() => Rebuild();
+        public void Refresh()
+        {
+            // The rolling anchor was aligned when the view opened. Realign it when
+            // refreshed so a changed week start moves dates with their headings.
+            if (_visibleWeeks > 0) _rollingStart = StartOfWeek(_rollingStart.AddDays(3));
+            Rebuild();
+        }
 
         /// <summary>First day of the week for the current culture, so this is not hardcoded to Sunday.</summary>
         private static DayOfWeek FirstDay => WeekStartManager.FirstDay;
