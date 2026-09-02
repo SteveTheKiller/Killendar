@@ -18,6 +18,10 @@
     <sys:String x:Key="Str_View_Agenda">Күн тәртібі</sys:String>
     <sys:String x:Key="Str_TT_Prev">Артқа</sys:String>
     <sys:String x:Key="Str_TT_Next">Алға</sys:String>
+    <sys:String x:Key="Str_TT_PrevWeek">Алдыңғы апта</sys:String>
+    <sys:String x:Key="Str_TT_NextWeek">Келесі апта</sys:String>
+    <sys:String x:Key="Str_TT_PrevRange">Алдыңғы көрсетілетін кезең</sys:String>
+    <sys:String x:Key="Str_TT_NextRange">Келесі көрсетілетін кезең</sys:String>
 
     <!-- Rail -->
     <sys:String x:Key="Str_TT_Theme">Тақырып</sys:String>

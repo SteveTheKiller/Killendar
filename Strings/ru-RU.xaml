@@ -19,6 +19,10 @@
     <sys:String x:Key="Str_View_Agenda">Расписание</sys:String>
     <sys:String x:Key="Str_TT_Prev">Назад</sys:String>
     <sys:String x:Key="Str_TT_Next">Вперёд</sys:String>
+    <sys:String x:Key="Str_TT_PrevWeek">Предыдущая неделя</sys:String>
+    <sys:String x:Key="Str_TT_NextWeek">Следующая неделя</sys:String>
+    <sys:String x:Key="Str_TT_PrevRange">Предыдущий видимый период</sys:String>
+    <sys:String x:Key="Str_TT_NextRange">Следующий видимый период</sys:String>
 
     <!-- Rail -->
     <sys:String x:Key="Str_TT_Theme">Тема</sys:String>

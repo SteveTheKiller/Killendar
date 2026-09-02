@@ -14,6 +14,10 @@
     <sys:String x:Key="Str_View_Agenda">Agenda</sys:String>
     <sys:String x:Key="Str_TT_Prev">Předchozí</sys:String>
     <sys:String x:Key="Str_TT_Next">Další</sys:String>
+    <sys:String x:Key="Str_TT_PrevWeek">Předchozí týden</sys:String>
+    <sys:String x:Key="Str_TT_NextWeek">Další týden</sys:String>
+    <sys:String x:Key="Str_TT_PrevRange">Předchozí zobrazené období</sys:String>
+    <sys:String x:Key="Str_TT_NextRange">Další zobrazené období</sys:String>
 
     <sys:String x:Key="Str_TT_Theme">Motiv</sys:String>
     <sys:String x:Key="Str_TT_Language">Jazyk</sys:String>

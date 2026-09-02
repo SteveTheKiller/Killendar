@@ -18,6 +18,10 @@
     <sys:String x:Key="Str_View_Agenda">Napirend</sys:String>
     <sys:String x:Key="Str_TT_Prev">Előző</sys:String>
     <sys:String x:Key="Str_TT_Next">Következő</sys:String>
+    <sys:String x:Key="Str_TT_PrevWeek">Előző hét</sys:String>
+    <sys:String x:Key="Str_TT_NextWeek">Következő hét</sys:String>
+    <sys:String x:Key="Str_TT_PrevRange">Előző látható időszak</sys:String>
+    <sys:String x:Key="Str_TT_NextRange">Következő látható időszak</sys:String>
 
     <!-- Rail -->
     <sys:String x:Key="Str_TT_Theme">téma</sys:String>

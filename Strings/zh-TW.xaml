@@ -14,6 +14,10 @@
     <sys:String x:Key="Str_View_Agenda">行程</sys:String>
     <sys:String x:Key="Str_TT_Prev">上一個</sys:String>
     <sys:String x:Key="Str_TT_Next">下一個</sys:String>
+    <sys:String x:Key="Str_TT_PrevWeek">上一週</sys:String>
+    <sys:String x:Key="Str_TT_NextWeek">下一週</sys:String>
+    <sys:String x:Key="Str_TT_PrevRange">上一顯示時段</sys:String>
+    <sys:String x:Key="Str_TT_NextRange">下一顯示時段</sys:String>
 
     <sys:String x:Key="Str_TT_Theme">佈景主題</sys:String>
     <sys:String x:Key="Str_TT_Language">語言</sys:String>

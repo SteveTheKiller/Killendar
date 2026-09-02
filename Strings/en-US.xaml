@@ -18,6 +18,10 @@
     <sys:String x:Key="Str_View_Agenda">Agenda</sys:String>
     <sys:String x:Key="Str_TT_Prev">Previous</sys:String>
     <sys:String x:Key="Str_TT_Next">Next</sys:String>
+    <sys:String x:Key="Str_TT_PrevWeek">Previous week</sys:String>
+    <sys:String x:Key="Str_TT_NextWeek">Next week</sys:String>
+    <sys:String x:Key="Str_TT_PrevRange">Previous visible range</sys:String>
+    <sys:String x:Key="Str_TT_NextRange">Next visible range</sys:String>
 
     <!-- Rail -->
     <sys:String x:Key="Str_TT_Theme">Theme</sys:String>

@@ -4,6 +4,12 @@ All notable changes to Killendar are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - Unreleased
+
+### Fixed
+- Changing the week start immediately updates the calendar dates as well as the headings (#6).
+- Rolling Month navigation has larger range arrows and distinct week and range tooltips (#11).
+
 ## [1.1.2] - 2026-09-02
 
 1.1.2 improves the calendar layout.

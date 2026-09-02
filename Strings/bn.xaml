@@ -14,6 +14,10 @@
     <sys:String x:Key="Str_View_Agenda">সূচি</sys:String>
     <sys:String x:Key="Str_TT_Prev">আগের</sys:String>
     <sys:String x:Key="Str_TT_Next">পরের</sys:String>
+    <sys:String x:Key="Str_TT_PrevWeek">আগের সপ্তাহ</sys:String>
+    <sys:String x:Key="Str_TT_NextWeek">পরের সপ্তাহ</sys:String>
+    <sys:String x:Key="Str_TT_PrevRange">আগের দৃশ্যমান সময়সীমা</sys:String>
+    <sys:String x:Key="Str_TT_NextRange">পরের দৃশ্যমান সময়সীমা</sys:String>
 
     <sys:String x:Key="Str_TT_Theme">থিম</sys:String>
     <sys:String x:Key="Str_TT_Language">ভাষা</sys:String>

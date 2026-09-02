@@ -14,6 +14,10 @@
     <sys:String x:Key="Str_View_Agenda">Ajanda</sys:String>
     <sys:String x:Key="Str_TT_Prev">Önceki</sys:String>
     <sys:String x:Key="Str_TT_Next">Sonraki</sys:String>
+    <sys:String x:Key="Str_TT_PrevWeek">Önceki hafta</sys:String>
+    <sys:String x:Key="Str_TT_NextWeek">Sonraki hafta</sys:String>
+    <sys:String x:Key="Str_TT_PrevRange">Önceki görünür aralık</sys:String>
+    <sys:String x:Key="Str_TT_NextRange">Sonraki görünür aralık</sys:String>
 
     <sys:String x:Key="Str_TT_Theme">Tema</sys:String>
     <sys:String x:Key="Str_TT_Language">Dil</sys:String>

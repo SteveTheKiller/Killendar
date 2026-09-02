@@ -14,6 +14,10 @@
     <sys:String x:Key="Str_View_Agenda">Agenda</sys:String>
     <sys:String x:Key="Str_TT_Prev">Precedente</sys:String>
     <sys:String x:Key="Str_TT_Next">Successivo</sys:String>
+    <sys:String x:Key="Str_TT_PrevWeek">Settimana precedente</sys:String>
+    <sys:String x:Key="Str_TT_NextWeek">Settimana successiva</sys:String>
+    <sys:String x:Key="Str_TT_PrevRange">Intervallo visibile precedente</sys:String>
+    <sys:String x:Key="Str_TT_NextRange">Intervallo visibile successivo</sys:String>
 
     <sys:String x:Key="Str_TT_Theme">Tema</sys:String>
     <sys:String x:Key="Str_TT_Language">Lingua</sys:String>
