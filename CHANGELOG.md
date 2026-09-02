@@ -18,6 +18,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Hungarian localization for the complete app interface and killendar.net, bringing both to twelve languages.
 - Optional address suggestions for the appointment location field, powered by Photon. The network lookup is off by default and can be enabled from the About card; typed locations stay on the machine unless the user opts in.
 - A crash log at %LOCALAPPDATA%\Killendar\crash.log records any unhandled error with its stack, so a report can say what actually failed.
+- First launch now picks the interface language from the Windows display language when it is one of the fifteen shipped, falling back to English.
 
 ### Changed
 - The SQLCipher encryption native is now built from upstream source (SQLCipher 4.18.0, SQLite 3.53.4) and vendored in the repo, replacing the deprecated SQLitePCLRaw.lib.e_sqlcipher package.
