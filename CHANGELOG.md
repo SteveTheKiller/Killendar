@@ -6,7 +6,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ## [1.1.1] - 2026-09-01
 
-1.1.1 is a bug fix and polish release answering the first round of user reports.
+1.1.1 fixes the time box crash and the first round of user reports, and adds a crash log, two languages and optional address suggestions.
 
 ### Added
 - Multi-day appointments now appear as one continuous block across the Month view (#1).
