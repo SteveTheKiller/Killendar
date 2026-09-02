@@ -4,6 +4,13 @@ All notable changes to Killendar are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - Unreleased
+
+1.1.2 improves the calendar layout.
+
+### Fixed
+- The sidebar density button no longer overlaps the date and matches the other controls' size (#10).
+
 ## [1.1.1] - 2026-09-01
 
 1.1.1 fixes the time box crash and the first round of user reports, and adds a crash log, two languages and optional address suggestions.

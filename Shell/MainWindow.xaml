@@ -477,30 +477,35 @@
                                  panel, and two controls a few pixels apart doing the same thing is
                                  just a second way to get it wrong. Cancel closes it too.
                                  (2026-07-30) -->
-                            <Viewbox Grid.Row="0" Margin="14,12,10,10"
-                                     HorizontalAlignment="Left" Stretch="Uniform"
-                                     StretchDirection="DownOnly">
-                                <Grid>
-                                    <TextBlock Text="{Binding Text, ElementName=SidebarTitle}" FontSize="20" Margin="1,2,0,0"
-                                               FontFamily="{DynamicResource SidebarHeadingFont}" FontWeight="Bold"
-                                               VerticalAlignment="Center" Foreground="#D0000000"
-                                               Opacity="{DynamicResource IconShadowOpacity}">
-                                        <TextBlock.Effect>
-                                            <BlurEffect Radius="3"/>
-                                        </TextBlock.Effect>
-                                    </TextBlock>
-                                    <TextBlock x:Name="SidebarTitle" Text="{DynamicResource Str_Side_New}" FontSize="20"
-                                               FontFamily="{DynamicResource SidebarHeadingFont}" FontWeight="Bold"
-                                               VerticalAlignment="Center" Foreground="{DynamicResource PrimaryBrush}"/>
-                                </Grid>
-                            </Viewbox>
-                            <Button x:Name="SidebarDensityBtn" Grid.Row="0"
-                                    Style="{StaticResource RailButton}" Content="&#xE8A1;"
-                                    FontFamily="Segoe MDL2 Assets" FontSize="13"
-                                    HorizontalAlignment="Right" VerticalAlignment="Center"
-                                    Margin="0,8,10,6" Visibility="Collapsed"
-                                    Click="SidebarDensityBtn_Click"
-                                    MouseWheel="SidebarDensityBtn_MouseWheel"/>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Viewbox Grid.Column="0" Margin="14,12,10,10"
+                                         HorizontalAlignment="Left" Stretch="Uniform"
+                                         StretchDirection="DownOnly">
+                                    <Grid>
+                                        <TextBlock Text="{Binding Text, ElementName=SidebarTitle}" FontSize="20" Margin="1,2,0,0"
+                                                   FontFamily="{DynamicResource SidebarHeadingFont}" FontWeight="Bold"
+                                                   VerticalAlignment="Center" Foreground="#D0000000"
+                                                   Opacity="{DynamicResource IconShadowOpacity}">
+                                            <TextBlock.Effect>
+                                                <BlurEffect Radius="3"/>
+                                            </TextBlock.Effect>
+                                        </TextBlock>
+                                        <TextBlock x:Name="SidebarTitle" Text="{DynamicResource Str_Side_New}" FontSize="20"
+                                                   FontFamily="{DynamicResource SidebarHeadingFont}" FontWeight="Bold"
+                                                   VerticalAlignment="Center" Foreground="{DynamicResource PrimaryBrush}"/>
+                                    </Grid>
+                                </Viewbox>
+                                <Button x:Name="SidebarDensityBtn" Grid.Column="1"
+                                        Style="{StaticResource RailButton}" Content="&#xE8A1;"
+                                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                                        Margin="0,8,10,6" Visibility="Collapsed"
+                                        Click="SidebarDensityBtn_Click"
+                                        MouseWheel="SidebarDensityBtn_MouseWheel"/>
+                            </Grid>
 
                             <ScrollViewer x:Name="EditorScroll" Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,2,0">
                                 <StackPanel Margin="10,0,6,10">

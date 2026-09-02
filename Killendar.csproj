@@ -9,10 +9,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources\kd-icon.ico</ApplicationIcon>
-    <Version>1.1.1</Version>
-    <FileVersion>1.1.1.0</FileVersion>
-    <AssemblyVersion>1.1.1.0</AssemblyVersion>
-    <InformationalVersion>1.1.1</InformationalVersion>
+    <Version>1.1.2</Version>
+    <FileVersion>1.1.2.0</FileVersion>
+    <AssemblyVersion>1.1.2.0</AssemblyVersion>
+    <InformationalVersion>1.1.2</InformationalVersion>
     <AssemblyTitle>Killendar</AssemblyTitle>
     <Product>Killendar</Product>
     <Company>killertools.net</Company>
