@@ -5,6 +5,7 @@ using Xunit;
 
 namespace Killendar.Tests
 {
+    [Collection("Calendar settings")]
     public sealed class DateFormatManagerTests
     {
         [Fact]
