@@ -20,6 +20,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - The SQLCipher encryption native is now built from upstream source (SQLCipher 4.18.0, SQLite 3.53.4) and vendored in the repo, replacing the deprecated SQLitePCLRaw.lib.e_sqlcipher package.
 
 ### Fixed
+- File-picker names now show their complete text in a hover tooltip when a column clips them.
 - Week and rolling Month ranges no longer repeat a full numeric date inside their headings (#9).
 - Ctrl+Shift+M now resizes the selected Month-view appointment after its sidebar opens (#13).
 - AltGr characters no longer trigger Ctrl shortcuts while typing with international keyboard layouts (#8).
