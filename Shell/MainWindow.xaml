@@ -39,12 +39,7 @@
             </Border>
 
             <!-- Wordmark: "The" in the text color, "Killendar" 1.3x and bold in the accent.
-                 Blurred dark copy underneath is the soft drop shadow.
-                 The open Killendar's NAME sits right after it (2026-07-30) - the title bar
-                 is where every other app says which file is open, so it belongs here rather than
-                 tucked in the footer. Hidden while only the default file is open, so the common
-                 case stays quiet; ISecurityHost.ShowActiveKillendar drives both this and the
-                 footer copy. Clicking it opens Manage Killendars, same as the title-bar button. -->
+                 Blurred dark copy underneath is the soft drop shadow. -->
             <StackPanel x:Name="LogoBar" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
                         Margin="{DynamicResource TitleBarPadding}" Background="Transparent"
                         Visibility="{DynamicResource WordmarkVisibility}"
@@ -64,14 +59,6 @@
                                Opacity="{DynamicResource WordmarkEmbossOpacity}"><Run Text="The " Foreground="#70000000"/><Run Text="Killendar" FontSize="{DynamicResource TitleWordmarkBoldSize}" FontWeight="Bold" Foreground="#70000000"/></TextBlock>
                     <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="{DynamicResource TitleWordmarkSize}"><Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="{DynamicResource TitleWordmarkBoldSize}" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}"/></TextBlock>
                 </Grid>
-                <!-- Consolas, not the wordmark face: it is a file name, not branding. Muted and a
-                     tier smaller so the wordmark still leads. -->
-                <TextBlock x:Name="TitleKillendarLabel" Visibility="Collapsed"
-                           Foreground="{DynamicResource MutedTextBrush}" FontFamily="Consolas"
-                           FontSize="11.5" VerticalAlignment="Center" Margin="10,2,0,0"
-                           MaxWidth="220" TextTrimming="CharacterEllipsis"
-                           Cursor="Hand" ToolTip="{DynamicResource Str_TT_Killendars}"
-                           MouseLeftButtonUp="ActiveKillendarLabel_Click"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Visibility="{DynamicResource PlainTitleVisibility}"
@@ -89,6 +76,12 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
                         Margin="{DynamicResource CaptionButtonsMargin}"
                         shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                <TextBlock x:Name="TitleKillendarLabel" Visibility="Collapsed"
+                           Foreground="{DynamicResource MutedTextBrush}" FontFamily="Consolas"
+                           FontSize="10" VerticalAlignment="Center" Margin="12,0,6,0"
+                           MaxWidth="220" TextTrimming="CharacterEllipsis"
+                           Cursor="Hand" ToolTip="{DynamicResource Str_TT_Killendars}"
+                           MouseLeftButtonUp="ActiveKillendarLabel_Click"/>
                 <!-- File actions sit in the title bar: both are about the open Killendar, not about
                      the view. Theme and language stay on the sidebar rail. Order is Killendars,
                      lock, then the caption buttons.

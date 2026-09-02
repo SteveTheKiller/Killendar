@@ -12,6 +12,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Agenda automatically shows two columns in wide windows and one column in narrow windows.
 - Date format and week-start settings have their own flyout above the language button.
 
+### Changed
+- The calendar name sits beside the database controls in the title bar.
+
 ### Fixed
 - The sidebar density button no longer overlaps the date and matches the other controls' size (#10).
 
