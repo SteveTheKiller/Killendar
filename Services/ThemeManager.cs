@@ -211,6 +211,9 @@ namespace Killendar.Services
             Alias("KsCatAppt", "PrimaryBrush");
             Alias("AppBorderBrush", "CardBorderBrush");
             Alias("OutlineRestBrush", "OutlineBtnBrush");
+            // The theme picker's checked row while hovered; Sepulchre sets it white in its
+            // own file because its accent is its hover fill. KillerPDF's key.
+            Alias("RadioHoverFgBrush", "PrimaryBrush");
             Alias("TitleBarBrush", "BackgroundBrush");
             Alias("ChromeTextBrush", "TextBrush");
             // Resolved after accent merging so gradient themes can use their left-edge chrome
