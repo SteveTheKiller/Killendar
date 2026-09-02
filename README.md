@@ -16,7 +16,7 @@ Internals, formats, storage details, and limits live on the [technical page](htt
 - Import and export in the formats people actually hand you: iCalendar (.ics, RFC 5545) both ways, CSV in Outlook's column format both ways, saved email invites (.eml) in, and a themed month-by-month web page out with a print stylesheet
 - Optional encryption: the lock button puts a password on a Killendar and it is encrypted at rest with SQLCipher (AES-256, per-page HMAC-SHA512); opt-in, so no password means a plain readable SQLite file
 - As many Killendars as you like - work, on-call, family - each its own `.kcal` file with its own password or none; keep them in the default profile folder, another folder you choose, or beside the portable executable
-- Thirteen themes - Dark, Light, Black, 98SE, Blood, Greed, Cyanotic, Ectoplasm, Decay, Mourning, Sepulchre, Delirium and Malaise - four of them (Dark, Light, Black and 98SE) take six accent hues each, so 33 looks in all; thirteen languages switchable without a restart (contribute via `TRANSLATING.md`)
+- Thirteen themes - Dark, Light, Black, 98SE, Blood, Greed, Cyanotic, Ectoplasm, Decay, Mourning, Sepulchre, Delirium and Malaise - four of them (Dark, Light, Black and 98SE) take six accent hues each, so 33 looks in all; fifteen languages switchable without a restart (contribute via `TRANSLATING.md`)
 - Keyboard driven with single-key shortcuts; full keyboard shortcut overlay on F1 with list and visual keyboard views
 - Runs portable, or self-installs per-user (no UAC) or machine-wide (`/silent` for scripted deployment); uninstalls cleanly and never deletes your appointments
 - Verified code signing shown in the About card, checked with WinVerifyTrust rather than just read off the file

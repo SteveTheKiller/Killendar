@@ -168,7 +168,7 @@
       { src: 'screenshots/03.png', desc: 'Week view, Decay theme - a five-day work week with overlapping appointments packed into lanes' },
       { src: 'screenshots/04.png', desc: 'Keyboard shortcuts, Black theme - the F1 overlay showing every binding on a drawn keyboard' },
       { src: 'screenshots/05.png', desc: 'Day view, 98SE theme - one wall-to-wall day in the hour grid, beside the day list' },
-      { src: 'screenshots/06.png', desc: 'Agenda view, Blood theme - the language menu with twelve languages and the date format picker' },
+      { src: 'screenshots/06.png', desc: 'Agenda view, Blood theme - the language menu and the date format picker' },
       { src: 'screenshots/07.png', desc: 'Multi-week view, Ectoplasm theme - switching view mode from the toolbar' }
     ];
     SHOTS.forEach(function (shot, idx) {
