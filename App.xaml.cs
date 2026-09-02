@@ -78,6 +78,7 @@ namespace Killendar
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            HookCrashLogging();   // CrashLog.cs - first, so it covers startup itself
             base.OnStartup(e);
 
             // Render on the CPU so the window is not black over console-session
