@@ -146,6 +146,10 @@ namespace Killendar.Services
                 }
                 catch { /* overlay file not present - base theme stands */ }
             }
+            // Resolve after accent overlays, and reset the fallback on every theme switch.
+            if (!newDict.Contains("CalendarViewSelectedBrush"))
+                merged[0]["CalendarViewSelectedBrush"] = merged[0]["SelectionBg"];
+
             // The classic calendar is a white client area. Give unclassified appointments a
             // pale version of the selected 98SE accent instead of the old face gray, which could
             // disappear into the calendar. Each accent therefore owns its own readable shade.

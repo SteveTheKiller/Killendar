@@ -14,6 +14,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Changed
 - The calendar name sits beside the database controls in the title bar.
+- Sepulchre uses brown for the selected calendar view button.
 
 ### Fixed
 - The sidebar density button no longer overlaps the date and matches the other controls' size (#10).

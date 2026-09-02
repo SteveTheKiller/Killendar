@@ -888,7 +888,7 @@
                                  keeps its selection tile on hover; otherwise RowHoverBrush replaces
                                  the tile while SelectionFg remains active (dark-on-dark in
                                  Ectoplasm, making the glyph appear to vanish). -->
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource SelectionBg}"/>
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource CalendarViewSelectedBrush}"/>
                             <Setter TargetName="toolbarContent" Property="Effect" Value="{x:Null}"/>
                             <Setter TargetName="Bd" Property="Effect">
                                 <Setter.Value>

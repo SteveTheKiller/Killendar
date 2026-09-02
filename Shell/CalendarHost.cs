@@ -88,14 +88,7 @@ namespace Killendar.Shell
         void ICalendarHost.StepDensity(int direction) => DensityStepped(direction);   // Density.cs
 
         /// <summary>
-        /// The active tab gets the family's selection treatment: a solid SelectionBg fill with
-        /// SelectionFg (white) text, exactly as KillerPDF marks its selected tool.
-        ///
-        /// It used to be PrimaryBrush text on a RowHoverBrush fill - accent-colored text on a
-        /// tint, which is the hover treatment wearing the selected state's job and looked nothing
-        /// like the rest of the family. SelectionBg with white text is how KillerPDF looks.
-        /// (2026-07-30) Killendar had no SelectionBg/SelectionFg keys at all; they are in
-        /// the theme files now, with KillerPDF's values.
+        /// Calendar view selection follows the family colors, with a brown tile in Sepulchre.
         /// </summary>
         void ICalendarHost.HighlightTab(string which)
         {
@@ -107,7 +100,7 @@ namespace Killendar.Shell
                 bool on = tag == which;
                 btn.SetResourceReference(ForegroundProperty, on ? "SelectionFg" : "TextBrush");
                 btn.CommandParameter = on ? "selected" : null;
-                if (on) btn.SetResourceReference(BackgroundProperty, "SelectionBg");
+                if (on) btn.SetResourceReference(BackgroundProperty, "CalendarViewSelectedBrush");
                 else    btn.Background = System.Windows.Media.Brushes.Transparent;
             }
 
