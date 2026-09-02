@@ -26,7 +26,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Address lookup now closes an earlier suggestion list when a newer query returns no results, so stale addresses cannot appear to belong to the current text.
 - Black and Dark theme buttons now use readable near-black text on their bright accent fills, and Black theme card borders match the rest of the dark-theme family.
 - Self-update now keeps the Add/Remove Programs version current instead of leaving it describing the replaced build.
-- On the Sepulchre theme the selected theme picker row no longer loses its ring, dot and label while hovered; they turn white.
+- On the Sepulchre and Mourning themes the selected theme picker row no longer loses its ring, dot and label while hovered; they turn white.
 
 ## [1.1.0] - 2026-08-17
 
