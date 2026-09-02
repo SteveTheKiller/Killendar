@@ -17,6 +17,7 @@
 
     <sys:String x:Key="Str_TT_Theme">テーマ</sys:String>
     <sys:String x:Key="Str_TT_Language">言語</sys:String>
+    <sys:String x:Key="Str_TT_DateSettings">日付設定</sys:String>
     <sys:String x:Key="Str_TT_PanelShow">予定パネルを表示</sys:String>
     <sys:String x:Key="Str_TT_PanelHide">予定パネルを隠す</sys:String>
     <sys:String x:Key="Str_Lbl_Theme">テーマ</sys:String>

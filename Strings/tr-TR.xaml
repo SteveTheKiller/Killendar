@@ -17,6 +17,7 @@
 
     <sys:String x:Key="Str_TT_Theme">Tema</sys:String>
     <sys:String x:Key="Str_TT_Language">Dil</sys:String>
+    <sys:String x:Key="Str_TT_DateSettings">Tarih ayarları</sys:String>
     <sys:String x:Key="Str_TT_PanelShow">Randevu panelini göster</sys:String>
     <sys:String x:Key="Str_TT_PanelHide">Randevu panelini gizle</sys:String>
     <sys:String x:Key="Str_Lbl_Theme">tema</sys:String>

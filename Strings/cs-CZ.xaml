@@ -17,6 +17,7 @@
 
     <sys:String x:Key="Str_TT_Theme">Motiv</sys:String>
     <sys:String x:Key="Str_TT_Language">Jazyk</sys:String>
+    <sys:String x:Key="Str_TT_DateSettings">Nastavení data</sys:String>
     <sys:String x:Key="Str_TT_PanelShow">Zobrazit panel schůzek</sys:String>
     <sys:String x:Key="Str_TT_PanelHide">Skrýt panel schůzek</sys:String>
     <sys:String x:Key="Str_Lbl_Theme">motiv</sys:String>

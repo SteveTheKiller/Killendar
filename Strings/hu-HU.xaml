@@ -22,6 +22,7 @@
     <!-- Rail -->
     <sys:String x:Key="Str_TT_Theme">téma</sys:String>
     <sys:String x:Key="Str_TT_Language">Nyelv</sys:String>
+    <sys:String x:Key="Str_TT_DateSettings">Dátumbeállítások</sys:String>
     <sys:String x:Key="Str_TT_PanelShow">Találkozó panel megjelenítése</sys:String>
     <sys:String x:Key="Str_TT_PanelHide">Találkozó panel elrejtése</sys:String>
     <sys:String x:Key="Str_Lbl_Theme">téma</sys:String>

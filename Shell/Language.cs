@@ -10,6 +10,7 @@ namespace Killendar.Shell
     public partial class MainWindow
     {
         private Controls.LanguageMenu _languageMenu = null!;
+        private Controls.DateSettingsMenu _dateSettingsMenu = null!;
 
         /// <summary>Builds the rail menu over the button's own ContextMenu.</summary>
         private void InitLanguageMenu()
@@ -17,11 +18,13 @@ namespace Killendar.Shell
             _languageMenu = new Controls.LanguageMenu(
                 // LangButton, not RailFlyoutAnchor: a flyout hangs off its own button (family rule,
                 // see the ThemePopup note in MainWindow.xaml).
-                LangMenu, LangButton, RelocalizeDynamicUi, ReformatOpenEditor,
-                RelocalizeDynamicUi);
+                LangMenu, LangButton, RelocalizeDynamicUi);
+            _dateSettingsMenu = new Controls.DateSettingsMenu(
+                DateSettingsContextMenu, DateSettingsButton, ReformatOpenEditor, RelocalizeDynamicUi);
         }
 
         private void LangButton_Click(object sender, RoutedEventArgs e) => _languageMenu.Open();
+        private void DateSettingsButton_Click(object sender, RoutedEventArgs e) => _dateSettingsMenu.Open();
 
         /// <summary>Look up a localized string.</summary>
         private string Loc(string key) => LocaleManager.Loc(key);

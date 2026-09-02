@@ -13,6 +13,7 @@
     <sys:String x:Key="Str_TT_Next">Następny</sys:String>
     <sys:String x:Key="Str_TT_Theme">Motyw</sys:String>
     <sys:String x:Key="Str_TT_Language">Język</sys:String>
+    <sys:String x:Key="Str_TT_DateSettings">Ustawienia daty</sys:String>
     <sys:String x:Key="Str_Side_New">Nowe spotkanie</sys:String>
     <sys:String x:Key="Str_Side_Edit">Edytuj spotkanie</sys:String>
     <sys:String x:Key="Str_Fld_Title">TYTUŁ</sys:String>

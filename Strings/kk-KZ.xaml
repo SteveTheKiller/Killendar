@@ -22,6 +22,7 @@
     <!-- Rail -->
     <sys:String x:Key="Str_TT_Theme">Тақырып</sys:String>
     <sys:String x:Key="Str_TT_Language">Тіл</sys:String>
+    <sys:String x:Key="Str_TT_DateSettings">Күн баптаулары</sys:String>
     <sys:String x:Key="Str_TT_PanelShow">Кездесу тақтасын көрсету</sys:String>
     <sys:String x:Key="Str_TT_PanelHide">Кездесу тақтасын жасыру</sys:String>
     <sys:String x:Key="Str_Lbl_Theme">тақырып</sys:String>

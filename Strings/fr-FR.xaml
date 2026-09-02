@@ -17,6 +17,7 @@
 
     <sys:String x:Key="Str_TT_Theme">Thème</sys:String>
     <sys:String x:Key="Str_TT_Language">Langue</sys:String>
+    <sys:String x:Key="Str_TT_DateSettings">Paramètres de date</sys:String>
     <sys:String x:Key="Str_TT_PanelShow">Afficher le volet des rendez-vous</sys:String>
     <sys:String x:Key="Str_TT_PanelHide">Masquer le volet des rendez-vous</sys:String>
     <sys:String x:Key="Str_Lbl_Theme">thème</sys:String>

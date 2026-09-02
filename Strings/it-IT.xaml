@@ -17,6 +17,7 @@
 
     <sys:String x:Key="Str_TT_Theme">Tema</sys:String>
     <sys:String x:Key="Str_TT_Language">Lingua</sys:String>
+    <sys:String x:Key="Str_TT_DateSettings">Impostazioni data</sys:String>
     <sys:String x:Key="Str_TT_PanelShow">Mostra il pannello degli appuntamenti</sys:String>
     <sys:String x:Key="Str_TT_PanelHide">Nascondi il pannello degli appuntamenti</sys:String>
     <sys:String x:Key="Str_Lbl_Theme">tema</sys:String>

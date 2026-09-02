@@ -374,13 +374,7 @@
 
                             <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,8">
 
-                                <!-- FAMILY RAIL ORDER, top to bottom in this bottom-anchored stack:
-                                     app-specific toggles, then ?, then language, then theme.
-                                     KillerNotes and KillerShell both read that way; Killendar had
-                                     ? above Categories until 2026-07-30. The logic is that the
-                                     app's own tools come first and the three universal buttons
-                                     land in the same place in every app, so muscle memory carries
-                                     across. Categories is the app-specific one here. -->
+                                <!-- Date settings sit directly above language; theme stays last. -->
                                 <Button x:Name="CategoriesButton" Style="{StaticResource RailButton}"
                                         Click="CategoriesButton_Click" Content="&#xE8EC;" Margin="0,0,0,6"
                                         ToolTip="{DynamicResource Str_TT_Categories}"/>
@@ -406,6 +400,13 @@
                                         Click="ShortcutsButton_Click" Content="?" FontFamily="Consolas"
                                         FontSize="18" Margin="0,0,0,6"
                                         ToolTip="{DynamicResource Str_TT_Shortcuts}"/>
+                                <Button x:Name="DateSettingsButton" Style="{StaticResource RailButton}"
+                                        Click="DateSettingsButton_Click" Content="&#xE787;" Margin="0,0,0,6"
+                                        ToolTip="{DynamicResource Str_TT_DateSettings}">
+                                    <Button.ContextMenu>
+                                        <ContextMenu x:Name="DateSettingsContextMenu"/>
+                                    </Button.ContextMenu>
+                                </Button>
                                 <Button x:Name="LangButton" Style="{StaticResource RailButton}"
                                         Click="LangButton_Click" Content="&#xF2B7;" Margin="0,0,0,6"
                                         ToolTip="{DynamicResource Str_TT_Language}">

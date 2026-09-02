@@ -17,6 +17,7 @@
 
     <sys:String x:Key="Str_TT_Theme">佈景主題</sys:String>
     <sys:String x:Key="Str_TT_Language">語言</sys:String>
+    <sys:String x:Key="Str_TT_DateSettings">日期設定</sys:String>
     <sys:String x:Key="Str_TT_PanelShow">顯示約會面板</sys:String>
     <sys:String x:Key="Str_TT_PanelHide">隱藏約會面板</sys:String>
     <sys:String x:Key="Str_Lbl_Theme">佈景主題</sys:String>

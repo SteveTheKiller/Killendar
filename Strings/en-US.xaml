@@ -22,6 +22,7 @@
     <!-- Rail -->
     <sys:String x:Key="Str_TT_Theme">Theme</sys:String>
     <sys:String x:Key="Str_TT_Language">Language</sys:String>
+    <sys:String x:Key="Str_TT_DateSettings">Date settings</sys:String>
     <sys:String x:Key="Str_TT_PanelShow">Show appointment panel</sys:String>
     <sys:String x:Key="Str_TT_PanelHide">Hide appointment panel</sys:String>
     <sys:String x:Key="Str_Lbl_Theme">theme</sys:String>

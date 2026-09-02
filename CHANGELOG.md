@@ -10,6 +10,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Added
 - Agenda automatically shows two columns in wide windows and one column in narrow windows.
+- Date format and week-start settings have their own flyout above the language button.
 
 ### Fixed
 - The sidebar density button no longer overlaps the date and matches the other controls' size (#10).
