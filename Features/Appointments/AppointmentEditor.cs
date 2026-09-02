@@ -26,6 +26,12 @@ namespace Killendar.Features
 
         private bool _allDay;
 
+        /// <summary>The start the end boxes were last aligned to. When the start moves, the end
+        /// moves by the same amount so the appointment keeps its length (#14). Null until the
+        /// panel has finished loading, so filling the boxes never counts as an edit.</summary>
+        private DateTime? _followedStart;
+        private bool _loading;
+
         internal AppointmentEditor(IAppointmentView view, EventStore store)
         {
             _view = view;
@@ -41,6 +47,7 @@ namespace Killendar.Features
 
         internal void NewAt(DateTime when)
         {
+            _loading = true;
             _editing = null;
             _allDay = false;
 
@@ -70,6 +77,7 @@ namespace Killendar.Features
         internal void Load(CalendarEvent ev)
         {
             // Edit a copy: canceling must not leave half-typed changes on the stored object.
+            _loading = true;
             _editing = ev.Clone();
             _allDay = ev.AllDay;
 
@@ -120,6 +128,8 @@ namespace Killendar.Features
             ApplyAllDay();
             _view.OpenPanel();
             SyncHighlightedSelection();
+            _loading = false;
+            _followedStart = CurrentStart();
         }
 
         /// <summary>
@@ -140,7 +150,66 @@ namespace Killendar.Features
         }
 
         /// <summary>Either start box was edited. Wired to TextChanged by the shell.</summary>
-        internal void StartEdited() => SyncHighlightedSelection();
+        internal void StartEdited()
+        {
+            SyncHighlightedSelection();
+            FollowStart();
+        }
+
+        /// <summary>The instant the start boxes describe, or null while one of them is unreadable
+        /// (mid-edit, or blank). All-day reads the date alone.</summary>
+        private DateTime? CurrentStart()
+        {
+            if (!TryParseDate(_view.FieldStartDate, out var d)) return null;
+            if (_allDay) return d.Date;
+            return TryParseTime(_view.FieldStartTime, out var t) ? d.Date + t : (DateTime?)null;
+        }
+
+        /// <summary>
+        /// Moves the end by however far the start just moved, so a 9 to 10 that is retyped as 8
+        /// becomes 8 to 9 rather than 8 to 10 (#14). Runs on every keystroke, so it works from the
+        /// last start that was readable: "8", then "8:3", then "8:30" apply three small shifts that
+        /// add up to the one the user meant. Nothing happens while the start is half-typed, and an
+        /// unreadable end is left alone rather than guessed at.
+        /// </summary>
+        private void FollowStart()
+        {
+            if (_loading) return;
+            var now = CurrentStart();
+            if (now == null) return;
+            var was = _followedStart;
+            _followedStart = now;
+            if (was == null || was == now) return;
+            if (!TryFollowStart(was.Value, now.Value, _allDay, _view.FieldEndDate, _view.FieldEndTime,
+                                out var endDate, out var endTime)) return;
+            _view.FieldEndDate = endDate;
+            _view.FieldEndTime = endTime;
+        }
+
+        /// <summary>The arithmetic behind FollowStart, kept free of the view so it can be tested.
+        /// False when the end boxes cannot be read, in which case they are left as they are.</summary>
+        internal static bool TryFollowStart(DateTime was, DateTime now, bool allDay,
+                                            string endDateText, string endTimeText,
+                                            out string endDate, out string endTime)
+        {
+            endDate = endDateText;
+            endTime = endTimeText;
+            if (!TryParseDate(endDateText, out var d)) return false;
+
+            if (allDay)
+            {
+                // The time boxes are hidden; only whole days move, and the time text is kept for
+                // when all-day is toggled back off.
+                endDate = DateFormatManager.Format(d.Date + (now.Date - was.Date));
+                return true;
+            }
+
+            if (!TryParseTime(endTimeText, out var t)) return false;
+            var moved = d.Date + t + (now - was);
+            endDate = DateFormatManager.Format(moved);
+            endTime = moved.ToString("h:mm tt");
+            return true;
+        }
 
         internal void ToggleAllDay()
         {
@@ -148,6 +217,9 @@ namespace Killendar.Features
             ApplyAllDay();
             // All-day has no slot, so the time band has to go (and come back on un-toggling).
             SyncHighlightedSelection();
+            // The start now means something different (a day, or a day and a time), so the next
+            // edit must measure from the new meaning, not shift the end by a whole time of day.
+            _followedStart = CurrentStart();
         }
 
         /// <summary>All-day hides the time fields rather than disabling them: a grayed-out box you
@@ -386,10 +458,20 @@ namespace Killendar.Features
             raw = (raw ?? "").Trim();
             if (raw.Length == 0) return false;
 
+            // "%H", not "H": a one-character format string is read as a STANDARD specifier, and
+            // there is no standard "H", so the framework throws FormatException instead of
+            // returning false. It was only reached once every earlier pattern had failed, which
+            // is exactly what a bare "8" or a half-typed "8A" does, so typing an hour crashed the
+            // app on the first keystroke (#14). The percent sign says "custom pattern".
+            //
+            // 24-hour patterns first. In cultures with no AM/PM designators (German among them)
+            // an empty "tt" matches nothing and defaults to PM, so with the 12-hour patterns
+            // ahead a bare "8" came back as 20:00. Nothing with a real "am"/"pm" on it can
+            // match a 24-hour pattern, so the order costs those inputs nothing.
             string[] formats =
             [
-                "h:mm tt", "hh:mm tt", "h:mmtt", "hh:mmtt", "h tt", "htt",
-                "H:mm", "HH:mm", "Hmm", "HHmm", "H", "HH"
+                "H:mm", "HH:mm", "Hmm", "HHmm", "%H", "HH",
+                "h:mm tt", "hh:mm tt", "h:mmtt", "hh:mmtt", "h tt", "htt"
             ];
             if (DateTime.TryParseExact(raw, formats, CultureInfo.CurrentCulture,
                                        DateTimeStyles.None, out var dt) ||

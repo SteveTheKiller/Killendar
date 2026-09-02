@@ -20,6 +20,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - The SQLCipher encryption native is now built from upstream source (SQLCipher 4.18.0, SQLite 3.53.4) and vendored in the repo, replacing the deprecated SQLitePCLRaw.lib.e_sqlcipher package.
 
 ### Fixed
+- Typing an hour such as 8 or 8AM into a time box no longer crashes the app; a one-letter time pattern was being read as a standard format specifier (#14).
+- Changing the start date or time now moves the end by the same amount, so the appointment keeps its length (#14).
 - File-picker names now show their complete text in a hover tooltip when a column clips them.
 - Week and rolling Month ranges no longer repeat a full numeric date inside their headings (#9).
 - Ctrl+Shift+M now resizes the selected Month-view appointment after its sidebar opens (#13).
