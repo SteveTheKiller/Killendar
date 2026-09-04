@@ -212,6 +212,8 @@ namespace Killendar.Services
 
             Alias("ChipBrush", "RowHoverBrush");
             Alias("SurfaceHoverBrush", "RowHoverBrush");
+            // The keyboard map's key caps. 98SE names its own, white rather than button-face gray.
+            Alias("KeyCapBrush", "SurfaceBrush");
             Alias("KsCatAppt", "PrimaryBrush");
             Alias("AppBorderBrush", "CardBorderBrush");
             Alias("OutlineRestBrush", "OutlineBtnBrush");
