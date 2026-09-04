@@ -57,10 +57,22 @@ namespace Killendar.Controls
         {
             _menu.Items.Clear();
             var current = LocaleManager.Current;
-            // Content-sized and deliberately narrow: the old 190px body plus the flyout's shadow
-            // room made this compact picker read like a dialog. The longest native name and locale
-            // code still fit at 160px without forcing the menu across the calendar.
-            var panel = new StackPanel { Width = 160, Margin = new Thickness(10, 10, 10, 10) };
+
+            // Two columns. Fifteen languages in one stack ran nearly the full window height and
+            // clipped on a short window, and a flyout that cannot show its last row is broken
+            // whatever it looks like. Split down the middle rather than balanced by height, so
+            // the left column stays in reading order and English stays at the top of it.
+            var columns = new StackPanel { Orientation = Orientation.Horizontal,
+                                           Margin = new Thickness(10, 10, 10, 10) };
+            // Content-sized and deliberately narrow per column: the longest native name and its
+            // locale code still fit at 160px.
+            var left = new StackPanel { Width = 160 };
+            var right = new StackPanel { Width = 160, Margin = new Thickness(14, 0, 0, 0) };
+            columns.Children.Add(left);
+            columns.Children.Add(right);
+            int half = (Languages.Length + 1) / 2;
+            int index = 0;
+
             foreach (var (loc, name, code) in Languages)
             {
                 var grid = new Grid();
@@ -89,14 +101,14 @@ namespace Killendar.Controls
                     IsChecked = loc == current,
                 };
                 item.Checked += LocaleItem_Click;
-                panel.Children.Add(item);
+                (index++ < half ? left : right).Children.Add(item);
             }
             // A raw panel added to ContextMenu is auto-wrapped in the normal MenuItem template,
             // which reserves an icon gutter and row padding around the WHOLE picker. This is a
             // custom menu panel, like the theme swatches, so use the shared gutter-free container.
             _menu.Items.Add(new MenuItem
             {
-                Header = panel,
+                Header = columns,
                 StaysOpenOnClick = true,
                 Style = (Style)Application.Current.FindResource("PanelMenuItem"),
             });
