@@ -30,6 +30,21 @@ namespace Killendar
         /// <summary>True when Killendar is already installed machine-wide.</summary>
         internal static bool MachineInstallExists() => File.Exists(MachineInstallExe);
 
+        private static bool ShowInstallDialog(string message, bool confirmation = false, string? heading = null)
+        {
+            var dialog = new Controls.ConfirmDialog(heading ?? AppName, message,
+                confirmation ? "Yes" : "OK", confirmation ? "No" : "");
+            if (Current.MainWindow?.IsVisible == true)
+                dialog.Owner = Current.MainWindow;
+            else
+            {
+                dialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                dialog.ShowInTaskbar = true;
+            }
+            dialog.ShowDialog();
+            return dialog.Confirmed;
+        }
+
         internal static void OfferInstallConflictRepair()
         {
             if (!File.Exists(InstallExe) || !File.Exists(MachineInstallExe)) return;
@@ -39,8 +54,8 @@ namespace Killendar
             if (!runningMachine && !runningUser) return;
 
             string other = runningMachine ? "per-user" : "all-users";
-            if (MessageBox.Show($"Killendar is installed twice. Remove the other {other} copy now?\n\nYour calendars and settings will not be removed.",
-                AppName + " installation conflict", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) return;
+            if (!ShowInstallDialog($"Killendar is installed twice. Remove the other {other} copy now?\n\nYour calendars and settings will not be removed.",
+                true, AppName + " installation conflict")) return;
 
             if (runningMachine) RemovePerUserInstall();
             else
@@ -188,10 +203,9 @@ namespace Killendar
             var (valid, _, _) = CodeSignature.GetSignerInfo();
             if (!valid)
             {
-                MessageBox.Show(
+                ShowInstallDialog(
                     "Installation refused: the running EXE does not carry a valid Authenticode " +
-                    "signature.\n\nOnly signed builds of Killendar can be installed.",
-                    AppName, MessageBoxButton.OK, MessageBoxImage.Error);
+                    "signature.\n\nOnly signed builds of Killendar can be installed.");
                 return false;
             }
 
@@ -203,11 +217,11 @@ namespace Killendar
                     Version.TryParse(installedText, out var installedVersion) &&
                     runningVersion < installedVersion)
                 {
-                    var choice = MessageBox.Show(
+                    var choice = ShowInstallDialog(
                         $"You are about to install an older version ({runningText}) over " +
                         $"the currently installed version ({installedText}).\n\nDowngrade anyway?",
-                        AppName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                    if (choice != MessageBoxResult.Yes) return false;
+                        true);
+                    if (!choice) return false;
                 }
             }
 
@@ -224,11 +238,10 @@ namespace Killendar
                 }
                 catch (Exception copyEx) when (copyEx is UnauthorizedAccessException or IOException)
                 {
-                    MessageBox.Show(
+                    ShowInstallDialog(
                         "Couldn't write the installed copy at:\n" + InstallExe +
                         "\n\nClose any open Killendar window (and check Task Manager for " +
-                        "Killendar.exe), then run the installer again.",
-                        AppName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                        "Killendar.exe), then run the installer again.");
                     return false;
                 }
                 try { File.SetAttributes(InstallExe, FileAttributes.Normal); } catch { }
@@ -243,8 +256,7 @@ namespace Killendar
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Installation failed:\n" + ex.Message, AppName,
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                ShowInstallDialog("Installation failed:\n" + ex.Message);
                 return false;
             }
         }
@@ -327,8 +339,7 @@ namespace Killendar
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Uninstall could not request administrator access:\n" + ex.Message,
-                    AppName, MessageBoxButton.OK, MessageBoxImage.Error);
+                ShowInstallDialog("Uninstall could not request administrator access:\n" + ex.Message);
             }
             return true;
         }
@@ -343,7 +354,8 @@ namespace Killendar
                 "Uninstall Killendar?",
                 "Your appointments will be kept.",
                 "Uninstall",
-                "Cancel");
+                "Cancel")
+            { WindowStartupLocation = WindowStartupLocation.CenterScreen, ShowInTaskbar = true };
             confirm.ShowDialog();
             if (!confirm.Confirmed) return;
 

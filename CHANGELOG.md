@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.1.4] - Unreleased
 
 ### Fixed
+- Standalone installation dialogs use the default Dark/Red theme, including uninstall and installation conflicts.
 - The language picker lists its fifteen languages in two columns, so it no longer runs the height of the window or clips on a short one.
 - On the 98SE theme the keyboard map's keys are white instead of button-face gray.
 

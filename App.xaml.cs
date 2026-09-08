@@ -80,6 +80,7 @@ namespace Killendar
         {
             HookCrashLogging();   // CrashLog.cs - first, so it covers startup itself
             base.OnStartup(e);
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
             // Render on the CPU so the window is not black over console-session
             // screen-sharing tools (ScreenConnect, Kaseya LiveConnect, VNC, TeamViewer).
@@ -100,6 +101,7 @@ namespace Killendar
             if (e.Args.Length > 0 &&
                 string.Equals(e.Args[0], "/uninstall", StringComparison.OrdinalIgnoreCase))
             {
+                ThemeManager.Initialize();
                 Uninstall();
                 Shutdown();
                 return;
@@ -128,6 +130,9 @@ namespace Killendar
             string runningExe = Process.GetCurrentProcess().MainModule?.FileName ?? "";
             if (!string.Equals(runningExe, MachineInstallExe, StringComparison.OrdinalIgnoreCase))
                 FileAssociations.Register();   // portable/per-user: HKCU, best-effort, idempotent
+            // Complete the shipped Dark/Red palette before standalone setup prompts.
+            // Persistence hooks are not connected until the normal app starts below.
+            ThemeManager.Initialize();
             OfferInstallConflictRepair();
 
             // Persistence hooks. ThemeManager uses these for theme and accent; the window chrome
@@ -136,7 +141,7 @@ namespace Killendar
             Services.ThemeManager.SetSetting = Settings.Set;
 
             // Restores the saved theme before the window is built, so there is no flash of the
-            // default palette. With nothing saved this lands on Black + Red.
+            // default palette. With nothing saved this lands on Dark + Red.
             Services.ThemeManager.Initialize();
 
             // Capture the regional week start before the selected interface locale changes the
@@ -176,7 +181,9 @@ namespace Killendar
                 }
             }
 
-            new MainWindow().Show();
+            MainWindow = new MainWindow();
+            ShutdownMode = ShutdownMode.OnLastWindowClose;
+            MainWindow.Show();
         }
 
         /// <summary>True when launched with --demo. Read by the shell to keep marketing

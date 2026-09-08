@@ -35,6 +35,7 @@ namespace Killendar.Controls
             DetailText.Visibility = string.IsNullOrEmpty(detail) ? Visibility.Collapsed : Visibility.Visible;
             OkButton.Content = confirmText;
             CancelButton.Content = cancelText;
+            CancelButton.Visibility = string.IsNullOrEmpty(cancelText) ? Visibility.Collapsed : Visibility.Visible;
 
             if (!string.IsNullOrEmpty(check1Label))
             {
