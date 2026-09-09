@@ -15,7 +15,7 @@
     <docsUrl>https://github.com/SteveTheKiller/Killendar/blob/main/README.md</docsUrl>
     <bugTrackerUrl>https://github.com/SteveTheKiller/Killendar/issues</bugTrackerUrl>
     <tags>calendar appointments icalendar ics encrypted sqlite portable</tags>
-    <summary>Encrypted calendar for Windows. No account, no sync, no telemetry.</summary>
+    <summary>Open-source calendar for Windows with recurring appointments, color categories, four calendar views and optional encryption.</summary>
     <description>Free and open-source calendar for Windows with no account, no sync and nothing phoning home. Your appointments live in a single .kcal file on your own machine, an ordinary SQLite database until you put a password on it. Install or run portable.
 
 - Four views, month, week, day and agenda, with one shared previous / next / today control; month zooms from one to six visible weeks and draws multi-day appointments as continuous runs
