@@ -16,6 +16,7 @@
 
 var I18N = {
     en: {
+      "package_install_intro": "Or install from your terminal:",
       // ---- index.html ----
       tag: "A calendar you can encrypt, with no account, no sync, and nothing phoning home.",
       b1h: "Encrypted, if you want it",
@@ -195,6 +196,7 @@ var I18N = {
       tk_117: "What it does not protect"
     },
     hu: {
+      "package_install_intro": "Vagy telepítse a terminálból:",
       "tag": "Titkosítható naptár fiók, szinkronizálás és otthoni telefonálás nélkül.",
       "b1h": "Titkosítva, ha akarod",
       "b1a": "Állítson be egy jelszót, és a fájl <b>nyugalmi állapotban titkosítva lesz</b> az SQLCipher segítségével.",
@@ -376,6 +378,7 @@ var I18N = {
       "egg": "Nincs fiók. Nincs szinkronizálás. Nincs szerver. Az Ön árajánlatai soha nem hagyják el ezt a gépet."
     },
     es: {
+      "package_install_intro": "O instala desde tu terminal:",
       tag: "Un calendario que puedes cifrar, sin cuenta, sin sincronización y sin nada que llame a casa.",
       b1h: "Cifrado, si lo quieres",
       b1a: "Pon una contraseña y el archivo queda <b>cifrado en reposo</b> con SQLCipher.",
@@ -554,6 +557,7 @@ var I18N = {
       egg: "Sin cuenta. Sin sincronización. Sin servidor. Tus citas nunca salen de esta máquina."
     },
     fr: {
+      "package_install_intro": "Ou installez depuis votre terminal :",
       tag: "Un calendrier que vous pouvez chiffrer, sans compte, sans synchronisation et sans rien qui téléphone à la maison.",
       b1h: "Chiffré, si vous voulez",
       b1a: "Mettez un mot de passe et le fichier est <b>chiffré au repos</b> avec SQLCipher.",
@@ -732,6 +736,7 @@ var I18N = {
       egg: "Pas de compte. Pas de synchro. Pas de serveur. Vos rendez-vous ne quittent jamais cette machine."
     },
     de: {
+      "package_install_intro": "Oder über das Terminal installieren:",
       tag: "Ein Kalender zum Verschlüsseln - ohne Konto, ohne Sync und ohne dass etwas nach Hause telefoniert.",
       b1h: "Verschlüsselt, wenn Sie wollen",
       b1a: "Passwort setzen, und die Datei ist mit SQLCipher <b>im Ruhezustand verschlüsselt</b>.",
@@ -910,6 +915,7 @@ var I18N = {
       egg: "Kein Konto. Kein Sync. Kein Server. Ihre Termine verlassen diese Maschine nie."
     },
     cs: {
+      "package_install_intro": "Nebo nainstalujte z terminálu:",
       tag: "Kalendář, který můžete zašifrovat - bez účtu, bez synchronizace a bez telefonování domů.",
       b1h: "Šifrovaný, pokud chcete",
       b1a: "Nastavte heslo a soubor je <b>šifrovaný v klidu</b> pomocí SQLCipher.",
@@ -1088,6 +1094,7 @@ var I18N = {
       egg: "Žádný účet. Žádná synchronizace. Žádný server. Vaše schůzky nikdy neopustí tento stroj."
     },
     tr: {
+      "package_install_intro": "Veya terminalinizden yükleyin:",
       tag: "Şifreleyebileceğiniz bir takvim - hesap yok, senkronizasyon yok, eve telefon eden hiçbir şey yok.",
       b1h: "İsterseniz şifreli",
       b1a: "Bir parola belirleyin, dosya SQLCipher ile <b>bekleme halinde şifrelenir</b>.",
@@ -1266,6 +1273,7 @@ var I18N = {
       egg: "Hesap yok. Senkronizasyon yok. Sunucu yok. Randevularınız bu makineden asla ayrılmaz."
     },
     ja: {
+      "package_install_intro": "またはターミナルからインストール：",
       tag: "暗号化できるカレンダー。アカウントなし、同期なし、外部に何も送信しません。",
       b1h: "望めば暗号化",
       b1a: "パスワードを設定すると、ファイルは SQLCipher で<b>保存時に暗号化</b>されます。",
@@ -1444,6 +1452,7 @@ var I18N = {
       egg: "アカウントなし。同期なし。サーバーなし。予定がこのマシンを離れることはありません。"
     },
     pl: {
+      "package_install_intro": "Lub zainstaluj z terminala:",
       tag: "Kalendarz, który możesz zaszyfrować - bez konta, bez synchronizacji i bez niczego, co dzwoni do domu.",
       b1h: "Szyfrowany, jeśli chcesz",
       b1a: "Ustaw hasło, a plik jest <b>szyfrowany w spoczynku</b> przez SQLCipher.",
@@ -1631,6 +1640,7 @@ var I18N = {
     // put back. After editing, check: there must be ZERO occurrences of U+09AF or U+09A1 followed
     // by U+09BC anywhere in this object.
     bn: {
+      "package_install_intro": "অথবা টার্মিনাল থেকে ইনস্টল করুন:",
       tag: "এমন একটি ক্যালেন্ডার যা আপনি এনক্রিপ্ট করতে পারেন - অ্যাকাউন্ট নেই, সিঙ্ক নেই, বাইরে কিছু পাঠায় না।",
       b1h: "চাইলে এনক্রিপ্টেড",
       b1a: "পাসওয়ার্ড দিলে ফাইলটি SQLCipher দিয়ে <b>স্টোরেজে এনক্রিপ্টেড</b> থাকে।",
@@ -1809,6 +1819,7 @@ var I18N = {
       egg: "অ্যাকাউন্ট নেই। সিঙ্ক নেই। সার্ভার নেই। আপনার অ্যাপয়েন্টমেন্ট এই মেশিন ছেড়ে যায় না।"
     },
     'zh-CN': {
+      "package_install_intro": "或从终端安装：",
       tag: "一个可以加密的日历 - 无账户、无同步、不向外发送任何东西。",
       b1h: "需要时即可加密",
       b1a: "设个密码，文件就由 SQLCipher <b>静态加密</b>。",
@@ -1987,6 +1998,7 @@ var I18N = {
       egg: "无账户。无同步。无服务器。你的约会永远不离开这台机器。"
     },
     'zh-TW': {
+      "package_install_intro": "或從終端機安裝：",
       tag: "一個可以加密的行事曆 - 無帳戶、無同步、不向外傳送任何東西。",
       b1h: "需要時即可加密",
       b1a: "設個密碼，檔案就由 SQLCipher <b>靜態加密</b>。",
@@ -2165,6 +2177,7 @@ var I18N = {
       egg: "無帳戶。無同步。無伺服器。你的約會永遠不離開這台機器。"
     },
     it: {
+      "package_install_intro": "Oppure installa dal terminale:",
       // ---- index.html ----
       tag: "Un calendario che puoi cifrare, senza account, senza sincronizzazione e senza nulla che telefoni a casa.",
       b1h: "Cifrato, se lo vuoi",
@@ -2345,6 +2358,7 @@ var I18N = {
       egg: "Nessun account. Nessuna sincronizzazione. Nessun server. I tuoi appuntamenti non lasciano mai questa macchina."
     },
     ru: {
+      "package_install_intro": "Или установите через терминал:",
       // ---- index.html ----
       tag: "Календарь, который можно зашифровать: без учётной записи, без синхронизации и без обращений на сторону.",
       b1h: "Шифрование, если оно вам нужно",
@@ -2525,6 +2539,7 @@ var I18N = {
       egg: "Без учётной записи. Без синхронизации. Без сервера. Ваши встречи никогда не покидают эту машину."
     },
     kk: {
+      "package_install_intro": "Немесе терминал арқылы орнатыңыз:",
       // ---- index.html ----
       tag: "Шифрлауға болатын күнтізбе: тіркелгісіз, синхрондаусыз және ешқайда хабарласпайды.",
       b1h: "Қаласаңыз, шифрланған",
