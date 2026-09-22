@@ -27,7 +27,7 @@
 - Optional encryption: the lock button puts a password on a Killendar and encrypts it at rest with SQLCipher (AES-256, per-page HMAC-SHA512); opt-in, so no password means a plain readable SQLite file
 - As many Killendars as you like, work, on-call, family, each its own .kcal file with its own password or none, kept in the default profile folder, another folder you choose, or beside the portable executable
 - Thirteen themes including a full 98SE recreation; Dark, Light, Black and 98SE each carry six accent colors for 33 looks in all
-- Localized in fifteen languages, switchable without a restart
+- Localized in sixteen languages, switchable without a restart
 - Keyboard driven with single-key shortcuts and a full shortcut overlay on F1, with list and visual keyboard views
 - Verified code signing shown in the About card, checked with WinVerifyTrust rather than read off the file
 - One self-contained Windows EXE, no runtime install; runs portable, self-installs per-user without UAC or machine-wide with /silent for scripted deployment, and uninstalls without deleting your appointments

@@ -6,9 +6,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ## [1.1.4] - Unreleased
 
+### Added
+- Vietnamese localization for the app and website. (Thanks @vuanhvu11982)
+
 ### Fixed
 - Standalone installation dialogs use the default Dark/Red theme, including uninstall and installation conflicts.
-- The language picker lists its fifteen languages in two columns, so it no longer runs the height of the window or clips on a short one.
+- The language picker lists its sixteen languages in two columns, so it no longer runs the height of the window or clips on a short one.
 - On the 98SE theme the keyboard map's keys are white instead of button-face gray.
 - Chocolatey package now installs the app instead of leaving the download in the Chocolatey tools folder.
 

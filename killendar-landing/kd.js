@@ -302,7 +302,7 @@
   // The hero-info card carries no data-i18n on purpose - release.ps1 rewrites it by matching
   // the literal English label spans. Values may contain markup; they are our own strings.
 
-  var LANGS = ['en', 'es', 'fr', 'de', 'cs', 'tr', 'ja', 'pl', 'bn', 'zh-CN', 'zh-TW', 'hu', 'it', 'ru', 'kk'];
+  var LANGS = ['en', 'es', 'fr', 'de', 'cs', 'tr', 'vi', 'ja', 'pl', 'bn', 'zh-CN', 'zh-TW', 'hu', 'it', 'ru', 'kk'];
 
   // Flag SVGs, KillerPDF's kp.js set verbatim; the toggle wears the chosen language's flag.
   var FLAGS = {
@@ -312,6 +312,7 @@
     fr: '<svg viewBox="0 0 24 24"><rect width="8" height="24" fill="#0055a4"/><rect x="8" width="8" height="24" fill="#fff"/><rect x="16" width="8" height="24" fill="#ef4135"/></svg>',
     ja: '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#fff"/><circle cx="12" cy="12" r="7" fill="#bc002d"/></svg>',
     tr: '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#e30a17"/><circle cx="9.5" cy="12" r="5" fill="#fff"/><circle cx="11" cy="12" r="4" fill="#e30a17"/><polygon points="15.5,9.4 16.12,11.15 17.97,11.2 16.5,12.32 17.03,14.1 15.5,13.05 13.97,14.1 14.5,12.32 13.03,11.2 14.88,11.15" fill="#fff"/></svg>',
+    vi: '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#da251d"/><polygon points="12,5 13.65,10.1 19,10.1 14.67,13.25 16.32,18.35 12,15.2 7.68,18.35 9.33,13.25 5,10.1 10.35,10.1" fill="#ff0"/></svg>',
     'zh-TW': '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#fe0000"/><rect width="12" height="12" fill="#000095"/><polygon points="6,3 7.2,6.6 11,6.6 7.9,8.8 9.1,12.4 6,10.2 2.9,12.4 4.1,8.8 1,6.6 4.8,6.6" fill="#fff"/></svg>',
     'zh-CN': '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#de2910"/><polygon points="4,3 4.9,5.6 7.6,5.6 5.4,7.3 6.2,9.9 4,8.3 1.8,9.9 2.6,7.3 0.4,5.6 3.1,5.6" fill="#ffde00"/></svg>',
     bn: '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#006a4e"/><circle cx="10.5" cy="12" r="6" fill="#f42a41"/></svg>',
