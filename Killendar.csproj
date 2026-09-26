@@ -42,8 +42,11 @@
 
   <ItemGroup>
     <Compile Remove="Killendar.Tests\**\*.cs" />
+    <Compile Remove="Killendar.Cli\**\*.cs" />
     <EmbeddedResource Remove="Killendar.Tests\**\*" />
+    <EmbeddedResource Remove="Killendar.Cli\**\*" />
     <None Remove="Killendar.Tests\**\*" />
+    <None Remove="Killendar.Cli\**\*" />
   </ItemGroup>
 
   <!-- artifacts\ is test and coverage OUTPUT, not source. Keep the whole tree out of this

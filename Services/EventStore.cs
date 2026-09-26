@@ -185,6 +185,43 @@ namespace Killendar.Services
             CategoryManager.Refresh(this);
         }
 
+        /// <summary>Loads an existing calendar for scriptable queries without creating files,
+        /// migrating data, or changing its schema. Encrypted files require a separate unlock path.</summary>
+        public void OpenReadOnly(string path)
+        {
+            Close();
+            if (!Path.IsPathRooted(path) || !File.Exists(path))
+                throw new FileNotFoundException("The Killendar file was not found");
+            var builder = new SqliteConnectionStringBuilder
+            {
+                DataSource = path,
+                Mode = SqliteOpenMode.ReadOnly,
+                Pooling = false,
+            };
+            var db = new SqliteConnection(builder.ConnectionString);
+            try
+            {
+                db.Open();
+                using (var probe = db.CreateCommand())
+                {
+                    probe.CommandText = "PRAGMA query_only = ON; SELECT count(*) FROM sqlite_master";
+                    probe.ExecuteScalar();
+                }
+                _db = db;
+                _file = path;
+                LoadIntoMemory();
+            }
+            catch
+            {
+                db.Dispose();
+                _db = null;
+                _file = "";
+                _events = [];
+                SqliteConnection.ClearAllPools();
+                throw;
+            }
+        }
+
         public void Close()
         {
             _db?.Dispose();

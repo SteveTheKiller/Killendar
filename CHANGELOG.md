@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.1.4] - Unreleased
 
 ### Added
+- Read-only agenda queries are available through the new command-line interface.
 - Vietnamese localization for the app and website. (Thanks @vuanhvu11982)
 
 ### Fixed
