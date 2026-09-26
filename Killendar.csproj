@@ -8,6 +8,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <StartupObject>Killendar.App</StartupObject>
     <ApplicationIcon>Resources\kd-icon.ico</ApplicationIcon>
     <Version>1.1.4</Version>
     <FileVersion>1.1.4.0</FileVersion>
@@ -43,6 +44,7 @@
   <ItemGroup>
     <Compile Remove="Killendar.Tests\**\*.cs" />
     <Compile Remove="Killendar.Cli\**\*.cs" />
+    <Compile Include="Killendar.Cli\Program.cs" />
     <EmbeddedResource Remove="Killendar.Tests\**\*" />
     <EmbeddedResource Remove="Killendar.Cli\**\*" />
     <None Remove="Killendar.Tests\**\*" />

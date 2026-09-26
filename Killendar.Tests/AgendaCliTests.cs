@@ -80,8 +80,8 @@ namespace Killendar.Tests
                     End = new DateTime(2026, 10, 1, 10, 0, 0),
                 });
                 writer.Close();
-                string executable = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Killendar.Cli.exe");
-                var start = new ProcessStartInfo(executable, $"agenda 2026-10-01 1 --database \"{path}\"")
+                string executable = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Killendar.exe");
+                var start = new ProcessStartInfo(executable, $"--cli agenda 2026-10-01 1 --database \"{path}\"")
                 {
                     UseShellExecute = false,
                     CreateNoWindow = true,

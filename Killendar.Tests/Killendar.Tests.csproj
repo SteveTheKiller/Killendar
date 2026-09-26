@@ -19,6 +19,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Killendar.csproj" />
-    <ProjectReference Include="..\Killendar.Cli\Killendar.Cli.csproj" />
   </ItemGroup>
 </Project>
