@@ -270,6 +270,15 @@ html[data-theme="light"] .tb-nav a { text-shadow: none; }
 .tb-dl:hover { filter: brightness(1.1); color: var(--btn-text); transform: translateY(-1px); box-shadow: 0 7px 16px rgba(0,0,0,0.4); }
 .tb-dl:active { transform: translateY(1px); box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
 .tb-dl svg { width: 14px; height: 14px; fill: currentColor; }
+
+/* Shared KillerMCP topbar link */
+.tb-mcp-link { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 3px 10px; border: 1px solid var(--accent); border-radius: 6px; background: transparent; color: var(--text); font-family: 'Killendar', 'Courier New', monospace; font-size: 16px; line-height: 1; text-decoration: none; white-space: nowrap; box-shadow: 0 3px 8px rgba(0,0,0,0.25); transition: transform 0.12s, box-shadow 0.15s, border-color 0.12s; }
+.tb-mcp-link:hover { color: var(--text); border-color: color-mix(in srgb, var(--accent) 72%, var(--text)); transform: translateY(-1px); box-shadow: 0 7px 14px rgba(0,0,0,0.4); filter: none; }
+.tb-mcp-link.on { box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent), 0 3px 8px rgba(0,0,0,0.25); }
+.tb-mcp-link img { width: 24px; height: 24px; object-fit: contain; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5)); }
+.tb-mcp-wordmark { display: inline-flex; align-items: baseline; }
+.tb-mcp-accent { color: var(--accent); font-size: 1.2em; text-shadow: 0 1px 2px rgba(0,0,0,0.45); }
+html[data-theme="light"] .tb-mcp-accent { text-shadow: none; }
 /* Pre-release ghost of the topbar download. Same metrics as .tb-dl so the bar does not shift
    when the real button returns, but outlined and inert - the releases page is empty until
    1.0.0 is tagged, and a header button that 404s is worse than one that says "not yet". */
