@@ -62,7 +62,7 @@ namespace Killendar.Cli
             try
             {
                 store.OpenReadOnly(database);
-                return store.GetInRange(from.Date, from.Date.AddDays(days))
+                return [.. store.GetInRange(from.Date, from.Date.AddDays(days))
                     .Take(limit)
                     .Select(ev => (object)new
                     {
@@ -74,8 +74,7 @@ namespace Killendar.Cli
                         location = ev.Location,
                         categories = ev.Categories,
                         recurring = ev.IsSeries || ev.IsOccurrence,
-                    })
-                    .ToArray();
+                    })];
             }
             finally { store.Close(); }
         }
