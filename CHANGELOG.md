@@ -8,7 +8,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Added
 - Read-only agenda queries are available through the installed app's command-line interface.
-- Vietnamese localization for the app and website. (Thanks @vuanhvu11982)
+- Vietnamese localization for the app and website.
 
 ### Fixed
 - Standalone installation dialogs use the default Dark/Red theme, including uninstall and installation conflicts.
