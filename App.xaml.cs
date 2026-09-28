@@ -72,6 +72,13 @@ namespace Killendar
             if (PendingOpenFile != null) win.HandlePendingOpenFile();
         }
 
+        private string OnCalendarCommand(string request)
+        {
+            return MainWindow is MainWindow win
+                ? win.HandleCalendarCommand(request)
+                : "{\"error\":\"Killendar is still opening its calendar. Try again shortly.\"}";
+        }
+
         // ============================================================
         // Startup
         // ============================================================
@@ -138,6 +145,7 @@ namespace Killendar
                 Shutdown(0);
                 return;
             }
+            CalendarCommandPipe.Start(Dispatcher, OnCalendarCommand);
 
             string runningExe = Process.GetCurrentProcess().MainModule?.FileName ?? "";
             if (!string.Equals(runningExe, MachineInstallExe, StringComparison.OrdinalIgnoreCase))

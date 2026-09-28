@@ -15,7 +15,28 @@ namespace Killendar.Cli
             if (args.Length == 1 && args[0] == "--help")
             {
                 Console.WriteLine("Killendar CLI: agenda <yyyy-MM-dd> <days 1..31> [--limit 1..100] [--database absolute.kcal]");
+                Console.WriteLine("create <json> (requires an open, unlocked Killendar)");
                 return 0;
+            }
+            if (args.Length == 2 && args[0] == "create")
+            {
+                try
+                {
+                    var response = CalendarCommandPipe.Send(args[1]);
+                    using var result = JsonDocument.Parse(response);
+                    if (result.RootElement.TryGetProperty("error", out var error))
+                    {
+                        Console.Error.WriteLine(error.GetString());
+                        return 1;
+                    }
+                    Console.WriteLine(response);
+                    return 0;
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine(ex.Message);
+                    return 1;
+                }
             }
             if (args.Length < 3 || args[0] != "agenda"
                 || !DateTime.TryParseExact(args[1], "yyyy-MM-dd", CultureInfo.InvariantCulture,

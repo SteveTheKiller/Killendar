@@ -70,6 +70,13 @@ namespace Killendar.Shell
                               ?? StatusText.Text;
         }
 
+        internal string HandleCalendarCommand(string request)
+        {
+            var response = CalendarCommands.Create(_store, request);
+            if (_agendaDay != null) BuildDayAgendaRows();
+            return response;
+        }
+
         // ---- ICalendarHost ----
 
         string ICalendarHost.PeriodLabel { set => PeriodLabel.Text = value; }

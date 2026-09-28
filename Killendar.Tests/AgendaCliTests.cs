@@ -98,5 +98,44 @@ namespace Killendar.Tests
             }
             finally { Clean(path); }
         }
+
+        [Fact]
+        public void CreatingThroughOpenStorePersistsAndRefreshesItsMemory()
+        {
+            string path = NewPath();
+            try
+            {
+                var store = new EventStore();
+                store.Open(path);
+                string response = CalendarCommands.Create(store,
+                    "{\"title\":\"Site visit\",\"start\":\"2026-10-01T09:00\",\"end\":\"2026-10-01T10:00\"}");
+                using var result = JsonDocument.Parse(response);
+                Assert.False(result.RootElement.TryGetProperty("error", out _));
+                Assert.Single(store.GetOnDay(new DateTime(2026, 10, 1)));
+                store.Close();
+
+                Assert.Single(Program.Agenda(path, new DateTime(2026, 10, 1), 1, 10));
+            }
+            finally { Clean(path); }
+        }
+
+        [Fact]
+        public void CreatingRejectsInvalidOrLockedCalendar()
+        {
+            var closed = new EventStore();
+            Assert.Contains("error", CalendarCommands.Create(closed,
+                "{\"title\":\"Visit\",\"start\":\"2026-10-01T09:00\",\"end\":\"2026-10-01T10:00\"}"));
+
+            string path = NewPath();
+            try
+            {
+                closed.Open(path);
+                Assert.Contains("error", CalendarCommands.Create(closed,
+                    "{\"title\":\"Visit\",\"start\":\"2026-10-01T10:00\",\"end\":\"2026-10-01T09:00\"}"));
+                Assert.Empty(closed.Events);
+                closed.Close();
+            }
+            finally { Clean(path); }
+        }
     }
 }
