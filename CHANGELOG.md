@@ -6,11 +6,16 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ## [1.1.4] - Unreleased
 
+1.1.4 adds calendar access through KillerMCP and expands localization.
+
 ### Added
-- Read-only agenda queries are available through the installed app's command-line interface.
+- KillerMCP can use the installed app to read the calendar agenda without changing it.
+- KillerMCP can create appointments in the open, unlocked calendar.
 - Vietnamese localization for the app and website.
 
 ### Fixed
+- The 98SE calendar edge, toolbar buttons, and About controls now match the classic styling.
+- Closing the appointment panel with Escape leaves the B shortcut ready to reopen it (#15).
 - Standalone installation dialogs use the default Dark/Red theme, including uninstall and installation conflicts.
 - The language picker lists its sixteen languages in two columns, so it no longer runs the height of the window or clips on a short one.
 - On the 98SE theme the keyboard map's keys are white instead of button-face gray.
