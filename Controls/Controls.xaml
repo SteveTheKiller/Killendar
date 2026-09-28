@@ -94,6 +94,7 @@
 
     <!-- Primary Button (filled accent) -->
     <Style x:Key="PrimaryButton" TargetType="Button">
+        <Setter Property="AutomationProperties.Name" Value="{Binding RelativeSource={RelativeSource Self}, Path=ToolTip}"/>
         <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
         <Setter Property="FontSize" Value="14"/>
@@ -134,6 +135,7 @@
 
     <!-- Outline Button (accent border + text, reactive fill on hover) -->
     <Style x:Key="OutlineButton" TargetType="Button">
+        <Setter Property="AutomationProperties.Name" Value="{Binding RelativeSource={RelativeSource Self}, Path=ToolTip}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource OutlineBtnBrush}"/>
         <Setter Property="FontSize" Value="13"/>
@@ -173,6 +175,18 @@
                             <Setter TargetName="bevelLight" Property="BorderBrush" Value="{DynamicResource BevelDarkBrush}"/>
                             <Setter TargetName="bevelDark" Property="BorderBrush" Value="{DynamicResource BevelLightBrush}"/>
                         </Trigger>
+                        <Trigger Property="Tag" Value="toolbar">
+                            <Setter TargetName="bevelLight" Property="BorderThickness" Value="{DynamicResource ToolBevelLightThickness}"/>
+                            <Setter TargetName="bevelDark" Property="BorderThickness" Value="{DynamicResource ToolBevelDarkThickness}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Tag" Value="toolbar"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="bevelLight" Property="BorderThickness" Value="{DynamicResource ToolHoverBevelLightThickness}"/>
+                            <Setter TargetName="bevelDark" Property="BorderThickness" Value="{DynamicResource ToolHoverBevelDarkThickness}"/>
+                        </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5"/>
                         </Trigger>
@@ -186,6 +200,7 @@
          hover that dims rather than colors. Accent on hover belongs to OutlineButton and
          PrimaryButton; a secondary button that lights up accent reads as the primary action. -->
     <Style x:Key="SurfaceButton" TargetType="Button">
+        <Setter Property="AutomationProperties.Name" Value="{Binding RelativeSource={RelativeSource Self}, Path=ToolTip}"/>
         <Setter Property="Background" Value="{DynamicResource InputFieldBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="FontSize" Value="13"/>
@@ -724,6 +739,7 @@
         <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="RadioButton"><Border x:Name="bd" Background="Transparent" CornerRadius="{DynamicResource SmallCornerRadius}" Margin="-8,0,2,0" Padding="10,4"><DockPanel><Grid Width="16" Height="16" Margin="0,0,8,0" DockPanel.Dock="Left"><Ellipse x:Name="ring" Width="14" Height="14" Stroke="{DynamicResource DimTextBrush}" StrokeThickness="1.5"/><Ellipse x:Name="dot" Width="8" Height="8" Fill="{DynamicResource PrimaryBrush}" Visibility="Collapsed"/></Grid><ContentPresenter VerticalAlignment="Center"/></DockPanel></Border><ControlTemplate.Triggers><Trigger Property="IsChecked" Value="True"><Setter TargetName="dot" Property="Visibility" Value="Visible"/><Setter TargetName="ring" Property="Stroke" Value="{DynamicResource PrimaryBrush}"/><Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/></Trigger><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="bd" Property="Background" Value="{DynamicResource RowHoverBrush}"/></Trigger><!-- Checked AND hovered: ring, dot and label take RadioHoverFgBrush, aliased to PrimaryBrush so twelve themes are unchanged; Sepulchre's accent is its own hover teal, so it sets white. Declared last so it wins both single triggers. --><MultiTrigger><MultiTrigger.Conditions><Condition Property="IsChecked" Value="True"/><Condition Property="IsMouseOver" Value="True"/></MultiTrigger.Conditions><Setter TargetName="ring" Property="Stroke" Value="{DynamicResource RadioHoverFgBrush}"/><Setter TargetName="dot" Property="Fill" Value="{DynamicResource RadioHoverFgBrush}"/><Setter Property="Foreground" Value="{DynamicResource RadioHoverFgBrush}"/></MultiTrigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
     </Style>
     <Style x:Key="ThemeSwatch" TargetType="Button">
+        <Setter Property="AutomationProperties.Name" Value="{Binding RelativeSource={RelativeSource Self}, Path=Tag}"/>
         <Setter Property="Width" Value="15"/>
         <Setter Property="Height" Value="15"/>
         <Setter Property="Margin" Value="2,0"/>
@@ -752,6 +768,7 @@
     <SolidColorBrush x:Key="DangerRed" Color="#e04444"/>
 
     <Style x:Key="ChromeButton" TargetType="Button">
+        <Setter Property="AutomationProperties.Name" Value="{Binding RelativeSource={RelativeSource Self}, Path=ToolTip}"/>
         <Setter Property="Background" Value="{DynamicResource CaptionButtonBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource CaptionGlyphBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -844,6 +861,7 @@
          BorderThickness is 1 ALWAYS, transparent at rest. If the border only existed on hover
          every button would grow 2px as the pointer crossed it and the whole bar would shuffle. -->
     <Style x:Key="ToolbarButton" TargetType="Button">
+        <Setter Property="AutomationProperties.Name" Value="{Binding RelativeSource={RelativeSource Self}, Path=ToolTip}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -865,16 +883,18 @@
                         </Border>
                         <Border x:Name="toolLight" IsHitTestVisible="False"
                                 BorderBrush="{DynamicResource BevelLightBrush}"
-                                BorderThickness="{DynamicResource ButtonBevelLightThickness}"/>
+                                BorderThickness="{DynamicResource ToolBevelLightThickness}"/>
                         <Border x:Name="toolDark" IsHitTestVisible="False"
                                 BorderBrush="{DynamicResource BevelDarkBrush}"
-                                BorderThickness="{DynamicResource ButtonBevelDarkThickness}"/>
+                                BorderThickness="{DynamicResource ToolBevelDarkThickness}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <!-- Fill only. No colored border: KillerPDF's toolbar has never had one
                              and this is the family standard (KillerUI/Controls/Controls.xaml). -->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource RowHoverBrush}"/>
+                            <Setter TargetName="toolLight" Property="BorderThickness" Value="{DynamicResource ToolHoverBevelLightThickness}"/>
+                            <Setter TargetName="toolDark" Property="BorderThickness" Value="{DynamicResource ToolHoverBevelDarkThickness}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource SurfaceBrush}"/>
@@ -911,6 +931,7 @@
          ChromeCloseButton follows for the caption X. Named to match KillerPDF, where the
          family's overlay X comes from, so the two can be compared side by side. -->
     <Style x:Key="DangerCloseButton" TargetType="Button">
+        <Setter Property="AutomationProperties.Name" Value="{Binding RelativeSource={RelativeSource Self}, Path=ToolTip}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}"/>
         <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
@@ -948,6 +969,7 @@
     <!-- About/Shortcuts close control copied from KillerScan's overlay geometry. Unlike caption
          buttons it never paints a red tile: only the X changes color on hover. -->
     <Style x:Key="OverlayCloseButton" TargetType="Button">
+        <Setter Property="AutomationProperties.Name" Value="{Binding RelativeSource={RelativeSource Self}, Path=ToolTip}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}"/>
@@ -1018,6 +1040,7 @@
     <!-- Sidebar icon-rail button: bare glyph with a soft shadow, turning the accent color on
          hover. Content is the glyph; override FontFamily/FontSize for text glyphs like a "?". -->
     <Style x:Key="RailButton" TargetType="Button">
+        <Setter Property="AutomationProperties.Name" Value="{Binding RelativeSource={RelativeSource Self}, Path=ToolTip}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <!-- 20 logical hugs the 16px glyphs; the 24px rail column leaves only a 2px inset per
@@ -1179,6 +1202,7 @@
 
     <!-- View toggle buttons; Tag="on" marks the active mode. -->
     <Style x:Key="PickerViewBtn" TargetType="Button">
+        <Setter Property="AutomationProperties.Name" Value="{Binding RelativeSource={RelativeSource Self}, Path=ToolTip}"/>
         <Setter Property="Width" Value="26"/>
         <Setter Property="Height" Value="22"/>
         <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>

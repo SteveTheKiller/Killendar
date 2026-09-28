@@ -34,6 +34,7 @@ namespace Killendar.Views
         private Grid _allDayStrip = null!;
         private Border _allDayHost = null!;
         private Grid _bodyGrid = null!;
+        private Border _bodySurface = null!;
         private ScrollViewer _scroller = null!;
         private readonly List<Canvas> _dayCanvases = [];
 
@@ -51,6 +52,8 @@ namespace Killendar.Views
         {
             _dayCount = dayCount;
             BuildSkeleton();
+            Loaded += (_, _) => RefreshBodyShadow();
+            ThemeManager.ThemeChanged += RefreshBodyShadow;
 
             // Ctrl+wheel changes density; plain wheel keeps scrolling the day. Preview, so it is
             // seen before the ScrollViewer consumes it, and Handled so the grid does not also
@@ -161,6 +164,18 @@ namespace Killendar.Views
 
         public void Refresh() => Rebuild();
 
+        private void RefreshBodyShadow()
+        {
+            _bodySurface.Effect = ThemeManager.Current == Theme.SE98 ? null
+                : new System.Windows.Media.Effects.DropShadowEffect
+                {
+                    Color = Colors.Black,
+                    BlurRadius = 16,
+                    ShadowDepth = 0,
+                    Opacity = TryFindResource("PaneShadowOpacity") is double opacity ? opacity : 0.6,
+                };
+        }
+
         private void BuildSkeleton()
         {
             var root = new Grid();
@@ -171,19 +186,12 @@ namespace Killendar.Views
 
             // Week/Day use Month's surface rule: labels live directly on the app background,
             // while the actual calendar body owns the pane fill and grain beneath them.
-            var bodySurface = new Border { BorderThickness = new Thickness(0) };
-            bodySurface.SetResourceReference(Border.BackgroundProperty, "PaneBrush");
-            bodySurface.SetResourceReference(Border.CornerRadiusProperty, "PanelCornerRadius");
-            bodySurface.Effect = new System.Windows.Media.Effects.DropShadowEffect
-            {
-                Color = Colors.Black,
-                BlurRadius = 16,
-                ShadowDepth = 0,
-                Opacity = TryFindResource("PaneShadowOpacity") is double opacity ? opacity : 0.6,
-            };
-            Grid.SetRow(bodySurface, 1);
-            Grid.SetRowSpan(bodySurface, 2);
-            root.Children.Add(bodySurface);
+            _bodySurface = new Border { BorderThickness = new Thickness(0) };
+            _bodySurface.SetResourceReference(Border.BackgroundProperty, "PaneBrush");
+            _bodySurface.SetResourceReference(Border.CornerRadiusProperty, "PanelCornerRadius");
+            Grid.SetRow(_bodySurface, 1);
+            Grid.SetRowSpan(_bodySurface, 2);
+            root.Children.Add(_bodySurface);
 
             var bodyGrain = new Border { IsHitTestVisible = false };
             bodyGrain.SetResourceReference(Border.BackgroundProperty, "GrainTileBrush");

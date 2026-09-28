@@ -193,6 +193,7 @@ namespace Killendar.Services
             // whose sources may have been replaced by an accent overlay.
             merged[0]["OutlineRestBrush"] = merged[0]["OutlineBtnBrush"];
             merged[0]["KsCatAppt"] = merged[0]["PrimaryBrush"];
+            if (theme == Theme.SE98) merged[0]["CheckBoxCheckedBrush"] = merged[0]["PrimaryBrush"];
             // About and Keyboard Shortcuts are window surfaces. Resolve this after accent merging
             // so the exact BackgroundBrush object (including gradients) is retained.
             merged[0]["OverlayWindowBrush"] = merged[0]["BackgroundBrush"];
@@ -234,15 +235,18 @@ namespace Killendar.Services
             if (!d.Contains("ButtonBevelDarkThickness")) d["ButtonBevelDarkThickness"] = new Thickness(0);
 
             bool square = theme == Theme.SE98;
+            if (!d.Contains("ToolBevelLightThickness")) d["ToolBevelLightThickness"] = new Thickness(0);
+            if (!d.Contains("ToolBevelDarkThickness")) d["ToolBevelDarkThickness"] = new Thickness(0);
+            if (!d.Contains("ToolHoverBevelLightThickness")) d["ToolHoverBevelLightThickness"] = new Thickness(0);
+            if (!d.Contains("ToolHoverBevelDarkThickness")) d["ToolHoverBevelDarkThickness"] = new Thickness(0);
             d["TitleBarGridLength"] = new GridLength(square ? 22 : 36);
             d["ContentPaneMargin"] = square ? new Thickness(0) : new Thickness(0, 0, 8, 0);
             // Modern sidebars are transparent so the app gradient/grain continues through them.
             // 98SE uses a white client pane instead of exposing the gray window/button face.
             d["SidebarPaneBrush"] = square ? d["PaneBrush"] : Brushes.Transparent;
-            // A hosted view can paint over a Border's normal border rendering. Keep the classic
-            // border in layout for its bevel, but draw modern themes' single-pixel outline above
-            // the view so it cannot disappear.
-            d["ContentPaneBaseBorderThickness"] = square ? new Thickness(1) : new Thickness(0);
+            // Draw the edge above the hosted view. The classic pane uses the same four rings as
+            // the sidebar without an extra base border outside them.
+            d["ContentPaneBaseBorderThickness"] = new Thickness(0);
             d["ContentPaneOutlineThickness"] = square ? new Thickness(0) : new Thickness(1);
             // A shadow cast by the whole selected tile covers far more area than an icon shadow;
             // use a lighter opacity so the two read at the same visual weight.
@@ -263,6 +267,8 @@ namespace Killendar.Services
             d["CaptionCloseCornerRadius"] = square ? new CornerRadius(0) : new CornerRadius(0, 6, 0, 0);
             d["DialogTitleTextMargin"] = square ? new Thickness(4, 0, 0, 0) : new Thickness(14, 0, 0, 0);
             d["DialogCaptionCloseMargin"] = square ? new Thickness(0, 2, 3, 2) : new Thickness(0);
+            if (!d.Contains("AboutCaptionCloseMargin")) d["AboutCaptionCloseMargin"] = new Thickness(0);
+            if (!d.Contains("AboutBodyMargin")) d["AboutBodyMargin"] = new Thickness(18, 10, 18, 18);
 
             // These keys are structural 98SE chrome. Themes are merged into one live dictionary,
             // so modern palettes must actively reset them or a switch away from 98SE leaves the

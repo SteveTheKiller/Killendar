@@ -79,7 +79,7 @@ namespace Killendar.Shell
             {
                 if (ShortcutsOverlay.Visibility == Visibility.Visible) { FadeOverlayOut(ShortcutsOverlay); }
                 else if (AboutOverlay.Visibility == Visibility.Visible) { AboutClose_Click(this, new RoutedEventArgs()); }
-                else if (_sidebarOpen) { CloseSidebar(); }
+                else if (_sidebarOpen) { CloseSidebar(); SidebarToggleBtn.Focus(); }
                 e.Handled = true;
                 return;
             }

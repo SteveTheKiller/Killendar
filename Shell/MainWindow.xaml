@@ -101,11 +101,11 @@
                 <Button x:Name="LockButton" Click="LockButton_Click" Style="{StaticResource ChromeButton}"
                         FontSize="14" Margin="0,0,6,0"/>
                 <Button x:Name="MinimizeBtn" Click="MinimizeBtn_Click" Style="{StaticResource ChromeButton}"
-                        Content="&#xE921;"/>
+                        Content="&#xE921;" ToolTip="{DynamicResource Str_Sys_Minimize}"/>
                 <Button x:Name="MaximizeBtn" Click="MaximizeBtn_Click" Style="{StaticResource ChromeButton}"
-                        Content="&#xE922;"/>
+                        Content="&#xE922;" ToolTip="{DynamicResource Str_Sys_Maximize}"/>
                 <Button x:Name="CloseBtn" Click="CloseBtn_Click" Style="{StaticResource ChromeCloseButton}"
-                        Content="&#xE8BB;"/>
+                        Content="&#xE8BB;" ToolTip="{DynamicResource Str_Sys_Close}"/>
             </StackPanel>
 
         </Grid>
@@ -177,11 +177,8 @@
 
                     <!-- The action you came here to do, then file actions, then where you are in time. -->
                     <StackPanel x:Name="ToolbarLeft" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <!-- OutlineButton, not PrimaryButton. Family standard is an accent OUTLINE
-                             at rest that fills solid on hover; PrimaryButton is already solid, so
-                             hovering it only shifts a shade and the button reads as dead. Same
-                             correction ConfirmDialog's OK button needed. (2026-07-30) -->
                         <Button x:Name="NewEventBtn" Content="{DynamicResource Str_Btn_New}" Style="{StaticResource OutlineButton}"
+                                Tag="toolbar"
                                 Padding="12,4" Margin="0,0,10,0" Click="NewEventBtn_Click"/>
 
                         <!-- Group separators, KillerPDF's exactly (MainWindow.xaml, GrpPageOps and
@@ -1046,11 +1043,11 @@
                                            Foreground="{DynamicResource ChromeTextBrush}"/>
                                 <Button Content="&#xE8BB;" Click="AboutClose_Click"
                                         Style="{StaticResource ChromeCloseButton}" HorizontalAlignment="Right"
-                                        Margin="{DynamicResource DialogCaptionCloseMargin}"/>
+                                        Margin="{DynamicResource AboutCaptionCloseMargin}"/>
                             </Grid>
                         </Border>
 
-                        <StackPanel Margin="18,10,18,18">
+                        <StackPanel Margin="{DynamicResource AboutBodyMargin}">
                             <!-- Header: icon left of the wordmark, width pinned to the info panel so a
                                  long tagline wraps instead of widening the card. -->
                             <Grid Margin="0,4,0,14" Width="{Binding ActualWidth, ElementName=AboutInfoGrid}">

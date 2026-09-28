@@ -176,6 +176,8 @@
     <sys:Double x:Key="AboutCloseWidth" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">18</sys:Double>
     <sys:Double x:Key="AboutCloseHeight" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">16</sys:Double>
     <Thickness x:Key="AboutCloseMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,4,4,0</Thickness>
+    <Thickness x:Key="AboutCaptionCloseMargin">0,1,1,2</Thickness>
+    <Thickness x:Key="AboutBodyMargin">18,18,18,18</Thickness>
     <sys:String x:Key="AboutCloseGlyph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">&#xE8BB;</sys:String>
     <FontFamily x:Key="AboutCloseFont" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Segoe MDL2 Assets</FontFamily>
     <SolidColorBrush x:Key="AboutCloseFg" Color="#000000" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
@@ -194,6 +196,10 @@
 
     <Thickness x:Key="ButtonBevelLightThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">2,2,0,0</Thickness>
     <Thickness x:Key="ButtonBevelDarkThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,2,2</Thickness>
+    <Thickness x:Key="ToolBevelLightThickness">0</Thickness>
+    <Thickness x:Key="ToolBevelDarkThickness">0</Thickness>
+    <Thickness x:Key="ToolHoverBevelLightThickness">1,1,0,0</Thickness>
+    <Thickness x:Key="ToolHoverBevelDarkThickness">0,0,1,1</Thickness>
     <Thickness x:Key="CheckSunkenDarkThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">1,1,0,0</Thickness>
     <Thickness x:Key="CheckSunkenLightThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,1,1</Thickness>
 
