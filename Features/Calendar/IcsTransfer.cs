@@ -46,13 +46,18 @@ namespace Killendar.Features
             };
             if (dlg.ShowDialog(_host.Window) != true) return;
 
+            Import(dlg.FileName);
+        }
+
+        internal void Import(string path)
+        {
             try
             {
-                var ok = Path.GetExtension(dlg.FileName).ToLowerInvariant() switch
+                var ok = Path.GetExtension(path).ToLowerInvariant() switch
                 {
-                    ".csv" => ImportCsv(dlg.FileName),
-                    ".eml" => ImportEml(dlg.FileName),
-                    _ => ImportIcs(IcsService.ParseFile(dlg.FileName)),
+                    ".csv" => ImportCsv(path),
+                    ".eml" => ImportEml(path),
+                    _ => ImportIcs(IcsService.ParseFile(path)),
                 };
                 if (ok) _afterChange();
             }

@@ -30,7 +30,7 @@ namespace Killendar.Shell
                 Dispatcher.BeginInvoke(new System.Action(() =>
                 {
                     OpenCalendarData();        // opens, unlocks if needed, paints
-                    HandlePendingOpenFile();   // a double-clicked .kcal, if any
+                    HandlePendingOpenFile();   // a shell-opened .kcal or .ics, if any
                     if (string.Equals(Settings.Get("AppointmentSidebarOpen"), "1",
                                       System.StringComparison.Ordinal))
                         RestoreSidebarPanel();

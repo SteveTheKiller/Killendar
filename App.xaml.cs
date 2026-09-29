@@ -47,7 +47,7 @@ namespace Killendar
 
         private SingleInstanceGuard? _instance;
 
-        /// <summary>Path of a double-clicked .kcal, waiting for the window to finish opening.
+        /// <summary>Path of a shell-opened .kcal or .ics, waiting for the window to finish opening.
         /// Internal so MainWindow can drain it, and so a forwarded second launch can refill it.</summary>
         internal static string? PendingOpenFile;
 
@@ -58,7 +58,7 @@ namespace Killendar
         }
 
         /// <summary>A second launch was blocked and forwarded its command line here: bring the window
-        /// forward, then route any .kcal through the same path as a first-launch double-click.</summary>
+        /// forward, then route the file through the same path as a first-launch shell open.</summary>
         private void OnForwardedLaunch(string? path)
         {
             if (MainWindow is not MainWindow win) return;
@@ -133,7 +133,7 @@ namespace Killendar
                 return;
             }
 
-            // A double-clicked .kcal arrives as argv[0]. Captured before the single-instance check
+            // A shell-opened .kcal or .ics arrives as argv[0]. Captured before the single-instance check
             // so a blocked second launch can forward it to the running window.
             CaptureOpenFileArgument(e.Args);
 

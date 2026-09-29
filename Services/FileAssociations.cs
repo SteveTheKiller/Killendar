@@ -17,6 +17,7 @@ namespace Killendar.Services
     internal static class FileAssociations
     {
         internal const string ProgId      = "Killendar.Killendar";
+        internal const string IcsProgId   = "Killendar.iCalendar";
         internal const string DisplayName = "Killendar";
 
         private static string ExePath => Process.GetCurrentProcess().MainModule!.FileName;
@@ -51,6 +52,31 @@ namespace Killendar.Services
                 using (var k = root.CreateSubKey(@"Software\Classes\" + ProgId + @"\shell\open\command"))
                     k.SetValue("", "\"" + exe + "\" \"%1\"");
 
+                // iCalendar is a shared format, so advertise Killendar in Open With without
+                // replacing the user's existing default calendar app.
+                using (var k = root.CreateSubKey(@"Software\Classes\" + IcsProgId))
+                {
+                    k.SetValue("", "iCalendar File");
+                    k.SetValue("FriendlyTypeName", "iCalendar File");
+                }
+                using (var k = root.CreateSubKey(@"Software\Classes\" + IcsProgId + @"\DefaultIcon"))
+                    k.SetValue("", exe + ",0");
+                using (var k = root.CreateSubKey(@"Software\Classes\" + IcsProgId + @"\shell\open"))
+                    k.SetValue("FriendlyAppName", DisplayName);
+                using (var k = root.CreateSubKey(@"Software\Classes\" + IcsProgId + @"\shell\open\command"))
+                    k.SetValue("", "\"" + exe + "\" \"%1\"");
+                using (var k = root.CreateSubKey(@"Software\Classes\.ics\OpenWithProgids"))
+                    k.SetValue(IcsProgId, Array.Empty<byte>(), RegistryValueKind.None);
+                using (var k = root.CreateSubKey(@"Software\Classes\Applications\Killendar.exe"))
+                    k.SetValue("FriendlyAppName", DisplayName);
+                using (var k = root.CreateSubKey(@"Software\Classes\Applications\Killendar.exe\shell\open\command"))
+                    k.SetValue("", "\"" + exe + "\" \"%1\"");
+                using (var k = root.CreateSubKey(@"Software\Classes\Applications\Killendar.exe\SupportedTypes"))
+                {
+                    k.SetValue(EventStore.Extension, "");
+                    k.SetValue(".ics", "");
+                }
+
                 SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, IntPtr.Zero, IntPtr.Zero);
             }
             catch { /* best-effort */ }
@@ -67,6 +93,13 @@ namespace Killendar.Services
             {
                 root.DeleteSubKeyTree(
                     @"Software\Classes\" + ProgId, throwOnMissingSubKey: false);
+                root.DeleteSubKeyTree(
+                    @"Software\Classes\" + IcsProgId, throwOnMissingSubKey: false);
+                root.DeleteSubKeyTree(
+                    @"Software\Classes\Applications\Killendar.exe", throwOnMissingSubKey: false);
+                using (var k = root.OpenSubKey(
+                           @"Software\Classes\.ics\OpenWithProgids", writable: true))
+                    k?.DeleteValue(IcsProgId, throwOnMissingValue: false);
                 using (var k = root.OpenSubKey(
                            @"Software\Classes\" + EventStore.Extension, writable: true))
                 {
@@ -86,8 +119,9 @@ namespace Killendar.Services
             if (args.Length == 0) return null;
             string path = args[0];
             if (!File.Exists(path)) return null;
-            if (!string.Equals(Path.GetExtension(path), EventStore.Extension,
-                               StringComparison.OrdinalIgnoreCase)) return null;
+            string extension = Path.GetExtension(path);
+            if (!string.Equals(extension, EventStore.Extension, StringComparison.OrdinalIgnoreCase) &&
+                !string.Equals(extension, ".ics", StringComparison.OrdinalIgnoreCase)) return null;
             return path;
         }
     }

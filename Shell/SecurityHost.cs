@@ -1,6 +1,8 @@
 using System.Windows;
 using System.Windows.Input;
+using System.IO;
 using Killendar.Features;
+using Killendar.Services;
 
 // MainWindow's side of the security feature: it satisfies ISecurityHost and forwards the two
 // button clicks. All the behavior lives in Features/Security/SecurityController.cs.
@@ -33,9 +35,23 @@ namespace Killendar.Shell
 
         void ISecurityHost.CloseSidebar() => CloseSidebar();
 
-        /// <summary>Routes a double-clicked .kcal after the active Killendar has opened. Internal:
+        /// <summary>Routes a shell-opened file after the active Killendar has opened. Internal:
         /// App also calls this for a path forwarded from a blocked second launch.</summary>
-        internal void HandlePendingOpenFile() => _security.AdoptPendingFile();
+        internal void HandlePendingOpenFile()
+        {
+            string? path = App.PendingOpenFile;
+            if (path == null) return;
+
+            if (string.Equals(Path.GetExtension(path), ".ics",
+                              System.StringComparison.OrdinalIgnoreCase))
+            {
+                App.PendingOpenFile = null;
+                _ics.Import(path);
+                return;
+            }
+
+            _security.AdoptPendingFile();
+        }
 
         private void KillendarsButton_Click(object sender, RoutedEventArgs e)
             => _security.ShowKillendars();
