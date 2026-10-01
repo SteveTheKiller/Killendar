@@ -33,7 +33,7 @@ var I18N = {
       b3a: "Month, week, day and agenda, sharing one prev / next / today.",
       b3b: "Overlapping appointments lay out side by side, never hidden.",
       b3c: "<b>Color categories</b> you define, painting every view.",
-      b3d: "Thirteen themes, sixteen languages, single-key shortcuts.",
+      b3d: "Thirteen themes, nineteen languages, single-key shortcuts.",
       dl: "Download", dlwin: "Download for Windows", gh: "Source on GitHub",
       navTech: "Technical", navAbout: "About",
       note: "Install or run portable. Free, open source, GPLv3.<br>No account, no subscription, no sync service.<br>No telemetry is sent and no ads... ever.",
@@ -48,7 +48,7 @@ var I18N = {
       f4p: "SQLCipher at rest: AES-256, per-page HMAC-SHA512, its own key derivation. Opt-in, so with no\npassword the file stays plain SQLite.",
       f5h: "iCalendar in and out",
       f5p: "Import and export written against RFC 5545 with no external dependencies. Categories travel\nwith an appointment through both.<code>.ics</code> import / export",
-      f6h: "Thirteen themes, sixteen languages",
+      f6h: "Thirteen themes, nineteen languages",
       f6p: "Every theme switchable while it runs. Dark, Light, Black and 98SE each take six accent hues, so there are 33 looks in all. Single-key\nshortcuts that stand down while you are typing in a field.",
       f7h: "Portable or installed",
       f7p: "Run it off a USB stick, or let it install itself per-user or for everyone on the machine.\nKeep the calendar beside the executable for a self-contained copy. A silent install path exists for winget, Chocolatey and RMM.",
@@ -66,7 +66,7 @@ var I18N = {
       app_h: "The app",
       app_p1: "<b>Killendar</b> is a native Windows calendar that ships as a single self-contained executable. Install it or run it portable. There is no service to register, no account, and no subscription. Hand someone the .exe and they have a calendar.",
       app_p2: "Your appointments live in one <b>.kcal</b> file in your own profile. It is an ordinary SQLite database, so it is yours to read, back up, move, or open with any SQLite tool. Set a password and the whole file is encrypted at rest with SQLCipher; leave it off and it stays plain SQLite. Either way nothing leaves the machine, because there is nowhere for it to go.",
-      app_p3: "It does month, week, day and agenda views, color categories you define yourself, and iCalendar import and export so whatever you put in can come back out. Thirteen themes, sixteen languages, and a keyboard shortcut for everything, because a tool you have to go looking for with the mouse costs you the time it was meant to save.",
+      app_p3: "It does month, week, day and agenda views, color categories you define yourself, and iCalendar import and export so whatever you put in can come back out. Thirteen themes, nineteen languages, and a keyboard shortcut for everything, because a tool you have to go looking for with the mouse costs you the time it was meant to save.",
       app_p4: "Much of what it does next will be driven by what people ask for. The <a href=\"https://github.com/SteveTheKiller/Killendar/issues\" target=\"_blank\" rel=\"noopener\">GitHub issues</a> page is open to anyone, and suggestions genuinely shape where it goes. Killendar is free software under the <b>GPL-3.0</b> license, and the <a href=\"technical.html\">Technical</a> page has the deep details.",
       contact_h: "Contact &amp; links",
       contact_p: "Find me, file a bug, or just say hi:",
@@ -3436,3 +3436,95 @@ I18N.pt = {
  "tk_117": "O que não é protegido",
  "egg": "Sem conta. Sem sincronização. Sem servidor. Seus compromissos nunca saem desta máquina."
 };
+
+/* Language count update: nineteen locales. */
+if (I18N["vi"]) Object.assign(I18N["vi"], {
+ "app_p3": "Ứng dụng có các chế độ xem theo tháng, tuần, ngày và lịch trình, các danh mục màu do bạn tự xác định, cùng tính năng nhập và xuất iCalendar để mọi dữ liệu bạn đưa vào đều có thể được lấy ra. Mười ba giao diện, mười chín ngôn ngữ và phím tắt cho mọi thao tác, bởi một công cụ khiến bạn phải dùng chuột để tìm kiếm sẽ làm mất chính khoảng thời gian mà nó được tạo ra để tiết kiệm.",
+ "b3d": "Mười ba giao diện, mười chín ngôn ngữ và các phím tắt một phím.",
+ "f6h": "Mười ba giao diện, mười chín ngôn ngữ"
+});
+if (I18N["hu"]) Object.assign(I18N["hu"], {
+ "app_p3": "Havi, heti, napi és napirend nézetet ad, saját maga által meghatározott színkategóriákat, valamint iCalendar importálást és exportálást, hogy amit betesz, ki is jöhessen. Tizenhárom téma, 19 nyelv, és billentyűparancs mindenre, mert az az eszköz, amelyet egérrel kell megkeresni, pontosan azt az időt veszi el, amelyet meg kellett volna spórolnia.",
+ "b3d": "Tizenhárom téma, 19 nyelv, egygombos gyorsbillentyűk.",
+ "f6h": "Tizenhárom téma, 19 nyelv"
+});
+if (I18N["es"]) Object.assign(I18N["es"], {
+ "app_p3": "Tiene vistas de mes, semana, día y agenda, categorías de color que defines tú mismo, e importación y exportación de iCalendar para que todo lo que metas pueda volver a salir. Trece temas, 19 idiomas y un atajo de teclado para todo, porque una herramienta que tienes que ir a buscar con el ratón te cuesta el tiempo que venía a ahorrarte.",
+ "b3d": "Trece temas, 19 idiomas, atajos de una sola tecla.",
+ "f6h": "Trece temas, 19 idiomas"
+});
+if (I18N["fr"]) Object.assign(I18N["fr"], {
+ "app_p3": "Il propose les vues mois, semaine, jour et agenda, des catégories de couleur que vous définissez vous-même, et l'import et l'export iCalendar pour que tout ce que vous y mettez puisse en ressortir. Treize thèmes, 19 langues et un raccourci clavier pour tout, parce qu'un outil qu'il faut aller chercher à la souris vous coûte le temps qu'il devait vous faire gagner.",
+ "b3d": "Treize thèmes, 19 langues, raccourcis à une seule touche.",
+ "f6h": "Treize thèmes, 19 langues"
+});
+if (I18N["de"]) Object.assign(I18N["de"], {
+ "app_p3": "Er kann Monats-, Wochen-, Tages- und Agenda-Ansicht, selbst angelegte Farbkategorien sowie iCalendar-Import und -Export, damit alles, was Sie hineingeben, auch wieder herauskommt. Dreizehn Designs, 19 Sprachen und ein Tastenkürzel für alles, denn ein Werkzeug, das Sie mit der Maus erst suchen müssen, kostet Sie genau die Zeit, die es sparen sollte.",
+ "b3d": "Dreizehn Designs, 19 Sprachen, Einzeltasten-Kürzel.",
+ "f6h": "Dreizehn Designs, 19 Sprachen"
+});
+if (I18N["cs"]) Object.assign(I18N["cs"], {
+ "app_p3": "Umí zobrazení měsíce, týdne, dne a agendy, barevné kategorie, které si definujete sami, a import i export iCalendaru, aby všechno, co do něj vložíte, mohlo zase ven. Třináct motivů, 19 jazyků a klávesová zkratka na všechno, protože nástroj, který musíte hledat myší, vás stojí přesně ten čas, který měl ušetřit.",
+ "b3d": "Třináct motivů, 19 jazyků, jednoklávesové zkratky.",
+ "f6h": "Třináct motivů, 19 jazyků"
+});
+if (I18N["tr"]) Object.assign(I18N["tr"], {
+ "app_p3": "Ay, hafta, gün ve ajanda görünümleri, kendi tanımladığınız renk kategorileri ve koyduğunuz her şeyin geri çıkabilmesi için iCalendar içe ve dışa aktarma sunar. On üç tema, 19 dil ve her şey için bir klavye kısayolu; çünkü fareyle aramanız gereken bir araç, size kazandırması gereken zamana mal olur.",
+ "b3d": "On üç tema, 19 dil, tek tuşlu kısayollar.",
+ "f6h": "On üç tema, 19 dil"
+});
+if (I18N["ja"]) Object.assign(I18N["ja"], {
+ "app_p3": "月・週・日・予定一覧の表示、自分で決めるカラーカテゴリ、そして入れたものがそのまま取り出せる iCalendar の読み込みと書き出しを備えています。テーマ十三種、19 か国語、そしてすべての操作にキーボードショートカット。マウスで探しに行かなければならない道具は、節約するはずだった時間をかえって奪ってしまうからです。",
+ "b3d": "テーマ十三種、19 か国語、ワンキーのショートカット。",
+ "f6h": "テーマ十三種、19 か国語"
+});
+if (I18N["pl"]) Object.assign(I18N["pl"], {
+ "app_p3": "Ma widoki miesiąca, tygodnia, dnia i agendy, kolorowe kategorie definiowane przez ciebie oraz import i eksport iCalendar, żeby to, co włożysz, mogło wyjść z powrotem. Trzynaście motywów, 19 języków i skrót klawiaturowy do wszystkiego, bo narzędzie, którego trzeba szukać myszą, kosztuje cię dokładnie ten czas, który miało oszczędzić.",
+ "b3d": "Trzynaście motywów, 19 języków, skróty jednym klawiszem.",
+ "f6h": "Trzynaście motywów, 19 języków"
+});
+if (I18N["bn"]) Object.assign(I18N["bn"], {
+ "app_p3": "এতে আছে মাস, সপ্তাহ, দিন ও সূচি ভিউ, নিজের সংজ্ঞা দেওয়া রঙের বিভাগ, আর iCalendar ইমপোর্ট ও এক্সপোর্ট - যা ঢোকান, তা আবার বেরিয়েও আসতে পারে। তেরোটি থিম, ১৯টি ভাষা, আর সবকিছুর জন্য কীবোর্ড শর্টকাট; কারণ যে টুল মাউস দিয়ে খুঁজে বের করতে হয়, সেটি যে সময় বাঁচানোর কথা ছিল সেই সময়ই কেড়ে নেয়।",
+ "b3d": "তেরোটি থিম, ১৯টি ভাষা, এক-কী শর্টকাট।",
+ "f6h": "তেরোটি থিম, ১৯টি ভাষা"
+});
+if (I18N["zh-CN"]) Object.assign(I18N["zh-CN"], {
+ "app_p3": "它有月、周、日和日程视图，有你自己定义的颜色类别，还有 iCalendar 导入导出，放进去的东西都能再拿出来。十三套主题、19 种语言，每件事都有键盘快捷键 - 因为一个还得用鼠标去找的工具，会把它本该替你省下的时间又花掉。",
+ "b3d": "十三套主题、19 种语言、单键快捷键。",
+ "f6h": "十三套主题，19 种语言"
+});
+if (I18N["zh-TW"]) Object.assign(I18N["zh-TW"], {
+ "app_p3": "它有月、週、日和行程檢視，有你自己定義的顏色類別，還有 iCalendar 匯入匯出，放進去的東西都能再拿出來。十三套主題、19 種語言，每件事都有鍵盤快速鍵 - 因為一個還得用滑鼠去找的工具，會把它本該替你省下的時間又花掉。",
+ "b3d": "十三套佈景主題、19 種語言、單鍵快速鍵。",
+ "f6h": "十三套主題，19 種語言"
+});
+if (I18N["it"]) Object.assign(I18N["it"], {
+ "app_p3": "Offre le viste mese, settimana, giorno e agenda, categorie di colore che definisci tu stesso, e importazione ed esportazione iCalendar così quello che metti dentro può tornare fuori. Tredici temi, 19 lingue e una scorciatoia da tastiera per tutto, perché uno strumento che devi andare a cercare con il mouse ti costa il tempo che doveva farti risparmiare.",
+ "b3d": "Tredici temi, 19 lingue, scorciatoie a tasto singolo.",
+ "f6h": "Tredici temi, 19 lingue"
+});
+if (I18N["ru"]) Object.assign(I18N["ru"], {
+ "app_p3": "Он умеет виды месяца, недели, дня и расписания, цветовые категории, которые вы задаёте сами, и импорт и экспорт iCalendar, чтобы всё, что вы в него положили, могло выйти обратно. Тринадцать тем, 19 языков и сочетание клавиш для всего, потому что инструмент, который приходится искать мышью, отнимает то самое время, которое должен был сэкономить.",
+ "b3d": "Тринадцать тем, 19 языков, сочетания из одной клавиши.",
+ "f6h": "Тринадцать тем, 19 языков"
+});
+if (I18N["kk"]) Object.assign(I18N["kk"], {
+ "app_p3": "Ол ай, апта, күн және күн тәртібі көріністерін, өзіңіз белгілейтін түсті санаттарды және iCalendar импорты мен экспортын жасайды, сондықтан ішіне салғаныңыз қайтып шыға алады. Он үш тақырып, 19 тіл және бәріне пернелік тіркесім, өйткені тінтуірмен іздеуге тура келетін құрал үнемдеуге тиіс уақытыңызды алып кетеді.",
+ "b3d": "Он үш тақырып, 19 тіл, жалғыз пернелік тіркесімдер.",
+ "f6h": "Он үш тақырып, 19 тіл"
+});
+if (I18N["uk"]) Object.assign(I18N["uk"], {
+ "app_p3": "Він уміє подання місяця, тижня, дня та розкладу, кольорові категорії, які ви задаєте самі, й імпорт та експорт iCalendar, щоб усе, що ви в нього поклали, могло вийти назад. Тринадцять тем, 19 мов і комбінація клавіш для всього, бо інструмент, який доводиться шукати мишею, забирає той самий час, який мав заощадити.",
+ "b3d": "Тринадцять тем, 19 мов, комбінації з однієї клавіші.",
+ "f6h": "Тринадцять тем, 19 мов"
+});
+if (I18N["nb"]) Object.assign(I18N["nb"], {
+ "app_p3": "Den har måneds-, uke-, dags- og agendavisning, fargekategorier du definerer selv, og iCalendar-import og -eksport slik at alt du legger inn også kan komme ut igjen. Tretten temaer, 19 språk og en hurtigtast for alt, for et verktøy du må lete etter med musen koster deg akkurat den tiden det skulle spare.",
+ "b3d": "Tretten temaer, 19 språk, snarveier med én tast.",
+ "f6h": "Tretten temaer, 19 språk"
+});
+if (I18N["pt"]) Object.assign(I18N["pt"], {
+ "app_p3": "Ele tem visualizações de mês, semana, dia e agenda, categorias de cor que você mesmo define e importação e exportação de iCalendar para que tudo o que você colocar possa sair de volta. Treze temas, 19 idiomas e um atalho de teclado para tudo, porque uma ferramenta que você precisa procurar com o mouse custa exatamente o tempo que deveria economizar.",
+ "b3d": "Treze temas, 19 idiomas, atalhos de uma tecla só.",
+ "f6h": "Treze temas, 19 idiomas"
+});
