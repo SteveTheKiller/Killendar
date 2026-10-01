@@ -9,7 +9,7 @@ namespace Killendar.Services
     //
     // Append new members at the END: the value is persisted by NAME, not by ordinal, but keeping
     // the order stable also keeps the language menu's order stable.
-    public enum Locale { EnUS, Es, ZhTW, ZhCN, Bn, TrTR, De, Fr, Ja, Cs, PlPL, HuHU, It, RuRU, KkKZ, ViVN, UkUA }
+    public enum Locale { EnUS, Es, ZhTW, ZhCN, Bn, TrTR, De, Fr, Ja, Cs, PlPL, HuHU, It, RuRU, KkKZ, ViVN, UkUA, NbNO, PtBR }
 
     public static class LocaleManager
     {
@@ -69,6 +69,8 @@ namespace Killendar.Services
                 "pl" => Locale.PlPL, "ru" => Locale.RuRU, "tr" => Locale.TrTR,
                 "vi" => Locale.ViVN,
                 "uk" => Locale.UkUA,
+                "nb" or "no" or "nn" => Locale.NbNO,
+                "pt" => Locale.PtBR,
                 _ => Locale.EnUS,
             };
         }
@@ -116,6 +118,8 @@ namespace Killendar.Services
                 Locale.KkKZ => new Uri("pack://application:,,,/Strings/kk-KZ.xaml"),
                 Locale.ViVN => new Uri("pack://application:,,,/Strings/vi-VN.xaml"),
                 Locale.UkUA => new Uri("pack://application:,,,/Strings/uk-UA.xaml"),
+                Locale.NbNO => new Uri("pack://application:,,,/Strings/nb-NO.xaml"),
+                Locale.PtBR => new Uri("pack://application:,,,/Strings/pt-BR.xaml"),
                 _           => null,   // English: base only
             };
 
@@ -157,6 +161,8 @@ namespace Killendar.Services
             Locale.KkKZ => "kk-KZ",
             Locale.ViVN => "vi-VN",
             Locale.UkUA => "uk-UA",
+            Locale.NbNO => "nb-NO",
+            Locale.PtBR => "pt-BR",
             _           => "en-US",
         });
     }
