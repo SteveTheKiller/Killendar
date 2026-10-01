@@ -173,6 +173,9 @@ namespace Killendar.Controls
                     VerticalAlignment = VerticalAlignment.Stretch,
                     Margin = new Thickness(0, 0, 0, i == colors.Length - 1 ? 0 : 8),
                     Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(hex)),
+                    Effect = accent == Accent.Yellow && (family is Theme.Light or Theme.SE98)
+                        ? new System.Windows.Media.Effects.DropShadowEffect { Color = Colors.Black, BlurRadius = 4, ShadowDepth = 1, Opacity = 0.45 }
+                        : null,
                 };
                 if (ThemeManager.AccentChoiceFor(family) == accent)
                     dot.BorderBrush = Application.Current.TryFindResource("TextBrush") as Brush;
@@ -248,23 +251,23 @@ namespace Killendar.Controls
         {
             Theme.Light =>
             [
-                (Accent.Red, "#931A1A"), (Accent.Orange, "#C7710F"), (Accent.Green, "#1B5E20"),
-                (Accent.Teal, "#0D827E"), (Accent.Blue, "#18608E"), (Accent.Purple, "#5A1690")
+                (Accent.Red, "#931A1A"), (Accent.Orange, "#C7710F"), (Accent.Yellow, "#EAD900"), (Accent.Green, "#1B5E20"),
+                (Accent.Teal, "#0D827E"), (Accent.Blue, "#18608E"), (Accent.Purple, "#5A1690"), (Accent.Magenta, "#A60070")
             ],
             Theme.Black =>
             [
-                (Accent.Red, "#FF2929"), (Accent.Orange, "#FF910A"), (Accent.Green, "#00FF66"),
-                (Accent.Teal, "#0AFFE7"), (Accent.Blue, "#298DFF"), (Accent.Purple, "#B829FF")
+                (Accent.Red, "#FF2929"), (Accent.Orange, "#FF910A"), (Accent.Yellow, "#FFEB00"), (Accent.Green, "#00FF66"),
+                (Accent.Teal, "#0AFFE7"), (Accent.Blue, "#298DFF"), (Accent.Purple, "#B829FF"), (Accent.Magenta, "#FF2BBD")
             ],
             Theme.SE98 =>
             [
-                (Accent.Red, "#800040"), (Accent.Orange, "#A05000"), (Accent.Green, "#006000"),
-                (Accent.Teal, "#008080"), (Accent.Blue, "#000080"), (Accent.Purple, "#5A376E")
+                (Accent.Red, "#800040"), (Accent.Orange, "#A05000"), (Accent.Yellow, "#EAD900"), (Accent.Green, "#006000"),
+                (Accent.Teal, "#008080"), (Accent.Blue, "#000080"), (Accent.Purple, "#5A376E"), (Accent.Magenta, "#750052")
             ],
             _ =>
             [
-                (Accent.Red, "#DD504B"), (Accent.Orange, "#E8962C"), (Accent.Green, "#1EA54C"),
-                (Accent.Teal, "#1FB8A8"), (Accent.Blue, "#4580D9"), (Accent.Purple, "#B982E3")
+                (Accent.Red, "#DD504B"), (Accent.Orange, "#E8962C"), (Accent.Yellow, "#EAD900"), (Accent.Green, "#1EA54C"),
+                (Accent.Teal, "#1FB8A8"), (Accent.Blue, "#4580D9"), (Accent.Purple, "#B982E3"), (Accent.Magenta, "#FF52C9")
             ],
         };
 
