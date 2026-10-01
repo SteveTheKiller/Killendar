@@ -363,6 +363,7 @@ html[data-theme="light"] .tech-sec h3 { text-shadow: none; }
 .tech-sec a { color: var(--accent); font-weight: 600; }
 .codeblock { background: var(--panel); border: 1px solid var(--pane-border); border-left: 2px solid var(--accent); border-radius: 7px; padding: 13px 16px; margin: 10px 0 14px; font-family: Consolas, monospace; font-size: 12.5px; line-height: 1.7; color: var(--text); white-space: pre-wrap; overflow-x: auto; }
 .codeblock .cm { color: var(--muted); }
+html:not([data-theme="light"]) .codeblock { background-color: color-mix(in srgb, var(--modal) 65%, #000); border-color: color-mix(in srgb, var(--text) 28%, var(--modal)); border-left-color: var(--accent); }
 /* Arrow-bulleted lists, shared by the hero blurbs and the technical sections */
 .blurb-list { list-style: none; margin-bottom: 11px; }
 .blurb-list li { font-size: 13.5px; color: var(--muted); line-height: 1.55; padding-left: 16px; position: relative; margin-bottom: 6px; }
