@@ -4,7 +4,10 @@ All notable changes to Killendar are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.5] - Unreleased
+## [1.2.0] - Unreleased
+
+### Added
+- Ukrainian localization.
 
 ### Fixed
 - Opening an iCalendar file with Killendar now imports its events, and Killendar appears in the Windows Open with list for `.ics` files.
