@@ -9,7 +9,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Added
 - Added yellow and magenta accents to the neutral and 98SE themes.
 - Ukrainian localization.
-- Norwegian (Bokmål) and Brazilian Portuguese localization.
+- Norwegian (Bokmål) localization.
+- Brazilian Portuguese localization.
 
 ### Fixed
 - Opening an iCalendar file with Killendar now imports its events, and Killendar appears in the Windows Open with list for `.ics` files.
