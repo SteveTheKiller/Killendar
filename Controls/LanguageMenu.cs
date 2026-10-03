@@ -62,16 +62,13 @@ namespace Killendar.Controls
             _menu.Items.Clear();
             var current = LocaleManager.Current;
 
-            // Two columns. Fifteen languages in one stack ran nearly the full window height and
-            // clipped on a short window, and a flyout that cannot show its last row is broken
-            // whatever it looks like. Split down the middle rather than balanced by height, so
-            // the left column stays in reading order and English stays at the top of it.
+            // Keep the 19 languages in two columns so the last row stays visible on short windows.
+            // Fill the left column first to preserve reading order and keep English at the top.
             var columns = new StackPanel { Orientation = Orientation.Horizontal,
                                            Margin = new Thickness(10, 10, 10, 10) };
-            // Content-sized and deliberately narrow per column: the longest native name and its
-            // locale code still fit at 160px.
-            var left = new StackPanel { Width = 160 };
-            var right = new StackPanel { Width = 160, Margin = new Thickness(14, 0, 0, 0) };
+            // Leave room for native names and locale codes in each column.
+            var left = new StackPanel { Width = 200 };
+            var right = new StackPanel { Width = 200, Margin = new Thickness(14, 0, 0, 0) };
             columns.Children.Add(left);
             columns.Children.Add(right);
             int half = (Languages.Length + 1) / 2;
