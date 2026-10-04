@@ -38,7 +38,7 @@
     <!-- Untagged appointment chips - accent-free neutral, see the note in Greed.xaml. Brighter
          than the page and the hover gray, so it reads as a card on both. -->
     <SolidColorBrush x:Key="ChipBrush"           Color="#f7f7f7" po:Freeze="True"/>
-    <LinearGradientBrush x:Key="SelectionBg"         po:Freeze="True" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#2D6B32" Offset="0"/><GradientStop Color="#19581E" Offset="1"/></LinearGradientBrush>
+    <LinearGradientBrush x:Key="SelectionBg"         po:Freeze="True" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#37753C" Offset="0"/><GradientStop Color="#0F4E14" Offset="1"/></LinearGradientBrush>
     <SolidColorBrush x:Key="SelectionFg"         Color="#ffffff" po:Freeze="True"/>
     <SolidColorBrush x:Key="TreeLineBrush"       Color="#c2c2c2" po:Freeze="True"/>
 

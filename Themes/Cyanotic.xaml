@@ -34,7 +34,7 @@
     <SolidColorBrush x:Key="RowSelectedBrush"    Color="#44ffffff" po:Freeze="True"/>
     <!-- Untagged appointment chips - neutral gray, see the note in Greed.xaml. -->
     <SolidColorBrush x:Key="ChipBrush"           Color="#4a4a4a" po:Freeze="True"/>
-    <LinearGradientBrush x:Key="SelectionBg"         po:Freeze="True" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#4CFFFFFF" Offset="0"/><GradientStop Color="#3CFFFFFF" Offset="1"/></LinearGradientBrush>
+    <LinearGradientBrush x:Key="SelectionBg"         po:Freeze="True" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#60FFFFFF" Offset="0"/><GradientStop Color="#30FFFFFF" Offset="1"/></LinearGradientBrush>
     <SolidColorBrush x:Key="SelectionFg"         Color="#ffffff" po:Freeze="True"/>
     <SolidColorBrush x:Key="TreeLineBrush"       Color="#21466b" po:Freeze="True"/>
 
