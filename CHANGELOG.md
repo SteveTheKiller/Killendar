@@ -20,6 +20,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Opening an iCalendar file with Killendar now imports its events, and Killendar appears in the Windows Open with list for `.ics` files.
 - Install and uninstall windows now show the film grain and the app icon in the title bar.
 - The uninstaller has its own taskbar button, labeled "Uninstall Killendar", with the app icon.
+- Appointments show an open hand on hover and a closed hand while they are dragged, and so does the color picker's title.
 
 ## [1.1.4] - 2026-09-28
 

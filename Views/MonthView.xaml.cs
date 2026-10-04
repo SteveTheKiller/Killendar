@@ -691,10 +691,13 @@ namespace Killendar.Views
 
             Point start = default;
             bool dragging = false;
+            // The family grab cursor: open hand over the chip, closed hand while it is carried.
+            chip.Cursor = Controls.DragCursors.Open;
 
             void Reset()
             {
                 dragging = false;
+                Controls.DragCursors.EndDrag();
                 move.X = move.Y = 0;
                 chip.Opacity = 1.0;
                 Panel.SetZIndex(dragLayer, dragLayer == chip ? 10 : 0);
@@ -717,6 +720,7 @@ namespace Killendar.Views
                      Math.Abs(dy) >= SystemParameters.MinimumVerticalDragDistance))
                 {
                     dragging = true;
+                    Controls.DragCursors.BeginDrag();
                     chip.Opacity = 0.7;
                     Panel.SetZIndex(dragLayer, 99);
                 }

@@ -121,9 +121,14 @@ namespace Killendar.Controls
                 Text = L("Str_Dlg_PickColor", "Pick a color"), Foreground = R("PrimaryBrush"),
                 FontSize = 14, FontWeight = FontWeights.SemiBold, Margin = new Thickness(0, 0, 0, 12),
                 Effect = new System.Windows.Media.Effects.DropShadowEffect { Color = Colors.Black, BlurRadius = 2, ShadowDepth = 1, Direction = 270, Opacity = 0.7 },
-                Cursor = Cursors.SizeAll
+                Cursor = DragCursors.Open
             };
-            title.MouseLeftButtonDown += (_, e) => { if (e.ButtonState == MouseButtonState.Pressed) DragMove(); };
+            title.MouseLeftButtonDown += (_, e) =>
+            {
+                if (e.ButtonState != MouseButtonState.Pressed) return;
+                DragCursors.BeginDrag();
+                try { DragMove(); } catch { } finally { DragCursors.EndDrag(); }
+            };
             panel.Children.Add(title);
 
             // SV square + hue strip
