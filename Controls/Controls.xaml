@@ -668,6 +668,10 @@
                             <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
                             <Setter TargetName="Gesture" Property="Foreground" Value="{DynamicResource SelectionFg}"/>
                             <Setter TargetName="SubArrow" Property="Foreground" Value="{DynamicResource SelectionFg}"/>
+                            <!-- Icon and tick move with the label, as in KillerPDF: both are pinned at
+                                 rest and vanish on a saturated fill (yellow, 98SE navy). -->
+                            <Setter TargetName="IconPresenter" Property="TextElement.Foreground" Value="{DynamicResource SelectionFg}"/>
+                            <Setter TargetName="Check" Property="Foreground" Value="{DynamicResource SelectionFg}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
