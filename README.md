@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://killendar.net"><img src="docs/wordmark.png" width="640" alt="The Killendar - Free Encrypted Calendar"></a>
+  <a href="https://killendar.net"><img src="docs/wordmark.png" height="180" alt="The Killendar - Free Encrypted Calendar"></a>
 </p>
 
 Free and open-source calendar for Windows with no account, no sync, and nothing phoning home. Month, week, day and agenda views, repeating appointments, color categories, iCalendar import and export, and optional AES-256 encryption at rest. Your appointments live in a single `.kcal` file on your own machine - an ordinary SQLite database until you put a password on it. Install or run portable. Single Windows EXE, ~3 MB, no runtime install required.
