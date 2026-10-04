@@ -52,7 +52,7 @@
          so it can never collide with the accent-colored selection or hover fills. See the note
          in Greed.xaml. Lighter than RowHoverBrush so a chip still reads inside a hovered cell. -->
     <SolidColorBrush x:Key="ChipBrush"           Color="#4a4a4a" po:Freeze="True"/>
-    <SolidColorBrush x:Key="SelectionBg"         Color="#1c5e38" po:Freeze="True"/>
+    <LinearGradientBrush x:Key="SelectionBg"         po:Freeze="True" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#2E6B48" Offset="0"/><GradientStop Color="#1A5835" Offset="1"/></LinearGradientBrush>
     <SolidColorBrush x:Key="SelectionFg"         Color="#ffffff" po:Freeze="True"/>
     <SolidColorBrush x:Key="TreeLineBrush"       Color="#3d3d3d" po:Freeze="True"/>
     <SolidColorBrush x:Key="KsCatFile"           Color="#00fff9" po:Freeze="True"/>

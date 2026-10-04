@@ -175,7 +175,8 @@ namespace Killendar.Services
             }
             // Aliases created from the base palette hold the old brush object. Refresh the ones
             // whose sources may have been replaced by an accent overlay.
-            newDict["OutlineRestBrush"] = newDict["OutlineBtnBrush"];
+            if (theme != Theme.Light)
+                newDict["OutlineRestBrush"] = newDict["OutlineBtnBrush"];
             newDict["KsCatAppt"] = newDict["PrimaryBrush"];
             if (theme == Theme.SE98) newDict["CheckBoxCheckedBrush"] = newDict["PrimaryBrush"];
             if (!newDict.Contains("ComboHighlightTextBrush"))

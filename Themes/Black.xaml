@@ -39,7 +39,7 @@
          the theme the collision was caught on: RowSelectedBrush #003322 against SelectionBg
          #003314 made an untagged chip invisible inside the selected day. -->
     <SolidColorBrush x:Key="ChipBrush"           Color="#303030" po:Freeze="True"/>
-    <SolidColorBrush x:Key="SelectionBg"         Color="#003314" po:Freeze="True"/>
+    <LinearGradientBrush x:Key="SelectionBg"         po:Freeze="True" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#144327" Offset="0"/><GradientStop Color="#003013" Offset="1"/></LinearGradientBrush>
     <SolidColorBrush x:Key="SelectionFg"         Color="#ffffff" po:Freeze="True"/>
     <SolidColorBrush x:Key="TreeLineBrush"       Color="#383838" po:Freeze="True"/>
 

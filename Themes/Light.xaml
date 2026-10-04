@@ -38,7 +38,7 @@
     <!-- Untagged appointment chips - accent-free neutral, see the note in Greed.xaml. Brighter
          than the page and the hover gray, so it reads as a card on both. -->
     <SolidColorBrush x:Key="ChipBrush"           Color="#f7f7f7" po:Freeze="True"/>
-    <SolidColorBrush x:Key="SelectionBg"         Color="#1b5e20" po:Freeze="True"/>
+    <LinearGradientBrush x:Key="SelectionBg"         po:Freeze="True" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#2D6B32" Offset="0"/><GradientStop Color="#19581E" Offset="1"/></LinearGradientBrush>
     <SolidColorBrush x:Key="SelectionFg"         Color="#ffffff" po:Freeze="True"/>
     <SolidColorBrush x:Key="TreeLineBrush"       Color="#c2c2c2" po:Freeze="True"/>
 
@@ -66,4 +66,5 @@
          DynamicResource resolves instead of falling through. -->
     <x:Null x:Key="TextStroke"/>
 
+    <SolidColorBrush x:Key="OutlineRestBrush" Color="#777777" po:Freeze="True"/>
 </ResourceDictionary>
