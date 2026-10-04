@@ -109,22 +109,6 @@ namespace Killendar.Services
                 : new Uri($"pack://application:,,,/Themes/{theme}.xaml");
             var newDict = new ResourceDictionary { Source = uri };
             CompleteKillendarPalette(newDict, theme);
-            var merged  = Application.Current.Resources.MergedDictionaries;
-
-            // In-place per-key update: fires a targeted change notification for each key without
-            // structurally modifying MergedDictionaries (a structural swap fires a synchronous
-            // ResourcesChanged that can re-enter lookups before the new dict is fully in place).
-            if (merged.Count > 0)
-            {
-                var existing = merged[0];
-                foreach (object key in newDict.Keys)
-                    existing[key] = newDict[key];
-            }
-            else
-            {
-                merged.Add(newDict);
-            }
-
             // Accent overlay: Dark/Light/Black recolor their accent-family keys on top of the base
             // green. Green is the base itself, so it needs no overlay. Overlays live in Accents/<Family>/.
             var accent = AccentFor(theme);
@@ -140,7 +124,7 @@ namespace Killendar.Services
                     {
                         Source = new Uri($"pack://application:,,,/Themes/Accents/{family}/{accent}.xaml")
                     };
-                    var target = merged[0];
+                    var target = newDict;
                     foreach (object key in accentDict.Keys)
                         target[key] = accentDict[key];
                 }
@@ -148,15 +132,15 @@ namespace Killendar.Services
             }
             // Resolve after accent overlays, and reset the fallback on every theme switch.
             if (!newDict.Contains("CalendarViewSelectedBrush"))
-                merged[0]["CalendarViewSelectedBrush"] = merged[0]["SelectionBg"];
+                newDict["CalendarViewSelectedBrush"] = newDict["SelectionBg"];
 
             // The classic calendar is a white client area. Give unclassified appointments a
             // pale version of the selected 98SE accent instead of the old face gray, which could
             // disappear into the calendar. Each accent therefore owns its own readable shade.
-            if (theme == Theme.SE98 && merged[0]["PrimaryBrush"] is SolidColorBrush primary)
+            if (theme == Theme.SE98 && newDict["PrimaryBrush"] is SolidColorBrush primary)
             {
                 Color p = primary.Color;
-                merged[0]["ChipBrush"] = new SolidColorBrush(Color.FromRgb(
+                newDict["ChipBrush"] = new SolidColorBrush(Color.FromRgb(
                     (byte)(255 * 0.84 + p.R * 0.16),
                     (byte)(255 * 0.84 + p.G * 0.16),
                     (byte)(255 * 0.84 + p.B * 0.16)));
@@ -166,37 +150,54 @@ namespace Killendar.Services
             // strengths by display column, which arbitrarily made Tuesday and Thursday dark and
             // produced five apparent shades once selection/today were added.
             SolidColorBrush? calendarAccent = theme == Theme.Ectoplasm
-                ? merged[0]["InputBorderBrush"] as SolidColorBrush
-                : merged[0]["PrimaryBrush"] as SolidColorBrush;
+                ? newDict["InputBorderBrush"] as SolidColorBrush
+                : newDict["PrimaryBrush"] as SolidColorBrush;
             if (calendarAccent != null)
             {
                 byte weekend = theme == Theme.SE98 ? (byte)24 : (byte)56;
-                merged[0]["CalendarEvenColumnBrush"] = Brushes.Transparent;
-                merged[0]["CalendarOddColumnBrush"] = Brushes.Transparent;
-                merged[0]["CalendarWeekendBrush"] = new SolidColorBrush(Color.FromArgb(weekend, 0, 0, 0));
+                newDict["CalendarEvenColumnBrush"] = Brushes.Transparent;
+                newDict["CalendarOddColumnBrush"] = Brushes.Transparent;
+                newDict["CalendarWeekendBrush"] = new SolidColorBrush(Color.FromArgb(weekend, 0, 0, 0));
                 // Spillover dates are a different state, not another accent stripe. Give them an
                 // opaque dark client color so none of the weekday tint can bleed through.
-                Color outsideBase = merged[0]["PaneBrush"] is SolidColorBrush pane
+                Color outsideBase = newDict["PaneBrush"] is SolidColorBrush pane
                     ? pane.Color : Color.FromRgb(42, 42, 42);
                 double outsideScale = theme == Theme.SE98 ? 0.48 : 0.38;
-                merged[0]["CalendarOutsideMonthBrush"] = new SolidColorBrush(Color.FromRgb(
+                newDict["CalendarOutsideMonthBrush"] = new SolidColorBrush(Color.FromRgb(
                     (byte)(outsideBase.R * outsideScale),
                     (byte)(outsideBase.G * outsideScale),
                     (byte)(outsideBase.B * outsideScale)));
-                merged[0]["CalendarEvenHeaderBrush"] = Brushes.Transparent;
-                merged[0]["CalendarOddHeaderBrush"] = Brushes.Transparent;
-                merged[0]["CalendarWeekendHeaderBrush"] = new SolidColorBrush(
+                newDict["CalendarEvenHeaderBrush"] = Brushes.Transparent;
+                newDict["CalendarOddHeaderBrush"] = Brushes.Transparent;
+                newDict["CalendarWeekendHeaderBrush"] = new SolidColorBrush(
                     Color.FromArgb(theme == Theme.SE98 ? (byte)16 : (byte)36, 0, 0, 0));
 
             }
             // Aliases created from the base palette hold the old brush object. Refresh the ones
             // whose sources may have been replaced by an accent overlay.
-            merged[0]["OutlineRestBrush"] = merged[0]["OutlineBtnBrush"];
-            merged[0]["KsCatAppt"] = merged[0]["PrimaryBrush"];
-            if (theme == Theme.SE98) merged[0]["CheckBoxCheckedBrush"] = merged[0]["PrimaryBrush"];
+            newDict["OutlineRestBrush"] = newDict["OutlineBtnBrush"];
+            newDict["KsCatAppt"] = newDict["PrimaryBrush"];
+            if (theme == Theme.SE98) newDict["CheckBoxCheckedBrush"] = newDict["PrimaryBrush"];
             // About and Keyboard Shortcuts are window surfaces. Resolve this after accent merging
             // so the exact BackgroundBrush object (including gradients) is retained.
-            merged[0]["OverlayWindowBrush"] = merged[0]["BackgroundBrush"];
+            newDict["OverlayWindowBrush"] = newDict["BackgroundBrush"];
+            Publish(newDict);
+        }
+
+        /// <summary>
+        /// Attaches a fully built palette as MergedDictionaries[0], in ONE assignment, the way
+        /// KillerNotes and KillerShell do. A per-key copy into the live dictionary can overwrite a
+        /// key but never remove one, so a key only some themes define (98SE's caption and bevel
+        /// tokens) leaked into every theme chosen after it, and every key fired its own
+        /// invalidation pass. Building the whole palette off-tree first, accent overlay and derived
+        /// roles included, means the swap publishes a finished dictionary and nothing can read a
+        /// half-built one.
+        /// </summary>
+        private static void Publish(ResourceDictionary target)
+        {
+            var merged = Application.Current.Resources.MergedDictionaries;
+            if (merged.Count > 0) merged[0] = target;
+            else merged.Add(target);
         }
 
         /// <summary>
