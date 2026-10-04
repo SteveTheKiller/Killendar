@@ -125,6 +125,7 @@ namespace Killendar
             {
                 bool silent = string.Equals(e.Args[0], "/uninstall-silent", StringComparison.OrdinalIgnoreCase);
                 if (!silent) ThemeManager.Initialize();
+                Controls.TaskbarIdentity.UseUninstall();
                 Uninstall(silent);
                 Shutdown();
                 return;
