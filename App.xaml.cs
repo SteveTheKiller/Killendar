@@ -117,12 +117,15 @@ namespace Killendar
                 return;
             }
 
-            // Uninstall flag, called by Add/Remove Programs.
+            // Uninstall flags. Add/Remove Programs runs /uninstall; package managers run
+            // /uninstall-silent, the registered QuietUninstallString, which shows no UI.
             if (e.Args.Length > 0 &&
-                string.Equals(e.Args[0], "/uninstall", StringComparison.OrdinalIgnoreCase))
+                (string.Equals(e.Args[0], "/uninstall", StringComparison.OrdinalIgnoreCase) ||
+                 string.Equals(e.Args[0], "/uninstall-silent", StringComparison.OrdinalIgnoreCase)))
             {
-                ThemeManager.Initialize();
-                Uninstall();
+                bool silent = string.Equals(e.Args[0], "/uninstall-silent", StringComparison.OrdinalIgnoreCase);
+                if (!silent) ThemeManager.Initialize();
+                Uninstall(silent);
                 Shutdown();
                 return;
             }
