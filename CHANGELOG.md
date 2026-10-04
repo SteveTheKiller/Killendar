@@ -14,6 +14,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Added a silent uninstall, `/uninstall-silent`, registered as the quiet uninstall so WinGet and other package managers can remove Killendar without a prompt.
 
 ### Changed
+- Menu rows now show accent text and icons on the theme's hover color.
 - The two-column language menu now has room for all 19 languages.
 
 ### Fixed
@@ -23,7 +24,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Appointments show an open hand on hover and a closed hand while they are dragged, and so does the color picker's title.
 - Pinned places in the file picker can be dragged into a new order.
 - The portable footer button reads PORTABLE, like KillerPDF and KillerScan, and its tooltip offers the install.
-- Menu icons and check marks turn the selection text color on a highlighted row, so they stay visible on bright accents and 98SE.
 
 ## [1.1.4] - 2026-09-28
 

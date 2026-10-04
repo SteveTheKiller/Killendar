@@ -178,6 +178,8 @@ namespace Killendar.Services
             newDict["OutlineRestBrush"] = newDict["OutlineBtnBrush"];
             newDict["KsCatAppt"] = newDict["PrimaryBrush"];
             if (theme == Theme.SE98) newDict["CheckBoxCheckedBrush"] = newDict["PrimaryBrush"];
+            if (!newDict.Contains("ComboHighlightTextBrush"))
+                newDict["ComboHighlightTextBrush"] = newDict["PrimaryBrush"];
             // About and Keyboard Shortcuts are window surfaces. Resolve this after accent merging
             // so the exact BackgroundBrush object (including gradients) is retained.
             newDict["OverlayWindowBrush"] = newDict["BackgroundBrush"];
