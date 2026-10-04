@@ -108,6 +108,7 @@ namespace Killendar.Services
                 ? new Uri("pack://application:,,,/Themes/98SE.xaml")
                 : new Uri($"pack://application:,,,/Themes/{theme}.xaml");
             var newDict = new ResourceDictionary { Source = uri };
+            bool themeOwnsRadioHover = newDict.Contains("RadioHoverFgBrush");
             CompleteKillendarPalette(newDict, theme);
             // Accent overlay: Dark/Light/Black recolor their accent-family keys on top of the base
             // green. Green is the base itself, so it needs no overlay. Overlays live in Accents/<Family>/.
@@ -127,6 +128,8 @@ namespace Killendar.Services
                     var target = newDict;
                     foreach (object key in accentDict.Keys)
                         target[key] = accentDict[key];
+                    if (!themeOwnsRadioHover && !accentDict.Contains("RadioHoverFgBrush"))
+                        target["RadioHoverFgBrush"] = target["PrimaryBrush"];
                 }
                 catch { /* overlay file not present - base theme stands */ }
             }
