@@ -100,6 +100,7 @@ namespace Killendar
             HookCrashLogging();   // CrashLog.cs - first, so it covers startup itself
             base.OnStartup(e);
             ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            Controls.GrainTexture.Publish();   // install and uninstall dialogs open before any main window
 
             // Render on the CPU so the window is not black over console-session
             // screen-sharing tools (ScreenConnect, Kaseya LiveConnect, VNC, TeamViewer).

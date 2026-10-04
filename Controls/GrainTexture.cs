@@ -48,10 +48,20 @@ namespace Killendar.Controls
         /// </summary>
         internal static void Apply(FrameworkElement scope, params string[] brushNames)
         {
-            var bmp = Generate();
+            var bmp = Publish();
 
             foreach (var name in brushNames)
                 if (scope.FindName(name) is ImageBrush ib) ib.ImageSource = bmp;
+        }
+
+        /// <summary>
+        /// Generates the tile and publishes it as the app-level GrainTileBrush. App startup calls
+        /// this too, so dialogs shown before any main window exists (install, uninstall, install
+        /// repair) are textured like the rest of the app.
+        /// </summary>
+        internal static BitmapSource Publish()
+        {
+            var bmp = Generate();
 
             // The keyed resource brush is frozen, so its ImageSource cannot be set in place. Swap in
             // a fresh frozen brush instead; DynamicResource consumers re-resolve automatically.
@@ -64,6 +74,7 @@ namespace Killendar.Controls
             };
             tile.Freeze();
             Application.Current.Resources["GrainTileBrush"] = tile;
+            return bmp;
         }
     }
 }
