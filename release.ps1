@@ -197,28 +197,18 @@ foreach ($localeFile in Get-ChildItem (Join-Path $PSScriptRoot 'Strings') -Filte
 }
 Write-Host "Translations OK: $($englishStrings.Count) keys across $((Get-ChildItem (Join-Path $PSScriptRoot 'Strings') -Filter '*.xaml').Count) languages"
 
-# English release text must use ordinary hyphens. Translation dictionaries are excluded because
-# their punctuation follows the target language. At release time the clean-tree check guarantees
-# every candidate file is tracked, so git grep covers the complete candidate.
-Step "Checking English punctuation"
-$dashMatches = @(git grep -n -I -P '[\x{2013}\x{2014}]' -- . `
-    ':(exclude)Strings/bn.xaml' `
-    ':(exclude)Strings/cs-CZ.xaml' `
-    ':(exclude)Strings/de-DE.xaml' `
-    ':(exclude)Strings/es.xaml' `
-    ':(exclude)Strings/fr-FR.xaml' `
-    ':(exclude)Strings/ja-JP.xaml' `
-    ':(exclude)Strings/pl-PL.xaml' `
-    ':(exclude)Strings/tr-TR.xaml' `
-    ':(exclude)Strings/zh-CN.xaml' `
-    ':(exclude)Strings/zh-TW.xaml' `
-    ':(exclude)killendar-landing/kd.js' 2>$null)
+# No en dashes or em dashes anywhere, translations and the landing script included - the
+# KillerNotes rule. One rule applied everywhere beats a per-language exemption list. At release
+# time the clean-tree check guarantees every candidate file is tracked, so git grep covers the
+# complete candidate.
+Step "Checking punctuation"
+$dashMatches = @(git grep -n -I -P '[\x{2013}\x{2014}]' -- . 2>$null)
 $dashGrepExit = $LASTEXITCODE
-if ($dashGrepExit -notin 0, 1) { Fail "English punctuation scan failed with exit code $dashGrepExit" }
+if ($dashGrepExit -notin 0, 1) { Fail "Punctuation scan failed with exit code $dashGrepExit" }
 if ($dashMatches.Count -gt 0) {
-    Fail "English text contains an en or em dash:`n$($dashMatches -join "`n")"
+    Fail "En/em dashes found in $($dashMatches.Count) place(s). Use a single hyphen.`n$($dashMatches -join "`n")"
 }
-Write-Host 'English punctuation OK'
+Write-Host 'Punctuation OK'
 
 # --- 5. Clean Release publish (FolderProfile: net48, win-x64) ---
 Step "Building Release (publish)"
