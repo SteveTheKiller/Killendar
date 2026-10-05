@@ -14,7 +14,7 @@
     <SolidColorBrush x:Key="OnPrimaryBrush"      Color="#002e1c" po:Freeze="True"/>
     <SolidColorBrush x:Key="OutlineBtnBrush"     Color="#3fbf6f" po:Freeze="True"/>
     <SolidColorBrush x:Key="InputHoverBrush"     Color="#2a7a52" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TextFooter"          Color="#3a8a5a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TextFooter"          Color="#499367" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="BackgroundBrush"     Color="#002115" po:Freeze="True"/>
     <SolidColorBrush x:Key="SurfaceBrush"        Color="#002e1c" po:Freeze="True"/>
@@ -40,7 +40,7 @@
          Gray, not a theme-secondary: the gold/amber/sand first cut read as mud on these dark
          grounds (2026-07-31). -->
     <SolidColorBrush x:Key="ChipBrush"           Color="#4a4a4a" po:Freeze="True"/>
-    <LinearGradientBrush x:Key="SelectionBg"         po:Freeze="True" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#60FFFFFF" Offset="0"/><GradientStop Color="#30FFFFFF" Offset="1"/></LinearGradientBrush>
+    <LinearGradientBrush x:Key="SelectionBg"         po:Freeze="True" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#57FFFFFF" Offset="0"/><GradientStop Color="#30FFFFFF" Offset="1"/></LinearGradientBrush>
     <SolidColorBrush x:Key="SelectionFg"         Color="#ffffff" po:Freeze="True"/>
     <SolidColorBrush x:Key="TreeLineBrush"       Color="#156140" po:Freeze="True"/>
 

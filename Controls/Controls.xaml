@@ -164,7 +164,7 @@
                         <!-- Order matters: IsPressed must come after IsMouseOver to win. -->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="border" Property="Background" Value="{DynamicResource OutlineBtnBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource OutlineHoverTextBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <!-- Outline actions stay hollow when pressed on every palette. Several

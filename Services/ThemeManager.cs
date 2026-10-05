@@ -184,6 +184,8 @@ namespace Killendar.Services
             if (theme == Theme.SE98) newDict["CheckBoxCheckedBrush"] = newDict["PrimaryBrush"];
             if (!newDict.Contains("ComboHighlightTextBrush"))
                 newDict["ComboHighlightTextBrush"] = newDict["PrimaryBrush"];
+            if (!newDict.Contains("OutlineHoverTextBrush"))
+                newDict["OutlineHoverTextBrush"] = newDict["OnPrimaryBrush"];
             if (!newDict.Contains("MenuSeparatorBrush") && newDict.Contains("MenuBorderBrush"))
                 newDict["MenuSeparatorBrush"] = newDict["MenuBorderBrush"];
             // About and Keyboard Shortcuts are window surfaces. Resolve this after accent merging

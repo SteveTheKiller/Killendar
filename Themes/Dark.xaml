@@ -27,7 +27,7 @@
     <SolidColorBrush x:Key="OnPrimaryBrush"      Color="#0a0a0a" po:Freeze="True"/>
     <SolidColorBrush x:Key="OutlineBtnBrush"     Color="#1ea54c" po:Freeze="True"/>
     <SolidColorBrush x:Key="InputHoverBrush"     Color="#707070" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TextFooter"          Color="#6a6a6a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TextFooter"          Color="#858585" po:Freeze="True"/>
 
     <!-- Surface tiers -->
     <SolidColorBrush x:Key="BackgroundBrush"     Color="#1c1c1c" po:Freeze="True"/>
@@ -76,4 +76,5 @@
          rasterizes ClearType, so on light surfaces it is dialled back or the label reads blurry. -->
     <DropShadowEffect x:Key="TextStroke"     Color="Black" BlurRadius="3" ShadowDepth="0.8" Direction="270" Opacity="0.7"/>
 
+    <SolidColorBrush x:Key="ComboHighlightTextBrush" Color="#E0E0E0"/>
 </ResourceDictionary>

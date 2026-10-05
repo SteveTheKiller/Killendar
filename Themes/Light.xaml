@@ -14,7 +14,7 @@
     <SolidColorBrush x:Key="OnPrimaryBrush"      Color="#FFFFFF" po:Freeze="True"/>
     <SolidColorBrush x:Key="OutlineBtnBrush"     Color="#1b5e20" po:Freeze="True"/>
     <SolidColorBrush x:Key="InputHoverBrush"     Color="#8a8a8a" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TextFooter"          Color="#888888" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TextFooter"          Color="#5F5F5F" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="BackgroundBrush"     Color="#dcdcdc" po:Freeze="True"/>
     <SolidColorBrush x:Key="SurfaceBrush"        Color="#f0f0f0" po:Freeze="True"/>
@@ -67,4 +67,5 @@
     <x:Null x:Key="TextStroke"/>
 
     <SolidColorBrush x:Key="OutlineRestBrush" Color="#777777" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ComboHighlightTextBrush" Color="#1A1A1A"/>
 </ResourceDictionary>
