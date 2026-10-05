@@ -689,7 +689,9 @@
          MenuItem.SeparatorStyleKey and falls back to the stock Aero separator, which is the light
          gray line. This keyed alias is what actually applies in menus. -->
     <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}" TargetType="Separator"
-           BasedOn="{StaticResource {x:Type Separator}}"/>
+           BasedOn="{StaticResource {x:Type Separator}}">
+        <Setter Property="Background" Value="{DynamicResource MenuSeparatorBrush}"/>
+    </Style>
 
     <!-- Text-input context menu.
          The implicit ContextMenu/MenuItem styles above do NOT reach a TextBox's or PasswordBox's
