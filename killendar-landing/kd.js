@@ -85,7 +85,7 @@
     ['dark', 'light', 'black'].forEach(function (neutralTheme) {
       var preview = ACCENTS[neutralTheme][name] || ACCENTS[neutralTheme][DEFAULT_ACCENT];
       document.querySelectorAll('.sw-' + neutralTheme).forEach(function (dot) {
-        dot.style.setProperty('--sw-accent', preview);
+        dot.style.setProperty('--sw-accent', neutralTheme === 'light' && name === 'Yellow' ? 'linear-gradient(#FFF5A3, #FFD43B)' : preview);
       });
     });
     if (!hasAccents(t)) {
