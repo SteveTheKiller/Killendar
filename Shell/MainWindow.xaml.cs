@@ -13,6 +13,18 @@ namespace Killendar.Shell
         public MainWindow()
         {
             InitializeComponent();
+            var titleFrames = System.Windows.Media.Imaging.BitmapDecoder.Create(
+                new System.Uri("pack://application:,,,/Resources/kd-icon.ico"),
+                System.Windows.Media.Imaging.BitmapCreateOptions.None,
+                System.Windows.Media.Imaging.BitmapCacheOption.OnLoad).Frames;
+            foreach (var icon in new[] { WordmarkTitleIcon, PlainTitleIcon })
+            {
+                void Refresh() => icon.Source = titleFrames
+                    .OrderBy(frame => System.Math.Abs(frame.PixelWidth - icon.ActualWidth * System.Windows.Media.VisualTreeHelper.GetDpi(icon).DpiScaleX))
+                    .First();
+                icon.Loaded += (_, _) => Refresh();
+                icon.SizeChanged += (_, _) => Refresh();
+            }
             InitSidebarResize();
 
             RestoreWindowPlacement();

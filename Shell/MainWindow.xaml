@@ -46,7 +46,7 @@
                         shell:WindowChrome.IsHitTestVisibleInChrome="True"
                         PreviewMouseWheel="LogoBar_MouseWheel"
                         MouseLeftButtonDown="LogoBar_MouseLeftButtonDown">
-                <Image Source="pack://application:,,,/Resources/kd-icon.png"
+                <Image x:Name="WordmarkTitleIcon"
                        Width="{DynamicResource TitleIconSize}" Height="{DynamicResource TitleIconSize}"
                        Margin="{DynamicResource TitleIconMargin}" VerticalAlignment="Center"
                        RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False"/>
@@ -65,7 +65,7 @@
                         HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,0,0,0"
                         Background="Transparent" shell:WindowChrome.IsHitTestVisibleInChrome="True"
                         PreviewMouseWheel="LogoBar_MouseWheel" MouseLeftButtonDown="LogoBar_MouseLeftButtonDown">
-                <Image Source="pack://application:,,,/Resources/kd-icon.png"
+                <Image x:Name="PlainTitleIcon"
                        Width="{DynamicResource TitleIconSize}" Height="{DynamicResource TitleIconSize}"
                        Margin="{DynamicResource TitleIconMargin}" RenderOptions.BitmapScalingMode="HighQuality"/>
                 <TextBlock Text="The Killendar" VerticalAlignment="Center"
