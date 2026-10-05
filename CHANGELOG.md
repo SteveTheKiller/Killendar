@@ -26,7 +26,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Pinned places in the file picker can be dragged into a new order.
 - The portable footer button reads PORTABLE, like KillerPDF and KillerScan, and its tooltip offers the install.
 - Selected language and theme rows keep the active accent on hover.
-- The title bar icon now uses a sharp size-matched image.
+- Main window and dialog title bar icons now use sharp size-matched images.
 
 ## [1.1.4] - 2026-09-28
 

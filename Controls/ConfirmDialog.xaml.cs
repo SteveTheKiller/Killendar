@@ -1,5 +1,8 @@
 using System.Windows;
 using System.Windows.Input;
+using System.Linq;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 
 namespace Killendar.Controls
@@ -17,6 +20,12 @@ namespace Killendar.Controls
         public ConfirmDialog()
         {
             InitializeComponent();
+            var titleFrames = BitmapDecoder.Create(new System.Uri("pack://application:,,,/Resources/kd-icon.ico"),
+                BitmapCreateOptions.None, BitmapCacheOption.OnLoad).Frames;
+            void RefreshTitleIcon() => TitleIcon.Source = titleFrames.OrderBy(frame =>
+                System.Math.Abs(frame.PixelWidth - TitleIcon.ActualWidth * VisualTreeHelper.GetDpi(TitleIcon).DpiScaleX)).First();
+            TitleIcon.Loaded += (_, _) => RefreshTitleIcon();
+            TitleIcon.SizeChanged += (_, _) => RefreshTitleIcon();
             TaskbarIdentity.Track(this);
             Loaded += (_, _) => Anim.FadeIn(RootBorder);
         }

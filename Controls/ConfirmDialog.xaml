@@ -52,7 +52,7 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
                                     Margin="{DynamicResource DialogTitleTextMargin}">
                         <!-- The app icon leads the caption, as it does in the main title bar. -->
-                        <Image Source="pack://application:,,,/Resources/kd-icon.png"
+                        <Image x:Name="TitleIcon"
                                Width="{DynamicResource TitleIconSize}" Height="{DynamicResource TitleIconSize}"
                                Margin="{DynamicResource TitleIconMargin}" VerticalAlignment="Center"
                                RenderOptions.BitmapScalingMode="HighQuality"/>
