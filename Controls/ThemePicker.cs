@@ -150,13 +150,14 @@ namespace Killendar.Controls
             var host = new Grid { Width = 39 };
             Grid.SetColumn(host, 1);
 
-            host.Children.Add(new Border
+            var divider = new Border
             {
                 Width = 1,
                 HorizontalAlignment = HorizontalAlignment.Left,
                 Margin = new Thickness(0, 6, 0, 6),
-                Background = Application.Current.TryFindResource("MenuBorderBrush") as Brush,
-            });
+            };
+            divider.SetResourceReference(Border.BackgroundProperty, "MenuBorderBrush");
+            host.Children.Add(divider);
 
             var strip = new Grid { Margin = new Thickness(7, 6, 2, 6) };
             var colors = StripColors(family);
