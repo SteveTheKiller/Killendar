@@ -19,7 +19,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Selected states now use subtle gradients outside 98SE, Light buttons have softer gray borders, and yellow wordmarks match their accent.
 
 ### Fixed
-- Fixed picker corners.
+- Fixed picker and dialog borders, including square color picker corners in 98SE.
 - The theme picker's divider updates when switching themes.
 - Opening an iCalendar file with Killendar now imports its events, and Killendar appears in the Windows Open with list for `.ics` files.
 - Install and uninstall windows now show the film grain and the app icon in the title bar.

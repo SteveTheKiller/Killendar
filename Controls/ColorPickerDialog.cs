@@ -91,23 +91,29 @@ namespace Killendar.Controls
 
         private void BuildUi()
         {
-            var card = new Border
+            var card = new PickerBorder
             {
                 Background = R("SurfaceBrush"),
                 BorderBrush = R("CardBorderBrush"),
                 BorderThickness = new Thickness(1),
-                CornerRadius = new CornerRadius(6),
                 Margin = new Thickness(14),
-                Effect = new System.Windows.Media.Effects.DropShadowEffect
-                { Color = Colors.Black, BlurRadius = 18, ShadowDepth = 3, Direction = 270, Opacity = 0.55 }
             };
+            card.SetResourceReference(Border.CornerRadiusProperty, "PanelCornerRadius");
+            double shadowOpacity = Application.Current.TryFindResource("FlyoutShadowOpacity") is double opacity ? opacity : 0.55;
+            if (shadowOpacity > 0)
+            {
+                card.Effect = new System.Windows.Media.Effects.DropShadowEffect
+                { Color = Colors.Black, BlurRadius = 18, ShadowDepth = 3, Direction = 270, Opacity = shadowOpacity };
+            }
             var panel = new StackPanel { Margin = new Thickness(18, 14, 18, 16) };
             // Film grain over the card, same treatment as ConfirmDialog.
             var root = new Grid();
             if (Application.Current.TryFindResource("GrainTileBrush") is Brush grain)
             {
                 double grainOp = Application.Current.TryFindResource("GrainOpacity") is double go ? go : 0.12;
-                root.Children.Add(new Border { Background = grain, Opacity = grainOp, CornerRadius = new CornerRadius(6), IsHitTestVisible = false });
+                var grainLayer = new Border { Background = grain, Opacity = grainOp, IsHitTestVisible = false };
+                grainLayer.SetResourceReference(Border.CornerRadiusProperty, "PanelCornerRadius");
+                root.Children.Add(grainLayer);
             }
             root.Children.Add(panel);
             card.Child = root;

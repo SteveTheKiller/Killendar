@@ -43,6 +43,7 @@
 
         <!-- Shadow layer: same geometry, NO content, not hit-testable. -->
         <Border Margin="{DynamicResource DialogHaloMargin}" CornerRadius="{DynamicResource PanelCornerRadius}" Background="{DynamicResource BackgroundBrush}"
+                BorderThickness="1" BorderBrush="{DynamicResource BackgroundBrush}"
                 IsHitTestVisible="False">
             <Border.Effect>
                 <DropShadowEffect Color="Black" BlurRadius="18" ShadowDepth="3" Direction="270" Opacity="{DynamicResource FlyoutShadowOpacity}"/>

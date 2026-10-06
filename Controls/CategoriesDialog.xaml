@@ -6,6 +6,7 @@
 <Window x:Class="Killendar.Controls.CategoriesDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:kui="clr-namespace:Killendar.Controls"
         Title="Killendar"
         Width="400" SizeToContent="Height"
         WindowStartupLocation="CenterOwner"
@@ -18,15 +19,15 @@
         ShowInTaskbar="False">
 
     <!-- Dark tier, so the fields and list rows on top of it read as raised. -->
-    <Border x:Name="RootBorder" Opacity="0"
+    <kui:PickerBorder x:Name="RootBorder" Opacity="0"
             Background="{StaticResource BackgroundBrush}"
             BorderBrush="{StaticResource CardBorderBrush}"
             BorderThickness="1"
             CornerRadius="{DynamicResource PanelCornerRadius}"
             Margin="{DynamicResource DialogHaloMargin}">
-        <Border.Effect>
+        <kui:PickerBorder.Effect>
             <DropShadowEffect Color="Black" BlurRadius="18" ShadowDepth="3" Direction="270" Opacity="{DynamicResource AboutShadowOpacity}"/>
-        </Border.Effect>
+        </kui:PickerBorder.Effect>
         <Grid>
             <Border IsHitTestVisible="False" CornerRadius="{DynamicResource PanelCornerRadius}"
                     Opacity="{DynamicResource GrainOpacity}"
@@ -150,5 +151,5 @@
             <Border Panel.ZIndex="9001" IsHitTestVisible="False" Margin="{DynamicResource OverlayBevelInnerMargin}" BorderBrush="{DynamicResource OverlayBevelInnerLightBrush}" BorderThickness="{DynamicResource OverlayBevelLightThickness}"/>
             <Border Panel.ZIndex="9001" IsHitTestVisible="False" Margin="{DynamicResource OverlayBevelInnerMargin}" BorderBrush="{DynamicResource OverlayBevelInnerDarkBrush}" BorderThickness="{DynamicResource OverlayBevelDarkThickness}"/>
         </Grid>
-    </Border>
+    </kui:PickerBorder>
 </Window>
