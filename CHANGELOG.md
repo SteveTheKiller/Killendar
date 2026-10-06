@@ -17,7 +17,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Changed
 - Menu rows now show accent text and icons on the theme's hover color.
 - The two-column language menu now has room for all 19 languages.
-- Improved menu and selection contrast, softened material-theme footers and 98SE footer text, and used subtle gray Delirium dividers.
+- Improved menu and selection contrast, softened material-theme footers and 98SE footer text, matched the 98SE About bevel to the sidebar, and used subtle gray Delirium dividers.
 
 ### Fixed
 - Align shortcut titles, view controls, and online help in one header row.
