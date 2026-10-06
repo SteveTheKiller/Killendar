@@ -49,7 +49,7 @@
             </Border.Effect>
         </Border>
 
-        <Border x:Name="RootBorder" Opacity="0" BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1"
+        <kui:PickerBorder x:Name="RootBorder" Opacity="0" BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1"
                 Background="{DynamicResource BackgroundBrush}" CornerRadius="{DynamicResource PanelCornerRadius}" Margin="{DynamicResource DialogHaloMargin}">
             <Grid>
             <Grid.RowDefinitions>
@@ -494,6 +494,6 @@
             <Border Grid.RowSpan="6" Panel.ZIndex="9001" IsHitTestVisible="False" Margin="{DynamicResource OverlayBevelInnerMargin}" BorderBrush="{DynamicResource OverlayBevelInnerLightBrush}" BorderThickness="{DynamicResource OverlayBevelLightThickness}"/>
             <Border Grid.RowSpan="6" Panel.ZIndex="9001" IsHitTestVisible="False" Margin="{DynamicResource OverlayBevelInnerMargin}" BorderBrush="{DynamicResource OverlayBevelInnerDarkBrush}" BorderThickness="{DynamicResource OverlayBevelDarkThickness}"/>
             </Grid>
-        </Border>
+        </kui:PickerBorder>
     </Grid>
 </Window>
