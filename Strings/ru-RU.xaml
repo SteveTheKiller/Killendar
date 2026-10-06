@@ -426,4 +426,5 @@
     <sys:String x:Key="Str_TT_SwatchReplace">Нажмите, чтобы задать этому образцу текущий цвет</sys:String>
     <sys:String x:Key="Str_TT_SwatchUse">Нажмите, чтобы использовать этот цвет</sys:String>
 
+    <sys:String x:Key="Str_KS_OnlineHelp">Онлайн-руководство по сочетаниям клавиш</sys:String>
 </ResourceDictionary>

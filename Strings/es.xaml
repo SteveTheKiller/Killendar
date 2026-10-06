@@ -399,4 +399,5 @@
     <sys:String x:Key="Str_Kc_DataFolderTitle">Elegir la carpeta de Killendar</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderChanged">Carpeta de Killendar: {0}</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderFailed">No se pudo usar esa carpeta: {0}</sys:String>
+    <sys:String x:Key="Str_KS_OnlineHelp">Guía de atajos de teclado en línea</sys:String>
 </ResourceDictionary>

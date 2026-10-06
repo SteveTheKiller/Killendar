@@ -955,8 +955,13 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="{DynamicResource Str_KS_Title}" Foreground="{DynamicResource TextBrush}"
-                                       FontFamily="Consolas" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"/>
+                            <StackPanel Grid.Row="0">
+                                <TextBlock Text="{DynamicResource Str_KS_Title}" Foreground="{DynamicResource TextBrush}"
+                                           FontFamily="Consolas" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"/>
+                                <TextBlock FontSize="11" Margin="0,0,0,10">
+                                    <Hyperlink NavigateUri="https://killendar.net/technical.html#keyboard" RequestNavigate="Hyperlink_RequestNavigate" Foreground="{DynamicResource PrimaryBrush}" TextDecorations="None"><Run Text="{DynamicResource Str_KS_OnlineHelp}"/></Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
 
                             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12">
                                 <Button x:Name="KsViewList"     Style="{StaticResource KsToggle}" Tag="on"

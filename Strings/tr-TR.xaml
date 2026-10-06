@@ -399,4 +399,5 @@
     <sys:String x:Key="Str_Kc_DataFolderTitle">Killendar klasörünü seç</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderChanged">Killendar klasörü: {0}</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderFailed">Bu klasör kullanılamadı: {0}</sys:String>
+    <sys:String x:Key="Str_KS_OnlineHelp">Çevrimiçi klavye kısayolu kılavuzu</sys:String>
 </ResourceDictionary>

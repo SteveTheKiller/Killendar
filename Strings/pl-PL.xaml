@@ -346,4 +346,5 @@
     <sys:String x:Key="Str_TT_ResetSwatches">Przywróć domyślne próbki</sys:String>
     <sys:String x:Key="Str_TT_SwatchReplace">Kliknij, aby nadać tej próbce bieżący kolor</sys:String>
     <sys:String x:Key="Str_TT_SwatchUse">Kliknij, aby użyć tego koloru</sys:String>
+    <sys:String x:Key="Str_KS_OnlineHelp">Internetowy przewodnik po skrótach klawiaturowych</sys:String>
 </ResourceDictionary>

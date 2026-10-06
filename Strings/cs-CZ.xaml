@@ -399,4 +399,5 @@
     <sys:String x:Key="Str_Kc_DataFolderTitle">Vybrat složku Killendaru</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderChanged">Složka Killendaru: {0}</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderFailed">Tuto složku se nepodařilo použít: {0}</sys:String>
+    <sys:String x:Key="Str_KS_OnlineHelp">Online průvodce klávesovými zkratkami</sys:String>
 </ResourceDictionary>

@@ -378,4 +378,5 @@
     <sys:String x:Key="Str_TT_SwatchReplace">Clicca per impostare questo campione al colore attuale</sys:String>
     <sys:String x:Key="Str_TT_SwatchUse">Clicca per usare questo colore</sys:String>
 
+    <sys:String x:Key="Str_KS_OnlineHelp">Guida online alle scorciatoie da tastiera</sys:String>
 </ResourceDictionary>

@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.2.0] - Unreleased
 
 ### Added
+- Link both shortcut views to the online shortcut guide.
 - Added yellow and magenta accents to the neutral and 98SE themes.
 - Ukrainian localization.
 - Norwegian (Bokmål) localization.

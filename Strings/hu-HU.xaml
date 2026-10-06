@@ -427,4 +427,5 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_TT_SwatchReplace">Kattintson ide, hogy a mintát az aktuális színre állítsa</sys:String>
     <sys:String x:Key="Str_TT_SwatchUse">Kattintson a szín használatához</sys:String>
 
+    <sys:String x:Key="Str_KS_OnlineHelp">Online billentyűparancs-útmutató</sys:String>
 </ResourceDictionary>
