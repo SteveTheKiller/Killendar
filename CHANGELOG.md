@@ -33,7 +33,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - The portable footer button reads PORTABLE, like KillerPDF and KillerScan, and its tooltip offers the install.
 - Selected language and theme rows keep the active accent on hover.
 - Main window and dialog title bar icons now use sharp size-matched images.
-- Improved menu, selection, and footer text contrast, with subtle gray Delirium dividers.
 
 ## [1.1.4] - 2026-09-28
 
