@@ -425,5 +425,5 @@
     <sys:String x:Key="Str_TT_SwatchReplace">Clique para definir esta amostra com a cor atual</sys:String>
     <sys:String x:Key="Str_TT_SwatchUse">Clique para usar esta cor</sys:String>
 
-    <sys:String x:Key="Str_KS_OnlineHelp">Guia online de atalhos de teclado</sys:String>
+    <sys:String x:Key="Str_KS_OnlineHelp">Guia completo &amp; tutoriais online</sys:String>
 </ResourceDictionary>

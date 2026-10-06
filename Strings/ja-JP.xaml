@@ -399,5 +399,5 @@
     <sys:String x:Key="Str_Kc_DataFolderTitle">Killendar フォルダーを選択</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderChanged">Killendar フォルダー: {0}</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderFailed">そのフォルダーを使用できませんでした: {0}</sys:String>
-    <sys:String x:Key="Str_KS_OnlineHelp">オンラインのキーボードショートカットガイド</sys:String>
+    <sys:String x:Key="Str_KS_OnlineHelp">完全ガイド &amp; 使い方 (オンライン)</sys:String>
 </ResourceDictionary>

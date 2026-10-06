@@ -399,5 +399,5 @@
     <sys:String x:Key="Str_Kc_DataFolderTitle">选择 Killendar 文件夹</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderChanged">Killendar 文件夹：{0}</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderFailed">无法使用该文件夹：{0}</sys:String>
-    <sys:String x:Key="Str_KS_OnlineHelp">在线键盘快捷键指南</sys:String>
+    <sys:String x:Key="Str_KS_OnlineHelp">完整指南和在线教程</sys:String>
 </ResourceDictionary>

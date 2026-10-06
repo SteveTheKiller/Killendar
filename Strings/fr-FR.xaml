@@ -399,5 +399,5 @@
     <sys:String x:Key="Str_Kc_DataFolderTitle">Choisir le dossier Killendar</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderChanged">Dossier Killendar : {0}</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderFailed">Impossible d’utiliser ce dossier : {0}</sys:String>
-    <sys:String x:Key="Str_KS_OnlineHelp">Guide des raccourcis clavier en ligne</sys:String>
+    <sys:String x:Key="Str_KS_OnlineHelp">Guide complet et tutoriels en ligne</sys:String>
 </ResourceDictionary>

@@ -955,19 +955,26 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <StackPanel Grid.Row="0">
+                            <Grid Grid.Row="0" Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
                                 <TextBlock Text="{DynamicResource Str_KS_Title}" Foreground="{DynamicResource TextBrush}"
-                                           FontFamily="Consolas" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"/>
-                                <TextBlock FontSize="11" Margin="0,0,0,10">
+                                           FontFamily="Consolas" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="12,0">
+                                    <Button x:Name="KsViewList" Style="{StaticResource KsToggle}" Tag="on"
+                                            Content="{DynamicResource Str_KS_ViewList}" Click="KsViewList_Click"/>
+                                    <Button x:Name="KsViewKeyboard" Style="{StaticResource KsToggle}"
+                                            Content="{DynamicResource Str_KS_ViewMap}" Click="KsViewKeyboard_Click"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="2" FontSize="11" MaxWidth="210" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,0,0">
                                     <Hyperlink NavigateUri="https://killendar.net/technical.html#keyboard" RequestNavigate="Hyperlink_RequestNavigate" Foreground="{DynamicResource PrimaryBrush}" TextDecorations="None"><Run Text="{DynamicResource Str_KS_OnlineHelp}"/></Hyperlink>
                                 </TextBlock>
-                            </StackPanel>
+                            </Grid>
 
                             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12">
-                                <Button x:Name="KsViewList"     Style="{StaticResource KsToggle}" Tag="on"
-                                        Content="{DynamicResource Str_KS_ViewList}" Click="KsViewList_Click"/>
-                                <Button x:Name="KsViewKeyboard" Style="{StaticResource KsToggle}"
-                                        Content="{DynamicResource Str_KS_ViewMap}" Click="KsViewKeyboard_Click"/>
                                 <TextBlock Text="{DynamicResource Str_KS_Hint}" Foreground="{DynamicResource DimTextBrush}"
                                            FontSize="11" VerticalAlignment="Center" Margin="8,0,0,0"/>
                             </StackPanel>

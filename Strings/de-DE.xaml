@@ -399,5 +399,5 @@
     <sys:String x:Key="Str_Kc_DataFolderTitle">Killendar-Ordner auswählen</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderChanged">Killendar-Ordner: {0}</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderFailed">Dieser Ordner konnte nicht verwendet werden: {0}</sys:String>
-    <sys:String x:Key="Str_KS_OnlineHelp">Online-Anleitung zu Tastenkürzeln</sys:String>
+    <sys:String x:Key="Str_KS_OnlineHelp">Vollständige Anleitung &amp; Tutorials online</sys:String>
 </ResourceDictionary>

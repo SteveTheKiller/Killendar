@@ -7,7 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.2.0] - Unreleased
 
 ### Added
-- Link both shortcut views to the online shortcut guide.
+- Link both shortcut views to the online guide and how-to.
 - Added yellow and magenta accents to the neutral and 98SE themes.
 - Ukrainian localization.
 - Norwegian (Bokmål) localization.
@@ -20,6 +20,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Selected states now use subtle gradients outside 98SE, Light buttons have softer gray borders, and yellow wordmarks match their accent.
 
 ### Fixed
+- Align shortcut titles, view controls, and online help in one header row.
 - Ctrl+wheel changes picker views and icon sizes.
 - Fixed picker and dialog borders, including square color picker corners in 98SE.
 - The theme picker's divider updates when switching themes.
