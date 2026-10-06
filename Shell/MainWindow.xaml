@@ -770,7 +770,7 @@
              declared after the calendar row - used to paint over the shadow and swallow it
              entirely. Negative rather than raising the calendar row, because the About overlay is
              declared after this and has to stay on top of everything. -->
-        <Border Grid.Row="2" Panel.ZIndex="-1" Background="{DynamicResource BackgroundBrush}">
+        <Border Grid.Row="2" Panel.ZIndex="-1" Background="{DynamicResource FooterBackgroundBrush}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

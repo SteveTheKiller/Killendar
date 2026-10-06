@@ -222,6 +222,7 @@ namespace Killendar.Services
                 if (!d.Contains(key) && d.Contains(source)) d[key] = d[source];
             }
 
+            Alias("FooterBackgroundBrush", "BackgroundBrush");
             Alias("ChipBrush", "RowHoverBrush");
             Alias("SurfaceHoverBrush", "RowHoverBrush");
             // The keyboard map's key caps. 98SE names its own, white rather than button-face gray.
