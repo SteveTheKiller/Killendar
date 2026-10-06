@@ -20,6 +20,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Improved menu and selection contrast, softened material-theme footers and 98SE footer text, matched the 98SE About bevel to the sidebar, and used subtle gray Delirium dividers.
 
 ### Fixed
+- Added a faint divider with fading ends between the language menu columns.
 - Align shortcut titles, view controls, and online help in one header row.
 - Ctrl+wheel changes picker views and icon sizes.
 - Fixed picker and dialog borders, including square color picker corners in 98SE.

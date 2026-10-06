@@ -1,6 +1,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using Killendar.Services;
 
 namespace Killendar.Controls
@@ -68,8 +69,28 @@ namespace Killendar.Controls
                                            Margin = new Thickness(10, 10, 10, 10) };
             // Leave room for native names and locale codes in each column.
             var left = new StackPanel { Width = 200 };
-            var right = new StackPanel { Width = 200, Margin = new Thickness(14, 0, 0, 0) };
+            var right = new StackPanel { Width = 200 };
+            var divider = new Border
+            {
+                Width = 1,
+                Margin = new Thickness(6, 8, 7, 8),
+                Opacity = 0.18,
+                IsHitTestVisible = false,
+                OpacityMask = new LinearGradientBrush
+                {
+                    StartPoint = new Point(0, 0), EndPoint = new Point(0, 1),
+                    GradientStops =
+                    {
+                        new GradientStop(Colors.Transparent, 0),
+                        new GradientStop(Colors.Black, 0.15),
+                        new GradientStop(Colors.Black, 0.85),
+                        new GradientStop(Colors.Transparent, 1),
+                    },
+                },
+            };
+            divider.SetResourceReference(Border.BackgroundProperty, "TextBrush");
             columns.Children.Add(left);
+            columns.Children.Add(divider);
             columns.Children.Add(right);
             int half = (Languages.Length + 1) / 2;
             int index = 0;
