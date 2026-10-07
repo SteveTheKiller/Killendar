@@ -520,6 +520,7 @@
     </Style>
 
     <Style TargetType="ContextMenu">
+        <Setter Property="kui:MenuAnimation.OpenImmediately" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="HasDropShadow" Value="False"/>
         <!-- Compensates FlyoutCard's shadow halo so the card lands where it did when that halo was
@@ -534,14 +535,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ContextMenu">
-                    <!-- FADE IN. A ContextMenu has no PopupAnimation property - it is not a Popup,
-                         it is hosted inside one WPF owns - so the fade is driven from the template
-                         with an EventTrigger on Loaded. Submenus already faded, so a menu appeared
-                         instantly while its own children faded in, which is backwards. 150ms
-                         ease-out, the curve Anim.FadeIn uses. (2026-07-30) -->
-                    <!-- Chrome comes from FlyoutCard - the SAME style the theme flyout uses.
-                         Opacity 0 is the fade's start value, not chrome. -->
-                    <Border x:Name="MenuRoot" Opacity="0" Style="{StaticResource FlyoutCard}">
+                    <!-- Paint the menu surface immediately. -->
+                    <Border x:Name="MenuRoot" Opacity="1" Style="{StaticResource FlyoutCard}">
                         <Grid>
                             <StackPanel IsItemsHost="True" Margin="{TemplateBinding Padding}" KeyboardNavigation.DirectionalNavigation="Cycle"/>
                             <Border Style="{StaticResource FlyoutGrain}"/>
@@ -557,18 +552,6 @@
                                     BorderThickness="{DynamicResource MenuBevel2DarkThickness}"/>
                         </Grid>
                     </Border>
-                    <ControlTemplate.Triggers>
-                        <EventTrigger RoutedEvent="ContextMenu.Loaded">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetName="MenuRoot" Storyboard.TargetProperty="Opacity"
-                                                     From="0" To="1" Duration="0:0:0.15">
-                                        <DoubleAnimation.EasingFunction><QuadraticEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
-                                    </DoubleAnimation>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -624,7 +607,7 @@
                                        Visibility="Collapsed"/>
 
                             <Popup x:Name="SubPopup" AllowsTransparency="True" Placement="Right"
-                                   HorizontalOffset="-20" VerticalOffset="-12" Focusable="False" PopupAnimation="Fade"
+                                   HorizontalOffset="-20" VerticalOffset="-12" Focusable="False" PopupAnimation="Fade" kui:MenuAnimation.OpenImmediately="True"
                                    IsOpen="{TemplateBinding IsSubmenuOpen}">
                                 <!-- Halo sized to the 22/4 shadow, same as FlyoutCard; the offsets
                                      above carry the -16,-12 compensation on top of the -4 gap. -->
