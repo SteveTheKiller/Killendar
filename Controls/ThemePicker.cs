@@ -262,7 +262,7 @@ namespace Killendar.Controls
             ],
             Theme.SE98 =>
             [
-                (Accent.Red, "#800040"), (Accent.Orange, "#A05000"), (Accent.Yellow, "#EAD900"), (Accent.Green, "#006000"),
+                (Accent.Red, "#800000"), (Accent.Orange, "#A05000"), (Accent.Yellow, "#EAD900"), (Accent.Green, "#006000"),
                 (Accent.Teal, "#008080"), (Accent.Blue, "#000080"), (Accent.Purple, "#5A376E"), (Accent.Magenta, "#750052")
             ],
             _ =>
