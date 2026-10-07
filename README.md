@@ -49,7 +49,7 @@ choco install killendar
 ```
 
 - Prebuilt binary: <https://github.com/SteveTheKiller/Killendar/releases/latest/download/Killendar.exe>
-- Source (GPL3 corresponding source for this release): <https://github.com/SteveTheKiller/Killendar/releases/download/v1.1.4/Killendar-1.1.4-src.zip>
+- Source (GPL3 corresponding source for this release): <https://github.com/SteveTheKiller/Killendar/releases/download/v1.2.0/Killendar-1.2.0-src.zip>
 
 ## Build from source
 
