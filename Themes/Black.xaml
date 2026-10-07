@@ -65,4 +65,26 @@
          rasterizes ClearType, so on light surfaces it is dialled back or the label reads blurry. -->
     <DropShadowEffect x:Key="TextStroke"     Color="Black" BlurRadius="3" ShadowDepth="0.8" Direction="270" Opacity="0.7"/>
 
+    <SolidColorBrush x:Key="AccentLogo"     Color="#00ff66" po:Freeze="True"/>
+    <sys:Double x:Key="FlyoutShadowOpacity">0.55</sys:Double>
+    <CornerRadius x:Key="WindowCornerRadius">7</CornerRadius>
+    <CornerRadius x:Key="AccentSwatchCornerRadius">9</CornerRadius>
+    <CornerRadius x:Key="PanelCornerRadius">6</CornerRadius>
+    <SolidColorBrush x:Key="RadioAccent"    Color="#00ff66" po:Freeze="True"/>
+    <CornerRadius x:Key="FlyoutCornerRadius">4</CornerRadius>
+    <sys:Double x:Key="BarShadowOpacity">0.38</sys:Double>
+    <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
+    <CornerRadius x:Key="SmallCornerRadius">3</CornerRadius>
+    <SolidColorBrush x:Key="SelectionAccent" Color="#1a8f48" po:Freeze="True"/>
+    <sys:Double x:Key="PaneShadowOpacity">0.60</sys:Double>
+    <SolidColorBrush x:Key="TitleBarBrush" Color="#000000" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#FF333333" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ComboHighlightTextBrush" Color="#FF00FF66" po:Freeze="True"/>
+    <SolidColorBrush x:Key="DialogTitleBarBrush" Color="#FF000000" po:Freeze="True"/>
+    <SolidColorBrush x:Key="FooterBackgroundBrush" Color="#FF000000" po:Freeze="True"/>
+    <sys:Double x:Key="WordmarkShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.45</sys:Double>
+    <sys:Double x:Key="TitleBarHeight" xmlns:sys="clr-namespace:System;assembly=mscorlib">36</sys:Double>
+    <SolidColorBrush x:Key="MenuSeparatorBrush" Color="#FF2A2A2A" po:Freeze="True"/>
+    <sys:Double x:Key="TitleWordmarkBoldSize" xmlns:sys="clr-namespace:System;assembly=mscorlib">21.45</sys:Double>
+    <sys:Double x:Key="TitleWordmarkSize" xmlns:sys="clr-namespace:System;assembly=mscorlib">16.5</sys:Double>
 </ResourceDictionary>

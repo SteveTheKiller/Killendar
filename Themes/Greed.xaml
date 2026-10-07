@@ -10,7 +10,7 @@
     <SolidColorBrush x:Key="PrimaryBrush"        Color="#ffffff" po:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryHoverBrush"   Color="#ffffff" po:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#ffffff" po:Freeze="True"/>
-    <SolidColorBrush x:Key="HeaderLineBrush"     Color="#2a7a4a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="HeaderLineBrush" Color="#3fbf6f" po:Freeze="True"/>
     <SolidColorBrush x:Key="OnPrimaryBrush"      Color="#002e1c" po:Freeze="True"/>
     <SolidColorBrush x:Key="OutlineBtnBrush"     Color="#3fbf6f" po:Freeze="True"/>
     <SolidColorBrush x:Key="InputHoverBrush"     Color="#2a7a52" po:Freeze="True"/>
@@ -26,7 +26,7 @@
 
     <SolidColorBrush x:Key="TextBrush"           Color="#fffde8" po:Freeze="True"/>
     <SolidColorBrush x:Key="MutedTextBrush"      Color="#e0d49a" po:Freeze="True"/>
-    <SolidColorBrush x:Key="ChromeTextBrush"     Color="#ece2bc" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ChromeTextBrush" Color="#cfd6c2" po:Freeze="True"/>
     <SolidColorBrush x:Key="DimTextBrush"        Color="#c0aa68" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="RowAltBrush"         Color="#18FFFFFF" po:Freeze="True"/>
@@ -66,4 +66,25 @@
     <DropShadowEffect x:Key="TextStroke"     Color="Black" BlurRadius="3" ShadowDepth="0.8" Direction="270" Opacity="0.7"/>
 
     <SolidColorBrush x:Key="AccentLogo" Color="#e0d49a"/>
+    <CornerRadius x:Key="AccentSwatchCornerRadius">9</CornerRadius>
+    <SolidColorBrush x:Key="RadioAccent"    Color="#e0d49a" po:Freeze="True"/>
+    <CornerRadius x:Key="FlyoutCornerRadius">4</CornerRadius>
+    <CornerRadius x:Key="SmallCornerRadius">3</CornerRadius>
+    <SolidColorBrush x:Key="SelectionAccent" Color="#138a42" po:Freeze="True"/>
+    <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
+    <sys:Double x:Key="WordmarkShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.45</sys:Double>
+    <sys:Double x:Key="FlyoutShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.55</sys:Double>
+    <SolidColorBrush x:Key="DialogTitleBarBrush" Color="#FF002115" po:Freeze="True"/>
+    <CornerRadius x:Key="PanelCornerRadius">6</CornerRadius>
+    <SolidColorBrush x:Key="ComboHighlightTextBrush" Color="#FFFFFFFF" po:Freeze="True"/>
+    <sys:Double x:Key="TitleWordmarkSize" xmlns:sys="clr-namespace:System;assembly=mscorlib">16.5</sys:Double>
+    <sys:Double x:Key="BarShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.38</sys:Double>
+    <CornerRadius x:Key="WindowCornerRadius">7</CornerRadius>
+    <sys:Double x:Key="TitleWordmarkBoldSize" xmlns:sys="clr-namespace:System;assembly=mscorlib">21.45</sys:Double>
+    <sys:Double x:Key="TitleBarHeight" xmlns:sys="clr-namespace:System;assembly=mscorlib">36</sys:Double>
+    <sys:Double x:Key="PaneShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.6</sys:Double>
+    <SolidColorBrush x:Key="TitleBarBrush" Color="#FF002115" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#FF00593A" po:Freeze="True"/>
+    <SolidColorBrush x:Key="FooterBackgroundBrush" Color="#FF002115" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MenuSeparatorBrush" Color="#FF0F4A30" po:Freeze="True"/>
 </ResourceDictionary>

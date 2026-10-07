@@ -26,7 +26,7 @@
 
     <SolidColorBrush x:Key="TextBrush"           Color="#1a1a1a" po:Freeze="True"/>
     <SolidColorBrush x:Key="MutedTextBrush"      Color="#555555" po:Freeze="True"/>
-    <SolidColorBrush x:Key="ChromeTextBrush"     Color="#444444" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ChromeTextBrush" Color="#3a3a3a" po:Freeze="True"/>
     <SolidColorBrush x:Key="DimTextBrush"        Color="#666666" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="RowAltBrush"         Color="#14000000" po:Freeze="True"/>
@@ -68,4 +68,25 @@
 
     <SolidColorBrush x:Key="OutlineRestBrush" Color="#777777" po:Freeze="True"/>
     <SolidColorBrush x:Key="ComboHighlightTextBrush" Color="#1A1A1A"/>
+    <SolidColorBrush x:Key="AccentLogo"     Color="#1b5e20" po:Freeze="True"/>
+    <CornerRadius x:Key="AccentSwatchCornerRadius">9</CornerRadius>
+    <SolidColorBrush x:Key="RadioAccent"    Color="#1b5e20" po:Freeze="True"/>
+    <CornerRadius x:Key="FlyoutCornerRadius">4</CornerRadius>
+    <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
+    <CornerRadius x:Key="SmallCornerRadius">3</CornerRadius>
+    <SolidColorBrush x:Key="SelectionAccent" Color="#1b5e20" po:Freeze="True"/>
+    <sys:Double x:Key="WordmarkShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.45</sys:Double>
+    <sys:Double x:Key="FlyoutShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.55</sys:Double>
+    <SolidColorBrush x:Key="DialogTitleBarBrush" Color="#FFDCDCDC" po:Freeze="True"/>
+    <CornerRadius x:Key="PanelCornerRadius">6</CornerRadius>
+    <sys:Double x:Key="TitleWordmarkSize" xmlns:sys="clr-namespace:System;assembly=mscorlib">16.5</sys:Double>
+    <sys:Double x:Key="BarShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.38</sys:Double>
+    <CornerRadius x:Key="WindowCornerRadius">7</CornerRadius>
+    <sys:Double x:Key="TitleWordmarkBoldSize" xmlns:sys="clr-namespace:System;assembly=mscorlib">21.45</sys:Double>
+    <sys:Double x:Key="TitleBarHeight" xmlns:sys="clr-namespace:System;assembly=mscorlib">36</sys:Double>
+    <sys:Double x:Key="PaneShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.6</sys:Double>
+    <SolidColorBrush x:Key="TitleBarBrush" Color="#FFDCDCDC" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#FFB2B2B2" po:Freeze="True"/>
+    <SolidColorBrush x:Key="FooterBackgroundBrush" Color="#FFDCDCDC" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MenuSeparatorBrush" Color="#FFC0C0C0" po:Freeze="True"/>
 </ResourceDictionary>

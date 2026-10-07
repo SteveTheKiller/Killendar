@@ -10,7 +10,7 @@
     <SolidColorBrush x:Key="PrimaryBrush"        Color="#f8c99e" po:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryHoverBrush"   Color="#f8c99e" po:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#f8c99e" po:Freeze="True"/>
-    <SolidColorBrush x:Key="HeaderLineBrush"     Color="#8f3640" po:Freeze="True"/>
+    <SolidColorBrush x:Key="HeaderLineBrush" Color="#e8485a" po:Freeze="True"/>
     <SolidColorBrush x:Key="OnPrimaryBrush"      Color="#2c1012" po:Freeze="True"/>
     <SolidColorBrush x:Key="OutlineBtnBrush"     Color="#f8c99e" po:Freeze="True"/>
     <SolidColorBrush x:Key="InputHoverBrush"     Color="#a8434f" po:Freeze="True"/>
@@ -26,12 +26,12 @@
 
     <SolidColorBrush x:Key="TextBrush"           Color="#fffde8" po:Freeze="True"/>
     <SolidColorBrush x:Key="MutedTextBrush"      Color="#f8c99e" po:Freeze="True"/>
-    <SolidColorBrush x:Key="ChromeTextBrush"     Color="#fbdcbc" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ChromeTextBrush" Color="#e8cfc2" po:Freeze="True"/>
     <SolidColorBrush x:Key="DimTextBrush"        Color="#e2b58a" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="RowAltBrush"         Color="#18FFFFFF" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowHoverBrush"       Color="#54201f" po:Freeze="True"/>
-    <SolidColorBrush x:Key="RowSelectedBrush"    Color="#44ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RowSelectedBrush"    Color="#44f8c99e" po:Freeze="True"/>
     <!-- Untagged appointment chips - neutral gray, see the note in Greed.xaml. -->
     <SolidColorBrush x:Key="ChipBrush"           Color="#4a4a4a" po:Freeze="True"/>
     <LinearGradientBrush x:Key="SelectionBg"         po:Freeze="True" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#60F8C99E" Offset="0"/><GradientStop Color="#30F8C99E" Offset="1"/></LinearGradientBrush>
@@ -59,4 +59,26 @@
          rasterizes ClearType, so on light surfaces it is dialled back or the label reads blurry. -->
     <DropShadowEffect x:Key="TextStroke"     Color="Black" BlurRadius="3" ShadowDepth="0.8" Direction="270" Opacity="0.7"/>
 
+    <SolidColorBrush x:Key="AccentLogo"     Color="#f8c99e" po:Freeze="True"/>
+    <CornerRadius x:Key="WindowCornerRadius">7</CornerRadius>
+    <CornerRadius x:Key="AccentSwatchCornerRadius">9</CornerRadius>
+    <CornerRadius x:Key="PanelCornerRadius">6</CornerRadius>
+    <SolidColorBrush x:Key="RadioAccent"    Color="#f8c99e" po:Freeze="True"/>
+    <CornerRadius x:Key="FlyoutCornerRadius">4</CornerRadius>
+    <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
+    <CornerRadius x:Key="SmallCornerRadius">3</CornerRadius>
+    <SolidColorBrush x:Key="SelectionAccent" Color="#cc1a2b" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TitleBarBrush" Color="#240c0d" po:Freeze="True"/>
+    <sys:Double x:Key="PaneShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.6</sys:Double>
+    <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#FF54201F" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ComboHighlightTextBrush" Color="#FFF8C99E" po:Freeze="True"/>
+    <sys:Double x:Key="BarShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.38</sys:Double>
+    <SolidColorBrush x:Key="DialogTitleBarBrush" Color="#FF240C0D" po:Freeze="True"/>
+    <SolidColorBrush x:Key="FooterBackgroundBrush" Color="#FF240C0D" po:Freeze="True"/>
+    <sys:Double x:Key="FlyoutShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.55</sys:Double>
+    <sys:Double x:Key="WordmarkShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.45</sys:Double>
+    <sys:Double x:Key="TitleBarHeight" xmlns:sys="clr-namespace:System;assembly=mscorlib">36</sys:Double>
+    <SolidColorBrush x:Key="MenuSeparatorBrush" Color="#FF401D1D" po:Freeze="True"/>
+    <sys:Double x:Key="TitleWordmarkBoldSize" xmlns:sys="clr-namespace:System;assembly=mscorlib">21.45</sys:Double>
+    <sys:Double x:Key="TitleWordmarkSize" xmlns:sys="clr-namespace:System;assembly=mscorlib">16.5</sys:Double>
 </ResourceDictionary>
