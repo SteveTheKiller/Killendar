@@ -27,6 +27,8 @@ namespace Killendar.Controls
             _window = window;
             _menu = menu;
             _button = themeButton;
+            if (_button is FrameworkElement button)
+                button.ContextMenuOpening += (_, e) => { e.Handled = true; Toggle(); };
             // This is a palette tester, not a one-shot command menu. Both flags matter: StaysOpen
             // keeps the ContextMenu alive. StaysOpenOnClick belongs to the chrome-free generated
             // MenuItem wrapper in MainWindow.xaml; replacing ItemContainerStyle here restores the

@@ -6,6 +6,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ## [1.2.1] - Unreleased
 
+### Fixed
+- Rail right-click menus align 8 pixels from the side and bottom content edges.
+
 ## [1.2.0] - 2026-10-07
 
 ### Added

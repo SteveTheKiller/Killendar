@@ -43,6 +43,8 @@ namespace Killendar.Controls
             _menu             = menu;
             _anchor           = anchor;
             _localeChanged    = localeChanged;
+            if (_anchor is FrameworkElement button)
+                button.ContextMenuOpening += (_, e) => { e.Handled = true; Open(); };
         }
 
         /// <summary>Rebuilds the items and opens the menu.</summary>

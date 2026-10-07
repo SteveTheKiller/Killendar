@@ -29,6 +29,8 @@ namespace Killendar.Controls
             _anchor = anchor;
             _dateStyleChanged = dateStyleChanged;
             _weekStartChanged = weekStartChanged;
+            if (_anchor is FrameworkElement button)
+                button.ContextMenuOpening += (_, e) => { e.Handled = true; Open(); };
         }
 
         internal void Open()
