@@ -206,6 +206,7 @@ namespace Killendar.Services
             // About and Keyboard Shortcuts are window surfaces. Resolve this after accent merging
             // so the exact BackgroundBrush object (including gradients) is retained.
             newDict["OverlayWindowBrush"] = newDict["BackgroundBrush"];
+            if (!newDict.Contains("WordmarkAccentShadowOpacity")) newDict["WordmarkAccentShadowOpacity"] = 0.0;
             newDict["PrimaryFillBrush"] = ButtonFill(newDict["PrimaryBrush"], theme == Theme.SE98);
             newDict["OutlineHoverFillBrush"] = ButtonFill(newDict["OutlineBtnBrush"], theme == Theme.SE98);
             Publish(newDict);
@@ -257,6 +258,8 @@ namespace Killendar.Services
             // color without stretching the whole window gradient across a narrow panel.
             Alias("DialogTitleBarBrush", "BackgroundBrush");
             Alias("InputFieldBrush", "SurfaceBrush");
+            Alias("ComboFieldBrush", "SurfaceBrush");
+            Alias("ComboPopupBrush", "MenuBackgroundBrush");
             Alias("AboutPanelBrush", "PaneBrush");
 
             if (!d.Contains("BevelLightBrush")) d["BevelLightBrush"] = Brushes.Transparent;
@@ -274,6 +277,9 @@ namespace Killendar.Services
             // Modern sidebars are transparent so the app gradient/grain continues through them.
             // 98SE uses a white client pane instead of exposing the gray window/button face.
             d["SidebarPaneBrush"] = square ? d["PaneBrush"] : Brushes.Transparent;
+            d["EditorPaneBrush"] = square ? d["SurfaceBrush"] : Brushes.Transparent;
+            d["DropdownArrowBrush"] = square ? d["SurfaceBrush"] : Brushes.Transparent;
+            d["ComboPopupMargin"] = square ? new Thickness(0) : new Thickness(6);
             // Draw the edge above the hosted view. The classic pane uses the same four rings as
             // the sidebar without an extra base border outside them.
             d["ContentPaneBaseBorderThickness"] = new Thickness(0);

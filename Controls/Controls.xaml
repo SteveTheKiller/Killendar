@@ -201,7 +201,7 @@
          PrimaryButton; a secondary button that lights up accent reads as the primary action. -->
     <Style x:Key="SurfaceButton" TargetType="Button">
         <Setter Property="AutomationProperties.Name" Value="{Binding RelativeSource={RelativeSource Self}, Path=ToolTip}"/>
-        <Setter Property="Background" Value="{DynamicResource InputFieldBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="Padding" Value="12,6"/>
@@ -335,12 +335,22 @@
                             <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
-                        <Border IsHitTestVisible="False" BorderBrush="{DynamicResource BevelDarkBrush}"
+                        <Border x:Name="inputDark" IsHitTestVisible="False" BorderBrush="{DynamicResource BevelDarkBrush}"
                                 BorderThickness="{DynamicResource CheckSunkenDarkThickness}"/>
-                        <Border IsHitTestVisible="False" BorderBrush="{DynamicResource BevelLightBrush}"
+                        <Border x:Name="inputLight" IsHitTestVisible="False" BorderBrush="{DynamicResource BevelLightBrush}"
                                 BorderThickness="{DynamicResource CheckSunkenLightThickness}"/>
+                        <Border x:Name="inputInnerDark" Margin="1" IsHitTestVisible="False"
+                                BorderBrush="{DynamicResource FrameOuterDarkBrush}" BorderThickness="{DynamicResource CheckSunkenDarkThickness}"/>
+                        <Border x:Name="inputInnerLight" Margin="1" IsHitTestVisible="False"
+                                BorderBrush="{DynamicResource FrameOuterLightBrush}" BorderThickness="{DynamicResource CheckSunkenLightThickness}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="BorderThickness" Value="0">
+                            <Setter TargetName="inputDark" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="inputLight" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="inputInnerDark" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="inputInnerLight" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource InputHoverBrush}"/>
                         </Trigger>
@@ -486,9 +496,8 @@
              picked: WPF expands render bounds by the FULL BlurRadius, so a 22 blur needs 22 each
              way, and the 4px downward depth takes 4 off the top and adds 4 to the bottom. A uniform
              6 clipped every edge, and half the correct value still leaves a faint visible step.
-             CONSUMERS MUST COMPENSATE: 16 wider on the left and 12 taller on the top than the old
-             6, so a popup needs HorizontalOffset -16 and VerticalOffset -12 on top of whatever it
-             already had, or the card drifts away from what opened it. -->
+             Rail placement reads this style's margin and compensates for the full halo to keep
+             the visible card eight pixels inside the pane. Ordinary menus use the style offsets. -->
         <Setter Property="Margin" Value="22,18,22,26"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Effect">
@@ -631,11 +640,11 @@
                                             BorderBrush="{DynamicResource MenuBorderBrush}"
                                             BorderThickness="1" CornerRadius="{DynamicResource FlyoutCornerRadius}" SnapsToDevicePixels="True">
                                         <Grid>
+                                            <StackPanel IsItemsHost="True" Margin="0,4"
+                                                        KeyboardNavigation.DirectionalNavigation="Cycle"/>
                                             <Border IsHitTestVisible="False" CornerRadius="{DynamicResource FlyoutCornerRadius}"
                                                     Background="{DynamicResource GrainTileBrush}"
                                                     Opacity="{DynamicResource GrainOpacity}"/>
-                                            <StackPanel IsItemsHost="True" Margin="0,4"
-                                                        KeyboardNavigation.DirectionalNavigation="Cycle"/>
                                         </Grid>
                                     </Border>
                                 </Grid>
@@ -1310,11 +1319,43 @@
 
 
 
+    <Style x:Key="DropdownButton" TargetType="Button" BasedOn="{StaticResource SurfaceButton}">
+        <Setter Property="Background" Value="{DynamicResource ComboFieldBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}"/>
+                        <Grid Margin="1">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="22"/></Grid.ColumnDefinitions>
+                            <ContentPresenter Margin="{TemplateBinding Padding}" VerticalAlignment="Center"/>
+                            <Grid Grid.Column="1">
+                                <Border Background="{DynamicResource DropdownArrowBrush}"/>
+                                <TextBlock Text="&#xE70D;" FontFamily="Segoe MDL2 Assets" FontSize="8"
+                                           Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Border IsHitTestVisible="False" BorderBrush="{DynamicResource BevelLightBrush}" BorderThickness="{DynamicResource ButtonBevelLightThickness}"/>
+                                <Border IsHitTestVisible="False" BorderBrush="{DynamicResource BevelDarkBrush}" BorderThickness="{DynamicResource ButtonBevelDarkThickness}"/>
+                            </Grid>
+                        </Grid>
+                        <Border IsHitTestVisible="False" BorderBrush="{DynamicResource BevelDarkBrush}" BorderThickness="{DynamicResource CheckSunkenDarkThickness}"/>
+                        <Border IsHitTestVisible="False" BorderBrush="{DynamicResource BevelLightBrush}" BorderThickness="{DynamicResource CheckSunkenLightThickness}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource InputHoverBrush}"/></Trigger>
+                        <Trigger Property="IsPressed" Value="True"><Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/></Trigger>
+                        <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.4"/></Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Themed ComboBox; without one a dropdown renders as a stock white box. -->
     <Style TargetType="ComboBox">
-    <!-- SurfaceBrush, matching DarkTextBox - see the note there. A combo is an input and has to
-         sit on the same surface as the text boxes beside it, or a form reads as two materials. -->
-    <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
+    <Setter Property="Background" Value="{DynamicResource ComboFieldBrush}"/>
     <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
     <Setter Property="FontFamily" Value="Consolas"/>
     <Setter Property="FontSize" Value="12"/>
@@ -1330,21 +1371,28 @@
                 <Grid>
                     <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{DynamicResource ControlCornerRadius}"/>
-                    <Grid Margin="{TemplateBinding Padding}">
+                    <Grid Margin="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="22"/>
                         </Grid.ColumnDefinitions>
                         <ContentPresenter Grid.Column="0" Content="{TemplateBinding SelectionBoxItem}"
                                           ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                          VerticalAlignment="Center" IsHitTestVisible="False">
+                                          Margin="{TemplateBinding Padding}" VerticalAlignment="Center" IsHitTestVisible="False">
                             <ContentPresenter.Resources>
                                 <Style TargetType="TextBlock"><Setter Property="TextTrimming" Value="CharacterEllipsis"/></Style>
                             </ContentPresenter.Resources>
                         </ContentPresenter>
-                        <TextBlock x:Name="chev" Grid.Column="1" Text="&#xE70D;" FontFamily="Segoe MDL2 Assets" FontSize="8"
-                                   Foreground="{DynamicResource DimTextBrush}" VerticalAlignment="Center" Margin="5,1,0,0"/>
+                        <Grid Grid.Column="1">
+                            <Border Background="{DynamicResource DropdownArrowBrush}"/>
+                            <TextBlock x:Name="chev" Text="&#xE70D;" FontFamily="Segoe MDL2 Assets" FontSize="8"
+                                       Foreground="{DynamicResource DimTextBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <Border IsHitTestVisible="False" BorderBrush="{DynamicResource BevelLightBrush}" BorderThickness="{DynamicResource ButtonBevelLightThickness}"/>
+                            <Border IsHitTestVisible="False" BorderBrush="{DynamicResource BevelDarkBrush}" BorderThickness="{DynamicResource ButtonBevelDarkThickness}"/>
+                        </Grid>
                     </Grid>
+                    <Border IsHitTestVisible="False" BorderBrush="{DynamicResource BevelDarkBrush}" BorderThickness="{DynamicResource CheckSunkenDarkThickness}"/>
+                    <Border IsHitTestVisible="False" BorderBrush="{DynamicResource BevelLightBrush}" BorderThickness="{DynamicResource CheckSunkenLightThickness}"/>
                     <ToggleButton Focusable="False" ClickMode="Press"
                                   IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
                         <ToggleButton.Template>
@@ -1354,14 +1402,14 @@
                     <Popup x:Name="PART_Popup" IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
                            Placement="Bottom" AllowsTransparency="True" PopupAnimation="Fade">
                         <Border MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                                Background="{DynamicResource MenuBackgroundBrush}" BorderBrush="{DynamicResource MenuBorderBrush}"
-                                BorderThickness="1" CornerRadius="{DynamicResource FlyoutCornerRadius}" Margin="6">
+                                Background="{DynamicResource ComboPopupBrush}" BorderBrush="{DynamicResource MenuBorderBrush}"
+                                BorderThickness="1" CornerRadius="{DynamicResource FlyoutCornerRadius}" Margin="{DynamicResource ComboPopupMargin}">
                             <Border.Effect><DropShadowEffect Color="Black" BlurRadius="22" ShadowDepth="4" Direction="270" Opacity="{DynamicResource FlyoutShadowOpacity}"/></Border.Effect>
                             <Grid>
-                                <Border IsHitTestVisible="False" CornerRadius="{DynamicResource FlyoutCornerRadius}" Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
                                 <ScrollViewer Margin="0,4" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                                     <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/>
                                 </ScrollViewer>
+                                <Border IsHitTestVisible="False" CornerRadius="{DynamicResource FlyoutCornerRadius}" Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
                             </Grid>
                         </Border>
                     </Popup>
@@ -1393,11 +1441,18 @@
                 <ControlTemplate.Triggers>
                     <Trigger Property="IsHighlighted" Value="True">
                         <Setter TargetName="bg" Property="Background" Value="{DynamicResource MenuHoverBrush}"/>
-                        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource ComboHighlightTextBrush}"/>
                     </Trigger>
                     <Trigger Property="IsSelected" Value="True">
                         <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
                     </Trigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsSelected" Value="True"/>
+                            <Condition Property="IsHighlighted" Value="True"/>
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Foreground" Value="{DynamicResource ComboHighlightTextBrush}"/>
+                    </MultiTrigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
         </Setter.Value>

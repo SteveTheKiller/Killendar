@@ -57,6 +57,9 @@
                     <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="{DynamicResource TitleWordmarkSize}"
                                Margin="1,1,0,0" IsHitTestVisible="False"
                                Opacity="{DynamicResource WordmarkEmbossOpacity}"><Run Text="The " Foreground="#70000000"/><Run Text="Killendar" FontSize="{DynamicResource TitleWordmarkBoldSize}" FontWeight="Bold" Foreground="#70000000"/></TextBlock>
+                    <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="{DynamicResource TitleWordmarkSize}"
+                               Margin="1,2,0,0" IsHitTestVisible="False"
+                               Opacity="{DynamicResource WordmarkAccentShadowOpacity}"><TextBlock.Effect><BlurEffect Radius="3"/></TextBlock.Effect><Run Text="The " Foreground="Transparent"/><Run Text="Killendar" FontSize="{DynamicResource TitleWordmarkBoldSize}" FontWeight="Bold" Foreground="Black"/></TextBlock>
                     <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="{DynamicResource TitleWordmarkSize}"><Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="{DynamicResource TitleWordmarkBoldSize}" FontWeight="Bold" Foreground="{DynamicResource AccentLogo}"/></TextBlock>
                 </Grid>
             </StackPanel>
@@ -453,8 +456,17 @@
                     <!-- Appointment sidebar: creating and editing both happen here, never in a
                          separate dialog window. The column animates 0 to 330 rather than the panel
                          toggling Visibility, so it slides instead of popping. -->
-                    <Border x:Name="AppointmentSidebar" Grid.Column="0" ClipToBounds="True"
-                            Background="{DynamicResource SidebarPaneBrush}">
+                    <Border x:Name="AppointmentSidebar" Grid.Column="0" ClipToBounds="True">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Background" Value="{DynamicResource SidebarPaneBrush}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Visibility, ElementName=EditorScroll}" Value="Visible">
+                                        <Setter Property="Background" Value="{DynamicResource EditorPaneBrush}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <!-- Fixed width inside the clipped border: the column animates, the content
                              does not reflow, so nothing reflows mid-slide. Pinned right so it slides
                              out from under the rail rather than crawling in from the window edge. -->
@@ -588,7 +600,7 @@
                                          come from the same table the summary line reads. -->
                                     <TextBlock Text="{DynamicResource Str_Fld_Repeats}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
                                     <WrapPanel Margin="0,4,0,0">
-                                        <Button x:Name="RepeatFreqButton" Style="{StaticResource SurfaceButton}"
+                                        <Button x:Name="RepeatFreqButton" Style="{StaticResource DropdownButton}"
                                                 HorizontalAlignment="Left" MinWidth="92" Padding="7,3"
                                                 Click="RepeatFreqButton_Click">
                                             <Button.ContextMenu>
@@ -1082,6 +1094,8 @@
                                     <Grid Margin="0,0,0,4" HorizontalAlignment="Left">
                                         <TextBlock FontFamily="{DynamicResource WordmarkFont}" Margin="1,2,0,0" IsHitTestVisible="False"
                                                    Opacity="{DynamicResource IconShadowOpacity}"><TextBlock.Effect><BlurEffect Radius="2"/></TextBlock.Effect><Run Text="The " FontSize="22" Foreground="#C0000000"/><Run Text="Killendar" FontSize="28.6" FontWeight="Bold" Foreground="#C0000000"/></TextBlock>
+                                        <TextBlock FontFamily="{DynamicResource WordmarkFont}" Margin="1,2,0,0" IsHitTestVisible="False"
+                                                   Opacity="{DynamicResource WordmarkAccentShadowOpacity}"><TextBlock.Effect><BlurEffect Radius="3"/></TextBlock.Effect><Run Text="The " FontSize="22" Foreground="Transparent"/><Run Text="Killendar" FontSize="28.6" FontWeight="Bold" Foreground="Black"/></TextBlock>
                                         <TextBlock FontFamily="{DynamicResource WordmarkFont}"><Run Text="The " FontSize="22" Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="28.6" FontWeight="Bold" Foreground="{DynamicResource AccentLogo}"/></TextBlock>
                                     </Grid>
                                     <!-- Tagline split so GPLv3 and the Killer Tools link stay out of
