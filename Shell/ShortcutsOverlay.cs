@@ -28,6 +28,7 @@ namespace Killendar.Shell
         /// <summary>What a binding belongs to. Drives the color of the bar under a key on the
         /// map and the group it lands in on the list. Same five the website map uses.</summary>
         private enum KsCat { View, Nav, Appt, File, Help }
+        private enum KsLayer { Base, Ctrl, Alt, CtrlShift }
 
         /// <summary>
         /// One binding. <paramref name="Caps"/> are the map key ids it should light (the ids in
@@ -39,7 +40,8 @@ namespace Killendar.Shell
             public readonly string Keys = keys;        // how it reads on the list, e.g. "M or 1"
             public readonly string LabelKey = labelKey;    // Str_* resource key
             public readonly KsCat Cat = cat;
-            public readonly bool Ctrl = ctrl;        // lives on the Ctrl layer of the map
+            public KsLayer Layer => Keys.StartsWith("Ctrl+Shift+") ? KsLayer.CtrlShift
+                : Keys.StartsWith("Alt+") ? KsLayer.Alt : ctrl ? KsLayer.Ctrl : KsLayer.Base;
             public readonly string[] Caps = caps;      // map key ids to light
         }
 
@@ -60,9 +62,9 @@ namespace Killendar.Shell
             new("B",        "Str_KS_Panel",    KsCat.Appt, false, "B"),
             new("Ctrl+N",   "Str_KS_New",      KsCat.Appt, true,  "N"),
             new("Ctrl+Enter", "Str_KS_SaveAppt", KsCat.Appt, true, "Enter"),
-            new("Ctrl+Delete", "Str_KS_DeleteAppt", KsCat.Appt, true, "Delete"),
-            new("Alt+A",    "Str_KS_AllDay",   KsCat.Appt, false),
-            new("Alt+R",    "Str_KS_Repeats",  KsCat.Appt, false),
+            new("Ctrl+Delete", "Str_KS_DeleteAppt", KsCat.Appt, true, "Del"),
+            new("Alt+A",    "Str_KS_AllDay",   KsCat.Appt, false, "A"),
+            new("Alt+R",    "Str_KS_Repeats",  KsCat.Appt, false, "R"),
             new("Ctrl+Shift+M", "Str_KS_ShrinkAppt", KsCat.Appt, true, "M"),
 
             new("Ctrl+I",   "Str_KS_Import",   KsCat.File, true,  "I"),
@@ -248,7 +250,7 @@ namespace Killendar.Shell
             KsMapRows.Children.Clear();
             // Which cap ids are lit, and with what, on the layer being shown.
             var lit = new Dictionary<string, KsBinding>();
-            foreach (var b in KsAll.Where(x => x.Ctrl == _ksCtrlLayer))
+            foreach (var b in KsAll.Where(x => x.Layer == _ksLayer))
                 foreach (var cap in b.Caps)
                     lit[cap] = b;
 
@@ -278,18 +280,22 @@ namespace Killendar.Shell
             _kbDetail.SetResourceReference(TextBlock.ForegroundProperty, "PrimaryBrush");
             KsMapRows.Children.Add(_kbDetail);
 
-            KsLayerBase.Tag = _ksCtrlLayer ? null : "on";
-            KsLayerCtrl.Tag = _ksCtrlLayer ? "on" : null;
+            KsLayerBase.Tag = _ksLayer == KsLayer.Base ? "on" : null;
+            KsLayerCtrl.Tag = _ksLayer == KsLayer.Ctrl ? "on" : null;
+            KsLayerAlt.Tag = _ksLayer == KsLayer.Alt ? "on" : null;
+            KsLayerCtrlShift.Tag = _ksLayer == KsLayer.CtrlShift ? "on" : null;
         }
 
         /// <summary>Reads out the hovered key. Rebuilt with the board, so it is re-created on every
         /// layer switch rather than held across one.</summary>
         private TextBlock? _kbDetail;
 
-        private bool _ksCtrlLayer;
+        private KsLayer _ksLayer;
 
-        private void KsLayerBase_Click(object sender, RoutedEventArgs e) { _ksCtrlLayer = false; BuildKeyboardMap(); }
-        private void KsLayerCtrl_Click(object sender, RoutedEventArgs e) { _ksCtrlLayer = true;  BuildKeyboardMap(); }
+        private void KsLayerBase_Click(object sender, RoutedEventArgs e) { _ksLayer = KsLayer.Base; BuildKeyboardMap(); }
+        private void KsLayerCtrl_Click(object sender, RoutedEventArgs e) { _ksLayer = KsLayer.Ctrl; BuildKeyboardMap(); }
+        private void KsLayerAlt_Click(object sender, RoutedEventArgs e) { _ksLayer = KsLayer.Alt; BuildKeyboardMap(); }
+        private void KsLayerCtrlShift_Click(object sender, RoutedEventArgs e) { _ksLayer = KsLayer.CtrlShift; BuildKeyboardMap(); }
 
         /// <summary>
         /// One keycap, built to KillerPDF's geometry exactly - KeyboardMapOverlay.cs BuildKeyboardView
