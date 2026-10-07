@@ -65,4 +65,5 @@
          rasterizes ClearType, so on light surfaces it is dialled back or the label reads blurry. -->
     <DropShadowEffect x:Key="TextStroke"     Color="Black" BlurRadius="3" ShadowDepth="0.8" Direction="270" Opacity="0.7"/>
 
+    <SolidColorBrush x:Key="AccentLogo" Color="#e0d49a"/>
 </ResourceDictionary>

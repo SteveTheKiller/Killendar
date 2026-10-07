@@ -25,6 +25,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Dropdown highlight text uses the right color in Dark/Yellow, Light/Purple and Light/Yellow.
 - 98SE Red is a true maroon again, so it no longer looks like Magenta.
 - Delirium, Ectoplasm and Sepulchre footers match the window background again.
+- Greed and Cyanotic wordmarks use their cream accent again.
 - Added a faint divider with fading ends between the language menu columns.
 - Align shortcut titles, view controls, and online help in one header row.
 - Ctrl+wheel changes picker views and icon sizes.
