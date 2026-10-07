@@ -26,6 +26,8 @@ namespace Killendar.Shell
         // before issuing its own deferred Close(), so Alt+F4, the caption button, the system
         // menu and Application.Shutdown all share the same exit animation without recursion.
         private bool _closeFaded;
+        private WindowState _stateBeforeMinimize = WindowState.Normal;
+        private bool _restoringFromMinimize;
 
         // Grain brush layers in MainWindow.xaml. All optional - Apply skips the ones absent.
         // FlyoutGrainBrush is gone: flyouts share the GrainTileBrush resource through the
@@ -35,6 +37,7 @@ namespace Killendar.Shell
 
         private void MainWindow_SourceInitialized(object? sender, EventArgs e)
         {
+            if (WindowState != WindowState.Minimized) _stateBeforeMinimize = WindowState;
             var hwnd = new WindowInteropHelper(this).Handle;
             HwndSource.FromHwnd(hwnd)?.AddHook(WndProc);
             DwmChrome.SetRoundedCorners(this, rounded: Services.ThemeManager.Current != Services.Theme.SE98
@@ -69,6 +72,22 @@ namespace Killendar.Shell
         protected override void OnStateChanged(EventArgs e)
         {
             base.OnStateChanged(e);
+            if (WindowState == WindowState.Minimized)
+            {
+                _restoringFromMinimize = true;
+            }
+            else
+            {
+                if (_restoringFromMinimize && WindowState == WindowState.Normal &&
+                    _stateBeforeMinimize == WindowState.Maximized)
+                {
+                    _restoringFromMinimize = false;
+                    WindowState = WindowState.Maximized;
+                    return;
+                }
+                _restoringFromMinimize = false;
+                _stateBeforeMinimize = WindowState;
+            }
             // Square the corners when maximized (flush to the screen edges), round when floating.
             DwmChrome.SetRoundedCorners(this, rounded: Services.ThemeManager.Current != Services.Theme.SE98
                                                        && WindowState == WindowState.Normal);

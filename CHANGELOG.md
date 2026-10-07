@@ -23,6 +23,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Fixed
 - Assigned categories are visibly selected, and saving keeps the primary category's color (#16).
 - Opening a Killendar already in the active folder uses the existing file instead of creating a duplicate (#18).
+- A maximized window stays maximized after it is minimized and restored (#17).
 - Light/Yellow uses true yellow for the wordmark, accent lines and radio buttons, with neutral dark text instead of olive brown.
 - Dropdown highlight text uses the right color in Dark/Yellow, Light/Purple and Light/Yellow.
 - 98SE Red is a true maroon again, so it no longer looks like Magenta.
