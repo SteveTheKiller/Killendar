@@ -331,6 +331,7 @@
     <sys:String x:Key="Str_St_WorkWeekOn">Widok tygodnia pokazuje dni robocze (pon.-pt.)</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOff">Widok tygodnia pokazuje cały tydzień</sys:String>
     <sys:String x:Key="Str_Cat_Title">Kategorie</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">Ustaw jako główną</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Kolory tego Killendara. Spotkanie może mieć kilka kategorii; pierwsza określa jego kolor.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Podaj nazwę kategorii.</sys:String>
     <sys:String x:Key="Str_Cat_Exists">Kategoria o tej nazwie już istnieje.</sys:String>

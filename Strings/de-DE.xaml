@@ -332,6 +332,7 @@
     <sys:String x:Key="Str_St_WorkWeekOn">Wochenansicht zeigt die Arbeitswoche (Mo - Fr)</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOff">Wochenansicht zeigt die volle Woche</sys:String>
     <sys:String x:Key="Str_Cat_Title">Kategorien</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">Als Hauptkategorie festlegen</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Farben für diesen Killendar. Ein Termin kann mehrere tragen; die erste färbt ihn.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Geben Sie der Kategorie einen Namen.</sys:String>
     <sys:String x:Key="Str_Cat_Exists">Es gibt bereits eine Kategorie mit diesem Namen.</sys:String>

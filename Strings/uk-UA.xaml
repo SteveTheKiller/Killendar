@@ -404,6 +404,7 @@
     <sys:String x:Key="Str_St_WorkWeekOn">Перегляд тижня показує робочий тиждень (пн - пт)</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOff">Перегляд тижня показує повний тиждень</sys:String>
     <sys:String x:Key="Str_Cat_Title">Категорії</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">Зробити основною</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Кольори для цього Killendar. Зустріч може мати кілька категорій; її колір визначає перша.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Введіть назву категорії.</sys:String>
     <sys:String x:Key="Str_Cat_Exists">Категорія з такою назвою вже існує.</sys:String>

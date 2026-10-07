@@ -332,6 +332,7 @@
     <sys:String x:Key="Str_St_WorkWeekOn">La vue semaine affiche la semaine de travail (lun - ven)</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOff">La vue semaine affiche la semaine complète</sys:String>
     <sys:String x:Key="Str_Cat_Title">Catégories</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">Définir comme catégorie principale</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Couleurs de ce Killendar. Un rendez-vous peut en porter plusieurs ; la première le colore.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Donnez un nom à la catégorie.</sys:String>
     <sys:String x:Key="Str_Cat_Exists">Une catégorie porte déjà ce nom.</sys:String>

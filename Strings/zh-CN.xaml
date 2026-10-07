@@ -332,6 +332,7 @@
     <sys:String x:Key="Str_St_WorkWeekOn">周视图显示工作周 (周一 - 周五)</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOff">周视图显示整周</sys:String>
     <sys:String x:Key="Str_Cat_Title">类别</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">设为主要类别</sys:String>
     <sys:String x:Key="Str_Cat_Hint">这个 Killendar 的颜色。一个约会可以带多个类别，第一个决定它的颜色。</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">请为类别取个名字。</sys:String>
     <sys:String x:Key="Str_Cat_Exists">已有同名的类别。</sys:String>

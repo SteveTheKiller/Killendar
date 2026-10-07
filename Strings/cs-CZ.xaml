@@ -332,6 +332,7 @@
     <sys:String x:Key="Str_St_WorkWeekOn">Zobrazení týdne ukazuje pracovní týden (po - pá)</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOff">Zobrazení týdne ukazuje celý týden</sys:String>
     <sys:String x:Key="Str_Cat_Title">Kategorie</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">Nastavit jako hlavní</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Barvy pro tento Killendar. Schůzka jich může nést více; první ji obarví.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Zadejte název kategorie.</sys:String>
     <sys:String x:Key="Str_Cat_Exists">Kategorie s tímto názvem už existuje.</sys:String>

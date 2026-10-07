@@ -404,6 +404,7 @@
     <sys:String x:Key="Str_St_WorkWeekOn">Week view shows the work week (Mon - Fri)</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOff">Week view shows the full week</sys:String>
     <sys:String x:Key="Str_Cat_Title">Categories</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">Make primary</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Colors for this Killendar. An appointment can carry more than one; the first one colors it.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Give the category a name.</sys:String>
     <sys:String x:Key="Str_Cat_Exists">There is already a category with that name.</sys:String>

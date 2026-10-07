@@ -332,6 +332,7 @@
     <sys:String x:Key="Str_St_WorkWeekOn">週檢視顯示工作週 (週一 - 週五)</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOff">週檢視顯示整週</sys:String>
     <sys:String x:Key="Str_Cat_Title">類別</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">設為主要類別</sys:String>
     <sys:String x:Key="Str_Cat_Hint">這個 Killendar 的顏色。一個約會可以帶多個類別，第一個決定它的顏色。</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">請為類別取個名稱。</sys:String>
     <sys:String x:Key="Str_Cat_Exists">已有同名的類別。</sys:String>

@@ -374,6 +374,7 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_St_WorkWeekOn">Chế độ xem tuần hiển thị tuần làm việc (Thứ Hai đến Thứ Sáu)</sys:String>
   <sys:String x:Key="Str_St_WorkWeekOff">Chế độ xem tuần hiển thị cả tuần</sys:String>
   <sys:String x:Key="Str_Cat_Title">Danh mục</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">Đặt làm danh mục chính</sys:String>
   <sys:String x:Key="Str_Cat_Hint">Màu sắc dành cho Killendar này. Một cuộc hẹn có thể thuộc nhiều danh mục; danh mục đầu tiên quyết định màu của cuộc hẹn.</sys:String>
   <sys:String x:Key="Str_Cat_NeedName">Hãy đặt tên cho danh mục.</sys:String>
   <sys:String x:Key="Str_Cat_Exists">Đã có một danh mục mang tên đó.</sys:String>

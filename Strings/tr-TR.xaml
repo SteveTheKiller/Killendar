@@ -332,6 +332,7 @@
     <sys:String x:Key="Str_St_WorkWeekOn">Hafta görünümü iş haftasını gösterir (Pzt - Cum)</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOff">Hafta görünümü tüm haftayı gösterir</sys:String>
     <sys:String x:Key="Str_Cat_Title">Kategoriler</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">Birincil olarak ayarla</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Bu Killendar için renkler. Bir randevu birden fazla taşıyabilir; ilki onu renklendirir.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Kategoriye bir ad verin.</sys:String>
     <sys:String x:Key="Str_Cat_Exists">Bu adda bir kategori zaten var.</sys:String>

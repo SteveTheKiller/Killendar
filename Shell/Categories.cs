@@ -121,9 +121,17 @@ namespace Killendar.Shell
                 chip.Opacity = 1.0;
                 PaintCategoryChip(chip, name);
             };
-            // Right-click a chip to manage the definitions: left-click assigns, right-click edits
-            // the thing being assigned.
-            chip.MouseRightButtonUp += (_, e) => { e.Handled = true; OpenCategoriesDialog(); };
+            var menu = new ContextMenu();
+            var primary = new MenuItem();
+            primary.SetResourceReference(HeaderedItemsControl.HeaderProperty, "Str_Cat_MakePrimary");
+            primary.Click += (_, _) => BuildCategoryChips(EventStore.WithPrimaryCategory(ReadCategoryChips(), name));
+            menu.Items.Add(primary);
+            menu.Items.Add(new Separator());
+            var manage = new MenuItem();
+            manage.SetResourceReference(HeaderedItemsControl.HeaderProperty, "Str_Cat_Title");
+            manage.Click += (_, _) => OpenCategoriesDialog();
+            menu.Items.Add(manage);
+            chip.ContextMenu = menu;
             return chip;
         }
 

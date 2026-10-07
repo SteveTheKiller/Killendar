@@ -332,6 +332,7 @@
     <sys:String x:Key="Str_St_WorkWeekOn">週表示は平日のみ表示します (月 - 金)</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOff">週表示は週全体を表示します</sys:String>
     <sys:String x:Key="Str_Cat_Title">カテゴリ</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">メインカテゴリに設定</sys:String>
     <sys:String x:Key="Str_Cat_Hint">この Killendar の色です。予定は複数のカテゴリを持つことができ、最初のカテゴリの色が使われます。</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">カテゴリ名を入力してください。</sys:String>
     <sys:String x:Key="Str_Cat_Exists">その名前のカテゴリはすでにあります。</sys:String>

@@ -32,6 +32,17 @@ namespace Killendar.Services
             return string.Join(", ", kept);
         }
 
+        internal static string WithPrimaryCategory(string categories, string primary)
+        {
+            var names = SplitCategories(NormalizeCategories(categories));
+            string name = names.FirstOrDefault(n => string.Equals(n, primary, StringComparison.OrdinalIgnoreCase))
+                          ?? primary.Trim();
+            if (string.IsNullOrWhiteSpace(name)) return NormalizeCategories(categories);
+            names.RemoveAll(n => string.Equals(n, name, StringComparison.OrdinalIgnoreCase));
+            names.Insert(0, name);
+            return string.Join(", ", names);
+        }
+
         /// <summary>Definitions in insertion order, the order the pickers show them in.</summary>
         public List<(string Name, string Color)> ListCategories()
         {

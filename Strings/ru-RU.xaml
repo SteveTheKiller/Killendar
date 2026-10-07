@@ -405,6 +405,7 @@
     <sys:String x:Key="Str_St_WorkWeekOn">Вид недели показывает рабочую неделю (пн - пт)</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOff">Вид недели показывает всю неделю</sys:String>
     <sys:String x:Key="Str_Cat_Title">Категории</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">Сделать основной</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Цвета для этого Killendar. У встречи может быть несколько категорий; цвет задаёт первая.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Дайте категории имя.</sys:String>
     <sys:String x:Key="Str_Cat_Exists">Категория с таким именем уже есть.</sys:String>

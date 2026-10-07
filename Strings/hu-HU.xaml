@@ -406,6 +406,7 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOn">A heti nézet a munkahetet mutatja (hétfőtől péntekig)</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOff">A heti nézet a teljes hetet mutatja</sys:String>
     <sys:String x:Key="Str_Cat_Title">Kategóriák</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">Beállítás elsődlegesként</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Színek ehhez a Killendarhoz. Egy találkozó egynél többet is tartalmazhat; az első színezi.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Adjon nevet a kategóriának.</sys:String>
     <sys:String x:Key="Str_Cat_Exists">Már létezik ilyen nevű kategória.</sys:String>

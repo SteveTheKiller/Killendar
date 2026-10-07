@@ -404,6 +404,7 @@
     <sys:String x:Key="Str_St_WorkWeekOn">Апта көрінісі жұмыс аптасын көрсетеді (дс - жм)</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOff">Апта көрінісі толық аптаны көрсетеді</sys:String>
     <sys:String x:Key="Str_Cat_Title">Санаттар</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">Негізгі санат ету</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Осы Killendar үшін түстер. Бір кездесуде бірнеше санат бола алады; түсті бірінші санат береді.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Санатқа атау беріңіз.</sys:String>
     <sys:String x:Key="Str_Cat_Exists">Мұндай атаумен санат бұрыннан бар.</sys:String>

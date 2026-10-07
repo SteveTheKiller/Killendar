@@ -332,6 +332,7 @@
     <sys:String x:Key="Str_St_WorkWeekOn">সপ্তাহ ভিউ কর্মসপ্তাহ দেখায় (সোম - শুক্র)</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOff">সপ্তাহ ভিউ পুরো সপ্তাহ দেখায়</sys:String>
     <sys:String x:Key="Str_Cat_Title">বিভাগ</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">প্রধান বিভাগ করুন</sys:String>
     <sys:String x:Key="Str_Cat_Hint">এই Killendar-এর রং। একটি অ্যাপয়েন্টমেন্ট একাধিক বিভাগ নিতে পারে; প্রথমটি তার রং ঠিক করে।</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">বিভাগের একটি নাম দিন।</sys:String>
     <sys:String x:Key="Str_Cat_Exists">এই নামে একটি বিভাগ আগে থেকেই আছে।</sys:String>

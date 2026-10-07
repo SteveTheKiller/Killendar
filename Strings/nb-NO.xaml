@@ -404,6 +404,7 @@
     <sys:String x:Key="Str_St_WorkWeekOn">Ukevisningen viser arbeidsuken (man - fre)</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOff">Ukevisningen viser hele uken</sys:String>
     <sys:String x:Key="Str_Cat_Title">Kategorier</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">Angi som hovedkategori</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Farger for denne Killendar-filen. En avtale kan ha mer enn én; den første gir den farge.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Gi kategorien et navn.</sys:String>
     <sys:String x:Key="Str_Cat_Exists">Det finnes allerede en kategori med dette navnet.</sys:String>

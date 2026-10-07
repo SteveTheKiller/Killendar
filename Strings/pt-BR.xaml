@@ -404,6 +404,7 @@
     <sys:String x:Key="Str_St_WorkWeekOn">A visualização de semana mostra a semana útil (seg - sex)</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOff">A visualização de semana mostra a semana inteira</sys:String>
     <sys:String x:Key="Str_Cat_Title">Categorias</sys:String>
+    <sys:String x:Key="Str_Cat_MakePrimary">Definir como principal</sys:String>
     <sys:String x:Key="Str_Cat_Hint">Cores deste Killendar. Um compromisso pode ter mais de uma; a primeira define a cor dele.</sys:String>
     <sys:String x:Key="Str_Cat_NeedName">Dê um nome à categoria.</sys:String>
     <sys:String x:Key="Str_Cat_Exists">Já existe uma categoria com esse nome.</sys:String>
