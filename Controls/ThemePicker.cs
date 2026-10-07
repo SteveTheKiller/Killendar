@@ -173,11 +173,12 @@ namespace Killendar.Controls
                     Height = double.NaN,
                     VerticalAlignment = VerticalAlignment.Stretch,
                     Margin = new Thickness(0, 0, 0, i == colors.Length - 1 ? 0 : 8),
-                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(hex)),
-                    Effect = accent == Accent.Yellow && (family is Theme.Light or Theme.SE98)
-                        ? new System.Windows.Media.Effects.DropShadowEffect { Color = Colors.Black, BlurRadius = 4, ShadowDepth = 1, Opacity = 0.45 }
-                        : null,
+                    Background = AccentStripBrush(family, accent, hex),
+                    RenderTransformOrigin = new Point(0.5, 0.5),
+                    RenderTransform = new ScaleTransform(),
                 };
+                dot.MouseEnter += (_, _) => RingAccentStrip(family);
+                dot.MouseLeave += (_, _) => RingAccentStrip(family);
                 if (ThemeManager.AccentChoiceFor(family) == accent)
                     dot.BorderBrush = Application.Current.TryFindResource("TextBrush") as Brush;
                 dot.MouseLeftButtonUp += (_, _) =>
@@ -195,12 +196,54 @@ namespace Killendar.Controls
             return host;
         }
 
+        // Each pill shows its accent the way a selection does: the palette's own SelectionBg
+        // gradient, read from that accent's theme file. 98SE keeps its flat Win98 swatches.
+        private static readonly Dictionary<(Theme, Accent), Brush> AccentStripBrushes = new();
+
+        private static Brush AccentStripBrush(Theme family, Accent accent, string flatHex)
+        {
+            if (AccentStripBrushes.TryGetValue((family, accent), out var cached)) return cached;
+            Brush brush;
+            if (family == Theme.SE98)
+                brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(flatHex));
+            else
+            {
+                string path = accent == Accent.Green
+                    ? $"Themes/{family}.xaml"
+                    : $"Themes/Accents/{family}/{accent}.xaml";
+                var palette = new ResourceDictionary
+                {
+                    Source = new Uri($"/Killendar;component/{path}", UriKind.Relative)
+                };
+                brush = ((Brush)palette["SelectionBg"]).CloneCurrentValue();
+            }
+            brush.Freeze();
+            AccentStripBrushes[(family, accent)] = brush;
+            return brush;
+        }
+
+        // The ring marks the chosen accent and follows the mouse, and the pill under the mouse
+        // lifts a little (KillerNotes). 98SE swatches stay flat.
         private void RingAccentStrip(Theme family)
         {
             var selected = ThemeManager.AccentChoiceFor(family);
             Brush? ring = Application.Current.TryFindResource("TextBrush") as Brush;
             foreach (Border dot in _accentDots)
-                dot.BorderBrush = dot.Tag is Accent accent && accent == selected ? ring : Brushes.Transparent;
+            {
+                dot.BorderBrush = dot.IsMouseOver || (dot.Tag is Accent accent && accent == selected) ? ring : Brushes.Transparent;
+                bool pop = dot.IsMouseOver && family != Theme.SE98;
+                if (dot.RenderTransform is ScaleTransform scale)
+                {
+                    scale.BeginAnimation(ScaleTransform.ScaleXProperty,
+                        new DoubleAnimation(pop ? 1.06 : 1, TimeSpan.FromMilliseconds(100)));
+                    scale.BeginAnimation(ScaleTransform.ScaleYProperty,
+                        new DoubleAnimation(pop ? 1.03 : 1, TimeSpan.FromMilliseconds(100)));
+                }
+                dot.Effect = pop
+                    ? new System.Windows.Media.Effects.DropShadowEffect
+                    { Color = Colors.Black, BlurRadius = 4, ShadowDepth = 1, Opacity = 0.25 }
+                    : null;
+            }
         }
 
         /// <summary>Hide the synchronous DynamicResource repaint beneath a snapshot and reveal

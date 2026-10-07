@@ -95,7 +95,7 @@
     <!-- Primary Button (filled accent) -->
     <Style x:Key="PrimaryButton" TargetType="Button">
         <Setter Property="AutomationProperties.Name" Value="{Binding RelativeSource={RelativeSource Self}, Path=ToolTip}"/>
-        <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource PrimaryFillBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="Normal"/>
@@ -163,7 +163,7 @@
                     <ControlTemplate.Triggers>
                         <!-- Order matters: IsPressed must come after IsMouseOver to win. -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource OutlineBtnBrush}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource OutlineHoverFillBrush}"/>
                             <Setter Property="Foreground" Value="{DynamicResource OutlineHoverTextBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
@@ -283,7 +283,7 @@
                         </Trigger>
                         <!-- After IsMouseOver so hovering a checked chip does not undo the fill. -->
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource PrimaryFillBrush}"/>
                             <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
                             <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
                         </Trigger>

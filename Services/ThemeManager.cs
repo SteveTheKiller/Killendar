@@ -102,6 +102,21 @@ namespace Killendar.Services
             }
         }
 
+        // Filled buttons and the outline button's hover fill carry the family's soft vertical
+        // gradient (the KillerNotes treatment): 12% lighter at the top, 16% darker at the bottom.
+        // 98SE, and any value that is already a gradient, stay exactly as they are.
+        private static object ButtonFill(object brush, bool flat)
+        {
+            if (flat || brush is not System.Windows.Media.SolidColorBrush solid) return brush;
+            var c = solid.Color;
+            var top = System.Windows.Media.Color.FromArgb(c.A, (byte)(c.R + (255 - c.R) * 0.12),
+                (byte)(c.G + (255 - c.G) * 0.12), (byte)(c.B + (255 - c.B) * 0.12));
+            var bottom = System.Windows.Media.Color.FromArgb(c.A, (byte)(c.R * 0.84), (byte)(c.G * 0.84), (byte)(c.B * 0.84));
+            var gradient = new System.Windows.Media.LinearGradientBrush(top, bottom, 90);
+            gradient.Freeze();
+            return gradient;
+        }
+
         private static void LoadDict(Theme theme)
         {
             var uri = theme == Theme.SE98
@@ -191,6 +206,8 @@ namespace Killendar.Services
             // About and Keyboard Shortcuts are window surfaces. Resolve this after accent merging
             // so the exact BackgroundBrush object (including gradients) is retained.
             newDict["OverlayWindowBrush"] = newDict["BackgroundBrush"];
+            newDict["PrimaryFillBrush"] = ButtonFill(newDict["PrimaryBrush"], theme == Theme.SE98);
+            newDict["OutlineHoverFillBrush"] = ButtonFill(newDict["OutlineBtnBrush"], theme == Theme.SE98);
             Publish(newDict);
         }
 

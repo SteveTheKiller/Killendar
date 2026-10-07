@@ -15,6 +15,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Added a silent uninstall, `/uninstall-silent`, registered as the quiet uninstall so WinGet and other package managers can remove Killendar without a prompt.
 
 ### Changed
+- Filled buttons, hovered outline buttons, checked chips and accent picker pills use gradients outside 98SE, and accent swatches lift on hover.
 - Menu rows now show accent text and icons on the theme's hover color.
 - The two-column language menu now has room for all 19 languages.
 - Improved menu and selection contrast, softened material-theme footers and 98SE footer text, matched the 98SE About bevel to the sidebar, and used subtle gray Delirium dividers.
