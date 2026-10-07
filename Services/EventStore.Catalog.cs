@@ -64,20 +64,35 @@ namespace Killendar.Services
             File.Delete(Path.Combine(DataDir, name));
         }
 
-        /// <summary>Copies a .kcal from anywhere into the data folder, uniquifying the name, and
-        /// returns the name it landed under. Import rather than open-in-place: a Killendar is
-        /// written to constantly, and silently writing into someone's Downloads folder or a network
-        /// share is not what "Load" should mean.</summary>
+        /// <summary>Uses an existing .kcal in the data folder or copies an external one into it.
+        /// External files are copied because a live Killendar must not write into a Downloads folder
+        /// or network share.</summary>
         public static string ImportKillendar(string sourcePath)
+            => ImportKillendarInto(sourcePath, DataDir);
+
+        internal static bool IsInDataDir(string path) =>
+            SameDirectory(Path.GetDirectoryName(Path.GetFullPath(path))!, DataDir);
+
+        internal static string ImportKillendarInto(string sourcePath, string dataDir)
         {
-            Directory.CreateDirectory(DataDir);
-            string stem = Path.GetFileNameWithoutExtension(sourcePath);
+            Directory.CreateDirectory(dataDir);
+            string source = Path.GetFullPath(sourcePath);
+            if (!File.Exists(source)) throw new FileNotFoundException("Killendar file not found.", source);
+            if (SameDirectory(Path.GetDirectoryName(source)!, dataDir))
+                return Path.GetFileName(source);
+
+            string stem = Path.GetFileNameWithoutExtension(source);
             if (string.IsNullOrWhiteSpace(stem)) stem = "Imported";
             string name = stem + Extension;
-            for (int i = 2; File.Exists(Path.Combine(DataDir, name)); i++)
+            for (int i = 2; File.Exists(Path.Combine(dataDir, name)); i++)
                 name = stem + "-" + i + Extension;
-            File.Copy(sourcePath, Path.Combine(DataDir, name));
+            File.Copy(source, Path.Combine(dataDir, name));
             return name;
         }
+
+        private static bool SameDirectory(string left, string right) =>
+            string.Equals(Path.GetFullPath(left).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar),
+                          Path.GetFullPath(right).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar),
+                          StringComparison.OrdinalIgnoreCase);
     }
 }

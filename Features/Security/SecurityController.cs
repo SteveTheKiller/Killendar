@@ -182,8 +182,8 @@ namespace Killendar.Features
                             ?? string.Format(_host.Loc("Str_Status_Opened"), _store.DisplayName));
         }
 
-        /// <summary>Adopts an external .kcal: copies it into the data folder, switches to the copy
-        /// and opens it, falling back to what was open before if that is canceled or fails.
+        /// <summary>Opens a .kcal in the data folder or copies an external one there first,
+        /// falling back to what was open before if the switch is canceled or fails.
         /// Returns the status text to show.</summary>
         internal string AdoptFile(string path)
         {
@@ -226,15 +226,12 @@ namespace Killendar.Features
             }
         }
 
-        /// <summary>Adopts a double-clicked .kcal once a Killendar is open, asking first.
+        /// <summary>Adopts a double-clicked .kcal once a Killendar is open.
         ///
-        /// It COPIES the file into the data folder and switches to the copy rather than opening it
-        /// where it sits. A Killendar is written to constantly, and SQLite over SMB is a well-known
-        /// way to corrupt a database, so silently making someone's network share or Downloads folder
-        /// the live store is not what a double-click should mean.
+        /// A file already in the data folder opens directly. An external file is copied there
+        /// because a live Killendar must not write into Downloads or a network share.
         ///
-        /// The confirm is not ceremony: the copy changes which Killendar is open, and doing that
-        /// without asking would surprise anyone who only wanted a look at the file.</summary>
+        /// Confirm before copying an external file and changing the open Killendar.</summary>
         internal void AdoptPendingFile()
         {
             string? path = App.PendingOpenFile;
@@ -246,13 +243,16 @@ namespace Killendar.Features
                               StringComparison.OrdinalIgnoreCase))
                 return;
 
-            var confirm = new ConfirmDialog(
-                string.Format(_host.Loc("Str_Kc_AddHead"), Path.GetFileName(path)),
-                _host.Loc("Str_Kc_AddBody"),
-                _host.Loc("Str_Btn_Add"),
-                _host.Loc("Str_Btn_Cancel")) { Owner = _host.Window };
-            confirm.ShowDialog();
-            if (!confirm.Confirmed) return;
+            if (!EventStore.IsInDataDir(path))
+            {
+                var confirm = new ConfirmDialog(
+                    string.Format(_host.Loc("Str_Kc_AddHead"), Path.GetFileName(path)),
+                    _host.Loc("Str_Kc_AddBody"),
+                    _host.Loc("Str_Btn_Add"),
+                    _host.Loc("Str_Btn_Cancel")) { Owner = _host.Window };
+                confirm.ShowDialog();
+                if (!confirm.Confirmed) return;
+            }
 
             string status = AdoptFile(path);
             _host.RefreshView();
