@@ -6,9 +6,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ## [1.2.1] - Unreleased
 
-### Fixed
-- Menus open immediately and retain their existing closing fades.
-
 ## [1.2.0] - 2026-10-07
 
 ### Added
