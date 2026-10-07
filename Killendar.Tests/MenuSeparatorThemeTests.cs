@@ -24,7 +24,7 @@ namespace Killendar.Tests
         }
 
         [Fact]
-        public void OnlyDeliriumOverridesTheMenuSeparatorBrush()
+        public void EveryThemeDefinesTheMenuSeparatorBrush()
         {
             XNamespace x = "http://schemas.microsoft.com/winfx/2006/xaml";
             string[] themes = Directory.GetFiles(Path.Combine(FindRepositoryRoot(), "Themes"), "*.xaml");
@@ -34,10 +34,9 @@ namespace Killendar.Tests
                 var document = XDocument.Load(path);
                 var brushes = document.Descendants().Where(element =>
                     (string?)element.Attribute(x + "Key") == "MenuSeparatorBrush").ToList();
+                var brush = Assert.Single(brushes);
                 if (Path.GetFileName(path) == "Delirium.xaml")
-                    Assert.Equal("#666666", (string?)Assert.Single(brushes).Attribute("Color"));
-                else
-                    Assert.Empty(brushes);
+                    Assert.Equal("#666666", (string?)brush.Attribute("Color"));
             }
         }
 
