@@ -4,45 +4,46 @@ All notable changes to Killendar are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.2.0] - Unreleased
+## [1.2.0] - 2026-10-07
 
 ### Added
-- Link both shortcut views to the online guide and how-to, with more space beside the close button.
-- Added yellow and magenta accents to the neutral and 98SE themes.
+- Added a silent uninstall, `/uninstall-silent`, registered as the quiet uninstall so WinGet and other package managers can remove Killendar without a prompt.
 - Ukrainian localization.
 - Norwegian (Bokmål) localization.
 - Brazilian Portuguese localization.
-- Added a silent uninstall, `/uninstall-silent`, registered as the quiet uninstall so WinGet and other package managers can remove Killendar without a prompt.
+- Added yellow and magenta accents to the neutral and 98SE themes.
+- Link both shortcut views to the online guide and how-to, with more space beside the close button.
 
 ### Changed
+- Improved menu and selection contrast, softened material-theme footers and 98SE footer text, matched the 98SE About bevel to the sidebar, and used subtle gray Delirium dividers.
+- The two-column language menu now has room for all 19 languages.
 - Filled buttons, hovered outline buttons, checked chips and accent picker pills use gradients outside 98SE, and accent swatches lift on hover.
 - Menu rows now show accent text and icons on the theme's hover color.
-- The two-column language menu now has room for all 19 languages.
-- Improved menu and selection contrast, softened material-theme footers and 98SE footer text, matched the 98SE About bevel to the sidebar, and used subtle gray Delirium dividers.
 
 ### Fixed
-- Assigned categories are visibly selected, retain their primary color, and offer Make primary without clearing other selections (#16).
 - Opening a Killendar already in the active folder uses the existing file instead of creating a duplicate (#18).
+- Opening an iCalendar file with Killendar now imports its events, and Killendar appears in the Windows Open with list for `.ics` files.
+- Assigned categories are visibly selected, retain their primary color, and offer Make primary without clearing other selections (#16).
 - A maximized window stays maximized after it is minimized and restored (#17).
+- Pinned places in the file picker can be dragged into a new order.
+- Ctrl+wheel changes picker views and icon sizes.
 - App and website keyboard maps show appointment actions on separate Ctrl, Alt and Ctrl+Shift layers.
-- Light/Yellow uses true yellow for the wordmark, accent lines and radio buttons, with neutral dark text instead of olive brown.
+- The uninstaller has its own taskbar button, labeled "Uninstall Killendar", with the app icon.
+- 98SE forms use gray panels, distinct white fields and recessed borders, with clearer dropdown arrows and readable highlights.
+- Shared theme colors, control states, title styling and shadows match the family palette, including cream Blood, Greed and Cyanotic wordmarks. Rail flyouts sit 8 pixels from the rail and bottom content edges.
 - Dropdown highlight text uses the right color in Dark/Yellow, Light/Purple and Light/Yellow.
+- Selected language and theme rows keep the active accent on hover.
+- Fixed picker and dialog borders, including square color picker corners in 98SE.
+- Appointments show an open hand on hover and a closed hand while they are dragged, and so does the color picker's title.
+- Align shortcut titles, view controls, and online help in one header row.
+- Light/Yellow uses true yellow for the wordmark, accent lines and radio buttons, with neutral dark text instead of olive brown. Only the yellow wordmark accent has a shadow.
 - 98SE Red is a true maroon again, so it no longer looks like Magenta.
 - Delirium, Ectoplasm and Sepulchre footers match the window background again.
-- Shared theme colors, control states, title styling and shadows match the family palette, including cream Blood, Greed and Cyanotic wordmarks.
-- Added a faint divider with fading ends between the language menu columns.
-- Align shortcut titles, view controls, and online help in one header row.
-- Ctrl+wheel changes picker views and icon sizes.
-- Fixed picker and dialog borders, including square color picker corners in 98SE.
 - The theme picker's divider updates when switching themes.
-- Opening an iCalendar file with Killendar now imports its events, and Killendar appears in the Windows Open with list for `.ics` files.
-- Install and uninstall windows now show the film grain and the app icon in the title bar.
-- The uninstaller has its own taskbar button, labeled "Uninstall Killendar", with the app icon.
-- Appointments show an open hand on hover and a closed hand while they are dragged, and so does the color picker's title.
-- Pinned places in the file picker can be dragged into a new order.
 - The portable footer button reads PORTABLE, like KillerPDF and KillerScan, and its tooltip offers the install.
-- Selected language and theme rows keep the active accent on hover.
+- Install and uninstall windows now show the film grain and the app icon in the title bar.
 - Main window and dialog title bar icons now use sharp size-matched images.
+- Added a faint divider with fading ends between the language menu columns.
 
 ## [1.1.4] - 2026-09-28
 
