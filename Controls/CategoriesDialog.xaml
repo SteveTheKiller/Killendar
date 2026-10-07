@@ -53,7 +53,7 @@
                                 <StackPanel.Effect><BlurEffect Radius="3"/></StackPanel.Effect>
                                 <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15"><Run Text="The " Foreground="#D8000000"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="#D8000000"/><Run Text="  "/><Run Text="{DynamicResource Str_Cat_Title}"/></TextBlock>
                             </StackPanel>
-                            <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15"><Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}"/><Run Text="  "/><Run Text="{DynamicResource Str_Cat_Title}" Foreground="{DynamicResource MutedTextBrush}"/></TextBlock>
+                            <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15"><Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="{DynamicResource AccentLogo}"/><Run Text="  "/><Run Text="{DynamicResource Str_Cat_Title}" Foreground="{DynamicResource MutedTextBrush}"/></TextBlock>
                         </Grid>
                         <TextBlock Text="{DynamicResource Str_Cat_Title}" Visibility="{DynamicResource PlainTitleVisibility}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"

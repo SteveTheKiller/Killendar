@@ -81,7 +81,7 @@
                             <Run Text="The " Foreground="#D8000000"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="#D8000000"/>
                         </TextBlock>
                         <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="15">
-                            <Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}"/>
+                            <Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run Text="Killendar" FontSize="19.5" FontWeight="Bold" Foreground="{DynamicResource AccentLogo}"/>
                         </TextBlock>
                     </Grid>
                     <TextBlock Text="Killendar" Visibility="{DynamicResource PlainTitleVisibility}"

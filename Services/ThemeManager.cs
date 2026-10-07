@@ -223,6 +223,7 @@ namespace Killendar.Services
             }
 
             Alias("FooterBackgroundBrush", "BackgroundBrush");
+            Alias("AccentLogo", "PrimaryBrush");   // wordmark bold run; Light/Yellow states its own
             Alias("ChipBrush", "RowHoverBrush");
             Alias("SurfaceHoverBrush", "RowHoverBrush");
             // The keyboard map's key caps. 98SE names its own, white rather than button-face gray.
