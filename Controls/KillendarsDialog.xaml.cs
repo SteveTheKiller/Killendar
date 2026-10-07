@@ -82,9 +82,8 @@ namespace Killendar.Controls
             DlgStatus.Text = EventStore.DataDir;
         }
 
-        // A selected row fills with the accent (RowSelectedBrush); force white text so name and
-        // meta stay readable - in the Light accents the fill and the accent text are the same hue,
-        // which leaves a selected row unreadable without this. Unselected:
+        // Selected rows use the SelectionBg/SelectionFg pair, matching the picker rows.
+        // Keep both labels fully opaque so the selected fill and text retain their contrast. Unselected:
         // the active Killendar's name in the accent, the rest normal. SetResourceReference rather
         // than a cached brush, so the colors follow a theme switch.
         private static void SetRowColors(TextBlock name, TextBlock meta, bool active, bool selected)
@@ -93,7 +92,7 @@ namespace Killendar.Controls
             {
                 name.SetResourceReference(TextBlock.ForegroundProperty, "SelectionFg");
                 meta.SetResourceReference(TextBlock.ForegroundProperty, "SelectionFg");
-                meta.Opacity = 0.78;
+                meta.Opacity = 1;
             }
             else
             {

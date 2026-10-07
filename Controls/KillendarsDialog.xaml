@@ -121,7 +121,7 @@
                                                         <Setter TargetName="bg" Property="Background" Value="{DynamicResource RowHoverBrush}"/>
                                                     </Trigger>
                                                     <Trigger Property="IsSelected" Value="True">
-                                                        <Setter TargetName="bg" Property="Background" Value="{DynamicResource RowSelectedBrush}"/>
+                                                        <Setter TargetName="bg" Property="Background" Value="{DynamicResource SelectionBg}"/>
                                                     </Trigger>
                                                 </ControlTemplate.Triggers>
                                             </ControlTemplate>
