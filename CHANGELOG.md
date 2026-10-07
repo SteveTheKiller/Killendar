@@ -21,6 +21,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Improved menu and selection contrast, softened material-theme footers and 98SE footer text, matched the 98SE About bevel to the sidebar, and used subtle gray Delirium dividers.
 
 ### Fixed
+- Assigned categories are visibly selected, and saving keeps the primary category's color (#16).
 - Opening a Killendar already in the active folder uses the existing file instead of creating a duplicate (#18).
 - Light/Yellow uses true yellow for the wordmark, accent lines and radio buttons, with neutral dark text instead of olive brown.
 - Dropdown highlight text uses the right color in Dark/Yellow, Light/Purple and Light/Yellow.

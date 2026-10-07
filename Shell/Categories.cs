@@ -23,6 +23,7 @@ namespace Killendar.Shell
     {
         private readonly HashSet<string> _selectedCategories =
             new(System.StringComparer.OrdinalIgnoreCase);
+        private readonly List<string> _categoryOrder = [];
 
         // ---- Manage dialog ----
 
@@ -47,7 +48,9 @@ namespace Killendar.Shell
         private void BuildCategoryChips(string assigned)
         {
             _selectedCategories.Clear();
-            foreach (string name in EventStore.SplitCategories(assigned)) _selectedCategories.Add(name);
+            _categoryOrder.Clear();
+            foreach (string name in EventStore.SplitCategories(assigned))
+                if (_selectedCategories.Add(name)) _categoryOrder.Add(name);
 
             FieldCategories.Children.Clear();
             var defined = CategoryManager.Order;
@@ -56,7 +59,7 @@ namespace Killendar.Shell
             // appointment and saving it does not silently strip categories this Killendar has
             // never heard of. CategoryManager paints those in the orphan gray.
             var names = defined.Select(d => d.Name).ToList();
-            foreach (string name in _selectedCategories)
+            foreach (string name in _categoryOrder)
                 if (!names.Any(n => string.Equals(n, name, System.StringComparison.OrdinalIgnoreCase)))
                     names.Add(name);
 
@@ -81,11 +84,8 @@ namespace Killendar.Shell
             OpenCategoriesDialog();
         }
 
-        /// <summary>The assignment string the editor stores: definition order, orphans last.</summary>
-        private string ReadCategoryChips() =>
-            string.Join(", ", FieldCategories.Children.OfType<Border>()
-                .Where(b => b.Tag is string s && _selectedCategories.Contains(s))
-                .Select(b => (string)b.Tag!));
+        /// <summary>Preserves assignment order because the first category colors the appointment.</summary>
+        private string ReadCategoryChips() => string.Join(", ", _categoryOrder);
 
         private Border CategoryChipButton(string name)
         {
@@ -102,13 +102,16 @@ namespace Killendar.Shell
             PaintCategoryChip(chip, name);
             chip.MouseLeftButtonUp += (_, _) =>
             {
-                if (!_selectedCategories.Remove(name)) _selectedCategories.Add(name);
-                PaintCategoryChip(chip, name);
+                if (_selectedCategories.Remove(name))
+                    _categoryOrder.RemoveAll(n => string.Equals(n, name, System.StringComparison.OrdinalIgnoreCase));
+                else
+                {
+                    _selectedCategories.Add(name);
+                    _categoryOrder.Add(name);
+                }
+                RefreshCategoryChips();
             };
-            // Hover (2026-07-31): an unselected chip washes in a faint tint of its own
-            // color - a preview of the fill a click would apply - and its text brightens; a
-            // selected one dims, the same 0.82 the calendar chips use. Leave repaints from
-            // state, which also resets the dim.
+            // Hover dims a chip briefly; repaint from its selection state when the pointer leaves.
             chip.MouseEnter += (_, _) =>
             {
                 chip.Opacity = 0.82;
@@ -124,6 +127,12 @@ namespace Killendar.Shell
             return chip;
         }
 
+        private void RefreshCategoryChips()
+        {
+            foreach (Border chip in FieldCategories.Children.OfType<Border>())
+                PaintCategoryChip(chip, (string)chip.Tag);
+        }
+
         // Selected reads as the category filled solid; unselected as its outline only, so the
         // color is visible either way and the state is unambiguous at a glance.
         private void PaintCategoryChip(Border chip, string name)
@@ -133,13 +142,18 @@ namespace Killendar.Shell
             bool on   = _selectedCategories.Contains(name);
             var text  = (TextBlock)chip.Child;
 
-            chip.BorderBrush = fill;
-            chip.Background = fill;
-            text.Foreground = CategoryManager.ForegroundFor(color);
+            bool primary = on && _categoryOrder.Count > 0 &&
+                string.Equals(_categoryOrder[0], name, System.StringComparison.OrdinalIgnoreCase);
+            chip.BorderBrush = primary ? CategoryManager.ForegroundFor(color) : fill;
+            chip.Background = on ? fill : Brushes.Transparent;
+            if (on) text.Foreground = CategoryManager.ForegroundFor(color);
+            else text.SetResourceReference(TextBlock.ForegroundProperty, "TextBrush");
+            text.FontWeight = primary ? FontWeights.Bold : FontWeights.Normal;
             if (on)
             {
-                chip.BorderThickness = new Thickness(2);
-                chip.Padding = new Thickness(6, 1, 6, 1);
+                chip.BorderThickness = new Thickness(primary ? 2 : 1);
+                chip.Padding = new Thickness(primary ? 6 : 7, primary ? 1 : 2,
+                                             primary ? 6 : 7, primary ? 1 : 2);
             }
             else
             {
