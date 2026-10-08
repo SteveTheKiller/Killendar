@@ -8,6 +8,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Fixed
 - Rail right-click menus align 8 pixels from the side and bottom content edges.
+- Submenus attach consistently to their opening rows, with native direction and screen-edge placement.
 
 ## [1.2.0] - 2026-10-07
 

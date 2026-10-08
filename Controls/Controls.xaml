@@ -616,11 +616,12 @@
                                        VerticalAlignment="Center" Margin="12,0,0,0"
                                        Visibility="Collapsed"/>
 
-                            <Popup x:Name="SubPopup" AllowsTransparency="True" Placement="Right"
-                                   HorizontalOffset="-20" VerticalOffset="-12" Focusable="False" PopupAnimation="Fade"
+                            <Popup x:Name="PART_Popup" AllowsTransparency="True" Placement="Right"
+                                   PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                   HorizontalOffset="-2" VerticalOffset="-3" Focusable="False" PopupAnimation="Fade"
                                    IsOpen="{TemplateBinding IsSubmenuOpen}">
-                                <!-- Halo sized to the 22/4 shadow, same as FlyoutCard; the offsets
-                                     above carry the -16,-12 compensation on top of the -4 gap. -->
+                                <!-- WPF places the child render bounds, so the shadow halo does not
+                                      need extra offsets. Keep native row-relative placement. -->
                                 <Grid Margin="22,18,22,26">
                                     <Border Background="{DynamicResource MenuBackgroundBrush}" CornerRadius="{DynamicResource FlyoutCornerRadius}"
                                             IsHitTestVisible="False">
