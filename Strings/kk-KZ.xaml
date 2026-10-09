@@ -44,6 +44,7 @@
     <sys:String x:Key="Str_Theme_Sepulchre">Кесене</sys:String>
     <sys:String x:Key="Str_Theme_Delirium">Сандырақ</sys:String>
     <sys:String x:Key="Str_Theme_Mourning">Аза</sys:String>
+    <sys:String x:Key="Str_Theme_FilmGrain">Пленка түйіршігі</sys:String>
 
     <!-- Appointment sidebar -->
     <sys:String x:Key="Str_Side_New">Жаңа кездесу</sys:String>

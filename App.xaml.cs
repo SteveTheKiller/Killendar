@@ -168,6 +168,7 @@ namespace Killendar
             // Restores the saved theme before the window is built, so there is no flash of the
             // default palette. With nothing saved this lands on Dark + Red.
             Services.ThemeManager.Initialize();
+            Services.FilmGrain.Initialize();   // the Film Grain choice, which outranks the theme
 
             // Capture the regional week start before the selected interface locale changes the
             // process culture used for generated month and weekday names.

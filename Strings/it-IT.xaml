@@ -39,6 +39,7 @@
     <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
     <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
     <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_FilmGrain">Grana pellicola</sys:String>
 
     <sys:String x:Key="Str_Side_New">Nuovo appuntamento</sys:String>
     <sys:String x:Key="Str_Side_Edit">Modifica appuntamento</sys:String>

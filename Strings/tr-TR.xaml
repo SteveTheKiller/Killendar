@@ -372,6 +372,7 @@
     <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
     <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
     <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_FilmGrain">Film greni</sys:String>
     <sys:String x:Key="Str_Btn_Select">Seç</sys:String>
     <sys:String x:Key="Str_TT_DataFolder">Veritabanlarının saklandığı veri klasörünü değiştir</sys:String>
     <sys:String x:Key="Str_Fld_From">BAŞLANGIÇ</sys:String>

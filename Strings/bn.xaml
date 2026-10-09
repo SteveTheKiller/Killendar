@@ -372,6 +372,7 @@
     <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
     <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
     <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_FilmGrain">ফিল্ম গ্রেইন</sys:String>
     <sys:String x:Key="Str_Btn_Select">নির্বাচন করুন</sys:String>
     <sys:String x:Key="Str_TT_DataFolder">ডেটাবেস যেখানে রাখা হয় সেই ডেটা ফোল্ডার বদলান</sys:String>
     <sys:String x:Key="Str_Fld_From">থেকে</sys:String>

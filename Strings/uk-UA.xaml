@@ -44,6 +44,7 @@
     <sys:String x:Key="Str_Theme_Sepulchre">Гробниця</sys:String>
     <sys:String x:Key="Str_Theme_Delirium">Марення</sys:String>
     <sys:String x:Key="Str_Theme_Mourning">Жалоба</sys:String>
+    <sys:String x:Key="Str_Theme_FilmGrain">Зернистість плівки</sys:String>
 
     <!-- Appointment sidebar -->
     <sys:String x:Key="Str_Side_New">Нова зустріч</sys:String>

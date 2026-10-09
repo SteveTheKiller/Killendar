@@ -372,6 +372,7 @@
     <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
     <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
     <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_FilmGrain">Grain de film</sys:String>
     <sys:String x:Key="Str_Btn_Select">Sélectionner</sys:String>
     <sys:String x:Key="Str_TT_DataFolder">Changer le dossier de données où sont stockées les bases de données</sys:String>
     <sys:String x:Key="Str_Fld_From">DE</sys:String>

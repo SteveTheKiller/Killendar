@@ -372,6 +372,7 @@
     <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
     <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
     <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_FilmGrain">底片顆粒</sys:String>
     <sys:String x:Key="Str_Btn_Select">選擇</sys:String>
     <sys:String x:Key="Str_TT_DataFolder">變更儲存資料庫的資料夾</sys:String>
     <sys:String x:Key="Str_Fld_From">從</sys:String>

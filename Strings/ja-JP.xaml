@@ -372,6 +372,7 @@
     <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
     <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
     <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_FilmGrain">フィルムグレイン</sys:String>
     <sys:String x:Key="Str_Btn_Select">選択</sys:String>
     <sys:String x:Key="Str_TT_DataFolder">データベースを保存するデータ フォルダーを変更</sys:String>
     <sys:String x:Key="Str_Fld_From">開始</sys:String>

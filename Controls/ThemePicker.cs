@@ -118,6 +118,45 @@ namespace Killendar.Controls
                 }
             }
 
+            // Film Grain: one switch for the grain texture on every surface (Services/FilmGrain.cs).
+            // Its own row under both columns, so the accent strip still runs the height of the
+            // theme list only.
+            panel.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            panel.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            var grainRow = new StackPanel();
+            Grid.SetRow(grainRow, 1);
+            Grid.SetColumnSpan(grainRow, 2);
+            var grainDivider = new Border
+            {
+                Height = 1,
+                Margin = new Thickness(0, 0, 9, 8),
+                Opacity = 0.18,
+                IsHitTestVisible = false,
+                OpacityMask = new LinearGradientBrush
+                {
+                    StartPoint = new Point(0, 0), EndPoint = new Point(1, 0),
+                    GradientStops =
+                    {
+                        new GradientStop(Colors.Transparent, 0),
+                        new GradientStop(Colors.Black, 0.15),
+                        new GradientStop(Colors.Black, 0.85),
+                        new GradientStop(Colors.Transparent, 1),
+                    },
+                },
+            };
+            grainDivider.SetResourceReference(Border.BackgroundProperty, "TextBrush");
+            grainRow.Children.Add(grainDivider);
+            var filmGrain = new CheckBox
+            {
+                Style = (Style)Application.Current.FindResource("ThemeCheck"),
+                IsChecked = FilmGrain.Enabled,
+                Margin = new Thickness(0),
+            };
+            filmGrain.SetResourceReference(ContentControl.ContentProperty, "Str_Theme_FilmGrain");
+            filmGrain.Click += (_, _) => FilmGrain.Set(filmGrain.IsChecked == true);
+            grainRow.Children.Add(filmGrain);
+            panel.Children.Add(grainRow);
+
             _menu.Items.Add(panel);
         }
 
