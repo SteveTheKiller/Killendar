@@ -22,10 +22,7 @@ namespace Killendar.Controls
             InitializeComponent();
             var titleFrames = BitmapDecoder.Create(new System.Uri("pack://application:,,,/Resources/kd-icon.ico"),
                 BitmapCreateOptions.None, BitmapCacheOption.OnLoad).Frames;
-            void RefreshTitleIcon() => TitleIcon.Source = titleFrames.OrderBy(frame =>
-                System.Math.Abs(frame.PixelWidth - TitleIcon.ActualWidth * VisualTreeHelper.GetDpi(TitleIcon).DpiScaleX)).First();
-            TitleIcon.Loaded += (_, _) => RefreshTitleIcon();
-            TitleIcon.SizeChanged += (_, _) => RefreshTitleIcon();
+            TitleIcon.Source = titleFrames[0];
             TaskbarIdentity.Track(this);
             Loaded += (_, _) => Anim.FadeIn(RootBorder);
         }

@@ -110,6 +110,7 @@
 
   <ItemGroup>
     <Resource Include="Resources\kd-icon.ico" />
+    <Resource Include="Resources\app-icon-master.png" />
     <!-- About card header art. Generated from brand/logo.png, which is gitignored, so this
          tracked copy is what makes a fresh clone build and render correctly. -->
     <Resource Include="Resources\kd-icon.png" />

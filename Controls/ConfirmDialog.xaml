@@ -4,6 +4,7 @@
 <Window x:Class="Killendar.Controls.ConfirmDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:icons="clr-namespace:Killendar.Controls"
         xmlns:kui="clr-namespace:Killendar.Controls"
         Title="Killendar"
         Width="360" SizeToContent="Height"
@@ -54,10 +55,10 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
                                     Margin="{DynamicResource DialogTitleTextMargin}">
                         <!-- The app icon leads the caption, as it does in the main title bar. -->
-                        <Image x:Name="TitleIcon"
+                        <icons:AppIcon x:Name="TitleIcon"
                                Width="{DynamicResource TitleIconSize}" Height="{DynamicResource TitleIconSize}"
                                Margin="{DynamicResource TitleIconMargin}" VerticalAlignment="Center"
-                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                               RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                         <!-- Wordmark with the same soft dark shadow copy the main title bar uses. -->
                         <Grid VerticalAlignment="Center"
                               Visibility="{DynamicResource WordmarkVisibility}">

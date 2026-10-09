@@ -19,11 +19,7 @@ namespace Killendar.Shell
                 System.Windows.Media.Imaging.BitmapCacheOption.OnLoad).Frames;
             foreach (var icon in new[] { WordmarkTitleIcon, PlainTitleIcon })
             {
-                void Refresh() => icon.Source = titleFrames
-                    .OrderBy(frame => System.Math.Abs(frame.PixelWidth - icon.ActualWidth * System.Windows.Media.VisualTreeHelper.GetDpi(icon).DpiScaleX))
-                    .First();
-                icon.Loaded += (_, _) => Refresh();
-                icon.SizeChanged += (_, _) => Refresh();
+                icon.Source = titleFrames[0];
             }
             InitSidebarResize();
 
