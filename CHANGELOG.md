@@ -6,6 +6,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ## [1.2.1] - Unreleased
 
+### Changed
+- The website's headings and wordmarks use Iceland and Freckle Face in place of the typewriter font.
+
 ### Fixed
 - Kept app icons sharp at fractional display DPI and app zoom by caching exact pixel sizes from a covering source and aligning the final draw to device pixels.
 - Rail right-click menus align 8 pixels from the side and bottom content edges.
