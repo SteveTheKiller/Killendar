@@ -841,14 +841,14 @@
                             BorderThickness="{DynamicResource FooterCellDarkThickness}"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
                             Margin="{DynamicResource FooterCellPadding}">
-                    <!-- FontSize 10. The status line on the left stays 11.5. -->
+                    <!-- FontSize 11 in the wordmark face. The status line on the left stays 11.5. -->
                     <TextBlock x:Name="VersionLabel" Text="v1.0.0"
-                               Foreground="{DynamicResource TextFooter}" FontFamily="Consolas"
-                               FontSize="10" VerticalAlignment="Center" Margin="0,0,12,0"
+                               Foreground="{DynamicResource TextFooter}" FontFamily="{DynamicResource WordmarkFont}"
+                               FontSize="11" VerticalAlignment="Center" Margin="0,0,12,0"
                                Cursor="Hand" ToolTip="About Killendar"
                                MouseLeftButtonUp="VersionLabel_Click"/>
                     <!-- 14px trailing margin keeps the copyright clear of the corner grip. -->
-                    <TextBlock FontSize="10" VerticalAlignment="Center" FontFamily="Consolas" Margin="0,0,14,0">
+                    <TextBlock FontSize="11" VerticalAlignment="Center" FontFamily="{DynamicResource WordmarkFont}" Margin="0,0,14,0">
                         <Run Text="&#x00A9; 2026 " Foreground="{DynamicResource TextFooter}"/>
                         <Hyperlink NavigateUri="https://thekiller.net" RequestNavigate="Hyperlink_RequestNavigate"
                                    Foreground="{DynamicResource TextFooter}" TextDecorations="None">
