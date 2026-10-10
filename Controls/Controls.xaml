@@ -15,10 +15,12 @@
     <!-- Floors the scrollbar thumb at a grabbable minimum. -->
     <kui:ThumbViewportFloorConverter x:Key="ThumbFloor"/>
 
-    <!-- Family wordmark faces, bundled in Fonts/ (both OFL, licenses beside them): Killer Sans
-         for "Killer", Freckle Face for the app name. -->
-    <FontFamily x:Key="WordmarkFont">/Killendar;component/Fonts/#Killer Sans</FontFamily>
-    <FontFamily x:Key="WordmarkAccentFont">/Killendar;component/Fonts/#Freckle Face</FontFamily>
+    <!-- Family brand faces, bundled in Fonts/ with their licenses beside them: Punktype
+         (commercial license) for "Killer", Lacquer (OFL) for the app name, and Killer Sans
+         (OFL) for headings and the footer. -->
+    <FontFamily x:Key="WordmarkFont">/Killendar;component/Fonts/#Punktype</FontFamily>
+    <FontFamily x:Key="WordmarkAccentFont">/Killendar;component/Fonts/#Lacquer</FontFamily>
+    <FontFamily x:Key="BrandSansFont">/Killendar;component/Fonts/#Killer Sans</FontFamily>
 
     <!-- Global themed tooltip. Implicit (no key) so every tooltip app-wide picks it up. -->
     <Style TargetType="ToolTip">

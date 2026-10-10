@@ -51,9 +51,9 @@
                             <StackPanel Orientation="Horizontal" Margin="1,2,0,0"
                                         Opacity="{DynamicResource IconShadowOpacity}">
                                 <StackPanel.Effect><BlurEffect Radius="3"/></StackPanel.Effect>
-                                <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="16.5"><Run Text="The " Foreground="#D8000000"/><Run FontFamily="{DynamicResource WordmarkAccentFont}" Text="Killendar" FontSize="18.02" Foreground="#D8000000"/><Run Text="  "/><Run Text="{DynamicResource Str_Cat_Title}"/></TextBlock>
+                                <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="11.73"><Run Text="The " Foreground="#D8000000"/><Run FontFamily="{DynamicResource WordmarkAccentFont}" Text="Killendar" FontSize="17.62" Foreground="#D8000000"/><Run FontSize="16.5" FontFamily="{DynamicResource BrandSansFont}" Text="  "/><Run FontSize="16.5" FontFamily="{DynamicResource BrandSansFont}" Text="{DynamicResource Str_Cat_Title}"/></TextBlock>
                             </StackPanel>
-                            <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="16.5"><Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run FontFamily="{DynamicResource WordmarkAccentFont}" Text="Killendar" FontSize="18.02" Foreground="{DynamicResource AccentLogo}"/><Run Text="  "/><Run Text="{DynamicResource Str_Cat_Title}" Foreground="{DynamicResource MutedTextBrush}"/></TextBlock>
+                            <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="11.73"><Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run FontFamily="{DynamicResource WordmarkAccentFont}" Text="Killendar" FontSize="17.62" Foreground="{DynamicResource AccentLogo}"/><Run FontSize="16.5" FontFamily="{DynamicResource BrandSansFont}" Text="  "/><Run FontSize="16.5" FontFamily="{DynamicResource BrandSansFont}" Text="{DynamicResource Str_Cat_Title}" Foreground="{DynamicResource MutedTextBrush}"/></TextBlock>
                         </Grid>
                         <TextBlock Text="{DynamicResource Str_Cat_Title}" Visibility="{DynamicResource PlainTitleVisibility}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"

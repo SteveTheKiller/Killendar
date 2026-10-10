@@ -291,7 +291,7 @@ namespace Killendar.Services
             d["GripHatchVisibility"] = square ? Visibility.Visible : Visibility.Collapsed;
             d["SidebarHeadingFont"] = square
                 ? new FontFamily("Courier New")
-                : (Application.Current.TryFindResource("WordmarkFont") as FontFamily ?? new FontFamily("Consolas"));
+                : (Application.Current.TryFindResource("BrandSansFont") as FontFamily ?? new FontFamily("Consolas"));
             if (!d.Contains("WindowCornerRadius")) d["WindowCornerRadius"] = new CornerRadius(square ? 0 : 8);
             if (!d.Contains("PanelCornerRadius")) d["PanelCornerRadius"] = new CornerRadius(square ? 0 : 6);
             if (!d.Contains("FlyoutCornerRadius")) d["FlyoutCornerRadius"] = new CornerRadius(square ? 0 : 6);
@@ -316,8 +316,8 @@ namespace Killendar.Services
             if (!d.Contains("TitleBarPadding")) d["TitleBarPadding"] = new Thickness(14, 0, 0, 0);
             if (!d.Contains("TitleIconSize")) d["TitleIconSize"] = 22d;
             if (!d.Contains("TitleIconMargin")) d["TitleIconMargin"] = new Thickness(0, 0, 6, 0);
-            if (!d.Contains("TitleWordmarkSize")) d["TitleWordmarkSize"] = 17d;
-            if (!d.Contains("TitleWordmarkBoldSize")) d["TitleWordmarkBoldSize"] = 22.1d;
+            if (!d.Contains("TitleWordmarkSize")) d["TitleWordmarkSize"] = 12.09d;
+            if (!d.Contains("TitleWordmarkBoldSize")) d["TitleWordmarkBoldSize"] = 21.61d;
             if (!d.Contains("TitleTextMargin")) d["TitleTextMargin"] = new Thickness(0);
             if (!d.Contains("WordmarkEmbossOpacity")) d["WordmarkEmbossOpacity"] = 0d;
             if (!d.Contains("WindowFramePadding")) d["WindowFramePadding"] = new Thickness(0);
