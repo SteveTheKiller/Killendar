@@ -41,12 +41,12 @@ a:hover { filter: brightness(1.15); }
    20px topbar, and at that size a 1px rim and a 2px offset are roughly three times heavier in
    proportion than they are on the hero: the bevel goes muddy and the letterforms thicken. In
    em they hold the same ratio at every size. 0.012em is 1px on the ~86px hero wordmark. */
-/* Family header faces: Iceland and Freckle Face, both OFL, licenses in brand/. KtKiller is
-   the "Killer" half of the wordmarks, KtAccent the app-name half. Iceland draws small for its
+/* Family header faces: Killer Sans and Freckle Face, both OFL, licenses in brand/. KtKiller is
+   the "Killer" half of the wordmarks, KtAccent the app-name half. Killer Sans draws small for its
    em, so size-adjust brings its line widths back to what the old typewriter face set. */
 @font-face {
   font-family: 'KtKiller';
-  src: url('brand/Iceland-Regular.ttf') format('truetype');
+  src: url('brand/KillerSans-Regular.ttf') format('truetype');
   font-weight: normal; font-style: normal; font-display: block;
   size-adjust: 110%;
 }

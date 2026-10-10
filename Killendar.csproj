@@ -114,7 +114,7 @@
     <!-- About card header art. Generated from brand/logo.png, which is gitignored, so this
          tracked copy is what makes a fresh clone build and render correctly. -->
     <Resource Include="Resources\kd-icon.png" />
-    <!-- The wordmark faces, Iceland and Freckle Face. Build Action must be Resource for the
+    <!-- The wordmark faces, Killer Sans and Freckle Face. Build Action must be Resource for the
          component font URI. -->
     <Resource Include="Fonts\*.ttf" />
     <!-- The family grab cursors (Controls\DragCursors.cs): open hand on a draggable surface,
