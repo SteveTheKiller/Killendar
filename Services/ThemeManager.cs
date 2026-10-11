@@ -317,7 +317,7 @@ namespace Killendar.Services
             // Family title-bar contract used by KillerScan, KillerNotes and KillerShell. 98SE
             // supplies its own smaller values; every modern theme shares these defaults.
             if (!d.Contains("TitleBarPadding")) d["TitleBarPadding"] = new Thickness(14, 0, 0, 0);
-            if (!d.Contains("TitleIconSize")) d["TitleIconSize"] = 25d;
+            if (!d.Contains("TitleIconSize")) d["TitleIconSize"] = 27d;
             if (!d.Contains("TitleIconMargin")) d["TitleIconMargin"] = new Thickness(0, 0, 7, 0);
             if (!d.Contains("TitleWordmarkSize")) d["TitleWordmarkSize"] = 15d;
             if (!d.Contains("TitleWordmarkBoldSize")) d["TitleWordmarkBoldSize"] = 22.52d;
