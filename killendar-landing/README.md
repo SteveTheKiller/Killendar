@@ -8,7 +8,7 @@ spacing, grain, scrollbars and pane treatment are the family's rather than a rei
 
 1. the six palette lines, mapped onto the app's own `Themes/*.xaml` values
 2. the `hc` theme key renamed to `black`, which is what Killendar calls it
-3. the header faces (Killer Sans and Freckle Face) shared with the rest of the family
+3. the family faces (Punktype and Lacquer for the wordmark, Killer Sans for headings) shared with the rest of the family
 4. KillerShell-only blocks dropped: language switcher, accent bar, diagram lightbox
 
 ## What is here
@@ -24,7 +24,7 @@ spacing, grain, scrollbars and pane treatment are the family's rather than a rei
 | `robots.txt`, `sitemap.xml` | All three pages are listed. |
 | `grain.png` | The family texture, byte-identical to shell-landing's. |
 | `og-image.png` | 1200x630, generated from the real icon and the real wordmark font. |
-| `brand/` | `kd-icon.png`, `kd-icon.ico`, the Killer Sans and Freckle Face TTFs the headings render in (OFL, licenses beside them), and the wordmark SVGs. |
+| `brand/` | `kd-icon.png`, `kd-icon.ico`, the Punktype, Lacquer and Killer Sans TTFs the wordmark and headings render in (licenses beside them), and the wordmark SVGs. |
 
 The wordmark is an `<img>`, not styled text, matching the rest of the family. `brand/` holds 18
 `killendar-logo-<variant>-<accent>.svg` (3 variants x 6 accents) which `updateLogos()` in `kd.js`
