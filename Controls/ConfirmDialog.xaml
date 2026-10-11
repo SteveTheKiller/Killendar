@@ -68,6 +68,7 @@
                                 <StackPanel.Effect><BlurEffect Radius="3"/></StackPanel.Effect>
                                 <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="{DynamicResource TitleWordmarkSize}"><Run Text="The " Foreground="#D8000000"/><Run FontFamily="{DynamicResource WordmarkAccentFont}" Text="Killendar" FontSize="{DynamicResource TitleWordmarkBoldSize}" Foreground="#D8000000"/></TextBlock>
                             </StackPanel>
+                            <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="{DynamicResource TitleWordmarkSize}" Margin="1,2,0,0" IsHitTestVisible="False" Opacity="{DynamicResource WordmarkAccentShadowOpacity}"><TextBlock.Effect><BlurEffect Radius="3"/></TextBlock.Effect><Run Text="The " Foreground="Transparent"/><Run FontFamily="{DynamicResource WordmarkAccentFont}" Text="Killendar" FontSize="{DynamicResource TitleWordmarkBoldSize}" Foreground="#D8000000"/></TextBlock>
                             <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="{DynamicResource TitleWordmarkSize}"><Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run FontFamily="{DynamicResource WordmarkAccentFont}" Text="Killendar" FontSize="{DynamicResource TitleWordmarkBoldSize}" Foreground="{DynamicResource AccentLogo}"/></TextBlock>
                         </Grid>
                         <TextBlock Text="Killendar" Visibility="{DynamicResource PlainTitleVisibility}"
