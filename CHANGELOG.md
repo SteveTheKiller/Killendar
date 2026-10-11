@@ -17,6 +17,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Rail right-click menus align 8 pixels from the side and bottom content edges.
 - Submenus attach consistently to their opening rows, with native direction and screen-edge placement.
 - Dialog title wordmarks keep the main window's dark halo behind the app name on the Light theme's Yellow accent, so the yellow no longer fades into the title bar.
+- Active and hovered sidebar rail icons show the yellow accent with a dark halo on the Light theme's Yellow accent, instead of near-black.
 
 ## [1.2.0] - 2026-10-07
 
