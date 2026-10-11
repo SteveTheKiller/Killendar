@@ -69,19 +69,20 @@
             <!-- Title bar -->
             <Border Grid.Row="0" Background="{DynamicResource DialogTitleBarBrush}"
                     Height="{DynamicResource DialogTitleBarHeight}"
-                    CornerRadius="{DynamicResource DialogTitleCornerRadius}" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                    CornerRadius="{DynamicResource DialogTitleCornerRadius}" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" Panel.ZIndex="1">
                 <Grid>
                     <Border IsHitTestVisible="False" CornerRadius="{DynamicResource DialogTitleCornerRadius}"
                             Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
                     <Grid VerticalAlignment="Center" HorizontalAlignment="Left" IsHitTestVisible="False"
-                          Margin="{DynamicResource DialogTitleTextMargin}"
+                          Margin="6,-18,0,-22"
                           Visibility="{DynamicResource WordmarkVisibility}">
-                        <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="11.73" Margin="1,2,0,0" Opacity="{DynamicResource IconShadowOpacity}">
+                        <Grid.RenderTransform><TranslateTransform Y="-5"/></Grid.RenderTransform>
+                        <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="{DynamicResource TitleWordmarkSize}" Margin="1,2,0,0" Opacity="{DynamicResource IconShadowOpacity}">
                             <TextBlock.Effect><BlurEffect Radius="3"/></TextBlock.Effect>
-                            <Run Text="The " Foreground="#D8000000"/><Run FontFamily="{DynamicResource WordmarkAccentFont}" Text="Killendar" FontSize="17.62" Foreground="#D8000000"/>
+                            <Run Text="The " Foreground="#D8000000"/><Run FontFamily="{DynamicResource WordmarkAccentFont}" Text="Killendar" FontSize="{DynamicResource TitleWordmarkBoldSize}" Foreground="#D8000000"/>
                         </TextBlock>
-                        <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="11.73">
-                            <Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run FontFamily="{DynamicResource WordmarkAccentFont}" Text="Killendar" FontSize="17.62" Foreground="{DynamicResource AccentLogo}"/>
+                        <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="{DynamicResource TitleWordmarkSize}">
+                            <Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run FontFamily="{DynamicResource WordmarkAccentFont}" Text="Killendar" FontSize="{DynamicResource TitleWordmarkBoldSize}" Foreground="{DynamicResource AccentLogo}"/>
                         </TextBlock>
                     </Grid>
                     <TextBlock Text="Killendar" Visibility="{DynamicResource PlainTitleVisibility}"
@@ -97,7 +98,7 @@
 
             <!-- Heading: the caller's Title, so "Import iCalendar" still reads as the prompt -->
             <TextBlock x:Name="HeadingText" Grid.Row="1" Margin="16,0,16,8"
-                       Foreground="{DynamicResource MutedTextBrush}" FontFamily="Consolas" FontSize="12"/>
+                       Foreground="{DynamicResource MutedTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="12"/>
 
             <!-- Path row: up one level + current path + view modes -->
             <Grid Grid.Row="2" Margin="16,0,16,8">
@@ -128,7 +129,7 @@
                 <Grid Grid.Column="1">
                     <TextBox x:Name="PathBox" Height="28" Style="{StaticResource DarkTextBox}"
                              AutomationProperties.Name="{Binding Text, RelativeSource={RelativeSource Self}}"
-                             FontFamily="Consolas" FontSize="12" Padding="8,0,28,0"
+                             FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="8,0,28,0"
                              VerticalContentAlignment="Center" KeyDown="PathBox_KeyDown"/>
                     <Button x:Name="RecentsBtn" Content="&#xE70D;" Click="RecentsBtn_Click"
                             ToolTip="{DynamicResource Str_TT_RecentLocations}"
@@ -177,7 +178,7 @@
                                              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding}" FontFamily="Consolas" FontSize="12"
+                                                <TextBlock Text="{Binding}" FontFamily="{DynamicResource UiFont}" FontSize="12"
                                                            TextTrimming="CharacterEllipsis"/>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
@@ -244,7 +245,7 @@
                                     <Image Source="{Binding Icon}" Width="16" Height="16" VerticalAlignment="Center"
                                            Margin="0,0,8,0" SnapsToDevicePixels="True"
                                            RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-                                    <TextBlock Text="{Binding Label}" FontFamily="Consolas" FontSize="12" VerticalAlignment="Center"
+                                    <TextBlock Text="{Binding Label}" FontFamily="{DynamicResource UiFont}" FontSize="12" VerticalAlignment="Center"
                                                TextTrimming="CharacterEllipsis"/>
                                 </StackPanel>
                             </DataTemplate>
@@ -432,7 +433,7 @@
                                 </ListBox.ContextMenu>
                             </ListBox>
                             <TextBlock x:Name="EmptyHint" Text="{DynamicResource Str_Dlg_NoMatchingFiles}" Visibility="Collapsed"
-                                       Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="11"
+                                       Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="11"
                                        HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"
                                        TextAlignment="Center" Margin="20"/>
                         </Grid>
@@ -455,7 +456,7 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Str_Dlg_FileName}" VerticalAlignment="Center"
-                           Margin="0,0,10,0" Foreground="{DynamicResource MutedTextBrush}" FontFamily="Consolas" FontSize="11"/>
+                           Margin="0,0,10,0" Foreground="{DynamicResource MutedTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="11"/>
                 <!-- Left padding 5, not 8: a TextBox's content host carries its own ~2px inset
                      (WPF's TextBoxView), so at 8 the name started visibly right of the filter
                      combo's text directly below it (combo padding is 7 with no inherent inset).
@@ -463,11 +464,11 @@
                 <TextBox x:Name="FileNameBox" Grid.Row="0" Grid.Column="1" Height="28"
                          AutomationProperties.Name="{DynamicResource Str_Dlg_FileName}"
                          Style="{StaticResource DarkTextBox}"
-                         FontFamily="Consolas" FontSize="12" Padding="5,0,8,0"
+                         FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="5,0,8,0"
                          VerticalContentAlignment="Center" KeyDown="FileNameBox_KeyDown"/>
 
                 <TextBlock x:Name="FilterLabel" Grid.Row="1" Grid.Column="0" Text="{DynamicResource Str_Dlg_FileType}" VerticalAlignment="Center"
-                           Margin="0,8,10,0" Foreground="{DynamicResource MutedTextBrush}" FontFamily="Consolas" FontSize="11"/>
+                           Margin="0,8,10,0" Foreground="{DynamicResource MutedTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="11"/>
                 <ComboBox x:Name="FilterCombo" Grid.Row="1" Grid.Column="1" Height="28" Margin="0,8,0,0"
                           AutomationProperties.Name="{DynamicResource Str_Dlg_FileType}"
                           SelectionChanged="Filter_SelectionChanged"/>
@@ -480,9 +481,9 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,12,0">
-                    <TextBlock x:Name="SelName" FontFamily="Consolas" FontSize="12" Foreground="{DynamicResource TextBrush}"
+                    <TextBlock x:Name="SelName" FontFamily="{DynamicResource UiFont}" FontSize="12" Foreground="{DynamicResource TextBrush}"
                                TextTrimming="CharacterEllipsis"/>
-                    <TextBlock x:Name="SelMeta" FontFamily="Consolas" FontSize="10" Foreground="{DynamicResource MutedTextBrush}"
+                    <TextBlock x:Name="SelMeta" FontFamily="{DynamicResource UiFont}" FontSize="10" Foreground="{DynamicResource MutedTextBrush}"
                                TextTrimming="CharacterEllipsis" Margin="0,2,0,0"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">

@@ -13,11 +13,12 @@
         WindowStyle="None" Background="{DynamicResource BackgroundBrush}"
         MinWidth="494" MinHeight="460" Width="1100" Height="760"
         TextOptions.TextFormattingMode="Display" UseLayoutRounding="True"
+        FontFamily="{DynamicResource UiFont}"
         WindowStartupLocation="CenterScreen"
         PreviewKeyDown="Window_PreviewKeyDown">
 
     <shell:WindowChrome.WindowChrome>
-        <shell:WindowChrome CaptionHeight="36" ResizeBorderThickness="8" CornerRadius="0"
+        <shell:WindowChrome CaptionHeight="32" ResizeBorderThickness="8" CornerRadius="0"
                             GlassFrameThickness="0" UseAeroCaptionButtons="False"/>
     </shell:WindowChrome.WindowChrome>
 
@@ -31,7 +32,8 @@
         </Grid.RowDefinitions>
 
         <!-- ================= TITLE BAR ================= -->
-        <Grid Grid.Row="0" Background="{DynamicResource TitleBarBrush}">
+        <!-- ZIndex 1 so the wordmark's drips can hang into the top of the content row below. -->
+        <Grid Grid.Row="0" Background="{DynamicResource TitleBarBrush}" Panel.ZIndex="1">
             <Border IsHitTestVisible="False" Opacity="{DynamicResource GrainOpacity}">
                 <Border.Background>
                     <ImageBrush x:Name="TitleGrainBrush" TileMode="Tile" ViewportUnits="Absolute"
@@ -42,7 +44,7 @@
             <!-- Wordmark: "The" in the text color, "Killendar" 1.3x and bold in the accent.
                  Blurred dark copy underneath is the soft drop shadow. -->
             <StackPanel x:Name="LogoBar" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
-                        Margin="{DynamicResource TitleBarPadding}" Background="Transparent"
+                        Margin="{DynamicResource TitleLogoMargin}" Background="Transparent"
                         Visibility="{DynamicResource WordmarkVisibility}"
                         shell:WindowChrome.IsHitTestVisibleInChrome="True"
                         PreviewMouseWheel="LogoBar_MouseWheel"
@@ -51,7 +53,10 @@
                        Width="{DynamicResource TitleIconSize}" Height="{DynamicResource TitleIconSize}"
                        Margin="{DynamicResource TitleIconMargin}" VerticalAlignment="Center"
                        RenderOptions.BitmapScalingMode="NearestNeighbor" IsHitTestVisible="False"/>
-                <Grid>
+                <!-- Negative margins keep Lacquer's deep descent out of the layout so the bar never
+                     clips the drips; the 2px imbalance and the lift match KillerPDF. -->
+                <Grid Margin="0,-18,0,-22" VerticalAlignment="Center">
+                    <Grid.RenderTransform><TranslateTransform Y="-5"/></Grid.RenderTransform>
                     <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="{DynamicResource TitleWordmarkSize}"
                                Margin="1,2,0,0" IsHitTestVisible="False"
                                Opacity="{DynamicResource IconShadowOpacity}"><TextBlock.Effect><BlurEffect Radius="3"/></TextBlock.Effect><Run Text="The " Foreground="#D8000000"/><Run FontFamily="{DynamicResource WordmarkAccentFont}" Text="Killendar" FontSize="{DynamicResource TitleWordmarkBoldSize}" Foreground="#D8000000"/></TextBlock>
@@ -81,8 +86,9 @@
                         Margin="{DynamicResource CaptionButtonsMargin}"
                         shell:WindowChrome.IsHitTestVisibleInChrome="True">
                 <TextBlock x:Name="TitleKillendarLabel" Visibility="Collapsed"
-                           Foreground="{DynamicResource MutedTextBrush}" FontFamily="Consolas"
-                           FontSize="10" VerticalAlignment="Center" Margin="12,0,6,0"
+                           Foreground="{DynamicResource MutedTextBrush}" FontFamily="{DynamicResource FileNameFont}"
+                           FontSize="{DynamicResource FileNameFontSize}" RenderTransform="{DynamicResource FileNameTransform}"
+                           TextOptions.TextFormattingMode="Ideal" VerticalAlignment="Center" Margin="12,0,6,0"
                            MaxWidth="220" TextTrimming="CharacterEllipsis"
                            Cursor="Hand" ToolTip="{DynamicResource Str_TT_Killendars}"
                            MouseLeftButtonUp="ActiveKillendarLabel_Click"/>
@@ -520,18 +526,18 @@
                                          you after you have finished typing asks the question too late
                                          to change what you typed. Save and Delete both obey it. -->
                                     <StackPanel x:Name="SeriesScopeRow" Visibility="Collapsed" Margin="0,0,0,10">
-                                        <TextBlock Text="{DynamicResource Str_Rep_Scope}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
+                                        <TextBlock Text="{DynamicResource Str_Rep_Scope}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
                                         <WrapPanel x:Name="SeriesScopeChips" Margin="0,4,0,0"/>
                                     </StackPanel>
 
-                                    <TextBlock Text="{DynamicResource Str_Fld_Title}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
+                                    <TextBlock Text="{DynamicResource Str_Fld_Title}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
                                     <TextBox x:Name="FieldTitle" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="4,3" Margin="0,2,0,10"/>
 
                                     <CheckBox x:Name="AllDayToggle" Click="AllDayToggle_Click"
                                               HorizontalAlignment="Left" Margin="0,0,0,10"
                                               Content="{DynamicResource Str_Chk_AllDayOff}"/>
 
-                                    <TextBlock x:Name="FieldStartLabel" Text="{DynamicResource Str_Fld_Starts}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
+                                    <TextBlock x:Name="FieldStartLabel" Text="{DynamicResource Str_Fld_Starts}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
                                     <Grid Margin="0,2,0,10">
                                         <Grid.ColumnDefinitions>
                                             <!-- This row must fit at the sidebar's 250px minimum
@@ -555,7 +561,7 @@
                                                     <ColumnDefinition Width="26"/>
                                                 </Grid.ColumnDefinitions>
                                                 <TextBox x:Name="FieldStartDate" Grid.Column="0" Style="{StaticResource DarkTextBox}"
-                                                         Background="Transparent" BorderThickness="0" FontFamily="Consolas" FontSize="12" Padding="4,3"
+                                                         Background="Transparent" BorderThickness="0" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,3"
                                                          TextChanged="FieldStart_TextChanged" ToolTip="{DynamicResource Str_Hint_Date}"/>
                                                 <Button x:Name="StartDatePickerBtn" Grid.Column="1" Content="&#xE787;" Click="StartDatePicker_Click"
                                                         Style="{StaticResource SurfaceButton}" Background="Transparent" BorderThickness="0"
@@ -563,11 +569,11 @@
                                                         ToolTip="{DynamicResource Str_TT_ChooseDate}"/>
                                             </Grid>
                                         </Border>
-                                        <TextBox x:Name="FieldStartTime" Grid.Column="3" Style="{StaticResource DarkTextBox}" FontFamily="Consolas" FontSize="12" Padding="4,3"
+                                        <TextBox x:Name="FieldStartTime" Grid.Column="3" Style="{StaticResource DarkTextBox}" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,3"
                                                  TextChanged="FieldStart_TextChanged" ToolTip="{DynamicResource Str_Hint_Time}"/>
                                     </Grid>
 
-                                    <TextBlock x:Name="FieldEndLabel" Text="{DynamicResource Str_Fld_Ends}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
+                                    <TextBlock x:Name="FieldEndLabel" Text="{DynamicResource Str_Fld_Ends}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
                                     <Grid Margin="0,2,0,10">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="96"/>
@@ -582,7 +588,7 @@
                                                     <ColumnDefinition Width="26"/>
                                                 </Grid.ColumnDefinitions>
                                                 <TextBox x:Name="FieldEndDate" Grid.Column="0" Style="{StaticResource DarkTextBox}"
-                                                         Background="Transparent" BorderThickness="0" FontFamily="Consolas" FontSize="12" Padding="4,3"
+                                                         Background="Transparent" BorderThickness="0" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,3"
                                                          ToolTip="{DynamicResource Str_Hint_Date}"/>
                                                 <Button x:Name="EndDatePickerBtn" Grid.Column="1" Content="&#xE787;" Click="EndDatePicker_Click"
                                                         Style="{StaticResource SurfaceButton}" Background="Transparent" BorderThickness="0"
@@ -590,7 +596,7 @@
                                                         ToolTip="{DynamicResource Str_TT_ChooseDate}"/>
                                             </Grid>
                                         </Border>
-                                        <TextBox x:Name="FieldEndTime" Grid.Column="3" Style="{StaticResource DarkTextBox}" FontFamily="Consolas" FontSize="12" Padding="4,3" ToolTip="{DynamicResource Str_Hint_Time}"/>
+                                        <TextBox x:Name="FieldEndTime" Grid.Column="3" Style="{StaticResource DarkTextBox}" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,3" ToolTip="{DynamicResource Str_Hint_Time}"/>
                                     </Grid>
 
                                     <!-- REPEATS. The chips and weekday buttons are built in code
@@ -599,7 +605,7 @@
                                          that starts its week on Monday gets them that way without
                                          seven more translated strings, and the pattern captions
                                          come from the same table the summary line reads. -->
-                                    <TextBlock Text="{DynamicResource Str_Fld_Repeats}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
+                                    <TextBlock Text="{DynamicResource Str_Fld_Repeats}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
                                     <WrapPanel Margin="0,4,0,0">
                                         <Button x:Name="RepeatFreqButton" Style="{StaticResource DropdownButton}"
                                                 HorizontalAlignment="Left" MinWidth="92" Padding="7,3"
@@ -615,11 +621,11 @@
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Grid.Column="0" Text="{DynamicResource Str_Rep_Every}" Foreground="{DynamicResource MutedTextBrush}"
-                                                       FontFamily="Consolas" FontSize="11" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                                       FontFamily="{DynamicResource UiFont}" FontSize="11" VerticalAlignment="Center" Margin="0,0,5,0"/>
                                             <TextBox x:Name="FieldRepeatInterval" Grid.Column="1" Style="{StaticResource DarkTextBox}"
                                                      FontSize="12" Padding="4,3" TextAlignment="Center" TextChanged="RepeatInterval_TextChanged"/>
                                             <TextBlock x:Name="RepeatUnitLabel" Grid.Column="2" Foreground="{DynamicResource MutedTextBrush}"
-                                                       FontFamily="Consolas" FontSize="11" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                                       FontFamily="{DynamicResource UiFont}" FontSize="11" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                         </Grid>
                                     </WrapPanel>
 
@@ -627,7 +633,7 @@
                                         <WrapPanel x:Name="RepeatDaysRow" Visibility="Collapsed" Margin="0,0,0,4"/>
 
                                         <TextBlock Text="{DynamicResource Str_Rep_Ends}" Foreground="{DynamicResource DimTextBrush}"
-                                                   FontFamily="Consolas" FontSize="10" Margin="0,2,0,0"/>
+                                                   FontFamily="{DynamicResource UiFont}" FontSize="10" Margin="0,2,0,0"/>
                                         <WrapPanel x:Name="RepeatEndRow" Margin="0,4,0,0"/>
 
                                         <!-- One box for both end conditions: it holds a NUMBER of
@@ -642,7 +648,7 @@
 
                                     <Border Height="10"/>
 
-                                    <TextBlock Text="{DynamicResource Str_Fld_Location}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
+                                    <TextBlock Text="{DynamicResource Str_Fld_Location}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
                                     <!-- The map button hands whatever is typed to the user's browser as a maps
                                          search. It is not a lookup: nothing is sent anywhere until this is
                                          clicked, which is the whole point given what killendar.net promises. -->
@@ -669,27 +675,27 @@
                                                 ToolTip="{DynamicResource Str_TT_OpenInMaps}"/>
                                     </Grid>
 
-                                    <TextBlock Text="{DynamicResource Str_Fld_Description}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
+                                    <TextBlock Text="{DynamicResource Str_Fld_Description}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
                                     <TextBox x:Name="FieldDescription" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="4,3" Margin="0,2,0,10"
                                              Height="72" AcceptsReturn="True" TextWrapping="Wrap"
                                              VerticalScrollBarVisibility="Auto"/>
 
-                                    <TextBlock Text="{DynamicResource Str_Fld_Attendees}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
+                                    <TextBlock Text="{DynamicResource Str_Fld_Attendees}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
                                     <TextBox x:Name="FieldAttendees" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="4,3" Margin="0,2,0,2"
                                              ToolTip="{DynamicResource Str_Hint_AttendeesTip}"/>
                                     <TextBlock Text="{DynamicResource Str_Hint_Attendees}" Foreground="{DynamicResource DimTextBrush}"
-                                               FontFamily="Consolas" FontSize="9.5" Margin="0,0,0,10"/>
+                                               FontFamily="{DynamicResource UiFont}" FontSize="9.5" Margin="0,0,0,10"/>
 
                                     <!-- Categories are ASSIGNED by clicking chips, never typed: the
                                          names come from the Killendar's own definitions, so a text
                                          box here would invite typos that render as orphan gray. The
                                          chips are built in code (AppointmentView.cs) because their
                                          colors are user data, not theme resources. -->
-                                    <TextBlock Text="{DynamicResource Str_Fld_Categories}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
+                                    <TextBlock Text="{DynamicResource Str_Fld_Categories}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
                                     <WrapPanel x:Name="FieldCategories" Margin="0,4,0,2"/>
                                     <TextBlock x:Name="FieldCategoriesEmpty" Text="{DynamicResource Str_Hint_NoCategories}"
                                                Foreground="{DynamicResource DimTextBrush}" Visibility="Collapsed"
-                                               FontFamily="Consolas" FontSize="9.5" TextWrapping="Wrap" Margin="0,0,0,10"/>
+                                               FontFamily="{DynamicResource UiFont}" FontSize="9.5" TextWrapping="Wrap" Margin="0,0,0,10"/>
 
                                     <TextBlock x:Name="SidebarError" Visibility="Collapsed" TextWrapping="Wrap"
                                                Foreground="{DynamicResource DangerRed}" FontSize="11" Margin="0,0,0,6"/>
@@ -800,8 +806,8 @@
                 <Grid Grid.Column="0" Margin="{DynamicResource FooterCellMargin}">
                     <TextBlock x:Name="StatusText" Text="{DynamicResource Str_Status_Ready}"
                                Foreground="{DynamicResource TextFooter}"
-                               FontFamily="Segoe UI, Microsoft JhengHei UI, Nirmala UI"
-                               FontSize="11.5" VerticalAlignment="Center"
+                               FontFamily="{DynamicResource BrandSansFont}"
+                               FontSize="16" TextOptions.TextFormattingMode="Ideal" VerticalAlignment="Center"
                                Margin="4,0,0,0" Padding="{DynamicResource FooterCellPadding}"/>
                     <Border IsHitTestVisible="False" BorderBrush="{DynamicResource FooterBevelDarkBrush}"
                             BorderThickness="{DynamicResource FooterCellLightThickness}"/>
@@ -824,7 +830,7 @@
                     <StackPanel x:Name="PortableBadge" Orientation="Horizontal"
                                 VerticalAlignment="Center" Visibility="Collapsed">
                         <Button x:Name="InstallBtn" Content="{DynamicResource Str_Portable}" ToolTip="{DynamicResource Str_Btn_Install}" Click="Install_Click"
-                                Style="{StaticResource OutlineButton}" FontFamily="Segoe UI" FontSize="10" Padding="8,1"
+                                Style="{StaticResource OutlineButton}" FontFamily="{DynamicResource UiFont}" FontSize="10" Padding="8,1"
                                 VerticalAlignment="Center">
                             <Button.Resources>
                                 <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
@@ -893,7 +899,7 @@
                 <!-- Segmented toggle: accent outline at rest, filled when Tag="on". Same rule as
                      the rail's toggles, so "this one is active" reads identically everywhere. -->
                 <Style x:Key="KsToggle" TargetType="Button">
-                    <Setter Property="FontFamily" Value="Consolas"/>
+                    <Setter Property="FontFamily" Value="{DynamicResource UiFont}"/>
                     <Setter Property="FontSize" Value="11"/>
                     <Setter Property="Padding" Value="10,3"/>
                     <Setter Property="Margin" Value="0,0,6,0"/>
@@ -975,7 +981,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{DynamicResource Str_KS_Title}" Foreground="{DynamicResource TextBrush}"
-                                           FontFamily="Consolas" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                           FontFamily="{DynamicResource UiFont}" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" TextWrapping="Wrap"/>
                                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="12,0">
                                     <Button x:Name="KsViewList" Style="{StaticResource KsToggle}" Tag="on"
                                             Content="{DynamicResource Str_KS_ViewList}" Click="KsViewList_Click"/>
@@ -1124,30 +1130,30 @@
                                                 Opacity="{DynamicResource GrainOpacity}"/>
                                     <StackPanel Margin="14,12,14,4">
                                         <StackPanel Margin="0,0,0,10">
-                                            <TextBlock Text="{DynamicResource Str_About_Version}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
+                                            <TextBlock Text="{DynamicResource Str_About_Version}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
                                             <Grid Margin="0,1,0,0">
                                                 <TextBlock x:Name="AboutVersionBlock" Foreground="{DynamicResource PrimaryBrush}"
-                                                           FontFamily="Consolas" FontSize="13" Cursor="Hand"
+                                                           FontFamily="{DynamicResource UiFont}" FontSize="13" Cursor="Hand"
                                                            HorizontalAlignment="Left" VerticalAlignment="Bottom"
                                                            MouseLeftButtonUp="AboutVersion_Click"/>
                                                 <TextBlock x:Name="AboutReleaseDateBlock" Foreground="{DynamicResource MutedTextBrush}"
-                                                           FontFamily="Consolas" FontSize="11" FontStyle="Italic"
+                                                           FontFamily="{DynamicResource UiFont}" FontSize="11" FontStyle="Italic"
                                                            HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
                                             </Grid>
                                         </StackPanel>
                                         <StackPanel Margin="0,0,0,10">
-                                            <TextBlock Text="{DynamicResource Str_About_Publisher}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
+                                            <TextBlock Text="{DynamicResource Str_About_Publisher}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
                                             <TextBlock x:Name="AboutPublisherBlock" Foreground="{DynamicResource TextBrush}" FontSize="12" Margin="0,1,0,0"/>
                                             <TextBlock x:Name="AboutAkaBlock" Visibility="Collapsed" Foreground="{DynamicResource MutedTextBrush}"
                                                        FontSize="11" Margin="0,3,0,0"><Run Text="AKA "/><Hyperlink NavigateUri="https://thekiller.net" RequestNavigate="AboutLink_Navigate" Foreground="{DynamicResource PrimaryBrush}" TextDecorations="None" ToolTip="thekiller.net"><Run x:Name="AboutAkaRun"/></Hyperlink></TextBlock>
                                         </StackPanel>
                                         <StackPanel Margin="0,0,0,10">
-                                            <TextBlock Text="{DynamicResource Str_About_Thumbprint}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
-                                            <TextBlock x:Name="AboutThumbprintBlock" Foreground="{DynamicResource TextBrush}" FontFamily="Consolas" FontSize="11" TextWrapping="Wrap" Margin="0,1,0,0"/>
+                                            <TextBlock Text="{DynamicResource Str_About_Thumbprint}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
+                                            <TextBlock x:Name="AboutThumbprintBlock" Foreground="{DynamicResource TextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="11" TextWrapping="Wrap" Margin="0,1,0,0"/>
                                         </StackPanel>
                                         <StackPanel Margin="0,0,0,10">
-                                            <TextBlock Text="{DynamicResource Str_About_Sha}" Foreground="{DynamicResource DimTextBrush}" FontFamily="Consolas" FontSize="10"/>
-                                            <TextBlock x:Name="AboutSha256Block" Foreground="{DynamicResource TextBrush}" FontFamily="Consolas" FontSize="11" TextWrapping="NoWrap" Margin="0,1,0,0"/>
+                                            <TextBlock Text="{DynamicResource Str_About_Sha}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
+                                            <TextBlock x:Name="AboutSha256Block" Foreground="{DynamicResource TextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="11" TextWrapping="NoWrap" Margin="0,1,0,0"/>
                                         </StackPanel>
                                     </StackPanel>
                                     </Grid>

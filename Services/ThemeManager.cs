@@ -31,6 +31,9 @@ namespace Killendar.Services
     /// </summary>
     public static class ThemeManager
     {
+        /// <summary>Killer Sans UI (Killer Sans scaled to Segoe UI proportions) with the Segoe fallback stack.</summary>
+        internal static readonly FontFamily KillerSansUiStack = new FontFamily(new Uri("pack://application:,,,/"), "./Fonts/#Killer Sans UI, Segoe UI, Microsoft JhengHei UI, Nirmala UI");
+        internal static readonly FontFamily KillerSansFont = new FontFamily(new Uri("pack://application:,,,/"), "./Fonts/#Killer Sans");
         // ---- Persistence hooks (optional). Default: in-memory only. ----
         public static Func<string, string?> GetSetting { get; set; } = _ => null;
         public static Action<string, string> SetSetting { get; set; } = (_, _) => { };
@@ -272,7 +275,7 @@ namespace Killendar.Services
             if (!d.Contains("ToolBevelDarkThickness")) d["ToolBevelDarkThickness"] = new Thickness(0);
             if (!d.Contains("ToolHoverBevelLightThickness")) d["ToolHoverBevelLightThickness"] = new Thickness(0);
             if (!d.Contains("ToolHoverBevelDarkThickness")) d["ToolHoverBevelDarkThickness"] = new Thickness(0);
-            d["TitleBarGridLength"] = new GridLength(square ? 22 : 36);
+            d["TitleBarGridLength"] = new GridLength(square ? 22 : 32);
             d["ContentPaneMargin"] = square ? new Thickness(0) : new Thickness(0, 0, 8, 0);
             // Modern sidebars are transparent so the app gradient/grain continues through them.
             // 98SE uses a white client pane instead of exposing the gray window/button face.
@@ -314,10 +317,25 @@ namespace Killendar.Services
             // Family title-bar contract used by KillerScan, KillerNotes and KillerShell. 98SE
             // supplies its own smaller values; every modern theme shares these defaults.
             if (!d.Contains("TitleBarPadding")) d["TitleBarPadding"] = new Thickness(14, 0, 0, 0);
-            if (!d.Contains("TitleIconSize")) d["TitleIconSize"] = 22d;
-            if (!d.Contains("TitleIconMargin")) d["TitleIconMargin"] = new Thickness(0, 0, 6, 0);
-            if (!d.Contains("TitleWordmarkSize")) d["TitleWordmarkSize"] = 12.09d;
-            if (!d.Contains("TitleWordmarkBoldSize")) d["TitleWordmarkBoldSize"] = 21.61d;
+            if (!d.Contains("TitleIconSize")) d["TitleIconSize"] = 25d;
+            if (!d.Contains("TitleIconMargin")) d["TitleIconMargin"] = new Thickness(0, 0, 7, 0);
+            if (!d.Contains("TitleWordmarkSize")) d["TitleWordmarkSize"] = 15d;
+            if (!d.Contains("TitleWordmarkBoldSize")) d["TitleWordmarkBoldSize"] = 22.52d;
+            // The main window logo (icon + wordmark) sits 5px off the top-left corner, as in KillerPDF;
+            // a dialog caption's sits 6px in. 98SE keeps its classic caption inset.
+            if (!d.Contains("TitleLogoMargin")) d["TitleLogoMargin"] = square ? d["TitleBarPadding"] : new Thickness(4, 4, 0, 0);
+            if (!d.Contains("DialogTitleMargin")) d["DialogTitleMargin"] = square ? d["TitleBarPadding"] : new Thickness(6, 0, 0, 0);
+            // The UI face (98SE declares its own) and the titlebar Killendar name, which sits on the
+            // wordmark baseline in Killer Sans like KillerPDF's filename.
+            if (!d.Contains("UiFont")) d["UiFont"] = KillerSansUiStack;
+            if (!d.Contains("FileNameFont")) d["FileNameFont"] = square ? d["UiFont"] : KillerSansFont;
+            if (!d.Contains("FileNameFontSize")) d["FileNameFontSize"] = square ? 11d : 18d;
+            if (!d.Contains("FileNameTransform"))
+            {
+                var fileNameShift = new TranslateTransform(0, square ? 0 : 3);
+                fileNameShift.Freeze();
+                d["FileNameTransform"] = fileNameShift;
+            }
             if (!d.Contains("TitleTextMargin")) d["TitleTextMargin"] = new Thickness(0);
             if (!d.Contains("WordmarkEmbossOpacity")) d["WordmarkEmbossOpacity"] = 0d;
             if (!d.Contains("WindowFramePadding")) d["WindowFramePadding"] = new Thickness(0);
@@ -350,10 +368,10 @@ namespace Killendar.Services
             d["OverlayBevelLightThickness"] = square ? new Thickness(1, 1, 0, 0) : new Thickness(0);
             d["OverlayBevelDarkThickness"] = square ? new Thickness(0, 0, 1, 1) : new Thickness(0);
             d["OverlayBevelInnerMargin"] = square ? new Thickness(1) : new Thickness(0);
-            if (!d.Contains("TitleBarHeight")) d["TitleBarHeight"] = 36d;
-            if (!d.Contains("DialogTitleBarHeight")) d["DialogTitleBarHeight"] = 36d;
+            if (!d.Contains("TitleBarHeight")) d["TitleBarHeight"] = 32d;
+            if (!d.Contains("DialogTitleBarHeight")) d["DialogTitleBarHeight"] = 32d;
             if (!d.Contains("CaptionButtonWidth")) d["CaptionButtonWidth"] = 44d;
-            if (!d.Contains("CaptionButtonHeight")) d["CaptionButtonHeight"] = 36d;
+            if (!d.Contains("CaptionButtonHeight")) d["CaptionButtonHeight"] = 32d;
             if (!d.Contains("CaptionButtonMargin")) d["CaptionButtonMargin"] = new Thickness(0);
             if (!d.Contains("CaptionButtonsMargin")) d["CaptionButtonsMargin"] = new Thickness(0);
             if (!d.Contains("CaptionCloseGap")) d["CaptionCloseGap"] = new Thickness(0);

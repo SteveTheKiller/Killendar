@@ -6,6 +6,7 @@
 <Window x:Class="Killendar.Controls.KillendarsDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:icons="clr-namespace:Killendar.Controls"
         xmlns:kui="clr-namespace:Killendar.Controls"
         Title="{DynamicResource Str_Kc_Title}"
         Width="460" SizeToContent="Height"
@@ -43,28 +44,40 @@
                 <Border Grid.Row="0" Background="{DynamicResource DialogTitleBarBrush}"
                         Height="{DynamicResource DialogTitleBarHeight}"
                         CornerRadius="{DynamicResource DialogTitleCornerRadius}"
-                        MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                        MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" Panel.ZIndex="1">
                     <Grid>
                         <Border IsHitTestVisible="False" CornerRadius="{DynamicResource DialogTitleCornerRadius}"
                                 Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
-                        <Grid Margin="{DynamicResource DialogTitleTextMargin}" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="{DynamicResource WordmarkVisibility}">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Margin="{DynamicResource DialogTitleMargin}">
+                        <!-- The app icon leads the caption, as it does in the main title bar. -->
+                        <icons:AppIcon IsHitTestVisible="False" Source="pack://application:,,,/Resources/kd-icon.ico"
+                               Width="{DynamicResource TitleIconSize}" Height="{DynamicResource TitleIconSize}"
+                               Margin="{DynamicResource TitleIconMargin}" VerticalAlignment="Center"
+                               RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                        <Grid VerticalAlignment="Center" Visibility="{DynamicResource WordmarkVisibility}">
                             <TextBlock Text="{DynamicResource Str_Kc_Title}" Margin="1,2,0,0"
-                                       FontFamily="{DynamicResource BrandSansFont}" FontSize="15" FontWeight="Bold"
+                                       FontFamily="{DynamicResource BrandSansFont}" FontSize="18"
                                        Foreground="#D8000000" Opacity="{DynamicResource IconShadowOpacity}">
                                 <TextBlock.Effect><BlurEffect Radius="3"/></TextBlock.Effect>
                             </TextBlock>
                             <TextBlock Text="{DynamicResource Str_Kc_Title}"
-                                       FontFamily="{DynamicResource BrandSansFont}" FontSize="15" FontWeight="Bold"
+                                       FontFamily="{DynamicResource BrandSansFont}" FontSize="18"
                                        Foreground="{DynamicResource PrimaryBrush}"/>
                         </Grid>
                         <TextBlock Text="{DynamicResource Str_Kc_Title}" Visibility="{DynamicResource PlainTitleVisibility}"
-                                   HorizontalAlignment="Left" VerticalAlignment="Center"
-                                   Margin="{DynamicResource DialogTitleTextMargin}"
+                                   VerticalAlignment="Center"
                                    FontFamily="{DynamicResource ChromeFontFamily}" FontSize="11" FontWeight="Bold"
                                    Foreground="{DynamicResource ChromeTextBrush}"/>
+                        </StackPanel>
+                        <!-- Same X as the About card: the family overlay glyph on a card, the classic caption button on 98SE. -->
                         <Button Content="&#xE8BB;" Click="Close_Click" Style="{StaticResource ChromeCloseButton}"
                                 HorizontalAlignment="Right" VerticalAlignment="Center"
-                                Margin="{DynamicResource DialogCaptionCloseMargin}"/>
+                                Margin="{DynamicResource DialogCaptionCloseMargin}" Visibility="{DynamicResource PlainTitleVisibility}"/>
+                        <Button Content="&#x2715;" Click="Close_Click" Style="{StaticResource OverlayCloseButton}"
+                                ToolTip="{DynamicResource Str_Sys_Close}"
+                                HorizontalAlignment="Right" VerticalAlignment="Center" Width="28" Height="26" Margin="0,0,3,0"
+                                Visibility="{DynamicResource AboutModernCloseVisibility}"/>
                     </Grid>
                 </Border>
 

@@ -99,6 +99,13 @@ namespace Killendar
 
             HookCrashLogging();   // CrashLog.cs - first, so it covers startup itself
             base.OnStartup(e);
+            // Every window (dialogs, pickers) takes the family UI face from the active theme unless it
+            // sets its own, so no dialog falls back to the system Segoe UI.
+            EventManager.RegisterClassHandler(typeof(Window), FrameworkElement.LoadedEvent, new RoutedEventHandler((s, _) =>
+            {
+                if (s is Window w && DependencyPropertyHelper.GetValueSource(w, System.Windows.Controls.Control.FontFamilyProperty).BaseValueSource == BaseValueSource.Default)
+                    w.SetResourceReference(System.Windows.Controls.Control.FontFamilyProperty, "UiFont");
+            }));
             ShutdownMode = ShutdownMode.OnExplicitShutdown;
             Controls.GrainTexture.Publish();   // install and uninstall dialogs open before any main window
 
