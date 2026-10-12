@@ -25,6 +25,7 @@ namespace Killendar.Controls
             TitleIcon.Source = titleFrames[0];
             TaskbarIdentity.Track(this);
             Loaded += (_, _) => Anim.FadeIn(RootBorder);
+            Loaded += (_, _) => ApplyNotice();
         }
 
         // Configurable variant. detail may contain newlines for multiple lines. check1Label /
@@ -37,7 +38,6 @@ namespace Killendar.Controls
             : this()
         {
             HeadingText.Text = heading;
-            HeadingText.Margin = new Thickness(0, 0, 0, string.IsNullOrEmpty(detail) ? 0 : 12);
             DetailText.Text = detail;
             DetailText.Visibility = string.IsNullOrEmpty(detail) ? Visibility.Collapsed : Visibility.Visible;
             OkButton.Content = confirmText;
@@ -56,6 +56,29 @@ namespace Killendar.Controls
                 Check2.IsChecked = check2Initial;
                 Check2.Visibility = Visibility.Visible;
             }
+        }
+
+        // The family setup dialog's notice ring: an amber "!" on a confirmation and the accent "i" on a
+        // notice with a single button. The amber darkens on a light card so it keeps its contrast.
+        private void ApplyNotice()
+        {
+            bool confirmation = CancelButton.Visibility == Visibility.Visible;
+            System.Windows.Media.Brush brush;
+            if (confirmation)
+            {
+                var card = TryFindResource("BackgroundBrush") as System.Windows.Media.SolidColorBrush;
+                bool light = card != null && card.Color.R * 0.299 + card.Color.G * 0.587 + card.Color.B * 0.114 > 140;
+                brush = new System.Windows.Media.SolidColorBrush(light
+                    ? System.Windows.Media.Color.FromRgb(176, 112, 0)
+                    : System.Windows.Media.Color.FromRgb(255, 190, 80));
+            }
+            else
+            {
+                brush = TryFindResource("PrimaryBrush") as System.Windows.Media.Brush ?? System.Windows.Media.Brushes.Gray;
+            }
+            NoticeGlyph.Text = confirmation ? "!" : "i";
+            NoticeGlyph.Foreground = brush;
+            NoticeRing.BorderBrush = brush;
         }
 
         private void OK_Click(object sender, RoutedEventArgs e)
