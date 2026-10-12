@@ -22,7 +22,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Active and hovered sidebar rail icons show the yellow accent with a dark halo on the Light theme's Yellow accent, instead of near-black.
 - The wordmark has a soft shadow on the Light theme too, so it no longer looks thin on the light title bar, and the dark themes use the same lighter shadow as the rest of the Killer Tools family.
 - The title bar icon is 27px and has its own 27px image, so it is a little larger and sharper.
+- Button gradients start at the outline color and darken toward the bottom, so a hovered button no longer looks darker than its border.
 - The "Install for everyone" checkbox in the install dialog wraps instead of being cut off.
+- On 98SE, hovered dialog buttons keep the classic gray face instead of filling with a dark color that hid the label.
 
 ## [1.2.0] - 2026-10-07
 
