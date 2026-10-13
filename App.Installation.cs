@@ -152,17 +152,17 @@ namespace Killendar
         // Silent (machine-wide) install - winget / choco / RMM
         // ============================================================
 
-        private static void DoSilentInstall()
+        private static int DoSilentInstall()
         {
             try
             {
+                using var installLease = KillerFamily.Deployment.InstallerExitCodes.Acquire(AppName);
                 string src = Process.GetCurrentProcess().MainModule!.FileName;
                 var (valid, _, _) = CodeSignature.GetSignerInfo();
                 if (!valid)
                 {
                     Console.Error.WriteLine("Silent install refused: EXE has no valid Authenticode signature.");
-                    Environment.Exit(1);
-                    return;
+                    return KillerFamily.Deployment.InstallerExitCodes.SecurityRejected;
                 }
 
                 string startMenuDir = Path.Combine(
@@ -182,13 +182,14 @@ namespace Killendar
 
                 WriteInstallKeys(Registry.LocalMachine, MachineInstallDir, MachineInstallExe);
                 FileAssociations.Register(Registry.LocalMachine, MachineInstallExe);
+                return KillerFamily.Deployment.InstallerExitCodes.Success;
             }
             catch (Exception ex)
             {
                 // No UI on this path by definition, so the exit code is the only signal a
                 // deployment tool gets.
                 Console.Error.WriteLine("Silent install failed: " + ex.Message);
-                Environment.Exit(1);
+                return KillerFamily.Deployment.InstallerExitCodes.FromException(ex);
             }
         }
 
