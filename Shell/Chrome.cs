@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Navigation;
+using KillerFamily.Windowing;
 using Killendar.Controls;
 
 // Window-message plumbing for a WindowStyle="None" window, and the caption buttons. This stays a
@@ -40,6 +41,9 @@ namespace Killendar.Shell
             if (WindowState != WindowState.Minimized) _stateBeforeMinimize = WindowState;
             var hwnd = new WindowInteropHelper(this).Handle;
             HwndSource.FromHwnd(hwnd)?.AddHook(WndProc);
+            // Windows 11 snap layouts flyout on the maximize button. Added after WindowChrome's
+            // hook, so it answers WM_NCHITTEST first.
+            SnapLayouts.Attach(this, MaximizeBtn);
             DwmChrome.SetRoundedCorners(this, rounded: Services.ThemeManager.Current != Services.Theme.SE98
                                                        && WindowState == WindowState.Normal);
             DwmChrome.SetThemeBorder(this);
