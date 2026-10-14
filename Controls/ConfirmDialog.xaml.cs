@@ -68,8 +68,7 @@ namespace Killendar.Controls
             System.Windows.Media.Brush brush;
             if (confirmation)
             {
-                var card = TryFindResource("BackgroundBrush") as System.Windows.Media.SolidColorBrush;
-                bool light = card != null && card.Color.R * 0.299 + card.Color.G * 0.587 + card.Color.B * 0.114 > 140;
+                bool light = TryFindResource("BackgroundBrush") is System.Windows.Media.SolidColorBrush card && card.Color.R * 0.299 + card.Color.G * 0.587 + card.Color.B * 0.114 > 140;
                 brush = new System.Windows.Media.SolidColorBrush(light
                     ? System.Windows.Media.Color.FromRgb(176, 112, 0)
                     : System.Windows.Media.Color.FromRgb(255, 190, 80));
