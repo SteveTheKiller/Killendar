@@ -549,6 +549,8 @@ html[data-theme="black"] .spec-table tr:nth-child(even) td { background: #050505
 
 /* Preserve the lettering size when using the taller Lacquer SVG canvas. */
 /* Center visible artwork at the width of the download controls. */
+body .hero { padding-top: 28px; }
+body .hero .tagline { margin-top: 28px; }
 body .hero .hero-lockup {
   display: flex;
   flex-direction: row;

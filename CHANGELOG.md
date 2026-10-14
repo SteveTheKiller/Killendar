@@ -27,7 +27,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Button gradients start at the outline color and darken toward the bottom, so a hovered button no longer looks darker than its border.
 - The "Install for everyone" checkbox in the install dialog wraps instead of being cut off.
 - On 98SE, hovered dialog buttons keep the classic gray face instead of filling with a dark color that hid the label.
-- Centered website logos and corrected current features, runtime requirements and documentation.
+- Centered website logos with space above and below and corrected current features, runtime requirements and documentation.
 
 ## [1.2.0] - 2026-10-07
 
