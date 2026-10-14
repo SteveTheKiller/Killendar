@@ -3528,3 +3528,138 @@ if (I18N["pt"]) Object.assign(I18N["pt"], {
  "b3d": "Treze temas, 19 idiomas, atalhos de uma tecla só.",
  "f6h": "Treze temas, 19 idiomas"
 });
+
+// Current release site facts.
+Object.assign(I18N["en"], {
+  "tag": "A calendar with optional encryption, no account and no synchronization.",
+  "b2c": "Unencrypted .kcal files can be opened with SQLite tools. Encrypted files require SQLCipher and the password.",
+  "tk_4": "Unencrypted .kcal files can be opened with SQLite tools. Encrypted files require SQLCipher and the password.",
+  "app_p2": "Unencrypted .kcal files can be opened with SQLite tools. Encrypted files require SQLCipher and the password. App data is processed locally, with no telemetry or automatic uploads. Update checks, downloads and network features you choose to use make external connections.",
+  "f6p": "Every theme switchable while it runs. Dark, Light, Black and 98SE each take eight accent hues, so there are 41 looks in all. Single-key\nshortcuts that stand down while you are typing in a field. The theme menu can turn Film Grain on or off."
+});
+Object.assign(I18N["vi"], {
+  "tag": "Lịch có mã hóa tùy chọn, không cần tài khoản hay đồng bộ hóa.",
+  "b2c": "Tệp .kcal không mã hóa có thể mở bằng công cụ SQLite. Tệp mã hóa cần SQLCipher và mật khẩu.",
+  "tk_4": "Tệp .kcal không mã hóa có thể mở bằng công cụ SQLite. Tệp mã hóa cần SQLCipher và mật khẩu.",
+  "app_p2": "Tệp .kcal không mã hóa có thể mở bằng công cụ SQLite. Tệp mã hóa cần SQLCipher và mật khẩu. Dữ liệu được xử lý cục bộ, không có đo từ xa hay tự động tải lên. Kiểm tra cập nhật, tải xuống và các tính năng mạng bạn chọn sử dụng sẽ kết nối ra bên ngoài.",
+  "f6p": "Có thể chuyển đổi mọi giao diện ngay khi ứng dụng đang chạy. Dark, Light, Black và 98SE đều có tám màu nhấn, tạo nên tổng cộng 41 diện mạo. Các phím tắt\nmột phím sẽ tự vô hiệu hóa khi bạn đang nhập vào một trường. Menu chủ đề cho phép bật hoặc tắt hạt phim."
+});
+Object.assign(I18N["hu"], {
+  "tag": "Naptár választható titkosítással, fiók és szinkronizálás nélkül.",
+  "b2c": "A titkosítatlan .kcal fájlokat SQLite-eszközökkel lehet megnyitni. A titkosított fájlokhoz SQLCipher és a jelszó szükséges.",
+  "tk_4": "A titkosítatlan .kcal fájlokat SQLite-eszközökkel lehet megnyitni. A titkosított fájlokhoz SQLCipher és a jelszó szükséges.",
+  "app_p2": "A titkosítatlan .kcal fájlokat SQLite-eszközökkel lehet megnyitni. A titkosított fájlokhoz SQLCipher és a jelszó szükséges. Az adatok helyben dolgozódnak fel, telemetria és automatikus feltöltés nélkül. A frissítéskeresés, letöltés és választott hálózati funkciók külső kapcsolatokat létesítenek.",
+  "f6p": "Minden téma váltható futás közben. A Sötét, Világos, Fekete és a 98SE mindegyik nyolc hangsúlyos árnyalattal rendelkezik, így összesen 41 megjelenés érhető el. Egygombos\nparancsikonok, amelyek leállnak a mezőbe való beírás közben. A témamenüben be- és kikapcsolható a filmszemcsézettség."
+});
+Object.assign(I18N["es"], {
+  "tag": "Un calendario con cifrado opcional, sin cuenta ni sincronización.",
+  "b2c": "Los archivos .kcal sin cifrar se pueden abrir con herramientas SQLite. Los cifrados requieren SQLCipher y la contraseña.",
+  "tk_4": "Los archivos .kcal sin cifrar se pueden abrir con herramientas SQLite. Los cifrados requieren SQLCipher y la contraseña.",
+  "app_p2": "Los archivos .kcal sin cifrar se pueden abrir con herramientas SQLite. Los cifrados requieren SQLCipher y la contraseña. Los datos se procesan localmente, sin telemetría ni subidas automáticas. Las comprobaciones de actualizaciones, las descargas y las funciones de red que elijas usar hacen conexiones externas.",
+  "f6p": "Cada tema se cambia en marcha. Dark, Light, Black y 98SE admiten ocho acentos cada uno, 41 aspectos en total. Atajos de una tecla que se apartan mientras escribes en un campo. El menú de temas permite activar o desactivar Grano de película."
+});
+Object.assign(I18N["fr"], {
+  "tag": "Un calendrier avec chiffrement facultatif, sans compte ni synchronisation.",
+  "b2c": "Les fichiers .kcal non chiffrés s'ouvrent avec des outils SQLite. Les fichiers chiffrés nécessitent SQLCipher et le mot de passe.",
+  "tk_4": "Les fichiers .kcal non chiffrés s'ouvrent avec des outils SQLite. Les fichiers chiffrés nécessitent SQLCipher et le mot de passe.",
+  "app_p2": "Les fichiers .kcal non chiffrés s'ouvrent avec des outils SQLite. Les fichiers chiffrés nécessitent SQLCipher et le mot de passe. Les données sont traitées localement, sans télémétrie ni envoi automatique. Les recherches de mises à jour, téléchargements et fonctions réseau choisies établissent des connexions externes.",
+  "f6p": "Chaque thème se change en cours d'exécution. Dark, Light, Black et 98SE prennent chacun huit accents, soit 41 apparences en tout. Des raccourcis à une touche qui s'effacent pendant que vous tapez dans un champ. Le menu des thèmes permet d'activer ou de désactiver le grain de film."
+});
+Object.assign(I18N["de"], {
+  "tag": "Ein Kalender mit optionaler Verschlüsselung, ohne Konto und Synchronisierung.",
+  "b2c": "Unverschlüsselte .kcal-Dateien lassen sich mit SQLite-Werkzeugen öffnen. Verschlüsselte Dateien erfordern SQLCipher und das Passwort.",
+  "tk_4": "Unverschlüsselte .kcal-Dateien lassen sich mit SQLite-Werkzeugen öffnen. Verschlüsselte Dateien erfordern SQLCipher und das Passwort.",
+  "app_p2": "Unverschlüsselte .kcal-Dateien lassen sich mit SQLite-Werkzeugen öffnen. Verschlüsselte Dateien erfordern SQLCipher und das Passwort. App-Daten werden lokal verarbeitet, ohne Telemetrie oder automatische Uploads. Updateprüfungen, Downloads und gewählte Netzwerkfunktionen stellen externe Verbindungen her.",
+  "f6p": "Jedes Design zur Laufzeit wechselbar. Dark, Light, Black und 98SE tragen je acht Akzentfarben, also 41 Looks insgesamt. Einzeltasten-Kürzel, die pausieren, während Sie in ein Feld tippen. Im Themenmenü lässt sich Filmkorn ein- oder ausschalten."
+});
+Object.assign(I18N["cs"], {
+  "tag": "Kalendář s volitelným šifrováním, bez účtu a synchronizace.",
+  "b2c": "Nešifrované soubory .kcal lze otevřít nástroji SQLite. Šifrované soubory vyžadují SQLCipher a heslo.",
+  "tk_4": "Nešifrované soubory .kcal lze otevřít nástroji SQLite. Šifrované soubory vyžadují SQLCipher a heslo.",
+  "app_p2": "Nešifrované soubory .kcal lze otevřít nástroji SQLite. Šifrované soubory vyžadují SQLCipher a heslo. Data aplikace se zpracovávají místně, bez telemetrie a automatického odesílání. Kontroly aktualizací, stahování a zvolené síťové funkce navazují externí spojení.",
+  "f6p": "Každý motiv lze přepnout za běhu. Dark, Light, Black a 98SE mají po osmi akcentových barvách, celkem 41 vzhledů. Jednoklávesové zkratky, které se odmlčí, když píšete do pole. Nabídka motivů umožňuje zapnout nebo vypnout filmové zrno."
+});
+Object.assign(I18N["tr"], {
+  "tag": "İsteğe bağlı şifrelemeli, hesap ve eşitleme gerektirmeyen bir takvim.",
+  "b2c": "Şifrelenmemiş .kcal dosyaları SQLite araçlarıyla açılabilir. Şifreli dosyalar SQLCipher ve parola gerektirir.",
+  "tk_4": "Şifrelenmemiş .kcal dosyaları SQLite araçlarıyla açılabilir. Şifreli dosyalar SQLCipher ve parola gerektirir.",
+  "app_p2": "Şifrelenmemiş .kcal dosyaları SQLite araçlarıyla açılabilir. Şifreli dosyalar SQLCipher ve parola gerektirir. Uygulama verileri telemetri ve otomatik yükleme olmadan yerel olarak işlenir. Güncelleme kontrolleri, indirmeler ve seçtiğiniz ağ özellikleri dış bağlantılar kurar.",
+  "f6p": "Her tema çalışırken değiştirilebilir; Dark, Light, Black ve 98SE sekizer vurgu rengi taşır, toplam 41 görünüm. Bir alana yazarken kenara çekilen tek tuşlu kısayollar. Tema menüsünden Film Tanesi açılıp kapatılabilir."
+});
+Object.assign(I18N["ja"], {
+  "tag": "暗号化を選べるカレンダー。アカウントや同期は不要です。",
+  "b2c": "暗号化していない .kcal ファイルは SQLite ツールで開けます。暗号化したファイルには SQLCipher とパスワードが必要です。",
+  "tk_4": "暗号化していない .kcal ファイルは SQLite ツールで開けます。暗号化したファイルには SQLCipher とパスワードが必要です。",
+  "app_p2": "暗号化していない .kcal ファイルは SQLite ツールで開けます。暗号化したファイルには SQLCipher とパスワードが必要です。 データはローカルで処理し、テレメトリや自動アップロードは行いません。更新確認、ダウンロード、選択したネットワーク機能は外部と接続します。",
+  "f6p": "どのテーマも実行中に切り替え可能。Dark、Light、Black、98SE はそれぞれ八色のアクセントを持ち、合計 41 通り。入力中は遠慮するワンキーショートカット。 テーマメニューでフィルムグレインをオンまたはオフにできます。"
+});
+Object.assign(I18N["pl"], {
+  "tag": "Kalendarz z opcjonalnym szyfrowaniem, bez konta i synchronizacji.",
+  "b2c": "Niezaszyfrowane pliki .kcal można otworzyć narzędziami SQLite. Zaszyfrowane wymagają SQLCipher i hasła.",
+  "tk_4": "Niezaszyfrowane pliki .kcal można otworzyć narzędziami SQLite. Zaszyfrowane wymagają SQLCipher i hasła.",
+  "app_p2": "Niezaszyfrowane pliki .kcal można otworzyć narzędziami SQLite. Zaszyfrowane wymagają SQLCipher i hasła. Dane są przetwarzane lokalnie, bez telemetrii i automatycznego wysyłania. Sprawdzanie aktualizacji, pobieranie i wybrane funkcje sieciowe nawiązują połączenia zewnętrzne.",
+  "f6p": "Każdy motyw przełączysz w trakcie działania. Dark, Light, Black i 98SE mają po osiem kolorów akcentu, łącznie 41 wyglądów. Skróty jednym klawiszem, które ustępują, gdy piszesz w polu. Menu motywów pozwala włączyć lub wyłączyć ziarno filmowe."
+});
+Object.assign(I18N["bn"], {
+  "tag": "ঐচ্ছিক এনক্রিপশনসহ ক্যালেন্ডার, অ্যাকাউন্ট বা সিঙ্ক ছাড়াই।",
+  "b2c": "এনক্রিপ্ট না করা .kcal ফাইল SQLite টুল দিয়ে খোলা যায়। এনক্রিপ্ট করা ফাইলে SQLCipher ও পাসওয়ার্ড প্রয়োজন।",
+  "tk_4": "এনক্রিপ্ট না করা .kcal ফাইল SQLite টুল দিয়ে খোলা যায়। এনক্রিপ্ট করা ফাইলে SQLCipher ও পাসওয়ার্ড প্রয়োজন।",
+  "app_p2": "এনক্রিপ্ট না করা .kcal ফাইল SQLite টুল দিয়ে খোলা যায়। এনক্রিপ্ট করা ফাইলে SQLCipher ও পাসওয়ার্ড প্রয়োজন। অ্যাপের ডেটা স্থানীয়ভাবে প্রক্রিয়াকৃত হয়, টেলিমেট্রি বা স্বয়ংক্রিয় আপলোড নেই। আপডেট পরীক্ষা, ডাউনলোড ও আপনার নির্বাচিত নেটওয়ার্ক সুবিধা বাইরের সংযোগ করে।",
+  "f6p": "প্রতিটি থিম চলন্ত অবস্থায় বদলানো যায়, চারটিতে (Dark, Light, Black ও 98SE) আটটি অ্যাকসেন্ট রঙ। এক-কী শর্টকাট, যা ফিল্ডে টাইপ করার সময় সরে দাঁড়ায়। থিম মেনু থেকে ফিল্ম গ্রেইন চালু বা বন্ধ করা যায়।"
+});
+Object.assign(I18N["zh-CN"], {
+  "tag": "可选择加密的日历，不需要账户或同步。",
+  "b2c": "未加密的 .kcal 文件可用 SQLite 工具打开。加密文件需要 SQLCipher 和密码。",
+  "tk_4": "未加密的 .kcal 文件可用 SQLite 工具打开。加密文件需要 SQLCipher 和密码。",
+  "app_p2": "未加密的 .kcal 文件可用 SQLite 工具打开。加密文件需要 SQLCipher 和密码。 数据在本地处理，不发送遥测数据，也不会自动上传。更新检查、下载和您选用的网络功能会建立外部连接。",
+  "f6p": "每套主题运行中即可切换。Dark、Light、Black 和 98SE 各有八种强调色，共 41 种外观。单键快捷键在你输入时自动避让。 主题菜单可开启或关闭胶片颗粒。"
+});
+Object.assign(I18N["zh-TW"], {
+  "tag": "可選擇加密的行事曆，不需要帳戶或同步。",
+  "b2c": "未加密的 .kcal 檔案可用 SQLite 工具開啟。加密檔案需要 SQLCipher 和密碼。",
+  "tk_4": "未加密的 .kcal 檔案可用 SQLite 工具開啟。加密檔案需要 SQLCipher 和密碼。",
+  "app_p2": "未加密的 .kcal 檔案可用 SQLite 工具開啟。加密檔案需要 SQLCipher 和密碼。 資料在本機處理，不傳送遙測資料，也不會自動上傳。更新檢查、下載和您選用的網路功能會建立外部連線。",
+  "f6p": "每套主題執行中即可切換。Dark、Light、Black 和 98SE 各有八種強調色，共 41 種外觀。單鍵快速鍵在你輸入時自動讓開。 主題選單可開啟或關閉膠片顆粒。"
+});
+Object.assign(I18N["it"], {
+  "tag": "Un calendario con cifratura facoltativa, senza account né sincronizzazione.",
+  "b2c": "I file .kcal non cifrati si aprono con strumenti SQLite. I file cifrati richiedono SQLCipher e la password.",
+  "tk_4": "I file .kcal non cifrati si aprono con strumenti SQLite. I file cifrati richiedono SQLCipher e la password.",
+  "app_p2": "I file .kcal non cifrati si aprono con strumenti SQLite. I file cifrati richiedono SQLCipher e la password. I dati sono elaborati localmente, senza telemetria o caricamenti automatici. I controlli degli aggiornamenti, i download e le funzioni di rete scelte effettuano connessioni esterne.",
+  "f6p": "Ogni tema si cambia mentre l'app è in esecuzione. Scuro, Chiaro, Nero e 98SE prendono ciascuno otto tinte di accento, quindi 41 aspetti in tutto. Scorciatoie\na tasto singolo che si fermano mentre scrivi in un campo. Il menu dei temi permette di attivare o disattivare la grana della pellicola."
+});
+Object.assign(I18N["ru"], {
+  "tag": "Календарь с необязательным шифрованием, без аккаунта и синхронизации.",
+  "b2c": "Незашифрованные файлы .kcal можно открыть инструментами SQLite. Зашифрованные требуют SQLCipher и пароль.",
+  "tk_4": "Незашифрованные файлы .kcal можно открыть инструментами SQLite. Зашифрованные требуют SQLCipher и пароль.",
+  "app_p2": "Незашифрованные файлы .kcal можно открыть инструментами SQLite. Зашифрованные требуют SQLCipher и пароль. Данные обрабатываются локально, без телеметрии и автоматической отправки. Проверки обновлений, загрузки и выбранные сетевые функции создают внешние соединения.",
+  "f6p": "Любую тему можно сменить на ходу. Тёмная, Светлая, Чёрная и 98SE берут по восемь оттенков акцента, так что всего получается 41 вид. Сочетания\nиз одной клавиши, которые отступают, пока вы печатаете в поле. В меню тем можно включить или выключить зернистость плёнки."
+});
+Object.assign(I18N["kk"], {
+  "tag": "Қосымша шифрлауы бар, тіркелгісіз және синхрондаусыз күнтізбе.",
+  "b2c": "Шифрланбаған .kcal файлдарын SQLite құралдарымен ашуға болады. Шифрланған файлдарға SQLCipher және құпиясөз қажет.",
+  "tk_4": "Шифрланбаған .kcal файлдарын SQLite құралдарымен ашуға болады. Шифрланған файлдарға SQLCipher және құпиясөз қажет.",
+  "app_p2": "Шифрланбаған .kcal файлдарын SQLite құралдарымен ашуға болады. Шифрланған файлдарға SQLCipher және құпиясөз қажет. Қолданба деректері телеметриясыз және автоматты жүктеп жіберусіз жергілікті өңделеді. Жаңарту тексерулері, жүктеп алулар және таңдалған желілік мүмкіндіктер сыртқы байланыстар орнатады.",
+  "f6p": "Әр тақырыпты жұмыс кезінде ауыстыруға болады. Қараңғы, Ашық, Қара және 98SE сегіз акцент реңкінен алады, сондықтан барлығы 41 түр шығады. Өрісте теріп\nотырғанда әрекет етпейтін жалғыз пернелік тіркесімдер. Тақырыптар мәзірінде пленка түйіршігін қосуға немесе өшіруге болады."
+});
+Object.assign(I18N["uk"], {
+  "tag": "Календар із необов'язковим шифруванням, без облікового запису й синхронізації.",
+  "b2c": "Незашифровані файли .kcal можна відкрити інструментами SQLite. Зашифровані потребують SQLCipher і пароля.",
+  "tk_4": "Незашифровані файли .kcal можна відкрити інструментами SQLite. Зашифровані потребують SQLCipher і пароля.",
+  "app_p2": "Незашифровані файли .kcal можна відкрити інструментами SQLite. Зашифровані потребують SQLCipher і пароля. Дані обробляються локально, без телеметрії й автоматичного надсилання. Перевірки оновлень, завантаження й вибрані мережеві функції створюють зовнішні з'єднання.",
+  "f6p": "Будь-яку тему можна змінити на ходу. Темна, Світла, Чорна та 98SE беруть по вісім відтінків акценту, тож загалом виходить 41 вигляд. Комбінації\nз однієї клавіші, які відступають, поки ви друкуєте в полі. У меню тем можна ввімкнути або вимкнути зернистість плівки."
+});
+Object.assign(I18N["nb"], {
+  "tag": "En kalender med valgfri kryptering, uten konto eller synkronisering.",
+  "b2c": "Ukrypterte .kcal-filer kan åpnes med SQLite-verktøy. Krypterte filer krever SQLCipher og passordet.",
+  "tk_4": "Ukrypterte .kcal-filer kan åpnes med SQLite-verktøy. Krypterte filer krever SQLCipher og passordet.",
+  "app_p2": "Ukrypterte .kcal-filer kan åpnes med SQLite-verktøy. Krypterte filer krever SQLCipher og passordet. Appdata behandles lokalt, uten telemetri eller automatisk opplasting. Oppdateringssjekker, nedlastinger og nettverksfunksjoner du velger å bruke, oppretter eksterne forbindelser.",
+  "f6p": "Hvert tema kan byttes mens appen kjører. Mørk, Lys, Svart og 98SE tar hver åtte aksentfarger, så det blir 41 utseender til sammen. Hurtigtaster med én tast som holder seg unna mens du skriver i et felt. Temamenyen kan slå filmkorn av eller på."
+});
+Object.assign(I18N["pt"], {
+  "tag": "Um calendário com criptografia opcional, sem conta nem sincronização.",
+  "b2c": "Arquivos .kcal sem criptografia podem ser abertos com ferramentas SQLite. Os criptografados exigem SQLCipher e a senha.",
+  "tk_4": "Arquivos .kcal sem criptografia podem ser abertos com ferramentas SQLite. Os criptografados exigem SQLCipher e a senha.",
+  "app_p2": "Arquivos .kcal sem criptografia podem ser abertos com ferramentas SQLite. Os criptografados exigem SQLCipher e a senha. Os dados são processados localmente, sem telemetria nem envios automáticos. Verificações de atualização, downloads e funções de rede escolhidas fazem conexões externas.",
+  "f6p": "Todos os temas podem ser trocados com o aplicativo em uso. Escuro, Claro, Preto e 98SE aceitam oito tons de destaque cada, somando 41 visuais. Atalhos de tecla única\nque se desativam enquanto você digita em um campo. O menu de temas permite ativar ou desativar o grão de filme."
+});
