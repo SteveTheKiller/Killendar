@@ -148,8 +148,8 @@
     <sys:String x:Key="Str_About_DescA" xml:space="preserve">কোনো অ্যাকাউন্ট নেই, সিঙ্ক নেই, টেলিমেট্রি নেই এমন একটি ক্যালেন্ডার। আপনার অ্যাপয়েন্টমেন্ট থাকে নিজের মেশিনের একটিমাত্র ফাইলে, চাইলে এনক্রিপ্ট করা। একটি GPLv3 </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> ইউটিলিটি।</sys:String>
 
-    <sys:String x:Key="Str_Dlg_UpdateMsg">Killendar {0} ডাউনলোড করে ইনস্টল করবেন?</sys:String>
-    <sys:String x:Key="Str_Dlg_UpdateBullets">অ্যাপটি বন্ধ হয়ে স্বয়ংক্রিয়ভাবে আবার খুলবে।</sys:String>
+    <sys:String x:Key="Str_About_UpdateHeading">{0} {1} ডাউনলোড করে ইনস্টল করবেন?</sys:String>
+    <sys:String x:Key="Str_About_UpdateDetail">অ্যাপটি বন্ধ হয়ে স্বয়ংক্রিয়ভাবে আবার খুলবে।</sys:String>
     <sys:String x:Key="Str_Btn_Update">আপডেট</sys:String>
 
     <sys:String x:Key="Str_Sc_Title">কীবোর্ড শর্টকাট</sys:String>

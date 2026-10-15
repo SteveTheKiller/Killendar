@@ -121,9 +121,10 @@ namespace Killendar.Features
             if (string.IsNullOrEmpty(tag) || _updating) return;
 
             var dlg = new ConfirmDialog(
-                string.Format(_host.Loc("Str_About_StartupUpdateHeading"), AppInfo.DisplayName, tag),
-                _host.Loc("Str_About_StartupUpdateDetail"),
-                _host.Loc("Str_About_UpdateNow")) { Owner = _host.Window };
+                string.Format(_host.Loc("Str_About_UpdateHeading"), AppInfo.DisplayName, tag),
+                _host.Loc("Str_About_UpdateDetail"),
+                _host.Loc("Str_About_UpdateNow"),
+                _host.Loc("Str_Btn_Cancel")) { Owner = _host.Window };
             dlg.ShowDialog();
             if (!dlg.Confirmed) return;
             await InstallAsync(tag!);

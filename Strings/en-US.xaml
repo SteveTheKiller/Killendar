@@ -192,8 +192,8 @@
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> utility.</sys:String>
 
     <!-- Self-update prompt -->
-    <sys:String x:Key="Str_Dlg_UpdateMsg">Download and install Killendar {0}?</sys:String>
-    <sys:String x:Key="Str_Dlg_UpdateBullets">The app will close and reopen automatically.</sys:String>
+    <sys:String x:Key="Str_About_UpdateHeading">Download and install {0} {1}?</sys:String>
+    <sys:String x:Key="Str_About_UpdateDetail">The app will close and reopen automatically.</sys:String>
     <sys:String x:Key="Str_Btn_Update">Update</sys:String>
 
     <!-- Keyboard shortcuts overlay -->

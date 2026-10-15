@@ -148,8 +148,8 @@
     <sys:String x:Key="Str_About_DescA" xml:space="preserve">没有账户、没有同步、没有遥测的日历。你的约会保存在自己电脑上的单个文件里，需要的话还可以加密。一个 GPLv3 的 </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> 工具。</sys:String>
 
-    <sys:String x:Key="Str_Dlg_UpdateMsg">下载并安装 Killendar {0}?</sys:String>
-    <sys:String x:Key="Str_Dlg_UpdateBullets">应用将关闭并自动重新打开。</sys:String>
+    <sys:String x:Key="Str_About_UpdateHeading">下载并安装 {0} {1}？</sys:String>
+    <sys:String x:Key="Str_About_UpdateDetail">应用将关闭并自动重新打开。</sys:String>
     <sys:String x:Key="Str_Btn_Update">更新</sys:String>
 
     <sys:String x:Key="Str_Sc_Title">键盘快捷键</sys:String>

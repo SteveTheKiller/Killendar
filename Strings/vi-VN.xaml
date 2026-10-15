@@ -176,8 +176,8 @@
   <sys:String x:Key="Str_About_DescA" xml:space="preserve">Một ứng dụng lịch không cần tài khoản, không đồng bộ và không thu thập dữ liệu đo từ xa. Các cuộc hẹn của bạn nằm trong một tệp duy nhất trên chính máy tính của bạn và có thể được mã hóa nếu bạn muốn. Một tiện ích GPLv3 </sys:String>
   <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>
   <!-- Self-update prompt -->
-  <sys:String x:Key="Str_Dlg_UpdateMsg">Tải xuống và cài đặt Killendar {0}?</sys:String>
-  <sys:String x:Key="Str_Dlg_UpdateBullets">Ứng dụng sẽ tự động đóng rồi mở lại.</sys:String>
+  <sys:String x:Key="Str_About_UpdateHeading">Tải xuống và cài đặt {0} {1}?</sys:String>
+  <sys:String x:Key="Str_About_UpdateDetail">Ứng dụng sẽ tự động đóng rồi mở lại.</sys:String>
   <sys:String x:Key="Str_Btn_Update">Cập nhật</sys:String>
   <!-- Keyboard shortcuts overlay -->
   <sys:String x:Key="Str_Sc_Title">Phím tắt</sys:String>

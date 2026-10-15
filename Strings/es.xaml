@@ -148,8 +148,8 @@
     <sys:String x:Key="Str_About_DescA" xml:space="preserve">Un calendario sin cuenta, sin sincronización y sin telemetría. Tus citas viven en un único archivo en tu propia máquina, cifrado si así lo quieres. Una utilidad GPLv3 de </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>
 
-    <sys:String x:Key="Str_Dlg_UpdateMsg">¿Descargar e instalar Killendar {0}?</sys:String>
-    <sys:String x:Key="Str_Dlg_UpdateBullets">La aplicación se cerrará y volverá a abrirse automáticamente.</sys:String>
+    <sys:String x:Key="Str_About_UpdateHeading">¿Descargar e instalar {0} {1}?</sys:String>
+    <sys:String x:Key="Str_About_UpdateDetail">La aplicación se cerrará y volverá a abrirse automáticamente.</sys:String>
     <sys:String x:Key="Str_Btn_Update">Actualizar</sys:String>
 
     <sys:String x:Key="Str_Sc_Title">Atajos de teclado</sys:String>

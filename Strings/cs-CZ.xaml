@@ -148,8 +148,8 @@
     <sys:String x:Key="Str_About_DescA" xml:space="preserve">Kalendář bez účtu, bez synchronizace a bez telemetrie. Tvoje schůzky žijí v jediném souboru na tvém vlastním počítači, v případě zájmu šifrovaném. Nástroj GPLv3 od </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>
 
-    <sys:String x:Key="Str_Dlg_UpdateMsg">Stáhnout a nainstalovat Killendar {0}?</sys:String>
-    <sys:String x:Key="Str_Dlg_UpdateBullets">Aplikace se zavře a automaticky znovu otevře.</sys:String>
+    <sys:String x:Key="Str_About_UpdateHeading">Stáhnout a nainstalovat {0} {1}?</sys:String>
+    <sys:String x:Key="Str_About_UpdateDetail">Aplikace se zavře a automaticky znovu otevře.</sys:String>
     <sys:String x:Key="Str_Btn_Update">Aktualizovat</sys:String>
 
     <sys:String x:Key="Str_Sc_Title">Klávesové zkratky</sys:String>

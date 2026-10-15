@@ -192,8 +192,8 @@
     <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>
 
     <!-- Self-update prompt -->
-    <sys:String x:Key="Str_Dlg_UpdateMsg">Killendar {0} жүктеп орнатылсын ба?</sys:String>
-    <sys:String x:Key="Str_Dlg_UpdateBullets">Қолданба жабылып, автоматты түрде қайта ашылады.</sys:String>
+    <sys:String x:Key="Str_About_UpdateHeading">{0} {1} жүктеп орнату керек пе?</sys:String>
+    <sys:String x:Key="Str_About_UpdateDetail">Қолданба жабылып, автоматты түрде қайта ашылады.</sys:String>
     <sys:String x:Key="Str_Btn_Update">Жаңарту</sys:String>
 
     <!-- Keyboard shortcuts overlay -->

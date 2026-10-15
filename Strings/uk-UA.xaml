@@ -192,8 +192,8 @@
     <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>
 
     <!-- Self-update prompt -->
-    <sys:String x:Key="Str_Dlg_UpdateMsg">Завантажити й установити Killendar {0}?</sys:String>
-    <sys:String x:Key="Str_Dlg_UpdateBullets">Застосунок закриється і відкриється знову автоматично.</sys:String>
+    <sys:String x:Key="Str_About_UpdateHeading">Завантажити й установити {0} {1}?</sys:String>
+    <sys:String x:Key="Str_About_UpdateDetail">Застосунок закриється і відкриється знову автоматично.</sys:String>
     <sys:String x:Key="Str_Btn_Update">Оновити</sys:String>
 
     <!-- Keyboard shortcuts overlay -->

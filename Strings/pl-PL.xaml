@@ -217,8 +217,8 @@
     <sys:String x:Key="Str_About_AlwaysCheckOnStartup">Zawsze sprawdzaj aktualizacje przy uruchamianiu</sys:String>
     <sys:String x:Key="Str_About_DescA">Kalendarz bez konta, synchronizacji i połączeń telemetrycznych. Spotkania znajdują się w jednym pliku na Twoim komputerze i mogą być szyfrowane. Narzędzie GPLv3</sys:String>
     <sys:String x:Key="Str_About_DescB">.</sys:String>
-    <sys:String x:Key="Str_Dlg_UpdateMsg">Pobrać i zainstalować Killendar {0}?</sys:String>
-    <sys:String x:Key="Str_Dlg_UpdateBullets">Aplikacja zamknie się i uruchomi ponownie automatycznie.</sys:String>
+    <sys:String x:Key="Str_About_UpdateHeading">Pobrać i zainstalować {0} {1}?</sys:String>
+    <sys:String x:Key="Str_About_UpdateDetail">Aplikacja zamknie się i uruchomi ponownie automatycznie.</sys:String>
     <sys:String x:Key="Str_Sc_New">Nowe spotkanie</sys:String>
     <sys:String x:Key="Str_Sc_Today">Przejdź do dzisiaj</sys:String>
     <sys:String x:Key="Str_Sc_Prev">Poprzedni okres</sys:String>

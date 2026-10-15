@@ -148,8 +148,8 @@
     <sys:String x:Key="Str_About_DescA" xml:space="preserve">Hesapsız, senkronizasyonsuz ve telemetrisiz bir takvim. Randevuların kendi makinendeki tek bir dosyada yaşar, istersen şifreli. Bir GPLv3 </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> aracı.</sys:String>
 
-    <sys:String x:Key="Str_Dlg_UpdateMsg">Killendar {0} indirilip kurulsun mu?</sys:String>
-    <sys:String x:Key="Str_Dlg_UpdateBullets">Uygulama kapanacak ve otomatik olarak yeniden açılacak.</sys:String>
+    <sys:String x:Key="Str_About_UpdateHeading">{0} {1} indirilip yüklensin mi?</sys:String>
+    <sys:String x:Key="Str_About_UpdateDetail">Uygulama kapanacak ve otomatik olarak yeniden açılacak.</sys:String>
     <sys:String x:Key="Str_Btn_Update">Güncelle</sys:String>
 
     <sys:String x:Key="Str_Sc_Title">Klavye kısayolları</sys:String>

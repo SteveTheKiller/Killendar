@@ -148,8 +148,8 @@
     <sys:String x:Key="Str_About_DescA" xml:space="preserve">Un agenda sans compte, sans synchronisation et sans télémétrie. Vos rendez-vous vivent dans un seul fichier sur votre propre machine, chiffré si vous le souhaitez. Un utilitaire GPLv3 de </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>
 
-    <sys:String x:Key="Str_Dlg_UpdateMsg">Télécharger et installer Killendar {0} ?</sys:String>
-    <sys:String x:Key="Str_Dlg_UpdateBullets">L'application se fermera et se rouvrira automatiquement.</sys:String>
+    <sys:String x:Key="Str_About_UpdateHeading">Télécharger et installer {0} {1} ?</sys:String>
+    <sys:String x:Key="Str_About_UpdateDetail">L'application se fermera et se rouvrira automatiquement.</sys:String>
     <sys:String x:Key="Str_Btn_Update">Mettre à jour</sys:String>
 
     <sys:String x:Key="Str_Sc_Title">Raccourcis clavier</sys:String>

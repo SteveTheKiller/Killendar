@@ -148,8 +148,8 @@
     <sys:String x:Key="Str_About_DescA" xml:space="preserve">Ein Kalender ohne Konto, ohne Sync und ohne Telemetrie. Deine Termine liegen in einer einzigen Datei auf deinem eigenen Rechner, auf Wunsch verschlüsselt. Ein GPLv3-Werkzeug von </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>
 
-    <sys:String x:Key="Str_Dlg_UpdateMsg">Killendar {0} herunterladen und installieren?</sys:String>
-    <sys:String x:Key="Str_Dlg_UpdateBullets">Die App wird geschlossen und automatisch neu geöffnet.</sys:String>
+    <sys:String x:Key="Str_About_UpdateHeading">{0} {1} herunterladen und installieren?</sys:String>
+    <sys:String x:Key="Str_About_UpdateDetail">Die App wird geschlossen und automatisch neu geöffnet.</sys:String>
     <sys:String x:Key="Str_Btn_Update">Aktualisieren</sys:String>
 
     <sys:String x:Key="Str_Sc_Title">Tastenkürzel</sys:String>
