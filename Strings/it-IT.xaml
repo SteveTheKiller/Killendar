@@ -166,7 +166,7 @@
     <sys:String x:Key="Str_About_UpdateNow">Aggiorna</sys:String>
     <sys:String x:Key="Str_About_NotNow">Non ora</sys:String>
     <sys:String x:Key="Str_About_AlwaysCheckOnStartup">All'avvio controlla sempre aggiornamenti</sys:String>
-    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Un calendario senza account, senza sincronizzazione e senza nulla che telefoni a casa. I tuoi appuntamenti vivono in un unico file sulla tua macchina, cifrato se lo desideri. Un'utilità GPLv3 di </sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Un calendario senza account, senza sincronizzazione e senza telemetria. I tuoi appuntamenti vivono in un unico file sulla tua macchina, cifrato se lo desideri. Un'utilità GPLv3 di </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>
 
     <sys:String x:Key="Str_Dlg_UpdateMsg">Scaricare e installare Killendar {0}?</sys:String>

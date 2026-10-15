@@ -188,7 +188,7 @@
     <sys:String x:Key="Str_About_NotNow">Most nem</sys:String>
     <sys:String x:Key="Str_About_AlwaysCheckOnStartup">Mindig keressen frissítéseket indításkor</sys:String>
     <!-- Tagline is split so the GPLv3 license and the Killer Tools link stay untranslated. -->
-    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Egy naptár fiók, szinkronizálás és otthoni telefonálás nélkül. Az Ön találkozói egy fájlban élnek a saját gépén, titkosítva, ha akarja. Egy GPLv3 </sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Egy naptár fiók, szinkronizálás és telemetria nélkül. Az Ön találkozói egy fájlban élnek a saját gépén, titkosítva, ha akarja. Egy GPLv3 </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> hasznosság.</sys:String>
 
     <!-- Self-update prompt -->

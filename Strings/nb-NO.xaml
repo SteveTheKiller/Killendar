@@ -188,7 +188,7 @@
     <sys:String x:Key="Str_About_NotNow">Ikke nå</sys:String>
     <sys:String x:Key="Str_About_AlwaysCheckOnStartup">Se alltid etter ved oppstart</sys:String>
     <!-- Tagline is split so the GPLv3 license and the Killer Tools link stay untranslated. -->
-    <sys:String x:Key="Str_About_DescA" xml:space="preserve">En kalender uten konto, uten synkronisering og uten at noe ringer hjem. Avtalene dine ligger i én fil på din egen maskin, kryptert hvis du vil. Et GPLv3- </sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">En kalender uten konto, uten synkronisering og uten telemetri. Avtalene dine ligger i én fil på din egen maskin, kryptert hvis du vil. Et GPLv3- </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> verktøy.</sys:String>
 
     <!-- Self-update prompt -->

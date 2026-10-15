@@ -145,7 +145,7 @@
     <sys:String x:Key="Str_About_UpdateNow">Aktualizovat</sys:String>
     <sys:String x:Key="Str_About_NotNow">Teď ne</sys:String>
     <sys:String x:Key="Str_About_AlwaysCheckOnStartup">Vždy kontrolovat aktualizace při spuštění</sys:String>
-    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Kalendář bez účtu, bez synchronizace a bez čehokoli, co volá domů. Tvoje schůzky žijí v jediném souboru na tvém vlastním počítači, v případě zájmu šifrovaném. Nástroj GPLv3 od </sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Kalendář bez účtu, bez synchronizace a bez telemetrie. Tvoje schůzky žijí v jediném souboru na tvém vlastním počítači, v případě zájmu šifrovaném. Nástroj GPLv3 od </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>
 
     <sys:String x:Key="Str_Dlg_UpdateMsg">Stáhnout a nainstalovat Killendar {0}?</sys:String>

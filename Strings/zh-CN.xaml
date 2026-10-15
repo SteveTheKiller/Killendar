@@ -145,7 +145,7 @@
     <sys:String x:Key="Str_About_UpdateNow">更新</sys:String>
     <sys:String x:Key="Str_About_NotNow">以后再说</sys:String>
     <sys:String x:Key="Str_About_AlwaysCheckOnStartup">启动时始终检查更新</sys:String>
-    <sys:String x:Key="Str_About_DescA" xml:space="preserve">没有账户、没有同步、不向任何地方回传的日历。你的约会保存在自己电脑上的单个文件里，需要的话还可以加密。一个 GPLv3 的 </sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">没有账户、没有同步、没有遥测的日历。你的约会保存在自己电脑上的单个文件里，需要的话还可以加密。一个 GPLv3 的 </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> 工具。</sys:String>
 
     <sys:String x:Key="Str_Dlg_UpdateMsg">下载并安装 Killendar {0}?</sys:String>

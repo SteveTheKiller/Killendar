@@ -145,7 +145,7 @@
     <sys:String x:Key="Str_About_UpdateNow">আপডেট</sys:String>
     <sys:String x:Key="Str_About_NotNow">এখন নয়</sys:String>
     <sys:String x:Key="Str_About_AlwaysCheckOnStartup">অ্যাপ চালু হলে সর্বদা আপডেট পরীক্ষা করুন</sys:String>
-    <sys:String x:Key="Str_About_DescA" xml:space="preserve">কোনো অ্যাকাউন্ট নেই, সিঙ্ক নেই, কোথাও কিছু পাঠায় না এমন একটি ক্যালেন্ডার। আপনার অ্যাপয়েন্টমেন্ট থাকে নিজের মেশিনের একটিমাত্র ফাইলে, চাইলে এনক্রিপ্ট করা। একটি GPLv3 </sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">কোনো অ্যাকাউন্ট নেই, সিঙ্ক নেই, টেলিমেট্রি নেই এমন একটি ক্যালেন্ডার। আপনার অ্যাপয়েন্টমেন্ট থাকে নিজের মেশিনের একটিমাত্র ফাইলে, চাইলে এনক্রিপ্ট করা। একটি GPLv3 </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> ইউটিলিটি।</sys:String>
 
     <sys:String x:Key="Str_Dlg_UpdateMsg">Killendar {0} ডাউনলোড করে ইনস্টল করবেন?</sys:String>

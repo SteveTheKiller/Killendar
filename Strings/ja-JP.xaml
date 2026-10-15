@@ -145,7 +145,7 @@
     <sys:String x:Key="Str_About_UpdateNow">更新</sys:String>
     <sys:String x:Key="Str_About_NotNow">後で</sys:String>
     <sys:String x:Key="Str_About_AlwaysCheckOnStartup">起動時に常に更新を確認する</sys:String>
-    <sys:String x:Key="Str_About_DescA" xml:space="preserve">アカウントなし、同期なし、どこにも通信しないカレンダー。予定は自分のマシンにある一つのファイルに収まり、望むなら暗号化されます。GPLv3 の </sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">アカウントなし、同期なし、テレメトリなしのカレンダー。予定は自分のマシンにある一つのファイルに収まり、望むなら暗号化されます。GPLv3 の </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> ユーティリティです。</sys:String>
 
     <sys:String x:Key="Str_Dlg_UpdateMsg">Killendar {0} をダウンロードしてインストールしますか?</sys:String>

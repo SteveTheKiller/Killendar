@@ -18,6 +18,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Fixed
 - Turning off Film Grain removes the grain from the calendar pane too.
 - Screen readers no longer read toolbar, menu and title bar icons as unreadable symbols, and the appointment fields, the Repeats button, each calendar view and each day in Month view now have names.
+- The About card says Killendar has no telemetry instead of claiming nothing phones home, since it now checks for updates at startup.
 - The About card's update notice and update dialog are translated instead of always showing English.
 - Toolbar menus open leftward under their button so they stay inside the window instead of running off its right edge.
 - Corrected the Hungarian name of the rolling weeks month mode.

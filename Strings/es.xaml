@@ -145,7 +145,7 @@
     <sys:String x:Key="Str_About_UpdateNow">Actualizar</sys:String>
     <sys:String x:Key="Str_About_NotNow">Ahora no</sys:String>
     <sys:String x:Key="Str_About_AlwaysCheckOnStartup">Buscar siempre actualizaciones al iniciar</sys:String>
-    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Un calendario sin cuenta, sin sincronización y sin nada que llame a casa. Tus citas viven en un único archivo en tu propia máquina, cifrado si así lo quieres. Una utilidad GPLv3 de </sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">Un calendario sin cuenta, sin sincronización y sin telemetría. Tus citas viven en un único archivo en tu propia máquina, cifrado si así lo quieres. Una utilidad GPLv3 de </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>
 
     <sys:String x:Key="Str_Dlg_UpdateMsg">¿Descargar e instalar Killendar {0}?</sys:String>

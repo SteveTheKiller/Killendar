@@ -188,7 +188,7 @@
     <sys:String x:Key="Str_About_NotNow">Not now</sys:String>
     <sys:String x:Key="Str_About_AlwaysCheckOnStartup">Always check on startup</sys:String>
     <!-- Tagline is split so the GPLv3 license and the Killer Tools link stay untranslated. -->
-    <sys:String x:Key="Str_About_DescA" xml:space="preserve">A calendar with no account, no sync and nothing phoning home. Your appointments live in one file on your own machine, encrypted if you want them to be. A GPLv3 </sys:String>
+    <sys:String x:Key="Str_About_DescA" xml:space="preserve">A calendar with no account, no sync and no telemetry. Your appointments live in one file on your own machine, encrypted if you want them to be. A GPLv3 </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> utility.</sys:String>
 
     <!-- Self-update prompt -->
