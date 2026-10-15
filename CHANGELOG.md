@@ -13,6 +13,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Changed
 - The period header above the calendar, the sidebar date heading and the dialog headings use Lacquer, the wordmark's app-name face, in place of Killer Sans. 98SE keeps Killer Sans.
 - Context menus use Killer Sans UI like the rest of the interface instead of Segoe UI.
+- The Light theme draws a softer shadow under the toolbars.
 
 ### Fixed
 - The About card's update notice and update dialog are translated instead of always showing English.

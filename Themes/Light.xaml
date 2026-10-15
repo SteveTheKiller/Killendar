@@ -80,7 +80,7 @@
     <SolidColorBrush x:Key="DialogTitleBarBrush" Color="#FFDCDCDC" po:Freeze="True"/>
     <CornerRadius x:Key="PanelCornerRadius">6</CornerRadius>
     <sys:Double x:Key="TitleWordmarkSize" xmlns:sys="clr-namespace:System;assembly=mscorlib">15</sys:Double>
-    <sys:Double x:Key="BarShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.38</sys:Double>
+    <sys:Double x:Key="BarShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.18</sys:Double>
     <CornerRadius x:Key="WindowCornerRadius">7</CornerRadius>
     <sys:Double x:Key="TitleWordmarkBoldSize" xmlns:sys="clr-namespace:System;assembly=mscorlib">22.52</sys:Double>
     <sys:Double x:Key="TitleBarHeight" xmlns:sys="clr-namespace:System;assembly=mscorlib">32</sys:Double>
