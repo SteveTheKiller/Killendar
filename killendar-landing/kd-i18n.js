@@ -18,7 +18,7 @@ var I18N = {
     en: {
       "package_install_intro": "Or install from your terminal:",
       // ---- index.html ----
-      tag: "A calendar you can encrypt, with no account, no sync, and nothing phoning home.",
+      tag: "A calendar with optional encryption, no account and no synchronization.",
       b1h: "Encrypted, if you want it",
       b1a: "Set a password and the file is <b>encrypted at rest</b> with SQLCipher.",
       b1b: "AES-256, per-page HMAC-SHA512, SQLCipher's own key derivation.",
@@ -198,7 +198,7 @@ var I18N = {
     },
     vi: {
       "package_install_intro": "Hoặc cài đặt từ cửa sổ dòng lệnh:",
-      "tag": "Một ứng dụng lịch có thể mã hóa, không cần tài khoản, không đồng bộ và không âm thầm gửi dữ liệu về máy chủ.",
+      "tag": "Lịch có mã hóa tùy chọn, không cần tài khoản hay đồng bộ hóa.",
       "b1h": "Mã hóa nếu bạn muốn",
       "b1a": "Đặt mật khẩu và tệp sẽ được <b>mã hóa khi lưu trữ</b> bằng SQLCipher.",
       "b1b": "AES-256, HMAC-SHA512 trên từng trang, cùng cơ chế dẫn xuất khóa riêng của SQLCipher.",
@@ -378,7 +378,7 @@ var I18N = {
     },
     hu: {
       "package_install_intro": "Vagy telepítse a terminálból:",
-      "tag": "Titkosítható naptár fiók, szinkronizálás és otthoni telefonálás nélkül.",
+      "tag": "Naptár választható titkosítással, fiók és szinkronizálás nélkül.",
       "b1h": "Titkosítva, ha akarod",
       "b1a": "Állítson be egy jelszót, és a fájl <b>nyugalmi állapotban titkosítva lesz</b> az SQLCipher segítségével.",
       "b1b": "AES-256, oldalankénti HMAC-SHA512, az SQLCipher saját kulcsának levezetése.",
@@ -561,7 +561,7 @@ var I18N = {
     },
     es: {
       "package_install_intro": "O instala desde tu terminal:",
-      tag: "Un calendario que puedes cifrar, sin cuenta, sin sincronización y sin nada que llame a casa.",
+      tag: "Un calendario con cifrado opcional, sin cuenta ni sincronización.",
       b1h: "Cifrado, si lo quieres",
       b1a: "Pon una contraseña y el archivo queda <b>cifrado en reposo</b> con SQLCipher.",
       b1b: "AES-256, HMAC-SHA512 por página y la derivación de clave del propio SQLCipher.",
@@ -741,7 +741,7 @@ var I18N = {
     },
     fr: {
       "package_install_intro": "Ou installez depuis votre terminal :",
-      tag: "Un calendrier que vous pouvez chiffrer, sans compte, sans synchronisation et sans rien qui téléphone à la maison.",
+      tag: "Un calendrier avec chiffrement facultatif, sans compte ni synchronisation.",
       b1h: "Chiffré, si vous voulez",
       b1a: "Mettez un mot de passe et le fichier est <b>chiffré au repos</b> avec SQLCipher.",
       b1b: "AES-256, HMAC-SHA512 par page, la dérivation de clé de SQLCipher lui-même.",
@@ -921,7 +921,7 @@ var I18N = {
     },
     de: {
       "package_install_intro": "Oder über das Terminal installieren:",
-      tag: "Ein Kalender zum Verschlüsseln - ohne Konto, ohne Sync und ohne dass etwas nach Hause telefoniert.",
+      tag: "Ein Kalender mit optionaler Verschlüsselung, ohne Konto und Synchronisierung.",
       b1h: "Verschlüsselt, wenn Sie wollen",
       b1a: "Passwort setzen, und die Datei ist mit SQLCipher <b>im Ruhezustand verschlüsselt</b>.",
       b1b: "AES-256, HMAC-SHA512 pro Seite, SQLCiphers eigene Schlüsselableitung.",
@@ -1101,7 +1101,7 @@ var I18N = {
     },
     cs: {
       "package_install_intro": "Nebo nainstalujte z terminálu:",
-      tag: "Kalendář, který můžete zašifrovat - bez účtu, bez synchronizace a bez telefonování domů.",
+      tag: "Kalendář s volitelným šifrováním, bez účtu a synchronizace.",
       b1h: "Šifrovaný, pokud chcete",
       b1a: "Nastavte heslo a soubor je <b>šifrovaný v klidu</b> pomocí SQLCipher.",
       b1b: "AES-256, HMAC-SHA512 na stránku, vlastní odvození klíče SQLCipheru.",
@@ -1281,7 +1281,7 @@ var I18N = {
     },
     tr: {
       "package_install_intro": "Veya terminalinizden yükleyin:",
-      tag: "Şifreleyebileceğiniz bir takvim - hesap yok, senkronizasyon yok, eve telefon eden hiçbir şey yok.",
+      tag: "İsteğe bağlı şifrelemeli, hesap ve eşitleme gerektirmeyen bir takvim.",
       b1h: "İsterseniz şifreli",
       b1a: "Bir parola belirleyin, dosya SQLCipher ile <b>bekleme halinde şifrelenir</b>.",
       b1b: "AES-256, sayfa başına HMAC-SHA512, SQLCipher'ın kendi anahtar türetmesi.",
@@ -1461,7 +1461,7 @@ var I18N = {
     },
     ja: {
       "package_install_intro": "またはターミナルからインストール：",
-      tag: "暗号化できるカレンダー。アカウントなし、同期なし、外部に何も送信しません。",
+      tag: "暗号化を選べるカレンダー。アカウントや同期は不要です。",
       b1h: "望めば暗号化",
       b1a: "パスワードを設定すると、ファイルは SQLCipher で<b>保存時に暗号化</b>されます。",
       b1b: "AES-256、ページごとの HMAC-SHA512、SQLCipher 自身の鍵導出。",
@@ -1641,7 +1641,7 @@ var I18N = {
     },
     pl: {
       "package_install_intro": "Lub zainstaluj z terminala:",
-      tag: "Kalendarz, który możesz zaszyfrować - bez konta, bez synchronizacji i bez niczego, co dzwoni do domu.",
+      tag: "Kalendarz z opcjonalnym szyfrowaniem, bez konta i synchronizacji.",
       b1h: "Szyfrowany, jeśli chcesz",
       b1a: "Ustaw hasło, a plik jest <b>szyfrowany w spoczynku</b> przez SQLCipher.",
       b1b: "AES-256, HMAC-SHA512 na stronę i własna derywacja klucza SQLCipher.",
@@ -1830,7 +1830,7 @@ var I18N = {
     // by U+09BC anywhere in this object.
     bn: {
       "package_install_intro": "অথবা টার্মিনাল থেকে ইনস্টল করুন:",
-      tag: "এমন একটি ক্যালেন্ডার যা আপনি এনক্রিপ্ট করতে পারেন - অ্যাকাউন্ট নেই, সিঙ্ক নেই, বাইরে কিছু পাঠায় না।",
+      tag: "ঐচ্ছিক এনক্রিপশনসহ ক্যালেন্ডার, অ্যাকাউন্ট বা সিঙ্ক ছাড়াই।",
       b1h: "চাইলে এনক্রিপ্টেড",
       b1a: "পাসওয়ার্ড দিলে ফাইলটি SQLCipher দিয়ে <b>স্টোরেজে এনক্রিপ্টেড</b> থাকে।",
       b1b: "AES-256, প্রতি পৃষ্ঠায় HMAC-SHA512, SQLCipher-এর নিজস্ব কী ডেরিভেশন।",
@@ -2010,7 +2010,7 @@ var I18N = {
     },
     'zh-CN': {
       "package_install_intro": "或从终端安装：",
-      tag: "一个可以加密的日历 - 无账户、无同步、不向外发送任何东西。",
+      tag: "可选择加密的日历，不需要账户或同步。",
       b1h: "需要时即可加密",
       b1a: "设个密码，文件就由 SQLCipher <b>静态加密</b>。",
       b1b: "AES-256、每页 HMAC-SHA512、SQLCipher 自带的密钥派生。",
@@ -2190,7 +2190,7 @@ var I18N = {
     },
     'zh-TW': {
       "package_install_intro": "或從終端機安裝：",
-      tag: "一個可以加密的行事曆 - 無帳戶、無同步、不向外傳送任何東西。",
+      tag: "可選擇加密的行事曆，不需要帳戶或同步。",
       b1h: "需要時即可加密",
       b1a: "設個密碼，檔案就由 SQLCipher <b>靜態加密</b>。",
       b1b: "AES-256、每頁 HMAC-SHA512、SQLCipher 自帶的金鑰派生。",
@@ -2371,7 +2371,7 @@ var I18N = {
     it: {
       "package_install_intro": "Oppure installa dal terminale:",
       // ---- index.html ----
-      tag: "Un calendario che puoi cifrare, senza account, senza sincronizzazione e senza nulla che telefoni a casa.",
+      tag: "Un calendario con cifratura facoltativa, senza account né sincronizzazione.",
       b1h: "Cifrato, se lo vuoi",
       b1a: "Imposta una password e il file è <b>cifrato a riposo</b> con SQLCipher.",
       b1b: "AES-256, HMAC-SHA512 per pagina, la derivazione di chiave di SQLCipher stesso.",
@@ -2553,7 +2553,7 @@ var I18N = {
     ru: {
       "package_install_intro": "Или установите через терминал:",
       // ---- index.html ----
-      tag: "Календарь, который можно зашифровать: без учётной записи, без синхронизации и без обращений на сторону.",
+      tag: "Календарь с необязательным шифрованием, без аккаунта и синхронизации.",
       b1h: "Шифрование, если оно вам нужно",
       b1a: "Задайте пароль, и файл будет <b>зашифрован на диске</b> с помощью SQLCipher.",
       b1b: "AES-256, HMAC-SHA512 для каждой страницы, собственная выработка ключа SQLCipher.",
@@ -2735,7 +2735,7 @@ var I18N = {
     kk: {
       "package_install_intro": "Немесе терминал арқылы орнатыңыз:",
       // ---- index.html ----
-      tag: "Шифрлауға болатын күнтізбе: тіркелгісіз, синхрондаусыз және ешқайда хабарласпайды.",
+      tag: "Қосымша шифрлауы бар, тіркелгісіз және синхрондаусыз күнтізбе.",
       b1h: "Қаласаңыз, шифрланған",
       b1a: "Құпия сөз қойсаңыз, файл SQLCipher арқылы <b>дискіде шифрланады</b>.",
       b1b: "AES-256, әр бетке HMAC-SHA512, SQLCipher-дің өз кілт шығару әдісі.",
@@ -2917,7 +2917,7 @@ var I18N = {
 };
 I18N.uk = {
  "package_install_intro": "Або встановіть через термінал:",
- "tag": "Календар, який можна зашифрувати: без облікового запису, без синхронізації та без звернень на бік.",
+ "tag": "Календар із необов'язковим шифруванням, без облікового запису й синхронізації.",
  "b1h": "Шифрування, якщо воно вам потрібне",
  "b1a": "Задайте пароль, і файл буде <b>зашифровано на диску</b> за допомогою SQLCipher.",
  "b1b": "AES-256, HMAC-SHA512 для кожної сторінки, власне вироблення ключа SQLCipher.",
@@ -3097,7 +3097,7 @@ I18N.uk = {
 };
 I18N.nb = {
  "package_install_intro": "Eller installer via terminalen:",
- "tag": "En kalender du kan kryptere, uten konto, uten synkronisering og uten at noe ringer hjem.",
+ "tag": "En kalender med valgfri kryptering, uten konto eller synkronisering.",
  "b1h": "Kryptert, hvis du vil",
  "b1a": "Sett et passord, så er filen <b>kryptert i hvile</b> med SQLCipher.",
  "b1b": "AES-256, HMAC-SHA512 per side og SQLCiphers egen nøkkelavledning.",
@@ -3277,7 +3277,7 @@ I18N.nb = {
 };
 I18N.pt = {
  "package_install_intro": "Ou instale pelo terminal:",
- "tag": "Uma agenda que você pode criptografar, sem conta, sem sincronização e sem enviar nada para fora.",
+ "tag": "Um calendário com criptografia opcional, sem conta nem sincronização.",
  "b1h": "Criptografada, se você quiser",
  "b1a": "Defina uma senha e o arquivo fica <b>criptografado em repouso</b> com SQLCipher.",
  "b1b": "AES-256, HMAC-SHA512 por página, derivação de chave própria do SQLCipher.",
