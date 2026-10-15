@@ -163,13 +163,16 @@
     if (placeholder) placeholder.remove();
     // One line per screenshot, describing what it actually shows - the tooltip on hover.
     var SHOTS = [
-      { src: 'screenshots/01.png', desc: 'Multi-week view, Sepulchre theme - six weeks of color-coded bars beside a packed day list' },
-      { src: 'screenshots/02.png', desc: 'Month view, Delirium theme - a full August of appointments, all-day runs across the top of each day' },
-      { src: 'screenshots/03.png', desc: 'Week view, Decay theme - a five-day work week with overlapping appointments packed into lanes' },
-      { src: 'screenshots/04.png', desc: 'Keyboard shortcuts, Black theme - the F1 overlay showing every binding on a drawn keyboard' },
-      { src: 'screenshots/05.png', desc: 'Day view, 98SE theme - one wall-to-wall day in the hour grid, beside the day list' },
-      { src: 'screenshots/06.png', desc: 'Agenda view, Blood theme - the language menu and the date format picker' },
-      { src: 'screenshots/07.png', desc: 'Multi-week view, Ectoplasm theme - switching view mode from the toolbar' }
+      { src: 'screenshots/01.png', desc: 'Month view, Delirium theme - a full October, all-day runs across the top of each day' },
+      { src: 'screenshots/02.png', desc: 'Week view, Decay theme - a five-day work week, toolbar with small icons and labels beside them' },
+      { src: 'screenshots/03.png', desc: 'Day view, 98SE theme - editing an appointment in the sidebar beside the hour grid' },
+      { src: 'screenshots/04.png', desc: 'Agenda view, Blood theme - the days ahead as a list, toolbar labels under the icons, Film Grain off' },
+      { src: 'screenshots/05.png', desc: 'Rolling weeks, Ectoplasm theme - three weeks from the current one at 110% app zoom' },
+      { src: 'screenshots/06.png', desc: 'Keyboard shortcuts, Black theme with the teal accent - the F1 overlay with every binding on a drawn keyboard' },
+      { src: 'screenshots/07.png', desc: 'About card, Sepulchre theme - version, signature and build details at 120% app zoom, text-only toolbar' },
+      { src: 'screenshots/08.png', desc: 'Month view, Light theme with the red accent - Film Grain off' },
+      { src: 'screenshots/09.png', desc: 'Week view, Malaise theme - at 90% app zoom, labels beside the icons' },
+      { src: 'screenshots/10.png', desc: 'Month view, Dark theme with the red accent - Film Grain on' }
     ];
     SHOTS.forEach(function (shot, idx) {
       var b = document.createElement('button');

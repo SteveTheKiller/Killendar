@@ -26,8 +26,8 @@ Internals, formats, storage details, and limits live on the [technical page](htt
 
 | | |
 | --- | --- |
-| ![Killendar month view, a full August of color-coded appointments](docs/month-view.png)<br>**Month view** - A full August of appointments, with all-day runs banded across the top of each day, on the Delirium theme. | ![Killendar week view showing a five-day work week](docs/week-view.png)<br>**Week view** - A five-day work week, overlapping appointments packed into lanes, on the Decay theme. |
-| ![Killendar day view with the hour grid and day list](docs/day-view-editor.png)<br>**Day view** - One wall-to-wall day in the hour grid beside the day list, on the 98SE theme. | ![Killendar keyboard shortcuts overlay showing every binding on a drawn keyboard](docs/shortcuts-map.png)<br>**Shortcuts map** - The F1 overlay's keyboard view, every bound key lit and labeled, on the Black theme. |
+| ![Killendar month view, a full October of color-coded appointments](docs/month-view.png)<br>**Month view** - A full October of appointments, with all-day runs banded across the top of each day, on the Delirium theme. | ![Killendar week view showing a five-day work week](docs/week-view.png)<br>**Week view** - A five-day work week with a compact toolbar of small icons and labels beside them, on the Decay theme. |
+| ![Killendar day view editing an appointment in the sidebar](docs/day-view-editor.png)<br>**Day view** - Editing an appointment in the sidebar beside the hour grid, on the 98SE theme. | ![Killendar keyboard shortcuts overlay showing every binding on a drawn keyboard](docs/shortcuts-map.png)<br>**Shortcuts map** - The F1 overlay's keyboard view, every bound key lit and labeled, on the Black theme with the teal accent. |
 
 ## Requirements
 
