@@ -356,6 +356,9 @@ namespace Killendar.Services
             // The UI face (98SE declares its own) and the titlebar Killendar name, which sits on the
             // wordmark baseline in Killer Sans like KillerPDF's filename.
             if (!d.Contains("UiFont")) d["UiFont"] = KillerSansUiStack;
+            // Context menus, as in every family app: Killer Sans UI at 12. 98SE states its own face and size.
+            if (!d.Contains("MenuFontFamily")) d["MenuFontFamily"] = KillerSansUiStack;
+            if (!d.Contains("MenuFontSize")) d["MenuFontSize"] = 12.0;
             if (!d.Contains("FileNameFont")) d["FileNameFont"] = square ? d["UiFont"] : KillerSansFont;
             if (!d.Contains("FileNameFontSize")) d["FileNameFontSize"] = square ? 11d : 18d;
             if (!d.Contains("FileNameTransform"))
