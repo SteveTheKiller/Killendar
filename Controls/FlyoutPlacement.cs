@@ -70,6 +70,30 @@ namespace Killendar.Controls
         }
 
         /// <summary>
+        /// A toolbar dropdown: below its own button, with the menu's right edge on the button's
+        /// right edge. The toolbar's dropdowns sit at the right end of the window, so a menu that
+        /// starts at the button's left edge runs past the window and out over the desktop; this
+        /// one opens leftward, back into the window.
+        /// </summary>
+        internal static void AttachBelowRight(ContextMenu menu, FrameworkElement button)
+        {
+            menu.PlacementTarget = button;
+            menu.Placement = PlacementMode.Custom;
+            menu.HorizontalOffset = 0;
+            menu.VerticalOffset = 0;
+            menu.CustomPopupPlacementCallback = (popupSize, targetSize, _) =>
+            {
+                var halo = new Border
+                {
+                    Style = Application.Current?.TryFindResource("FlyoutCard") as Style
+                }.Margin;
+                double x = targetSize.Width - popupSize.Width + halo.Right;
+                double y = targetSize.Height - halo.Top + 4;
+                return [new CustomPopupPlacement(new Point(x, y), PopupPrimaryAxis.None)];
+            };
+        }
+
+        /// <summary>
         /// Coordinates include the template's external shadow halo; padding inside the card
         /// does not contribute to its outer placement.
         /// </summary>

@@ -386,6 +386,8 @@
     <sys:String x:Key="Str_Ctx_Expand">展开</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">自然月</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">滚动周</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">在自然月和滚动周之间切换月视图</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">月视图模式 (R)</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">保存正在编辑的日程</sys:String>
     <sys:String x:Key="Str_KS_DeleteAppt">删除正在编辑的日程</sys:String>
     <sys:String x:Key="Str_KS_AllDay">编辑时切换全天日程</sys:String>

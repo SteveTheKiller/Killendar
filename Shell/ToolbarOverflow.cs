@@ -74,7 +74,7 @@ namespace Killendar.Shell
             public FrameworkElement Element = null!;
             public double Width;                 // cached from a frame where it was visible
             public bool Shed;
-            public Func<IEnumerable<MenuItem>> MenuItems = null!;   // what it contributes to "..."
+            public Func<IEnumerable<Control>> MenuItems = null!;    // what it contributes to "..."
         }
 
         private List<ShedItem> _shed = null!;
@@ -105,8 +105,9 @@ namespace Killendar.Shell
         private void ViewOverflowBtn_Click(object sender, RoutedEventArgs e)
         {
             RebuildOverflowMenu();
-            ViewOverflowMenu.PlacementTarget = ViewOverflowBtn;
-            ViewOverflowMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+            // The "..." button is at the window's right end; open leftward so the menu stays
+            // inside the window.
+            Controls.FlyoutPlacement.AttachBelowRight(ViewOverflowMenu, ViewOverflowBtn);
             ViewOverflowMenu.IsOpen = true;
         }
 
@@ -233,8 +234,9 @@ namespace Killendar.Shell
             }
         }
 
-        /// <summary>The four view entries, carrying their own glyphs and shortcut keys.</summary>
-        private IEnumerable<MenuItem> ViewMenuItems()
+        /// <summary>The four view entries, carrying their own glyphs and shortcut keys, then the
+        /// Month mode choice the Month button's dropdown offers.</summary>
+        private IEnumerable<Control> ViewMenuItems()
         {
             foreach (var btn in new[] { TabMonth, TabWeek, TabDay, TabAgenda })
             {
@@ -257,6 +259,22 @@ namespace Killendar.Shell
                 };
                 mi.Click += (_, _) => { if (tag != null) _calendar.SelectView(tag); };
                 yield return mi;
+            }
+
+            yield return new Separator();
+            bool rollingNow = _calendar.MonthRollingMode;
+            foreach (var (rolling, key) in new[] { (false, "Str_MonthMode_Calendar"), (true, "Str_MonthMode_Rolling") })
+            {
+                bool target = rolling;
+                var mode = new MenuItem
+                {
+                    Header = Loc(key),
+                    IsCheckable = true,
+                    IsChecked = rollingNow == target,
+                    InputGestureText = rollingNow == target ? "" : "R",
+                };
+                mode.Click += (_, _) => { _calendar.SelectView("Month"); _calendar.SetMonthRollingMode(target); };
+                yield return mode;
             }
         }
 

@@ -278,6 +278,8 @@
     <sys:String x:Key="Str_Ctx_Expand">Expandir</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">Mês do calendário</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">Semanas contínuas</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">Alternar a visualização de mês entre mês do calendário e semanas contínuas</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">Modo da visualização de mês (R)</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Abrir</sys:String>
     <sys:String x:Key="Str_Ctx_Rename">Renomear</sys:String>
     <sys:String x:Key="Str_Ctx_Delete">Excluir</sys:String>

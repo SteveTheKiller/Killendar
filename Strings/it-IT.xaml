@@ -246,6 +246,8 @@
     <sys:String x:Key="Str_Ctx_Expand">Espandi</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">Mese di calendario</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">Settimane scorrevoli</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">Alterna la vista mese tra mese di calendario e settimane scorrevoli</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">Modalità vista mese (R)</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Apri</sys:String>
     <sys:String x:Key="Str_Ctx_Rename">Rinomina</sys:String>
     <sys:String x:Key="Str_Ctx_Delete">Elimina</sys:String>

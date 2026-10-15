@@ -386,6 +386,8 @@
     <sys:String x:Key="Str_Ctx_Expand">Développer</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">Mois civil</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">Semaines glissantes</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">Basculer la vue mois entre mois civil et semaines glissantes</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">Mode de la vue mois (R)</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">Enregistrer le rendez-vous en cours de modification</sys:String>
     <sys:String x:Key="Str_KS_DeleteAppt">Supprimer le rendez-vous en cours de modification</sys:String>
     <sys:String x:Key="Str_KS_AllDay">Basculer le mode journée entière pendant la modification</sys:String>

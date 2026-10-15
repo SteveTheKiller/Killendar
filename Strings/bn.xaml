@@ -386,6 +386,8 @@
     <sys:String x:Key="Str_Ctx_Expand">প্রসারিত করুন</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">ক্যালেন্ডার মাস</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">চলমান সপ্তাহ</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">মাস ভিউ ক্যালেন্ডার মাস ও চলমান সপ্তাহের মধ্যে বদলান</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">মাস ভিউ মোড (R)</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">সম্পাদিত অ্যাপয়েন্টমেন্ট সংরক্ষণ করুন</sys:String>
     <sys:String x:Key="Str_KS_DeleteAppt">সম্পাদিত অ্যাপয়েন্টমেন্ট মুছুন</sys:String>
     <sys:String x:Key="Str_KS_AllDay">সম্পাদনার সময় সারাদিন টগল করুন</sys:String>

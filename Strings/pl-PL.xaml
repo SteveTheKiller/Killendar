@@ -277,6 +277,8 @@
     <sys:String x:Key="Str_Ctx_Expand">Rozwiń</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">Miesiąc kalendarzowy</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">Kroczące tygodnie</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">Przełącz widok miesiąca między miesiącem kalendarzowym a kroczącymi tygodniami</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">Tryb widoku miesiąca (R)</sys:String>
     <sys:String x:Key="Str_Ctx_CopyFile">Kopiuj plik</sys:String>
     <sys:String x:Key="Str_TT_CopyFile">Umieść plik w schowku, aby wkleić go w Eksploratorze lub wiadomości e-mail</sys:String>
     <sys:String x:Key="Str_TT_NewKcal">Nowy Killendar</sys:String>

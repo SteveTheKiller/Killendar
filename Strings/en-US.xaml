@@ -278,6 +278,8 @@
     <sys:String x:Key="Str_Ctx_Expand">Expand</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">Calendar month</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">Rolling weeks</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">Switch month view between calendar month and rolling weeks</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">Month view mode (R)</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Open</sys:String>
     <sys:String x:Key="Str_Ctx_Rename">Rename</sys:String>
     <sys:String x:Key="Str_Ctx_Delete">Delete</sys:String>

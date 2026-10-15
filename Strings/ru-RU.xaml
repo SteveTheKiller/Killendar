@@ -279,6 +279,8 @@
     <sys:String x:Key="Str_Ctx_Expand">Развернуть</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">Календарный месяц</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">Скользящие недели</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">Переключить вид месяца между календарным месяцем и скользящими неделями</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">Режим вида месяца (R)</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Открыть</sys:String>
     <sys:String x:Key="Str_Ctx_Rename">Переименовать</sys:String>
     <sys:String x:Key="Str_Ctx_Delete">Удалить</sys:String>

@@ -386,6 +386,8 @@
     <sys:String x:Key="Str_Ctx_Expand">展開</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">暦月</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">連続する週</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">月表示を暦月と連続する週で切り替え</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">月表示のモード (R)</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">編集中の予定を保存</sys:String>
     <sys:String x:Key="Str_KS_DeleteAppt">編集中の予定を削除</sys:String>
     <sys:String x:Key="Str_KS_AllDay">編集中に終日を切り替える</sys:String>

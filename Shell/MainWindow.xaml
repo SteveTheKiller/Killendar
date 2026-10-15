@@ -279,9 +279,10 @@
 
                     <StackPanel x:Name="ViewTabs" Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
                         <Button x:Name="TabMonth"  Content="{DynamicResource Str_View_Month}"  Style="{StaticResource ToolbarButton}"
-                                Padding="12,4" Margin="0,0,4,0" Click="ViewTab_Click" Tag="Month">
+                                Padding="12,4" Margin="0" Click="ViewTab_Click" Tag="Month"
+                                ContextMenuOpening="TabMonth_ContextMenuOpening">
                             <Button.ContextMenu>
-                                <ContextMenu Opened="MonthModeMenu_Opened">
+                                <ContextMenu x:Name="MonthModeMenu" Opened="MonthModeMenu_Opened">
                                     <MenuItem x:Name="MonthCalendarModeItem"
                                               Header="{DynamicResource Str_MonthMode_Calendar}"
                                               IsCheckable="True" Click="MonthCalendarMode_Click">
@@ -298,6 +299,14 @@
                                     </MenuItem>
                                 </ContextMenu>
                             </Button.ContextMenu>
+                        </Button>
+                        <!-- The Month button's mode choice, made visible. The same menu also opens on a
+                             right-click of the Month button; R toggles it from the keyboard. -->
+                        <Button x:Name="MonthModeBtn" Style="{StaticResource ToolbarButton}"
+                                Padding="2,4" Margin="0,0,4,0" Width="18" MinWidth="0"
+                                ToolTip="{DynamicResource Str_TT_MonthMode}" Click="MonthModeBtn_Click">
+                            <TextBlock Text="&#xE70D;" FontFamily="Segoe MDL2 Assets" FontSize="8"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
                         <Button x:Name="TabWeek"   Content="{DynamicResource Str_View_Week}"   Style="{StaticResource ToolbarButton}"
                                 Padding="12,4" Margin="0,0,4,0" Click="ViewTab_Click" Tag="Week"/>

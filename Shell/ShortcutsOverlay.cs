@@ -53,6 +53,7 @@ namespace Killendar.Shell
             new("W or 2",   "Str_KS_Week",     KsCat.View, false, "W", "D2"),
             new("D or 3",   "Str_KS_Day",      KsCat.View, false, "D", "D3"),
             new("A or 4",   "Str_KS_Agenda",   KsCat.View, false, "A", "D4"),
+            new("R",        "Str_KS_MonthMode", KsCat.View, false, "R"),
 
             new("Left / ,", "Str_KS_Prev",     KsCat.Nav,  false, "Left", "Comma"),
             new("Right / .","Str_KS_Next",     KsCat.Nav,  false, "Right", "Period"),

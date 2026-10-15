@@ -278,6 +278,8 @@
     <sys:String x:Key="Str_Ctx_Expand">Розгорнути</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">Календарний місяць</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">Рухомі тижні</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">Перемкнути перегляд місяця між календарним місяцем і рухомими тижнями</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">Режим перегляду місяця (R)</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Відкрити</sys:String>
     <sys:String x:Key="Str_Ctx_Rename">Перейменувати</sys:String>
     <sys:String x:Key="Str_Ctx_Delete">Видалити</sys:String>

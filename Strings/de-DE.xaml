@@ -386,6 +386,8 @@
     <sys:String x:Key="Str_Ctx_Expand">Erweitern</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">Kalendermonat</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">Fortlaufende Wochen</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">Monatsansicht zwischen Kalendermonat und fortlaufenden Wochen umschalten</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">Modus der Monatsansicht (R)</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">Den bearbeiteten Termin speichern</sys:String>
     <sys:String x:Key="Str_KS_DeleteAppt">Den bearbeiteten Termin löschen</sys:String>
     <sys:String x:Key="Str_KS_AllDay">Ganztägig beim Bearbeiten umschalten</sys:String>

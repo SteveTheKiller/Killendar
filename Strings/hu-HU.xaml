@@ -277,7 +277,9 @@
     <sys:String x:Key="Str_Ctx_Shrink">Zsugorodik</sys:String>
     <sys:String x:Key="Str_Ctx_Expand">Bontsa ki</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">Naptári hónap</sys:String>
-    <sys:String x:Key="Str_MonthMode_Rolling">Rohanó hetek</sys:String>
+    <sys:String x:Key="Str_MonthMode_Rolling">Gördülő hetek</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">Havi nézet váltása a naptári hónap és a gördülő hetek között</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">Havi nézet módja (R)</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Nyissa meg</sys:String>
     <sys:String x:Key="Str_Ctx_Rename">Átnevezés</sys:String>
     <sys:String x:Key="Str_Ctx_Delete">Törölje</sys:String>

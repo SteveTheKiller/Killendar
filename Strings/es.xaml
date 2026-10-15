@@ -386,6 +386,8 @@
     <sys:String x:Key="Str_Ctx_Expand">Expandir</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">Mes natural</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">Semanas continuas</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">Cambiar la vista de mes entre mes natural y semanas continuas</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">Modo de la vista de mes (R)</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">Guardar la cita que se está editando</sys:String>
     <sys:String x:Key="Str_KS_DeleteAppt">Eliminar la cita que se está editando</sys:String>
     <sys:String x:Key="Str_KS_AllDay">Alternar todo el día durante la edición</sys:String>

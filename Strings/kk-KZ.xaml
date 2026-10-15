@@ -278,6 +278,8 @@
     <sys:String x:Key="Str_Ctx_Expand">Ұлғайту</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">Күнтізбелік ай</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">Жылжымалы апталар</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">Ай көрінісін күнтізбелік ай мен жылжымалы апталар арасында ауыстыру</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">Ай көрінісінің режимі (R)</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Ашу</sys:String>
     <sys:String x:Key="Str_Ctx_Rename">Атауын өзгерту</sys:String>
     <sys:String x:Key="Str_Ctx_Delete">Жою</sys:String>

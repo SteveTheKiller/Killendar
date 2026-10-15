@@ -148,6 +148,9 @@ namespace Killendar.Shell
                 // The name always stays reachable, which is what makes an icon-only bar usable.
                 btn.ToolTip = label;
             }
+            // The Month dropdown arrow is not a toolbar item, but it must stand as tall as the
+            // Month button it belongs to in every size and text mode.
+            MonthModeBtn.Height = TabMonth.Height;
 
             foreach (var item in ToolbarMenu.Items)
             {

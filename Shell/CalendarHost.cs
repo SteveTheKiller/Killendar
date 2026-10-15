@@ -171,6 +171,30 @@ namespace Killendar.Shell
             bool rolling = _calendar.MonthRollingMode;
             MonthCalendarModeItem.IsChecked = !rolling;
             MonthRollingModeItem.IsChecked = rolling;
+            // R switches to whichever mode is not active, so that is the item that shows it.
+            MonthCalendarModeItem.InputGestureText = rolling ? "R" : "";
+            MonthRollingModeItem.InputGestureText = rolling ? "" : "R";
+        }
+
+        private void MonthModeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Controls.FlyoutPlacement.AttachBelowRight(MonthModeMenu, MonthModeBtn);
+            MonthModeMenu.IsOpen = true;
+        }
+
+        /// <summary>Right-clicking the Month button opens the same menu in the same place, under
+        /// the arrow, instead of at the pointer where it could run off the window.</summary>
+        private void TabMonth_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            e.Handled = true;
+            MonthModeBtn_Click(MonthModeBtn, new RoutedEventArgs());
+        }
+
+        /// <summary>The R key: show Month view and flip it between calendar month and rolling weeks.</summary>
+        private void ToggleMonthMode()
+        {
+            _calendar.SelectView("Month");
+            _calendar.SetMonthRollingMode(!_calendar.MonthRollingMode);
         }
 
         private void MonthCalendarMode_Click(object sender, RoutedEventArgs e)

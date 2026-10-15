@@ -386,6 +386,8 @@
     <sys:String x:Key="Str_Ctx_Expand">展開</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">曆月</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">連續週</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">在曆月與連續週之間切換月檢視</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">月檢視模式 (R)</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">儲存正在編輯的行程</sys:String>
     <sys:String x:Key="Str_KS_DeleteAppt">刪除正在編輯的行程</sys:String>
     <sys:String x:Key="Str_KS_AllDay">編輯時切換全天行程</sys:String>

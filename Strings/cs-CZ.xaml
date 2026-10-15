@@ -386,6 +386,8 @@
     <sys:String x:Key="Str_Ctx_Expand">Rozbalit</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">Kalendářní měsíc</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">Posuvné týdny</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">Přepnout zobrazení měsíce mezi kalendářním měsícem a posuvnými týdny</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">Režim zobrazení měsíce (R)</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">Uložit upravovanou událost</sys:String>
     <sys:String x:Key="Str_KS_DeleteAppt">Odstranit upravovanou událost</sys:String>
     <sys:String x:Key="Str_KS_AllDay">Přepnout celodenní událost při úpravách</sys:String>

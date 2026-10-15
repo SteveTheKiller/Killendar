@@ -386,6 +386,8 @@
     <sys:String x:Key="Str_Ctx_Expand">Genişlet</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">Takvim ayı</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">Kayan haftalar</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">Ay görünümünü takvim ayı ile kayan haftalar arasında değiştir</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">Ay görünümü modu (R)</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">Düzenlenen randevuyu kaydet</sys:String>
     <sys:String x:Key="Str_KS_DeleteAppt">Düzenlenen randevuyu sil</sys:String>
     <sys:String x:Key="Str_KS_AllDay">Düzenlerken tüm gün seçeneğini değiştir</sys:String>

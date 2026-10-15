@@ -278,6 +278,8 @@
     <sys:String x:Key="Str_Ctx_Expand">Utvid</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">Kalendermåned</sys:String>
     <sys:String x:Key="Str_MonthMode_Rolling">Rullerende uker</sys:String>
+    <sys:String x:Key="Str_KS_MonthMode">Bytt månedsvisning mellom kalendermåned og rullerende uker</sys:String>
+    <sys:String x:Key="Str_TT_MonthMode">Modus for månedsvisning (R)</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Åpne</sys:String>
     <sys:String x:Key="Str_Ctx_Rename">Gi nytt navn</sys:String>
     <sys:String x:Key="Str_Ctx_Delete">Slett</sys:String>

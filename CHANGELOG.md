@@ -4,6 +4,18 @@ All notable changes to Killendar are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - Unreleased
+
+### Added
+- Added a dropdown arrow beside the Month button that switches Month view between a calendar month and rolling weeks, and the R key to toggle it. The choice was only reachable by right-clicking the Month button.
+
+### Changed
+- Context menus use Killer Sans UI like the rest of the interface instead of Segoe UI.
+
+### Fixed
+- Toolbar menus open leftward under their button so they stay inside the window instead of running off its right edge.
+- Corrected the Hungarian name of the rolling weeks month mode.
+
 ## [1.3.0] - 2026-10-14
 
 ### Added
@@ -34,7 +46,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - On 98SE, hovered dialog buttons keep the classic gray face instead of filling with a dark color that hid the label.
 - Centered website logos with space above and below and corrected current features, runtime requirements and documentation.
 - Menu separators draw their divider line instead of leaving an empty gap.
-- Context menus use Killer Sans UI like the rest of the interface instead of Segoe UI.
 
 ## [1.2.0] - 2026-10-07
 
