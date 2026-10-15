@@ -1,0 +1,508 @@
+﻿Field,Type,English,Bangla,Czech,German,Spanish,Hungarian,Italian,Japanese,Kazakh,Turkish,Ukrainian,Vietnamese (Vietnam),Portuguese (Brazil),Polish,Norwegian (Bokmål),Chinese (Simplified),Chinese (Traditional),French,Russian
+ProductName,Text,Killendar,Killendar,Killendar,Killendar,Killendar,Killendar,Killendar,Killendar,Killendar,Killendar,Killendar,Killendar,Killendar,Killendar,Killendar,Killendar,Killendar,Killendar,Killendar
+Description,Text,"A calendar with optional encryption, no account and no synchronization.
+
+Install or run portable. Free, open source, GPLv3. No account, no subscription, no sync service. No telemetry is sent and no ads... ever.
+
+Month, week, day, agenda
+Overlapping appointments lay out side by side in lanes, so a double-booked hour shows both. All-day entries get their own strip above the hour grid. Month view zooms from one to six weeks and keeps multi-day runs connected.
+
+Optional encryption
+SQLCipher at rest: AES-256, per-page HMAC-SHA512, its own key derivation. Opt-in, so with no password the file stays plain SQLite.
+
+As many calendars as you like
+One for work, one for on-call, one for the family. Each is its own file with its own password, or none.
+
+Color categories
+Define your own, name them and pick their colors. An appointment can carry several, and the first one colors it in every view. Renaming updates every appointment at once.
+
+iCalendar in and out
+Import and export written against RFC 5545 with no external dependencies. Categories travel with an appointment through both.
+
+Signed, and checkable
+The About card shows the publisher, the certificate thumbprint and the running exe's SHA-256, validated with WinVerifyTrust rather than just read off the file.
+
+Thirteen themes, nineteen languages
+Every theme switchable while it runs. Dark, Light, Black and 98SE each take eight accent hues, so there are 41 looks in all. Single-key shortcuts that stand down while you are typing in a field. The theme menu can turn Film Grain on or off.","ঐচ্ছিক এনক্রিপশনসহ ক্যালেন্ডার, অ্যাকাউন্ট বা সিঙ্ক ছাড়াই।
+
+ইনস্টল করুন বা পোর্টেবল চালান। ফ্রি, ওপেন সোর্স, GPLv3। অ্যাকাউন্ট নেই, সাবস্ক্রিপশন নেই, সিঙ্ক সার্ভিস নেই। কোনো টেলিমেট্রি পাঠানো হয় না, বিজ্ঞাপনও নেই... কখনও না।
+
+মাস, সপ্তাহ, দিন, সূচি
+ওভারল্যাপ অ্যাপয়েন্টমেন্ট লেনে পাশাপাশি বসে, তাই ডাবল-বুক করা ঘন্টায় দুটোই দেখা যায়। সারাদিনের অ্যাপয়েন্টমেন্ট ঘন্টার গ্রিডের উপরে নিজস্ব স্ট্রিপ পায়।
+
+ঐচ্ছিক এনক্রিপশন
+স্টোরেজে SQLCipher: AES-256, প্রতি পৃষ্ঠায় HMAC-SHA512, নিজস্ব কী ডেরিভেশন। ঐচ্ছিক - পাসওয়ার্ড না থাকলে ফাইল সাধারণ SQLite থাকে।
+
+যত খুশি ক্যালেন্ডার
+একটি কাজের, একটি অন-কলের, একটি পরিবারের। প্রতিটি নিজস্ব পাসওয়ার্ডসহ (বা ছাড়া) নিজস্ব ফাইল। .kcal ফাইল
+
+রঙের বিভাগ
+নিজেরটি বানান, নাম দিন, রঙ বাছুন। একটি অ্যাপয়েন্টমেন্ট একাধিক নিতে পারে, প্রথমটি সব ভিউয়ে তার রঙ ঠিক করে। নাম বদলালে সব অ্যাপয়েন্টমেন্ট একসাথে আপডেট হয়।
+
+iCalendar আসা-যাওয়া
+ইমপোর্ট ও এক্সপোর্ট RFC 5545 অনুযায়ী লেখা, কোনো বাইরের ডিপেন্ডেন্সি নেই। বিভাগগুলো দুদিকেই অ্যাপয়েন্টমেন্টের সঙ্গে যায়। .ics ইমপোর্ট / এক্সপোর্ট
+
+স্বাক্ষরিত এবং যাচাইযোগ্য
+সম্পর্কে কার্ডে প্রকাশক, সার্টিফিকেটের থাম্বপ্রিন্ট ও চলন্ত exe-এর SHA-256 দেখায়, শুধু ফাইল থেকে পড়ে নয়, WinVerifyTrust দিয়ে যাচাই করে।
+
+তেরোটি থিম, ১৯টি ভাষা
+প্রতিটি থিম চলন্ত অবস্থায় বদলানো যায়, চারটিতে (Dark, Light, Black ও 98SE) আটটি অ্যাকসেন্ট রঙ। এক-কী শর্টকাট, যা ফিল্ডে টাইপ করার সময় সরে দাঁড়ায়। থিম মেনু থেকে ফিল্ম গ্রেইন চালু বা বন্ধ করা যায়।","Kalendář s volitelným šifrováním, bez účtu a synchronizace.
+
+Nainstalujte, nebo používejte přenosně. Zdarma, open source, GPLv3. Bez účtu, bez předplatného, bez synchronizační služby. Žádná telemetrie, žádné reklamy... nikdy.
+
+Měsíc, týden, den, agenda
+Překrývající se schůzky leží vedle sebe v pruzích, dvojitě obsazená hodina ukáže obě. Celodenní záznamy mají vlastní pruh nad hodinovou mřížkou.
+
+Volitelné šifrování
+SQLCipher v klidu: AES-256, HMAC-SHA512 na stránku, vlastní odvození klíče. Volitelné - bez hesla zůstává soubor obyčejné SQLite.
+
+Kolik kalendářů chcete
+Jeden na práci, jeden na pohotovost, jeden pro rodinu. Každý je vlastní soubor s vlastním heslem, nebo bez něj. Soubory .kcal
+
+Barevné kategorie
+Definujte vlastní, pojmenujte je a vyberte barvy. Schůzka jich může nést více, první ji barví v každém zobrazení. Přejmenování aktualizuje všechny schůzky najednou.
+
+iCalendar dovnitř i ven
+Import a export napsané podle RFC 5545 bez externích závislostí. Kategorie cestují se schůzkou oběma směry. Import / export .ics
+
+Podepsaný a ověřitelný
+Karta O aplikaci ukazuje vydavatele, otisk certifikátu a SHA-256 běžícího exe, ověřené přes WinVerifyTrust, ne jen přečtené ze souboru.
+
+Třináct motivů, 19 jazyků
+Každý motiv lze přepnout za běhu. Dark, Light, Black a 98SE mají po osmi akcentových barvách, celkem 41 vzhledů. Jednoklávesové zkratky, které se odmlčí, když píšete do pole. Nabídka motivů umožňuje zapnout nebo vypnout filmové zrno.","Ein Kalender mit optionaler Verschlüsselung, ohne Konto und Synchronisierung.
+
+Installieren oder portabel nutzen. Kostenlos, Open Source, GPLv3. Kein Konto, kein Abo, kein Sync-Dienst. Keine Telemetrie und keine Werbung... niemals.
+
+Monat, Woche, Tag, Agenda
+Überlappende Termine liegen in Spuren nebeneinander, eine doppelt belegte Stunde zeigt beide. Ganztägige Einträge bekommen ihren eigenen Streifen über dem Stundenraster.
+
+Optionale Verschlüsselung
+SQLCipher im Ruhezustand: AES-256, HMAC-SHA512 pro Seite, eigene Schlüsselableitung. Opt-in - ohne Passwort bleibt die Datei normales SQLite.
+
+So viele Kalender Sie wollen
+Einer für die Arbeit, einer für den Bereitschaftsdienst, einer für die Familie. Jeder ist seine eigene Datei mit eigenem Passwort, oder ohne.
+
+Farbkategorien
+Eigene anlegen, benennen, Farben wählen. Ein Termin kann mehrere tragen, die erste färbt ihn in jeder Ansicht. Umbenennen aktualisiert alle Termine auf einmal.
+
+iCalendar rein und raus
+Import und Export gegen RFC 5545 geschrieben, ohne externe Abhängigkeiten. Kategorien reisen in beide Richtungen mit dem Termin.
+
+Signiert und nachprüfbar
+Die Info-Karte zeigt Herausgeber, Zertifikat-Fingerabdruck und den SHA-256 der laufenden Exe, validiert mit WinVerifyTrust statt nur aus der Datei gelesen.
+
+Dreizehn Designs, 19 Sprachen
+Jedes Design zur Laufzeit wechselbar. Dark, Light, Black und 98SE tragen je acht Akzentfarben, also 41 Looks insgesamt. Einzeltasten-Kürzel, die pausieren, während Sie in ein Feld tippen. Im Themenmenü lässt sich Filmkorn ein- oder ausschalten.","Un calendario con cifrado opcional, sin cuenta ni sincronización.
+
+Instálalo o úsalo portátil. Gratis, código abierto, GPLv3. Sin cuenta, sin suscripción, sin servicio de sincronización. No se envía telemetría y no hay anuncios... nunca.
+
+Mes, semana, día, agenda
+Las citas solapadas se colocan lado a lado en carriles, así una hora con dos reuniones muestra ambas. Las citas de día completo tienen su propia franja sobre la cuadrícula horaria.
+
+Cifrado opcional
+SQLCipher en reposo: AES-256, HMAC-SHA512 por página, su propia derivación de clave. Opcional: sin contraseña el archivo sigue siendo SQLite normal.
+
+Tantos calendarios como quieras
+Uno para el trabajo, otro para las guardias, otro para la familia. Cada uno es su propio archivo con su propia contraseña, o ninguna. Archivos .kcal
+
+Categorías de color
+Define las tuyas, ponles nombre y elige sus colores. Una cita puede llevar varias, y la primera la colorea en todas las vistas. Renombrar actualiza todas las citas a la vez.
+
+iCalendar de entrada y salida
+Importación y exportación escritas contra RFC 5545 sin dependencias externas. Las categorías viajan con la cita en ambas direcciones. Importa / exporta .ics
+
+Firmado y comprobable
+La tarjeta Acerca de muestra el editor, la huella del certificado y el SHA-256 del exe en ejecución, validado con WinVerifyTrust en lugar de solo leerlo del archivo.
+
+Trece temas, 19 idiomas
+Cada tema se cambia en marcha. Dark, Light, Black y 98SE admiten ocho acentos cada uno, 41 aspectos en total. Atajos de una tecla que se apartan mientras escribes en un campo. El menú de temas permite activar o desactivar Grano de película.","Naptár választható titkosítással, fiók és szinkronizálás nélkül.
+
+Telepítse vagy futtassa a hordozható eszközt. Ingyenes, nyílt forráskódú, GPLv3. Nincs fiók, nincs előfizetés, nincs szinkronizálási szolgáltatás. Nem küldenek telemetriát és nincsenek hirdetések... soha.
+
+Hónap, hét, nap, napirend
+Az egymást átfedő időpontok sávokban egymás mellett helyezkednek el, így a dupla lefoglalt óra mindkettőt mutatja. Az egész napos bejegyzések saját sávot kapnak az órarács felett. A havi nézet egy hétről hat hétre nagyít, és többnapos futásokat is összeköt.
+
+Opcionális titkosítás
+SQLCipher nyugalmi állapotban: AES-256, oldalanként HMAC-SHA512, saját kulcs származtatása. Feliratkozás, tehát nem jelszóval a fájl sima SQLite marad.
+
+Annyi naptár, amennyit csak akar
+Egy a munkához, egy az ügyelethez, egy a családhoz. Mindegyik saját fájl a sajátjával jelszót, vagy semmilyen.
+
+Színkategóriák
+Határozza meg a sajátját, nevezze el őket, és válassza ki a színüket. Egy találkozó több, és a az első színezi minden nézetben. Az átnevezés minden találkozót egyszerre frissít.
+
+iCalendar be és ki
+Az RFC 5545-re írt import és exportálás külső függőségek nélkül. Kategóriák utazás időpont egyeztetéssel mindkettőn keresztül.
+
+Aláírva, ellenőrizhető
+A Névjegy kártya a kiadót, a tanúsítvány ujjlenyomatát és a futó exe-ket mutatja SHA-256, a WinVerifyTrust segítségével érvényesítve, nem csak a fájlt olvasva.
+
+Tizenhárom téma, 19 nyelv
+Minden téma váltható futás közben. A Sötét, Világos, Fekete és a 98SE mindegyik nyolc hangsúlyos árnyalattal rendelkezik, így összesen 41 megjelenés érhető el. Egygombos parancsikonok, amelyek leállnak a mezőbe való beírás közben. A témamenüben be- és kikapcsolható a filmszemcsézettség.","Un calendario con cifratura facoltativa, senza account né sincronizzazione.
+
+Installalo o usalo portatile. Gratuito, open source, GPLv3. Nessun account, nessun abbonamento, nessun servizio di sincronizzazione. Nessuna telemetria inviata e nessuna pubblicità... mai.
+
+Mese, settimana, giorno, agenda
+Gli appuntamenti sovrapposti si dispongono fianco a fianco in corsie, così un'ora con doppia prenotazione li mostra entrambi. Le voci di un giorno intero hanno la loro striscia sopra la griglia oraria. La vista mese va da una a sei settimane e tiene collegati gli intervalli di più giorni.
+
+Cifratura opzionale
+SQLCipher a riposo: AES-256, HMAC-SHA512 per pagina, la sua derivazione di chiave. Opzionale, quindi senza password il file resta SQLite in chiaro.
+
+Tutti i calendari che vuoi
+Uno per il lavoro, uno per la reperibilità, uno per la famiglia. Ognuno è un file a sé con la sua password, o nessuna.
+
+Categorie di colore
+Definisci le tue, dai loro un nome e scegli i colori. Un appuntamento può portarne più di una, e la prima lo colora in ogni vista. Rinominarne una aggiorna tutti gli appuntamenti in una volta.
+
+iCalendar in entrata e in uscita
+Importazione ed esportazione scritte sull'RFC 5545 senza dipendenze esterne. Le categorie viaggiano con un appuntamento in entrambe le direzioni.
+
+Firmato, e verificabile
+La scheda Informazioni mostra l'editore, l'impronta del certificato e lo SHA-256 dell'exe in esecuzione, convalidati con WinVerifyTrust invece che semplicemente letti dal file.
+
+Tredici temi, 19 lingue
+Ogni tema si cambia mentre l'app è in esecuzione. Scuro, Chiaro, Nero e 98SE prendono ciascuno otto tinte di accento, quindi 41 aspetti in tutto. Scorciatoie a tasto singolo che si fermano mentre scrivi in un campo. Il menu dei temi permette di attivare o disattivare la grana della pellicola.","暗号化を選べるカレンダー。アカウントや同期は不要です。
+
+インストールしてもポータブルでも。無料、オープンソース、GPLv3。アカウントなし、サブスクなし、同期サービスなし。テレメトリは送信せず、広告も... 永遠になし。
+
+月・週・日・予定一覧
+重なる予定はレーンで横に並び、ダブルブッキングの時間も両方見えます。終日の予定は時間グリッドの上に専用の帯を持ちます。
+
+任意の暗号化
+保存時は SQLCipher：AES-256、ページごとの HMAC-SHA512、独自の鍵導出。任意選択なのでパスワードなしなら普通の SQLite のまま。
+
+カレンダーは好きなだけ
+仕事用、当番用、家族用。それぞれが独自のパスワード付き（またはなし）の単独ファイルです。
+
+カラーカテゴリ
+自分で作って名前と色を決める。予定は複数持て、最初の一つがすべての表示で色を付けます。名前変更は全予定を一括更新。
+
+iCalendar の出入り
+読み書きは外部依存なしで RFC 5545 に沿って実装。カテゴリは双方向で予定と一緒に移動します。
+
+署名済み、検証可能
+バージョン情報カードは発行元、証明書の拇印、実行中の exe の SHA-256 を表示し、ファイルから読むだけでなく WinVerifyTrust で検証します。
+
+テーマ十三種、19 か国語
+どのテーマも実行中に切り替え可能。Dark、Light、Black、98SE はそれぞれ八色のアクセントを持ち、合計 41 通り。入力中は遠慮するワンキーショートカット。 テーマメニューでフィルムグレインをオンまたはオフにできます。","Қосымша шифрлауы бар, тіркелгісіз және синхрондаусыз күнтізбе.
+
+Орнатыңыз немесе портативті түрде іске қосыңыз. Тегін, ашық бастапқы код, GPLv3. Тіркелгісіз, жазылымсыз, синхрондау қызметінсіз. Ешқандай телеметрия жіберілмейді және жарнама жоқ... ешқашан.
+
+Ай, апта, күн, күн тәртібі
+Қабаттасқан кездесулер жолақтарға бөлініп қатар орналасады, сондықтан екі рет жазылған сағат екеуін де көрсетеді. Күні бойы жазбалары сағаттық тордың үстінде өз жолағын алады. Ай көрінісі бір аптадан алты аптаға дейін масштабталады және бірнеше күнге созылған кездесулерді бөлмейді.
+
+Қалауыңызша шифрлау
+Дискіде SQLCipher: AES-256, әр бетке HMAC-SHA512, өз кілт шығару әдісі. Ол қалауыңызша қосылады, сондықтан құпия сөзсіз файл кәдімгі SQLite күйінде қалады.
+
+Қалағаныңызша күнтізбе
+Біреуі жұмысқа, біреуі кезекшілікке, біреуі отбасына. Әрқайсысы өз құпия сөзі бар, немесе мүлдем құпия сөзсіз, жеке файл.
+
+Түсті санаттар
+Өзіңіздікін белгілеңіз, атауын беріп, түстерін таңдаңыз. Бір кездесуде бірнеше санат бола алады, ал біріншісі оны әр көріністе бояйды. Атауын өзгерту барлық кездесуді бірден жаңартады.
+
+iCalendar кіріс пен шығыс
+Импорт пен экспорт сыртқы тәуелділіктерсіз, тікелей RFC 5545 бойынша жазылған. Санаттар екі бағытта да кездесумен бірге жүреді.
+
+Қол қойылған және тексерілетін
+Бағдарлама туралы карточкасы жариялаушыны, сертификат саусақ ізін және іске қосылған exe файлының SHA-256 мәнін көрсетеді, олар файлдан жай оқылмай, WinVerifyTrust арқылы тексеріледі.
+
+Он үш тақырып, 19 тіл
+Әр тақырыпты жұмыс кезінде ауыстыруға болады. Қараңғы, Ашық, Қара және 98SE сегіз акцент реңкінен алады, сондықтан барлығы 41 түр шығады. Өрісте теріп отырғанда әрекет етпейтін жалғыз пернелік тіркесімдер. Тақырыптар мәзірінде пленка түйіршігін қосуға немесе өшіруге болады.","İsteğe bağlı şifrelemeli, hesap ve eşitleme gerektirmeyen bir takvim.
+
+Kurun ya da taşınabilir çalıştırın. Ücretsiz, açık kaynak, GPLv3. Hesap yok, abonelik yok, senkronizasyon servisi yok. Telemetri gönderilmez ve reklam yok... asla.
+
+Ay, hafta, gün, ajanda
+Çakışan randevular şeritler halinde yan yana durur; çift dolu bir saat ikisini de gösterir. Tüm gün kayıtları saat ızgarasının üstünde kendi şeridini alır.
+
+İsteğe bağlı şifreleme
+Beklemede SQLCipher: AES-256, sayfa başına HMAC-SHA512, kendi anahtar türetmesi. İsteğe bağlı - parola yoksa dosya düz SQLite kalır.
+
+İstediğiniz kadar takvim
+Biri iş, biri nöbet, biri aile için. Her biri kendi parolalı ya da parolasız kendi dosyasıdır.
+
+Renk kategorileri
+Kendinizinkini tanımlayın, adlandırın, renklerini seçin. Bir randevu birkaçını taşıyabilir; ilki onu her görünümde boyar. Yeniden adlandırmak tüm randevuları tek seferde günceller.
+
+iCalendar girer ve çıkar
+İçe ve dışa aktarma, harici bağımlılık olmadan RFC 5545'e göre yazıldı. Kategoriler randevuyla iki yönde de yolculuk eder.
+
+İmzalı ve doğrulanabilir
+Hakkında kartı yayımcıyı, sertifika parmak izini ve çalışan exe'nin SHA-256'sını gösterir; dosyadan okunmak yerine WinVerifyTrust ile doğrulanır.
+
+On üç tema, 19 dil
+Her tema çalışırken değiştirilebilir; Dark, Light, Black ve 98SE sekizer vurgu rengi taşır, toplam 41 görünüm. Bir alana yazarken kenara çekilen tek tuşlu kısayollar. Tema menüsünden Film Tanesi açılıp kapatılabilir.","Календар із необов'язковим шифруванням, без облікового запису й синхронізації.
+
+Установіть або запустіть портативно. Безкоштовно, відкритий вихідний код, GPLv3. Без облікового запису, без підписки, без служби синхронізації. Жодної телеметрії і жодної реклами... ніколи.
+
+Місяць, тиждень, день, розклад
+Зустрічі, що перетинаються, розкладаються поруч по доріжках, тому година з подвійним записом показує обидві. Записи на весь день отримують власну смугу над годинною сіткою. Подання місяця масштабується від одного до шести тижнів і не розриває багатоденні зустрічі.
+
+Шифрування за бажанням
+SQLCipher на диску: AES-256, HMAC-SHA512 для кожної сторінки, власне вироблення ключа. Воно вмикається за бажанням, тому без пароля файл залишається звичайним SQLite.
+
+Скільки завгодно календарів
+Один для роботи, один для чергувань, один для сім'ї. Кожен - окремий файл зі своїм паролем або взагалі без нього.
+
+Кольорові категорії
+Задайте свої, дайте їм назви та виберіть кольори. Зустріч може мати кілька категорій, і перша розфарбовує її в кожному поданні. Перейменування оновлює всі зустрічі одразу.
+
+iCalendar на вході й на виході
+Імпорт та експорт написано прямо за RFC 5545, без зовнішніх залежностей. Категорії мандрують разом із зустріччю в обидва боки.
+
+Підписано й можна перевірити
+Картка про програму показує видавця, відбиток сертифіката та SHA-256 запущеного exe, перевірений через WinVerifyTrust, а не просто зчитаний із файлу.
+
+Тринадцять тем, 19 мов
+Будь-яку тему можна змінити на ходу. Темна, Світла, Чорна та 98SE беруть по вісім відтінків акценту, тож загалом виходить 41 вигляд. Комбінації з однієї клавіші, які відступають, поки ви друкуєте в полі. У меню тем можна ввімкнути або вимкнути зернистість плівки.","Lịch có mã hóa tùy chọn, không cần tài khoản hay đồng bộ hóa.
+
+Cài đặt hoặc chạy bản di động. Miễn phí, mã nguồn mở, GPLv3. Không cần tài khoản, không thuê bao, không dịch vụ đồng bộ. Không gửi dữ liệu đo từ xa và không có quảng cáo... mãi mãi.
+
+Tháng, tuần, ngày, lịch biểu
+Các cuộc hẹn trùng giờ được xếp cạnh nhau theo từng cột, nên cả hai cuộc hẹn trong cùng một giờ đều hiện rõ. Các mục cả ngày có một dải riêng phía trên lưới giờ. Chế độ xem tháng có thể thu phóng từ một đến sáu tuần và giữ các sự kiện kéo dài nhiều ngày liền mạch.
+
+Mã hóa tùy chọn
+SQLCipher mã hóa dữ liệu khi lưu trữ: AES-256, HMAC-SHA512 trên từng trang và cơ chế dẫn xuất khóa riêng. Đây là tùy chọn bật, nên nếu không có mật khẩu, tệp vẫn là SQLite thuần.
+
+Bao nhiêu lịch tùy thích
+Một lịch cho công việc, một lịch cho ca trực và một lịch cho gia đình. Mỗi lịch là một tệp riêng với mật khẩu riêng, hoặc không cần mật khẩu.
+
+Danh mục màu
+Tự tạo danh mục, đặt tên và chọn màu. Một cuộc hẹn có thể thuộc nhiều danh mục, và danh mục đầu tiên sẽ tô màu cho cuộc hẹn trong mọi chế độ xem. Khi đổi tên, mọi cuộc hẹn liên quan đều được cập nhật cùng lúc.
+
+Nhập và xuất iCalendar
+Tính năng nhập và xuất được xây dựng theo RFC 5545, không dùng thành phần phụ thuộc bên ngoài. Các danh mục đi cùng cuộc hẹn theo cả hai chiều.
+
+Được ký và có thể xác minh
+Thẻ Giới thiệu hiển thị nhà phát hành, dấu vân tay chứng chỉ và SHA-256 của tệp exe đang chạy, được xác thực bằng WinVerifyTrust thay vì chỉ đọc thông tin từ tệp.
+
+Mười ba giao diện, mười chín ngôn ngữ
+Có thể chuyển đổi mọi giao diện ngay khi ứng dụng đang chạy. Dark, Light, Black và 98SE đều có tám màu nhấn, tạo nên tổng cộng 41 diện mạo. Các phím tắt một phím sẽ tự vô hiệu hóa khi bạn đang nhập vào một trường. Menu chủ đề cho phép bật hoặc tắt hạt phim.","Um calendário com criptografia opcional, sem conta nem sincronização.
+
+Instale ou execute em modo portátil. Gratuito, código aberto, GPLv3. Sem conta, sem assinatura, sem serviço de sincronização. Nenhuma telemetria é enviada e nunca há anúncios.
+
+Mês, semana, dia, pauta
+Compromissos sobrepostos ficam lado a lado em faixas, então uma hora com reserva dupla mostra os dois. Eventos de dia inteiro têm uma faixa própria acima da grade de horas. A visão de mês dá zoom de uma a seis semanas e mantém unidos os eventos de vários dias.
+
+Criptografia opcional
+SQLCipher em repouso: AES-256, HMAC-SHA512 por página, derivação de chave própria. Opcional, então sem senha o arquivo continua em SQLite puro.
+
+Quantas agendas você quiser
+Uma para o trabalho, uma para o plantão, uma para a família. Cada uma é um arquivo próprio com sua própria senha, ou nenhuma.
+
+Categorias de cor
+Crie as suas, dê um nome e escolha as cores. Um compromisso pode ter várias, e a primeira o colore em todas as visões. Renomear atualiza todos os compromissos de uma vez.
+
+iCalendar de entrada e saída
+Importação e exportação escritas direto sobre a RFC 5545, sem dependências externas. As categorias acompanham o compromisso nos dois sentidos.
+
+Assinado e verificável
+O cartão Sobre mostra o editor, a impressão digital do certificado e o SHA-256 do exe em execução, validados com WinVerifyTrust em vez de apenas lidos do arquivo.
+
+Treze temas, 19 idiomas
+Todos os temas podem ser trocados com o aplicativo em uso. Escuro, Claro, Preto e 98SE aceitam oito tons de destaque cada, somando 41 visuais. Atalhos de tecla única que se desativam enquanto você digita em um campo. O menu de temas permite ativar ou desativar o grão de filme.","Kalendarz z opcjonalnym szyfrowaniem, bez konta i synchronizacji.
+
+Zainstaluj lub uruchom przenośnie. Za darmo, open source, GPLv3. Bez konta, bez subskrypcji, bez usługi synchronizacji. Żadna telemetria nie jest wysyłana i żadnych reklam... nigdy.
+
+Miesiąc, tydzień, dzień, agenda
+Nakładające się spotkania układają się obok siebie w pasach, więc podwójnie zajęta godzina pokazuje oba. Wpisy całodniowe mają własny pasek nad siatką godzin.
+
+Opcjonalne szyfrowanie
+SQLCipher w spoczynku: AES-256, HMAC-SHA512 na stronę, własna derywacja klucza. Opcjonalne - bez hasła plik pozostaje zwykłym SQLite.
+
+Tyle kalendarzy, ile chcesz
+Jeden do pracy, jeden na dyżury, jeden dla rodziny. Każdy jest osobnym plikiem z własnym hasłem lub bez. Pliki .kcal
+
+Kolorowe kategorie
+Zdefiniuj własne, nazwij je i wybierz kolory. Spotkanie może nosić kilka, a pierwsza koloruje je w każdym widoku. Zmiana nazwy aktualizuje wszystkie spotkania naraz.
+
+iCalendar w obie strony
+Import i eksport napisane według RFC 5545 bez zewnętrznych zależności. Kategorie podróżują ze spotkaniem w obu kierunkach. Import / eksport .ics
+
+Podpisany i sprawdzalny
+Karta O aplikacji pokazuje wydawcę, odcisk certyfikatu i SHA-256 działającego exe, zweryfikowane przez WinVerifyTrust, a nie tylko odczytane z pliku.
+
+Trzynaście motywów, 19 języków
+Każdy motyw przełączysz w trakcie działania. Dark, Light, Black i 98SE mają po osiem kolorów akcentu, łącznie 41 wyglądów. Skróty jednym klawiszem, które ustępują, gdy piszesz w polu. Menu motywów pozwala włączyć lub wyłączyć ziarno filmowe.","En kalender med valgfri kryptering, uten konto eller synkronisering.
+
+Installer eller kjør bærbart. Gratis, åpen kildekode, GPLv3. Ingen konto, intet abonnement, ingen synkroniseringstjeneste. Ingen telemetri sendes og ingen reklame... aldri.
+
+Måned, uke, dag, agenda
+Overlappende avtaler legges side om side i felt, så en dobbeltbooket time viser begge. Heldagsoppføringer får sin egen stripe over timerutenettet. Månedsvisningen zoomer fra én til seks uker og holder flerdagers perioder sammenhengende.
+
+Valgfri kryptering
+SQLCipher i hvile: AES-256, HMAC-SHA512 per side, egen nøkkelavledning. Valgfritt, så uten passord forblir filen vanlig SQLite.
+
+Så mange kalendere du vil
+Én for jobb, én for vakt, én for familien. Hver er sin egen fil med sitt eget passord, eller uten.
+
+Fargekategorier
+Definer dine egne, gi dem navn og velg fargene deres. En avtale kan ha flere, og den første farger den i hver visning. Når du gir en kategori nytt navn, oppdateres alle avtaler på en gang.
+
+iCalendar inn og ut
+Import og eksport er skrevet direkte mot RFC 5545 uten eksterne avhengigheter. Kategorier følger med en avtale gjennom begge.
+
+Signert, og kan sjekkes
+Om-kortet viser utgiveren, sertifikatets avtrykk og SHA-256 for exe-filen som kjører, validert med WinVerifyTrust i stedet for bare lest fra filen.
+
+Tretten temaer, 19 språk
+Hvert tema kan byttes mens appen kjører. Mørk, Lys, Svart og 98SE tar hver åtte aksentfarger, så det blir 41 utseender til sammen. Hurtigtaster med én tast som holder seg unna mens du skriver i et felt. Temamenyen kan slå filmkorn av eller på.","可选择加密的日历，不需要账户或同步。
+
+安装或便携运行。免费、开源、GPLv3。无账户、无订阅、无同步服务。不发送遥测，没有广告... 永远。
+
+月、周、日、日程
+重叠的约会分轨并排，双重预约的一小时两个都看得到。全天条目在小时网格上方有自己的一栏。
+
+可选加密
+静态 SQLCipher：AES-256、每页 HMAC-SHA512、自带密钥派生。可选 - 不设密码文件仍是普通 SQLite。
+
+日历想建几个建几个
+工作一个，值班一个，家庭一个。每个都是独立文件，各自设密码或不设。
+
+颜色类别
+自己定义、命名、选色。一个约会可以带多个类别，第一个决定它在所有视图里的颜色。重命名一次更新所有约会。
+
+iCalendar 进出自如
+导入导出按 RFC 5545 从零实现，无外部依赖。类别随约会双向同行。
+
+已签名，可验证
+关于卡片显示发布者、证书指纹和运行中 exe 的 SHA-256，用 WinVerifyTrust 验证而不是只从文件里读。
+
+十三套主题，19 种语言
+每套主题运行中即可切换。Dark、Light、Black 和 98SE 各有八种强调色，共 41 种外观。单键快捷键在你输入时自动避让。 主题菜单可开启或关闭胶片颗粒。","可選擇加密的行事曆，不需要帳戶或同步。
+
+安裝或隨身執行。免費、開源、GPLv3。無帳戶、無訂閱、無同步服務。不傳送遙測，沒有廣告... 永遠。
+
+月、週、日、行程
+重疊的約會分軌並排，雙重預約的一小時兩個都看得到。全天項目在小時格線上方有自己的一欄。
+
+可選加密
+靜態 SQLCipher：AES-256、每頁 HMAC-SHA512、自帶金鑰派生。可選 - 不設密碼檔案仍是普通 SQLite。
+
+行事曆想建幾個建幾個
+工作一個，值班一個，家庭一個。每個都是獨立檔案，各自設密碼或不設。
+
+顏色類別
+自己定義、命名、選色。一個約會可以帶多個類別，第一個決定它在所有檢視裡的顏色。重新命名一次更新所有約會。
+
+iCalendar 進出自如
+匯入匯出按 RFC 5545 從零實作，無外部相依。類別隨約會雙向同行。
+
+已簽署，可驗證
+關於卡片顯示發行者、憑證指紋和執行中 exe 的 SHA-256，用 WinVerifyTrust 驗證而不是只從檔案裡讀。
+
+十三套主題，19 種語言
+每套主題執行中即可切換。Dark、Light、Black 和 98SE 各有八種強調色，共 41 種外觀。單鍵快速鍵在你輸入時自動讓開。 主題選單可開啟或關閉膠片顆粒。","Un calendrier avec chiffrement facultatif, sans compte ni synchronisation.
+
+Installez-le ou utilisez-le portable. Gratuit, open source, GPLv3. Sans compte, sans abonnement, sans service de synchronisation. Aucune télémétrie envoyée et aucune pub... jamais.
+
+Mois, semaine, jour, agenda
+Les rendez-vous qui se chevauchent s'affichent côte à côte en couloirs : une heure double affiche les deux. Les entrées sur toute la journée ont leur propre bande au-dessus de la grille horaire.
+
+Chiffrement optionnel
+SQLCipher au repos : AES-256, HMAC-SHA512 par page, sa propre dérivation de clé. Optionnel : sans mot de passe, le fichier reste du SQLite ordinaire.
+
+Autant de calendriers que vous voulez
+Un pour le travail, un pour l'astreinte, un pour la famille. Chacun est son propre fichier avec son propre mot de passe, ou aucun. Fichiers .kcal
+
+Catégories de couleur
+Définissez les vôtres, nommez-les, choisissez leurs couleurs. Un rendez-vous peut en porter plusieurs, la première le colore dans chaque vue. Renommer met à jour tous les rendez-vous d'un coup.
+
+iCalendar en entrée et en sortie
+Import et export écrits contre la RFC 5545 sans dépendances externes. Les catégories voyagent avec le rendez-vous dans les deux sens. Import / export .ics
+
+Signé, et vérifiable
+La carte À propos montre l'éditeur, l'empreinte du certificat et le SHA-256 de l'exe en cours, validé avec WinVerifyTrust plutôt que simplement lu dans le fichier.
+
+Treize thèmes, 19 langues
+Chaque thème se change en cours d'exécution. Dark, Light, Black et 98SE prennent chacun huit accents, soit 41 apparences en tout. Des raccourcis à une touche qui s'effacent pendant que vous tapez dans un champ. Le menu des thèmes permet d'activer ou de désactiver le grain de film.","Календарь с необязательным шифрованием, без аккаунта и синхронизации.
+
+Установите или запустите портативно. Бесплатно, открытый исходный код, GPLv3. Без учётной записи, без подписки, без службы синхронизации. Никакой телеметрии и никакой рекламы... никогда.
+
+Месяц, неделя, день, расписание
+Пересекающиеся встречи раскладываются рядом по дорожкам, поэтому час с двойной записью показывает обе. Записи на весь день получают собственную полосу над часовой сеткой. Вид месяца масштабируется от одной до шести недель и не разрывает многодневные встречи.
+
+Шифрование по желанию
+SQLCipher на диске: AES-256, HMAC-SHA512 для каждой страницы, собственная выработка ключа. Оно включается по желанию, поэтому без пароля файл остаётся обычным SQLite.
+
+Сколько угодно календарей
+Один для работы, один для дежурств, один для семьи. Каждый - отдельный файл со своим паролем или вовсе без него.
+
+Цветовые категории
+Задайте свои, дайте им имена и выберите цвета. У встречи может быть несколько категорий, и первая раскрашивает её в каждом виде. Переименование обновляет все встречи разом.
+
+iCalendar на входе и на выходе
+Импорт и экспорт написаны прямо по RFC 5545, без внешних зависимостей. Категории путешествуют вместе со встречей в обе стороны.
+
+Подписан и проверяем
+Карточка о программе показывает издателя, отпечаток сертификата и SHA-256 запущенного exe, проверенный через WinVerifyTrust, а не просто считанный из файла.
+
+Тринадцать тем, 19 языков
+Любую тему можно сменить на ходу. Тёмная, Светлая, Чёрная и 98SE берут по восемь оттенков акцента, так что всего получается 41 вид. Сочетания из одной клавиши, которые отступают, пока вы печатаете в поле. В меню тем можно включить или выключить зернистость плёнки."
+WhatsNew,Text,,,,,,,,,,,,,,,,,,,
+ProductFeatures1,Text,"Month, week, day and agenda, sharing one prev / next / today.","মাস, সপ্তাহ, দিন ও সূচি - একই আগের / পরের / আজ ভাগ করে নেয়।","Měsíc, týden, den a agenda se společným předchozí / další / dnes.","Monat, Woche, Tag und Agenda mit einem gemeinsamen Zurück / Weiter / Heute.","Mes, semana, día y agenda, compartiendo un solo anterior / siguiente / hoy.","Hónap, hét, nap és napirend, egy előző / következő / mai megosztása.","Mese, settimana, giorno e agenda, con un unico precedente / successivo / oggi.",月・週・日・予定一覧が、前へ / 次へ / 今日を共有します。,"Ай, апта, күн және күн тәртібі, ортақ артқа / алға / бүгін батырмаларымен.","Ay, hafta, gün ve ajanda; tek bir önceki / sonraki / bugün paylaşır.","Місяць, тиждень, день і розклад зі спільними кнопками назад / вперед / сьогодні.","Tháng, tuần, ngày và lịch biểu, cùng dùng các nút trước / tiếp / hôm nay.","Mês, semana, dia e pauta, compartilhando o mesmo anterior / próximo / hoje.","Miesiąc, tydzień, dzień i agenda ze wspólnym poprzedni / następny / dziś.","Måned, uke, dag og agenda, med felles forrige / neste / i dag.",月、周、日、日程，共用一组上一个 / 下一个 / 今天。,月、週、日、行程，共用一組上一個 / 下一個 / 今天。,"Mois, semaine, jour et agenda, partageant un seul précédent / suivant / aujourd'hui.","Месяц, неделя, день и расписание с общими кнопками назад / вперёд / сегодня."
+ProductFeatures2,Text,"Overlapping appointments lay out side by side, never hidden.","ওভারল্যাপ অ্যাপয়েন্টমেন্ট পাশাপাশি বসে, কখনও লুকায় না।","Překrývající se schůzky leží vedle sebe, nikdy skryté.","Überlappende Termine stehen nebeneinander, nie versteckt.","Las citas solapadas se colocan lado a lado, nunca ocultas.","Az egymást átfedő találkozók egymás mellett helyezkednek el, soha nem rejtve.","Gli appuntamenti sovrapposti si dispongono fianco a fianco, mai nascosti.",重なる予定は横に並び、隠れません。,"Қабаттасқан кездесулер қатар орналасады, ешқашан жасырылмайды.","Çakışan randevular yan yana dizilir, asla gizlenmez.","Зустрічі, що перетинаються, розкладаються поруч і ніколи не ховаються.",Các cuộc hẹn trùng giờ được xếp cạnh nhau và không bao giờ bị che khuất.,"Compromissos sobrepostos ficam lado a lado, nunca escondidos.","Nakładające się spotkania stają obok siebie, nigdy nie są ukryte.","Overlappende avtaler legges side om side, aldri skjult.",重叠的约会并排显示，从不遮挡。,重疊的約會並排顯示，從不遮擋。,"Les rendez-vous qui se chevauchent s'affichent côte à côte, jamais cachés.",Пересекающиеся встречи раскладываются рядом и никогда не прячутся.
+ProductFeatures3,Text,"Color categories you define, painting every view.",আপনার সংজ্ঞায়িত রঙের বিভাগ প্রতিটি ভিউ রাঙায়।,"Barevné kategorie, které si definujete a které barví každé zobrazení.","Farbkategorien, die Sie selbst anlegen und die jede Ansicht färben.","Categorías de color que tú defines, pintando cada vista.",Az Ön által meghatározott színkategóriák minden nézetet lefestenek.,"Categorie di colore che definisci tu, che colorano ogni vista.",自分で定義するカラーカテゴリがすべての表示を彩ります。,Өзіңіз белгілейтін түсті санаттар әр көріністі бояйды.,Kendi tanımladığınız renk kategorileri her görünümü boyar.,"Кольорові категорії, які задаєте ви, розфарбовують кожне подання.","Danh mục màu do bạn định nghĩa, được hiển thị trong mọi chế độ xem.",Categorias de cor definidas por você pintam todas as visões.,"Kolorowe kategorie, które sam definiujesz, malują każdy widok.","Fargekategorier du definerer selv, som farger hver visning.",你自己定义的颜色类别，给每个视图上色。,你自己定義的顏色類別，給每個檢視上色。,"Des catégories de couleur que vous définissez, peignant chaque vue.","Цветовые категории, которые задаёте вы, раскрашивают каждый вид."
+ProductFeatures4,Text,"Thirteen themes, nineteen languages, single-key shortcuts.","তেরোটি থিম, ১৯টি ভাষা, এক-কী শর্টকাট।","Třináct motivů, 19 jazyků, jednoklávesové zkratky.","Dreizehn Designs, 19 Sprachen, Einzeltasten-Kürzel.","Trece temas, 19 idiomas, atajos de una sola tecla.","Tizenhárom téma, 19 nyelv, egygombos gyorsbillentyűk.","Tredici temi, 19 lingue, scorciatoie a tasto singolo.",テーマ十三種、19 か国語、ワンキーのショートカット。,"Он үш тақырып, 19 тіл, жалғыз пернелік тіркесімдер.","On üç tema, 19 dil, tek tuşlu kısayollar.","Тринадцять тем, 19 мов, комбінації з однієї клавіші.","Mười ba giao diện, mười chín ngôn ngữ và các phím tắt một phím.","Treze temas, 19 idiomas, atalhos de uma tecla só.","Trzynaście motywów, 19 języków, skróty jednym klawiszem.","Tretten temaer, 19 språk, snarveier med én tast.",十三套主题、19 种语言、单键快捷键。,十三套佈景主題、19 種語言、單鍵快速鍵。,"Treize thèmes, 19 langues, raccourcis à une seule touche.","Тринадцать тем, 19 языков, сочетания из одной клавиши."
+ProductFeatures5,Text,Set a password and the file is encrypted at rest with SQLCipher.,পাসওয়ার্ড দিলে ফাইলটি SQLCipher দিয়ে স্টোরেজে এনক্রিপ্টেড থাকে।,Nastavte heslo a soubor je šifrovaný v klidu pomocí SQLCipher.,"Passwort setzen, und die Datei ist mit SQLCipher im Ruhezustand verschlüsselt.",Pon una contraseña y el archivo queda cifrado en reposo con SQLCipher.,"Állítson be egy jelszót, és a fájl nyugalmi állapotban titkosítva lesz az SQLCipher segítségével.",Imposta una password e il file è cifrato a riposo con SQLCipher.,パスワードを設定すると、ファイルは SQLCipher で保存時に暗号化されます。,"Құпия сөз қойсаңыз, файл SQLCipher арқылы дискіде шифрланады.","Bir parola belirleyin, dosya SQLCipher ile bekleme halinde şifrelenir.","Задайте пароль, і файл буде зашифровано на диску за допомогою SQLCipher.",Đặt mật khẩu và tệp sẽ được mã hóa khi lưu trữ bằng SQLCipher.,Defina uma senha e o arquivo fica criptografado em repouso com SQLCipher.,"Ustaw hasło, a plik jest szyfrowany w spoczynku przez SQLCipher.","Sett et passord, så er filen kryptert i hvile med SQLCipher.",设个密码，文件就由 SQLCipher 静态加密。,設個密碼，檔案就由 SQLCipher 靜態加密。,Mettez un mot de passe et le fichier est chiffré au repos avec SQLCipher.,"Задайте пароль, и файл будет зашифрован на диске с помощью SQLCipher."
+ProductFeatures6,Text,"AES-256, per-page HMAC-SHA512, SQLCipher's own key derivation.","AES-256, প্রতি পৃষ্ঠায় HMAC-SHA512, SQLCipher-এর নিজস্ব কী ডেরিভেশন।","AES-256, HMAC-SHA512 na stránku, vlastní odvození klíče SQLCipheru.","AES-256, HMAC-SHA512 pro Seite, SQLCiphers eigene Schlüsselableitung.","AES-256, HMAC-SHA512 por página y la derivación de clave del propio SQLCipher.","AES-256, oldalankénti HMAC-SHA512, az SQLCipher saját kulcsának levezetése.","AES-256, HMAC-SHA512 per pagina, la derivazione di chiave di SQLCipher stesso.",AES-256、ページごとの HMAC-SHA512、SQLCipher 自身の鍵導出。,"AES-256, әр бетке HMAC-SHA512, SQLCipher-дің өз кілт шығару әдісі.","AES-256, sayfa başına HMAC-SHA512, SQLCipher'ın kendi anahtar türetmesi.","AES-256, HMAC-SHA512 для кожної сторінки, власне вироблення ключа SQLCipher.","AES-256, HMAC-SHA512 trên từng trang, cùng cơ chế dẫn xuất khóa riêng của SQLCipher.","AES-256, HMAC-SHA512 por página, derivação de chave própria do SQLCipher.","AES-256, HMAC-SHA512 na stronę i własna derywacja klucza SQLCipher.","AES-256, HMAC-SHA512 per side og SQLCiphers egen nøkkelavledning.",AES-256、每页 HMAC-SHA512、SQLCipher 自带的密钥派生。,AES-256、每頁 HMAC-SHA512、SQLCipher 自帶的金鑰派生。,"AES-256, HMAC-SHA512 par page, la dérivation de clé de SQLCipher lui-même.","AES-256, HMAC-SHA512 для каждой страницы, собственная выработка ключа SQLCipher."
+ProductFeatures7,Text,"Opt-in: no password leaves it plain SQLite, readable by anything.","ঐচ্ছিক: পাসওয়ার্ড না থাকলে সাধারণ SQLite, যেকোনো কিছু দিয়ে পড়া যায়।","Volitelné: bez hesla zůstává obyčejné SQLite, čitelné čímkoli.","Opt-in: ohne Passwort bleibt es normales SQLite, für alles lesbar.","Opcional: sin contraseña queda como SQLite normal, legible por cualquier cosa.","Opt-in: semmilyen jelszó nem hagyja sima SQLite-t, bármivel olvasható.","Opzionale: senza password resta SQLite in chiaro, leggibile da qualsiasi cosa.",任意選択：パスワードなしなら普通の SQLite のまま、何でも読めます。,"Қалауыңызша: құпия сөзсіз ол кәдімгі SQLite күйінде қалады, кез келген нәрсе оқи алады.","İsteğe bağlı: parola yoksa düz SQLite kalır, her şeyle okunur.","За бажанням: без пароля це звичайний SQLite, який читається чим завгодно.",Tùy chọn bật: không đặt mật khẩu thì tệp vẫn là SQLite thuần và công cụ nào cũng có thể đọc.,"Opcional: sem senha, o arquivo continua em SQLite puro, legível por qualquer programa.","Opcjonalnie: bez hasła plik pozostaje zwykłym SQLite, czytelnym dla wszystkiego.","Valgfritt: uten passord forblir den vanlig SQLite, lesbar for hva som helst.",可选：不设密码就是普通 SQLite，什么都能读。,可選：不設密碼就是普通 SQLite，什麼都能讀。,"Optionnel : sans mot de passe, il reste du SQLite ordinaire, lisible par tout.","По желанию: без пароля это обычный SQLite, читаемый чем угодно."
+ProductFeatures8,Text,One password per calendar - keep work locked and the family one open.,"প্রতি ক্যালেন্ডারে একটি পাসওয়ার্ড - কাজেরটি তালাবদ্ধ, পরিবারেরটি খোলা।","Jedno heslo na kalendář - práci zamčené, rodinný otevřený.","Ein Passwort pro Kalender - die Arbeit verschlossen, der Familienkalender offen.",Una contraseña por calendario: el del trabajo cerrado y el de la familia abierto.,"Naptáronként egy jelszó - a munka zárva legyen, a család pedig nyitva.",Una password per calendario - tieni il lavoro bloccato e quello di famiglia aperto.,カレンダーごとにパスワード一つ - 仕事はロック、家族の分は開いたままに。,"Әр күнтізбеге бір құпия сөз - жұмысыңызды құлыпта, отбасылық күнтізбені ашық ұстаңыз.","Takvim başına bir parola - iş kilitli, aile takvimi açık.","Один пароль на календар - робочий тримайте під замком, а сімейний відкритим.",Mỗi lịch dùng một mật khẩu. Hãy khóa lịch công việc và để lịch gia đình luôn mở.,Uma senha por agenda: mantenha a do trabalho trancada e a da família aberta.,"Jedno hasło na kalendarz - służbowy zamknięty, rodzinny otwarty.",Ett passord per kalender - hold jobbkalenderen låst og familiekalenderen åpen.,每个日历一个密码 - 工作锁上，家庭的敞开。,每個行事曆一個密碼 - 工作鎖上，家庭的敞開。,"Un mot de passe par calendrier - le travail verrouillé, celui de la famille ouvert.","Один пароль на календарь - рабочий держите под замком, а семейный открытым."
+ProductFeatures9,Text,"One .kcal file is your whole calendar, in your profile or a folder you choose.","একটি .kcal ফাইলই আপনার পুরো ক্যালেন্ডার, আপনার নিজের প্রোফাইলে।","Jeden soubor .kcal je celý váš kalendář, ve vašem profilu.","Eine .kcal-Datei ist Ihr ganzer Kalender, im eigenen Profil.","Un archivo .kcal es todo tu calendario, en tu propio perfil.","Egy .kcal fájl a teljes naptár, a profilodban vagy egy kiválasztott mappában.","Un file .kcal è tutto il tuo calendario, nel tuo profilo o in una cartella a tua scelta.",.kcal ファイル一つがあなたのカレンダー全部、自分のプロファイルの中に。,"Бір .kcal файлы - бүкіл күнтізбеңіз, профиліңізде немесе өзіңіз таңдаған қалтада.","Bir .kcal dosyası, kendi profilinizde tüm takviminizdir.","Один файл .kcal - це весь ваш календар, у вашому профілі або у вибраній вами теці.","Một tệp .kcal chứa toàn bộ lịch của bạn, nằm trong hồ sơ người dùng hoặc thư mục bạn chọn.","Um único arquivo .kcal é a sua agenda inteira, no seu perfil ou em uma pasta que você escolher.","Jeden plik .kcal to cały twój kalendarz, w twoim własnym profilu.","Én .kcal-fil er hele kalenderen din, i profilen din eller i en mappe du velger.",一个 .kcal 文件就是你的全部日历，存在你自己的配置文件夹里。,一個 .kcal 檔案就是你的全部行事曆，存在你自己的設定檔資料夾裡。,"Un fichier .kcal est tout votre calendrier, dans votre propre profil.","Один файл .kcal - это весь ваш календарь, в вашем профиле или в выбранной вами папке."
+ProductFeatures10,Text,An ordinary SQLite database - back it up by copying it.,সাধারণ SQLite ডাটাবেস - কপি করলেই ব্যাকআপ।,Obyčejná databáze SQLite - zálohujete ji zkopírováním.,Eine gewöhnliche SQLite-Datenbank - Sicherung per Kopieren.,Una base de datos SQLite normal: cópiala y ya tienes copia de seguridad.,Egy közönséges SQLite adatbázis - készítsen biztonsági másolatot másolással.,Un normale database SQLite - fai il backup copiandolo.,普通の SQLite データベース - コピーするだけでバックアップ。,Кәдімгі SQLite дерекқоры - көшірмесін жасау үшін оны көшірсеңіз болғаны.,Sıradan bir SQLite veritabanı - kopyalayarak yedekleyin.,Звичайна база даних SQLite - для резервної копії її достатньо скопіювати.,Một cơ sở dữ liệu SQLite thông thường. Chỉ cần sao chép tệp để sao lưu.,"Um banco SQLite comum: para fazer backup, basta copiar.",Zwykła baza SQLite - kopia zapasowa przez zwykłe skopiowanie.,En vanlig SQLite-database - ta sikkerhetskopi ved å kopiere den.,普通的 SQLite 数据库 - 复制一份就是备份。,普通的 SQLite 資料庫 - 複製一份就是備份。,Une base SQLite ordinaire - sauvegardez-la en la copiant.,Обычная база данных SQLite - для резервной копии её достаточно скопировать.
+ProductFeatures11,Text,Unencrypted .kcal files can be opened with SQLite tools. Encrypted files require SQLCipher and the password.,এনক্রিপ্ট না করা .kcal ফাইল SQLite টুল দিয়ে খোলা যায়। এনক্রিপ্ট করা ফাইলে SQLCipher ও পাসওয়ার্ড প্রয়োজন।,Nešifrované soubory .kcal lze otevřít nástroji SQLite. Šifrované soubory vyžadují SQLCipher a heslo.,Unverschlüsselte .kcal-Dateien lassen sich mit SQLite-Werkzeugen öffnen. Verschlüsselte Dateien erfordern SQLCipher und das Passwort.,Los archivos .kcal sin cifrar se pueden abrir con herramientas SQLite. Los cifrados requieren SQLCipher y la contraseña.,A titkosítatlan .kcal fájlokat SQLite-eszközökkel lehet megnyitni. A titkosított fájlokhoz SQLCipher és a jelszó szükséges.,I file .kcal non cifrati si aprono con strumenti SQLite. I file cifrati richiedono SQLCipher e la password.,暗号化していない .kcal ファイルは SQLite ツールで開けます。暗号化したファイルには SQLCipher とパスワードが必要です。,Шифрланбаған .kcal файлдарын SQLite құралдарымен ашуға болады. Шифрланған файлдарға SQLCipher және құпиясөз қажет.,Şifrelenmemiş .kcal dosyaları SQLite araçlarıyla açılabilir. Şifreli dosyalar SQLCipher ve parola gerektirir.,Незашифровані файли .kcal можна відкрити інструментами SQLite. Зашифровані потребують SQLCipher і пароля.,Tệp .kcal không mã hóa có thể mở bằng công cụ SQLite. Tệp mã hóa cần SQLCipher và mật khẩu.,Arquivos .kcal sem criptografia podem ser abertos com ferramentas SQLite. Os criptografados exigem SQLCipher e a senha.,Niezaszyfrowane pliki .kcal można otworzyć narzędziami SQLite. Zaszyfrowane wymagają SQLCipher i hasła.,Ukrypterte .kcal-filer kan åpnes med SQLite-verktøy. Krypterte filer krever SQLCipher og passordet.,未加密的 .kcal 文件可用 SQLite 工具打开。加密文件需要 SQLCipher 和密码。,未加密的 .kcal 檔案可用 SQLite 工具開啟。加密檔案需要 SQLCipher 和密碼。,Les fichiers .kcal non chiffrés s'ouvrent avec des outils SQLite. Les fichiers chiffrés nécessitent SQLCipher et le mot de passe.,Незашифрованные файлы .kcal можно открыть инструментами SQLite. Зашифрованные требуют SQLCipher и пароль.
+ProductFeatures12,Text,Import and export .ics for everything else.,বাকি সবকিছুর জন্য .ics ইমপোর্ট ও এক্সপোর্ট।,Import a export .ics pro všechno ostatní.,Import und Export per .ics für alles andere.,Importa y exporta .ics para todo lo demás.,Importálja és exportálja az .ics fájlt minden máshoz.,Importa ed esporta .ics per tutto il resto.,その他はすべて .ics で読み書き。,Қалғанының бәрі үшін .ics импорты мен экспорты.,Geri kalan her şey için .ics içe ve dışa aktarın.,Імпорт та експорт .ics для всього іншого.,Nhập và xuất .ics để dùng với mọi ứng dụng khác.,Importe e exporte .ics para todo o resto.,Import i eksport .ics do całej reszty.,Importer og eksporter .ics for alt annet.,其他一切用 .ics 导入导出。,其他一切用 .ics 匯入匯出。,Importez et exportez du .ics pour tout le reste.,Импорт и экспорт .ics для всего остального.
+ProductFeatures13,Text,,,,,,,,,,,,,,,,,,,
+ProductFeatures14,Text,,,,,,,,,,,,,,,,,,,
+ProductFeatures15,Text,,,,,,,,,,,,,,,,,,,
+ProductFeatures16,Text,,,,,,,,,,,,,,,,,,,
+ProductFeatures17,Text,,,,,,,,,,,,,,,,,,,
+ProductFeatures18,Text,,,,,,,,,,,,,,,,,,,
+ProductFeatures19,Text,,,,,,,,,,,,,,,,,,,
+ProductFeatures20,Text,,,,,,,,,,,,,,,,,,,
+ShortDescription,Text,"A calendar with optional encryption, no account and no synchronization.","ঐচ্ছিক এনক্রিপশনসহ ক্যালেন্ডার, অ্যাকাউন্ট বা সিঙ্ক ছাড়াই।","Kalendář s volitelným šifrováním, bez účtu a synchronizace.","Ein Kalender mit optionaler Verschlüsselung, ohne Konto und Synchronisierung.","Un calendario con cifrado opcional, sin cuenta ni sincronización.","Naptár választható titkosítással, fiók és szinkronizálás nélkül.","Un calendario con cifratura facoltativa, senza account né sincronizzazione.",暗号化を選べるカレンダー。アカウントや同期は不要です。,"Қосымша шифрлауы бар, тіркелгісіз және синхрондаусыз күнтізбе.","İsteğe bağlı şifrelemeli, hesap ve eşitleme gerektirmeyen bir takvim.","Календар із необов'язковим шифруванням, без облікового запису й синхронізації.","Lịch có mã hóa tùy chọn, không cần tài khoản hay đồng bộ hóa.","Um calendário com criptografia opcional, sem conta nem sincronização.","Kalendarz z opcjonalnym szyfrowaniem, bez konta i synchronizacji.","En kalender med valgfri kryptering, uten konto eller synkronisering.",可选择加密的日历，不需要账户或同步。,可選擇加密的行事曆，不需要帳戶或同步。,"Un calendrier avec chiffrement facultatif, sans compte ni synchronisation.","Календарь с необязательным шифрованием, без аккаунта и синхронизации."
+SearchTerms1,Text,calendar,calendar,calendar,calendar,calendar,calendar,calendar,calendar,calendar,calendar,calendar,calendar,calendar,calendar,calendar,calendar,calendar,calendar,calendar
+SearchTerms2,Text,encrypted calendar,encrypted calendar,encrypted calendar,encrypted calendar,encrypted calendar,encrypted calendar,encrypted calendar,encrypted calendar,encrypted calendar,encrypted calendar,encrypted calendar,encrypted calendar,encrypted calendar,encrypted calendar,encrypted calendar,encrypted calendar,encrypted calendar,encrypted calendar,encrypted calendar
+SearchTerms3,Text,offline calendar,offline calendar,offline calendar,offline calendar,offline calendar,offline calendar,offline calendar,offline calendar,offline calendar,offline calendar,offline calendar,offline calendar,offline calendar,offline calendar,offline calendar,offline calendar,offline calendar,offline calendar,offline calendar
+SearchTerms4,Text,iCalendar,iCalendar,iCalendar,iCalendar,iCalendar,iCalendar,iCalendar,iCalendar,iCalendar,iCalendar,iCalendar,iCalendar,iCalendar,iCalendar,iCalendar,iCalendar,iCalendar,iCalendar,iCalendar
+SearchTerms5,Text,planner,planner,planner,planner,planner,planner,planner,planner,planner,planner,planner,planner,planner,planner,planner,planner,planner,planner,planner
+SearchTerms6,Text,appointments,appointments,appointments,appointments,appointments,appointments,appointments,appointments,appointments,appointments,appointments,appointments,appointments,appointments,appointments,appointments,appointments,appointments,appointments
+SearchTerms7,Text,agenda,agenda,agenda,agenda,agenda,agenda,agenda,agenda,agenda,agenda,agenda,agenda,agenda,agenda,agenda,agenda,agenda,agenda,agenda
+Applicable license terms,Text,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar,GNU General Public License v3.0 (GPLv3). Source code: https://github.com/SteveTheKiller/Killendar
+Copyright,Text,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer,© 2026 Steve the Killer
+DevelopedBy,Text,Steve the Killer,Steve the Killer,Steve the Killer,Steve the Killer,Steve the Killer,Steve the Killer,Steve the Killer,Steve the Killer,Steve the Killer,Steve the Killer,Steve the Killer,Steve the Killer,Steve the Killer,Steve the Killer,Steve the Killer,Steve the Killer,Steve the Killer,Steve the Killer,Steve the Killer
+RequirementsMinimum1,Text,.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows),.NET Framework 4.8 or newer (included with Windows)
+RequirementsMinimum2,Text,,,,,,,,,,,,,,,,,,,
+RequirementsMinimum3,Text,,,,,,,,,,,,,,,,,,,
+RequirementsMinimum4,Text,,,,,,,,,,,,,,,,,,,
+RequirementsMinimum5,Text,,,,,,,,,,,,,,,,,,,
+RequirementsMinimum6,Text,,,,,,,,,,,,,,,,,,,
+RequirementsMinimum7,Text,,,,,,,,,,,,,,,,,,,
+RequirementsMinimum8,Text,,,,,,,,,,,,,,,,,,,
+RequirementsMinimum9,Text,,,,,,,,,,,,,,,,,,,
+RequirementsMinimum10,Text,,,,,,,,,,,,,,,,,,,
+RequirementsMinimum11,Text,,,,,,,,,,,,,,,,,,,
+RequirementsRecommended1,Text,,,,,,,,,,,,,,,,,,,
+RequirementsRecommended2,Text,,,,,,,,,,,,,,,,,,,
+RequirementsRecommended3,Text,,,,,,,,,,,,,,,,,,,
+RequirementsRecommended4,Text,,,,,,,,,,,,,,,,,,,
+RequirementsRecommended5,Text,,,,,,,,,,,,,,,,,,,
+RequirementsRecommended6,Text,,,,,,,,,,,,,,,,,,,
+RequirementsRecommended7,Text,,,,,,,,,,,,,,,,,,,
+RequirementsRecommended8,Text,,,,,,,,,,,,,,,,,,,
+RequirementsRecommended9,Text,,,,,,,,,,,,,,,,,,,
+RequirementsRecommended10,Text,,,,,,,,,,,,,,,,,,,
+RequirementsRecommended11,Text,,,,,,,,,,,,,,,,,,,
+StoreLogos1,Provide the file name only if it is in the same folder. Provide relative path to image starting with the subfolder name otherwise,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png,StoreLogo-1080.png
+StoreLogos2,Provide the file name only if it is in the same folder. Provide relative path to image starting with the subfolder name otherwise,,,,,,,,,,,,,,,,,,,
+Screenshots1,Provide the file name only if it is in the same folder. Provide relative path to image starting with the subfolder name otherwise,screenshots/01.png,screenshots/01.png,screenshots/01.png,screenshots/01.png,screenshots/01.png,screenshots/01.png,screenshots/01.png,screenshots/01.png,screenshots/01.png,screenshots/01.png,screenshots/01.png,screenshots/01.png,screenshots/01.png,screenshots/01.png,screenshots/01.png,screenshots/01.png,screenshots/01.png,screenshots/01.png,screenshots/01.png
+Screenshots2,Provide the file name only if it is in the same folder. Provide relative path to image starting with the subfolder name otherwise,screenshots/02.png,screenshots/02.png,screenshots/02.png,screenshots/02.png,screenshots/02.png,screenshots/02.png,screenshots/02.png,screenshots/02.png,screenshots/02.png,screenshots/02.png,screenshots/02.png,screenshots/02.png,screenshots/02.png,screenshots/02.png,screenshots/02.png,screenshots/02.png,screenshots/02.png,screenshots/02.png,screenshots/02.png
+Screenshots3,Provide the file name only if it is in the same folder. Provide relative path to image starting with the subfolder name otherwise,screenshots/03.png,screenshots/03.png,screenshots/03.png,screenshots/03.png,screenshots/03.png,screenshots/03.png,screenshots/03.png,screenshots/03.png,screenshots/03.png,screenshots/03.png,screenshots/03.png,screenshots/03.png,screenshots/03.png,screenshots/03.png,screenshots/03.png,screenshots/03.png,screenshots/03.png,screenshots/03.png,screenshots/03.png
+Screenshots4,Provide the file name only if it is in the same folder. Provide relative path to image starting with the subfolder name otherwise,screenshots/04.png,screenshots/04.png,screenshots/04.png,screenshots/04.png,screenshots/04.png,screenshots/04.png,screenshots/04.png,screenshots/04.png,screenshots/04.png,screenshots/04.png,screenshots/04.png,screenshots/04.png,screenshots/04.png,screenshots/04.png,screenshots/04.png,screenshots/04.png,screenshots/04.png,screenshots/04.png,screenshots/04.png
+Screenshots5,Provide the file name only if it is in the same folder. Provide relative path to image starting with the subfolder name otherwise,screenshots/05.png,screenshots/05.png,screenshots/05.png,screenshots/05.png,screenshots/05.png,screenshots/05.png,screenshots/05.png,screenshots/05.png,screenshots/05.png,screenshots/05.png,screenshots/05.png,screenshots/05.png,screenshots/05.png,screenshots/05.png,screenshots/05.png,screenshots/05.png,screenshots/05.png,screenshots/05.png,screenshots/05.png
+Screenshots6,Provide the file name only if it is in the same folder. Provide relative path to image starting with the subfolder name otherwise,screenshots/06.png,screenshots/06.png,screenshots/06.png,screenshots/06.png,screenshots/06.png,screenshots/06.png,screenshots/06.png,screenshots/06.png,screenshots/06.png,screenshots/06.png,screenshots/06.png,screenshots/06.png,screenshots/06.png,screenshots/06.png,screenshots/06.png,screenshots/06.png,screenshots/06.png,screenshots/06.png,screenshots/06.png
+Screenshots7,Provide the file name only if it is in the same folder. Provide relative path to image starting with the subfolder name otherwise,screenshots/07.png,screenshots/07.png,screenshots/07.png,screenshots/07.png,screenshots/07.png,screenshots/07.png,screenshots/07.png,screenshots/07.png,screenshots/07.png,screenshots/07.png,screenshots/07.png,screenshots/07.png,screenshots/07.png,screenshots/07.png,screenshots/07.png,screenshots/07.png,screenshots/07.png,screenshots/07.png,screenshots/07.png
+Screenshots8,Provide the file name only if it is in the same folder. Provide relative path to image starting with the subfolder name otherwise,,,,,,,,,,,,,,,,,,,
+Screenshots9,Provide the file name only if it is in the same folder. Provide relative path to image starting with the subfolder name otherwise,,,,,,,,,,,,,,,,,,,
+Screenshots10,Provide the file name only if it is in the same folder. Provide relative path to image starting with the subfolder name otherwise,,,,,,,,,,,,,,,,,,,
+HeroArts,Text,,,,,,,,,,,,,,,,,,,
+Trailers,Text,,,,,,,,,,,,,,,,,,,
