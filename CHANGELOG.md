@@ -17,6 +17,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Fixed
 - Silent installs return specific Windows error codes and reject a second concurrent install instead of reporting a general failure.
+- A silent install started without admin rights asks for them through UAC instead of failing, so standard users and the Microsoft Store can install it machine-wide.
 - Chocolatey uninstalls run the silent uninstaller and fail with its exit code instead of opening the uninstall prompt.
 - Icon-only buttons give screen readers the name from their tooltip, including tooltips with formatted text, and controls reached with the keyboard show a dotted focus outline, drawn just outside small icon buttons so it no longer covers the icon.
 - Kept app icons sharp at fractional display DPI and app zoom by caching exact pixel sizes from a covering source and aligning the final draw to device pixels.
@@ -33,7 +34,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - On 98SE, hovered dialog buttons keep the classic gray face instead of filling with a dark color that hid the label.
 - Centered website logos with space above and below and corrected current features, runtime requirements and documentation.
 - Menu separators draw their divider line instead of leaving an empty gap.
-- The About card's update button uses the family outline button, as in KillerPDF, instead of a solid dark block.
 
 ## [1.2.0] - 2026-10-07
 

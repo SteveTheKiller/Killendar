@@ -154,6 +154,12 @@ namespace Killendar
 
         private static int DoSilentInstall()
         {
+            // Without admin rights, as the Microsoft Store installs, the install relaunches
+            // itself elevated through UAC and returns that copy's exit code.
+            int? elevated = KillerFamily.Deployment.InstallerExitCodes.ElevateIfNeeded(
+                "/silent", () => CodeSignature.GetSignerInfo().valid);
+            if (elevated.HasValue) return elevated.Value;
+
             try
             {
                 using var installLease = KillerFamily.Deployment.InstallerExitCodes.Acquire(AppName);
