@@ -33,6 +33,7 @@ namespace Killendar.Services
     {
         /// <summary>Killer Sans UI (Killer Sans scaled to Segoe UI proportions) with the Segoe fallback stack.</summary>
         internal static readonly FontFamily KillerSansUiStack = new(new Uri("pack://application:,,,/"), "./Fonts/#Killer Sans UI, Segoe UI, Microsoft JhengHei UI, Nirmala UI");
+        internal static readonly FontFamily LacquerHeadingStack = new(new Uri("pack://application:,,,/"), "./Fonts/#Lacquer, ./Fonts/#Killer Sans UI, Segoe UI, Microsoft JhengHei UI, Nirmala UI");
         internal static readonly FontFamily KillerSansFont = new(new Uri("pack://application:,,,/"), "./Fonts/#Killer Sans");
         // ---- Persistence hooks (optional). Default: in-memory only. ----
         public static Func<string, string?> GetSetting { get; set; } = _ => null;
@@ -360,6 +361,10 @@ namespace Killendar.Services
             if (!d.Contains("MenuFontFamily")) d["MenuFontFamily"] = KillerSansUiStack;
             if (!d.Contains("MenuFontSize")) d["MenuFontSize"] = 12.0;
             if (!d.Contains("FileNameFont")) d["FileNameFont"] = square ? d["UiFont"] : KillerSansFont;
+            // Primary headings (dialog headings, page and period titles): Lacquer, the app-name face of
+            // the wordmark, falling back to Killer Sans UI for scripts Lacquer does not cover. 98SE keeps
+            // Killer Sans. Secondary headings, the footer and the interface stay Killer Sans.
+            if (!d.Contains("HeadingFont")) d["HeadingFont"] = square ? KillerSansFont : LacquerHeadingStack;
             if (!d.Contains("FileNameFontSize")) d["FileNameFontSize"] = square ? 11d : 18d;
             if (!d.Contains("FileNameTransform"))
             {

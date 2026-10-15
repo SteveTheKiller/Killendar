@@ -253,14 +253,14 @@
                          writing one element. -->
                     <Grid Grid.Column="1" Margin="12,0,6,0" VerticalAlignment="Center">
                         <TextBlock Text="{Binding Text, ElementName=PeriodLabel}"
-                                   FontFamily="{DynamicResource BrandSansFont}" FontSize="22"
+                                   FontFamily="{DynamicResource HeadingFont}" FontSize="22"
                                    Margin="1,2,0,0" IsHitTestVisible="False"
                                    TextTrimming="CharacterEllipsis" Foreground="#C0000000"
                                    Opacity="{DynamicResource IconShadowOpacity}">
                             <TextBlock.Effect><BlurEffect Radius="3"/></TextBlock.Effect>
                         </TextBlock>
                         <TextBlock x:Name="PeriodLabel" TextTrimming="CharacterEllipsis"
-                                   FontFamily="{DynamicResource BrandSansFont}" FontSize="22"
+                                   FontFamily="{DynamicResource HeadingFont}" FontSize="22"
                                    Foreground="{DynamicResource PrimaryBrush}"/>
                     </Grid>
 

@@ -57,12 +57,12 @@
                                RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                         <Grid VerticalAlignment="Center" Visibility="{DynamicResource WordmarkVisibility}">
                             <TextBlock Text="{DynamicResource Str_Kc_Title}" Margin="1,2,0,0"
-                                       FontFamily="{DynamicResource BrandSansFont}" FontSize="18"
+                                       FontFamily="{DynamicResource HeadingFont}" FontSize="18"
                                        Foreground="#D8000000" Opacity="{DynamicResource IconShadowOpacity}">
                                 <TextBlock.Effect><BlurEffect Radius="3"/></TextBlock.Effect>
                             </TextBlock>
                             <TextBlock Text="{DynamicResource Str_Kc_Title}"
-                                       FontFamily="{DynamicResource BrandSansFont}" FontSize="18"
+                                       FontFamily="{DynamicResource HeadingFont}" FontSize="18"
                                        Foreground="{DynamicResource PrimaryBrush}"/>
                         </Grid>
                         <TextBlock Text="{DynamicResource Str_Kc_Title}" Visibility="{DynamicResource PlainTitleVisibility}"
