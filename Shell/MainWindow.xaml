@@ -332,7 +332,7 @@
                         <DropShadowEffect Color="Black" BlurRadius="16" ShadowDepth="0" Opacity="{DynamicResource PaneShadowOpacity}"/>
                     </Border.Effect>
                     <Grid>
-                        <Border x:Name="ContentPaneGrain" IsHitTestVisible="False" Opacity="0.20" Panel.ZIndex="-1" CornerRadius="{DynamicResource PanelCornerRadius}">
+                        <Border x:Name="ContentPaneGrain" IsHitTestVisible="False" Opacity="0.20" Visibility="{DynamicResource FilmGrainVisibility}" Panel.ZIndex="-1" CornerRadius="{DynamicResource PanelCornerRadius}">
                             <Border.Background>
                                 <ImageBrush x:Name="GrainBrush" TileMode="Tile" ViewportUnits="Absolute"
                                             Viewport="0,0,256,256" Stretch="None"/>
