@@ -182,6 +182,12 @@
     <sys:String x:Key="Str_About_Unsigned">(не подписано или цепочка не проверена)</sys:String>
     <sys:String x:Key="Str_About_UpdateAvailable">Доступно обновление: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">Загрузка...</sys:String>
+    <sys:String x:Key="Str_About_StartupUpdateCheck">Проверять обновления при запуске</sys:String>
+    <sys:String x:Key="Str_About_StartupUpdateHeading">Доступен {0} {1}</sys:String>
+    <sys:String x:Key="Str_About_StartupUpdateDetail">Хотите скачать и установить его сейчас? Приложение закроется и снова откроется автоматически.</sys:String>
+    <sys:String x:Key="Str_About_UpdateNow">Обновить</sys:String>
+    <sys:String x:Key="Str_About_NotNow">Не сейчас</sys:String>
+    <sys:String x:Key="Str_About_AlwaysCheckOnStartup">Всегда проверять обновления при запуске</sys:String>
     <!-- Tagline is split so the GPLv3 license and the Killer Tools link stay untranslated. -->
     <sys:String x:Key="Str_About_DescA" xml:space="preserve">Календарь без учётной записи, без синхронизации и без обращений на сторону. Ваши встречи лежат в одном файле на вашей собственной машине, зашифрованном, если вы этого хотите. Утилита GPLv3 от </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>

@@ -139,6 +139,12 @@
     <sys:String x:Key="Str_About_Unsigned">(imzasız veya zincir doğrulanamadı)</sys:String>
     <sys:String x:Key="Str_About_UpdateAvailable">Güncelleme mevcut: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">İndiriliyor...</sys:String>
+    <sys:String x:Key="Str_About_StartupUpdateCheck">Başlangıçta güncellemeleri denetle</sys:String>
+    <sys:String x:Key="Str_About_StartupUpdateHeading">{0} {1} kullanılabilir</sys:String>
+    <sys:String x:Key="Str_About_StartupUpdateDetail">Şimdi indirip yüklemek ister misiniz? Uygulama kapanacak ve otomatik olarak yeniden açılacak.</sys:String>
+    <sys:String x:Key="Str_About_UpdateNow">Güncelle</sys:String>
+    <sys:String x:Key="Str_About_NotNow">Şimdi değil</sys:String>
+    <sys:String x:Key="Str_About_AlwaysCheckOnStartup">Başlangıçta her zaman güncellemeleri denetle</sys:String>
     <sys:String x:Key="Str_About_DescA" xml:space="preserve">Hesapsız, senkronizasyonsuz ve eve telefon etmeyen bir takvim. Randevuların kendi makinendeki tek bir dosyada yaşar, istersen şifreli. Bir GPLv3 </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> aracı.</sys:String>
 

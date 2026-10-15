@@ -139,6 +139,12 @@
     <sys:String x:Key="Str_About_Unsigned">(nepodepsáno nebo řetěz selhal)</sys:String>
     <sys:String x:Key="Str_About_UpdateAvailable">K dispozici je aktualizace: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">Stahuje se...</sys:String>
+    <sys:String x:Key="Str_About_StartupUpdateCheck">Kontrolovat aktualizace při spuštění</sys:String>
+    <sys:String x:Key="Str_About_StartupUpdateHeading">Je k dispozici {0} {1}</sys:String>
+    <sys:String x:Key="Str_About_StartupUpdateDetail">Chcete jej nyní stáhnout a nainstalovat? Aplikace se zavře a automaticky znovu otevře.</sys:String>
+    <sys:String x:Key="Str_About_UpdateNow">Aktualizovat</sys:String>
+    <sys:String x:Key="Str_About_NotNow">Teď ne</sys:String>
+    <sys:String x:Key="Str_About_AlwaysCheckOnStartup">Vždy kontrolovat aktualizace při spuštění</sys:String>
     <sys:String x:Key="Str_About_DescA" xml:space="preserve">Kalendář bez účtu, bez synchronizace a bez čehokoli, co volá domů. Tvoje schůzky žijí v jediném souboru na tvém vlastním počítači, v případě zájmu šifrovaném. Nástroj GPLv3 od </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>
 

@@ -139,6 +139,12 @@
     <sys:String x:Key="Str_About_Unsigned">(未签名或证书链验证失败)</sys:String>
     <sys:String x:Key="Str_About_UpdateAvailable">有可用更新：{0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">正在下载...</sys:String>
+    <sys:String x:Key="Str_About_StartupUpdateCheck">启动时检查更新</sys:String>
+    <sys:String x:Key="Str_About_StartupUpdateHeading">{0} {1} 已发布</sys:String>
+    <sys:String x:Key="Str_About_StartupUpdateDetail">是否立即下载并安装？应用将关闭并自动重新打开。</sys:String>
+    <sys:String x:Key="Str_About_UpdateNow">更新</sys:String>
+    <sys:String x:Key="Str_About_NotNow">以后再说</sys:String>
+    <sys:String x:Key="Str_About_AlwaysCheckOnStartup">启动时始终检查更新</sys:String>
     <sys:String x:Key="Str_About_DescA" xml:space="preserve">没有账户、没有同步、不向任何地方回传的日历。你的约会保存在自己电脑上的单个文件里，需要的话还可以加密。一个 GPLv3 的 </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> 工具。</sys:String>
 

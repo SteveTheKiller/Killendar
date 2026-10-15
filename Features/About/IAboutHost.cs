@@ -34,6 +34,9 @@ namespace Killendar.Features
         bool UpdateVisible { set; }
         bool UpdateEnabled { set; }
 
+        /// <summary>The "Check for updates on startup" checkbox, first of the card's checkboxes.</summary>
+        bool StartupUpdateCheck { set; }
+
         /// <summary>Fades the About card in.</summary>
         void ShowCard();
     }

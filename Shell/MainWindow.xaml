@@ -1176,6 +1176,10 @@
                             <!-- About options belong below the raised identity pane, matching the
                                  shared KillerPDF/Killer Tools About hierarchy. -->
                             <StackPanel Margin="0,12,0,0" HorizontalAlignment="Left">
+                                <CheckBox x:Name="AboutStartupUpdateCheck"
+                                          Content="{DynamicResource Str_About_StartupUpdateCheck}"
+                                          FontSize="11" Margin="0,0,0,6"
+                                          Click="AboutStartupUpdateCheck_Click"/>
                                 <CheckBox x:Name="PhotonLookupToggle"
                                           Content="{DynamicResource Str_About_PhotonLookup}"
                                           FontSize="11"

@@ -139,6 +139,12 @@
     <sys:String x:Key="Str_About_Unsigned">(স্বাক্ষরিত নয় বা চেইন যাচাই ব্যর্থ)</sys:String>
     <sys:String x:Key="Str_About_UpdateAvailable">আপডেট পাওয়া গেছে: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">ডাউনলোড হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_About_StartupUpdateCheck">অ্যাপ চালু হলে আপডেট পরীক্ষা করুন</sys:String>
+    <sys:String x:Key="Str_About_StartupUpdateHeading">{0} {1} উপলব্ধ</sys:String>
+    <sys:String x:Key="Str_About_StartupUpdateDetail">এখনই এটি ডাউনলোড করে ইনস্টল করবেন? অ্যাপটি বন্ধ হয়ে স্বয়ংক্রিয়ভাবে আবার খুলবে।</sys:String>
+    <sys:String x:Key="Str_About_UpdateNow">আপডেট</sys:String>
+    <sys:String x:Key="Str_About_NotNow">এখন নয়</sys:String>
+    <sys:String x:Key="Str_About_AlwaysCheckOnStartup">অ্যাপ চালু হলে সর্বদা আপডেট পরীক্ষা করুন</sys:String>
     <sys:String x:Key="Str_About_DescA" xml:space="preserve">কোনো অ্যাকাউন্ট নেই, সিঙ্ক নেই, কোথাও কিছু পাঠায় না এমন একটি ক্যালেন্ডার। আপনার অ্যাপয়েন্টমেন্ট থাকে নিজের মেশিনের একটিমাত্র ফাইলে, চাইলে এনক্রিপ্ট করা। একটি GPLv3 </sys:String>
     <sys:String x:Key="Str_About_DescB" xml:space="preserve"> ইউটিলিটি।</sys:String>
 

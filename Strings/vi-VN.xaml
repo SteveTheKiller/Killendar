@@ -166,6 +166,12 @@
   <sys:String x:Key="Str_About_Unsigned">(chưa được ký hoặc xác minh chuỗi chứng chỉ không thành công)</sys:String>
   <sys:String x:Key="Str_About_UpdateAvailable">Có bản cập nhật: {0}</sys:String>
   <sys:String x:Key="Str_About_Downloading">Đang tải xuống...</sys:String>
+  <sys:String x:Key="Str_About_StartupUpdateCheck">Kiểm tra cập nhật khi khởi động</sys:String>
+  <sys:String x:Key="Str_About_StartupUpdateHeading">Phiên bản {0} {1} đã có sẵn</sys:String>
+  <sys:String x:Key="Str_About_StartupUpdateDetail">Bạn có muốn tải xuống và cài đặt ngay bây giờ không? Ứng dụng sẽ tự động đóng và mở lại.</sys:String>
+  <sys:String x:Key="Str_About_UpdateNow">Cập nhật</sys:String>
+  <sys:String x:Key="Str_About_NotNow">Để sau</sys:String>
+  <sys:String x:Key="Str_About_AlwaysCheckOnStartup">Luôn kiểm tra khi khởi động</sys:String>
   <!-- Tagline is split so the GPLv3 license and the Killer Tools link stay untranslated. -->
   <sys:String x:Key="Str_About_DescA" xml:space="preserve">Một ứng dụng lịch không cần tài khoản, không đồng bộ và không gửi dữ liệu về máy chủ. Các cuộc hẹn của bạn nằm trong một tệp duy nhất trên chính máy tính của bạn và có thể được mã hóa nếu bạn muốn. Một tiện ích GPLv3 </sys:String>
   <sys:String x:Key="Str_About_DescB" xml:space="preserve">.</sys:String>

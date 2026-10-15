@@ -42,6 +42,8 @@ namespace Killendar.Shell
                     if (string.Equals(Settings.Get("AppointmentSidebarOpen"), "1",
                                       System.StringComparison.Ordinal))
                         RestoreSidebarPanel();
+                    // After the unlock prompt, so an update offer never stacks on it (About.cs).
+                    _about.CheckOnStartup();
                 }), System.Windows.Threading.DispatcherPriority.Background);
             };
 
