@@ -5,6 +5,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using Killendar.Models;
+using KillerFamily.Accessibility;
 
 namespace Killendar.Views
 {
@@ -267,7 +268,7 @@ namespace Killendar.Views
         /// </summary>
         internal static TextBlock MenuGlyph(int codepoint)
         {
-            var tb = new TextBlock
+            var tb = new Glyph
             {
                 Text = char.ConvertFromUtf32(codepoint),
                 FontFamily = new System.Windows.Media.FontFamily("Segoe MDL2 Assets"),

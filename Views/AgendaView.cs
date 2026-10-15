@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using Killendar.Models;
 using Killendar.Services;
@@ -47,6 +48,7 @@ namespace Killendar.Views
             };
             _scroller.SizeChanged += (_, _) => ArrangeDays();
             Content = _scroller;
+            SetResourceReference(AutomationProperties.NameProperty, "Str_View_Agenda");
         }
 
         public DateTime Anchor

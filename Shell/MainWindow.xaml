@@ -6,6 +6,7 @@
 <Window x:Class="Killendar.Shell.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:a11y="clr-namespace:KillerFamily.Accessibility"
         xmlns:icons="clr-namespace:Killendar.Controls"
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         Title="The Killendar"
@@ -287,14 +288,14 @@
                                               Header="{DynamicResource Str_MonthMode_Calendar}"
                                               IsCheckable="True" Click="MonthCalendarMode_Click">
                                         <MenuItem.Icon>
-                                            <TextBlock Text="&#xE787;" FontFamily="Segoe MDL2 Assets"/>
+                                            <a11y:Glyph Text="&#xE787;" FontFamily="Segoe MDL2 Assets"/>
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <MenuItem x:Name="MonthRollingModeItem"
                                               Header="{DynamicResource Str_MonthMode_Rolling}"
                                               IsCheckable="True" Click="MonthRollingMode_Click">
                                         <MenuItem.Icon>
-                                            <TextBlock Text="&#xE8FD;" FontFamily="Segoe MDL2 Assets"/>
+                                            <a11y:Glyph Text="&#xE8FD;" FontFamily="Segoe MDL2 Assets"/>
                                         </MenuItem.Icon>
                                     </MenuItem>
                                 </ContextMenu>
@@ -305,7 +306,7 @@
                         <Button x:Name="MonthModeBtn" Style="{StaticResource ToolbarButton}"
                                 Padding="2,4" Margin="0,0,4,0" Width="18" MinWidth="0"
                                 ToolTip="{DynamicResource Str_TT_MonthMode}" Click="MonthModeBtn_Click">
-                            <TextBlock Text="&#xE70D;" FontFamily="Segoe MDL2 Assets" FontSize="8"
+                            <a11y:Glyph Text="&#xE70D;" FontFamily="Segoe MDL2 Assets" FontSize="8"
                                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
                         <Button x:Name="TabWeek"   Content="{DynamicResource Str_View_Week}"   Style="{StaticResource ToolbarButton}"
@@ -526,7 +527,8 @@
                                         MouseWheel="SidebarDensityBtn_MouseWheel"/>
                             </Grid>
 
-                            <ScrollViewer x:Name="EditorScroll" Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,2,0">
+                            <ScrollViewer x:Name="EditorScroll" Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,2,0"
+                                          AutomationProperties.LabeledBy="{Binding ElementName=SidebarTitle}">
                                 <StackPanel Margin="10,0,6,10">
                                     <!-- "This date or the whole series", shown only while editing one
                                          date of a repeating appointment. It is a row in the PANEL, not
@@ -540,7 +542,8 @@
                                     </StackPanel>
 
                                     <TextBlock Text="{DynamicResource Str_Fld_Title}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
-                                    <TextBox x:Name="FieldTitle" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="4,3" Margin="0,2,0,10"/>
+                                    <TextBox x:Name="FieldTitle" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="4,3" Margin="0,2,0,10"
+                                             AutomationProperties.Name="{DynamicResource Str_Fld_Title}"/>
 
                                     <CheckBox x:Name="AllDayToggle" Click="AllDayToggle_Click"
                                               HorizontalAlignment="Left" Margin="0,0,0,10"
@@ -617,6 +620,8 @@
                                     <TextBlock Text="{DynamicResource Str_Fld_Repeats}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
                                     <WrapPanel Margin="0,4,0,0">
                                         <Button x:Name="RepeatFreqButton" Style="{StaticResource DropdownButton}"
+                                                AutomationProperties.Name="{DynamicResource Str_Fld_Repeats}"
+                                                AutomationProperties.HelpText="{Binding Content, RelativeSource={RelativeSource Self}}"
                                                 HorizontalAlignment="Left" MinWidth="92" Padding="7,3"
                                                 Click="RepeatFreqButton_Click">
                                             <Button.ContextMenu>
@@ -667,6 +672,7 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBox x:Name="FieldLocation" Grid.Column="0" Style="{StaticResource DarkTextBox}"
+                                                  AutomationProperties.Name="{DynamicResource Str_Fld_Location}"
                                                   FontSize="12" Padding="4,3" TextChanged="FieldLocation_TextChanged"/>
                                         <Popup x:Name="LocationSuggestionsPopup" Grid.Column="0" PlacementTarget="{Binding ElementName=FieldLocation}"
                                                Placement="Bottom" StaysOpen="False" AllowsTransparency="True" PopupAnimation="Fade">
@@ -686,6 +692,7 @@
 
                                     <TextBlock Text="{DynamicResource Str_Fld_Description}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
                                     <TextBox x:Name="FieldDescription" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="4,3" Margin="0,2,0,10"
+                                             AutomationProperties.Name="{DynamicResource Str_Fld_Description}"
                                              Height="72" AcceptsReturn="True" TextWrapping="Wrap"
                                              VerticalScrollBarVisibility="Auto"/>
 

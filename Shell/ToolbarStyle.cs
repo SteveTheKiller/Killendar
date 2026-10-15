@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using KillerFamily.Accessibility;
 
 // ============================================================
 // Toolbar appearance: TWO INDEPENDENT SETTINGS - icon size, and where the text goes.
@@ -237,7 +238,7 @@ namespace Killendar.Shell
                     Text = label, FontSize = 12, VerticalAlignment = VerticalAlignment.Center,
                 };
 
-            var icon = new TextBlock
+            var icon = new Glyph
             {
                 Text = ((char)glyph).ToString(),
                 FontFamily = MdlFont,

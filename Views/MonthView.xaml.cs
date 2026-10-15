@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -50,6 +51,7 @@ namespace Killendar.Views
         public MonthView()
         {
             InitializeComponent();
+            SetResourceReference(AutomationProperties.NameProperty, "Str_View_Month");
             if (int.TryParse(Settings.Get("MonthVisibleWeeks"), out int saved))
                 _lastRollingWeeks = Math.Max(1, Math.Min(6, saved));
             _visibleWeeks = string.Equals(Settings.Get("MonthViewMode"), "Rolling",
@@ -418,6 +420,8 @@ namespace Killendar.Views
                 HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
                 PanningMode = PanningMode.VerticalOnly,
             };
+            // Each day's scroll area takes keyboard focus, so it carries the date as its name.
+            AutomationProperties.SetName(eventScroll, date.ToString("D", CultureInfo.CurrentCulture));
             Grid.SetRow(eventScroll, 1);
             content.Children.Add(eventScroll);
 

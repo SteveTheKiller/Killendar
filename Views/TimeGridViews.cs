@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -15,7 +16,7 @@ namespace Killendar.Views
     /// when the work-week toggle is on (2026-07-31).</summary>
     internal sealed class WeekView : TimeGridView
     {
-        public WeekView() : base(7) { }
+        public WeekView() : base(7) => SetResourceReference(AutomationProperties.NameProperty, "Str_View_Week");
 
         protected override int Days => CalendarChrome.WorkWeek ? 5 : 7;
 
@@ -53,7 +54,7 @@ namespace Killendar.Views
     /// <summary>A single day.</summary>
     internal sealed class DayView : TimeGridView
     {
-        public DayView() : base(1) { }
+        public DayView() : base(1) => SetResourceReference(AutomationProperties.NameProperty, "Str_View_Day");
 
         protected override DateTime FirstVisibleDay(DateTime anchor) => anchor.Date;
 
