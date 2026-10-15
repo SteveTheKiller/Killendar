@@ -3,6 +3,7 @@ bin/
 obj/
 artifacts/
 TestResults/
+*.tmp
 
 # Visual Studio
 .vs/
