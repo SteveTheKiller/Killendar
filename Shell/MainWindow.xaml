@@ -316,7 +316,7 @@
                      downward only because the footer is at Panel.ZIndex -1 and no longer paints over
                      it; that was the original reason a depth was needed at all. -->
                 <Border x:Name="ContentPane"
-                        Grid.Row="1" Background="{DynamicResource PaneBrush}" BorderBrush="{DynamicResource PaneBorderBrush}"
+                        Grid.Row="1" Background="{DynamicResource ContentPaneBrush}" BorderBrush="{DynamicResource PaneBorderBrush}"
                         BorderThickness="{DynamicResource ContentPaneBaseBorderThickness}"
                         CornerRadius="{DynamicResource PanelCornerRadius}" Margin="{DynamicResource ContentPaneMargin}" Panel.ZIndex="10">
                     <Border.Effect>

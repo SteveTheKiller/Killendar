@@ -13,6 +13,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Changed
 - The wordmarks use Punktype and Lacquer, and the interface text, headings and footers use Killer Sans, in place of the typewriter font in the app and on the website.
 - Confirm, install and uninstall dialogs use the family setup dialog layout, with a notice icon, a larger Killer Sans heading and evenly sized buttons.
+- The Malaise theme's calendar pane is a shade darker than the window around it, in the app and on the website.
 
 ### Fixed
 - Silent installs return specific Windows error codes and reject a second concurrent install instead of reporting a general failure.

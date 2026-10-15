@@ -246,6 +246,7 @@ namespace Killendar.Services
             }
 
             Alias("FooterBackgroundBrush", "BackgroundBrush");
+            Alias("ContentPaneBrush", "PaneBrush");
             Alias("AccentLogo", "PrimaryBrush");   // wordmark bold run; Light/Yellow states its own
             Alias("ChipBrush", "RowHoverBrush");
             Alias("SurfaceHoverBrush", "RowHoverBrush");
