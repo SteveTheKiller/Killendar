@@ -116,7 +116,8 @@ namespace Killendar
                 System.Windows.Interop.RenderMode.SoftwareOnly;
 
             // Silent install: Killendar.exe /silent
-            // Installs machine-wide to Program Files, no UI. Used by winget/choco/RMM.
+            // No UI. With admin rights (winget/choco/RMM) it installs machine-wide to Program
+            // Files; without them (the Microsoft Store) it installs for the current user.
             if (e.Args.Length > 0 &&
                 string.Equals(e.Args[0], "/silent", StringComparison.OrdinalIgnoreCase))
             {

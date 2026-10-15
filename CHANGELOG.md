@@ -17,7 +17,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Fixed
 - Silent installs return specific Windows error codes and reject a second concurrent install instead of reporting a general failure.
-- A silent install started without admin rights asks for them through UAC instead of failing, so standard users and the Microsoft Store can install it machine-wide.
+- A silent install started without admin rights, as the Microsoft Store runs it, installs for the current user with no prompt instead of failing.
 - Chocolatey uninstalls run the silent uninstaller and fail with its exit code instead of opening the uninstall prompt.
 - Icon-only buttons give screen readers the name from their tooltip, including tooltips with formatted text, and controls reached with the keyboard show a dotted focus outline, drawn just outside small icon buttons so it no longer covers the icon.
 - Kept app icons sharp at fractional display DPI and app zoom by caching exact pixel sizes from a covering source and aligning the final draw to device pixels.

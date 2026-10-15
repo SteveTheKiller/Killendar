@@ -149,17 +149,11 @@ namespace Killendar
         }
 
         // ============================================================
-        // Silent (machine-wide) install - winget / choco / RMM
+        // Silent install - winget / choco / RMM and the Microsoft Store
         // ============================================================
 
         private static int DoSilentInstall()
         {
-            // Without admin rights, as the Microsoft Store installs, the install relaunches
-            // itself elevated through UAC and returns that copy's exit code.
-            int? elevated = KillerFamily.Deployment.InstallerExitCodes.ElevateIfNeeded(
-                "/silent", () => CodeSignature.GetSignerInfo().valid);
-            if (elevated.HasValue) return elevated.Value;
-
             try
             {
                 using var installLease = KillerFamily.Deployment.InstallerExitCodes.Acquire(AppName);
@@ -171,23 +165,31 @@ namespace Killendar
                     return KillerFamily.Deployment.InstallerExitCodes.SecurityRejected;
                 }
 
-                string startMenuDir = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms), AppName);
+                // With admin rights (winget, choco, RMM) the install is machine-wide. Without them,
+                // as the Microsoft Store runs installers, it is the normal per-user install with no
+                // prompt. The app never needs admin rights.
+                bool machine = KillerFamily.Deployment.InstallerExitCodes.IsElevated();
+                string installDir = machine ? MachineInstallDir : InstallDir;
+                string installExe = machine ? MachineInstallExe : InstallExe;
+                string startMenuDir = machine
+                    ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms), AppName)
+                    : StartMenuDir;
                 string startMenuLnk = Path.Combine(startMenuDir, AppName + ".lnk");
+                RegistryKey hive = machine ? Registry.LocalMachine : Registry.CurrentUser;
 
-                Directory.CreateDirectory(MachineInstallDir);
-                if (File.Exists(MachineInstallExe))
+                Directory.CreateDirectory(installDir);
+                if (File.Exists(installExe))
                 {
-                    try { File.SetAttributes(MachineInstallExe, FileAttributes.Normal); } catch { }
+                    try { File.SetAttributes(installExe, FileAttributes.Normal); } catch { }
                 }
-                File.Copy(src, MachineInstallExe, overwrite: true);
-                try { File.SetAttributes(MachineInstallExe, FileAttributes.Normal); } catch { }
+                File.Copy(src, installExe, overwrite: true);
+                try { File.SetAttributes(installExe, FileAttributes.Normal); } catch { }
 
                 Directory.CreateDirectory(startMenuDir);
-                CreateShortcut(startMenuLnk, MachineInstallExe);
+                CreateShortcut(startMenuLnk, installExe);
 
-                WriteInstallKeys(Registry.LocalMachine, MachineInstallDir, MachineInstallExe);
-                FileAssociations.Register(Registry.LocalMachine, MachineInstallExe);
+                WriteInstallKeys(hive, installDir, installExe);
+                FileAssociations.Register(hive, installExe);
                 return KillerFamily.Deployment.InstallerExitCodes.Success;
             }
             catch (Exception ex)
