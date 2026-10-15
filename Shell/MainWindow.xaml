@@ -506,7 +506,7 @@
                                          StretchDirection="DownOnly">
                                     <Grid>
                                         <TextBlock Text="{Binding Text, ElementName=SidebarTitle}" FontSize="20" Margin="1,2,0,0"
-                                                   FontFamily="{DynamicResource SidebarHeadingFont}" FontWeight="Bold"
+                                                   FontFamily="{DynamicResource SidebarHeadingFont}" FontWeight="{DynamicResource SidebarHeadingWeight}"
                                                    VerticalAlignment="Center" Foreground="#D0000000"
                                                    Opacity="{DynamicResource IconShadowOpacity}">
                                             <TextBlock.Effect>
@@ -514,7 +514,7 @@
                                             </TextBlock.Effect>
                                         </TextBlock>
                                         <TextBlock x:Name="SidebarTitle" Text="{DynamicResource Str_Side_New}" FontSize="20"
-                                                   FontFamily="{DynamicResource SidebarHeadingFont}" FontWeight="Bold"
+                                                   FontFamily="{DynamicResource SidebarHeadingFont}" FontWeight="{DynamicResource SidebarHeadingWeight}"
                                                    VerticalAlignment="Center" Foreground="{DynamicResource PrimaryBrush}"/>
                                     </Grid>
                                 </Viewbox>

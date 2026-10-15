@@ -321,9 +321,10 @@ namespace Killendar.Services
             d["SelectedTileShadowOpacity"] = square ? 0d : 0.45d;
             d["GripDotsVisibility"] = square ? Visibility.Collapsed : Visibility.Visible;
             d["GripHatchVisibility"] = square ? Visibility.Visible : Visibility.Collapsed;
-            d["SidebarHeadingFont"] = square
-                ? new FontFamily("Courier New")
-                : (Application.Current.TryFindResource("BrandSansFont") as FontFamily ?? new FontFamily("Consolas"));
+            // Sidebar headings are headings too: Lacquer at its regular weight (it has no bold cut).
+            // 98SE keeps Courier New bold.
+            d["SidebarHeadingFont"] = square ? new FontFamily("Courier New") : LacquerHeadingStack;
+            d["SidebarHeadingWeight"] = square ? FontWeights.Bold : FontWeights.Normal;
             if (!d.Contains("WindowCornerRadius")) d["WindowCornerRadius"] = new CornerRadius(square ? 0 : 8);
             if (!d.Contains("PanelCornerRadius")) d["PanelCornerRadius"] = new CornerRadius(square ? 0 : 6);
             if (!d.Contains("FlyoutCornerRadius")) d["FlyoutCornerRadius"] = new CornerRadius(square ? 0 : 6);
