@@ -33,6 +33,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - On 98SE, hovered dialog buttons keep the classic gray face instead of filling with a dark color that hid the label.
 - Centered website logos with space above and below and corrected current features, runtime requirements and documentation.
 - Menu separators draw their divider line instead of leaving an empty gap.
+- The About card's update button uses the family outline button, as in KillerPDF, instead of a solid dark block.
 
 ## [1.2.0] - 2026-10-07
 

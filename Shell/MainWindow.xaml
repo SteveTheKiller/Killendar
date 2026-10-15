@@ -1178,21 +1178,11 @@
                             </StackPanel>
 
                             <Button x:Name="AboutUpdateButton" Visibility="Collapsed" Margin="0,14,0,0"
-                                    HorizontalAlignment="Left" Cursor="Hand" Click="AboutUpdateButton_Click">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border x:Name="ub" Background="Transparent" BorderBrush="{DynamicResource PrimaryBrush}"
-                                                BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}" Padding="14,7">
-                                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="ub" Property="Background" Value="{DynamicResource RowSelectedBrush}"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Button.Template>
-                                <TextBlock x:Name="AboutUpdateText" Text="{DynamicResource Str_About_UpdateAvailable}" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryBrush}"/>
+                                    HorizontalAlignment="Left" Style="{StaticResource OutlineButton}" Padding="14,7"
+                                    Click="AboutUpdateButton_Click">
+                                <!-- The family outline button, exactly as KillerPDF's About card. -->
+                                <TextBlock x:Name="AboutUpdateText" Text="{DynamicResource Str_About_UpdateAvailable}" FontSize="12" FontWeight="SemiBold"
+                                           Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"/>
                             </Button>
                         </StackPanel>
                     </Grid>
