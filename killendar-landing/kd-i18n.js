@@ -3682,3 +3682,22 @@ Object.assign(I18N["pt"], {
   "app_p2": "Arquivos .kcal sem criptografia podem ser abertos com ferramentas SQLite. Os criptografados exigem SQLCipher e a senha. Os dados são processados localmente, sem telemetria nem envios automáticos. Verificações de atualização, downloads e funções de rede escolhidas fazem conexões externas.",
   "f6p": "Todos os temas podem ser trocados com o aplicativo em uso. Escuro, Claro, Preto e 98SE aceitam oito tons de destaque cada, somando 41 visuais. Atalhos de tecla única\nque se desativam enquanto você digita em um campo. O menu de temas permite ativar ou desativar o grão de filme."
 });
+if (I18N["en"]) Object.assign(I18N["en"], { "tk_film_grain": "Film Grain" });
+if (I18N["vi"]) Object.assign(I18N["vi"], { "tk_film_grain": "Hạt phim" });
+if (I18N["hu"]) Object.assign(I18N["hu"], { "tk_film_grain": "Filmszemcse" });
+if (I18N["es"]) Object.assign(I18N["es"], { "tk_film_grain": "Grano de película" });
+if (I18N["fr"]) Object.assign(I18N["fr"], { "tk_film_grain": "Grain de film" });
+if (I18N["de"]) Object.assign(I18N["de"], { "tk_film_grain": "Filmkorn" });
+if (I18N["cs"]) Object.assign(I18N["cs"], { "tk_film_grain": "Filmové zrno" });
+if (I18N["tr"]) Object.assign(I18N["tr"], { "tk_film_grain": "Film greni" });
+if (I18N["ja"]) Object.assign(I18N["ja"], { "tk_film_grain": "フィルムグレイン" });
+if (I18N["pl"]) Object.assign(I18N["pl"], { "tk_film_grain": "Ziarno filmowe" });
+if (I18N["bn"]) Object.assign(I18N["bn"], { "tk_film_grain": "ফিল্ম গ্রেইন" });
+if (I18N["zh-CN"]) Object.assign(I18N["zh-CN"], { "tk_film_grain": "胶片颗粒" });
+if (I18N["zh-TW"]) Object.assign(I18N["zh-TW"], { "tk_film_grain": "底片顆粒" });
+if (I18N["it"]) Object.assign(I18N["it"], { "tk_film_grain": "Grana pellicola" });
+if (I18N["ru"]) Object.assign(I18N["ru"], { "tk_film_grain": "Зернистость плёнки" });
+if (I18N["kk"]) Object.assign(I18N["kk"], { "tk_film_grain": "Пленка түйіршігі" });
+if (I18N["uk"]) Object.assign(I18N["uk"], { "tk_film_grain": "Зернистість плівки" });
+if (I18N["nb"]) Object.assign(I18N["nb"], { "tk_film_grain": "Filmkorn" });
+if (I18N["pt"]) Object.assign(I18N["pt"], { "tk_film_grain": "Granulação de filme" });

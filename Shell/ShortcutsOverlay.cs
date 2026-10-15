@@ -28,7 +28,7 @@ namespace Killendar.Shell
         /// <summary>What a binding belongs to. Drives the color of the bar under a key on the
         /// map and the group it lands in on the list. Same five the website map uses.</summary>
         private enum KsCat { View, Nav, Appt, File, Help }
-        private enum KsLayer { Base, Ctrl, Alt, CtrlShift }
+        private enum KsLayer { Base, Ctrl, Alt, CtrlShift, AltShift }
 
         /// <summary>
         /// One binding. <paramref name="Caps"/> are the map key ids it should light (the ids in
@@ -41,6 +41,7 @@ namespace Killendar.Shell
             public readonly string LabelKey = labelKey;    // Str_* resource key
             public readonly KsCat Cat = cat;
             public KsLayer Layer => Keys.StartsWith("Ctrl+Shift+") ? KsLayer.CtrlShift
+                : Keys.StartsWith("Alt+Shift+") ? KsLayer.AltShift
                 : Keys.StartsWith("Alt+") ? KsLayer.Alt : ctrl ? KsLayer.Ctrl : KsLayer.Base;
             public readonly string[] Caps = caps;      // map key ids to light
         }
@@ -54,6 +55,7 @@ namespace Killendar.Shell
             new("D or 3",   "Str_KS_Day",      KsCat.View, false, "D", "D3"),
             new("A or 4",   "Str_KS_Agenda",   KsCat.View, false, "A", "D4"),
             new("R",        "Str_KS_MonthMode", KsCat.View, false, "R"),
+            new("Alt+Shift+G", "Str_Theme_FilmGrain", KsCat.View, false, "G"),
 
             new("Left / ,", "Str_KS_Prev",     KsCat.Nav,  false, "Left", "Comma"),
             new("Right / .","Str_KS_Next",     KsCat.Nav,  false, "Right", "Period"),
@@ -285,6 +287,7 @@ namespace Killendar.Shell
             KsLayerCtrl.Tag = _ksLayer == KsLayer.Ctrl ? "on" : null;
             KsLayerAlt.Tag = _ksLayer == KsLayer.Alt ? "on" : null;
             KsLayerCtrlShift.Tag = _ksLayer == KsLayer.CtrlShift ? "on" : null;
+            KsLayerAltShift.Tag = _ksLayer == KsLayer.AltShift ? "on" : null;
         }
 
         /// <summary>Reads out the hovered key. Rebuilt with the board, so it is re-created on every
@@ -297,6 +300,7 @@ namespace Killendar.Shell
         private void KsLayerCtrl_Click(object sender, RoutedEventArgs e) { _ksLayer = KsLayer.Ctrl; BuildKeyboardMap(); }
         private void KsLayerAlt_Click(object sender, RoutedEventArgs e) { _ksLayer = KsLayer.Alt; BuildKeyboardMap(); }
         private void KsLayerCtrlShift_Click(object sender, RoutedEventArgs e) { _ksLayer = KsLayer.CtrlShift; BuildKeyboardMap(); }
+        private void KsLayerAltShift_Click(object sender, RoutedEventArgs e) { _ksLayer = KsLayer.AltShift; BuildKeyboardMap(); }
 
         /// <summary>
         /// One keycap, built to KillerPDF's geometry exactly - KeyboardMapOverlay.cs BuildKeyboardView

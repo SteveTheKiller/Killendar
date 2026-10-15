@@ -22,6 +22,7 @@ namespace Killendar.Controls
         private readonly UIElement _button;
         private Grid? _accentHost;
         private readonly List<Border> _accentDots = [];
+        private CheckBox? _filmGrainCheck;
         internal ThemePicker(Window window, ContextMenu menu, UIElement themeButton)
         {
             _window = window;
@@ -154,10 +155,19 @@ namespace Killendar.Controls
             };
             filmGrain.SetResourceReference(ContentControl.ContentProperty, "Str_Theme_FilmGrain");
             filmGrain.Click += (_, _) => FilmGrain.Set(filmGrain.IsChecked == true);
+            filmGrain.ToolTip = (Application.Current.TryFindResource("Str_Theme_FilmGrain") as string) + " (Alt+Shift+G)";
+            _filmGrainCheck = filmGrain;
             grainRow.Children.Add(filmGrain);
             panel.Children.Add(grainRow);
 
             _menu.Items.Add(panel);
+        }
+
+        /// <summary>Alt+Shift+G: Film Grain on or off, kept in step with the flyout's check box.</summary>
+        internal void ToggleFilmGrain()
+        {
+            FilmGrain.Set(!FilmGrain.Enabled);
+            _filmGrainCheck?.IsChecked = FilmGrain.Enabled;
         }
 
         private void ReplaceAccentStrip(Grid panel, Theme family, bool animate)

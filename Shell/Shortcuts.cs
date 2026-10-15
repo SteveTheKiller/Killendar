@@ -54,6 +54,15 @@ namespace Killendar.Shell
                 return;
             }
 
+            // Alt+Shift+G, the family Film Grain chord. Safe while typing: a text field takes no
+            // Alt chords.
+            if (alt && shift && !ctrl && e.SystemKey == Key.G)
+            {
+                if (!e.IsRepeat) _themePicker.ToggleFilmGrain();   // Controls/ThemePicker.cs
+                e.Handled = true;
+                return;
+            }
+
             if (ctrlShortcut && shift && e.Key == Key.M &&
                 _calendar.ToggleFocusedMonthAppointment())
             {

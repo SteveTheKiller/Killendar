@@ -1035,6 +1035,8 @@
                                             Content="ALT" Click="KsLayerAlt_Click"/>
                                     <Button x:Name="KsLayerCtrlShift" Style="{StaticResource KsToggle}"
                                             Content="CTRL+SHIFT" Click="KsLayerCtrlShift_Click"/>
+                                    <Button x:Name="KsLayerAltShift" Style="{StaticResource KsToggle}"
+                                            Content="ALT+SHIFT" Click="KsLayerAltShift_Click"/>
                                 </StackPanel>
                                 <!-- The keyboard map is drawn at a FIXED unit size (KbUnit), so a
                                      full row is wider than a narrow window and the right-hand keys
