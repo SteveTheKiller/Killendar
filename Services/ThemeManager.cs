@@ -105,6 +105,11 @@ namespace Killendar.Services
             }
         }
 
+        private static Color Shade(Color c, double keep) =>
+            Color.FromRgb((byte)(c.R * keep), (byte)(c.G * keep), (byte)(c.B * keep));
+
+        private static double Luma(Color c) => 0.299 * c.R + 0.587 * c.G + 0.114 * c.B;
+
         // Filled buttons and the outline button's hover fill carry the family's soft vertical
         // gradient (the KillerNotes treatment): the outline color itself at the top, 16% darker at the bottom.
         // 98SE, and any value that is already a gradient, stay exactly as they are.
@@ -151,6 +156,7 @@ namespace Killendar.Services
                 catch { /* overlay file not present - base theme stands */ }
             }
             // Resolve after accent overlays, and reset the fallback on every theme switch.
+            newDict.Remove("CalendarWeekendHoverBrush");
             if (!newDict.Contains("CalendarViewSelectedBrush"))
                 newDict["CalendarViewSelectedBrush"] = newDict["SelectionBg"];
 
@@ -178,6 +184,21 @@ namespace Killendar.Services
                 newDict["CalendarEvenColumnBrush"] = Brushes.Transparent;
                 newDict["CalendarOddColumnBrush"] = Brushes.Transparent;
                 newDict["CalendarWeekendBrush"] = new SolidColorBrush(Color.FromArgb(weekend, 0, 0, 0));
+                // Month hover. Where the theme's hover gray sits on its weekend gray (Light), a
+                // hovered weekday turned the weekend color and a hovered weekend did not change.
+                // There the hover takes the tone halfway between the weekday and weekend grays,
+                // and a hovered weekend day moves the same step further.
+                if (newDict["PaneBrush"] is SolidColorBrush monthPane && monthPane.Color.A == 255 &&
+                    newDict["RowHoverBrush"] is SolidColorBrush rowHover)
+                {
+                    Color weekendColor = Shade(monthPane.Color, 1 - weekend / 255.0);
+                    if (Math.Abs(Luma(rowHover.Color) - Luma(weekendColor)) < 16)
+                    {
+                        double half = 1 - weekend / 510.0;
+                        newDict["CalendarDayHoverBrush"] = new SolidColorBrush(Shade(monthPane.Color, half));
+                        newDict["CalendarWeekendHoverBrush"] = new SolidColorBrush(Shade(weekendColor, half));
+                    }
+                }
                 // Spillover dates are a different state, not another accent stripe. Give them an
                 // opaque dark client color so none of the weekday tint can bleed through.
                 Color outsideBase = newDict["PaneBrush"] is SolidColorBrush pane
@@ -193,6 +214,10 @@ namespace Killendar.Services
                     Color.FromArgb(theme == Theme.SE98 ? (byte)16 : (byte)36, 0, 0, 0));
 
             }
+            if (!newDict.Contains("CalendarDayHoverBrush"))
+                newDict["CalendarDayHoverBrush"] = newDict["RowHoverBrush"];
+            if (!newDict.Contains("CalendarWeekendHoverBrush"))
+                newDict["CalendarWeekendHoverBrush"] = newDict["RowHoverBrush"];
             // Aliases created from the base palette hold the old brush object. Refresh the ones
             // whose sources may have been replaced by an accent overlay.
             if (theme != Theme.Light)

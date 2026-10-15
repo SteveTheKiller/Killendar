@@ -464,12 +464,13 @@ namespace Killendar.Views
                     ? "CalendarWeekendBrush"
                     : displayColumn % 2 == 0 ? "CalendarEvenColumnBrush" : "CalendarOddColumnBrush";
             _cells[date.Date] = (cell, dayNum, inMonth, isToday, restBrush);
+            string hoverBrush = restBrush == "CalendarWeekendBrush" ? "CalendarWeekendHoverBrush" : "CalendarDayHoverBrush";
 
             void Rest() => ApplyRest(cell, dayNum, date.Date, inMonth, isToday, restBrush);
             Rest();
             cell.MouseEnter += (_, _) =>
             {
-                ApplyPointerState(cell, dayNum, inMonth, "RowHoverBrush");
+                ApplyPointerState(cell, dayNum, inMonth, hoverBrush);
                 hoverGrain.Visibility = Visibility.Visible;
             };
             cell.MouseLeave += (_, _) =>
@@ -490,7 +491,7 @@ namespace Killendar.Views
                 DaySelected?.Invoke(date.Date);
             };
             cell.MouseLeftButtonUp += (_, _) =>
-                ApplyPointerState(cell, dayNum, inMonth, "RowHoverBrush");
+                ApplyPointerState(cell, dayNum, inMonth, hoverBrush);
             // Right-click is the explicit create, for anyone who wants to skip the agenda.
             cell.ContextMenu = CalendarChrome.DayMenu(date.Date.AddHours(9), d => SlotSelected?.Invoke(d));
 

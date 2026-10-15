@@ -20,6 +20,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Chocolatey uninstalls run the silent uninstaller and fail with its exit code instead of opening the uninstall prompt.
 - Icon-only buttons give screen readers the name from their tooltip, including tooltips with formatted text, and controls reached with the keyboard show a dotted focus outline, drawn just outside small icon buttons so it no longer covers the icon.
 - Kept app icons sharp at fractional display DPI and app zoom by caching exact pixel sizes from a covering source and aligning the final draw to device pixels.
+- On the Light theme, hovering a day in Month view uses its own gray instead of the weekend gray, and hovering a weekend day now shows a change.
 - Rail right-click menus align 8 pixels from the side and bottom content edges.
 - Submenus attach consistently to their opening rows, with native direction and screen-edge placement.
 - Installed Apps lists Steve the Killer as the publisher after an update, instead of keeping the old "Steve / thekiller.net" label from the first install.
