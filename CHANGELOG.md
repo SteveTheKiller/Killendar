@@ -32,6 +32,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Theme and language radio buttons and the Film Grain checkbox line up with their labels again.
 - On the website, text on accent-colored buttons, tabs and highlights switches to white or near-black for contrast, so it is never white on yellow.
 - Theme names, the date format choices, date hints, file type lists and the Hungarian event fields that were still in English are translated in every language.
+- The website's MCP page, release details, contact cards, carousel controls, keyboard map and remaining labels are translated in every language.
 
 ## [1.3.0] - 2026-10-14
 

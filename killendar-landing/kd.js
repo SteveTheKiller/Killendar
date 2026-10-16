@@ -373,6 +373,64 @@
     all('.lang-item[data-lang]').forEach(function (b) {
       b.setAttribute('aria-pressed', b.getAttribute('data-lang') === l ? 'true' : 'false');
     });
+    localizeChrome(l);
+  }
+
+  // ---- Chrome labels: tooltips, screen-reader names, hero labels, screenshot captions, title ----
+  // The release script rewrites the hero facts by matching the plain English label spans, so
+  // those labels carry no data-i18n and are translated here instead.
+  var CHROME_EN = { ui_theme: 'Theme', ui_choose_theme: 'Choose theme', ui_accent: 'Accent color', ui_language: 'Language', ui_click: 'click me', ui_expand: 'Expand section', accent_label: 'accent:', mcp_gh: 'KillerMCP on GitHub' };
+  function chromeText(l, key, english) {
+    var d = I18N[l] || {};
+    return d[key] || CHROME_EN[key] || english;
+  }
+  function plain(html) {
+    var holder = document.createElement('span');
+    holder.innerHTML = html;
+    return holder.textContent.trim();
+  }
+  function localizeChrome(l) {
+    function label(selector, key, attribute) {
+      all(selector).forEach(function (el) { el.setAttribute(attribute, chromeText(l, key)); });
+    }
+    label('.theme-toggle', 'ui_theme', 'title');
+    label('.theme-toggle', 'ui_choose_theme', 'aria-label');
+    label('.tgrp', 'ui_theme', 'aria-label');
+    label('#accentToggle', 'ui_accent', 'title');
+    label('#accentPop', 'ui_accent', 'aria-label');
+    label('#langToggle', 'ui_language', 'title');
+    label('#langToggle, .lang-switch', 'ui_language', 'aria-label');
+    label('#verEgg', 'ui_click', 'title');
+    label('.ol-chev', 'ui_expand', 'aria-label');
+    label('.mcp-github', 'mcp_gh', 'title');
+    label('.mcp-github', 'mcp_gh', 'aria-label');
+    all('.acc[data-accent]').forEach(function (el) {
+      var name = el.getAttribute('data-accent');
+      el.title = chromeText(l, 'ui_' + name.toLowerCase(), name);
+    });
+    all('.acc-pop-label').forEach(function (el) { el.textContent = chromeText(l, 'accent_label'); });
+    var dict = I18N[l] || {};
+    all('.hero-info .row .k').forEach(function (el) {
+      if (!el.hasAttribute('data-en-label')) el.setAttribute('data-en-label', el.textContent.trim());
+      var english = el.getAttribute('data-en-label');
+      el.textContent = dict['ui_' + english] || english;
+    });
+    all('.sb-thumb').forEach(function (button, index) {
+      var image = button.querySelector('img');
+      if (!button.hasAttribute('data-en-desc')) button.setAttribute('data-en-desc', button.title);
+      var text = dict['kd_shot_' + (index + 1)] || button.getAttribute('data-en-desc');
+      button.title = text; button.setAttribute('aria-label', text);
+      if (image) { image.alt = text; image.title = text; }
+    });
+    if (!root.hasAttribute('data-en-title')) root.setAttribute('data-en-title', document.title);
+    var title = root.getAttribute('data-en-title');
+    var page = location.pathname.split('/').pop();
+    if (l !== 'en') {
+      if (/^about/.test(page) && dict.navAbout) title = plain(dict.navAbout) + ' - Killendar';
+      else if (/^technical/.test(page) && dict.navTech) title = plain(dict.navTech) + ' - Killendar';
+      else if (!/^mcp/.test(page) && dict.tag) title = 'Killendar - ' + plain(dict.tag);
+    }
+    document.title = title;
   }
 
   function eggText() {
