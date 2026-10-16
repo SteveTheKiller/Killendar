@@ -27,6 +27,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - The About card's update notice and update dialog are translated instead of always showing English.
 - Toolbar menus open leftward under their button so they stay inside the window instead of running off its right edge.
 - Corrected the Hungarian name of the rolling weeks month mode.
+- The file picker's close button turns red on hover without filling a red block, like the other dialogs, and keeps the classic caption button on 98SE.
 - The website top bar no longer leaves extra space under the wordmark and buttons.
 - Theme and language radio buttons and the Film Grain checkbox line up with their labels again.
 

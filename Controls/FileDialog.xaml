@@ -96,7 +96,12 @@
                                Foreground="{DynamicResource ChromeTextBrush}"/>
                     <Button Content="&#xE8BB;" Click="Cancel_Click" HorizontalAlignment="Right"
                             VerticalAlignment="Center" Margin="{DynamicResource DialogCaptionCloseMargin}"
-                            Style="{StaticResource ChromeCloseButton}"/>
+                            Style="{StaticResource ChromeCloseButton}" Visibility="{DynamicResource PlainTitleVisibility}"/>
+                    <!-- Same X as the About card and the other dialogs: the family overlay glyph on a card, the classic caption button on 98SE. -->
+                    <Button Content="&#x2715;" Click="Cancel_Click" Style="{StaticResource OverlayCloseButton}"
+                            ToolTip="{DynamicResource Str_Sys_Close}"
+                            HorizontalAlignment="Right" VerticalAlignment="Center" Width="28" Height="26" Margin="0,0,3,0"
+                            Visibility="{DynamicResource AboutModernCloseVisibility}"/>
                 </Grid>
             </Border>
 
