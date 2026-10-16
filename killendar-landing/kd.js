@@ -16,7 +16,7 @@
   // wordmark and the og-image are built on, which is why Red is the default.
   var ACCENTS = {
     dark:  { Red: '#DD504B', Orange: '#E8962C', Yellow: '#EAD900', Green: '#1EA54C', Teal: '#1FB8A8', Blue: '#50AEE8', Purple: '#B982E3', Magenta: '#FF52C9' },
-    light: { Red: '#931A1A', Orange: '#C7710F', Yellow: '#766600', Green: '#1B5E20', Teal: '#0D827E', Blue: '#18608E', Purple: '#5A1690', Magenta: '#A60070' },
+    light: { Red: '#931A1A', Orange: '#C7710F', Yellow: '#F2C500', Green: '#1B5E20', Teal: '#0D827E', Blue: '#18608E', Purple: '#5A1690', Magenta: '#A60070' },
     black: { Red: '#FF2929', Orange: '#FF910A', Yellow: '#FFEB00', Green: '#00FF66', Teal: '#0AFFE7', Blue: '#298DFF', Purple: '#B829FF', Magenta: '#FF2BBD' }
   };
   var DEFAULT_ACCENT = 'Red';
@@ -82,6 +82,7 @@
 
   function applyAccent(name) {
     var t = theme(), sw = $('accentSwitch');
+    root.toggleAttribute('data-yellow-outline', t === 'light' && hasAccents(t) && name === 'Yellow');
     ['dark', 'light', 'black'].forEach(function (neutralTheme) {
       var preview = ACCENTS[neutralTheme][name] || ACCENTS[neutralTheme][DEFAULT_ACCENT];
       document.querySelectorAll('.sw-' + neutralTheme).forEach(function (dot) {
