@@ -163,6 +163,7 @@
     <sys:String x:Key="Str_Sc_Agenda">Agendaansicht</sys:String>
     <sys:String x:Key="Str_Sc_Panel">Terminbereich ein- oder ausblenden</sys:String>
     <sys:String x:Key="Str_Sc_About">Info</sys:String>
+    <sys:String x:Key="Str_TT_About">Über Killendar</sys:String>
     <sys:String x:Key="Str_Sc_Close">Bereich oder Overlay schließen</sys:String>
     <sys:String x:Key="Str_Sc_Hint">Einzelne Tasten funktionieren, solange du nicht in einem Feld tippst.</sys:String>
 
@@ -172,8 +173,8 @@
     <sys:String x:Key="Str_Lbl_WeekStart">wochenbeginn</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Windows folgen</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
-    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
-    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+    <sys:String x:Key="Str_Date_US">USA (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">Vereinigtes Königreich / EU (29/07/2026)</sys:String>
 
 
     <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
@@ -353,6 +354,7 @@
 
     <!-- Farbauswahl -->
     <sys:String x:Key="Str_Dlg_PickColor">Farbe wählen</sys:String>
+    <sys:String x:Key="Str_Color_Name">Farbe</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">Farbe von einer beliebigen Stelle des Bildschirms aufnehmen</sys:String>
     <sys:String x:Key="Str_Btn_Reset">Zurücksetzen</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">Klicken, dann ein Feld anklicken, um ihm die aktuelle Farbe zuzuweisen</sys:String>
@@ -372,12 +374,12 @@
     <sys:String x:Key="Str_Theme_Blood">Blut</sys:String>
     <sys:String x:Key="Str_Theme_Greed">Gier</sys:String>
     <sys:String x:Key="Str_Theme_Cyanotic">Zyanotisch</sys:String>
-    <sys:String x:Key="Str_Theme_Ectoplasm">Ectoplasm</sys:String>
-    <sys:String x:Key="Str_Theme_Decay">Decay</sys:String>
-    <sys:String x:Key="Str_Theme_Malaise">Malaise</sys:String>
-    <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
+    <sys:String x:Key="Str_Theme_Ectoplasm">Ektoplasma</sys:String>
+    <sys:String x:Key="Str_Theme_Decay">Verfall</sys:String>
+    <sys:String x:Key="Str_Theme_Malaise">Unwohlsein</sys:String>
+    <sys:String x:Key="Str_Theme_Sepulchre">Grabmal</sys:String>
     <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
-    <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_Mourning">Trauer</sys:String>
     <sys:String x:Key="Str_Theme_FilmGrain">Filmkorn</sys:String>
     <sys:String x:Key="Str_Btn_Select">Auswählen</sys:String>
     <sys:String x:Key="Str_TT_DataFolder">Datenordner ändern, in dem die Datenbanken gespeichert werden</sys:String>

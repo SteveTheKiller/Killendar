@@ -40,7 +40,7 @@
     <sys:String x:Key="Str_Theme_Cyanotic">Cianotikus</sys:String>
     <sys:String x:Key="Str_Theme_Ectoplasm">Ektoplazma</sys:String>
     <sys:String x:Key="Str_Theme_Decay">Bomlás</sys:String>
-    <sys:String x:Key="Str_Theme_Malaise">rosszullét</sys:String>
+    <sys:String x:Key="Str_Theme_Malaise">Rosszullét</sys:String>
     <sys:String x:Key="Str_Theme_Sepulchre">Sír</sys:String>
     <sys:String x:Key="Str_Theme_Delirium">Delírium</sys:String>
     <sys:String x:Key="Str_Theme_Mourning">Gyász</sys:String>
@@ -49,11 +49,11 @@
     <!-- Appointment sidebar -->
     <sys:String x:Key="Str_Side_New">Új találkozó</sys:String>
     <sys:String x:Key="Str_Side_Edit">Találkozó szerkesztése</sys:String>
-    <sys:String x:Key="Str_Fld_Title">TITLE</sys:String>
+    <sys:String x:Key="Str_Fld_Title">CÍM</sys:String>
     <sys:String x:Key="Str_Fld_Starts">INDUL</sys:String>
     <sys:String x:Key="Str_Fld_Ends">VÉGE</sys:String>
-    <sys:String x:Key="Str_Fld_From">FROM</sys:String>
-    <sys:String x:Key="Str_Fld_Through">KERESZTÜL</sys:String>
+    <sys:String x:Key="Str_Fld_From">MIKORTÓL</sys:String>
+    <sys:String x:Key="Str_Fld_Through">MEDDIG</sys:String>
     <sys:String x:Key="Str_Fld_Location">HELYSZÍN</sys:String>
 
     <!-- Themed Windows system menu (Shell/SystemMenu.cs). Same wording as KillerScan's. -->
@@ -152,7 +152,7 @@
          EVERY locale: they are Outlook's literal header words, matched by name, not labels. -->
     <sys:String x:Key="Str_Dlg_ImportTitle">Találkozók importálása</sys:String>
     <sys:String x:Key="Str_Dlg_ExportTitle">Kinevezések exportálása</sys:String>
-    <sys:String x:Key="Str_Dlg_ImportFilter">Calendar files (*.ics, *.csv, *.eml)|*.ics;*.csv;*.eml|iCalendar files (*.ics)|*.ics|CSV files (*.csv)|*.csv|Email invites (*.eml)|*.eml|All files (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Dlg_ImportFilter">Naptárfájlok (*.ics, *.csv, *.eml)|*.ics;*.csv;*.eml|iCalendar-fájlok (*.ics)|*.ics|CSV-fájlok (*.csv)|*.csv|E-mail-meghívók (*.eml)|*.eml|Minden fájl (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Dlg_ExportFilter">iCalendar-fájlok (*.ics)|*.ics|CSV-fájlok (*.csv)|*.csv|Weboldal (*.html)|*.html</sys:String>
     <sys:String x:Key="Str_Status_CsvBadHeader">Ez nem egy Outlook formátumú CSV. Az első sorban meg kell nevezni az oszlopokat: Tárgy, Kezdő dátum, Kezdő időpont, Befejezés dátuma, Befejezési idő, Egész napos esemény, Leírás, Hely</sys:String>
     <sys:String x:Key="Str_Status_NoInvite">Ebben az e-mailben nem található naptári meghívó</sys:String>
@@ -160,8 +160,8 @@
     <!-- Export scope flyout -->
     <sys:String x:Key="Str_Exp_Whole">Az egész naptár</sys:String>
     <sys:String x:Key="Str_Exp_Range">Dátumtartomány</sys:String>
-    <sys:String x:Key="Str_Exp_From">FROM</sys:String>
-    <sys:String x:Key="Str_Exp_To">TO</sys:String>
+    <sys:String x:Key="Str_Exp_From">MIKORTÓL</sys:String>
+    <sys:String x:Key="Str_Exp_To">MEDDIG</sys:String>
     <sys:String x:Key="Str_Exp_BadRange">Ellenőrizze a dátumokat</sys:String>
 
     <!-- Views -->
@@ -208,6 +208,7 @@
     <sys:String x:Key="Str_Sc_Agenda">Napirend nézet</sys:String>
     <sys:String x:Key="Str_Sc_Panel">A találkozó panel megjelenítése vagy elrejtése</sys:String>
     <sys:String x:Key="Str_Sc_About">Körülbelül</sys:String>
+    <sys:String x:Key="Str_TT_About">A Killendar névjegye</sys:String>
     <sys:String x:Key="Str_Sc_Close">Zárja be a panelt vagy a fedőlapot</sys:String>
     <sys:String x:Key="Str_Sc_Hint">Az egyes billentyűk akkor működnek, amikor nem ír be egy mezőt.</sys:String>
 
@@ -362,7 +363,7 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <!-- Shortcuts overlay (F1). One binding table in Shell/ShortcutsOverlay.cs feeds both the
          list and the keyboard map, so each of these is used in exactly one place. -->
     <sys:String x:Key="Str_KS_Title">Billentyűparancsok</sys:String>
-    <sys:String x:Key="Str_KS_ViewList">LIST</sys:String>
+    <sys:String x:Key="Str_KS_ViewList">LISTA</sys:String>
     <sys:String x:Key="Str_KS_ViewMap">BILLENTYŰZET</sys:String>
     <sys:String x:Key="Str_KS_Hint">Az egyes billentyűk lefelé állnak gépelés közben</sys:String>
     <sys:String x:Key="Str_TT_Shortcuts">Billentyűparancsok (F1)</sys:String>
@@ -430,8 +431,9 @@ A Killendar újraindul a telepített helyről.</sys:String>
 
     <!-- Color picker -->
     <sys:String x:Key="Str_Dlg_PickColor">Válasszon egy színt</sys:String>
+    <sys:String x:Key="Str_Color_Name">Szín</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">Válasszon egy színt a képernyő bármely pontjáról</sys:String>
-    <sys:String x:Key="Str_Btn_Reset">Reset</sys:String>
+    <sys:String x:Key="Str_Btn_Reset">Visszaállítás</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">Kattintson, majd kattintson egy színmintára az aktuális színre állításához</sys:String>
     <sys:String x:Key="Str_TT_ResetSwatches">Állítsa vissza a színtárakat az alapértelmezett értékekre</sys:String>
     <sys:String x:Key="Str_TT_SwatchReplace">Kattintson ide, hogy a mintát az aktuális színre állítsa</sys:String>

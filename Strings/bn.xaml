@@ -163,6 +163,7 @@
     <sys:String x:Key="Str_Sc_Agenda">সূচি ভিউ</sys:String>
     <sys:String x:Key="Str_Sc_Panel">অ্যাপয়েন্টমেন্ট প্যানেল দেখান বা লুকান</sys:String>
     <sys:String x:Key="Str_Sc_About">সম্পর্কে</sys:String>
+    <sys:String x:Key="Str_TT_About">Killendar সম্পর্কে</sys:String>
     <sys:String x:Key="Str_Sc_Close">প্যানেল বা ওভারলে বন্ধ করুন</sys:String>
     <sys:String x:Key="Str_Sc_Hint">কোনো ঘরে টাইপ না করলে একক কী কাজ করে।</sys:String>
 
@@ -172,8 +173,8 @@
     <sys:String x:Key="Str_Lbl_WeekStart">সপ্তাহের শুরু</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Windows অনুসরণ করুন</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
-    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
-    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+    <sys:String x:Key="Str_Date_US">মার্কিন যুক্তরাষ্ট্র (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">যুক্তরাজ্য / ইইউ (29/07/2026)</sys:String>
 
 
     <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
@@ -353,6 +354,7 @@
 
     <!-- রং নির্বাচক -->
     <sys:String x:Key="Str_Dlg_PickColor">একটি রং বাছুন</sys:String>
+    <sys:String x:Key="Str_Color_Name">রং</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">স্ক্রিনের যেকোনো জায়গা থেকে রং নিন</sys:String>
     <sys:String x:Key="Str_Btn_Reset">রিসেট</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">ক্লিক করুন, তারপর কোনো সোয়াচে ক্লিক করলে সেটি বর্তমান রং পাবে</sys:String>
@@ -365,19 +367,19 @@
     <sys:String x:Key="Str_Ctx_EditSeries">সিরিজ সম্পাদনা করুন</sys:String>
     <sys:String x:Key="Str_Ctx_Open">খুলুন</sys:String>
 
-    <sys:String x:Key="Str_Theme_Dark">অন্ধকার</sys:String>
+    <sys:String x:Key="Str_Theme_Dark">গাঢ়</sys:String>
     <sys:String x:Key="Str_Theme_Light">হালকা</sys:String>
     <sys:String x:Key="Str_Theme_Black">কালো</sys:String>
     <sys:String x:Key="Str_Theme_98SE">98SE</sys:String>
     <sys:String x:Key="Str_Theme_Blood">রক্ত</sys:String>
     <sys:String x:Key="Str_Theme_Greed">লোভ</sys:String>
-    <sys:String x:Key="Str_Theme_Cyanotic">সায়ানোটিক</sys:String>
-    <sys:String x:Key="Str_Theme_Ectoplasm">Ectoplasm</sys:String>
-    <sys:String x:Key="Str_Theme_Decay">Decay</sys:String>
-    <sys:String x:Key="Str_Theme_Malaise">Malaise</sys:String>
-    <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
-    <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
-    <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_Cyanotic">নীলাভ</sys:String>
+    <sys:String x:Key="Str_Theme_Ectoplasm">এক্টোপ্লাজম</sys:String>
+    <sys:String x:Key="Str_Theme_Decay">ক্ষয়</sys:String>
+    <sys:String x:Key="Str_Theme_Malaise">অস্বস্তি</sys:String>
+    <sys:String x:Key="Str_Theme_Sepulchre">সমাধি</sys:String>
+    <sys:String x:Key="Str_Theme_Delirium">প্রলাপ</sys:String>
+    <sys:String x:Key="Str_Theme_Mourning">শোক</sys:String>
     <sys:String x:Key="Str_Theme_FilmGrain">ফিল্ম গ্রেইন</sys:String>
     <sys:String x:Key="Str_Btn_Select">নির্বাচন করুন</sys:String>
     <sys:String x:Key="Str_TT_DataFolder">ডেটাবেস যেখানে রাখা হয় সেই ডেটা ফোল্ডার বদলান</sys:String>

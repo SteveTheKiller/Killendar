@@ -163,6 +163,7 @@
     <sys:String x:Key="Str_Sc_Agenda">日程视图</sys:String>
     <sys:String x:Key="Str_Sc_Panel">显示或隐藏约会面板</sys:String>
     <sys:String x:Key="Str_Sc_About">关于</sys:String>
+    <sys:String x:Key="Str_TT_About">关于 Killendar</sys:String>
     <sys:String x:Key="Str_Sc_Close">关闭面板或浮层</sys:String>
     <sys:String x:Key="Str_Sc_Hint">只要没有在输入框中打字，单个按键即可使用。</sys:String>
 
@@ -172,8 +173,8 @@
     <sys:String x:Key="Str_Lbl_WeekStart">每周开始日</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">跟随 Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
-    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
-    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+    <sys:String x:Key="Str_Date_US">美国 (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">英国 / 欧盟 (29/07/2026)</sys:String>
 
 
     <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
@@ -353,6 +354,7 @@
 
     <!-- 拾色器 -->
     <sys:String x:Key="Str_Dlg_PickColor">选择颜色</sys:String>
+    <sys:String x:Key="Str_Color_Name">颜色</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">从屏幕上任意位置取色</sys:String>
     <sys:String x:Key="Str_Btn_Reset">重置</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">点击后再点击一个色块，即可把它设为当前颜色</sys:String>
@@ -371,13 +373,13 @@
     <sys:String x:Key="Str_Theme_98SE">98SE</sys:String>
     <sys:String x:Key="Str_Theme_Blood">血色</sys:String>
     <sys:String x:Key="Str_Theme_Greed">贪婪</sys:String>
-    <sys:String x:Key="Str_Theme_Cyanotic">青色</sys:String>
-    <sys:String x:Key="Str_Theme_Ectoplasm">Ectoplasm</sys:String>
-    <sys:String x:Key="Str_Theme_Decay">Decay</sys:String>
-    <sys:String x:Key="Str_Theme_Malaise">Malaise</sys:String>
-    <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
-    <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
-    <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_Cyanotic">发绀</sys:String>
+    <sys:String x:Key="Str_Theme_Ectoplasm">灵质</sys:String>
+    <sys:String x:Key="Str_Theme_Decay">腐朽</sys:String>
+    <sys:String x:Key="Str_Theme_Malaise">倦怠</sys:String>
+    <sys:String x:Key="Str_Theme_Sepulchre">陵墓</sys:String>
+    <sys:String x:Key="Str_Theme_Delirium">谵妄</sys:String>
+    <sys:String x:Key="Str_Theme_Mourning">哀悼</sys:String>
     <sys:String x:Key="Str_Theme_FilmGrain">胶片颗粒</sys:String>
     <sys:String x:Key="Str_Btn_Select">选择</sys:String>
     <sys:String x:Key="Str_TT_DataFolder">更改存储数据库的数据文件夹</sys:String>

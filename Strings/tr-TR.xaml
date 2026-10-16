@@ -163,6 +163,7 @@
     <sys:String x:Key="Str_Sc_Agenda">Ajanda görünümü</sys:String>
     <sys:String x:Key="Str_Sc_Panel">Randevu panelini göster veya gizle</sys:String>
     <sys:String x:Key="Str_Sc_About">Hakkında</sys:String>
+    <sys:String x:Key="Str_TT_About">Killendar hakkında</sys:String>
     <sys:String x:Key="Str_Sc_Close">Paneli veya katmanı kapat</sys:String>
     <sys:String x:Key="Str_Sc_Hint">Tek tuşlar, bir alana yazmadığın sürece çalışır.</sys:String>
 
@@ -172,8 +173,8 @@
     <sys:String x:Key="Str_Lbl_WeekStart">haftanın başlangıcı</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Windows'u izle</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
-    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
-    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+    <sys:String x:Key="Str_Date_US">ABD (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">Birleşik Krallık / AB (29/07/2026)</sys:String>
 
 
     <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
@@ -353,6 +354,7 @@
 
     <!-- Renk seçici -->
     <sys:String x:Key="Str_Dlg_PickColor">Bir renk seç</sys:String>
+    <sys:String x:Key="Str_Color_Name">Renk</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">Ekranın herhangi bir yerinden renk al</sys:String>
     <sys:String x:Key="Str_Btn_Reset">Sıfırla</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">Tıklayın, sonra geçerli rengi atamak için bir örneğe tıklayın</sys:String>
@@ -369,15 +371,15 @@
     <sys:String x:Key="Str_Theme_Light">Açık</sys:String>
     <sys:String x:Key="Str_Theme_Black">Siyah</sys:String>
     <sys:String x:Key="Str_Theme_98SE">98SE</sys:String>
-    <sys:String x:Key="Str_Theme_Blood">Kanlı</sys:String>
-    <sys:String x:Key="Str_Theme_Greed">Açgözlü</sys:String>
+    <sys:String x:Key="Str_Theme_Blood">Kan</sys:String>
+    <sys:String x:Key="Str_Theme_Greed">Hırs</sys:String>
     <sys:String x:Key="Str_Theme_Cyanotic">Siyanotik</sys:String>
-    <sys:String x:Key="Str_Theme_Ectoplasm">Ectoplasm</sys:String>
-    <sys:String x:Key="Str_Theme_Decay">Decay</sys:String>
-    <sys:String x:Key="Str_Theme_Malaise">Malaise</sys:String>
-    <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
-    <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
-    <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_Ectoplasm">Ektoplazma</sys:String>
+    <sys:String x:Key="Str_Theme_Decay">Çürüme</sys:String>
+    <sys:String x:Key="Str_Theme_Malaise">Halsizlik</sys:String>
+    <sys:String x:Key="Str_Theme_Sepulchre">Kabir</sys:String>
+    <sys:String x:Key="Str_Theme_Delirium">Hezeyan</sys:String>
+    <sys:String x:Key="Str_Theme_Mourning">Yas</sys:String>
     <sys:String x:Key="Str_Theme_FilmGrain">Film greni</sys:String>
     <sys:String x:Key="Str_Btn_Select">Seç</sys:String>
     <sys:String x:Key="Str_TT_DataFolder">Veritabanlarının saklandığı veri klasörünü değiştir</sys:String>

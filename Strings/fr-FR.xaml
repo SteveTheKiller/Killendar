@@ -163,6 +163,7 @@
     <sys:String x:Key="Str_Sc_Agenda">Vue agenda</sys:String>
     <sys:String x:Key="Str_Sc_Panel">Afficher ou masquer le volet des rendez-vous</sys:String>
     <sys:String x:Key="Str_Sc_About">À propos</sys:String>
+    <sys:String x:Key="Str_TT_About">À propos de Killendar</sys:String>
     <sys:String x:Key="Str_Sc_Close">Fermer le volet ou la superposition</sys:String>
     <sys:String x:Key="Str_Sc_Hint">Les touches simples fonctionnent tant que vous n'écrivez pas dans un champ.</sys:String>
 
@@ -172,8 +173,8 @@
     <sys:String x:Key="Str_Lbl_WeekStart">début de la semaine</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Suivre Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
-    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
-    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+    <sys:String x:Key="Str_Date_US">États-Unis (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">Royaume-Uni / UE (29/07/2026)</sys:String>
 
 
     <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
@@ -353,6 +354,7 @@
 
     <!-- Sélecteur de couleur -->
     <sys:String x:Key="Str_Dlg_PickColor">Choisir une couleur</sys:String>
+    <sys:String x:Key="Str_Color_Name">Couleur</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">Prélever une couleur n'importe où à l'écran</sys:String>
     <sys:String x:Key="Str_Btn_Reset">Réinitialiser</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">Cliquez, puis cliquez un échantillon pour lui attribuer la couleur actuelle</sys:String>
@@ -369,15 +371,15 @@
     <sys:String x:Key="Str_Theme_Light">Clair</sys:String>
     <sys:String x:Key="Str_Theme_Black">Noir</sys:String>
     <sys:String x:Key="Str_Theme_98SE">98SE</sys:String>
-    <sys:String x:Key="Str_Theme_Blood">Blood</sys:String>
-    <sys:String x:Key="Str_Theme_Greed">Greed</sys:String>
+    <sys:String x:Key="Str_Theme_Blood">Sang</sys:String>
+    <sys:String x:Key="Str_Theme_Greed">Avarice</sys:String>
     <sys:String x:Key="Str_Theme_Cyanotic">Cyanotique</sys:String>
-    <sys:String x:Key="Str_Theme_Ectoplasm">Ectoplasm</sys:String>
-    <sys:String x:Key="Str_Theme_Decay">Decay</sys:String>
+    <sys:String x:Key="Str_Theme_Ectoplasm">Ectoplasme</sys:String>
+    <sys:String x:Key="Str_Theme_Decay">Décomposition</sys:String>
     <sys:String x:Key="Str_Theme_Malaise">Malaise</sys:String>
-    <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
-    <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
-    <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_Sepulchre">Sépulcre</sys:String>
+    <sys:String x:Key="Str_Theme_Delirium">Délire</sys:String>
+    <sys:String x:Key="Str_Theme_Mourning">Deuil</sys:String>
     <sys:String x:Key="Str_Theme_FilmGrain">Grain de film</sys:String>
     <sys:String x:Key="Str_Btn_Select">Sélectionner</sys:String>
     <sys:String x:Key="Str_TT_DataFolder">Changer le dossier de données où sont stockées les bases de données</sys:String>

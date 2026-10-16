@@ -33,12 +33,12 @@
     <sys:String x:Key="Str_Theme_Blood">Sangue</sys:String>
     <sys:String x:Key="Str_Theme_Greed">Avidità</sys:String>
     <sys:String x:Key="Str_Theme_Cyanotic">Cianotico</sys:String>
-    <sys:String x:Key="Str_Theme_Ectoplasm">Ectoplasm</sys:String>
-    <sys:String x:Key="Str_Theme_Decay">Decay</sys:String>
-    <sys:String x:Key="Str_Theme_Malaise">Malaise</sys:String>
-    <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
-    <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
-    <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_Ectoplasm">Ectoplasma</sys:String>
+    <sys:String x:Key="Str_Theme_Decay">Decadenza</sys:String>
+    <sys:String x:Key="Str_Theme_Malaise">Malessere</sys:String>
+    <sys:String x:Key="Str_Theme_Sepulchre">Sepolcro</sys:String>
+    <sys:String x:Key="Str_Theme_Delirium">Delirio</sys:String>
+    <sys:String x:Key="Str_Theme_Mourning">Lutto</sys:String>
     <sys:String x:Key="Str_Theme_FilmGrain">Grana pellicola</sys:String>
 
     <sys:String x:Key="Str_Side_New">Nuovo appuntamento</sys:String>
@@ -184,6 +184,7 @@
     <sys:String x:Key="Str_Sc_Agenda">Vista agenda</sys:String>
     <sys:String x:Key="Str_Sc_Panel">Mostra o nascondi il pannello degli appuntamenti</sys:String>
     <sys:String x:Key="Str_Sc_About">Informazioni</sys:String>
+    <sys:String x:Key="Str_TT_About">Informazioni su Killendar</sys:String>
     <sys:String x:Key="Str_Sc_Close">Chiudi il pannello o la scheda</sys:String>
     <sys:String x:Key="Str_Sc_Hint">I tasti singoli funzionano quando non stai scrivendo in un campo.</sys:String>
 
@@ -193,8 +194,8 @@
     <sys:String x:Key="Str_Lbl_WeekStart">inizio settimana</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Segui Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
-    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
-    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+    <sys:String x:Key="Str_Date_US">USA (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">Regno Unito / UE (29/07/2026)</sys:String>
 
     <sys:String x:Key="Str_Pw_UnlockHead">Sblocca questo Killendar</sys:String>
     <sys:String x:Key="Str_Pw_WrongPw">Quella password non ha funzionato. Riprova.</sys:String>
@@ -381,6 +382,7 @@
     <sys:String x:Key="Str_TT_CatDelete">Elimina</sys:String>
 
     <sys:String x:Key="Str_Dlg_PickColor">Scegli un colore</sys:String>
+    <sys:String x:Key="Str_Color_Name">Colore</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">Preleva un colore da qualsiasi punto dello schermo</sys:String>
     <sys:String x:Key="Str_Btn_Reset">Ripristina</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">Clicca, poi clicca un campione per impostarlo al colore attuale</sys:String>

@@ -163,6 +163,7 @@
     <sys:String x:Key="Str_Sc_Agenda">Zobrazení agendy</sys:String>
     <sys:String x:Key="Str_Sc_Panel">Zobrazit nebo skrýt panel schůzek</sys:String>
     <sys:String x:Key="Str_Sc_About">O aplikaci</sys:String>
+    <sys:String x:Key="Str_TT_About">O aplikaci Killendar</sys:String>
     <sys:String x:Key="Str_Sc_Close">Zavřít panel nebo překryv</sys:String>
     <sys:String x:Key="Str_Sc_Hint">Jednotlivé klávesy fungují, dokud nepíšeš do pole.</sys:String>
 
@@ -172,8 +173,8 @@
     <sys:String x:Key="Str_Lbl_WeekStart">začátek týdne</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Podle Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
-    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
-    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+    <sys:String x:Key="Str_Date_US">USA (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">Spojené království / EU (29/07/2026)</sys:String>
 
 
     <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
@@ -353,6 +354,7 @@
 
     <!-- Výběr barvy -->
     <sys:String x:Key="Str_Dlg_PickColor">Vybrat barvu</sys:String>
+    <sys:String x:Key="Str_Color_Name">Barva</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">Nabrat barvu odkudkoli z obrazovky</sys:String>
     <sys:String x:Key="Str_Btn_Reset">Obnovit</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">Klikněte a pak klikněte na vzorek, aby získal aktuální barvu</sys:String>
@@ -370,14 +372,14 @@
     <sys:String x:Key="Str_Theme_Black">Černý</sys:String>
     <sys:String x:Key="Str_Theme_98SE">98SE</sys:String>
     <sys:String x:Key="Str_Theme_Blood">Krvavý</sys:String>
-    <sys:String x:Key="Str_Theme_Greed">Chamtivý</sys:String>
-    <sys:String x:Key="Str_Theme_Cyanotic">Kyanotický</sys:String>
-    <sys:String x:Key="Str_Theme_Ectoplasm">Ectoplasm</sys:String>
-    <sys:String x:Key="Str_Theme_Decay">Decay</sys:String>
-    <sys:String x:Key="Str_Theme_Malaise">Malaise</sys:String>
-    <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
+    <sys:String x:Key="Str_Theme_Greed">Chamtivost</sys:String>
+    <sys:String x:Key="Str_Theme_Cyanotic">Cyanotický</sys:String>
+    <sys:String x:Key="Str_Theme_Ectoplasm">Ektoplazma</sys:String>
+    <sys:String x:Key="Str_Theme_Decay">Rozklad</sys:String>
+    <sys:String x:Key="Str_Theme_Malaise">Malátnost</sys:String>
+    <sys:String x:Key="Str_Theme_Sepulchre">Hrobka</sys:String>
     <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
-    <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_Mourning">Smutek</sys:String>
     <sys:String x:Key="Str_Theme_FilmGrain">Filmové zrno</sys:String>
     <sys:String x:Key="Str_Btn_Select">Vybrat</sys:String>
     <sys:String x:Key="Str_TT_DataFolder">Změnit datovou složku, kde jsou uloženy databáze</sys:String>

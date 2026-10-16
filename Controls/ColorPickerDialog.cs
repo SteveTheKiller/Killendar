@@ -68,7 +68,7 @@ namespace Killendar.Controls
 
         public ColorPickerDialog(Window? owner, Color initial)
         {
-            Title = "Killendar - Color";
+            Title = "Killendar - " + L("Str_Color_Name", "Color");
             Width = 300;
             SizeToContent = SizeToContent.Height;
             WindowStyle = WindowStyle.None;

@@ -74,9 +74,9 @@
     <sys:String x:Key="Str_Theme_Light">Jasny</sys:String>
     <sys:String x:Key="Str_Theme_Black">Czarny</sys:String>
     <sys:String x:Key="Str_Theme_98SE">98SE</sys:String>
-    <sys:String x:Key="Str_Theme_Blood">Blood</sys:String>
-    <sys:String x:Key="Str_Theme_Greed">Greed</sys:String>
-    <sys:String x:Key="Str_Theme_Cyanotic">Sini</sys:String>
+    <sys:String x:Key="Str_Theme_Blood">Krew</sys:String>
+    <sys:String x:Key="Str_Theme_Greed">Chciwość</sys:String>
+    <sys:String x:Key="Str_Theme_Cyanotic">Sinica</sys:String>
     <sys:String x:Key="Str_Theme_Ectoplasm">Ektoplazma</sys:String>
     <sys:String x:Key="Str_Theme_Decay">Rozkład</sys:String>
     <sys:String x:Key="Str_Theme_Malaise">Marazm</sys:String>
@@ -156,7 +156,7 @@
     <sys:String x:Key="Str_About_PhotonPrivacy">Używaj usługi Photon/Komoot</sys:String>
     <sys:String x:Key="Str_Location_NoResults">Brak podpowiedzi adresów</sys:String>
     <sys:String x:Key="Str_Hint_Attendees">oddziel przecinkami</sys:String>
-    <sys:String x:Key="Str_Hint_Date">yyyy-mm-dd</sys:String>
+    <sys:String x:Key="Str_Hint_Date">rrrr-mm-dd</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">Wybierz datę</sys:String>
     <sys:String x:Key="Str_Hint_Time">h:mm AM/PM lub format 24-godzinny</sys:String>
     <sys:String x:Key="Str_Hint_AttendeesTip">Adresy e-mail oddzielone przecinkami</sys:String>
@@ -229,11 +229,12 @@
     <sys:String x:Key="Str_Sc_Agenda">Widok agendy</sys:String>
     <sys:String x:Key="Str_Sc_Panel">Pokaż lub ukryj panel spotkań</sys:String>
     <sys:String x:Key="Str_Sc_About">Informacje</sys:String>
+    <sys:String x:Key="Str_TT_About">O Killendar</sys:String>
     <sys:String x:Key="Str_Sc_Close">Zamknij panel lub nakładkę</sys:String>
     <sys:String x:Key="Str_Sc_Hint">Pojedyncze klawisze działają, gdy nie wpisujesz tekstu w polu.</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
-    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
-    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+    <sys:String x:Key="Str_Date_US">USA (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">Wielka Brytania / UE (29/07/2026)</sys:String>
     <sys:String x:Key="Str_Pw_UnlockHead">Odblokuj ten Killendar</sys:String>
     <sys:String x:Key="Str_Pw_WrongPw">Hasło jest nieprawidłowe. Spróbuj ponownie.</sys:String>
     <sys:String x:Key="Str_Pw_Protected">{0} jest zaszyfrowany. Wpisz hasło, aby go otworzyć.</sys:String>
@@ -271,7 +272,7 @@
     <sys:String x:Key="Str_Kc_Deleted">Usunięto {0}</sys:String>
     <sys:String x:Key="Str_Kc_DeleteFailed">Usuwanie nie powiodło się: {0}</sys:String>
     <sys:String x:Key="Str_Kc_LoadTitle">Wczytaj Killendar</sys:String>
-    <sys:String x:Key="Str_Kc_Filter">Killendar files (*.kcal)|*.kcal|All files (*.*)|*.*</sys:String>
+    <sys:String x:Key="Str_Kc_Filter">Pliki Killendar (*.kcal)|*.kcal|Wszystkie pliki (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">Wczytano kopię jako {0}</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">Wczytywanie nie powiodło się: {0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} znajduje się w schowku - wklej go w dowolnym miejscu przyjmującym pliki</sys:String>
@@ -298,7 +299,7 @@
     <sys:String x:Key="Str_Kc_AddBody">Kopia zostanie dodana do folderu danych i otwarta. Oryginalny plik pozostanie nietknięty - Killendar stale zapisuje dane, dlatego nie powinien pracować bezpośrednio na pliku z udziału sieciowego ani folderu Pobrane.</sys:String>
     <sys:String x:Key="Str_Btn_Add">Dodaj</sys:String>
     <sys:String x:Key="Str_Side_NoAppointments">Brak spotkań w tym dniu</sys:String>
-    <sys:String x:Key="Str_Dlg_InstallBullets">Killendar is copied to your programs folder and a Start menu entry is added. Your Killendars are not touched, and this copy of the exe is left where it is. Killendar restarts from the installed location.</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallBullets">Killendar zostanie skopiowany do folderu programów i zostanie dodana pozycja w menu Start.&#x0a;Twoje Killendary pozostaną nietknięte, a ta kopia pliku exe zostanie tam, gdzie jest.&#x0a;Killendar uruchomi się ponownie z miejsca instalacji.</sys:String>
     <sys:String x:Key="Str_KS_Hint">Pojedyncze klawisze są wyłączone podczas wpisywania tekstu</sys:String>
     <sys:String x:Key="Str_KS_GrpViews">WIDOKI</sys:String>
     <sys:String x:Key="Str_KS_GrpAppt">SPOTKANIA</sys:String>
@@ -351,6 +352,7 @@
     <sys:String x:Key="Str_TT_CatPickColor">Wybierz kolor nowej kategorii</sys:String>
     <sys:String x:Key="Str_TT_CatRecolor">Zmień kolor</sys:String>
     <sys:String x:Key="Str_Dlg_PickColor">Wybierz kolor</sys:String>
+    <sys:String x:Key="Str_Color_Name">Kolor</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">Pobierz kolor z dowolnego miejsca na ekranie</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">Kliknij, a następnie wybierz próbkę, aby nadać jej bieżący kolor</sys:String>
     <sys:String x:Key="Str_TT_ResetSwatches">Przywróć domyślne próbki</sys:String>

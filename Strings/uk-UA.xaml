@@ -208,6 +208,7 @@
     <sys:String x:Key="Str_Sc_Agenda">Перегляд порядку денного</sys:String>
     <sys:String x:Key="Str_Sc_Panel">Показати або сховати панель зустрічей</sys:String>
     <sys:String x:Key="Str_Sc_About">Про програму</sys:String>
+    <sys:String x:Key="Str_TT_About">Про Killendar</sys:String>
     <sys:String x:Key="Str_Sc_Close">Закрити панель або накладку</sys:String>
     <sys:String x:Key="Str_Sc_Hint">Окремі клавіші працюють, коли ви не вводите текст у полі.</sys:String>
 
@@ -428,6 +429,7 @@
 
     <!-- Color picker -->
     <sys:String x:Key="Str_Dlg_PickColor">Оберіть колір</sys:String>
+    <sys:String x:Key="Str_Color_Name">Колір</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">Узяти колір будь-де на екрані</sys:String>
     <sys:String x:Key="Str_Btn_Reset">Скинути</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">Клацніть, а потім клацніть зразок, щоб задати йому поточний колір</sys:String>

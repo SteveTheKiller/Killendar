@@ -208,6 +208,7 @@
     <sys:String x:Key="Str_Sc_Agenda">Күн тәртібі көрінісі</sys:String>
     <sys:String x:Key="Str_Sc_Panel">Кездесу тақтасын көрсету немесе жасыру</sys:String>
     <sys:String x:Key="Str_Sc_About">Бағдарлама туралы</sys:String>
+    <sys:String x:Key="Str_TT_About">Killendar туралы</sys:String>
     <sys:String x:Key="Str_Sc_Close">Тақтаны немесе қабатты жабу</sys:String>
     <sys:String x:Key="Str_Sc_Hint">Жалғыз пернелер өрісте теріп отырмаған кезде жұмыс істейді.</sys:String>
 
@@ -217,8 +218,8 @@
     <sys:String x:Key="Str_Lbl_WeekStart">аптаның басталуы</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Windows бойынша</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
-    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
-    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+    <sys:String x:Key="Str_Date_US">АҚШ (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">Ұлыбритания / ЕО (29/07/2026)</sys:String>
 
 
     <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
@@ -428,6 +429,7 @@
 
     <!-- Color picker -->
     <sys:String x:Key="Str_Dlg_PickColor">Түс таңдаңыз</sys:String>
+    <sys:String x:Key="Str_Color_Name">Түс</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">Экранның кез келген жерінен түс алу</sys:String>
     <sys:String x:Key="Str_Btn_Reset">Ысыру</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">Басыңыз, содан кейін үлгіні басып, оған ағымдағы түсті беріңіз</sys:String>

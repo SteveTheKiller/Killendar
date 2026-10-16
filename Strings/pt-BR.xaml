@@ -80,7 +80,7 @@
     <sys:String x:Key="Str_Fld_Description">DESCRIÇÃO</sys:String>
     <sys:String x:Key="Str_Fld_Attendees">PARTICIPANTES</sys:String>
     <sys:String x:Key="Str_Hint_Attendees">separados por vírgula</sys:String>
-    <sys:String x:Key="Str_Hint_Date">yyyy-mm-dd</sys:String>
+    <sys:String x:Key="Str_Hint_Date">aaaa-mm-dd</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">Escolher uma data</sys:String>
     <sys:String x:Key="Str_Hint_Time">h:mm am/pm ou 24h</sys:String>
     <sys:String x:Key="Str_Hint_AttendeesTip">Endereços de email separados por vírgula</sys:String>
@@ -208,6 +208,7 @@
     <sys:String x:Key="Str_Sc_Agenda">Visualização de agenda</sys:String>
     <sys:String x:Key="Str_Sc_Panel">Mostrar ou ocultar o painel de compromissos</sys:String>
     <sys:String x:Key="Str_Sc_About">Sobre</sys:String>
+    <sys:String x:Key="Str_TT_About">Sobre o Killendar</sys:String>
     <sys:String x:Key="Str_Sc_Close">Fechar o painel ou a sobreposição</sys:String>
     <sys:String x:Key="Str_Sc_Hint">As teclas únicas funcionam sempre que você não estiver digitando em um campo.</sys:String>
 
@@ -428,6 +429,7 @@
 
     <!-- Color picker -->
     <sys:String x:Key="Str_Dlg_PickColor">Escolher uma cor</sys:String>
+    <sys:String x:Key="Str_Color_Name">Cor</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">Escolher uma cor de qualquer lugar da tela</sys:String>
     <sys:String x:Key="Str_Btn_Reset">Redefinir</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">Clique e depois clique em uma amostra para defini-la com a cor atual</sys:String>

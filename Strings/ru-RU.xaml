@@ -209,6 +209,7 @@
     <sys:String x:Key="Str_Sc_Agenda">Вид расписания</sys:String>
     <sys:String x:Key="Str_Sc_Panel">Показать или скрыть панель встреч</sys:String>
     <sys:String x:Key="Str_Sc_About">О программе</sys:String>
+    <sys:String x:Key="Str_TT_About">О Killendar</sys:String>
     <sys:String x:Key="Str_Sc_Close">Закрыть панель или карточку</sys:String>
     <sys:String x:Key="Str_Sc_Hint">Одиночные клавиши работают, когда вы не печатаете в поле.</sys:String>
 
@@ -218,8 +219,8 @@
     <sys:String x:Key="Str_Lbl_WeekStart">начало недели</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Как в Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
-    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
-    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+    <sys:String x:Key="Str_Date_US">США (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">Великобритания / ЕС (29/07/2026)</sys:String>
 
 
     <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
@@ -429,6 +430,7 @@
 
     <!-- Color picker -->
     <sys:String x:Key="Str_Dlg_PickColor">Выберите цвет</sys:String>
+    <sys:String x:Key="Str_Color_Name">Цвет</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">Взять цвет с любого места экрана</sys:String>
     <sys:String x:Key="Str_Btn_Reset">Сбросить</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">Нажмите, затем нажмите образец, чтобы задать ему текущий цвет</sys:String>

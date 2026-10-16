@@ -191,6 +191,7 @@
   <sys:String x:Key="Str_Sc_Agenda">Chế độ xem lịch biểu</sys:String>
   <sys:String x:Key="Str_Sc_Panel">Hiện hoặc ẩn bảng cuộc hẹn</sys:String>
   <sys:String x:Key="Str_Sc_About">Giới thiệu</sys:String>
+  <sys:String x:Key="Str_TT_About">Giới thiệu về Killendar</sys:String>
   <sys:String x:Key="Str_Sc_Close">Đóng bảng hoặc lớp phủ</sys:String>
   <sys:String x:Key="Str_Sc_Hint">Các phím đơn hoạt động bất cứ khi nào bạn không nhập nội dung vào một trường.</sys:String>
   <!-- Date format picker (in the language menu). The three samples are format examples,
@@ -397,6 +398,7 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_TT_CatDelete">Xóa</sys:String>
   <!-- Color picker -->
   <sys:String x:Key="Str_Dlg_PickColor">Chọn màu</sys:String>
+  <sys:String x:Key="Str_Color_Name">Màu sắc</sys:String>
   <sys:String x:Key="Str_TT_Eyedropper">Chọn màu từ bất kỳ vị trí nào trên màn hình</sys:String>
   <sys:String x:Key="Str_Btn_Reset">Đặt lại</sys:String>
   <sys:String x:Key="Str_TT_ReplaceSwatch">Bấm vào đây, rồi bấm vào một ô màu để đặt ô đó thành màu hiện tại</sys:String>

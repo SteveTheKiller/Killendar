@@ -163,6 +163,7 @@
     <sys:String x:Key="Str_Sc_Agenda">行程檢視</sys:String>
     <sys:String x:Key="Str_Sc_Panel">顯示或隱藏約會面板</sys:String>
     <sys:String x:Key="Str_Sc_About">關於</sys:String>
+    <sys:String x:Key="Str_TT_About">關於 Killendar</sys:String>
     <sys:String x:Key="Str_Sc_Close">關閉面板或覆蓋層</sys:String>
     <sys:String x:Key="Str_Sc_Hint">只要沒有在輸入欄位打字，單一按鍵就能使用。</sys:String>
 
@@ -172,8 +173,8 @@
     <sys:String x:Key="Str_Lbl_WeekStart">每週開始日</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">跟隨 Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
-    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
-    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+    <sys:String x:Key="Str_Date_US">美國 (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">英國 / 歐盟 (29/07/2026)</sys:String>
 
 
     <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
@@ -353,6 +354,7 @@
 
     <!-- 選色器 -->
     <sys:String x:Key="Str_Dlg_PickColor">選擇顏色</sys:String>
+    <sys:String x:Key="Str_Color_Name">顏色</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">從螢幕上任意位置取色</sys:String>
     <sys:String x:Key="Str_Btn_Reset">重設</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">按一下後再按一個色票，即可將它設為目前顏色</sys:String>
@@ -369,15 +371,15 @@
     <sys:String x:Key="Str_Theme_Light">淺色</sys:String>
     <sys:String x:Key="Str_Theme_Black">黑色</sys:String>
     <sys:String x:Key="Str_Theme_98SE">98SE</sys:String>
-    <sys:String x:Key="Str_Theme_Blood">血色</sys:String>
-    <sys:String x:Key="Str_Theme_Greed">貪婪</sys:String>
-    <sys:String x:Key="Str_Theme_Cyanotic">青色</sys:String>
-    <sys:String x:Key="Str_Theme_Ectoplasm">Ectoplasm</sys:String>
-    <sys:String x:Key="Str_Theme_Decay">Decay</sys:String>
-    <sys:String x:Key="Str_Theme_Malaise">Malaise</sys:String>
-    <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
-    <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
-    <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_Blood">血紅</sys:String>
+    <sys:String x:Key="Str_Theme_Greed">貪婪綠</sys:String>
+    <sys:String x:Key="Str_Theme_Cyanotic">藍紫</sys:String>
+    <sys:String x:Key="Str_Theme_Ectoplasm">靈質</sys:String>
+    <sys:String x:Key="Str_Theme_Decay">腐朽</sys:String>
+    <sys:String x:Key="Str_Theme_Malaise">倦怠</sys:String>
+    <sys:String x:Key="Str_Theme_Sepulchre">陵墓</sys:String>
+    <sys:String x:Key="Str_Theme_Delirium">譫妄</sys:String>
+    <sys:String x:Key="Str_Theme_Mourning">哀悼</sys:String>
     <sys:String x:Key="Str_Theme_FilmGrain">底片顆粒</sys:String>
     <sys:String x:Key="Str_Btn_Select">選擇</sys:String>
     <sys:String x:Key="Str_TT_DataFolder">變更儲存資料庫的資料夾</sys:String>

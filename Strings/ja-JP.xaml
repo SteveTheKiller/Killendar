@@ -163,6 +163,7 @@
     <sys:String x:Key="Str_Sc_Agenda">予定一覧表示</sys:String>
     <sys:String x:Key="Str_Sc_Panel">予定パネルの表示を切り替え</sys:String>
     <sys:String x:Key="Str_Sc_About">バージョン情報</sys:String>
+    <sys:String x:Key="Str_TT_About">Killendar について</sys:String>
     <sys:String x:Key="Str_Sc_Close">パネルまたはオーバーレイを閉じる</sys:String>
     <sys:String x:Key="Str_Sc_Hint">単独のキーは、入力欄に文字を打っていないときに使えます。</sys:String>
 
@@ -172,8 +173,8 @@
     <sys:String x:Key="Str_Lbl_WeekStart">週の開始</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Windows に合わせる</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
-    <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
-    <sys:String x:Key="Str_Date_EU">UK / EU (29/07/2026)</sys:String>
+    <sys:String x:Key="Str_Date_US">米国 (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">英国 / EU (29/07/2026)</sys:String>
 
 
     <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
@@ -353,6 +354,7 @@
 
     <!-- カラーピッカー -->
     <sys:String x:Key="Str_Dlg_PickColor">色を選ぶ</sys:String>
+    <sys:String x:Key="Str_Color_Name">色</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">画面上のどこからでも色を取得します</sys:String>
     <sys:String x:Key="Str_Btn_Reset">リセット</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">クリックしてから見本をクリックすると、その見本が現在の色になります</sys:String>
@@ -372,12 +374,12 @@
     <sys:String x:Key="Str_Theme_Blood">ブラッド</sys:String>
     <sys:String x:Key="Str_Theme_Greed">グリード</sys:String>
     <sys:String x:Key="Str_Theme_Cyanotic">シアノティック</sys:String>
-    <sys:String x:Key="Str_Theme_Ectoplasm">Ectoplasm</sys:String>
-    <sys:String x:Key="Str_Theme_Decay">Decay</sys:String>
-    <sys:String x:Key="Str_Theme_Malaise">Malaise</sys:String>
-    <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
-    <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
-    <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_Ectoplasm">エクトプラズム</sys:String>
+    <sys:String x:Key="Str_Theme_Decay">ディケイ</sys:String>
+    <sys:String x:Key="Str_Theme_Malaise">マレーズ</sys:String>
+    <sys:String x:Key="Str_Theme_Sepulchre">セパルカー</sys:String>
+    <sys:String x:Key="Str_Theme_Delirium">デリリウム</sys:String>
+    <sys:String x:Key="Str_Theme_Mourning">モーニング</sys:String>
     <sys:String x:Key="Str_Theme_FilmGrain">フィルムグレイン</sys:String>
     <sys:String x:Key="Str_Btn_Select">選択</sys:String>
     <sys:String x:Key="Str_TT_DataFolder">データベースを保存するデータ フォルダーを変更</sys:String>

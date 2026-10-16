@@ -867,7 +867,7 @@
                     <TextBlock x:Name="VersionLabel" Text="v1.0.0"
                                Foreground="{DynamicResource TextFooter}" FontFamily="{DynamicResource BrandSansFont}"
                                FontSize="16" TextOptions.TextFormattingMode="Ideal" VerticalAlignment="Center" Margin="0,0,12,0"
-                               Cursor="Hand" ToolTip="About Killendar"
+                               Cursor="Hand" ToolTip="{DynamicResource Str_TT_About}"
                                MouseLeftButtonUp="VersionLabel_Click"/>
                     <!-- 14px trailing margin keeps the copyright clear of the corner grip. -->
                     <TextBlock FontSize="16" TextOptions.TextFormattingMode="Ideal" VerticalAlignment="Center" FontFamily="{DynamicResource BrandSansFont}" Margin="0,0,14,0">
@@ -975,7 +975,7 @@
                                 Visibility="{DynamicResource ShortcutCaptionVisibility}"
                                 Background="{DynamicResource DialogTitleBarBrush}">
                             <Grid Margin="4,0,2,0">
-                                <TextBlock Text="Keyboard shortcuts" VerticalAlignment="Center"
+                                <TextBlock Text="{DynamicResource Str_KS_Title}" VerticalAlignment="Center"
                                            FontFamily="Tahoma" FontSize="11" FontWeight="Bold"
                                            Foreground="{DynamicResource ChromeTextBrush}"/>
                                 <Button Content="&#xE8BB;" Click="ShortcutsClose_Click"
@@ -1091,7 +1091,7 @@
                                 Visibility="{DynamicResource AboutCaptionVisibility}"
                                 Background="{DynamicResource DialogTitleBarBrush}">
                             <Grid Margin="4,0,2,0">
-                                <TextBlock Text="About" VerticalAlignment="Center"
+                                <TextBlock Text="{DynamicResource Str_Sc_About}" VerticalAlignment="Center"
                                            FontFamily="Tahoma" FontSize="11" FontWeight="Bold"
                                            Foreground="{DynamicResource ChromeTextBrush}"/>
                                 <Button Content="&#xE8BB;" Click="AboutClose_Click"

@@ -208,6 +208,7 @@
     <sys:String x:Key="Str_Sc_Agenda">Agenda view</sys:String>
     <sys:String x:Key="Str_Sc_Panel">Show or hide the appointment panel</sys:String>
     <sys:String x:Key="Str_Sc_About">About</sys:String>
+    <sys:String x:Key="Str_TT_About">About Killendar</sys:String>
     <sys:String x:Key="Str_Sc_Close">Close the panel or overlay</sys:String>
     <sys:String x:Key="Str_Sc_Hint">Single keys work whenever you are not typing in a field.</sys:String>
 
@@ -428,6 +429,7 @@
 
     <!-- Color picker -->
     <sys:String x:Key="Str_Dlg_PickColor">Pick a color</sys:String>
+    <sys:String x:Key="Str_Color_Name">Color</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">Pick a color from anywhere on screen</sys:String>
     <sys:String x:Key="Str_Btn_Reset">Reset</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">Click, then click a swatch to set it to the current color</sys:String>

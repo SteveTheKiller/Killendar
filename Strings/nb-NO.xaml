@@ -208,6 +208,7 @@
     <sys:String x:Key="Str_Sc_Agenda">Agendavisning</sys:String>
     <sys:String x:Key="Str_Sc_Panel">Vis eller skjul avtalepanelet</sys:String>
     <sys:String x:Key="Str_Sc_About">Om</sys:String>
+    <sys:String x:Key="Str_TT_About">Om Killendar</sys:String>
     <sys:String x:Key="Str_Sc_Close">Lukk panelet eller overlegget</sys:String>
     <sys:String x:Key="Str_Sc_Hint">Enkelttaster fungerer når du ikke skriver i et felt.</sys:String>
 
@@ -428,6 +429,7 @@
 
     <!-- Color picker -->
     <sys:String x:Key="Str_Dlg_PickColor">Velg en farge</sys:String>
+    <sys:String x:Key="Str_Color_Name">Farge</sys:String>
     <sys:String x:Key="Str_TT_Eyedropper">Velg en farge fra et hvilket som helst sted på skjermen</sys:String>
     <sys:String x:Key="Str_Btn_Reset">Tilbakestill</sys:String>
     <sys:String x:Key="Str_TT_ReplaceSwatch">Klikk, og klikk deretter på en fargeprøve for å sette den til gjeldende farge</sys:String>
