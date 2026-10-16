@@ -10,12 +10,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Added a dropdown arrow beside the Month button that switches Month view between a calendar month and rolling weeks, and the R key to toggle it. The choice was only reachable by right-clicking the Month button.
 - Killendar checks for updates on startup and offers a newer release in a dialog with an Always check on startup box. A Check for updates on startup checkbox at the top of the About options turns the check back on.
 - Alt+Shift+G turns Film Grain on or off. It is listed in the shortcuts overlay, and the keyboard map has a new Alt+Shift layer for it.
+- The website's top bar has a Microsoft Store button on every page, and the MCP page has a Microsoft Store button for KillerMCP.
 
 ### Changed
 - The period header above the calendar, the sidebar date heading and the dialog headings use Lacquer, the wordmark's app-name face, in place of Killer Sans. 98SE keeps Killer Sans.
 - Context menus use Killer Sans UI like the rest of the interface instead of Segoe UI.
 - The Light theme draws a softer shadow under the toolbars.
 - Clicking a density button steps one level tighter and wraps back to the roomiest, the same way the density buttons in KillerNotes and KillerShell work.
+- The website's top bar Download button uses the same font and height as the other top bar buttons.
 
 ### Fixed
 - On the Light theme's Yellow accent, buttons, links, tabs and accent icons stay yellow with a thin gray outline around yellow text and icons, instead of turning near-black.
@@ -33,6 +35,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - On the website, text on accent-colored buttons, tabs and highlights switches to white or near-black for contrast, so it is never white on yellow.
 - Theme names, the date format choices, date hints, file type lists and the Hungarian event fields that were still in English are translated in every language.
 - The website's MCP page, release details, contact cards, carousel controls, keyboard map and remaining labels are translated in every language.
+- On phones, the website's logo and download hash fit the screen instead of making the home page scroll sideways.
 
 ## [1.3.0] - 2026-10-14
 
