@@ -80,6 +80,13 @@
 
   // ---- Accent ----
 
+  // Text on an accent fill uses white or near-black, whichever contrasts more with that fill.
+  function readableOn(hex) {
+    var lum = function (h) { var c = [1, 3, 5].map(function (i) { var v = parseInt(h.substr(i, 2), 16) / 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+    var l = lum(hex), dark = lum('#1e1f22');
+    return (1.05 / (l + 0.05)) >= ((l + 0.05) / (dark + 0.05)) ? '#ffffff' : '#1e1f22';
+  }
+
   function applyAccent(name) {
     var t = theme(), sw = $('accentSwitch');
     root.toggleAttribute('data-yellow-outline', t === 'light' && hasAccents(t) && name === 'Yellow');
@@ -91,6 +98,8 @@
     });
     if (!hasAccents(t)) {
       root.style.removeProperty('--accent');
+      root.style.removeProperty('--btn-text');
+      root.style.removeProperty('--accent-text');
       if (sw) sw.hidden = true;    // .accent-switch[hidden] keeps the layout slot, so nothing shifts
       updateLogos();
       return;
@@ -98,6 +107,8 @@
     if (sw) sw.hidden = false;
     var hex = ACCENTS[t][name] || ACCENTS[t][DEFAULT_ACCENT];
     root.style.setProperty('--accent', hex);
+    root.style.setProperty('--btn-text', readableOn(hex));
+    root.style.setProperty('--accent-text', readableOn(hex));
     store('kcal-accent', hex);
     store('kcal-accent-name', name);
     paintAccents();
