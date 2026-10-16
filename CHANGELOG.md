@@ -15,6 +15,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - The period header above the calendar, the sidebar date heading and the dialog headings use Lacquer, the wordmark's app-name face, in place of Killer Sans. 98SE keeps Killer Sans.
 - Context menus use Killer Sans UI like the rest of the interface instead of Segoe UI.
 - The Light theme draws a softer shadow under the toolbars.
+- Clicking a density button steps one level tighter and wraps back to the roomiest, the same way the density buttons in KillerNotes and KillerShell work.
 
 ### Fixed
 - On the Light theme's Yellow accent, buttons, links, tabs and accent icons stay yellow with a thin gray outline around yellow text and icons, instead of turning near-black.

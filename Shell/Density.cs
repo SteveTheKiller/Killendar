@@ -39,9 +39,11 @@ namespace Killendar.Shell
             RefreshSidebarDensityTooltip();
         }
 
-        /// <summary>Click cycles forward and wraps, so the button alone can reach every step.</summary>
+        /// <summary>Click steps one tighter and wraps from the tightest back to the roomiest, as the
+        /// density buttons in KillerNotes and KillerShell do, so the button alone reaches every step.
+        /// Level 0 is the tightest here, so tighter is one level down.</summary>
         private void DensityBtn_Click(object sender, RoutedEventArgs e)
-            => ApplyDensity((CalendarChrome.Density + 1) % (CalendarChrome.MaxDensity + 1));
+            => ApplyDensity((CalendarChrome.Density + CalendarChrome.MaxDensity) % (CalendarChrome.MaxDensity + 1));
 
         /// <summary>Wheel over the button steps without wrapping - a wheel has a direction, so
         /// rolling up should not drop you back to the loosest grid.</summary>
@@ -84,8 +86,9 @@ namespace Killendar.Shell
                 : Loc("Str_TT_Density") + "  (" + CalendarChrome.Subdivisions + ")";
         }
 
+        /// <summary>Same as the grid button: one step tighter (less detail), wrapping to the fullest.</summary>
         private void SidebarDensityBtn_Click(object sender, RoutedEventArgs e)
-            => ApplySidebarDensity((_sidebarDensity + 1) % (CalendarChrome.MaxDensity + 1));
+            => ApplySidebarDensity((_sidebarDensity + CalendarChrome.MaxDensity) % (CalendarChrome.MaxDensity + 1));
 
         private void SidebarDensityBtn_MouseWheel(object sender, MouseWheelEventArgs e)
         {
