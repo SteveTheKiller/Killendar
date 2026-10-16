@@ -24,7 +24,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - On the website's Light theme with the Yellow accent, links, headings and labels stay yellow with a thin gray outline instead of turning olive brown.
 - The exe's file properties show Steve the Killer as the copyright holder instead of leaving it blank.
 - Turning off Film Grain removes the grain from the calendar pane too.
-- Screen readers no longer read toolbar, menu and title bar icons as unreadable symbols, and the appointment fields, the Repeats button, each calendar view and each day in Month view now have names.
+- Screen readers no longer read toolbar, menu and title bar icons as unreadable symbols, and the appointment fields, the Repeats button, each calendar view, each day in Month view and each part of the scroll bars now have names.
 - The About card says Killendar has no telemetry instead of claiming nothing phones home, since it now checks for updates at startup.
 - The About card's update notice and update dialog are translated instead of always showing English.
 - Toolbar menus open leftward under their button so they stay inside the window instead of running off its right edge.

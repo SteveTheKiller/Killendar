@@ -438,4 +438,8 @@
     <sys:String x:Key="Str_TT_SwatchUse">Klikk for å bruke denne fargen</sys:String>
 
     <sys:String x:Key="Str_KS_OnlineHelp">Full veiledning &amp; fremgangsmåter på nett</sys:String>
+    <sys:String x:Key="Str_Scroll_PageUp">Side opp</sys:String>
+    <sys:String x:Key="Str_Scroll_PageDown">Side ned</sys:String>
+    <sys:String x:Key="Str_Scroll_PageLeft">Side til venstre</sys:String>
+    <sys:String x:Key="Str_Scroll_PageRight">Side til høyre</sys:String>
 </ResourceDictionary>

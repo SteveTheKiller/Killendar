@@ -412,4 +412,8 @@
     <sys:String x:Key="Str_Kc_DataFolderChanged">Killendar フォルダー: {0}</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderFailed">そのフォルダーを使用できませんでした: {0}</sys:String>
     <sys:String x:Key="Str_KS_OnlineHelp">完全ガイド &amp; 使い方 (オンライン)</sys:String>
+    <sys:String x:Key="Str_Scroll_PageUp">1 ページ上へ</sys:String>
+    <sys:String x:Key="Str_Scroll_PageDown">1 ページ下へ</sys:String>
+    <sys:String x:Key="Str_Scroll_PageLeft">1 ページ左へ</sys:String>
+    <sys:String x:Key="Str_Scroll_PageRight">1 ページ右へ</sys:String>
 </ResourceDictionary>

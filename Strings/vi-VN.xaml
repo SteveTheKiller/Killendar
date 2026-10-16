@@ -406,4 +406,8 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_TT_SwatchReplace">Bấm để đặt ô màu này thành màu hiện tại</sys:String>
   <sys:String x:Key="Str_TT_SwatchUse">Bấm để dùng màu này</sys:String>
     <sys:String x:Key="Str_KS_OnlineHelp">Hướng dẫn đầy đủ &amp; cách sử dụng trực tuyến</sys:String>
+    <sys:String x:Key="Str_Scroll_PageUp">Lên một trang</sys:String>
+    <sys:String x:Key="Str_Scroll_PageDown">Xuống một trang</sys:String>
+    <sys:String x:Key="Str_Scroll_PageLeft">Sang trái một trang</sys:String>
+    <sys:String x:Key="Str_Scroll_PageRight">Sang phải một trang</sys:String>
 </ResourceDictionary>

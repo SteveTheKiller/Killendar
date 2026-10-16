@@ -412,4 +412,8 @@
     <sys:String x:Key="Str_Kc_DataFolderChanged">Killendar-Ordner: {0}</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderFailed">Dieser Ordner konnte nicht verwendet werden: {0}</sys:String>
     <sys:String x:Key="Str_KS_OnlineHelp">Vollständige Anleitung &amp; Tutorials online</sys:String>
+    <sys:String x:Key="Str_Scroll_PageUp">Seite nach oben</sys:String>
+    <sys:String x:Key="Str_Scroll_PageDown">Seite nach unten</sys:String>
+    <sys:String x:Key="Str_Scroll_PageLeft">Seite nach links</sys:String>
+    <sys:String x:Key="Str_Scroll_PageRight">Seite nach rechts</sys:String>
 </ResourceDictionary>

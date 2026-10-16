@@ -412,4 +412,8 @@
     <sys:String x:Key="Str_Kc_DataFolderChanged">Killendar ফোল্ডার: {0}</sys:String>
     <sys:String x:Key="Str_Kc_DataFolderFailed">ফোল্ডারটি ব্যবহার করা যায়নি: {0}</sys:String>
     <sys:String x:Key="Str_KS_OnlineHelp">সম্পূর্ণ গাইড ও অনলাইন নির্দেশিকা</sys:String>
+    <sys:String x:Key="Str_Scroll_PageUp">এক পৃষ্ঠা উপরে</sys:String>
+    <sys:String x:Key="Str_Scroll_PageDown">এক পৃষ্ঠা নিচে</sys:String>
+    <sys:String x:Key="Str_Scroll_PageLeft">এক পৃষ্ঠা বাঁয়ে</sys:String>
+    <sys:String x:Key="Str_Scroll_PageRight">এক পৃষ্ঠা ডানে</sys:String>
 </ResourceDictionary>
