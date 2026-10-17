@@ -1,5 +1,8 @@
 using System;
 using System.Windows;
+using System.Windows.Automation;
+using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -106,7 +109,7 @@ namespace Killendar.Views
                                     bool showEndTime = false)
         {
             string? category = Services.CategoryManager.PrimaryOf(ev);
-            var chip = new Border
+            var chip = new ChipBorder(() => onClick(ev))
             {
                 CornerRadius    = Services.ThemeManager.Current == Services.Theme.SE98
                                     ? new CornerRadius(0) : new CornerRadius(2),
@@ -120,6 +123,13 @@ namespace Killendar.Views
                                     ? ev.Title + "\n" + ev.TimeLabel
                                     : ev.Title + "\n" + ev.TimeLabel + "\n" + ev.Location
             };
+            // A screen reader hears what the tooltip shows, and keyboard focus gets the family
+            // ring rather than the system's dotted rectangle.
+            AutomationProperties.SetName(chip, string.IsNullOrWhiteSpace(ev.Location)
+                ? ev.Title + ", " + ev.TimeLabel
+                : ev.Title + ", " + ev.TimeLabel + ", " + ev.Location);
+            chip.FocusVisualStyle = AccessibleControls.FocusStyleFor(chip);
+            chip.SizeChanged += (_, _) => chip.FocusVisualStyle = AccessibleControls.FocusStyleFor(chip);
             if (category != null)
             {
                 var fill = Services.CategoryManager.BrushOf(category);
@@ -176,7 +186,7 @@ namespace Killendar.Views
             chip.MouseRightButtonDown += (_, _) => chip.Focus();
             chip.KeyDown += (_, e) =>
             {
-                if (e.Key != Key.Enter) return;
+                if (e.Key != Key.Enter && e.Key != Key.Space) return;
                 e.Handled = true;
                 onClick(ev);
             };
@@ -276,6 +286,34 @@ namespace Killendar.Views
                 VerticalAlignment = VerticalAlignment.Center,
             };
             return tb;
+        }
+
+        /// <summary>
+        /// An appointment chip. A Border, so the views keep positioning and painting it as one,
+        /// with a button's automation peer so a screen reader can name it and open it.
+        /// </summary>
+        internal sealed class ChipBorder : Border
+        {
+            private readonly Action _open;
+
+            internal ChipBorder(Action open) => _open = open;
+
+            protected override AutomationPeer OnCreateAutomationPeer() => new ChipPeer(this);
+
+            private sealed class ChipPeer(ChipBorder owner) : FrameworkElementAutomationPeer(owner), IInvokeProvider
+            {
+                protected override AutomationControlType GetAutomationControlTypeCore() => AutomationControlType.Button;
+                protected override string GetClassNameCore() => nameof(ChipBorder);
+
+                public override object GetPattern(PatternInterface patternInterface) =>
+                    patternInterface == PatternInterface.Invoke ? this : base.GetPattern(patternInterface);
+
+                void IInvokeProvider.Invoke()
+                {
+                    if (!IsEnabled()) throw new ElementNotEnabledException();
+                    ((ChipBorder)Owner)._open();
+                }
+            }
         }
 
         /// <summary>Hour label for the time gutter, e.g. "9 AM".</summary>
