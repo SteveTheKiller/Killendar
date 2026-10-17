@@ -339,7 +339,7 @@
                                             Viewport="0,0,256,256" Stretch="None"/>
                             </Border.Background>
                         </Border>
-                        <ContentControl x:Name="ViewHost"/>
+                        <ContentControl x:Name="ViewHost" IsTabStop="False"/>
                         <!-- The modern pane outline must sit above the hosted view. Drawing it on
                              the outer Border lets a full-bleed view obscure it; 98SE uses the four
                              dedicated bevel rings below instead. -->

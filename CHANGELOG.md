@@ -35,6 +35,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Opening the shortcuts or About card moves keyboard focus into it, Tab stays inside the card, and closing it returns focus to where it was.
 - Tab no longer stops on hidden links, which screen readers announced as the window.
 - Appointments read out their title, time and location to screen readers, open with Enter or Space, and show the focus ring instead of a dotted box.
+- Tab no longer stops on the calendar pane itself, which drew a dotted outline around the whole view.
 - The About card says Killendar has no telemetry instead of claiming nothing phones home, since it now checks for updates at startup.
 - The About card's update notice and update dialog are translated instead of always showing English.
 - Toolbar menus open leftward under their button so they stay inside the window instead of running off its right edge.
