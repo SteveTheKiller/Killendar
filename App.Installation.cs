@@ -78,6 +78,7 @@ namespace Killendar
             FileAssociations.Unregister(Registry.LocalMachine);
             try { if (Directory.Exists(common)) Directory.Delete(common, true); } catch { }
             try { if (Directory.Exists(MachineInstallDir)) Directory.Delete(MachineInstallDir, true); } catch { }
+            Services.CommandLinePath.Unregister(MachineInstallDir, machine: true);
         }
 
         /// <summary>
@@ -136,6 +137,7 @@ namespace Killendar
             try { if (Directory.Exists(StartMenuDir)) Directory.Delete(StartMenuDir, true); } catch { }
             try { if (File.Exists(DesktopLnk)) File.Delete(DesktopLnk); } catch { }
             try { if (Directory.Exists(InstallDir)) Directory.Delete(InstallDir, true); } catch { }
+            Services.CommandLinePath.Unregister(InstallDir, machine: false);
             try
             {
                 using var key = Registry.CurrentUser.OpenSubKey(RegKey, writable: true);
@@ -184,6 +186,7 @@ namespace Killendar
                 }
                 File.Copy(src, installExe, overwrite: true);
                 try { File.SetAttributes(installExe, FileAttributes.Normal); } catch { }
+                Services.CommandLinePath.Register(installDir, machine);
 
                 Directory.CreateDirectory(startMenuDir);
                 CreateShortcut(startMenuLnk, installExe);
@@ -254,6 +257,7 @@ namespace Killendar
                     return false;
                 }
                 try { File.SetAttributes(InstallExe, FileAttributes.Normal); } catch { }
+                Services.CommandLinePath.Register(InstallDir, machine: false);
 
                 Directory.CreateDirectory(StartMenuDir);
                 CreateShortcut(StartMenuLnk, InstallExe);
@@ -381,6 +385,7 @@ namespace Killendar
             try { File.Delete(Path.Combine(startMenuDir, AppName + ".lnk")); } catch { }
             try { Directory.Delete(startMenuDir, recursive: false); } catch { }
             try { File.Delete(DesktopLnk); } catch { }
+            Services.CommandLinePath.Unregister(targetDir, machine);
 
             var hive = machine ? Registry.LocalMachine : Registry.CurrentUser;
             try { hive.DeleteSubKeyTree(RegKey, throwOnMissingSubKey: false); } catch { }
