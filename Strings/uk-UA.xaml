@@ -199,7 +199,7 @@
     <!-- Keyboard shortcuts overlay -->
     <sys:String x:Key="Str_Sc_Title">Клавіатурні скорочення</sys:String>
     <sys:String x:Key="Str_Sc_New">Нова зустріч</sys:String>
-    <sys:String x:Key="Str_Sc_Today">Перейти до сьогодні</sys:String>
+    <sys:String x:Key="Str_Sc_Today">Перейти до сьогоднішнього дня</sys:String>
     <sys:String x:Key="Str_Sc_Prev">Попередній період</sys:String>
     <sys:String x:Key="Str_Sc_Next">Наступний період</sys:String>
     <sys:String x:Key="Str_Sc_Month">Перегляд місяця</sys:String>
@@ -376,7 +376,7 @@
     <sys:String x:Key="Str_KS_Agenda">Перегляд порядку денного</sys:String>
     <sys:String x:Key="Str_KS_Prev">Попередній місяць, тиждень або день</sys:String>
     <sys:String x:Key="Str_KS_Next">Наступний місяць, тиждень або день</sys:String>
-    <sys:String x:Key="Str_KS_Today">Перейти до сьогодні</sys:String>
+    <sys:String x:Key="Str_KS_Today">Перейти до сьогоднішнього дня</sys:String>
     <sys:String x:Key="Str_KS_New">Нова зустріч тут</sys:String>
     <sys:String x:Key="Str_KS_Panel">Панель зустрічей</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">Зберегти зустріч, що редагується</sys:String>

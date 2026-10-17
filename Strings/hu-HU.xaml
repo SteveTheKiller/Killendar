@@ -32,7 +32,7 @@
     <sys:String x:Key="Str_Lbl_Theme">téma</sys:String>
     <sys:String x:Key="Str_Lbl_Accent">akcentussal</sys:String>
     <sys:String x:Key="Str_Theme_Dark">Sötét</sys:String>
-    <sys:String x:Key="Str_Theme_Light">Fény</sys:String>
+    <sys:String x:Key="Str_Theme_Light">Világos</sys:String>
     <sys:String x:Key="Str_Theme_Black">Fekete</sys:String>
     <sys:String x:Key="Str_Theme_98SE">98SE</sys:String>
     <sys:String x:Key="Str_Theme_Blood">Vér</sys:String>
@@ -58,7 +58,7 @@
 
     <!-- Themed Windows system menu (Shell/SystemMenu.cs). Same wording as KillerScan's. -->
     <sys:String x:Key="Str_Sys_Restore">Visszaállítás</sys:String>
-    <sys:String x:Key="Str_Sys_Move">Mozgás</sys:String>
+    <sys:String x:Key="Str_Sys_Move">Áthelyezés</sys:String>
     <sys:String x:Key="Str_Sys_Size">Méret</sys:String>
     <sys:String x:Key="Str_Sys_Minimize">Minimalizálás</sys:String>
     <sys:String x:Key="Str_Sys_Maximize">Maximalizálás</sys:String>
@@ -92,10 +92,10 @@
 
     <!-- Validation -->
     <sys:String x:Key="Str_Err_NoTitle">Adj neki címet.</sys:String>
-    <sys:String x:Key="Str_Err_StartDate">A kezdési dátumnak 2026-07-29-nek kell lennie.</sys:String>
-    <sys:String x:Key="Str_Err_EndDate">A befejezés dátumának 2026-07-29-nek kell lennie.</sys:String>
-    <sys:String x:Key="Str_Err_StartTime">A kezdési időpontnak 9:30-nak vagy 21:30-nak kell lennie.</sys:String>
-    <sys:String x:Key="Str_Err_EndTime">A befejezési időnek 9:30-nak vagy 21:30-nak kell lennie.</sys:String>
+    <sys:String x:Key="Str_Err_StartDate">A kezdési dátumnak ilyen formátumúnak kell lennie: 2026-07-29.</sys:String>
+    <sys:String x:Key="Str_Err_EndDate">A befejezés dátumának ilyen formátumúnak kell lennie: 2026-07-29.</sys:String>
+    <sys:String x:Key="Str_Err_StartTime">A kezdési időpontnak ilyen formátumúnak kell lennie: 9:30 am vagy 21:30.</sys:String>
+    <sys:String x:Key="Str_Err_EndTime">A befejezési időnek ilyen formátumúnak kell lennie: 9:30 am vagy 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">Be kell fejeződnie, miután elkezdődött.</sys:String>
 
     <!-- Delete confirmation. {0} is the appointment title. -->
@@ -123,7 +123,7 @@
     <sys:String x:Key="Str_Rep_HintCount">Hányszor</sys:String>
     <sys:String x:Key="Str_Rep_SummaryNext">Következő: {0}</sys:String>
     <sys:String x:Key="Str_Rep_SummaryNone">Ez soha nem történik meg. Ellenőrizze a dátumokat.</sys:String>
-    <sys:String x:Key="Str_Rep_Scope">EZ ISMÉTLŐDŐ MEGJEGYZÉS</sys:String>
+    <sys:String x:Key="Str_Rep_Scope">EZ ISMÉTLŐDŐ IDŐPONT</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Csak ezt a dátumot</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Az egész sorozat</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Mondja ki, mikor ér véget az ismétlés, vagy állítsa be, hogy soha ne érjen véget.</sys:String>
@@ -135,7 +135,7 @@
     <sys:String x:Key="Str_Status_Saved">Mentve: {0}</sys:String>
     <sys:String x:Key="Str_Status_Deleted">Törölve: {0}</sys:String>
     <sys:String x:Key="Str_Status_Imported">{0} találkozó importálva</sys:String>
-    <sys:String x:Key="Str_Status_ImportedSkipped">{0} találkozó importálva, kihagyott {1} már jelen van</sys:String>
+    <sys:String x:Key="Str_Status_ImportedSkipped">{0} találkozó importálva, {1} kihagyva, mert már jelen van</sys:String>
     <!-- Import caveats, appended to the line above. Each carries its OWN leading sentence break,
          because that mark is not "." in every language. -->
     <sys:String x:Key="Str_Status_ImportRepeat">. {0} ismétlés, és csak az első dátum került hozzáadásra</sys:String>
@@ -151,10 +151,10 @@
     <!-- File dialogs. The CSV column names inside Str_Status_CsvBadHeader stay in English in
          EVERY locale: they are Outlook's literal header words, matched by name, not labels. -->
     <sys:String x:Key="Str_Dlg_ImportTitle">Találkozók importálása</sys:String>
-    <sys:String x:Key="Str_Dlg_ExportTitle">Kinevezések exportálása</sys:String>
+    <sys:String x:Key="Str_Dlg_ExportTitle">Időpontok exportálása</sys:String>
     <sys:String x:Key="Str_Dlg_ImportFilter">Naptárfájlok (*.ics, *.csv, *.eml)|*.ics;*.csv;*.eml|iCalendar-fájlok (*.ics)|*.ics|CSV-fájlok (*.csv)|*.csv|E-mail-meghívók (*.eml)|*.eml|Minden fájl (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Dlg_ExportFilter">iCalendar-fájlok (*.ics)|*.ics|CSV-fájlok (*.csv)|*.csv|Weboldal (*.html)|*.html</sys:String>
-    <sys:String x:Key="Str_Status_CsvBadHeader">Ez nem egy Outlook formátumú CSV. Az első sorban meg kell nevezni az oszlopokat: Tárgy, Kezdő dátum, Kezdő időpont, Befejezés dátuma, Befejezési idő, Egész napos esemény, Leírás, Hely</sys:String>
+    <sys:String x:Key="Str_Status_CsvBadHeader">Ez nem egy Outlook formátumú CSV. Az első sorban meg kell nevezni az oszlopokat: Subject, Start Date, Start Time, End Date, End Time, All day event, Description, Location</sys:String>
     <sys:String x:Key="Str_Status_NoInvite">Ebben az e-mailben nem található naptári meghívó</sys:String>
 
     <!-- Export scope flyout -->
@@ -177,7 +177,7 @@
     <sys:String x:Key="Str_About_Publisher">KIADÓ</sys:String>
     <sys:String x:Key="Str_About_Thumbprint">ujjlenyomat</sys:String>
     <sys:String x:Key="Str_About_Sha">EXE SHA-256</sys:String>
-    <sys:String x:Key="Str_About_Computing">számítástechnika...</sys:String>
+    <sys:String x:Key="Str_About_Computing">számítás...</sys:String>
     <sys:String x:Key="Str_About_Unsigned">(nincs aláírva vagy a lánc meghibásodott)</sys:String>
     <sys:String x:Key="Str_About_UpdateAvailable">Frissítés elérhető: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">Letöltés...</sys:String>
@@ -189,7 +189,7 @@
     <sys:String x:Key="Str_About_AlwaysCheckOnStartup">Mindig keressen frissítéseket indításkor</sys:String>
     <!-- Tagline is split so the GPLv3 license and the Killer Tools link stay untranslated. -->
     <sys:String x:Key="Str_About_DescA" xml:space="preserve">Egy naptár fiók, szinkronizálás és telemetria nélkül. Az Ön találkozói egy fájlban élnek a saját gépén, titkosítva, ha akarja. Egy GPLv3 </sys:String>
-    <sys:String x:Key="Str_About_DescB" xml:space="preserve"> hasznosság.</sys:String>
+    <sys:String x:Key="Str_About_DescB" xml:space="preserve"> segédprogram.</sys:String>
 
     <!-- Self-update prompt -->
     <sys:String x:Key="Str_About_UpdateHeading">Letölti és telepíti a következőt: {0} {1}?</sys:String>
@@ -207,7 +207,7 @@
     <sys:String x:Key="Str_Sc_Day">Napi nézet</sys:String>
     <sys:String x:Key="Str_Sc_Agenda">Napirend nézet</sys:String>
     <sys:String x:Key="Str_Sc_Panel">A találkozó panel megjelenítése vagy elrejtése</sys:String>
-    <sys:String x:Key="Str_Sc_About">Körülbelül</sys:String>
+    <sys:String x:Key="Str_Sc_About">Névjegy</sys:String>
     <sys:String x:Key="Str_TT_About">A Killendar névjegye</sys:String>
     <sys:String x:Key="Str_Sc_Close">Zárja be a panelt vagy a fedőlapot</sys:String>
     <sys:String x:Key="Str_Sc_Hint">Az egyes billentyűk akkor működnek, amikor nem ír be egy mezőt.</sys:String>
@@ -218,8 +218,8 @@
     <sys:String x:Key="Str_Lbl_WeekStart">a hét kezdete</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Kövesse a Windows rendszert</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
-    <sys:String x:Key="Str_Date_US">USA (2026.07.29.)</sys:String>
-    <sys:String x:Key="Str_Date_EU">Egyesült Királyság / EU (2026.07.29.)</sys:String>
+    <sys:String x:Key="Str_Date_US">USA (7/29/2026)</sys:String>
+    <sys:String x:Key="Str_Date_EU">Egyesült Királyság / EU (29/07/2026)</sys:String>
 
 
     <!-- Encryption: unlock prompt, the title-bar lock button (set/change/remove),
@@ -233,7 +233,7 @@
     <sys:String x:Key="Str_Pw_ChangeHead">Módosítsa vagy távolítsa el a jelszót</sys:String>
     <sys:String x:Key="Str_Pw_ChangeBody">Adjon meg egy új jelszót, vagy hagyja üresen mindkét mezőt a titkosítás eltávolításához, és a Killendart egyszerű SQLite-ként tárolja.</sys:String>
     <sys:String x:Key="Str_Pw_ConfirmLbl">MEGERŐSÍTÉS</sys:String>
-    <sys:String x:Key="Str_Pw_NoRecovery">Nincs felépülés. Ha elveszti a jelszót, a találkozók ebben a Killendarban végleg eltűntek.</sys:String>
+    <sys:String x:Key="Str_Pw_NoRecovery">Nincs helyreállítás. Ha elveszti a jelszót, a találkozók ebben a Killendarban végleg eltűntek.</sys:String>
     <sys:String x:Key="Str_Btn_Unlock">Oldja fel</sys:String>
     <sys:String x:Key="Str_Btn_Encrypt">Titkosítás</sys:String>
     <sys:String x:Key="Str_Btn_Apply">Alkalmazni</sys:String>
@@ -280,7 +280,7 @@
     <sys:String x:Key="Str_Kc_CopyFailed">A másolás nem sikerült: {0}</sys:String>
     <sys:String x:Key="Str_Ctx_AddAppointment">Találkozó hozzáadása</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">Szerkessze a sorozatot</sys:String>
-    <sys:String x:Key="Str_Ctx_OpenAppointment">Nyitott időpont egyeztetés</sys:String>
+    <sys:String x:Key="Str_Ctx_OpenAppointment">Időpont megnyitása</sys:String>
     <sys:String x:Key="Str_Ctx_Shrink">Zsugorodik</sys:String>
     <sys:String x:Key="Str_Ctx_Expand">Bontsa ki</sys:String>
     <sys:String x:Key="Str_MonthMode_Calendar">Naptári hónap</sys:String>
@@ -312,7 +312,7 @@
 
     <!-- Text-input context menu (replaces WPF's built-in Cut/Copy/Paste, which
          ignores app-level menu styling). -->
-    <sys:String x:Key="Str_Ctx_Cut">Vágás</sys:String>
+    <sys:String x:Key="Str_Ctx_Cut">Kivágás</sys:String>
     <sys:String x:Key="Str_Ctx_Copy">Másolás</sys:String>
     <sys:String x:Key="Str_Ctx_Paste">Beillesztés</sys:String>
     <sys:String x:Key="Str_Ctx_SelectAll">Válassza ki az összeset</sys:String>
@@ -329,8 +329,8 @@
     <sys:String x:Key="Str_Dlg_NoSuchFile">Ez a fájl nem létezik.</sys:String>
     <sys:String x:Key="Str_Dlg_OverwriteMsg">Lecseréli a következőt: {0}?</sys:String>
     <sys:String x:Key="Str_Sum_Counts">{0} mappa, {1} fájl</sys:String>
-    <sys:String x:Key="Str_QA_Home">Otthon</sys:String>
-    <sys:String x:Key="Str_QA_Desktop">Asztali</sys:String>
+    <sys:String x:Key="Str_QA_Home">Kezdőmappa</sys:String>
+    <sys:String x:Key="Str_QA_Desktop">Asztal</sys:String>
     <sys:String x:Key="Str_QA_Documents">Dokumentumok</sys:String>
     <sys:String x:Key="Str_QA_Downloads">Letöltések</sys:String>
     <sys:String x:Key="Str_QA_Pictures">Képek</sys:String>
@@ -365,7 +365,7 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_KS_Title">Billentyűparancsok</sys:String>
     <sys:String x:Key="Str_KS_ViewList">LISTA</sys:String>
     <sys:String x:Key="Str_KS_ViewMap">BILLENTYŰZET</sys:String>
-    <sys:String x:Key="Str_KS_Hint">Az egyes billentyűk lefelé állnak gépelés közben</sys:String>
+    <sys:String x:Key="Str_KS_Hint">Az egybillentyűs parancsok gépelés közben szünetelnek</sys:String>
     <sys:String x:Key="Str_TT_Shortcuts">Billentyűparancsok (F1)</sys:String>
     <sys:String x:Key="Str_KS_GrpViews">NÉZETEK</sys:String>
     <sys:String x:Key="Str_KS_GrpNav">NAVIGÁCIÓ</sys:String>
@@ -377,7 +377,7 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_KS_Day">Napi nézet</sys:String>
     <sys:String x:Key="Str_KS_Agenda">Napirend nézet</sys:String>
     <sys:String x:Key="Str_KS_Prev">Előző hónap, hét vagy nap</sys:String>
-    <sys:String x:Key="Str_KS_Next">Következő hónapban, héten vagy napon</sys:String>
+    <sys:String x:Key="Str_KS_Next">Következő hónap, hét vagy nap</sys:String>
     <sys:String x:Key="Str_KS_Today">Ugrás a mai napra</sys:String>
     <sys:String x:Key="Str_KS_New">Új időpont itt</sys:String>
     <sys:String x:Key="Str_KS_Panel">Találkozó panel</sys:String>

@@ -42,7 +42,7 @@
     <sys:String x:Key="Str_Sys_Close">关闭</sys:String>
 
     <sys:String x:Key="Str_Toolbar_Header">工具栏</sys:String>
-    <sys:String x:Key="Str_Toolbar_SmallIcons">图标</sys:String>
+    <sys:String x:Key="Str_Toolbar_SmallIcons">小图标</sys:String>
     <sys:String x:Key="Str_Toolbar_LargeIcons">大图标</sys:String>
     <sys:String x:Key="Str_Toolbar_TextNone">无文字</sys:String>
     <sys:String x:Key="Str_Toolbar_TextBeside">图标旁显示文字</sys:String>
@@ -381,8 +381,8 @@
     <sys:String x:Key="Str_Theme_Delirium">谵妄</sys:String>
     <sys:String x:Key="Str_Theme_Mourning">哀悼</sys:String>
     <sys:String x:Key="Str_Theme_FilmGrain">胶片颗粒</sys:String>
-    <sys:String x:Key="Str_Btn_Select">选择</sys:String>
-    <sys:String x:Key="Str_TT_DataFolder">更改存储数据库的数据文件夹</sys:String>
+    <sys:String x:Key="Str_Btn_Select">选择文件夹</sys:String>
+    <sys:String x:Key="Str_TT_DataFolder">更改 Killendar 文件夹</sys:String>
     <sys:String x:Key="Str_Fld_From">从</sys:String>
     <sys:String x:Key="Str_Fld_Through">至</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">地址建议</sys:String>

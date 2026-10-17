@@ -42,7 +42,7 @@
     <sys:String x:Key="Str_Sys_Close">Zavřít</sys:String>
 
     <sys:String x:Key="Str_Toolbar_Header">Panel nástrojů</sys:String>
-    <sys:String x:Key="Str_Toolbar_SmallIcons">Ikony</sys:String>
+    <sys:String x:Key="Str_Toolbar_SmallIcons">Malé ikony</sys:String>
     <sys:String x:Key="Str_Toolbar_LargeIcons">Velké ikony</sys:String>
     <sys:String x:Key="Str_Toolbar_TextNone">Bez textu</sys:String>
     <sys:String x:Key="Str_Toolbar_TextBeside">Text vedle ikon</sys:String>
@@ -381,8 +381,8 @@
     <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
     <sys:String x:Key="Str_Theme_Mourning">Smutek</sys:String>
     <sys:String x:Key="Str_Theme_FilmGrain">Filmové zrno</sys:String>
-    <sys:String x:Key="Str_Btn_Select">Vybrat</sys:String>
-    <sys:String x:Key="Str_TT_DataFolder">Změnit datovou složku, kde jsou uloženy databáze</sys:String>
+    <sys:String x:Key="Str_Btn_Select">Vybrat složku</sys:String>
+    <sys:String x:Key="Str_TT_DataFolder">Změnit složku Killendaru</sys:String>
     <sys:String x:Key="Str_Fld_From">OD</sys:String>
     <sys:String x:Key="Str_Fld_Through">DO</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">Návrhy adres</sys:String>

@@ -42,7 +42,7 @@
     <sys:String x:Key="Str_Sys_Close">Schließen</sys:String>
 
     <sys:String x:Key="Str_Toolbar_Header">Symbolleiste</sys:String>
-    <sys:String x:Key="Str_Toolbar_SmallIcons">Symbole</sys:String>
+    <sys:String x:Key="Str_Toolbar_SmallIcons">Kleine Symbole</sys:String>
     <sys:String x:Key="Str_Toolbar_LargeIcons">Große Symbole</sys:String>
     <sys:String x:Key="Str_Toolbar_TextNone">Kein Text</sys:String>
     <sys:String x:Key="Str_Toolbar_TextBeside">Text neben Symbolen</sys:String>

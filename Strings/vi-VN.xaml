@@ -142,7 +142,7 @@
   <sys:String x:Key="Str_Dlg_ExportTitle">Xuất cuộc hẹn</sys:String>
   <sys:String x:Key="Str_Dlg_ImportFilter">Tệp lịch (*.ics, *.csv, *.eml)|*.ics;*.csv;*.eml|Tệp iCalendar (*.ics)|*.ics|Tệp CSV (*.csv)|*.csv|Lời mời qua email (*.eml)|*.eml|Tất cả tệp (*.*)|*.*</sys:String>
   <sys:String x:Key="Str_Dlg_ExportFilter">Tệp iCalendar (*.ics)|*.ics|Tệp CSV (*.csv)|*.csv|Trang web (*.html)|*.html</sys:String>
-  <sys:String x:Key="Str_Status_CsvBadHeader">Đây không phải là tệp CSV theo định dạng Outlook. Dòng đầu tiên phải ghi tên các cột: Chủ đề, Ngày bắt đầu, Giờ bắt đầu, Ngày kết thúc, Giờ kết thúc, Sự kiện cả ngày, Mô tả, Địa điểm</sys:String>
+  <sys:String x:Key="Str_Status_CsvBadHeader">Đây không phải là tệp CSV theo định dạng Outlook. Dòng đầu tiên phải ghi tên các cột: Subject, Start Date, Start Time, End Date, End Time, All day event, Description, Location</sys:String>
   <sys:String x:Key="Str_Status_NoInvite">Không tìm thấy lời mời lịch trong email này</sys:String>
   <!-- Export scope flyout -->
   <sys:String x:Key="Str_Exp_Whole">Toàn bộ lịch</sys:String>

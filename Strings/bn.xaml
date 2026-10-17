@@ -42,7 +42,7 @@
     <sys:String x:Key="Str_Sys_Close">বন্ধ করুন</sys:String>
 
     <sys:String x:Key="Str_Toolbar_Header">টুলবার</sys:String>
-    <sys:String x:Key="Str_Toolbar_SmallIcons">আইকন</sys:String>
+    <sys:String x:Key="Str_Toolbar_SmallIcons">ছোট আইকন</sys:String>
     <sys:String x:Key="Str_Toolbar_LargeIcons">বড় আইকন</sys:String>
     <sys:String x:Key="Str_Toolbar_TextNone">লেখা নেই</sys:String>
     <sys:String x:Key="Str_Toolbar_TextBeside">আইকনের পাশে লেখা</sys:String>
@@ -208,7 +208,7 @@
     <!-- Export warning: an .ics is plain text, so exporting from an encrypted
          Killendar hands out what the password was protecting. -->
     <sys:String x:Key="Str_Exp_WarnHead">একটি এনক্রিপ্ট করা Killendar থেকে এক্সপোর্ট করবেন?</sys:String>
-    <sys:String x:Key="Str_Exp_WarnBody">.ics ফাইল সাধারণ টেক্সট। আপনি যা এক্সপোর্ট করবেন তা ফাইলটি খোলা যে কেউ পড়তে পারবে, এবং এই Killendar-এর পাসওযার্ড আর তা সুরক্ষিত রাখে না।</sys:String>
+    <sys:String x:Key="Str_Exp_WarnBody">.ics ফাইল সাধারণ টেক্সট। আপনি যা এক্সপোর্ট করবেন তা ফাইলটি খোলা যে কেউ পড়তে পারবে, এবং এই Killendar-এর পাসওয়ার্ড আর তা সুরক্ষিত রাখে না।</sys:String>
     <sys:String x:Key="Str_Exp_WarnCheck">আর মনে করিয়ে দেবেন না</sys:String>
 
 
@@ -272,7 +272,7 @@
     <sys:String x:Key="Str_Dlg_NoMatchingFiles">বর্তমান ফাইলের ধরনের সঙ্গে মিলে এমন কিছু নেই।</sys:String>
     <sys:String x:Key="Str_Dlg_NoSuchFolder">ওই ফোল্ডারটি নেই।</sys:String>
     <sys:String x:Key="Str_Dlg_NoSuchFile">ওই ফাইলটি নেই।</sys:String>
-    <sys:String x:Key="Str_Dlg_OverwriteMsg">{0} পরিবর্তন করবেন?</sys:String>
+    <sys:String x:Key="Str_Dlg_OverwriteMsg">{0} প্রতিস্থাপন করবেন?</sys:String>
     <sys:String x:Key="Str_Sum_Counts">{0} টি ফোল্ডার, {1} টি ফাইল</sys:String>
     <sys:String x:Key="Str_QA_Home">হোম</sys:String>
     <sys:String x:Key="Str_QA_Desktop">ডেস্কটপ</sys:String>
@@ -381,8 +381,8 @@
     <sys:String x:Key="Str_Theme_Delirium">প্রলাপ</sys:String>
     <sys:String x:Key="Str_Theme_Mourning">শোক</sys:String>
     <sys:String x:Key="Str_Theme_FilmGrain">ফিল্ম গ্রেইন</sys:String>
-    <sys:String x:Key="Str_Btn_Select">নির্বাচন করুন</sys:String>
-    <sys:String x:Key="Str_TT_DataFolder">ডেটাবেস যেখানে রাখা হয় সেই ডেটা ফোল্ডার বদলান</sys:String>
+    <sys:String x:Key="Str_Btn_Select">ফোল্ডার নির্বাচন করুন</sys:String>
+    <sys:String x:Key="Str_TT_DataFolder">Killendar ফোল্ডার বদলান</sys:String>
     <sys:String x:Key="Str_Fld_From">থেকে</sys:String>
     <sys:String x:Key="Str_Fld_Through">পর্যন্ত</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">ঠিকানার পরামর্শ</sys:String>

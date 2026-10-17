@@ -130,11 +130,11 @@
     <sys:String x:Key="Str_Menu_UnpinPlace">Usuń z miejsc</sys:String>
     <sys:String x:Key="Str_Btn_Edit">Edytuj</sys:String>
     <sys:String x:Key="Str_Portable">PRZENOŚNY</sys:String>
-    <sys:String x:Key="Str_Dlg_InstallMsg">Zainstalować program Killendar na tym komputerze? Killendar zostanie skopiowany do twojego folderu programów i dodana zostanie pozycja menu Start. Tę kopię pliku exe pozostawia się tam, gdzie jest i można ją w dowolnym momencie odinstalować używając Dodaj/Usuń programy.</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallMsg">Zainstalować program Killendar na tym komputerze?</sys:String>
     <sys:String x:Key="Str_Btn_DoInstall">Zainstaluj</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">Dodaj skrót na pulpicie</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">Zainstaluj dla wszystkich użytkowników tego komputera (wymaga administratora)</sys:String>
-    <sys:String x:Key="Str_Status_InstallFailed">Instalacja nie została zakończona - Killendar jest już uruchomiony portable.</sys:String>
+    <sys:String x:Key="Str_Status_InstallFailed">Instalacja nie została zakończona - Killendar nadal działa w trybie przenośnym.</sys:String>
     <sys:String x:Key="Str_KS_Title">Skróty Klawiaturowe</sys:String>
     <sys:String x:Key="Str_KS_ViewList">LISTA</sys:String>
     <sys:String x:Key="Str_KS_ViewMap">KLAWIATURA</sys:String>
@@ -143,7 +143,7 @@
     <sys:String x:Key="Str_KS_GrpFile">PLIK</sys:String>
     <sys:String x:Key="Str_KS_GrpHelp">POMOC</sys:String>
     <sys:String x:Key="Str_KS_ThisList">Lista skrótów</sys:String>
-    <sys:String x:Key="Str_KS_About">O oknie dialogowym</sys:String>
+    <sys:String x:Key="Str_KS_About">Okno O programie</sys:String>
     <sys:String x:Key="Str_TT_CatRename">Zmień nazwę</sys:String>
     <sys:String x:Key="Str_TT_CatDelete">Usuń</sys:String>
     <sys:String x:Key="Str_Btn_Reset">Zresetuj</sys:String>

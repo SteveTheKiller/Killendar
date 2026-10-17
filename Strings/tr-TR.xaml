@@ -42,7 +42,7 @@
     <sys:String x:Key="Str_Sys_Close">Kapat</sys:String>
 
     <sys:String x:Key="Str_Toolbar_Header">Araç çubuğu</sys:String>
-    <sys:String x:Key="Str_Toolbar_SmallIcons">Simgeler</sys:String>
+    <sys:String x:Key="Str_Toolbar_SmallIcons">Küçük simgeler</sys:String>
     <sys:String x:Key="Str_Toolbar_LargeIcons">Büyük simgeler</sys:String>
     <sys:String x:Key="Str_Toolbar_TextNone">Metin yok</sys:String>
     <sys:String x:Key="Str_Toolbar_TextBeside">Simgelerin yanında metin</sys:String>
@@ -381,8 +381,8 @@
     <sys:String x:Key="Str_Theme_Delirium">Hezeyan</sys:String>
     <sys:String x:Key="Str_Theme_Mourning">Yas</sys:String>
     <sys:String x:Key="Str_Theme_FilmGrain">Film greni</sys:String>
-    <sys:String x:Key="Str_Btn_Select">Seç</sys:String>
-    <sys:String x:Key="Str_TT_DataFolder">Veritabanlarının saklandığı veri klasörünü değiştir</sys:String>
+    <sys:String x:Key="Str_Btn_Select">Klasör seç</sys:String>
+    <sys:String x:Key="Str_TT_DataFolder">Killendar klasörünü değiştir</sys:String>
     <sys:String x:Key="Str_Fld_From">BAŞLANGIÇ</sys:String>
     <sys:String x:Key="Str_Fld_Through">BİTİŞ</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">Adres önerileri</sys:String>
