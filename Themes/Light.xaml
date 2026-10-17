@@ -27,7 +27,7 @@
     <SolidColorBrush x:Key="TextBrush"           Color="#1a1a1a" po:Freeze="True"/>
     <SolidColorBrush x:Key="MutedTextBrush"      Color="#555555" po:Freeze="True"/>
     <SolidColorBrush x:Key="ChromeTextBrush" Color="#3a3a3a" po:Freeze="True"/>
-    <SolidColorBrush x:Key="DimTextBrush"        Color="#666666" po:Freeze="True"/>
+    <SolidColorBrush x:Key="DimTextBrush"        Color="#616161" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="RowAltBrush"         Color="#14000000" po:Freeze="True"/>
     <SolidColorBrush x:Key="RowHoverBrush"       Color="#b2b2b2" po:Freeze="True"/>
