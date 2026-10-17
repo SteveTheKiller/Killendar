@@ -6,24 +6,24 @@
    defines its own red; Dark's #DD504B is the one the wordmark and og-image are built on.
    Blood / Greed / Cyanotic carry their own accent rather than white, so unlike KillerShell
    there is no white-accent special case to undo. */
-html[data-theme="dark"]     { --bg:#333333; --surface:#2b2b2b; --panel:#3a3a3a; --sidebar:#1c1c1c; --canvas:#3a3a3a; --border:#2e2e2e; --pane-border:#2e2e2e; --dragline:#363636; --tab-edge:var(--sel,var(--btn)); --accent:#DD504B; --accent-text:#ffffff; --text:#e0e0e0; --text2:#bcbcbc; --muted:#a0a0a0; --footer-text:#6a6a6a; --danger:#ef4444; --grain:0.26; --btn:var(--accent); --btn-text:#ffffff; --logo-pdf:var(--accent); --chrome:#141414; --modal:#1e1e1e; --fade:rgba(0,0,0,0.55); }
-html[data-theme="light"]    { --bg:#f0f0f0; --surface:#e8e8e8; --panel:#c8c8c8; --sidebar:#dcdcdc; --canvas:#f0f0f0; --border:#b0b0b0; --pane-border:#b0b0b0; --dragline:#a0a0a0; --tab-edge:var(--sel,var(--btn)); --accent:#931A1A; --accent-text:#ffffff; --text:#1a1a1a; --text2:#555555; --muted:#666666; --footer-text:#888888; --danger:#dc2626; --grain:0.28; --btn:var(--accent); --btn-text:#ffffff; --logo-pdf:var(--accent); --chrome:#c4c4c4; --modal:#ffffff; --fade:rgba(0,0,0,0.22); }
-html[data-theme="black"]    { --bg:#0d0d0d; --surface:#0a0a0a; --panel:#161616; --sidebar:#000000; --canvas:#0d0d0d; --border:#2a2a2a; --pane-border:#333333; --dragline:#373737; --tab-edge:var(--sel,var(--btn)); --accent:#FF2929; --accent-text:#000000; --text:#ffffff; --text2:#cccccc; --muted:#cccccc; --footer-text:#aaaaaa; --danger:#ff4444; --grain:0.08; --btn:var(--accent); --btn-text:#000000; --logo-pdf:var(--accent); --chrome:#000000; --modal:#000000; --fade:rgba(0,0,0,0.75); }
-html[data-theme="blood"]    { --bg:#2c1012; --surface:#2c1012; --panel:#321416; --sidebar:#240c0d; --canvas:#2c1012; --border:#401d1d; --pane-border:#401d1d; --dragline:#4a2325; --tab-edge:var(--sel,var(--btn)); --accent:#e8485a; --accent-text:#ffffff; --text:#fffde8; --text2:#f8c99e; --muted:#e2b58a; --footer-text:#a85a5a; --danger:#ff6666; --grain:0.32; --btn:var(--accent); --btn-text:#ffffff; --logo-pdf:var(--accent); --chrome:#1a0809; --modal:#1e0a0b; --fade:rgba(0,0,0,0.6); }
-html[data-theme="greed"]    { --bg:#002e1c; --surface:#002e1c; --panel:#003824; --sidebar:#002115; --canvas:#002e1c; --border:#0f4a30; --pane-border:#0f4a30; --dragline:#155a3a; --tab-edge:var(--sel,var(--btn)); --accent:#3fbf6f; --accent-text:#002819; --text:#fffde8; --text2:#e0d49a; --muted:#c0aa68; --footer-text:#3a8a5a; --danger:#ff6666; --grain:0.26; --btn:var(--accent); --btn-text:#002819; --logo-pdf:var(--accent); --chrome:#001710; --modal:#001e13; --fade:rgba(0,0,0,0.6); }
-html[data-theme="cyanotic"] { --bg:#00263a; --surface:#00263a; --panel:#002e48; --sidebar:#001a28; --canvas:#00263a; --border:#183450; --pane-border:#183450; --dragline:#1e4162; --tab-edge:var(--sel,var(--btn)); --accent:#3aa0d8; --accent-text:#001e2e; --text:#fffde8; --text2:#e0d49a; --muted:#c0aa68; --footer-text:#4a88bb; --danger:#ff6666; --grain:0.26; --btn:var(--accent); --btn-text:#001e2e; --logo-pdf:var(--accent); --chrome:#00121c; --modal:#001624; --fade:rgba(0,0,0,0.6); }
+html[data-theme="dark"]     { --bg:#333333; --surface:#2b2b2b; --panel:#3a3a3a; --sidebar:#1c1c1c; --canvas:#3a3a3a; --border:#2e2e2e; --pane-border:#2e2e2e; --dragline:#363636; --tab-edge:var(--sel,var(--btn)); --accent:#FF7C77; --accent-text:#1e1f22; --text:#e0e0e0; --text2:#bcbcbc; --muted:#a3a3a3; --footer-text:#a3a3a3; --danger:#ef4444; --grain:0.26; --btn:var(--accent); --btn-text:#1e1f22; --logo-pdf:var(--accent); --chrome:#141414; --modal:#1e1e1e; --fade:rgba(0,0,0,0.55); }
+html[data-theme="light"]    { --bg:#f0f0f0; --surface:#e8e8e8; --panel:#c8c8c8; --sidebar:#dcdcdc; --canvas:#f0f0f0; --border:#b0b0b0; --pane-border:#b0b0b0; --dragline:#a0a0a0; --tab-edge:var(--sel,var(--btn)); --accent:#931A1A; --accent-text:#ffffff; --text:#1a1a1a; --text2:#545454; --muted:#545454; --footer-text:#545454; --danger:#dc2626; --grain:0.28; --btn:var(--accent); --btn-text:#ffffff; --logo-pdf:var(--accent); --chrome:#c4c4c4; --modal:#ffffff; --fade:rgba(0,0,0,0.22); }
+html[data-theme="black"]    { --bg:#0d0d0d; --surface:#0a0a0a; --panel:#161616; --sidebar:#000000; --canvas:#0d0d0d; --border:#2a2a2a; --pane-border:#333333; --dragline:#373737; --tab-edge:var(--sel,var(--btn)); --accent:#FF3131; --accent-text:#000000; --text:#ffffff; --text2:#cccccc; --muted:#cccccc; --footer-text:#aaaaaa; --danger:#ff4444; --grain:0.08; --btn:var(--accent); --btn-text:#000000; --logo-pdf:var(--accent); --chrome:#000000; --modal:#000000; --fade:rgba(0,0,0,0.75); }
+html[data-theme="blood"]    { --bg:#2c1012; --surface:#2c1012; --panel:#321416; --sidebar:#240c0d; --canvas:#2c1012; --border:#401d1d; --pane-border:#401d1d; --dragline:#4a2325; --tab-edge:var(--sel,var(--btn)); --accent:#e94f60; --accent-text:#1e1f22; --text:#fffde8; --text2:#f8c99e; --muted:#e2b58a; --footer-text:#b57272; --danger:#ff6666; --grain:0.32; --btn:var(--accent); --btn-text:#1e1f22; --logo-pdf:var(--accent); --chrome:#1a0809; --modal:#1e0a0b; --fade:rgba(0,0,0,0.6); }
+html[data-theme="greed"]    { --bg:#002e1c; --surface:#002e1c; --panel:#003824; --sidebar:#002115; --canvas:#002e1c; --border:#0f4a30; --pane-border:#0f4a30; --dragline:#155a3a; --tab-edge:var(--sel,var(--btn)); --accent:#3fbf6f; --accent-text:#002819; --text:#fffde8; --text2:#e0d49a; --muted:#c0aa68; --footer-text:#47a96e; --danger:#ff6666; --grain:0.26; --btn:var(--accent); --btn-text:#002819; --logo-pdf:var(--accent); --chrome:#001710; --modal:#001e13; --fade:rgba(0,0,0,0.6); }
+html[data-theme="cyanotic"] { --bg:#00263a; --surface:#00263a; --panel:#002e48; --sidebar:#001a28; --canvas:#00263a; --border:#183450; --pane-border:#183450; --dragline:#1e4162; --tab-edge:var(--sel,var(--btn)); --accent:#3aa0d8; --accent-text:#001e2e; --text:#fffde8; --text2:#e0d49a; --muted:#c0aa68; --footer-text:#6097c3; --danger:#ff6666; --grain:0.26; --btn:var(--accent); --btn-text:#001e2e; --logo-pdf:var(--accent); --chrome:#00121c; --modal:#001624; --fade:rgba(0,0,0,0.6); }
 /* The six grunge palettes, ported from pdf-landing's kp.css. Their chrome tier is a gradient
    (--chrome-bg below); mourning is the one flat exception. Fixed accents, so no accent flyout. */
 html[data-theme="ectoplasm"] { --bg:#293c3f; --surface:#314548; --panel:#293c3f; --sidebar:#314548; --canvas:#293c3f; --border:#109fa3; --pane-border:#096366; --dragline:#096366; --tab-edge:rgba(234,217,0,.42); --accent:#ead900; --accent-text:#1e1f22; --text:#f4f4f0; --text2:#d7d7cf; --muted:#b4b6b1; --footer-text:#b4b6b1; --danger:#ff5a67; --grain:0.30; --btn:#ead900; --btn-text:#1e1f22; --logo-pdf:var(--accent); --chrome:#314548; --modal:#383838; --fade:rgba(0,0,0,0.58); --chrome-bg:linear-gradient(90deg,#5e1764 0%,#25232b 100%); }
-html[data-theme="decay"] { --bg:#403f3b; --surface:#514e48; --panel:#403f3b; --sidebar:#514e48; --canvas:#403f3b; --border:#6b705c; --pane-border:#5c554c; --dragline:#5c554c; --tab-edge:#8a8a78; --accent:#b8aa7c; --accent-text:#202321; --text:#f2f4f3; --text2:#d8cfb5; --muted:#b5ad9e; --footer-text:#b5ad9e; --danger:#d86b68; --grain:0.32; --btn:#b8aa7c; --btn-text:#202321; --logo-pdf:var(--accent); --chrome:#514e48; --modal:#3b3f46; --fade:rgba(0,0,0,0.58); --chrome-bg:linear-gradient(90deg,#3b3f46 0%,#50564b 100%); }
-html[data-theme="malaise"] { --bg:#343b3d; --surface:#3f4947; --panel:#303638; --sidebar:#3f4947; --canvas:#303638; --border:#4a5154; --pane-border:#394742; --dragline:#394742; --tab-edge:#a0ffe6; --accent:#ff6f91; --accent-text:#292c31; --text:#f2f4f3; --text2:#d8cfb5; --muted:#b6ad9e; --footer-text:#b6ad9e; --danger:#ff5b67; --grain:0.30; --btn:#ff6f91; --btn-text:#292c31; --logo-pdf:var(--accent); --chrome:#3f4947; --modal:#262b2d; --fade:rgba(0,0,0,0.58); --chrome-bg:linear-gradient(90deg,#563343 0%,#365b58 100%); }
-html[data-theme="sepulchre"] { --bg:#3a352f; --surface:#454039; --panel:#3a352f; --sidebar:#454039; --canvas:#3a352f; --border:#835a30; --pane-border:#4d3d2b; --dragline:#4d3d2b; --tab-edge:rgba(79,170,168,.42); --accent:#4faaa8; --accent-text:#1e2424; --text:#f4f4f0; --text2:#d7d7cf; --muted:#b4b6b1; --footer-text:#b4b6b1; --danger:#dc6666; --grain:0.30; --btn:#4faaa8; --btn-text:#1e2424; --logo-pdf:var(--accent); --chrome:#454039; --modal:#242729; --fade:rgba(0,0,0,0.62); --chrome-bg:linear-gradient(90deg,#25282b 0%,#2c5458 100%); }
-html[data-theme="delirium"] { --bg:#343344; --surface:#3e3c50; --panel:#343344; --sidebar:#3e3c50; --canvas:#343344; --border:#8e101c; --pane-border:#5c527d; --dragline:#5c527d; --tab-edge:#cf1020; --accent:#dd8500; --accent-text:#1e1f22; --text:#f4f4f0; --text2:#d7d7cf; --muted:#b4b6b1; --footer-text:#b4b6b1; --danger:#ff5360; --grain:0.30; --btn:#dd8500; --btn-text:#1e1f22; --logo-pdf:var(--accent); --chrome:#3e3c50; --modal:#24212b; --fade:rgba(0,0,0,0.62); --chrome-bg:linear-gradient(90deg,#641d25 0%,#2f2853 100%); }
-html[data-theme="mourning"] { --bg:#554c5d; --surface:#34373e; --panel:#554c5d; --sidebar:#3b3642; --canvas:#554c5d; --border:#756b79; --pane-border:#756b79; --dragline:#756b79; --tab-edge:rgba(255,111,145,.42); --accent:#ff6f91; --accent-text:#292c31; --text:#f4f4f0; --text2:#d7d7cf; --muted:#b4b6b1; --footer-text:#b4b6b1; --danger:#ff5360; --grain:0.28; --btn:#ff6f91; --btn-text:#292c31; --logo-pdf:var(--accent); --chrome:#34373e; --modal:#4f413f; --fade:rgba(0,0,0,0.62); }
+html[data-theme="decay"] { --bg:#403f3b; --surface:#514e48; --panel:#403f3b; --sidebar:#514e48; --canvas:#403f3b; --border:#6b705c; --pane-border:#5c554c; --dragline:#5c554c; --tab-edge:#8a8a78; --accent:#d1c8aa; --accent-text:#202321; --text:#f2f4f3; --text2:#d8cfb5; --muted:#cdc7bd; --footer-text:#cdc7bd; --danger:#d86b68; --grain:0.32; --btn:#d1c8aa; --btn-text:#202321; --logo-pdf:var(--accent); --chrome:#514e48; --modal:#3b3f46; --fade:rgba(0,0,0,0.58); --chrome-bg:linear-gradient(90deg,#3b3f46 0%,#50564b 100%); }
+html[data-theme="malaise"] { --bg:#343b3d; --surface:#3f4947; --panel:#303638; --sidebar:#3f4947; --canvas:#303638; --border:#4a5154; --pane-border:#394742; --dragline:#394742; --tab-edge:#a0ffe6; --accent:#ffb4c6; --accent-text:#292c31; --text:#f2f4f3; --text2:#d8cfb5; --muted:#cec8bd; --footer-text:#cec8bd; --danger:#ff5b67; --grain:0.30; --btn:#ffb4c6; --btn-text:#292c31; --logo-pdf:var(--accent); --chrome:#3f4947; --modal:#262b2d; --fade:rgba(0,0,0,0.58); --chrome-bg:linear-gradient(90deg,#563343 0%,#365b58 100%); }
+html[data-theme="sepulchre"] { --bg:#3a352f; --surface:#454039; --panel:#3a352f; --sidebar:#454039; --canvas:#3a352f; --border:#835a30; --pane-border:#4d3d2b; --dragline:#4d3d2b; --tab-edge:rgba(79,170,168,.42); --accent:#8ccac8; --accent-text:#1e2424; --text:#f4f4f0; --text2:#d7d7cf; --muted:#bdbfba; --footer-text:#bdbfba; --danger:#dc6666; --grain:0.30; --btn:#8ccac8; --btn-text:#1e2424; --logo-pdf:var(--accent); --chrome:#454039; --modal:#242729; --fade:rgba(0,0,0,0.62); --chrome-bg:linear-gradient(90deg,#25282b 0%,#2c5458 100%); }
+html[data-theme="delirium"] { --bg:#343344; --surface:#3e3c50; --panel:#343344; --sidebar:#3e3c50; --canvas:#343344; --border:#8e101c; --pane-border:#5c527d; --dragline:#5c527d; --tab-edge:#cf1020; --accent:#f29200; --accent-text:#1e1f22; --text:#f4f4f0; --text2:#d7d7cf; --muted:#b4b6b1; --footer-text:#b4b6b1; --danger:#ff5360; --grain:0.30; --btn:#f29200; --btn-text:#1e1f22; --logo-pdf:var(--accent); --chrome:#3e3c50; --modal:#24212b; --fade:rgba(0,0,0,0.62); --chrome-bg:linear-gradient(90deg,#641d25 0%,#2f2853 100%); }
+html[data-theme="mourning"] { --bg:#554c5d; --surface:#34373e; --panel:#554c5d; --sidebar:#3b3642; --canvas:#554c5d; --border:#756b79; --pane-border:#756b79; --dragline:#756b79; --tab-edge:rgba(255,111,145,.42); --accent:#ffa9bd; --accent-text:#292c31; --text:#f4f4f0; --text2:#d7d7cf; --muted:#c0c1bd; --footer-text:#c0c1bd; --danger:#ff5360; --grain:0.28; --btn:#ffa9bd; --btn-text:#292c31; --logo-pdf:var(--accent); --chrome:#34373e; --modal:#4f413f; --fade:rgba(0,0,0,0.62); }
 html[data-theme="delirium"] .tb-dl:hover,
-html[data-theme="delirium"] body .download-btn:hover { background:#ffad2f; color:#1e1f22; filter:none; }
+html[data-theme="delirium"] body .download-btn:hover { background:#ffa112; color:#1e1f22; filter:none; }
 html[data-theme="malaise"] .tb-dl:hover,
-html[data-theme="malaise"] body .download-btn:hover { background:#ff9fba; color:#292c31; filter:none; }
+html[data-theme="malaise"] body .download-btn:hover { background:#ffd3dd; color:#292c31; filter:none; }
 html[data-theme="black"] { --panel:#000000; --modal:#050505; }
 :root { --accent-dim: color-mix(in srgb, var(--accent) 16%, transparent); --chrome-bg:var(--sidebar); }
 
@@ -115,12 +115,12 @@ html[data-theme="light"] .page-title { text-shadow: none; }
 .swatch:hover { transform: scale(1.15); }
 .swatch[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
 .swatch::after { content: ""; position: absolute; inset: 4px; border-radius: 50%; background: var(--sw-accent); }
-.sw-dark { background:#1c1c1c; --sw-accent:#DD504B; } .sw-light { background:#dcdcdc; --sw-accent:#931A1A; }
-.sw-black { background:#000; --sw-accent:#FF2929; } .sw-blood { background:#240c0d; --sw-accent:#e8485a; }
+.sw-dark { background:#1c1c1c; --sw-accent:#FF7C77; } .sw-light { background:#dcdcdc; --sw-accent:#931A1A; }
+.sw-black { background:#000; --sw-accent:#FF3131; } .sw-blood { background:#240c0d; --sw-accent:#e94f60; }
 .sw-greed { background:#002115; --sw-accent:#3fbf6f; } .sw-cyanotic { background:#001a28; --sw-accent:#3aa0d8; }
-.sw-ectoplasm { background:#5e1764; --sw-accent:#ead900; } .sw-decay { background:#403f3b; --sw-accent:#b8aa7c; }
-.sw-malaise { background:#563343; --sw-accent:#ff6f91; } .sw-sepulchre { background:#3a352f; --sw-accent:#4faaa8; }
-.sw-delirium { background:#641d25; --sw-accent:#dd8500; } .sw-mourning { background:#554c5d; --sw-accent:#ff6f91; }
+.sw-ectoplasm { background:#5e1764; --sw-accent:#ead900; } .sw-decay { background:#403f3b; --sw-accent:#d1c8aa; }
+.sw-malaise { background:#563343; --sw-accent:#ffb4c6; } .sw-sepulchre { background:#3a352f; --sw-accent:#8ccac8; }
+.sw-delirium { background:#641d25; --sw-accent:#f29200; } .sw-mourning { background:#554c5d; --sw-accent:#ffa9bd; }
 .acc { width: 17px; height: 17px; border-radius: 50%; cursor: pointer; border: 2px solid rgba(255,255,255,0.25); padding: 0; transition: transform 0.12s; }
 html[data-theme="light"] .acc[data-accent="Yellow"] { background: #EAD900 !important; color: #EAD900 !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.55)); }
 .acc:hover { transform: scale(1.18); }
@@ -218,7 +218,7 @@ body.compact-sidebar .outline a:hover { color: var(--text); background: color-mi
 .statusbar::before { content: ""; position: absolute; right: 5px; bottom: 5px; width: 2px; height: 2px; background: var(--footer-text); box-shadow: -4px 0 var(--footer-text), -8px 0 var(--footer-text), 0 -4px var(--footer-text), -4px -4px var(--footer-text), 0 -8px var(--footer-text); opacity: .8; pointer-events: none; z-index: 7; }
 .statusbar > * { position: relative; z-index: 7; }
 /* Keep the right-side text clear of the corner grip (family standard spacing) */
-.statusbar .right { padding-right: 10px; }
+.statusbar .right { padding-right: 10px; opacity: .75; }
 .statusbar a { color: var(--footer-text); }
 .statusbar a:hover { color: var(--accent); }
 .statusbar .right b { color: var(--logo-pdf); font-weight: 600; }
@@ -735,3 +735,23 @@ html[data-yellow-outline] .connection-action:hover,
 html[data-yellow-outline] .connection-action:focus-visible {
   text-shadow: none !important;
 }
+/* Top bar fit (see the top bar fit script): one row at every width. The Store and KillerMCP
+   buttons shrink to their logos, then items move into the More menu, instead of wrapping. */
+.topbar { flex-wrap: nowrap !important; min-width: 0; max-width: 100%; }
+.topbar > * { flex-shrink: 0; }
+.topbar .tb-nav { order: 0 !important; flex: 0 0 auto !important; flex-wrap: nowrap !important; padding-top: 0 !important; border-top: 0 !important; }
+.topbar > .tb-store { display: inline-flex !important; }
+.topbar.tb-compact > .tb-store > span,
+.topbar.tb-compact > .tb-mcp-link > .tb-mcp-wordmark,
+.topbar.tb-dl-icon > .tb-dl > span { display: none; }
+.topbar.tb-compact > .tb-store, .topbar.tb-compact > .tb-mcp-link { gap: 0; padding: 0 6px; }
+.tb-more { position: relative; display: inline-flex; align-items: center; }
+.tb-more[hidden] { display: none; }
+.tb-more-toggle { display: inline-flex; align-items: center; justify-content: center; width: 35px; height: 35px; padding: 0; border: 1px solid var(--accent); border-radius: 6px; background: transparent; color: var(--text); cursor: pointer; }
+.tb-more-toggle:hover, .tb-more-toggle[aria-expanded="true"] { border-color: color-mix(in srgb, var(--accent) 72%, var(--text)); }
+.tb-more-toggle svg { width: 18px; height: 18px; fill: currentColor; }
+.tb-more-menu > a { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 0; margin: 0; padding: 7px 12px; border: 0; border-radius: 6px; background: none; box-shadow: none; transform: none; color: var(--text); font-size: 13px; line-height: 1.4; text-decoration: none; white-space: nowrap; }
+.tb-more-menu > a:hover { background: var(--accent-dim); transform: none; box-shadow: none; filter: none; }
+.tb-more-menu > a img { width: 22px; height: 22px; }
+.tb-more-menu > a svg { width: 18px; height: 18px; }
+html[data-yellow-outline] .tb-more-menu > a { text-shadow: none !important; }

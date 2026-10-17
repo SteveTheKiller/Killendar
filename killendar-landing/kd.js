@@ -15,9 +15,9 @@
   // Per-family accents. Each neutral defines its own red, and Dark's #DD504B is the one the
   // wordmark and the og-image are built on, which is why Red is the default.
   var ACCENTS = {
-    dark:  { Red: '#DD504B', Orange: '#E8962C', Yellow: '#EAD900', Green: '#1EA54C', Teal: '#1FB8A8', Blue: '#50AEE8', Purple: '#B982E3', Magenta: '#FF52C9' },
-    light: { Red: '#931A1A', Orange: '#C7710F', Yellow: '#F2C500', Green: '#1B5E20', Teal: '#0D827E', Blue: '#18608E', Purple: '#5A1690', Magenta: '#A60070' },
-    black: { Red: '#FF2929', Orange: '#FF910A', Yellow: '#FFEB00', Green: '#00FF66', Teal: '#0AFFE7', Blue: '#298DFF', Purple: '#B829FF', Magenta: '#FF2BBD' }
+    dark:  { Red: '#FF7C77', Orange: '#E8962C', Yellow: '#EAD900', Green: '#22BB56', Teal: '#1FB8A8', Blue: '#50AEE8', Purple: '#C08FE6', Magenta: '#FF6CD1' },
+    light: { Red: '#931A1A', Orange: '#E8962C', Yellow: '#F2C500', Green: '#1B5E20', Teal: '#095E5B', Blue: '#165883', Purple: '#5A1690', Magenta: '#A3006E' },
+    black: { Red: '#FF3131', Orange: '#FF910A', Yellow: '#FFEB00', Green: '#00FF66', Teal: '#0AFFE7', Blue: '#298DFF', Purple: '#C34AFF', Magenta: '#FF2BBD' }
   };
   var DEFAULT_ACCENT = 'Red';
 
@@ -81,6 +81,9 @@
   // ---- Accent ----
 
   // Text on an accent fill uses white or near-black, whichever contrasts more with that fill.
+  // Swatches and filled buttons use a deeper red than the dark red accent text, which stays light for contrast.
+  var FILL = { '#FF7C77': '#EA524C' };
+  function fillOf(hex) { return FILL[String(hex).toUpperCase()] || hex; }
   function readableOn(hex) {
     var lum = function (h) { var c = [1, 3, 5].map(function (i) { var v = parseInt(h.substr(i, 2), 16) / 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
     var l = lum(hex), dark = lum('#1e1f22');
@@ -89,15 +92,16 @@
 
   function applyAccent(name) {
     var t = theme(), sw = $('accentSwitch');
-    root.toggleAttribute('data-yellow-outline', t === 'light' && hasAccents(t) && name === 'Yellow');
+    root.toggleAttribute('data-yellow-outline', t === 'light' && hasAccents(t) && (name === 'Yellow' || name === 'Orange'));
     ['dark', 'light', 'black'].forEach(function (neutralTheme) {
       var preview = ACCENTS[neutralTheme][name] || ACCENTS[neutralTheme][DEFAULT_ACCENT];
       document.querySelectorAll('.sw-' + neutralTheme).forEach(function (dot) {
-        dot.style.setProperty('--sw-accent', neutralTheme === 'light' && name === 'Yellow' ? 'linear-gradient(#FFF5A3, #FFD43B)' : preview);
+        dot.style.setProperty('--sw-accent', neutralTheme === 'light' && name === 'Yellow' ? 'linear-gradient(#FFF5A3, #FFD43B)' : fillOf(preview));
       });
     });
     if (!hasAccents(t)) {
       root.style.removeProperty('--accent');
+      root.style.removeProperty('--btn');
       root.style.removeProperty('--btn-text');
       root.style.removeProperty('--accent-text');
       if (sw) sw.hidden = true;    // .accent-switch[hidden] keeps the layout slot, so nothing shifts
@@ -107,7 +111,8 @@
     if (sw) sw.hidden = false;
     var hex = ACCENTS[t][name] || ACCENTS[t][DEFAULT_ACCENT];
     root.style.setProperty('--accent', hex);
-    root.style.setProperty('--btn-text', readableOn(hex));
+    if (FILL[hex]) root.style.setProperty('--btn', FILL[hex]); else root.style.removeProperty('--btn');
+    root.style.setProperty('--btn-text', readableOn(fillOf(hex)));
     root.style.setProperty('--accent-text', readableOn(hex));
     store('kcal-accent', hex);
     store('kcal-accent-name', name);
@@ -141,13 +146,13 @@
     var t = theme();
     if (!hasAccents(t)) return;
     var active = accentName(), tog = $('accentToggle');
-    if (tog) tog.style.background = ACCENTS[t][active] || ACCENTS[t][DEFAULT_ACCENT];
+    if (tog) tog.style.background = fillOf(ACCENTS[t][active] || ACCENTS[t][DEFAULT_ACCENT]);
     all('.acc').forEach(function (b) {
       var hex = ACCENTS[t][b.getAttribute('data-accent')];
       if (!hex) return;
       // color as well as background: the pressed ring is drawn with currentColor.
-      b.style.background = hex;
-      b.style.color = hex;
+      b.style.background = fillOf(hex);
+      b.style.color = fillOf(hex);
       b.setAttribute('aria-pressed', b.getAttribute('data-accent') === active ? 'true' : 'false');
     });
   }
@@ -504,4 +509,86 @@
   wireEgg();
   applyTheme(theme());
   applyLang(defaultLang());
+})();
+/* Top bar fit: the bar never wraps. When it runs out of room, the Microsoft Store and KillerMCP
+   buttons shrink to their logos first, then the navigation links move into a More menu from the
+   end, then the Download button drops its label, and last the Store and KillerMCP buttons join
+   the menu. Re-measured on resize, font load and language changes. */
+(function () {
+  var bar = document.querySelector('.topbar');
+  if (!bar || !window.MutationObserver) return;
+  var nav = bar.querySelector('.tb-nav');
+  var more = document.createElement('div');
+  more.className = 'tb-more';
+  more.hidden = true;
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'tb-more-toggle';
+  btn.setAttribute('aria-haspopup', 'true');
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-label', 'More');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>';
+  var menu = document.createElement('div');
+  menu.className = 'lang-menu tb-more-menu';
+  menu.hidden = true;
+  more.appendChild(btn);
+  more.appendChild(menu);
+  if (nav && nav.parentNode === bar) bar.insertBefore(more, nav.nextSibling); else bar.appendChild(more);
+
+  function mark(el) {
+    if (!el) return null;
+    var m = document.createComment('tb-slot');
+    el.parentNode.insertBefore(m, el.nextSibling);
+    return { el: el, slot: m };
+  }
+  var links = nav ? [].slice.call(nav.children).map(mark) : [];
+  var extras = [bar.querySelector('.tb-mcp-link'), bar.querySelector('.tb-store')].filter(function (e) { return e && e.parentNode === bar; }).map(mark);
+  var all = links.concat(extras);
+  var busy = false;
+
+  function over() { return bar.scrollWidth > bar.clientWidth + 1; }
+  function close() { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); }
+  function fit() {
+    busy = true;
+    close();
+    all.forEach(function (m) { m.slot.parentNode.insertBefore(m.el, m.slot); });
+    bar.classList.remove('tb-compact', 'tb-dl-icon');
+    more.hidden = true;
+    if (over()) bar.classList.add('tb-compact');
+    if (over()) {
+      more.hidden = false;
+      for (var i = links.length - 1; i >= 0 && over(); i--) menu.insertBefore(links[i].el, menu.firstChild);
+      if (over()) bar.classList.add('tb-dl-icon');
+      for (var j = 0; j < extras.length && over(); j++) menu.appendChild(extras[j].el);
+      if (!menu.children.length) more.hidden = true;
+    }
+    observer.takeRecords();
+    busy = false;
+  }
+  var queued = false;
+  function queue() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(function () { queued = false; fit(); });
+  }
+  var observer = new MutationObserver(function () { if (!busy) queue(); });
+  observer.observe(bar, { subtree: true, childList: true, characterData: true });
+  window.addEventListener('resize', queue);
+  // Logos, flags and fonts change widths without a DOM change, so watch every item's size too.
+  if (window.ResizeObserver) {
+    var sizes = new ResizeObserver(function () { if (!busy) queue(); });
+    sizes.observe(bar);
+    [].forEach.call(bar.children, function (c) { sizes.observe(c); });
+  }
+  window.addEventListener('load', queue);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(queue);
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var open = menu.hidden;
+    menu.hidden = !open;
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', function (e) { if (!menu.hidden && !more.contains(e.target)) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) { close(); btn.focus(); } });
+  fit();
 })();

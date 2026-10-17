@@ -235,7 +235,8 @@ namespace Killendar.Services
             // so the exact BackgroundBrush object (including gradients) is retained.
             newDict["OverlayWindowBrush"] = newDict["BackgroundBrush"];
             if (!newDict.Contains("WordmarkAccentShadowOpacity")) newDict["WordmarkAccentShadowOpacity"] = 0.0;
-            newDict["PrimaryFillBrush"] = ButtonFill(newDict["PrimaryBrush"], theme == Theme.SE98);
+            // A palette can fill buttons with a deeper shade than its accent text (PrimaryFillBaseBrush).
+            newDict["PrimaryFillBrush"] = ButtonFill(newDict.Contains("PrimaryFillBaseBrush") ? newDict["PrimaryFillBaseBrush"] : newDict["PrimaryBrush"], theme == Theme.SE98);
             // 98SE keeps its classic light-gray hover face instead of filling with the accent.
             newDict["OutlineHoverFillBrush"] = theme == Theme.SE98 && newDict.Contains("OutlineHoverBrush")
                 ? newDict["OutlineHoverBrush"]
@@ -291,6 +292,8 @@ namespace Killendar.Services
             Alias("DialogTitleBarBrush", "BackgroundBrush");
             Alias("InputFieldBrush", "SurfaceBrush");
             Alias("ComboFieldBrush", "SurfaceBrush");
+            // Title bar text beside the wordmark (KillerPDF's key): muted text unless a theme states its own.
+            Alias("FilenameBrush", "MutedTextBrush");
             Alias("ComboPopupBrush", "MenuBackgroundBrush");
             Alias("AboutPanelBrush", "PaneBrush");
 

@@ -87,7 +87,7 @@
                         Margin="{DynamicResource CaptionButtonsMargin}"
                         shell:WindowChrome.IsHitTestVisibleInChrome="True">
                 <TextBlock x:Name="TitleKillendarLabel" Visibility="Collapsed"
-                           Foreground="{DynamicResource MutedTextBrush}" FontFamily="{DynamicResource FileNameFont}"
+                           Foreground="{DynamicResource FilenameBrush}" FontFamily="{DynamicResource FileNameFont}"
                            FontSize="{DynamicResource FileNameFontSize}" RenderTransform="{DynamicResource FileNameTransform}"
                            TextOptions.TextFormattingMode="Ideal" VerticalAlignment="Center" Margin="12,0,6,0"
                            MaxWidth="220" TextTrimming="CharacterEllipsis"
