@@ -390,6 +390,10 @@
     <sys:String x:Key="Str_KS_Today">Ir para hoje</sys:String>
     <sys:String x:Key="Str_KS_New">Novo compromisso aqui</sys:String>
     <sys:String x:Key="Str_KS_Panel">Painel de compromissos</sys:String>
+    <sys:String x:Key="Str_Sidebar">BARRA LATERAL</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">Esquerda</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">Direita</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">Mover barra lateral para a esquerda / direita</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">Salvar o compromisso em edição</sys:String>
     <sys:String x:Key="Str_KS_DeleteAppt">Excluir o compromisso em edição</sys:String>
     <sys:String x:Key="Str_KS_AllDay">Alternar dia inteiro durante a edição</sys:String>

@@ -390,6 +390,10 @@
     <sys:String x:Key="Str_KS_Today">Hopp til i dag</sys:String>
     <sys:String x:Key="Str_KS_New">Ny avtale her</sys:String>
     <sys:String x:Key="Str_KS_Panel">Avtalepanel</sys:String>
+    <sys:String x:Key="Str_Sidebar">SIDEPANEL</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">Venstre</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">Høyre</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">Flytt sidepanelet til venstre / høyre</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">Lagre avtalen som redigeres</sys:String>
     <sys:String x:Key="Str_KS_DeleteAppt">Slett avtalen som redigeres</sys:String>
     <sys:String x:Key="Str_KS_AllDay">Slå hele dagen av/på under redigering</sys:String>

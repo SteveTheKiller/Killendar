@@ -3739,6 +3739,25 @@ if (I18N["kk"]) Object.assign(I18N["kk"], { "tk_film_grain": "Пленка тү�
 if (I18N["uk"]) Object.assign(I18N["uk"], { "tk_film_grain": "Зернистість плівки" });
 if (I18N["nb"]) Object.assign(I18N["nb"], { "tk_film_grain": "Filmkorn" });
 if (I18N["pt"]) Object.assign(I18N["pt"], { "tk_film_grain": "Granulação de filme" });
+if (I18N["en"]) Object.assign(I18N["en"], { "tk_sidebar_side": "Move sidebar left / right" });
+if (I18N["vi"]) Object.assign(I18N["vi"], { "tk_sidebar_side": "Di chuyển thanh bên trái / phải" });
+if (I18N["hu"]) Object.assign(I18N["hu"], { "tk_sidebar_side": "Oldalsáv mozgatása balra / jobbra" });
+if (I18N["es"]) Object.assign(I18N["es"], { "tk_sidebar_side": "Barra lateral a la izquierda / derecha" });
+if (I18N["fr"]) Object.assign(I18N["fr"], { "tk_sidebar_side": "Panneau latéral à gauche / droite" });
+if (I18N["de"]) Object.assign(I18N["de"], { "tk_sidebar_side": "Seitenleiste links / rechts" });
+if (I18N["cs"]) Object.assign(I18N["cs"], { "tk_sidebar_side": "Postranní panel vlevo / vpravo" });
+if (I18N["tr"]) Object.assign(I18N["tr"], { "tk_sidebar_side": "Kenar çubuğunu sola / sağa taşı" });
+if (I18N["ja"]) Object.assign(I18N["ja"], { "tk_sidebar_side": "サイドバーを左 / 右に" });
+if (I18N["pl"]) Object.assign(I18N["pl"], { "tk_sidebar_side": "Przesuń pasek boczny w lewo/w prawo" });
+if (I18N["bn"]) Object.assign(I18N["bn"], { "tk_sidebar_side": "সাইডবার বাঁয়ে / ডানে" });
+if (I18N["zh-CN"]) Object.assign(I18N["zh-CN"], { "tk_sidebar_side": "侧边栏移到左 / 右侧" });
+if (I18N["zh-TW"]) Object.assign(I18N["zh-TW"], { "tk_sidebar_side": "側邊欄移到左 / 右側" });
+if (I18N["it"]) Object.assign(I18N["it"], { "tk_sidebar_side": "Sposta barra laterale sinistra / destra" });
+if (I18N["ru"]) Object.assign(I18N["ru"], { "tk_sidebar_side": "Перемещение боковой панели влево / вправо" });
+if (I18N["kk"]) Object.assign(I18N["kk"], { "tk_sidebar_side": "Бүйірлік панельді солға / оңға жылжыту" });
+if (I18N["uk"]) Object.assign(I18N["uk"], { "tk_sidebar_side": "Перемістити бічну панель ліворуч / праворуч" });
+if (I18N["nb"]) Object.assign(I18N["nb"], { "tk_sidebar_side": "Flytt sidepanelet til venstre / høyre" });
+if (I18N["pt"]) Object.assign(I18N["pt"], { "tk_sidebar_side": "Mover barra lateral para a esquerda / direita" });
 
 // MCP page, chrome labels, hero labels, contact cards and screenshot captions. Later blocks win.
 Object.assign(I18N["vi"], {

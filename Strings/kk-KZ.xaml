@@ -390,6 +390,10 @@
     <sys:String x:Key="Str_KS_Today">Бүгінге өту</sys:String>
     <sys:String x:Key="Str_KS_New">Осы жерде жаңа кездесу</sys:String>
     <sys:String x:Key="Str_KS_Panel">Кездесу тақтасы</sys:String>
+    <sys:String x:Key="Str_Sidebar">БҮЙІРЛІК ПАНЕЛЬ</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">Сол</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">Оң</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">Бүйірлік панельді солға / оңға жылжыту</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">Өңделіп жатқан кездесуді сақтау</sys:String>
     <sys:String x:Key="Str_KS_DeleteAppt">Өңделіп жатқан кездесуді жою</sys:String>
     <sys:String x:Key="Str_KS_AllDay">Өңдеу кезінде күні бойы режимін ауыстыру</sys:String>

@@ -6,7 +6,8 @@ using System.Windows.Controls.Primitives;
 namespace Killendar.Controls
 {
     /// <summary>
-    /// Rail flyout cards sit eight pixels inside the content pane's left and bottom edges.
+    /// Rail flyout cards sit eight pixels inside the content pane's bottom edge and the edge beside
+    /// the rail: its left edge, or its right edge when the panel and rail dock to the right.
     /// (2026-07-30, after this was got wrong repeatedly here and in KillerNotes)
     ///
     /// That corner is the answer because of what it avoids, and all three matter:
@@ -31,6 +32,10 @@ namespace Killendar.Controls
         private static FrameworkElement? _pane;
 
         internal static void UsePane(FrameworkElement pane) => _pane = pane;
+
+        /// <summary>The rail is on the content pane's right (Shell/SidebarDock.cs), so rail flyouts
+        /// take the pane's bottom-right corner instead of its bottom-left.</summary>
+        internal static bool RailOnRight { get; set; }
 
         internal static void Attach(Popup popup, UIElement _)
         {
@@ -104,7 +109,9 @@ namespace Killendar.Controls
             {
                 Style = Application.Current?.TryFindResource("FlyoutCard") as Style
             }.Margin;
-            double x = visibleCardInset - halo.Left;
+            double x = RailOnRight
+                ? targetSize.Width - popupSize.Width + halo.Right - visibleCardInset
+                : visibleCardInset - halo.Left;
             double y = targetSize.Height - popupSize.Height + halo.Bottom - visibleCardInset;
 
             // A flyout taller than the pane would otherwise start above it and run over the

@@ -63,6 +63,18 @@ namespace Killendar.Shell
                 return;
             }
 
+            // Alt+Shift+Left or Right, the family keys for a movable pane: docks the appointment
+            // panel to that side of the calendar, and the arrow of the side it is already on opens
+            // or closes it. Safe while typing for the same reason. (SidebarDock.cs)
+            if (alt && shift && !ctrl && (e.SystemKey == Key.Left || e.SystemKey == Key.Right))
+            {
+                bool right = e.SystemKey == Key.Right;
+                if (right == _sidebarRight) SidebarToggle_Click(this, new RoutedEventArgs());
+                else SelectSidebarSide(right);
+                e.Handled = true;
+                return;
+            }
+
             if (ctrlShortcut && shift && e.Key == Key.M &&
                 _calendar.ToggleFocusedMonthAppointment())
             {

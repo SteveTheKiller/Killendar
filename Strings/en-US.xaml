@@ -390,6 +390,10 @@
     <sys:String x:Key="Str_KS_Today">Jump to today</sys:String>
     <sys:String x:Key="Str_KS_New">New appointment here</sys:String>
     <sys:String x:Key="Str_KS_Panel">Appointment panel</sys:String>
+    <sys:String x:Key="Str_Sidebar">SIDEBAR</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">Left</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">Right</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">Move sidebar left / right</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">Save the appointment being edited</sys:String>
     <sys:String x:Key="Str_KS_DeleteAppt">Delete the appointment being edited</sys:String>
     <sys:String x:Key="Str_KS_AllDay">Toggle all day while editing</sys:String>

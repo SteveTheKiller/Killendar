@@ -34,7 +34,9 @@ namespace Killendar.Shell
         {
             if (!_sidebarOpen || _riding) return;
 
-            double width = ClampSidebarWidth(SidebarCol.ActualWidth + e.HorizontalChange);
+            // Dragging toward the calendar widens the panel: rightward for a left panel, leftward
+            // for a right one.
+            double width = ClampSidebarWidth(SidebarCol.ActualWidth + (_sidebarRight ? -e.HorizontalChange : e.HorizontalChange));
             _sidebarWidth = width;
             SidebarContent.Width = width;
             SidebarCol.Width = new GridLength(width);

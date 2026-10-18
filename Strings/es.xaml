@@ -328,6 +328,10 @@
     <sys:String x:Key="Str_KS_Today">Ir a hoy</sys:String>
     <sys:String x:Key="Str_KS_New">Nueva cita aquí</sys:String>
     <sys:String x:Key="Str_KS_Panel">Panel de citas</sys:String>
+    <sys:String x:Key="Str_Sidebar">BARRA LATERAL</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">Izquierda</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">Derecha</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">Barra lateral a la izquierda / derecha</sys:String>
     <sys:String x:Key="Str_KS_Import">Importar un archivo de calendario</sys:String>
     <sys:String x:Key="Str_KS_Export">Exportar el calendario</sys:String>
     <sys:String x:Key="Str_KS_ThisList">Esta lista de atajos</sys:String>

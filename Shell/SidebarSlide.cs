@@ -29,11 +29,12 @@ namespace Killendar.Shell
         /// </summary>
         private const double CalendarMinW = 460;
 
-        // Segoe MDL2 chevrons as escapes so this file stays pure ASCII on disk. The panel is on the
-        // LEFT, so closed shows E76C (points right, the direction the calendar gets pushed) and open
-        // shows E76B (points left, back into the edge it folds away to).
-        private const string ChevronOpen  = "\uE76C";
-        private const string ChevronClose = "\uE76B";
+        // Segoe MDL2 chevrons as escapes so this file stays pure ASCII on disk. With the panel on
+        // the LEFT, closed shows E76C (points right, the direction the calendar gets pushed) and
+        // open shows E76B (points left, back into the edge it folds away to). A right-hand panel
+        // mirrors both (SidebarDock.cs).
+        private string ChevronOpen  => _sidebarRight ? "\uE76B" : "\uE76C";
+        private string ChevronClose => _sidebarRight ? "\uE76C" : "\uE76B";
 
         private bool _sidebarOpen;
 

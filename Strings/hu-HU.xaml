@@ -392,6 +392,10 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_KS_Today">Ugrás a mai napra</sys:String>
     <sys:String x:Key="Str_KS_New">Új időpont itt</sys:String>
     <sys:String x:Key="Str_KS_Panel">Találkozó panel</sys:String>
+    <sys:String x:Key="Str_Sidebar">OLDALSÁV</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">Bal</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">Jobb</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">Oldalsáv mozgatása balra / jobbra</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">Mentse el a szerkesztett találkozót</sys:String>
     <sys:String x:Key="Str_KS_DeleteAppt">Törölje a szerkesztett találkozót</sys:String>
     <sys:String x:Key="Str_KS_AllDay">Váltás egész nap szerkesztés közben</sys:String>

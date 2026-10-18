@@ -56,6 +56,7 @@ namespace Killendar.Shell
             new("A or 4",   "Str_KS_Agenda",   KsCat.View, false, "A", "D4"),
             new("R",        "Str_KS_MonthMode", KsCat.View, false, "R"),
             new("Alt+Shift+G", "Str_Theme_FilmGrain", KsCat.View, false, "G"),
+            new("Alt+Shift+Left / Right", "Str_KS_SidebarSide", KsCat.View, false, "Left", "Right"),
 
             new("Left / ,", "Str_KS_Prev",     KsCat.Nav,  false, "Left", "Comma"),
             new("Right / .","Str_KS_Next",     KsCat.Nav,  false, "Right", "Period"),

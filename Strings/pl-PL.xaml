@@ -323,6 +323,10 @@
     <sys:String x:Key="Str_KS_Today">Przejdź do dzisiaj</sys:String>
     <sys:String x:Key="Str_KS_New">Nowe spotkanie tutaj</sys:String>
     <sys:String x:Key="Str_KS_Panel">Panel spotkań</sys:String>
+    <sys:String x:Key="Str_Sidebar">PASEK BOCZNY</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">Lewa</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">Prawa</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">Przesuń pasek boczny w lewo/w prawo</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">Zapisz edytowane spotkanie</sys:String>
     <sys:String x:Key="Str_KS_DeleteAppt">Usuń edytowane spotkanie</sys:String>
     <sys:String x:Key="Str_KS_AllDay">Przełącz tryb całodniowy podczas edycji</sys:String>

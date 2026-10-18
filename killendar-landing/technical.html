@@ -273,7 +273,7 @@ ctrl: { N:['appt','New appointment here'], I:['file','Import an .ics file'], E:[
   Enter:['appt','Save the appointment being edited'], Del:['appt','Delete the appointment being edited, with confirmation'] },
 alt: { A:['appt','Toggle all day while editing'], R:['appt','Open repeat options while editing'] },
 ctrlshift: { M:['appt','Shrink or expand the focused appointment in month view'] },
-altshift: { G:['view','Film Grain'] } };
+altshift: { G:['view','Film Grain'], Left:['view','Move sidebar left / right'], Right:['view','Move sidebar left / right'] } };
 var CATNAME = { file:'FILE', view:'VIEWS', nav:'NAVIGATION', appt:'APPOINTMENTS', help:'HELP' };
 
 // Labels follow the page language: the same wording as the list below where it matches, the app's
@@ -283,7 +283,7 @@ var KBK = { 'Month view':'tk_50', 'Week view':'tk_51', 'Day view':'tk_52', 'Agen
   'Save the appointment being edited':'tk_61', 'Delete the appointment being edited, with confirmation':'tk_62',
   'Toggle all day while editing':'tk_63', 'Open repeat options while editing':'tk_64',
   'Shrink or expand the focused appointment in month view':'tk_65', 'Import an .ics file':'tk_67',
-  'Export to .ics':'tk_68', 'Film Grain':'tk_film_grain',
+  'Export to .ics':'tk_68', 'Film Grain':'tk_film_grain', 'Move sidebar left / right':'tk_sidebar_side',
   'Close the shortcut overlay, About card or appointment panel':'kbm_close', 'This shortcut list':'kbm_list',
   'Reload the open Killendar from disk':'kbm_reload', 'About card':'kbm_about', 'New appointment here':'kbm_new',
   'Appointment panel':'kbm_panel', 'Previous month, week or day':'kbm_prev', 'Next month, week or day':'kbm_next',
@@ -391,7 +391,7 @@ window.addEventListener('resize', fit);
 <div class="kbd-row"><span class="k">D or 3</span><span class="d" data-i18n="tk_52">Day view</span></div>
 <div class="kbd-row"><span class="k">A or 4</span><span class="d" data-i18n="tk_53">Agenda view</span></div>
 <div class="kbd-row"><span class="k">R</span><span class="d" data-i18n="tk_118">Switch month view between calendar month and rolling weeks</span></div>
-<div class="kbd-row"><span class="k">Alt+Shift+G</span><span class="d" data-i18n="tk_film_grain">Film Grain</span></div>
+<div class="kbd-row"><span class="k">Alt+Shift+G</span><span class="d" data-i18n="tk_film_grain">Film Grain</span></div><div class="kbd-row"><span class="k">Alt+Shift+&#8592; / &#8594;</span><span class="d" data-i18n="tk_sidebar_side">Move sidebar left / right</span></div>
 </div>
 <div class="kbd-group"><h4 data-i18n="tk_54">NAVIGATION</h4>
 <div class="kbd-row"><span class="k">&#8592; / &#8594;</span><span class="d" data-i18n="tk_55">Previous / next month, week or day - whichever view is open</span></div>

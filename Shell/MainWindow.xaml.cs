@@ -31,6 +31,7 @@ namespace Killendar.Shell
                 icon.Source = titleFrames[0];
             }
             InitSidebarResize();
+            InitSidebarSide();   // SidebarDock.cs - left or right of the calendar
 
             RestoreWindowPlacement();
             InitAppScale();

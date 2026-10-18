@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.1] - Unreleased
 
 ### Added
+- Added a right-hand position for the appointment panel and its rail, picked from the rail's right-click menu or with Alt+Shift+Left and Alt+Shift+Right. The arrow of the side the panel is already on opens or closes it.
 - Added Start with Windows to the About card. It starts Killendar minimized on the taskbar when you sign in, and stays off until you turn it on.
 - Added Close to system tray to the About card. With it on, closing the window keeps Killendar running in the notification area, where its icon brings the window back or exits; it stays off until you turn it on.
 - Added a dropdown arrow beside the Month button that switches Month view between a calendar month and rolling weeks, and the R key to toggle it. The choice was only reachable by right-clicking the Month button.
@@ -17,6 +18,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - The website's About page lists KillerBench and KillerShot under Also try, with larger app icons.
 
 ### Changed
+- Rail buttons and the collapse arrow sit centered across the rail on either side, with the same space toward the panel and the edge, and the arrow is larger. The side choices in the rail's right-click menu show a picture of each position.
 - The period header above the calendar, the sidebar date heading and the dialog headings use Lacquer, the wordmark's app-name face, in place of Killer Sans. 98SE keeps Killer Sans.
 - Context menus use Killer Sans UI like the rest of the interface instead of Segoe UI.
 - The Light theme draws a softer shadow under the toolbars.

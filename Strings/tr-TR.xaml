@@ -328,6 +328,10 @@
     <sys:String x:Key="Str_KS_Today">Bugüne git</sys:String>
     <sys:String x:Key="Str_KS_New">Buraya yeni randevu</sys:String>
     <sys:String x:Key="Str_KS_Panel">Randevu paneli</sys:String>
+    <sys:String x:Key="Str_Sidebar">KENAR ÇUBUĞU</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">Sol</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">Sağ</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">Kenar çubuğunu sola / sağa taşı</sys:String>
     <sys:String x:Key="Str_KS_Import">Bir takvim dosyası içe aktar</sys:String>
     <sys:String x:Key="Str_KS_Export">Takvimi dışa aktar</sys:String>
     <sys:String x:Key="Str_KS_ThisList">Bu kısayol listesi</sys:String>

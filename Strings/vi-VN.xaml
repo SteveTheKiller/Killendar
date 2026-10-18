@@ -361,6 +361,10 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_KS_Today">Chuyển đến hôm nay</sys:String>
   <sys:String x:Key="Str_KS_New">Tạo cuộc hẹn mới tại đây</sys:String>
   <sys:String x:Key="Str_KS_Panel">Bảng cuộc hẹn</sys:String>
+  <sys:String x:Key="Str_Sidebar">THANH BÊN</sys:String>
+  <sys:String x:Key="Str_Sidebar_Left">Trái</sys:String>
+  <sys:String x:Key="Str_Sidebar_Right">Phải</sys:String>
+  <sys:String x:Key="Str_KS_SidebarSide">Di chuyển thanh bên trái / phải</sys:String>
   <sys:String x:Key="Str_KS_SaveAppt">Lưu cuộc hẹn đang chỉnh sửa</sys:String>
   <sys:String x:Key="Str_KS_DeleteAppt">Xóa cuộc hẹn đang chỉnh sửa</sys:String>
   <sys:String x:Key="Str_KS_AllDay">Bật hoặc tắt chế độ cả ngày khi chỉnh sửa</sys:String>

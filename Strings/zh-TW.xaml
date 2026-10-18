@@ -328,6 +328,10 @@
     <sys:String x:Key="Str_KS_Today">跳到今天</sys:String>
     <sys:String x:Key="Str_KS_New">在此新增約會</sys:String>
     <sys:String x:Key="Str_KS_Panel">約會面板</sys:String>
+    <sys:String x:Key="Str_Sidebar">側邊欄</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">左側</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">右側</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">側邊欄移到左 / 右側</sys:String>
     <sys:String x:Key="Str_KS_Import">匯入行事曆檔案</sys:String>
     <sys:String x:Key="Str_KS_Export">匯出行事曆</sys:String>
     <sys:String x:Key="Str_KS_ThisList">此快速鍵清單</sys:String>

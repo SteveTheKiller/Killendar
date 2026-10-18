@@ -328,6 +328,10 @@
     <sys:String x:Key="Str_KS_Today">Přejít na dnešek</sys:String>
     <sys:String x:Key="Str_KS_New">Nová schůzka zde</sys:String>
     <sys:String x:Key="Str_KS_Panel">Panel schůzky</sys:String>
+    <sys:String x:Key="Str_Sidebar">POSTRANNÍ PANEL</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">Vlevo</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">Vpravo</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">Postranní panel vlevo / vpravo</sys:String>
     <sys:String x:Key="Str_KS_Import">Importovat soubor kalendáře</sys:String>
     <sys:String x:Key="Str_KS_Export">Exportovat kalendář</sys:String>
     <sys:String x:Key="Str_KS_ThisList">Tento seznam zkratek</sys:String>

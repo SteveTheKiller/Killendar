@@ -328,6 +328,10 @@
     <sys:String x:Key="Str_KS_Today">Aller à aujourd'hui</sys:String>
     <sys:String x:Key="Str_KS_New">Nouveau rendez-vous ici</sys:String>
     <sys:String x:Key="Str_KS_Panel">Panneau des rendez-vous</sys:String>
+    <sys:String x:Key="Str_Sidebar">PANNEAU LATÉRAL</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">Gauche</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">Droite</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">Panneau latéral à gauche / droite</sys:String>
     <sys:String x:Key="Str_KS_Import">Importer un fichier calendrier</sys:String>
     <sys:String x:Key="Str_KS_Export">Exporter le calendrier</sys:String>
     <sys:String x:Key="Str_KS_ThisList">Cette liste de raccourcis</sys:String>

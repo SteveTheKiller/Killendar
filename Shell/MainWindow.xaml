@@ -132,7 +132,8 @@
              carry the same brush and grain as the title bar and footer and read as one surface
              running top to bottom. Only the calendar is a lifted card. -->
         <Grid x:Name="ScaleHost" Grid.Row="1">
-                    <!-- Panel, then the rail on its inner lip, then the calendar. -->
+                    <!-- Panel, then the rail on its inner lip, then the calendar. A right-hand panel
+                         puts the same three columns back in the other order (SidebarDock.cs). -->
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition x:Name="SidebarCol" Width="0"/>      <!-- appointment panel, animated -->
                         <ColumnDefinition x:Name="RailCol" Width="24"/>        <!-- permanent icon rail -->
@@ -141,7 +142,7 @@
 
             <!-- The calendar is the only lifted card: PaneBrush, rounded, shadowed, with its own
                  grain. Left margin 0 so it butts against the rail. -->
-            <Grid Grid.Column="2">
+            <Grid x:Name="CalendarArea" Grid.Column="2">
                 <Grid.RowDefinitions>
                     <!-- Auto with a 42 floor, NOT a fixed 42. The toolbar buttons are sized per
                          display mode now (ToolbarStyle.cs): 32px tall on small icons, 42 on large,
@@ -371,14 +372,14 @@
                          and closes the panel; theme sits pinned at the bottom. The rail is always
                          visible, so there is one fixed place to reach for either. Painted in the
                          chrome tier's own brush and grain show through, with no border of its own. -->
-                    <Border Grid.Column="1" Background="Transparent">
+                    <Border x:Name="RailHost" Grid.Column="1" Background="Transparent"
+                            MouseRightButtonUp="SidebarArea_MouseRightButtonUp">
                         <Grid Margin="2,0,2,0">
-                            <!-- E76C/E76B at FontSize 12. The 2px left margin on centered rail
-                                 elements is a 1px shift toward the pane, so the icon reads as
-                                 centered on the rail. -->
+                            <!-- E76C/E76B at FontSize 16, centered with no lean, so the glyph has the
+                                 same space to the grab handle as to the calendar card. -->
                             <Button x:Name="SidebarToggleBtn" Style="{StaticResource RailButton}"
-                                    Content="&#xE76C;" FontSize="12"
-                                    VerticalAlignment="Top" HorizontalAlignment="Center" Margin="2,10,0,0"
+                                    Content="&#xE76C;" FontSize="16"
+                                    VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0"
                                     Click="SidebarToggle_Click"
                                     ToolTip="{DynamicResource Str_TT_PanelShow}"/>
 
@@ -473,7 +474,8 @@
                     <!-- Appointment sidebar: creating and editing both happen here, never in a
                          separate dialog window. The column animates 0 to 330 rather than the panel
                          toggling Visibility, so it slides instead of popping. -->
-                    <Border x:Name="AppointmentSidebar" Grid.Column="0" ClipToBounds="True">
+                    <Border x:Name="AppointmentSidebar" Grid.Column="0" ClipToBounds="True"
+                            MouseRightButtonUp="SidebarArea_MouseRightButtonUp">
                         <Border.Style>
                             <Style TargetType="Border">
                                 <Setter Property="Background" Value="{DynamicResource SidebarPaneBrush}"/>
@@ -781,7 +783,7 @@
                         <Thumb.Template>
                             <ControlTemplate TargetType="Thumb">
                                 <Border Background="Transparent">
-                                    <Border x:Name="line" Width="1" HorizontalAlignment="Center"
+                                    <Border x:Name="line" Width="1" HorizontalAlignment="Right"
                                             Background="{DynamicResource CardBorderBrush}"
                                             Margin="0,12" Opacity="0"/>
                                 </Border>
@@ -834,13 +836,13 @@
                 <!-- Center column: the portable badge only. The open Killendar's NAME lives in the
                      TITLE BAR and nowhere else (2026-07-30) - it was briefly in both, which
                      was wrong; a file name belongs in one place. -->
-                <Grid Grid.ColumnSpan="3" Panel.ZIndex="5" IsHitTestVisible="True">
+                <Grid x:Name="FooterCenterGrid" Grid.ColumnSpan="3" Panel.ZIndex="5" IsHitTestVisible="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="{Binding Width, ElementName=SidebarCol}"/>
                         <ColumnDefinition Width="24"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel x:Name="PortableBadgeHost" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <!-- Compact portable install action, matching KillerPDF. Shown only when
                          running from outside the installed location. -->
                     <StackPanel x:Name="PortableBadge" Orientation="Horizontal"

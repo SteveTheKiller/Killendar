@@ -328,6 +328,10 @@
     <sys:String x:Key="Str_KS_Today">আজকে যান</sys:String>
     <sys:String x:Key="Str_KS_New">এখানে নতুন অ্যাপয়েন্টমেন্ট</sys:String>
     <sys:String x:Key="Str_KS_Panel">অ্যাপয়েন্টমেন্ট প্যানেল</sys:String>
+    <sys:String x:Key="Str_Sidebar">সাইডবার</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">বাঁ দিকে</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">ডান দিকে</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">সাইডবার বাঁয়ে / ডানে</sys:String>
     <sys:String x:Key="Str_KS_Import">একটি ক্যালেন্ডার ফাইল ইমপোর্ট করুন</sys:String>
     <sys:String x:Key="Str_KS_Export">ক্যালেন্ডার এক্সপোর্ট করুন</sys:String>
     <sys:String x:Key="Str_KS_ThisList">এই শর্টকাট তালিকা</sys:String>

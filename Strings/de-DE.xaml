@@ -328,6 +328,10 @@
     <sys:String x:Key="Str_KS_Today">Zu heute springen</sys:String>
     <sys:String x:Key="Str_KS_New">Neuer Termin hier</sys:String>
     <sys:String x:Key="Str_KS_Panel">Terminbereich</sys:String>
+    <sys:String x:Key="Str_Sidebar">SEITENLEISTE</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">Links</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">Rechts</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">Seitenleiste links / rechts</sys:String>
     <sys:String x:Key="Str_KS_Import">Eine Kalenderdatei importieren</sys:String>
     <sys:String x:Key="Str_KS_Export">Den Kalender exportieren</sys:String>
     <sys:String x:Key="Str_KS_ThisList">Diese Kürzelliste</sys:String>

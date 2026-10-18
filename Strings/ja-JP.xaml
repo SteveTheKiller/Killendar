@@ -328,6 +328,10 @@
     <sys:String x:Key="Str_KS_Today">今日に移動</sys:String>
     <sys:String x:Key="Str_KS_New">ここに新しい予定</sys:String>
     <sys:String x:Key="Str_KS_Panel">予定パネル</sys:String>
+    <sys:String x:Key="Str_Sidebar">サイドバー</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">左</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">右</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">サイドバーを左 / 右に</sys:String>
     <sys:String x:Key="Str_KS_Import">カレンダー ファイルを読み込む</sys:String>
     <sys:String x:Key="Str_KS_Export">カレンダーを書き出す</sys:String>
     <sys:String x:Key="Str_KS_ThisList">このショートカット一覧</sys:String>

@@ -391,6 +391,10 @@
     <sys:String x:Key="Str_KS_Today">Перейти к сегодняшнему дню</sys:String>
     <sys:String x:Key="Str_KS_New">Новая встреча здесь</sys:String>
     <sys:String x:Key="Str_KS_Panel">Панель встреч</sys:String>
+    <sys:String x:Key="Str_Sidebar">БОКОВАЯ ПАНЕЛЬ</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">Слева</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">Справа</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">Перемещение боковой панели влево / вправо</sys:String>
     <sys:String x:Key="Str_KS_SaveAppt">Сохранить редактируемую встречу</sys:String>
     <sys:String x:Key="Str_KS_DeleteAppt">Удалить редактируемую встречу</sys:String>
     <sys:String x:Key="Str_KS_AllDay">Переключить весь день при редактировании</sys:String>
