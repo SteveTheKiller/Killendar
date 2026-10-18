@@ -18,6 +18,7 @@ namespace Killendar.Shell
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            if (Views.CalendarKeyboardNavigation.HandleKey(e)) return;
             bool ctrl = (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control;
             bool alt = (Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt;
             bool shift = (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;

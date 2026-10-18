@@ -18,6 +18,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - The website's About page lists KillerBench and KillerShot under Also try, with larger app icons.
 
 ### Changed
+- Tab enters the calendar once; arrow keys move between appointments, and Tab leaves the grid.
+- The shortcut list's scrollbar sits at the card edge while its text keeps the existing inset.
 - Appointment editor, agenda, dialog lists and file-picker shadows extend beneath the scrollbars; 98SE stays flat.
 - Rail buttons and the collapse arrow sit centered across the rail on either side, with the same space toward the panel and the edge, and the arrow is larger. The side choices in the rail's right-click menu show a picture of each position.
 - The period header above the calendar, the sidebar date heading and the dialog headings use Lacquer, the wordmark's app-name face, in place of Killer Sans. 98SE keeps Killer Sans.

@@ -213,21 +213,31 @@ namespace Killendar.Views
             Grid.SetRow(headerHost, 0);
             root.Children.Add(headerHost);
 
+            // Keep header actions outside the appointment group's single Tab stop.
+            var appointments = new Grid();
+            appointments.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            appointments.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            Grid.SetRow(appointments, 1);
+            Grid.SetRowSpan(appointments, 2);
+            CalendarKeyboardNavigation.Attach(appointments);
+            root.Children.Add(appointments);
+
             _allDayStrip = new Grid { Margin = new Thickness(0, 2, 0, 2) };
             _allDayHost = new Border { Child = _allDayStrip, BorderThickness = new Thickness(0, 0, 0, 1), Visibility = Visibility.Collapsed };
             _allDayHost.Themed(Border.BorderBrushProperty, "CardBorderBrush");
-            Grid.SetRow(_allDayHost, 1);
-            root.Children.Add(_allDayHost);
+            Grid.SetRow(_allDayHost, 0);
+            appointments.Children.Add(_allDayHost);
 
             _bodyGrid = new Grid();
             _scroller = new ScrollViewer
             {
                 VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
                 HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
+                Focusable = false,
                 Content = _bodyGrid
             };
-            Grid.SetRow(_scroller, 2);
-            root.Children.Add(_scroller);
+            Grid.SetRow(_scroller, 1);
+            appointments.Children.Add(_scroller);
 
             // The body scrolls vertically and its scrollbar is effectively always visible (24h of
             // rows), which makes the body's star columns narrower than the header's by exactly the

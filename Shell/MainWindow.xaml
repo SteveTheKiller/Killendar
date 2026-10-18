@@ -1017,9 +1017,9 @@
                             </StackPanel>
 
                             <!-- LIST -->
-                            <ScrollViewer x:Name="KsListHostScroll" Grid.Row="2" VerticalScrollBarVisibility="Auto"
+                            <ScrollViewer x:Name="KsListHostScroll" Grid.Row="2" Margin="0,0,-24,0" VerticalScrollBarVisibility="Auto"
                                           HorizontalScrollBarVisibility="Disabled" PanningMode="VerticalOnly" Focusable="False">
-                                <StackPanel x:Name="KsListHost"/>
+                                <StackPanel x:Name="KsListHost" Margin="0,0,24,0"/>
                             </ScrollViewer>
 
                             <!-- MAP -->
