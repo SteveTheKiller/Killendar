@@ -140,6 +140,7 @@
     <sys:String x:Key="Str_About_UpdateAvailable">K dispozici je aktualizace: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">Stahuje se...</sys:String>
     <sys:String x:Key="Str_About_StartupUpdateCheck">Kontrolovat aktualizace při spuštění</sys:String>
+    <sys:String x:Key="Str_About_StartWithWindows">Spouštět se systémem Windows</sys:String>
     <sys:String x:Key="Str_About_StartupUpdateHeading">Je k dispozici {0} {1}</sys:String>
     <sys:String x:Key="Str_About_StartupUpdateDetail">Chcete jej nyní stáhnout a nainstalovat? Aplikace se zavře a automaticky znovu otevře.</sys:String>
     <sys:String x:Key="Str_About_UpdateNow">Aktualizovat</sys:String>

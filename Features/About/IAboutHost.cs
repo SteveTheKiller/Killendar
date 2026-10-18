@@ -37,6 +37,10 @@ namespace Killendar.Features
         /// <summary>The "Check for updates on startup" checkbox, first of the card's checkboxes.</summary>
         bool StartupUpdateCheck { set; }
 
+        /// <summary>The "Start with Windows" checkbox, under the update checkbox. Off until the user
+        /// turns it on.</summary>
+        bool StartWithWindows { set; }
+
         /// <summary>Fades the About card in.</summary>
         void ShowCard();
     }

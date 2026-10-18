@@ -165,6 +165,8 @@ namespace Killendar
             string runningExe = Process.GetCurrentProcess().MainModule?.FileName ?? "";
             if (!string.Equals(runningExe, MachineInstallExe, StringComparison.OrdinalIgnoreCase))
                 FileAssociations.Register();   // portable/per-user: HKCU, best-effort, idempotent
+            // Start with Windows (About card): keep the Run value pointing at this exe.
+            KillerFamily.Deployment.StartupRegistration.Refresh(Services.AppInfo.DisplayName);
             // Complete the shipped Dark/Red palette before standalone setup prompts.
             // Persistence hooks are not connected until the normal app starts below.
             ThemeManager.Initialize();
@@ -219,6 +221,9 @@ namespace Killendar
 
             MainWindow = new MainWindow();
             ShutdownMode = ShutdownMode.OnLastWindowClose;
+            // Started from the Run value: open minimized on the taskbar.
+            if (KillerFamily.Deployment.StartupRegistration.HasMinimizedArgument(e.Args))
+                KillerFamily.Deployment.StartupRegistration.StartMinimized(MainWindow);
             MainWindow.Show();
         }
 

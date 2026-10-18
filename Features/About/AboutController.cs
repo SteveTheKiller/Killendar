@@ -35,6 +35,14 @@ namespace Killendar.Features
             _host.StartupUpdateCheck = enabled;
         }
 
+        /// <summary>Adds or removes the app's Run value from the About checkbox, then shows what the
+        /// registry actually holds, so a refused write unchecks the box again.</summary>
+        internal void SetStartWithWindows(bool enabled)
+        {
+            KillerFamily.Deployment.StartupRegistration.Set(AppInfo.DisplayName, enabled);
+            _host.StartWithWindows = KillerFamily.Deployment.StartupRegistration.IsEnabled(AppInfo.DisplayName);
+        }
+
         /// <summary>Once per run, after the calendar is open: when a newer release exists, offers it
         /// with an "Always check on startup" box so the check can be turned off right there. The
         /// About card's checkbox turns it back on. Skipped under --demo so captures stay clean.</summary>
@@ -85,6 +93,7 @@ namespace Killendar.Features
             _host.Sha256       = _host.Loc("Str_About_Computing");
             _host.UpdateVisible = false;
             _host.StartupUpdateCheck = StartupCheckEnabled;
+            _host.StartWithWindows = KillerFamily.Deployment.StartupRegistration.IsEnabled(AppInfo.DisplayName);
 
             _host.ShowCard();
 

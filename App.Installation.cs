@@ -386,6 +386,7 @@ namespace Killendar
             try { Directory.Delete(startMenuDir, recursive: false); } catch { }
             try { File.Delete(DesktopLnk); } catch { }
             Services.CommandLinePath.Unregister(targetDir, machine);
+            KillerFamily.Deployment.StartupRegistration.Remove(Services.AppInfo.DisplayName);
 
             var hive = machine ? Registry.LocalMachine : Registry.CurrentUser;
             try { hive.DeleteSubKeyTree(RegKey, throwOnMissingSubKey: false); } catch { }
