@@ -61,6 +61,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Theme names, the date format choices, date hints, file type lists and the Hungarian event fields that were still in English are translated in every language.
 - The website's MCP page, release details, contact cards, carousel controls, keyboard map and remaining labels are translated in every language.
 - On phones, the website's logo and download hash fit the screen instead of making the home page scroll sideways.
+- The calendar name in the title bar sits on the baseline of The in the wordmark instead of 2px below it.
 
 ## [1.3.0] - 2026-10-14
 
