@@ -180,7 +180,7 @@
                                 <Grid>
                                     <Border IsHitTestVisible="False" CornerRadius="{DynamicResource FlyoutCornerRadius}"
                                             Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
-                                    <ListBox x:Name="RecentsList" Background="Transparent" BorderThickness="0" Padding="2,4"
+                                    <ListBox x:Name="RecentsList" Style="{StaticResource ShadowListBox}" Background="Transparent" BorderThickness="0" Padding="2,4"
                                              Width="{Binding ActualWidth, ElementName=PathBox}" MaxHeight="260"
                                              ItemContainerStyle="{StaticResource PickerRow}"
                                              SelectionChanged="RecentsList_SelectionChanged"
@@ -421,7 +421,7 @@
                             </Button>
                         </Grid>
                         <Grid>
-                            <ListBox x:Name="FileList" Background="Transparent" BorderThickness="0" Padding="2,4"
+                            <ListBox x:Name="FileList" Style="{StaticResource ShadowListBox}" Background="Transparent" BorderThickness="0" Padding="2,4"
                                      AutomationProperties.Name="{DynamicResource Str_Col_Name}"
                                      ItemContainerStyle="{StaticResource PickerRow}"
                                      ItemTemplate="{StaticResource RowTemplate}"
