@@ -34,7 +34,7 @@ namespace Killendar.Views
                     bool onTheHour = s == 0;
                     var line = new Border { BorderThickness = new Thickness(0, 1, 0, 0), Height = 1 };
                     line.Themed(Border.BorderBrushProperty, "CardBorderBrush");
-                    line.Opacity = onTheHour ? 0.6 : 0.25;
+                    line.Opacity = SystemParameters.HighContrast ? 1.0 : onTheHour ? 0.6 : 0.25;
                     Canvas.SetTop(line, h * CalendarChrome.HourHeight + s * subHeight);
                     Canvas.SetLeft(line, 0);
                     line.SetBinding(WidthProperty, new System.Windows.Data.Binding("ActualWidth") { Source = canvas });

@@ -53,6 +53,8 @@ namespace Killendar.Views
             _dayCount = dayCount;
             BuildSkeleton();
             Loaded += (_, _) => RefreshBodyShadow();
+            Loaded += (_, _) => SystemParameters.StaticPropertyChanged += OnSystemContrastChanged;
+            Unloaded += (_, _) => SystemParameters.StaticPropertyChanged -= OnSystemContrastChanged;
             ThemeManager.ThemeChanged += RefreshBodyShadow;
 
             // Ctrl+wheel changes density; plain wheel keeps scrolling the day. Preview, so it is
@@ -64,6 +66,12 @@ namespace Killendar.Views
                 e.Handled = true;
                 DensityStepped?.Invoke(e.Delta > 0 ? +1 : -1);
             };
+        }
+
+        private void OnSystemContrastChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == nameof(SystemParameters.HighContrast))
+                Dispatcher.BeginInvoke(new Action(Rebuild));
         }
 
         /// <summary>First day shown. Week starts on the culture's first day; Day is just the anchor.</summary>

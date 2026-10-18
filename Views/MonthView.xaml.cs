@@ -51,6 +51,8 @@ namespace Killendar.Views
         public MonthView()
         {
             InitializeComponent();
+            Loaded += (_, _) => SystemParameters.StaticPropertyChanged += OnSystemContrastChanged;
+            Unloaded += (_, _) => SystemParameters.StaticPropertyChanged -= OnSystemContrastChanged;
             SetResourceReference(AutomationProperties.NameProperty, "Str_View_Month");
             if (int.TryParse(Settings.Get("MonthVisibleWeeks"), out int saved))
                 _lastRollingWeeks = Math.Max(1, Math.Min(6, saved));
@@ -114,6 +116,12 @@ namespace Killendar.Views
         }
 
         internal bool IsRollingMode => _visibleWeeks > 0;
+
+        private void OnSystemContrastChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == nameof(SystemParameters.HighContrast))
+                Dispatcher.BeginInvoke(new Action(Rebuild));
+        }
 
         internal void SetRollingMode(bool rolling)
         {
@@ -269,10 +277,10 @@ namespace Killendar.Views
                     // Draw separators only where another real day of this month follows. Edges
                     // against spillover dates are the silhouette perimeter, not grid lines; a
                     // stroke there puts the unwanted box back around the hollowed-out days.
-                    bool rightSeparator = inMonth && c < 6 &&
-                        start.AddDays(r * 7 + c + 1).Month == _anchor.Month;
-                    bool bottomSeparator = inMonth && r < rows - 1 &&
-                        start.AddDays((r + 1) * 7 + c).Month == _anchor.Month;
+                    bool rightSeparator = c < 6 && (SystemParameters.HighContrast || inMonth &&
+                        start.AddDays(r * 7 + c + 1).Month == _anchor.Month);
+                    bool bottomSeparator = r < rows - 1 && (SystemParameters.HighContrast || inMonth &&
+                        start.AddDays((r + 1) * 7 + c).Month == _anchor.Month);
                     var cell = BuildDayCell(date, inMonth, date == today,
                                             c, rightSeparator, bottomSeparator, multiDayLanes);
                     Grid.SetRow(cell, r);
@@ -367,7 +375,7 @@ namespace Killendar.Views
 
             var cell = new Border
             {
-                BorderThickness = inMonth
+                BorderThickness = inMonth || SystemParameters.HighContrast
                     ? new Thickness(0, 0, rightSeparator ? 1 : 0, bottomSeparator ? 1 : 0)
                     : new Thickness(0),
                 Cursor = Cursors.Hand,
