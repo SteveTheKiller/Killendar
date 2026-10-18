@@ -132,6 +132,8 @@ namespace Killendar.Services
                 : new Uri($"pack://application:,,,/Themes/{theme}.xaml");
             var newDict = new ResourceDictionary { Source = uri };
             bool themeOwnsRadioHover = newDict.Contains("RadioHoverFgBrush");
+            bool themeOwnsCheckFill = newDict.Contains("CheckBoxCheckedBrush");
+            bool themeOwnsCheckMark = newDict.Contains("CheckMarkBrush");
             CompleteKillendarPalette(newDict, theme);
             // Accent overlay: Dark/Light/Black recolor their accent-family keys on top of the base
             // green. Green is the base itself, so it needs no overlay. Overlays live in Accents/<Family>/.
@@ -224,7 +226,11 @@ namespace Killendar.Services
             if (theme != Theme.Light)
                 newDict["OutlineRestBrush"] = newDict["OutlineBtnBrush"];
             newDict["KsCatAppt"] = newDict["PrimaryBrush"];
-            if (theme == Theme.SE98) newDict["CheckBoxCheckedBrush"] = newDict["PrimaryBrush"];
+            // The check box fill and mark are derived from the base palette before the accent
+            // overlay, so they still hold the base green. Take them from the accent in every
+            // theme, unless the palette states its own.
+            if (!themeOwnsCheckFill) newDict["CheckBoxCheckedBrush"] = newDict["PrimaryBrush"];
+            if (!themeOwnsCheckMark) newDict["CheckMarkBrush"] = newDict["OnPrimaryBrush"];
             if (!newDict.Contains("ComboHighlightTextBrush"))
                 newDict["ComboHighlightTextBrush"] = newDict["PrimaryBrush"];
             if (!newDict.Contains("OutlineHoverTextBrush"))
