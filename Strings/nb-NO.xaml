@@ -82,6 +82,12 @@
     <sys:String x:Key="Str_Hint_Attendees">kommaseparert</sys:String>
     <sys:String x:Key="Str_Hint_Date">åååå-mm-dd</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">Velg en dato</sys:String>
+    <sys:String x:Key="Str_A11y_StartDate">Startdato</sys:String>
+    <sys:String x:Key="Str_A11y_StartTime">Starttid</sys:String>
+    <sys:String x:Key="Str_A11y_EndDate">Sluttdato</sys:String>
+    <sys:String x:Key="Str_A11y_EndTime">Sluttid</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseStartDate">Velg startdato</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseEndDate">Velg sluttdato</sys:String>
     <sys:String x:Key="Str_Hint_Time">t:mm am/pm eller 24 t</sys:String>
     <sys:String x:Key="Str_Hint_AttendeesTip">Kommaseparerte e-postadresser</sys:String>
     <sys:String x:Key="Str_Chk_AllDayOff">[ ] hele dagen</sys:String>

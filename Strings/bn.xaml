@@ -389,6 +389,12 @@
     <sys:String x:Key="Str_About_PhotonPrivacy">Photon/Komoot পরিষেবা ব্যবহার করুন</sys:String>
     <sys:String x:Key="Str_Location_NoResults">কোনো ঠিকানার পরামর্শ নেই</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">একটি তারিখ নির্বাচন করুন</sys:String>
+    <sys:String x:Key="Str_A11y_StartDate">শুরুর তারিখ</sys:String>
+    <sys:String x:Key="Str_A11y_StartTime">শুরুর সময়</sys:String>
+    <sys:String x:Key="Str_A11y_EndDate">শেষের তারিখ</sys:String>
+    <sys:String x:Key="Str_A11y_EndTime">শেষের সময়</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseStartDate">শুরুর তারিখ নির্বাচন করুন</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseEndDate">শেষের তারিখ নির্বাচন করুন</sys:String>
     <sys:String x:Key="Str_Ctx_OpenAppointment">অ্যাপয়েন্টমেন্ট খুলুন</sys:String>
     <sys:String x:Key="Str_Ctx_Shrink">সংকুচিত করুন</sys:String>
     <sys:String x:Key="Str_Ctx_Expand">প্রসারিত করুন</sys:String>

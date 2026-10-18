@@ -389,6 +389,12 @@
     <sys:String x:Key="Str_About_PhotonPrivacy">Photon/Komoot hizmetini kullan</sys:String>
     <sys:String x:Key="Str_Location_NoResults">Adres önerisi yok</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">Bir tarih seç</sys:String>
+    <sys:String x:Key="Str_A11y_StartDate">Başlangıç tarihi</sys:String>
+    <sys:String x:Key="Str_A11y_StartTime">Başlangıç saati</sys:String>
+    <sys:String x:Key="Str_A11y_EndDate">Bitiş tarihi</sys:String>
+    <sys:String x:Key="Str_A11y_EndTime">Bitiş saati</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseStartDate">Başlangıç tarihini seç</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseEndDate">Bitiş tarihini seç</sys:String>
     <sys:String x:Key="Str_Ctx_OpenAppointment">Randevuyu aç</sys:String>
     <sys:String x:Key="Str_Ctx_Shrink">Küçült</sys:String>
     <sys:String x:Key="Str_Ctx_Expand">Genişlet</sys:String>

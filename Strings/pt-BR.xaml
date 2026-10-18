@@ -82,6 +82,12 @@
     <sys:String x:Key="Str_Hint_Attendees">separados por vírgula</sys:String>
     <sys:String x:Key="Str_Hint_Date">aaaa-mm-dd</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">Escolher uma data</sys:String>
+    <sys:String x:Key="Str_A11y_StartDate">Data de início</sys:String>
+    <sys:String x:Key="Str_A11y_StartTime">Hora de início</sys:String>
+    <sys:String x:Key="Str_A11y_EndDate">Data de término</sys:String>
+    <sys:String x:Key="Str_A11y_EndTime">Hora de término</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseStartDate">Escolher a data de início</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseEndDate">Escolher a data de término</sys:String>
     <sys:String x:Key="Str_Hint_Time">h:mm am/pm ou 24h</sys:String>
     <sys:String x:Key="Str_Hint_AttendeesTip">Endereços de email separados por vírgula</sys:String>
     <sys:String x:Key="Str_Chk_AllDayOff">[ ] dia inteiro</sys:String>

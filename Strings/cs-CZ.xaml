@@ -389,6 +389,12 @@
     <sys:String x:Key="Str_About_PhotonPrivacy">Používat službu Photon/Komoot</sys:String>
     <sys:String x:Key="Str_Location_NoResults">Žádné návrhy adres</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">Vybrat datum</sys:String>
+    <sys:String x:Key="Str_A11y_StartDate">Datum začátku</sys:String>
+    <sys:String x:Key="Str_A11y_StartTime">Čas začátku</sys:String>
+    <sys:String x:Key="Str_A11y_EndDate">Datum konce</sys:String>
+    <sys:String x:Key="Str_A11y_EndTime">Čas konce</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseStartDate">Vybrat datum začátku</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseEndDate">Vybrat datum konce</sys:String>
     <sys:String x:Key="Str_Ctx_OpenAppointment">Otevřít událost</sys:String>
     <sys:String x:Key="Str_Ctx_Shrink">Sbalit</sys:String>
     <sys:String x:Key="Str_Ctx_Expand">Rozbalit</sys:String>

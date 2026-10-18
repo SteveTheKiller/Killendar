@@ -389,6 +389,12 @@
     <sys:String x:Key="Str_About_PhotonPrivacy">使用 Photon/Komoot 服務</sys:String>
     <sys:String x:Key="Str_Location_NoResults">沒有地址建議</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">選擇日期</sys:String>
+    <sys:String x:Key="Str_A11y_StartDate">開始日期</sys:String>
+    <sys:String x:Key="Str_A11y_StartTime">開始時間</sys:String>
+    <sys:String x:Key="Str_A11y_EndDate">結束日期</sys:String>
+    <sys:String x:Key="Str_A11y_EndTime">結束時間</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseStartDate">選擇開始日期</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseEndDate">選擇結束日期</sys:String>
     <sys:String x:Key="Str_Ctx_OpenAppointment">開啟行程</sys:String>
     <sys:String x:Key="Str_Ctx_Shrink">收合</sys:String>
     <sys:String x:Key="Str_Ctx_Expand">展開</sys:String>

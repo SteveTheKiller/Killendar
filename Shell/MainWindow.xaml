@@ -572,16 +572,16 @@
                                                     <ColumnDefinition Width="96"/>
                                                     <ColumnDefinition Width="26"/>
                                                 </Grid.ColumnDefinitions>
-                                                <TextBox x:Name="FieldStartDate" Grid.Column="0" Style="{StaticResource DarkTextBox}"
+                                                <TextBox x:Name="FieldStartDate" Grid.Column="0" Style="{StaticResource DarkTextBox}" AutomationProperties.Name="{DynamicResource Str_A11y_StartDate}"
                                                          Background="Transparent" BorderThickness="0" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,3"
                                                          TextChanged="FieldStart_TextChanged" ToolTip="{DynamicResource Str_Hint_Date}"/>
-                                                <Button x:Name="StartDatePickerBtn" Grid.Column="1" Content="&#xE787;" Click="StartDatePicker_Click"
+                                                <Button x:Name="StartDatePickerBtn" Grid.Column="1" Content="&#xE787;" Click="StartDatePicker_Click" AutomationProperties.Name="{DynamicResource Str_A11y_ChooseStartDate}"
                                                         Style="{StaticResource SurfaceButton}" Background="Transparent" BorderThickness="0"
                                                         FontFamily="Segoe MDL2 Assets" FontSize="12" Padding="0"
                                                         ToolTip="{DynamicResource Str_TT_ChooseDate}"/>
                                             </Grid>
                                         </Border>
-                                        <TextBox x:Name="FieldStartTime" Grid.Column="3" Style="{StaticResource DarkTextBox}" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,3"
+                                        <TextBox x:Name="FieldStartTime" Grid.Column="3" Style="{StaticResource DarkTextBox}" AutomationProperties.Name="{DynamicResource Str_A11y_StartTime}" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,3"
                                                  TextChanged="FieldStart_TextChanged" ToolTip="{DynamicResource Str_Hint_Time}"/>
                                     </Grid>
 
@@ -599,16 +599,16 @@
                                                     <ColumnDefinition Width="96"/>
                                                     <ColumnDefinition Width="26"/>
                                                 </Grid.ColumnDefinitions>
-                                                <TextBox x:Name="FieldEndDate" Grid.Column="0" Style="{StaticResource DarkTextBox}"
+                                                <TextBox x:Name="FieldEndDate" Grid.Column="0" Style="{StaticResource DarkTextBox}" AutomationProperties.Name="{DynamicResource Str_A11y_EndDate}"
                                                          Background="Transparent" BorderThickness="0" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,3"
                                                          ToolTip="{DynamicResource Str_Hint_Date}"/>
-                                                <Button x:Name="EndDatePickerBtn" Grid.Column="1" Content="&#xE787;" Click="EndDatePicker_Click"
+                                                <Button x:Name="EndDatePickerBtn" Grid.Column="1" Content="&#xE787;" Click="EndDatePicker_Click" AutomationProperties.Name="{DynamicResource Str_A11y_ChooseEndDate}"
                                                         Style="{StaticResource SurfaceButton}" Background="Transparent" BorderThickness="0"
                                                         FontFamily="Segoe MDL2 Assets" FontSize="12" Padding="0"
                                                         ToolTip="{DynamicResource Str_TT_ChooseDate}"/>
                                             </Grid>
                                         </Border>
-                                        <TextBox x:Name="FieldEndTime" Grid.Column="3" Style="{StaticResource DarkTextBox}" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,3" ToolTip="{DynamicResource Str_Hint_Time}"/>
+                                        <TextBox x:Name="FieldEndTime" Grid.Column="3" Style="{StaticResource DarkTextBox}" AutomationProperties.Name="{DynamicResource Str_A11y_EndTime}" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,3" ToolTip="{DynamicResource Str_Hint_Time}"/>
                                     </Grid>
 
                                     <!-- REPEATS. The chips and weekday buttons are built in code

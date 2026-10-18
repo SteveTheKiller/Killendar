@@ -82,6 +82,12 @@
     <sys:String x:Key="Str_Hint_Attendees">comma separated</sys:String>
     <sys:String x:Key="Str_Hint_Date">yyyy-mm-dd</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">Choose a date</sys:String>
+    <sys:String x:Key="Str_A11y_StartDate">Start date</sys:String>
+    <sys:String x:Key="Str_A11y_StartTime">Start time</sys:String>
+    <sys:String x:Key="Str_A11y_EndDate">End date</sys:String>
+    <sys:String x:Key="Str_A11y_EndTime">End time</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseStartDate">Choose the start date</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseEndDate">Choose the end date</sys:String>
     <sys:String x:Key="Str_Hint_Time">h:mm am/pm or 24h</sys:String>
     <sys:String x:Key="Str_Hint_AttendeesTip">Comma separated email addresses</sys:String>
     <sys:String x:Key="Str_Chk_AllDayOff">[ ] all day</sys:String>

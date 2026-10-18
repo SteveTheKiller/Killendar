@@ -82,6 +82,12 @@
     <sys:String x:Key="Str_Hint_Attendees">үтірмен бөлінген</sys:String>
     <sys:String x:Key="Str_Hint_Date">жжжж-аа-кк</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">Күнді таңдаңыз</sys:String>
+    <sys:String x:Key="Str_A11y_StartDate">Басталу күні</sys:String>
+    <sys:String x:Key="Str_A11y_StartTime">Басталу уақыты</sys:String>
+    <sys:String x:Key="Str_A11y_EndDate">Аяқталу күні</sys:String>
+    <sys:String x:Key="Str_A11y_EndTime">Аяқталу уақыты</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseStartDate">Басталу күнін таңдаңыз</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseEndDate">Аяқталу күнін таңдаңыз</sys:String>
     <sys:String x:Key="Str_Hint_Time">с:мм am/pm немесе 24 с</sys:String>
     <sys:String x:Key="Str_Hint_AttendeesTip">Үтірмен бөлінген электрондық пошта мекенжайлары</sys:String>
     <sys:String x:Key="Str_Chk_AllDayOff">[ ] күні бойы</sys:String>

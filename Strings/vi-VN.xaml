@@ -75,6 +75,12 @@
   <sys:String x:Key="Str_Hint_Attendees">phân tách bằng dấu phẩy</sys:String>
   <sys:String x:Key="Str_Hint_Date">yyyy-mm-dd</sys:String>
   <sys:String x:Key="Str_TT_ChooseDate">Chọn ngày</sys:String>
+  <sys:String x:Key="Str_A11y_StartDate">Ngày bắt đầu</sys:String>
+  <sys:String x:Key="Str_A11y_StartTime">Giờ bắt đầu</sys:String>
+  <sys:String x:Key="Str_A11y_EndDate">Ngày kết thúc</sys:String>
+  <sys:String x:Key="Str_A11y_EndTime">Giờ kết thúc</sys:String>
+  <sys:String x:Key="Str_A11y_ChooseStartDate">Chọn ngày bắt đầu</sys:String>
+  <sys:String x:Key="Str_A11y_ChooseEndDate">Chọn ngày kết thúc</sys:String>
   <sys:String x:Key="Str_Hint_Time">h:mm am/pm hoặc 24h</sys:String>
   <sys:String x:Key="Str_Hint_AttendeesTip">Các địa chỉ email được phân tách bằng dấu phẩy</sys:String>
   <sys:String x:Key="Str_Chk_AllDayOff">[ ] cả ngày</sys:String>

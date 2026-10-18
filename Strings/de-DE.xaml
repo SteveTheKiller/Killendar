@@ -389,6 +389,12 @@
     <sys:String x:Key="Str_About_PhotonPrivacy">Photon/Komoot-Dienst verwenden</sys:String>
     <sys:String x:Key="Str_Location_NoResults">Keine Adressvorschläge</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">Datum auswählen</sys:String>
+    <sys:String x:Key="Str_A11y_StartDate">Startdatum</sys:String>
+    <sys:String x:Key="Str_A11y_StartTime">Startzeit</sys:String>
+    <sys:String x:Key="Str_A11y_EndDate">Enddatum</sys:String>
+    <sys:String x:Key="Str_A11y_EndTime">Endzeit</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseStartDate">Startdatum auswählen</sys:String>
+    <sys:String x:Key="Str_A11y_ChooseEndDate">Enddatum auswählen</sys:String>
     <sys:String x:Key="Str_Ctx_OpenAppointment">Termin öffnen</sys:String>
     <sys:String x:Key="Str_Ctx_Shrink">Verkleinern</sys:String>
     <sys:String x:Key="Str_Ctx_Expand">Erweitern</sys:String>
