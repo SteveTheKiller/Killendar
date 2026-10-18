@@ -12,10 +12,13 @@ namespace Killendar.Cli
     {
         public static int Main(string[] args)
         {
+            if (args.Length > 1 && args[args.Length - 1] == "--json")
+                args = args.Take(args.Length - 1).ToArray();
             if (args.Length == 1 && args[0] == "--help")
             {
                 Console.WriteLine("killendar agenda <yyyy-MM-dd> <days 1..31> [--limit 1..100] [--database absolute.kcal]");
                 Console.WriteLine("killendar create <json> (requires an open, unlocked Killendar)");
+                Console.WriteLine("Output is JSON by default; an optional trailing --json is accepted.");
                 return 0;
             }
             if (args.Length == 2 && args[0] == "create")

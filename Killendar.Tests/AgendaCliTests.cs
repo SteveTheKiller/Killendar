@@ -65,8 +65,10 @@ namespace Killendar.Tests
             finally { Clean(path); }
         }
 
-        [Fact]
-        public void CliProcessReturnsAgendaJson()
+        [Theory]
+        [InlineData("")]
+        [InlineData(" --json")]
+        public void CliProcessReturnsAgendaJson(string outputOption)
         {
             string path = NewPath();
             try
@@ -81,7 +83,7 @@ namespace Killendar.Tests
                 });
                 writer.Close();
                 string executable = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Killendar.exe");
-                var start = new ProcessStartInfo(executable, $"--cli agenda 2026-10-01 1 --database \"{path}\"")
+                var start = new ProcessStartInfo(executable, $"--cli agenda 2026-10-01 1 --database \"{path}\"{outputOption}")
                 {
                     UseShellExecute = false,
                     CreateNoWindow = true,
