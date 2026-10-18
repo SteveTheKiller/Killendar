@@ -529,7 +529,7 @@
                                         MouseWheel="SidebarDensityBtn_MouseWheel"/>
                             </Grid>
 
-                            <ScrollViewer x:Name="EditorScroll" Style="{StaticResource ShadowScrollViewer}" Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,2,0"
+                            <ScrollViewer x:Name="EditorScroll" Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,2,0"
                                           AutomationProperties.LabeledBy="{Binding ElementName=SidebarTitle}">
                                 <StackPanel Margin="10,0,6,10">
                                     <!-- "This date or the whole series", shown only while editing one
@@ -745,7 +745,7 @@
                                  (DayAgendaPanel.cs); Edit on a row swaps to the editor above, and
                                  the editor's Save/Cancel/Delete come back here rather than
                                  closing the panel. Same two sidebar rows, visibility-swapped. -->
-                            <ScrollViewer x:Name="AgendaScroll" Style="{StaticResource ShadowScrollViewer}" Grid.Row="1" Visibility="Collapsed"
+                            <ScrollViewer x:Name="AgendaScroll" Grid.Row="1" Visibility="Collapsed"
                                           VerticalScrollBarVisibility="Auto" Padding="0,0,4,0">
                                 <!-- Each appointment stacks its time above its chip, leaving the
                                      full sidebar width for titles and details at narrow sizes. -->
@@ -1017,9 +1017,9 @@
                             </StackPanel>
 
                             <!-- LIST -->
-                            <ScrollViewer x:Name="KsListHostScroll" Grid.Row="2" Margin="0,0,-24,0" VerticalScrollBarVisibility="Auto"
+                            <ScrollViewer x:Name="KsListHostScroll" Grid.Row="2" VerticalScrollBarVisibility="Auto"
                                           HorizontalScrollBarVisibility="Disabled" PanningMode="VerticalOnly" Focusable="False">
-                                <StackPanel x:Name="KsListHost" Margin="0,0,24,0"/>
+                                <StackPanel x:Name="KsListHost"/>
                             </ScrollViewer>
 
                             <!-- MAP -->

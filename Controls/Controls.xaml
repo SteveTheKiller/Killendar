@@ -10,9 +10,6 @@
                     xmlns:kui="clr-namespace:Killendar.Controls"
                     xmlns:snap="clr-namespace:KillerFamily.Windowing"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="ScrollShadows.xaml"/>
-    </ResourceDictionary.MergedDictionaries>
 
     <!-- Shared film-grain tile. ImageSource is assigned once at startup (Chrome.ApplyGrainTexture)
          so global styles - like the context menus - can layer the same grain as the chrome/flyouts. -->
@@ -78,8 +75,8 @@
                 <Setter Property="Background" Value="{DynamicResource RowHoverBrush}"/>
             </Trigger>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="{DynamicResource SelectionBg}"/>
-                <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
+                <Setter Property="Background" Value="{DynamicResource RowSelectedBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -100,7 +97,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
                 <Setter Property="Effect">
                     <Setter.Value>
                         <DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="0" Opacity="{DynamicResource IconShadowOpacity}"/>
@@ -1754,7 +1751,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TreeView">
                     <Border Background="{TemplateBinding Background}" BorderThickness="0">
-                        <ScrollViewer Style="{StaticResource ShadowScrollViewer}"
+                        <ScrollViewer Style="{StaticResource BareScrollViewer}"
                                       Padding="{TemplateBinding Padding}"
                                       CanContentScroll="False"
                                       HorizontalScrollBarVisibility="Auto"

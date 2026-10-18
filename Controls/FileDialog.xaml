@@ -51,7 +51,7 @@
             </Border.Effect>
         </Border>
 
-<kui:PickerBorder x:Name="RootBorder" Opacity="0" BorderBrush="{DynamicResource DialogFrameBrush}" BorderThickness="1"
+        <kui:PickerBorder x:Name="RootBorder" Opacity="0" BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1"
                 Background="{DynamicResource BackgroundBrush}" CornerRadius="{DynamicResource PanelCornerRadius}" Margin="{DynamicResource DialogHaloMargin}">
             <Grid>
             <Grid.RowDefinitions>
@@ -180,7 +180,7 @@
                                 <Grid>
                                     <Border IsHitTestVisible="False" CornerRadius="{DynamicResource FlyoutCornerRadius}"
                                             Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
-                                    <ListBox x:Name="RecentsList" Style="{StaticResource ShadowListBox}" Background="Transparent" BorderThickness="0" Padding="2,4"
+                                    <ListBox x:Name="RecentsList" Background="Transparent" BorderThickness="0" Padding="2,4"
                                              Width="{Binding ActualWidth, ElementName=PathBox}" MaxHeight="260"
                                              ItemContainerStyle="{StaticResource PickerRow}"
                                              SelectionChanged="RecentsList_SelectionChanged"
@@ -235,7 +235,7 @@
                     <Border Grid.Row="2" Background="{DynamicResource PaneBrush}"
                             BorderBrush="{DynamicResource PaneBorderBrush}" BorderThickness="1"
                             CornerRadius="{DynamicResource PanelCornerRadius}"/>
-                    <ListBox x:Name="PlacesList" Style="{StaticResource ShadowListBox}" Grid.Row="2" Background="Transparent" BorderThickness="0" Padding="2,4"
+                    <ListBox x:Name="PlacesList" Grid.Row="2" Background="Transparent" BorderThickness="0" Padding="2,4"
                              ItemContainerStyle="{StaticResource PickerPlaceRow}" SelectionChanged="Places_SelectionChanged"
                              ContextMenuOpening="Places_ContextMenuOpening"
                              PreviewMouseLeftButtonDown="Places_PreviewMouseLeftButtonDown" PreviewMouseMove="Places_PreviewMouseMove"
@@ -284,7 +284,7 @@
                          places icons below - dead space that cost horizontal room.
                          (2026-07-30) -->
                     <TreeView x:Name="FolderTreeCtl" Grid.Row="0" Style="{StaticResource FolderTreeView}" Visibility="Collapsed"
-                              Padding="0,3,2,4"
+                              Margin="0,3,2,4"
                               TreeViewItem.Expanded="FolderTree_Expanded"
                               ContextMenuOpening="FolderTree_ContextMenuOpening"
                               SelectedItemChanged="FolderTree_SelectedItemChanged">
@@ -320,11 +320,79 @@
                             BorderBrush="{DynamicResource PaneBevelDarkBrush}" BorderThickness="{DynamicResource BevelLightThickness}"/>
                     <Border Grid.Row="2" IsHitTestVisible="False"
                             BorderBrush="{DynamicResource PaneBevelLightBrush}" BorderThickness="{DynamicResource BevelDarkThickness}"/>
+                    <!-- Edge fades, KillerShell's tree pattern verbatim (MainWindow.xaml): the
+                         overlay IS the surface - BackgroundBrush plus the same grain, exactly as
+                         KillerShell's, now that the pane is flat on the card - under an opacity
+                         mask, so rows dissolve into an exact match instead of a flat band.
+                         Hit-test-transparent; each edge only shows while there is something PAST
+                         it, ramped in code (SyncTreeEdgeFades). Right inset clears the
+                         scrollbar; the bottom margin is driven from code when a horizontal bar
+                         appears (SyncTreeFade). -->
+
+                    <Border x:Name="TreeFadeTop" Grid.Row="0" Height="18" Opacity="0"
+                            VerticalAlignment="Top" Margin="0,3,14,0" IsHitTestVisible="False">
+                        <Border.OpacityMask>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#FF000000" Offset="0"/>
+                                <GradientStop Color="#00000000" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.OpacityMask>
+                        <Grid>
+                            <Border Background="{DynamicResource BackgroundBrush}"/>
+                            <Border Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
+                        </Grid>
+                    </Border>
+                    <Border x:Name="TreeFadeBottom" Grid.Row="0" Height="22" Opacity="0"
+                            VerticalAlignment="Bottom" Margin="0,0,14,4" IsHitTestVisible="False">
+                        <Border.OpacityMask>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#00000000" Offset="0"/>
+                                <GradientStop Color="#FF000000" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.OpacityMask>
+                        <Grid>
+                            <Border Background="{DynamicResource BackgroundBrush}"/>
+                            <Border Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
+                        </Grid>
+                    </Border>
+                    <!-- Same edge fades for the places list (2026-07-30): rows dissolve
+                         at both ends unless the list is flush there. Same surface, same ramp
+                         (SyncPlacesEdgeFades); no scrollbar lift needed - horizontal scrolling
+                         is disabled on this list. -->
+                    <Border x:Name="PlacesFadeTop" Grid.Row="2" Height="18" Opacity="0"
+                            VerticalAlignment="Top" Margin="0,0,12,0" IsHitTestVisible="False">
+                        <Border.OpacityMask>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#FF000000" Offset="0"/>
+                                <GradientStop Color="#00000000" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.OpacityMask>
+                        <Grid>
+                            <Border Background="{DynamicResource BackgroundBrush}"/>
+                            <Border Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
+                        </Grid>
+                    </Border>
+                    <Border x:Name="PlacesFadeBottom" Grid.Row="2" Height="22" Opacity="0"
+                            VerticalAlignment="Bottom" Margin="0,0,12,0" IsHitTestVisible="False">
+                        <Border.OpacityMask>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#00000000" Offset="0"/>
+                                <GradientStop Color="#FF000000" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.OpacityMask>
+                        <Grid>
+                            <Border Background="{DynamicResource BackgroundBrush}"/>
+                            <Border Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
+                        </Grid>
+                    </Border>
                 </Grid>
 
                 <Grid Grid.Column="2">
-                  <Border Background="{DynamicResource PaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}"
-                          IsHitTestVisible="False" Effect="{DynamicResource PaneShadowEffect}"/>
+                  <Border Background="{DynamicResource PaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}" IsHitTestVisible="False">
+                    <Border.Effect>
+                      <DropShadowEffect Color="Black" BlurRadius="14" ShadowDepth="2" Direction="270" Opacity="{DynamicResource PaneShadowOpacity}"/>
+                    </Border.Effect>
+                  </Border>
                   <Border Background="{DynamicResource PaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}">
                   <Grid>
                     <Border IsHitTestVisible="False" CornerRadius="{DynamicResource ControlCornerRadius}"
@@ -356,7 +424,7 @@
                             </Button>
                         </Grid>
                         <Grid>
-                            <ListBox x:Name="FileList" Style="{StaticResource ShadowListBox}" Background="Transparent" BorderThickness="0" Padding="2,4"
+                            <ListBox x:Name="FileList" Background="Transparent" BorderThickness="0" Padding="2,4"
                                      AutomationProperties.Name="{DynamicResource Str_Col_Name}"
                                      ItemContainerStyle="{StaticResource PickerRow}"
                                      ItemTemplate="{StaticResource RowTemplate}"

@@ -20,9 +20,9 @@
         ShowInTaskbar="False">
 
     <!-- Dark tier, so the fields and list rows on top of it read as raised. -->
-<kui:PickerBorder x:Name="RootBorder" Opacity="0"
+    <kui:PickerBorder x:Name="RootBorder" Opacity="0"
             Background="{StaticResource BackgroundBrush}"
-            BorderBrush="{DynamicResource DialogFrameBrush}"
+            BorderBrush="{StaticResource CardBorderBrush}"
             BorderThickness="1"
             CornerRadius="{DynamicResource PanelCornerRadius}"
             Margin="{DynamicResource DialogHaloMargin}">
@@ -85,15 +85,19 @@
                     <TextBlock Text="{DynamicResource Str_Cat_Hint}" Foreground="{DynamicResource MutedTextBrush}"
                                FontSize="11" TextWrapping="Wrap" Margin="0,0,0,8"/>
                     <Grid>
-                        <Border Background="{DynamicResource PaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}"
-                                IsHitTestVisible="False" Effect="{DynamicResource PaneShadowEffect}"/>
+                        <Border Background="{DynamicResource PaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="12" ShadowDepth="2"
+                                                  Direction="270" Opacity="{DynamicResource PaneShadowOpacity}"/>
+                            </Border.Effect>
+                        </Border>
                         <Border Background="{DynamicResource PaneBrush}"
                                 BorderBrush="{DynamicResource PaneBorderBrush}" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
                             <Grid>
                         <Border IsHitTestVisible="False" CornerRadius="{DynamicResource ControlCornerRadius}"
                                 Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
-                        <ListBox x:Name="CategoryList" Style="{StaticResource ShadowListBox}" Height="208" Background="Transparent" BorderThickness="0"
-                                 HorizontalContentAlignment="Stretch" Padding="4"
+                        <ListBox x:Name="CategoryList" Height="200" Background="Transparent" BorderThickness="0"
+                                 HorizontalContentAlignment="Stretch" Margin="4"
                                  PreviewKeyDown="CategoryList_PreviewKeyDown">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">

@@ -296,11 +296,7 @@ namespace Killendar.Views
         {
             private readonly Action _open;
 
-            internal ChipBorder(Action open)
-            {
-                _open = open;
-                SetValue(CalendarKeyboardNavigation.IsAppointmentProperty, true);
-            }
+            internal ChipBorder(Action open) => _open = open;
 
             protected override AutomationPeer OnCreateAutomationPeer() => new ChipPeer(this);
 

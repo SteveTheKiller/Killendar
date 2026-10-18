@@ -287,7 +287,6 @@ namespace Killendar.Services
             Alias("KeyCapBrush", "SurfaceBrush");
             Alias("KsCatAppt", "PrimaryBrush");
             Alias("AppBorderBrush", "CardBorderBrush");
-            Alias("DialogFrameBrush", "AppBorderBrush");
             Alias("OutlineRestBrush", "OutlineBtnBrush");
             // The theme picker's checked row while hovered; Sepulchre sets it white in its
             // own file because its accent is its hover fill. KillerPDF's key.
@@ -399,14 +398,6 @@ namespace Killendar.Services
             if (!d.Contains("FrameInnerLightThickness")) d["FrameInnerLightThickness"] = new Thickness(0);
             if (!d.Contains("FrameInnerDarkThickness")) d["FrameInnerDarkThickness"] = new Thickness(0);
             if (!d.Contains("PaneShadowOpacity")) d["PaneShadowOpacity"] = square ? 0d : 0.6d;
-            d["PaneShadowEffect"] = null;
-            if (d["PaneShadowOpacity"] is double paneOpacity && paneOpacity > 0)
-            {
-                var shadow = new System.Windows.Media.Effects.DropShadowEffect
-                { Color = Colors.Black, BlurRadius = 16, ShadowDepth = 5, Direction = 270, Opacity = paneOpacity };
-                shadow.Freeze();
-                d["PaneShadowEffect"] = shadow;
-            }
             if (!d.Contains("PaneBevelDarkBrush")) d["PaneBevelDarkBrush"] = Brushes.Transparent;
             if (!d.Contains("PaneBevelLightBrush")) d["PaneBevelLightBrush"] = Brushes.Transparent;
             if (!d.Contains("PaneBevelDark2Brush")) d["PaneBevelDark2Brush"] = Brushes.Transparent;

@@ -18,9 +18,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - The website's About page lists KillerBench and KillerShot under Also try, with larger app icons.
 
 ### Changed
-- Tab enters the calendar once; arrow keys move between appointments, and Tab leaves the grid.
-- The shortcut list's scrollbar sits at the card edge while its text keeps the existing inset.
-- Appointment editor, agenda, dialog lists and file-picker shadows extend beneath the scrollbars; 98SE stays flat.
 - Rail buttons and the collapse arrow sit centered across the rail on either side, with the same space toward the panel and the edge, and the arrow is larger. The side choices in the rail's right-click menu show a picture of each position.
 - The period header above the calendar, the sidebar date heading and the dialog headings use Lacquer, the wordmark's app-name face, in place of Killer Sans. 98SE keeps Killer Sans.
 - Context menus use Killer Sans UI like the rest of the interface instead of Segoe UI.
@@ -32,9 +29,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Primary, outline and secondary buttons sit raised on a soft shadow that lifts on hover and sets down when pressed. 98SE keeps its flat beveled buttons.
 
 ### Fixed
-- Dialog pane shadows use the family effect and clear when switching to 98SE.
-- Dialog and file-picker outlines follow the app frame color and stay black on 98SE.
-- Selected table rows keep readable text in every theme and accent.
 - The window opens fully on screen on a small or high-scaling display, or when its saved size came from a bigger monitor, instead of running off the edges, and changing the app size no longer pulls a window on another monitor back to the main one.
 - Checked check boxes take the chosen accent on Dark, Light and Black instead of staying green.
 - On the Light theme's Yellow and Orange accents, buttons, links, tabs and accent icons keep their color with a thin gray outline around accent text and icons, instead of turning near-black or brown.

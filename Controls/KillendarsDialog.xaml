@@ -21,9 +21,9 @@
         ShowInTaskbar="False">
 
     <!-- Dark tier, so the fields and list rows on top of it read as raised. -->
-<kui:PickerBorder x:Name="RootBorder" Opacity="0"
+    <kui:PickerBorder x:Name="RootBorder" Opacity="0"
             Background="{StaticResource BackgroundBrush}"
-            BorderBrush="{DynamicResource DialogFrameBrush}"
+            BorderBrush="{StaticResource CardBorderBrush}"
             BorderThickness="1"
             CornerRadius="{DynamicResource PanelCornerRadius}"
             Margin="{DynamicResource DialogHaloMargin}">
@@ -94,8 +94,8 @@
                         <Grid>
                         <Border IsHitTestVisible="False" CornerRadius="{DynamicResource ControlCornerRadius}"
                                 Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
-                        <ListBox x:Name="KcList" Style="{StaticResource ShadowListBox}" Height="188" Background="Transparent" BorderThickness="0"
-                                 HorizontalContentAlignment="Stretch" Padding="4"
+                        <ListBox x:Name="KcList" Height="180" Background="Transparent" BorderThickness="0"
+                                 HorizontalContentAlignment="Stretch" Margin="4"
                                  MouseDoubleClick="KcList_MouseDoubleClick"
                                  PreviewKeyDown="KcList_PreviewKeyDown"
                                  PreviewMouseRightButtonDown="KcList_PreviewMouseRightButtonDown">

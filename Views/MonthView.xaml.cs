@@ -51,7 +51,6 @@ namespace Killendar.Views
         public MonthView()
         {
             InitializeComponent();
-            CalendarKeyboardNavigation.Attach(CalGrid);
             SetResourceReference(AutomationProperties.NameProperty, "Str_View_Month");
             if (int.TryParse(Settings.Get("MonthVisibleWeeks"), out int saved))
                 _lastRollingWeeks = Math.Max(1, Math.Min(6, saved));
@@ -424,9 +423,8 @@ namespace Killendar.Views
                 VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
                 HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
                 PanningMode = PanningMode.VerticalOnly,
-                Focusable = false,
             };
-            // Keep the date available to automation without adding a separate Tab stop.
+            // Each day's scroll area takes keyboard focus, so it carries the date as its name.
             AutomationProperties.SetName(eventScroll, date.ToString("D", CultureInfo.CurrentCulture));
             Grid.SetRow(eventScroll, 1);
             content.Children.Add(eventScroll);
