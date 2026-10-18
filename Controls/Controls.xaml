@@ -1754,7 +1754,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TreeView">
                     <Border Background="{TemplateBinding Background}" BorderThickness="0">
-                        <ScrollViewer Style="{StaticResource BareScrollViewer}"
+                        <ScrollViewer Style="{StaticResource ShadowScrollViewer}"
                                       Padding="{TemplateBinding Padding}"
                                       CanContentScroll="False"
                                       HorizontalScrollBarVisibility="Auto"

@@ -107,64 +107,9 @@ namespace Killendar.Controls
                 catch (UnauthorizedAccessException) { continue; }
                 if (ready) TreeRoots.Add(new FolderNode(d));
             }
-
-            // Edge fades follow the scroll position (KillerShell TreePanel.cs). ScrollChanged is
-            // handled at the TreeView rather than dug out of its template: it bubbles, so the
-            // inner ScrollViewer is reached without needing to have found it first. Loaded and
-            // SizeChanged cover the passes where nothing scrolled but the extent moved.
-            FolderTreeCtl.AddHandler(ScrollViewer.ScrollChangedEvent,
-                new ScrollChangedEventHandler((_, _) => { SyncTreeEdgeFades(); SyncTreeFade(); }));
-            FolderTreeCtl.SizeChanged += (_, _) => { SyncTreeEdgeFades(); SyncTreeFade(); };
-            FolderTreeCtl.Loaded      += (_, _) => { SyncTreeEdgeFades(); SyncTreeFade(); };
-
         }
 
 
-        /// <summary>
-        /// Fade each edge only while there is something PAST it, ramped over the fade's own
-        /// height: none at the very top, none at the very bottom, full in between. A proportional
-        /// ramp rather than a flip - at one pixel of scroll it is one pixel's worth of fade, so
-        /// neither edge ever pops. (KillerShell TreePanel.SyncTreeEdgeFades, verbatim.)
-        /// </summary>
-        private void SyncTreeEdgeFades()
-        {
-            var sv = FindDescendant<ScrollViewer>(FolderTreeCtl);
-            if (sv == null) return;
-
-            TreeFadeTop.Opacity    = Ramp(sv.VerticalOffset, TreeFadeTop.Height, 18);
-            TreeFadeBottom.Opacity = Ramp(sv.ExtentHeight - sv.ViewportHeight - sv.VerticalOffset,
-                                          TreeFadeBottom.Height, 22);
-        }
-
-        // Height is NaN until the border has been laid out, hence the fallback.
-        private static double Ramp(double distance, double height, double fallback)
-        {
-            double h = double.IsNaN(height) || height <= 0 ? fallback : height;
-            return Math.Min(1, Math.Max(0, distance) / h);
-        }
-
-        /// <summary>
-        /// Keep the bottom edge fade sitting on the tree's last visible ROW rather than on the
-        /// horizontal scrollbar underneath it. The bar's real height is measured, not taken from
-        /// SystemParameters - the themed template is not the system metric. Base 4 is the tree's
-        /// own bottom margin. (KillerShell TreePanel.SyncTreeFade, adapted.)
-        /// </summary>
-        private void SyncTreeFade()
-        {
-            var sv = FindDescendant<ScrollViewer>(FolderTreeCtl);
-            double lift = 0;
-
-            if (sv != null && sv.ComputedHorizontalScrollBarVisibility == Visibility.Visible)
-            {
-                var bar = FindHorizontalBar(sv);
-                lift = bar?.ActualHeight ?? SystemParameters.HorizontalScrollBarHeight;
-            }
-
-            var m = TreeFadeBottom.Margin;
-            double want = 4 + lift;
-            if (Math.Abs(m.Bottom - want) < 0.5) return;     // no churn on every layout pass
-            TreeFadeBottom.Margin = new Thickness(m.Left, m.Top, m.Right, want);
-        }
 
         private static T? FindDescendant<T>(DependencyObject root) where T : DependencyObject
         {
@@ -179,21 +124,6 @@ namespace Killendar.Controls
             return null;
         }
 
-        // FindDescendant takes the FIRST match of a type, and a ScrollViewer has two scrollbars,
-        // so the orientation has to be checked rather than assumed.
-        private static System.Windows.Controls.Primitives.ScrollBar? FindHorizontalBar(DependencyObject root)
-        {
-            int n = System.Windows.Media.VisualTreeHelper.GetChildrenCount(root);
-            for (int i = 0; i < n; i++)
-            {
-                var c = System.Windows.Media.VisualTreeHelper.GetChild(root, i);
-                if (c is System.Windows.Controls.Primitives.ScrollBar sb &&
-                    sb.Orientation == Orientation.Horizontal) return sb;
-                var deeper = FindHorizontalBar(c);
-                if (deeper != null) return deeper;
-            }
-            return null;
-        }
 
         // TreeViewItem.Expanded is attached at the TreeView, so this fires for every node at any
         // depth - which is the point: one handler drives the whole lazy load.

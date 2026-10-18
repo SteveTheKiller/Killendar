@@ -284,7 +284,7 @@
                          places icons below - dead space that cost horizontal room.
                          (2026-07-30) -->
                     <TreeView x:Name="FolderTreeCtl" Grid.Row="0" Style="{StaticResource FolderTreeView}" Visibility="Collapsed"
-                              Margin="0,3,2,4"
+                              Padding="0,3,2,4"
                               TreeViewItem.Expanded="FolderTree_Expanded"
                               ContextMenuOpening="FolderTree_ContextMenuOpening"
                               SelectedItemChanged="FolderTree_SelectedItemChanged">
@@ -320,41 +320,6 @@
                             BorderBrush="{DynamicResource PaneBevelDarkBrush}" BorderThickness="{DynamicResource BevelLightThickness}"/>
                     <Border Grid.Row="2" IsHitTestVisible="False"
                             BorderBrush="{DynamicResource PaneBevelLightBrush}" BorderThickness="{DynamicResource BevelDarkThickness}"/>
-                    <!-- Edge fades, KillerShell's tree pattern verbatim (MainWindow.xaml): the
-                         overlay IS the surface - BackgroundBrush plus the same grain, exactly as
-                         KillerShell's, now that the pane is flat on the card - under an opacity
-                         mask, so rows dissolve into an exact match instead of a flat band.
-                         Hit-test-transparent; each edge only shows while there is something PAST
-                         it, ramped in code (SyncTreeEdgeFades). Right inset clears the
-                         scrollbar; the bottom margin is driven from code when a horizontal bar
-                         appears (SyncTreeFade). -->
-
-                    <Border x:Name="TreeFadeTop" Grid.Row="0" Height="18" Opacity="0"
-                            VerticalAlignment="Top" Margin="0,3,14,0" IsHitTestVisible="False">
-                        <Border.OpacityMask>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStop Color="#FF000000" Offset="0"/>
-                                <GradientStop Color="#00000000" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.OpacityMask>
-                        <Grid>
-                            <Border Background="{DynamicResource BackgroundBrush}"/>
-                            <Border Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
-                        </Grid>
-                    </Border>
-                    <Border x:Name="TreeFadeBottom" Grid.Row="0" Height="22" Opacity="0"
-                            VerticalAlignment="Bottom" Margin="0,0,14,4" IsHitTestVisible="False">
-                        <Border.OpacityMask>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStop Color="#00000000" Offset="0"/>
-                                <GradientStop Color="#FF000000" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.OpacityMask>
-                        <Grid>
-                            <Border Background="{DynamicResource BackgroundBrush}"/>
-                            <Border Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
-                        </Grid>
-                    </Border>
                 </Grid>
 
                 <Grid Grid.Column="2">
