@@ -14,8 +14,8 @@ namespace Killendar.Cli
         {
             if (args.Length == 1 && args[0] == "--help")
             {
-                Console.WriteLine("Killendar CLI: agenda <yyyy-MM-dd> <days 1..31> [--limit 1..100] [--database absolute.kcal]");
-                Console.WriteLine("create <json> (requires an open, unlocked Killendar)");
+                Console.WriteLine("killendar agenda <yyyy-MM-dd> <days 1..31> [--limit 1..100] [--database absolute.kcal]");
+                Console.WriteLine("killendar create <json> (requires an open, unlocked Killendar)");
                 return 0;
             }
             if (args.Length == 2 && args[0] == "create")

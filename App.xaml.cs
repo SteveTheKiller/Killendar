@@ -87,15 +87,14 @@ namespace Killendar
         {
             KillerFamily.Accessibility.AccessibleControls.Initialize();
             KillerFamily.Theming.AccentShadow.Initialize();
-            if (e.Args.Length > 0 && string.Equals(e.Args[0], "--cli", StringComparison.OrdinalIgnoreCase))
+            var cliArgs = KillerFamily.CommandLine.CommandLineEntry.GetArguments(e.Args, ["agenda", "create"]);
+            if (cliArgs != null)
             {
                 Services.CliConsole.AttachToParent();
                 using var output = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true };
                 using var error = new StreamWriter(Console.OpenStandardError()) { AutoFlush = true };
                 Console.SetOut(output);
                 Console.SetError(error);
-                var cliArgs = new string[e.Args.Length - 1];
-                Array.Copy(e.Args, 1, cliArgs, 0, cliArgs.Length);
                 Shutdown(Killendar.Cli.Program.Main(cliArgs));
                 return;
             }

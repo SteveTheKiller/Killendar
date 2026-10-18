@@ -8,13 +8,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Added
 - Added a right-hand position for the appointment panel and its rail, picked from the rail's right-click menu or with Alt+Shift+Left and Alt+Shift+Right. The arrow of the side the panel is already on opens or closes it.
-- Added Start with Windows to the About card. It starts Killendar minimized on the taskbar when you sign in, and stays off until you turn it on.
-- Added Close to system tray to the About card. With it on, closing the window keeps Killendar running in the notification area, where its icon brings the window back or exits; it stays off until you turn it on.
+- Installed copies add their folder to PATH, so commands such as `killendar agenda` run from any new terminal. `killendar --help` lists commands, and `--cli` stays compatible. Portable copies run from their folder or full path. Uninstalling removes the installed PATH entry.
 - Added a dropdown arrow beside the Month button that switches Month view between a calendar month and rolling weeks, and the R key to toggle it. The choice was only reachable by right-clicking the Month button.
 - Killendar checks for updates on startup and offers a newer release in a dialog with an Always check on startup box. A Check for updates on startup checkbox at the top of the About options turns the check back on.
+- Added Start with Windows to the About card. It starts Killendar minimized on the taskbar when you sign in, and stays off until you turn it on.
+- Added Close to system tray to the About card. With it on, closing the window keeps Killendar running in the notification area, where its icon brings the window back or exits; it stays off until you turn it on.
 - Alt+Shift+G turns Film Grain on or off. It is listed in the shortcuts overlay, and the keyboard map has a new Alt+Shift layer for it.
 - The website's top bar has a Microsoft Store button on every page, and the MCP page has a Microsoft Store button for KillerMCP.
-- Added the install folder to PATH for installed copies, so `killendar --cli` runs from any new terminal and prints its results there. Uninstalling removes it again.
 - The website's About page lists KillerBench and KillerShot under Also try, with larger app icons.
 
 ### Changed
