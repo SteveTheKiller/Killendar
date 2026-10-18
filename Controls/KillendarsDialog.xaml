@@ -94,8 +94,8 @@
                         <Grid>
                         <Border IsHitTestVisible="False" CornerRadius="{DynamicResource ControlCornerRadius}"
                                 Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
-                        <ListBox x:Name="KcList" Height="180" Background="Transparent" BorderThickness="0"
-                                 HorizontalContentAlignment="Stretch" Margin="4"
+                        <ListBox x:Name="KcList" Style="{StaticResource ShadowListBox}" Height="188" Background="Transparent" BorderThickness="0"
+                                 HorizontalContentAlignment="Stretch" Padding="4"
                                  MouseDoubleClick="KcList_MouseDoubleClick"
                                  PreviewKeyDown="KcList_PreviewKeyDown"
                                  PreviewMouseRightButtonDown="KcList_PreviewMouseRightButtonDown">
