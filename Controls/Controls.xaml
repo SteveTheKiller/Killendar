@@ -10,6 +10,9 @@
                     xmlns:kui="clr-namespace:Killendar.Controls"
                     xmlns:snap="clr-namespace:KillerFamily.Windowing"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ScrollShadows.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
 
     <!-- Shared film-grain tile. ImageSource is assigned once at startup (Chrome.ApplyGrainTexture)
          so global styles - like the context menus - can layer the same grain as the chrome/flyouts. -->
