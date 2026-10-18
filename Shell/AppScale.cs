@@ -74,10 +74,12 @@ namespace Killendar.Shell
                 double currentHeight = ActualHeight > 0 ? ActualHeight : Height;
                 Width = Math.Max(currentWidth, MinWidth);
                 Height = Math.Max(currentHeight, MinHeight);
-                Left = Math.Max(SystemParameters.WorkArea.Left,
-                                Math.Min(Left, SystemParameters.WorkArea.Right - Width));
-                Top = Math.Max(SystemParameters.WorkArea.Top,
-                               Math.Min(Top, SystemParameters.WorkArea.Bottom - Height));
+                // Keep the grown window inside its own monitor's work area. SystemParameters.WorkArea
+                // is the primary monitor only, and clamping to it dragged a window on another monitor
+                // to the primary on every launch. Before the HWND exists (the constructor restoring
+                // the saved scale) the SourceInitialized fit does this instead.
+                if (PresentationSource.FromVisual(this) != null)
+                    KillerFamily.Windowing.WorkAreaFit.Fit(this, keepMargin: false);
             }
 
             if (persist)
