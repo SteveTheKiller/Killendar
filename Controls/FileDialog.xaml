@@ -388,11 +388,8 @@
                 </Grid>
 
                 <Grid Grid.Column="2">
-                  <Border Background="{DynamicResource PaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}" IsHitTestVisible="False">
-                    <Border.Effect>
-                      <DropShadowEffect Color="Black" BlurRadius="14" ShadowDepth="2" Direction="270" Opacity="{DynamicResource PaneShadowOpacity}"/>
-                    </Border.Effect>
-                  </Border>
+                  <Border Background="{DynamicResource PaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}"
+                          IsHitTestVisible="False" Effect="{DynamicResource PaneShadowEffect}"/>
                   <Border Background="{DynamicResource PaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}">
                   <Grid>
                     <Border IsHitTestVisible="False" CornerRadius="{DynamicResource ControlCornerRadius}"

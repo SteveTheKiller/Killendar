@@ -85,12 +85,8 @@
                     <TextBlock Text="{DynamicResource Str_Cat_Hint}" Foreground="{DynamicResource MutedTextBrush}"
                                FontSize="11" TextWrapping="Wrap" Margin="0,0,0,8"/>
                     <Grid>
-                        <Border Background="{DynamicResource PaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" BlurRadius="12" ShadowDepth="2"
-                                                  Direction="270" Opacity="{DynamicResource PaneShadowOpacity}"/>
-                            </Border.Effect>
-                        </Border>
+                        <Border Background="{DynamicResource PaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}"
+                                IsHitTestVisible="False" Effect="{DynamicResource PaneShadowEffect}"/>
                         <Border Background="{DynamicResource PaneBrush}"
                                 BorderBrush="{DynamicResource PaneBorderBrush}" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
                             <Grid>
