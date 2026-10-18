@@ -51,7 +51,7 @@
             </Border.Effect>
         </Border>
 
-        <kui:PickerBorder x:Name="RootBorder" Opacity="0" BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1"
+<kui:PickerBorder x:Name="RootBorder" Opacity="0" BorderBrush="{DynamicResource DialogFrameBrush}" BorderThickness="1"
                 Background="{DynamicResource BackgroundBrush}" CornerRadius="{DynamicResource PanelCornerRadius}" Margin="{DynamicResource DialogHaloMargin}">
             <Grid>
             <Grid.RowDefinitions>

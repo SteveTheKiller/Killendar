@@ -21,9 +21,9 @@
         ShowInTaskbar="False">
 
     <!-- Dark tier, so the fields and list rows on top of it read as raised. -->
-    <kui:PickerBorder x:Name="RootBorder" Opacity="0"
+<kui:PickerBorder x:Name="RootBorder" Opacity="0"
             Background="{StaticResource BackgroundBrush}"
-            BorderBrush="{StaticResource CardBorderBrush}"
+            BorderBrush="{DynamicResource DialogFrameBrush}"
             BorderThickness="1"
             CornerRadius="{DynamicResource PanelCornerRadius}"
             Margin="{DynamicResource DialogHaloMargin}">

@@ -287,6 +287,7 @@ namespace Killendar.Services
             Alias("KeyCapBrush", "SurfaceBrush");
             Alias("KsCatAppt", "PrimaryBrush");
             Alias("AppBorderBrush", "CardBorderBrush");
+            Alias("DialogFrameBrush", "AppBorderBrush");
             Alias("OutlineRestBrush", "OutlineBtnBrush");
             // The theme picker's checked row while hovered; Sepulchre sets it white in its
             // own file because its accent is its hover fill. KillerPDF's key.
