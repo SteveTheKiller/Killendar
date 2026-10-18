@@ -63,8 +63,8 @@ namespace Killendar
         {
             if (MainWindow is not MainWindow win) return;
 
-            if (win.WindowState == WindowState.Minimized) win.WindowState = WindowState.Normal;
-            win.Activate();
+            // Also brings it back from the notification area (Close to system tray).
+            win.ShowFromTray();
             win.Topmost = true; win.Topmost = false;   // foreground nudge past the focus rules
 
             if (string.IsNullOrEmpty(path)) return;

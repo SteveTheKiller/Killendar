@@ -68,6 +68,8 @@ namespace Killendar.Shell
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
+            // Close to system tray: hide before the fade, so the window comes back as it was.
+            if (_tray.HideInstead(e)) return;
             if (Anim.FadeOutAndClose(this, ref _closeFaded))
             {
                 e.Cancel = true;

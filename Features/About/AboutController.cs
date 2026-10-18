@@ -43,6 +43,17 @@ namespace Killendar.Features
             _host.StartWithWindows = KillerFamily.Deployment.StartupRegistration.IsEnabled(AppInfo.DisplayName);
         }
 
+        /// <summary>Whether closing the main window hides it to the notification area. Read by
+        /// CloseToTray each time the window closes, so the checkbox takes effect at once.</summary>
+        internal static bool CloseToTrayEnabled => Settings.Get(KillerFamily.Shell.CloseToTray.SettingName) == "1";
+
+        /// <summary>Saves the Close to system tray choice from the About checkbox.</summary>
+        internal void SetCloseToTray(bool enabled)
+        {
+            Settings.Set(KillerFamily.Shell.CloseToTray.SettingName, enabled ? "1" : "0");
+            _host.CloseToTray = enabled;
+        }
+
         /// <summary>Once per run, after the calendar is open: when a newer release exists, offers it
         /// with an "Always check on startup" box so the check can be turned off right there. The
         /// About card's checkbox turns it back on. Skipped under --demo so captures stay clean.</summary>
@@ -94,6 +105,7 @@ namespace Killendar.Features
             _host.UpdateVisible = false;
             _host.StartupUpdateCheck = StartupCheckEnabled;
             _host.StartWithWindows = KillerFamily.Deployment.StartupRegistration.IsEnabled(AppInfo.DisplayName);
+            _host.CloseToTray = CloseToTrayEnabled;
 
             _host.ShowCard();
 

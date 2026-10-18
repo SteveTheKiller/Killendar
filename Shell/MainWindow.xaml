@@ -1193,6 +1193,11 @@
                                           Content="{DynamicResource Str_About_StartWithWindows}"
                                           FontSize="11" Margin="0,0,0,6"
                                           Click="AboutStartWithWindows_Click"/>
+                                <CheckBox x:Name="AboutCloseToTray"
+                                          Content="{DynamicResource Str_About_CloseToTray}"
+                                          ToolTip="{DynamicResource Str_About_CloseToTrayHint}"
+                                          FontSize="11" Margin="0,0,0,6"
+                                          Click="AboutCloseToTray_Click"/>
                                 <CheckBox x:Name="PhotonLookupToggle"
                                           Content="{DynamicResource Str_About_PhotonLookup}"
                                           FontSize="11"

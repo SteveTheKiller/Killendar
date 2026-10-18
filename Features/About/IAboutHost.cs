@@ -41,6 +41,10 @@ namespace Killendar.Features
         /// turns it on.</summary>
         bool StartWithWindows { set; }
 
+        /// <summary>The "Close to system tray" checkbox, under Start with Windows. Off until the user
+        /// turns it on.</summary>
+        bool CloseToTray { set; }
+
         /// <summary>Fades the About card in.</summary>
         void ShowCard();
     }
