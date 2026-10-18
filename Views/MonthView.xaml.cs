@@ -286,6 +286,10 @@ namespace Killendar.Views
                         ? start : placement.Event.Start.Date;
                     bool showTitle = weekStart.AddDays(placement.StartColumn) == visibleEventStart;
                     var chip = BuildMonthChip(placement.Event, spanning: true, showTitle);
+                    // An event that spans weeks has one bar per week, all in the same grid. The
+                    // week's first day tells a screen reader which bar it is on.
+                    AutomationProperties.SetName(chip, AutomationProperties.GetName(chip) + ", " +
+                        weekStart.AddDays(placement.StartColumn).ToString("D", CultureInfo.CurrentCulture));
                     chip.Margin = new Thickness(
                         placement.StartColumn == 0 ? 0 : 4,
                         MultiDayTop + placement.Row * MultiDayLaneHeight,
