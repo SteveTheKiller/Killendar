@@ -29,6 +29,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Primary, outline and secondary buttons sit raised on a soft shadow that lifts on hover and sets down when pressed. 98SE keeps its flat beveled buttons.
 
 ### Fixed
+- Selected table rows keep readable text in every theme and accent.
 - The window opens fully on screen on a small or high-scaling display, or when its saved size came from a bigger monitor, instead of running off the edges, and changing the app size no longer pulls a window on another monitor back to the main one.
 - Checked check boxes take the chosen accent on Dark, Light and Black instead of staying green.
 - On the Light theme's Yellow and Orange accents, buttons, links, tabs and accent icons keep their color with a thin gray outline around accent text and icons, instead of turning near-black or brown.

@@ -75,8 +75,8 @@
                 <Setter Property="Background" Value="{DynamicResource RowHoverBrush}"/>
             </Trigger>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="{DynamicResource RowSelectedBrush}"/>
-                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+                <Setter Property="Background" Value="{DynamicResource SelectionBg}"/>
+                <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -97,7 +97,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
                 <Setter Property="Effect">
                     <Setter.Value>
                         <DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="0" Opacity="{DynamicResource IconShadowOpacity}"/>
