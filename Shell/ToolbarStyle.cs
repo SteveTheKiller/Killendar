@@ -207,7 +207,7 @@ namespace Killendar.Shell
                     btn.Padding = new Thickness(8, 5, 8, 5);
                     break;
                 case LabelMode.Under:
-                    btn.Width = double.NaN; btn.MinWidth = 0; btn.Height = large ? 56 : 52;
+                    btn.Width = double.NaN; btn.MinWidth = 0; btn.Height = large ? 50 : 46;
                     btn.Padding = new Thickness(6, 4, 6, 4);
                     break;
                 default:   // None - icon only, the fixed KillerPDF box
