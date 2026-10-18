@@ -235,7 +235,7 @@
                     <Border Grid.Row="2" Background="{DynamicResource PaneBrush}"
                             BorderBrush="{DynamicResource PaneBorderBrush}" BorderThickness="1"
                             CornerRadius="{DynamicResource PanelCornerRadius}"/>
-                    <ListBox x:Name="PlacesList" Grid.Row="2" Background="Transparent" BorderThickness="0" Padding="2,4"
+                    <ListBox x:Name="PlacesList" Style="{StaticResource ShadowListBox}" Grid.Row="2" Background="Transparent" BorderThickness="0" Padding="2,4"
                              ItemContainerStyle="{StaticResource PickerPlaceRow}" SelectionChanged="Places_SelectionChanged"
                              ContextMenuOpening="Places_ContextMenuOpening"
                              PreviewMouseLeftButtonDown="Places_PreviewMouseLeftButtonDown" PreviewMouseMove="Places_PreviewMouseMove"
@@ -344,36 +344,6 @@
                     </Border>
                     <Border x:Name="TreeFadeBottom" Grid.Row="0" Height="22" Opacity="0"
                             VerticalAlignment="Bottom" Margin="0,0,14,4" IsHitTestVisible="False">
-                        <Border.OpacityMask>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStop Color="#00000000" Offset="0"/>
-                                <GradientStop Color="#FF000000" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.OpacityMask>
-                        <Grid>
-                            <Border Background="{DynamicResource BackgroundBrush}"/>
-                            <Border Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
-                        </Grid>
-                    </Border>
-                    <!-- Same edge fades for the places list (2026-07-30): rows dissolve
-                         at both ends unless the list is flush there. Same surface, same ramp
-                         (SyncPlacesEdgeFades); no scrollbar lift needed - horizontal scrolling
-                         is disabled on this list. -->
-                    <Border x:Name="PlacesFadeTop" Grid.Row="2" Height="18" Opacity="0"
-                            VerticalAlignment="Top" Margin="0,0,12,0" IsHitTestVisible="False">
-                        <Border.OpacityMask>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStop Color="#FF000000" Offset="0"/>
-                                <GradientStop Color="#00000000" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.OpacityMask>
-                        <Grid>
-                            <Border Background="{DynamicResource BackgroundBrush}"/>
-                            <Border Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
-                        </Grid>
-                    </Border>
-                    <Border x:Name="PlacesFadeBottom" Grid.Row="2" Height="22" Opacity="0"
-                            VerticalAlignment="Bottom" Margin="0,0,12,0" IsHitTestVisible="False">
                         <Border.OpacityMask>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                 <GradientStop Color="#00000000" Offset="0"/>

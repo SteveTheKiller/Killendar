@@ -117,24 +117,8 @@ namespace Killendar.Controls
             FolderTreeCtl.SizeChanged += (_, _) => { SyncTreeEdgeFades(); SyncTreeFade(); };
             FolderTreeCtl.Loaded      += (_, _) => { SyncTreeEdgeFades(); SyncTreeFade(); };
 
-            // The places list gets the same treatment (2026-07-30). No scrollbar lift:
-            // horizontal scrolling is disabled on it.
-            PlacesList.AddHandler(ScrollViewer.ScrollChangedEvent,
-                new ScrollChangedEventHandler((_, _) => SyncPlacesEdgeFades()));
-            PlacesList.SizeChanged += (_, _) => SyncPlacesEdgeFades();
-            PlacesList.Loaded      += (_, _) => SyncPlacesEdgeFades();
         }
 
-        /// <summary>Places-list twin of SyncTreeEdgeFades: same ramp, same rules.</summary>
-        private void SyncPlacesEdgeFades()
-        {
-            var sv = FindDescendant<ScrollViewer>(PlacesList);
-            if (sv == null) return;
-
-            PlacesFadeTop.Opacity    = Ramp(sv.VerticalOffset, PlacesFadeTop.Height, 18);
-            PlacesFadeBottom.Opacity = Ramp(sv.ExtentHeight - sv.ViewportHeight - sv.VerticalOffset,
-                                            PlacesFadeBottom.Height, 22);
-        }
 
         /// <summary>
         /// Fade each edge only while there is something PAST it, ramped over the fade's own
