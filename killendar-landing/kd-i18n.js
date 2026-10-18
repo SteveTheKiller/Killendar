@@ -73,6 +73,8 @@ var I18N = {
       also_h: "Also try...",
       also_kp: "Open-source PDF editor for Windows",
       also_ks: "Open-source network scanner for Windows",
+      also_kb: "Open-source diagnosis and repair workbench for Windows",
+      also_kst: "Open-source encrypted screenshot album for Windows",
       also_kn: "Open-source note taker for Windows",
       also_ksh: "File browser, terminal and editor in one exe",
 
@@ -254,6 +256,8 @@ var I18N = {
       "also_h": "Bạn cũng có thể thử...",
       "also_kp": "Trình chỉnh sửa PDF mã nguồn mở dành cho Windows",
       "also_ks": "Trình quét mạng mã nguồn mở dành cho Windows",
+      "also_kb": "Bàn làm việc chẩn đoán và sửa chữa mã nguồn mở cho Windows",
+      "also_kst": "Album ảnh chụp màn hình mã hóa mã nguồn mở cho Windows",
       "also_kn": "Ứng dụng ghi chú mã nguồn mở dành cho Windows",
       "also_ksh": "Trình duyệt tệp, cửa sổ dòng lệnh và trình chỉnh sửa trong một tệp exe",
       "tk_1": "Kỹ thuật",
@@ -435,6 +439,8 @@ var I18N = {
       also_h: "Próbálja ki ezeket is...",
       also_kp: "Nyílt forráskódú PDF-szerkesztő Windowsra",
       also_ks: "Nyílt forráskódú hálózatszkenner Windowsra",
+      also_kb: "Nyílt forráskódú diagnosztikai és javítóeszköz Windowshoz",
+      also_kst: "Nyílt forráskódú, titkosított képernyőkép-album Windowshoz",
       also_kn: "Nyílt forráskódú jegyzetelő Windowsra",
       also_ksh: "Fájlböngésző, terminál és szerkesztő egyetlen exe-ben",
 
@@ -615,6 +621,8 @@ var I18N = {
       also_h: "Prueba también...",
       also_kp: "Editor de PDF de código abierto para Windows",
       also_ks: "Escáner de red de código abierto para Windows",
+      also_kb: "Banco de diagnóstico y reparación de código abierto para Windows",
+      also_kst: "Álbum de capturas de pantalla cifrado de código abierto para Windows",
       also_kn: "Bloc de notas de código abierto para Windows",
       also_ksh: "Explorador de archivos, terminal y editor en un solo exe",
 
@@ -795,6 +803,8 @@ var I18N = {
       also_h: "Essayez aussi...",
       also_kp: "Éditeur PDF open source pour Windows",
       also_ks: "Scanner réseau open source pour Windows",
+      also_kb: "Atelier de diagnostic et de réparation open source pour Windows",
+      also_kst: "Album de captures d’écran chiffré open source pour Windows",
       also_kn: "Bloc-notes open source pour Windows",
       also_ksh: "Explorateur de fichiers, terminal et éditeur en un seul exe",
 
@@ -975,6 +985,8 @@ var I18N = {
       also_h: "Probieren Sie auch...",
       also_kp: "Open-Source-PDF-Editor für Windows",
       also_ks: "Open-Source-Netzwerkscanner für Windows",
+      also_kb: "Open-Source-Werkbank für Diagnose und Reparatur unter Windows",
+      also_kst: "Verschlüsseltes Open-Source-Screenshot-Album für Windows",
       also_kn: "Open-Source-Notizblock für Windows",
       also_ksh: "Dateibrowser, Terminal und Editor in einer exe",
 
@@ -1155,6 +1167,8 @@ var I18N = {
       also_h: "Vyzkoušejte také...",
       also_kp: "Open-source PDF editor pro Windows",
       also_ks: "Open-source síťový skener pro Windows",
+      also_kb: "Nástroj pro diagnostiku a opravy s otevřeným zdrojem pro Windows",
+      also_kst: "Šifrované album snímků obrazovky s otevřeným zdrojem pro Windows",
       also_kn: "Open-source poznámkový blok pro Windows",
       also_ksh: "Prohlížeč souborů, terminál a editor v jednom exe",
 
@@ -1335,6 +1349,8 @@ var I18N = {
       also_h: "Şunları da deneyin...",
       also_kp: "Windows için açık kaynak PDF düzenleyici",
       also_ks: "Windows için açık kaynak ağ tarayıcı",
+      also_kb: "Windows için açık kaynaklı arıza tespit ve onarım aracı",
+      also_kst: "Windows için açık kaynaklı, şifreli ekran görüntüsü albümü",
       also_kn: "Windows için açık kaynak not defteri",
       also_ksh: "Tek exe'de dosya gezgini, terminal ve düzenleyici",
 
@@ -1515,6 +1531,8 @@ var I18N = {
       also_h: "こちらもどうぞ...",
       also_kp: "Windows 用のオープンソース PDF エディター",
       also_ks: "Windows 用のオープンソース ネットワークスキャナー",
+      also_kb: "Windows 用オープンソース診断・修復ワークベンチ",
+      also_kst: "Windows 用オープンソース暗号化スクリーンショットアルバム",
       also_kn: "Windows 用のオープンソース ノートアプリ",
       also_ksh: "ファイルブラウザー、ターミナル、エディターが一つの exe に",
 
@@ -1695,6 +1713,8 @@ var I18N = {
       also_h: "Zobacz także...",
       also_kp: "Otwartoźródłowy edytor PDF dla Windows",
       also_ks: "Otwartoźródłowy skaner sieci dla Windows",
+      also_kb: "Otwartoźródłowe narzędzie do diagnostyki i naprawy dla Windows",
+      also_kst: "Otwartoźródłowy szyfrowany album zrzutów ekranu dla Windows",
       also_kn: "Otwartoźródłowy notatnik dla Windows",
       also_ksh: "Przeglądarka plików, terminal i edytor w jednym exe",
 
@@ -1884,6 +1904,8 @@ var I18N = {
       also_h: "এগুলিও দেখুন...",
       also_kp: "Windows-এর জন্য ওপেন সোর্স PDF এডিটর",
       also_ks: "Windows-এর জন্য ওপেন সোর্স নেটওয়ার্ক স্ক্যানার",
+      also_kb: "Windows-এর জন্য ওপেন-সোর্স ডায়াগনসিস ও মেরামতের ওয়ার্কবেঞ্চ",
+      also_kst: "Windows-এর জন্য ওপেন-সোর্স এনক্রিপ্টেড স্ক্রিনশট অ্যালবাম",
       also_kn: "Windows-এর জন্য ওপেন সোর্স নোট নেওয়ার অ্যাপ",
       also_ksh: "ফাইল ব্রাউজার, টার্মিনাল ও এডিটর - একটিমাত্র exe-তে",
 
@@ -2064,6 +2086,8 @@ var I18N = {
       also_h: "也试试...",
       also_kp: "Windows 上的开源 PDF 编辑器",
       also_ks: "Windows 上的开源网络扫描器",
+      also_kb: "适用于 Windows 的开源诊断与修复工作台",
+      also_kst: "适用于 Windows 的开源加密截图相册",
       also_kn: "Windows 上的开源记事本",
       also_ksh: "文件浏览器、终端和编辑器，装在一个 exe 里",
 
@@ -2244,6 +2268,8 @@ var I18N = {
       also_h: "也試試...",
       also_kp: "Windows 上的開源 PDF 編輯器",
       also_ks: "Windows 上的開源網路掃描器",
+      also_kb: "適用於 Windows 的開源診斷與修復工作台",
+      also_kst: "適用於 Windows 的開源加密螢幕截圖相簿",
       also_kn: "Windows 上的開源記事工具",
       also_ksh: "檔案瀏覽器、終端機和編輯器，全裝在一個 exe 裡",
 
@@ -2426,6 +2452,8 @@ var I18N = {
       also_h: "Prova anche...",
       also_kp: "Editor PDF open source per Windows",
       also_ks: "Scanner di rete open source per Windows",
+      also_kb: "Banco di diagnosi e riparazione open source per Windows",
+      also_kst: "Album di screenshot cifrato open source per Windows",
       also_kn: "App di note open source per Windows",
       also_ksh: "File browser, terminale ed editor in un solo exe",
 
@@ -2608,6 +2636,8 @@ var I18N = {
       also_h: "Попробуйте также...",
       also_kp: "PDF-редактор с открытым исходным кодом для Windows",
       also_ks: "Сетевой сканер с открытым исходным кодом для Windows",
+      also_kb: "Инструмент диагностики и ремонта с открытым кодом для Windows",
+      also_kst: "Зашифрованный альбом скриншотов с открытым кодом для Windows",
       also_kn: "Заметочник с открытым исходным кодом для Windows",
       also_ksh: "Файловый менеджер, терминал и редактор в одном exe",
 
@@ -2790,6 +2820,8 @@ var I18N = {
       also_h: "Мынаны да көріңіз...",
       also_kp: "Windows үшін ашық бастапқы кодты PDF өңдегіші",
       also_ks: "Windows үшін ашық бастапқы кодты желі сканері",
+      also_kb: "Windows үшін ашық бастапқы кодты диагностика және жөндеу құралы",
+      also_kst: "Windows үшін ашық бастапқы кодты шифрланған скриншот альбомы",
       also_kn: "Windows үшін ашық бастапқы кодты жазба құралы",
       also_ksh: "Бір exe ішінде файл шолғышы, терминал және өңдегіш",
 
@@ -2973,6 +3005,8 @@ I18N.uk = {
  "also_h": "Спробуйте також...",
  "also_kp": "PDF-редактор з відкритим вихідним кодом для Windows",
  "also_ks": "Мережевий сканер з відкритим вихідним кодом для Windows",
+ "also_kb": "Інструмент діагностики та ремонту з відкритим кодом для Windows",
+ "also_kst": "Зашифрований альбом знімків екрана з відкритим кодом для Windows",
  "also_kn": "Нотатник з відкритим вихідним кодом для Windows",
  "also_ksh": "Файловий менеджер, термінал і редактор в одному exe",
  "tk_1": "Технічне",
@@ -3153,6 +3187,8 @@ I18N.nb = {
  "also_h": "Prøv også...",
  "also_kp": "PDF-redigerer med åpen kildekode for Windows",
  "also_ks": "Nettverksskanner med åpen kildekode for Windows",
+ "also_kb": "Verktøy for feilsøking og reparasjon med åpen kildekode for Windows",
+ "also_kst": "Kryptert skjermbildealbum med åpen kildekode for Windows",
  "also_kn": "Notatapp med åpen kildekode for Windows",
  "also_ksh": "Filbehandler, terminal og redigeringsprogram i én exe",
  "tk_1": "Teknisk",
@@ -3333,6 +3369,8 @@ I18N.pt = {
  "also_h": "Experimente também...",
  "also_kp": "Editor de PDF de código aberto para Windows",
  "also_ks": "Scanner de rede de código aberto para Windows",
+ "also_kb": "Bancada de diagnóstico e reparo de código aberto para Windows",
+ "also_kst": "Álbum de capturas de tela criptografado de código aberto para Windows",
  "also_kn": "Bloco de notas de código aberto para Windows",
  "also_ksh": "Navegador de arquivos, terminal e editor em um só exe",
  "tk_1": "Técnico",
