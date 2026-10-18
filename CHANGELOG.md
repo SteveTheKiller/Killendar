@@ -34,6 +34,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Screen readers no longer read toolbar, menu and title bar icons as unreadable symbols, and the appointment fields, the Repeats button, each calendar view, each day in Month view and each part of the scroll bars now have names.
 - Opening the shortcuts or About card moves keyboard focus into it, Tab stays inside the card, and closing it returns focus to where it was.
 - Tab no longer stops on hidden links, which screen readers announced as the window.
+- Screen readers and accessibility checkers no longer report empty text or the hidden parts of scroll bars as items on screen.
 - Appointments read out their title, time and location to screen readers, open with Enter or Space, and show the focus ring instead of a dotted box.
 - Tab no longer stops on the calendar pane itself, which drew a dotted outline around the whole view.
 - The About card says Killendar has no telemetry instead of claiming nothing phones home, since it now checks for updates at startup.
