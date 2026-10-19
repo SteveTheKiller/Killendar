@@ -171,13 +171,13 @@ namespace Killendar.Services
             if (fresh.Count == 0) return 0;
 
             _events.AddRange(fresh);
-            Commit(() =>
+            bool saved = Commit(() =>
             {
                 using var tx = _db!.BeginTransaction();
                 foreach (var ev in fresh) Upsert(ev);
                 tx.Commit();
             });
-            return fresh.Count;
+            return saved ? fresh.Count : 0;
         }
     }
 }

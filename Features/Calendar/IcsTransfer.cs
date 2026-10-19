@@ -70,6 +70,7 @@ namespace Killendar.Features
         private bool ImportIcs(IcsParseResult parsed)
         {
             int added   = _store.ImportEvents(parsed.Events);
+            if (_store.LoadError != null) throw new InvalidOperationException(_store.LoadError);
             int skipped = parsed.Events.Count - added;
 
             var status = new StringBuilder(skipped > 0
@@ -102,6 +103,7 @@ namespace Killendar.Features
             }
 
             int added   = _store.ImportEvents(parsed.Events);
+            if (_store.LoadError != null) throw new InvalidOperationException(_store.LoadError);
             int skipped = parsed.Events.Count - added;
 
             var status = new StringBuilder(skipped > 0

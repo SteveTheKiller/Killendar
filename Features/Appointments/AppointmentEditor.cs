@@ -328,6 +328,7 @@ namespace Killendar.Features
                 };
                 ApplyRepeatFromPanel(ev);
                 _store.Add(ev);
+                if (_store.LoadError != null) { _view.ShowError(_store.LoadError); return; }
                 _view.SetStatus(string.Format(_view.Loc("Str_Status_Added"), ev.Title));
             }
             else
@@ -360,6 +361,7 @@ namespace Killendar.Features
                     _store.SaveOccurrence(_editing);
                 }
 
+                if (_store.LoadError != null) { _view.ShowError(_store.LoadError); return; }
                 _view.SetStatus(string.Format(_view.Loc("Str_Status_Saved"), _editing.Title));
             }
 
@@ -396,6 +398,7 @@ namespace Killendar.Features
             else if (_editing.IsSeries)                    _store.DeleteSeries(_editing.Id);
             else                                           _store.Delete(_editing.Id);
 
+            if (_store.LoadError != null) { _view.ShowError(_store.LoadError); return; }
             _view.SetStatus(string.Format(_view.Loc("Str_Status_Deleted"), title));
             _view.ClosePanel();
         }

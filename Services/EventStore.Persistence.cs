@@ -123,14 +123,30 @@ namespace Killendar.Services
             cmd.ExecuteNonQuery();
         }
 
-        /// <summary>Writes, then repaints. A write failure (disk full, profile locked) is recorded
-        /// in LoadError and the session keeps working in memory rather than throwing at the user
-        /// mid-edit - the same bargain the JSON store made.</summary>
-        private void Commit(Action write)
+        /// <summary>Writes, then repaints. If persistence fails, reload the database so the
+        /// calendar never presents an unsaved mutation as a saved appointment.</summary>
+        private bool Commit(Action write)
         {
-            try { if (_db != null) write(); LoadError = null; }
-            catch (Exception ex) { LoadError = ex.Message; }
+            try
+            {
+                if (_db == null) throw new InvalidOperationException("No Killendar is open.");
+                write();
+                LoadError = null;
+            }
+            catch (Exception ex)
+            {
+                LoadError = ex.Message;
+                try { if (_db != null) LoadIntoMemory(); else _events = []; }
+                catch (Exception reloadError)
+                {
+                    _events = [];
+                    LoadError = ex.Message + " " + reloadError.Message;
+                }
+                Changed?.Invoke();
+                return false;
+            }
             Changed?.Invoke();
+            return true;
         }
 
         public void Add(CalendarEvent ev)
@@ -262,7 +278,11 @@ namespace Killendar.Services
             var stray = _events.FirstOrDefault(
                 e => e.IsOverride && e.SeriesId == key &&
                      e.OccurrenceStart.HasValue && e.OccurrenceStart.Value.Date == day);
-            if (stray != null) Delete(stray.Id);
+            if (stray != null)
+            {
+                Delete(stray.Id);
+                if (LoadError != null) return;
+            }
 
             var master = GetSeriesMaster(occ);
             if (master == null) return;
