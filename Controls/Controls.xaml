@@ -863,8 +863,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid>
-                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
-                                CornerRadius="{DynamicResource CaptionCloseCornerRadius}">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <Border x:Name="capLight" IsHitTestVisible="False"
