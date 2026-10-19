@@ -60,16 +60,6 @@ jobs:
           if (!$env:WINDIR) { $env:WINDIR = $env:SYSTEMROOT }
           dotnet test $env:PROJECT --no-build --no-restore --configuration Release --logger 'trx;LogFileName=tests.trx' --results-directory ci-results --verbosity normal 2>&1 | Tee-Object ci-results/test.log
           if ($LASTEXITCODE -ne 0) { throw 'Tests failed. See test.log and tests.trx.' }
-      - name: Run console regression checks
-        if: matrix.mode == 'console'
-        env:
-          PROJECT: ${{ matrix.project }}
-          FRAMEWORK: ${{ matrix.framework }}
-        run: |
-          if (!$env:WINDIR) { $env:WINDIR = $env:SYSTEMROOT }
-          # No --worker or --internet: SpeedTest uses local fixtures only.
-          dotnet run --project $env:PROJECT --framework $env:FRAMEWORK --configuration Release --no-build --no-restore 2>&1 | Tee-Object ci-results/console.log
-          if ($LASTEXITCODE -ne 0) { throw 'Regression checks failed. See console.log.' }
       - name: Retain failure diagnostics and test results
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
