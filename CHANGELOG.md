@@ -8,7 +8,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Added
 - Added a right-hand position for the appointment panel and its rail, picked from the rail's right-click menu or with Alt+Shift+Left and Alt+Shift+Right. The arrow of the side the panel is already on opens or closes it.
-- Rail buttons can be dragged into any order, which is remembered. Theme, language and shortcuts stay together at the rail's corner, with date settings moved out of that group, and Move icons to the other side in the rail's right-click menu puts them at the top.
+- Rail buttons can be dragged into any order, which is remembered. Theme, language and shortcuts stay together at the bottom, with date settings moved out of that group and the chevron at the top. Removed the option to swap those ends.
 - Installed copies add their folder to PATH, so commands such as `killendar agenda` run from any new terminal. `killendar --help` lists commands, and `--cli` stays compatible. Portable copies run from their folder or full path. Uninstalling removes the installed PATH entry.
 - Added a dropdown arrow beside the Month button that switches Month view between a calendar month and rolling weeks, and the R key to toggle it. The choice was only reachable by right-clicking the Month button.
 - Killendar checks for updates on startup and offers a newer release in a dialog with an Always check on startup box. A Check for updates on startup checkbox at the top of the About options turns the check back on.

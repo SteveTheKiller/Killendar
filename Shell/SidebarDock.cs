@@ -98,8 +98,7 @@ namespace Killendar.Shell
             ContentPane.Margin = new Thickness(inset.Right, inset.Top, inset.Left, inset.Bottom);
         }
 
-        // The rail's (and the panel's) right-click menu: which side the panel docks to, and
-        // Move icons to the other side.
+        // The rail's and panel's right-click menu selects the panel's docking side.
         private void SidebarArea_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             // Fields, buttons and lists in the panel keep their own menus.
@@ -123,10 +122,6 @@ namespace Killendar.Shell
                 item.Click += (_, _) => SelectSidebarSide(right);
                 menu.Items.Add(item);
             }
-            menu.Items.Add(new Separator());
-            var flip = new MenuItem { Header = Loc("Str_Rail_Flip") };
-            flip.Click += (_, _) => ToggleRailFlip();
-            menu.Items.Add(flip);
             menu.PlacementTarget = (UIElement)sender;
             menu.IsOpen = true;
             e.Handled = true;
