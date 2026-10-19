@@ -130,7 +130,22 @@ namespace Killendar.Services
                         else
                         {
                             if (current.End == default && duration != null)
-                                current.End = current.Start + ParseDuration(duration);
+                            {
+                                var span = ParseDuration(duration);
+                                if (span == null)
+                                {
+                                    result.Unreadable++;
+                                    current = null;
+                                    continue;
+                                }
+                                try { current.End = current.Start + span.Value; }
+                                catch (ArgumentOutOfRangeException)
+                                {
+                                    result.Unreadable++;
+                                    current = null;
+                                    continue;
+                                }
+                            }
                             if (current.End <= current.Start)
                                 current.End = current.AllDay
                                     ? current.Start.AddDays(1)
@@ -504,21 +519,26 @@ namespace Killendar.Services
             return false;
         }
 
-        private static TimeSpan ParseDuration(string value)
+        private static TimeSpan? ParseDuration(string value)
         {
             // Basic DURATION: P[nW][nD][T[nH][nM][nS]]
             var m = Regex.Match(value,
                 @"^(?<neg>-)?P(?:(?<w>\d+)W)?(?:(?<d>\d+)D)?(?:T(?:(?<h>\d+)H)?(?:(?<mn>\d+)M)?(?:(?<s>\d+)S)?)?$");
-            if (!m.Success) return TimeSpan.Zero;
+            if (!m.Success) return null;
 
-            int weeks   = m.Groups["w"].Success  ? int.Parse(m.Groups["w"].Value)  : 0;
-            int days    = m.Groups["d"].Success  ? int.Parse(m.Groups["d"].Value)  : 0;
-            int hours   = m.Groups["h"].Success  ? int.Parse(m.Groups["h"].Value)  : 0;
-            int minutes = m.Groups["mn"].Success ? int.Parse(m.Groups["mn"].Value) : 0;
-            int seconds = m.Groups["s"].Success  ? int.Parse(m.Groups["s"].Value)  : 0;
+            try
+            {
+                int weeks   = m.Groups["w"].Success  ? int.Parse(m.Groups["w"].Value)  : 0;
+                int days    = m.Groups["d"].Success  ? int.Parse(m.Groups["d"].Value)  : 0;
+                int hours   = m.Groups["h"].Success  ? int.Parse(m.Groups["h"].Value)  : 0;
+                int minutes = m.Groups["mn"].Success ? int.Parse(m.Groups["mn"].Value) : 0;
+                int seconds = m.Groups["s"].Success  ? int.Parse(m.Groups["s"].Value)  : 0;
 
-            var ts = new TimeSpan((weeks * 7) + days, hours, minutes, seconds);
-            return m.Groups["neg"].Success ? ts.Negate() : ts;
+                var ts = new TimeSpan(checked(weeks * 7 + days), hours, minutes, seconds);
+                return m.Groups["neg"].Success ? ts.Negate() : ts;
+            }
+            catch (OverflowException) { return null; }
+            catch (ArgumentOutOfRangeException) { return null; }
         }
 
         private static string UnescapeText(string s)

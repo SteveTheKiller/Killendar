@@ -86,5 +86,23 @@ namespace Killendar.Tests
             var ev = Assert.Single(IcsService.ParseText(ics).Events);
             Assert.Equal(TimeSpan.FromHours(2), ev.End - ev.Start);
         }
+
+        [Theory]
+        [InlineData("P99999999999999W")]
+        [InlineData("P2147483647W")]
+        [InlineData("P999999999D")]
+        public void OversizedDurationSkipsOnlyTheBadEvent(string duration)
+        {
+            string ics = "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\n" +
+                "DTSTART:20261020T090000\r\nDURATION:" + duration + "\r\n" +
+                "SUMMARY:Bad event\r\nEND:VEVENT\r\n" +
+                "BEGIN:VEVENT\r\nDTSTART:20261021T090000\r\n" +
+                "DTEND:20261021T100000\r\nSUMMARY:Good event\r\n" +
+                "END:VEVENT\r\nEND:VCALENDAR\r\n";
+
+            var parsed = IcsService.ParseText(ics);
+            Assert.Equal(1, parsed.Unreadable);
+            Assert.Equal("Good event", Assert.Single(parsed.Events).Title);
+        }
     }
 }
