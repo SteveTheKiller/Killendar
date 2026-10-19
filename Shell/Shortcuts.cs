@@ -69,8 +69,11 @@ namespace Killendar.Shell
             if (alt && shift && !ctrl && (e.SystemKey == Key.Left || e.SystemKey == Key.Right))
             {
                 bool right = e.SystemKey == Key.Right;
-                if (right == _sidebarRight) SidebarToggle_Click(this, new RoutedEventArgs());
-                else SelectSidebarSide(right);
+                if (!e.IsRepeat)
+                {
+                    if (right == _sidebarRight) SidebarToggle_Click(this, new RoutedEventArgs());
+                    else SelectSidebarSide(right);
+                }
                 e.Handled = true;
                 return;
             }
