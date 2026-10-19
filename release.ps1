@@ -139,6 +139,13 @@ Write-Host "Release date: $csprojReleaseDate"
 
 Write-Host 'Preflight OK'
 
+# The Microsoft Store listing installs the versioned installer the Cloudflare Worker serves from
+# the GitHub release. Check the Store credentials and that no submission is in progress now, so a
+# problem stops the release before anything is built or published.
+$storeScript = Join-Path $PSScriptRoot 'store\Submit-StoreRelease.ps1'
+$storeArgs = @{ ProductId = 'XP9B15HXZ5L7G5'; PackageUrl = "https://killendar.net/store/$Version/Killendar.exe" }
+& $storeScript @storeArgs -PreflightOnly
+
 # --- 3. Vulnerable package scan (required at every release) ---
 Step "Scanning for vulnerable packages"
 dotnet restore | Out-Null
@@ -543,6 +550,16 @@ if ($Choco) {
             Write-Host 'Skipping push - set CHOCO_API_KEY or pass -ChocoApiKey to push automatically.' -ForegroundColor Yellow
         }
     }
+}
+
+Step "Submitting $Tag to the Microsoft Store"
+# The GitHub release is already published, so a Store failure is reported with the exact retry
+# command rather than failing the release.
+try { & $storeScript @storeArgs }
+catch {
+    Write-Host "WARNING: The Microsoft Store submission did not finish: $($_.Exception.Message)" -ForegroundColor Yellow
+    Write-Host "Retry only the Store step with:" -ForegroundColor Yellow
+    Write-Host "  & '$storeScript' -ProductId $($storeArgs.ProductId) -PackageUrl $($storeArgs.PackageUrl)" -ForegroundColor Yellow
 }
 
 Step "Done"
