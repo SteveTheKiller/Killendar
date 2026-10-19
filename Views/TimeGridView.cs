@@ -35,6 +35,7 @@ namespace Killendar.Views
         private Border _allDayHost = null!;
         private Grid _bodyGrid = null!;
         private Border _bodySurface = null!;
+        private Border _bodyGrain = null!;
         private ScrollViewer _scroller = null!;
         private readonly List<Canvas> _dayCanvases = [];
 
@@ -53,9 +54,11 @@ namespace Killendar.Views
             _dayCount = dayCount;
             BuildSkeleton();
             Loaded += (_, _) => RefreshBodyShadow();
+            Loaded += (_, _) => RefreshBodyCorners();
             Loaded += (_, _) => SystemParameters.StaticPropertyChanged += OnSystemContrastChanged;
             Unloaded += (_, _) => SystemParameters.StaticPropertyChanged -= OnSystemContrastChanged;
             ThemeManager.ThemeChanged += RefreshBodyShadow;
+            ThemeManager.ThemeChanged += RefreshBodyCorners;
 
             // Ctrl+wheel changes density; plain wheel keeps scrolling the day. Preview, so it is
             // seen before the ScrollViewer consumes it, and Handled so the grid does not also
@@ -172,6 +175,16 @@ namespace Killendar.Views
 
         public void Refresh() => Rebuild();
 
+        /// <summary>The body sits flush under the day headers, so its top edge is flat; only the
+        /// bottom corners follow the pane's radius.</summary>
+        private void RefreshBodyCorners()
+        {
+            var pane = TryFindResource("PanelCornerRadius") is CornerRadius r ? r : new CornerRadius(0);
+            var flatTop = new CornerRadius(0, 0, pane.BottomRight, pane.BottomLeft);
+            _bodySurface.CornerRadius = flatTop;
+            _bodyGrain.CornerRadius = flatTop;
+        }
+
         private void RefreshBodyShadow()
         {
             _bodySurface.Effect = ThemeManager.Current == Theme.SE98 ? null
@@ -196,15 +209,13 @@ namespace Killendar.Views
             // while the actual calendar body owns the pane fill and grain beneath them.
             _bodySurface = new Border { BorderThickness = new Thickness(0) };
             _bodySurface.SetResourceReference(Border.BackgroundProperty, "PaneBrush");
-            _bodySurface.SetResourceReference(Border.CornerRadiusProperty, "PanelCornerRadius");
             Grid.SetRow(_bodySurface, 1);
             Grid.SetRowSpan(_bodySurface, 2);
             root.Children.Add(_bodySurface);
 
-            var bodyGrain = new Border { IsHitTestVisible = false };
+            var bodyGrain = _bodyGrain = new Border { IsHitTestVisible = false };
             bodyGrain.SetResourceReference(Border.BackgroundProperty, "GrainTileBrush");
             bodyGrain.SetResourceReference(OpacityProperty, "GrainOpacity");
-            bodyGrain.SetResourceReference(Border.CornerRadiusProperty, "PanelCornerRadius");
             Grid.SetRow(bodyGrain, 1);
             Grid.SetRowSpan(bodyGrain, 2);
             root.Children.Add(bodyGrain);
