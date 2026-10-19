@@ -31,6 +31,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Primary, outline and secondary buttons sit raised on a soft shadow that lifts on hover and sets down when pressed. 98SE keeps its flat beveled buttons.
 
 ### Fixed
+- ICS duration applies correctly whether it appears before or after the event start.
 - ICS imports now convert named time zones, including daylight time, and report unknown zone IDs instead of treating them as local time.
 - ICS imports now link recurring exceptions to their series when the UID is text rather than a GUID.
 - Failed appointment writes now restore the calendar from disk and keep the editor open with an error instead of reporting a save or deletion that did not happen.

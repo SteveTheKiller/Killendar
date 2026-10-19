@@ -71,5 +71,20 @@ namespace Killendar.Tests
             var error = Assert.Throws<TimeZoneNotFoundException>(() => IcsService.ParseText(ics));
             Assert.Contains("Mars/Colony", error.Message);
         }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void DurationIsAppliedAfterStartRegardlessOfPropertyOrder(bool durationFirst)
+        {
+            string properties = durationFirst
+                ? "DURATION:PT2H\r\nDTSTART:20261020T090000\r\n"
+                : "DTSTART:20261020T090000\r\nDURATION:PT2H\r\n";
+            string ics = "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\n" + properties +
+                "SUMMARY:Long meeting\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n";
+
+            var ev = Assert.Single(IcsService.ParseText(ics).Events);
+            Assert.Equal(TimeSpan.FromHours(2), ev.End - ev.Start);
+        }
     }
 }

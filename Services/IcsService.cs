@@ -87,6 +87,7 @@ namespace Killendar.Services
             CalendarEvent? current = null;
             bool haveStart = false;   // no DTSTART means no appointment, however much else parsed
             bool repeating = false;
+            string? duration = null;
             DateTime? recurrenceId = null;   // set when this VEVENT replaces one date of a series
 
             foreach (var raw in lines)
@@ -104,6 +105,7 @@ namespace Killendar.Services
                         current      = new CalendarEvent();
                         haveStart    = false;
                         repeating    = false;
+                        duration     = null;
                         recurrenceId = null;
                     }
                     else if (current == null &&
@@ -127,6 +129,8 @@ namespace Killendar.Services
                         }
                         else
                         {
+                            if (current.End == default && duration != null)
+                                current.End = current.Start + ParseDuration(duration);
                             if (current.End <= current.Start)
                                 current.End = current.AllDay
                                     ? current.Start.AddDays(1)
@@ -234,8 +238,7 @@ namespace Killendar.Services
                     }
 
                     case "DURATION":
-                        if (current.End == default)
-                            current.End = current.Start + ParseDuration(value);
+                        duration = value;
                         break;
 
                     case "CREATED":
