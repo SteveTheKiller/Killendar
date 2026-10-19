@@ -23,6 +23,10 @@
                             GlassFrameThickness="0" UseAeroCaptionButtons="False"/>
     </shell:WindowChrome.WindowChrome>
 
+    <Window.Resources>
+        <ResourceDictionary Source="/Killendar;component/Controls/OverlayScrollViewer.xaml"/>
+    </Window.Resources>
+
     <Grid x:Name="FrameHost">
     <!-- Opacity 0: Chrome.cs FadeInContent brings RootGrid up on Loaded. -->
     <Grid x:Name="RootGrid" Opacity="0" Margin="{DynamicResource WindowFramePadding}">
@@ -1021,7 +1025,8 @@
 
                             <!-- LIST -->
                             <ScrollViewer x:Name="KsListHostScroll" Grid.Row="2" VerticalScrollBarVisibility="Auto"
-                                          HorizontalScrollBarVisibility="Disabled" PanningMode="VerticalOnly" Focusable="False">
+                                          HorizontalScrollBarVisibility="Disabled" PanningMode="VerticalOnly" Focusable="False"
+                                          Style="{StaticResource OverlayScrollViewer}" Margin="-24,0,-24,0" Padding="24,0">
                                 <StackPanel x:Name="KsListHost"/>
                             </ScrollViewer>
 
