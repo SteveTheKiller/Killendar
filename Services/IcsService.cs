@@ -634,7 +634,7 @@ namespace Killendar.Services
 
                 if (ev.IsSeries)
                 {
-                    sb.AppendLine(BuildRRule(ev));
+                    sb.AppendLine(FoldLine(BuildRRule(ev)));
 
                     // Dates the user removed one at a time. Written as floating DATE values to
                     // match how they are stored and compared, which is by calendar date.
@@ -646,7 +646,7 @@ namespace Killendar.Services
                     }
                 }
 
-                sb.AppendLine($"SUMMARY:{EscapeText(ev.Title)}");
+                sb.AppendLine(FoldLine($"SUMMARY:{EscapeText(ev.Title)}"));
 
                 if (!string.IsNullOrEmpty(ev.Location))
                     sb.AppendLine(FoldLine($"LOCATION:{EscapeText(ev.Location)}"));
@@ -716,16 +716,30 @@ namespace Killendar.Services
         /// <summary>RFC-5545 line folding at 75 octets.</summary>
         private static string FoldLine(string line)
         {
-            if (line.Length <= 75) return line;
             var sb = new StringBuilder();
-            sb.Append(line.Substring(0, 75));
-            int index = 75;
+            int octets = 0;
+            int index = 0;
             while (index < line.Length)
             {
-                sb.Append("\r\n ");
-                int chunk = Math.Min(74, line.Length - index);
-                sb.Append(line.Substring(index, chunk));
-                index += chunk;
+                char c = line[index];
+                int chars = 1;
+                int bytes;
+                if (char.IsHighSurrogate(c) && index + 1 < line.Length &&
+                    char.IsLowSurrogate(line[index + 1]))
+                {
+                    chars = 2;
+                    bytes = 4;
+                }
+                else bytes = c <= 0x7f ? 1 : c <= 0x7ff ? 2 : 3;
+
+                if (octets + bytes > 75)
+                {
+                    sb.Append("\r\n ");
+                    octets = 1;
+                }
+                sb.Append(line, index, chars);
+                octets += bytes;
+                index += chars;
             }
             return sb.ToString();
         }

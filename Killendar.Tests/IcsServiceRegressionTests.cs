@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Text;
 using Killendar.Models;
 using Killendar.Services;
 using Xunit;
@@ -103,6 +105,42 @@ namespace Killendar.Tests
             var parsed = IcsService.ParseText(ics);
             Assert.Equal(1, parsed.Unreadable);
             Assert.Equal("Good event", Assert.Single(parsed.Events).Title);
+        }
+
+        [Fact]
+        public void ExportFoldsAtUtf8ByteBoundariesWithoutChangingUnicodeText()
+        {
+            string title = new string('s', 70) + "😀" + new string('t', 20);
+            string location = new string('a', 66) + "😀" + new string('b', 20);
+            string description = new string('d', 63) + "😀" + new string('e', 20);
+            string attendee = new string('x', 36) + "😀@example.com";
+            string category = new string('c', 64) + "😀";
+            var ev = new CalendarEvent
+            {
+                Title = title,
+                Location = location,
+                Description = description,
+                Attendees = [attendee],
+                Categories = category,
+                Start = new DateTime(2026, 10, 20, 9, 0, 0),
+                End = new DateTime(2026, 10, 20, 10, 0, 0),
+            };
+            string path = Path.Combine(Path.GetTempPath(), "killendar-fold-" + Guid.NewGuid().ToString("N") + ".ics");
+            try
+            {
+                IcsService.ExportToFile([ev], path);
+                string text = new UTF8Encoding(false, true).GetString(File.ReadAllBytes(path));
+                foreach (string line in text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
+                    Assert.True(Encoding.UTF8.GetByteCount(line) <= 75, line);
+
+                var imported = Assert.Single(IcsService.ParseFile(path).Events);
+                Assert.Equal(title, imported.Title);
+                Assert.Equal(location, imported.Location);
+                Assert.Equal(description, imported.Description);
+                Assert.Equal(attendee, Assert.Single(imported.Attendees));
+                Assert.Equal(category, imported.Categories);
+            }
+            finally { File.Delete(path); }
         }
     }
 }
