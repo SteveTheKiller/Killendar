@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using Killendar.Models;
@@ -160,7 +161,7 @@ namespace Killendar.Services
                 switch (upper)
                 {
                     case "UID":
-                        if (Guid.TryParse(value, out var g)) current.Id = g;
+                        if (value.Length > 0) current.Id = IdFromUid(value);
                         break;
 
                     case "SUMMARY":
@@ -387,6 +388,16 @@ namespace Killendar.Services
                 DayOfWeek.Friday => "FR",
                 _ => "SA",
             };
+        }
+
+        private static Guid IdFromUid(string uid)
+        {
+            if (Guid.TryParse(uid, out var id)) return id;
+            using var sha = SHA256.Create();
+            byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes("Killendar ICS UID:" + uid));
+            var bytes = new byte[16];
+            Array.Copy(hash, bytes, bytes.Length);
+            return new Guid(bytes);
         }
 
         private static (string name, string param, string value) SplitProperty(string line)
