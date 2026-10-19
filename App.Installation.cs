@@ -186,13 +186,14 @@ namespace Killendar
                 }
                 File.Copy(src, installExe, overwrite: true);
                 try { File.SetAttributes(installExe, FileAttributes.Normal); } catch { }
-                Services.CommandLinePath.Register(installDir, machine);
 
                 Directory.CreateDirectory(startMenuDir);
                 CreateShortcut(startMenuLnk, installExe);
 
                 WriteInstallKeys(hive, installDir, installExe);
                 FileAssociations.Register(hive, installExe);
+                // Last, so a failed install never leaves a PATH entry behind.
+                Services.CommandLinePath.Register(installDir, machine);
                 return KillerFamily.Deployment.InstallerExitCodes.Success;
             }
             catch (Exception ex)
@@ -257,7 +258,6 @@ namespace Killendar
                     return false;
                 }
                 try { File.SetAttributes(InstallExe, FileAttributes.Normal); } catch { }
-                Services.CommandLinePath.Register(InstallDir, machine: false);
 
                 Directory.CreateDirectory(StartMenuDir);
                 CreateShortcut(StartMenuLnk, InstallExe);
@@ -265,6 +265,8 @@ namespace Killendar
 
                 WriteInstallKeys(Registry.CurrentUser, InstallDir, InstallExe);
                 FileAssociations.Register(Registry.CurrentUser, InstallExe);
+                // Last, so a failed install never leaves a PATH entry behind.
+                Services.CommandLinePath.Register(InstallDir, machine: false);
                 return true;
             }
             catch (Exception ex)
