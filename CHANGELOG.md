@@ -42,9 +42,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - The command line accepts an optional trailing --json while keeping its existing JSON output.
 - Checked check boxes take the chosen accent on Dark, Light and Black instead of staying green.
 - On the Light theme's Yellow and Orange accents, buttons, links, tabs and accent icons keep their color with a thin gray outline around accent text and icons, instead of turning near-black or brown.
-- Gray, menu and accent text reads at 4.5:1 contrast or better in every theme and accent, and the footer's version and copyright are slightly dimmed.
+- Gray, menu and accent text reads at 4.5:1 contrast or better in every theme and accent except the Light theme's outlined Yellow and Orange, and the footer's version and copyright are slightly dimmed.
 - The Dark theme's Red accent stays a true red on buttons, lines, scroll bars and the website's accent swatches, and only small red text uses a lighter red.
-- The website's text and accent colors read at 4.5:1 contrast or better in every theme, and a narrow top bar shrinks the Microsoft Store and MCP buttons to their logos and moves links into a More menu instead of wrapping.
+- The website's text and accent colors read at 4.5:1 contrast or better in every theme except the Light theme's outlined Yellow and Orange accents, and a narrow top bar shrinks the Microsoft Store and MCP buttons to their logos and moves links into a More menu instead of wrapping.
 - On 98SE the title bar text beside the wordmark is readable on the green title bar.
 - On the website's Light theme with the Yellow or Orange accent, links, headings and labels keep their color with a thin gray outline instead of turning olive or brown.
 - The exe's file properties show Steve the Killer as the copyright holder instead of leaving it blank.
