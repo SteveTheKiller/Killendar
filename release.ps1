@@ -514,41 +514,47 @@ if ($LASTEXITCODE -ne 0) {
 # Runs AFTER the release is published so the package never points at a release that failed.
 # Non-fatal: the GitHub release is already out, so a choco hiccup must not fail the run.
 if ($Choco) {
-    $chocoDir   = Join-Path $PSScriptRoot 'choco'
-    $nuspec     = Join-Path $chocoDir 'Killendar.nuspec'
-    if (-not (Test-Path $nuspec)) {
-        Write-Warning 'Skipping Chocolatey - no choco\Killendar.nuspec yet (copy KillerScan''s choco folder as a template).'
-    } else {
-        Step "Packing Chocolatey package"
-        $installPs1 = Join-Path $chocoDir 'tools\chocolateyInstall.ps1'
-        $nuspecOrig  = Get-Content $nuspec -Raw
-        $installOrig = Get-Content $installPs1 -Raw
-        $nupkg = $null
-        try {
-            $nuspecOrig  -replace 'REPLACE_VERSION', $Version | Set-Content $nuspec -NoNewline
-            $installOrig -replace 'REPLACE_HASH',    $exeHash | Set-Content $installPs1 -NoNewline
+    try {
+        $chocoDir   = Join-Path $PSScriptRoot 'choco'
+        $nuspec     = Join-Path $chocoDir 'Killendar.nuspec'
+        if (-not (Test-Path $nuspec)) {
+            Write-Warning 'Skipping Chocolatey - no choco\Killendar.nuspec yet (copy KillerScan''s choco folder as a template).'
+        } else {
+            Step "Packing Chocolatey package"
+            $installPs1 = Join-Path $chocoDir 'tools\chocolateyInstall.ps1'
+            $nuspecOrig  = Get-Content $nuspec -Raw
+            $installOrig = Get-Content $installPs1 -Raw
+            $nupkg = $null
+            try {
+                $nuspecOrig  -replace 'REPLACE_VERSION', $Version | Set-Content $nuspec -NoNewline
+                $installOrig -replace 'REPLACE_HASH',    $exeHash | Set-Content $installPs1 -NoNewline
 
-            Push-Location $chocoDir
-            choco pack Killendar.nuspec
-            if ($LASTEXITCODE -ne 0) { Write-Warning 'choco pack failed' } else {
-                $nupkg = Join-Path $chocoDir "Killendar.$Version.nupkg"
-                Write-Host "Packed: $nupkg" -ForegroundColor Green
+                Push-Location $chocoDir
+                try {
+                    choco pack Killendar.nuspec
+                    if ($LASTEXITCODE -ne 0) { Write-Warning 'choco pack failed' } else {
+                        $nupkg = Join-Path $chocoDir "Killendar.$Version.nupkg"
+                        Write-Host "Packed: $nupkg" -ForegroundColor Green
+                    }
+                } finally { Pop-Location }
+            } finally {
+                # Always restore the templates so the placeholders survive in git.
+                $nuspecOrig  | Set-Content $nuspec -NoNewline
+                $installOrig | Set-Content $installPs1 -NoNewline
             }
-            Pop-Location
-        } finally {
-            # Always restore the templates so the placeholders survive in git.
-            $nuspecOrig  | Set-Content $nuspec -NoNewline
-            $installOrig | Set-Content $installPs1 -NoNewline
-        }
 
-        if ($nupkg -and $ChocoApiKey) {
-            Step "Pushing to the Chocolatey community repo"
-            choco push $nupkg --source https://push.chocolatey.org --api-key $ChocoApiKey
-            if ($LASTEXITCODE -ne 0) { Write-Warning 'choco push failed - push it by hand.' }
-            else { Write-Host 'Pushed OK' -ForegroundColor Green }
-        } elseif ($nupkg) {
-            Write-Host 'Skipping push - set CHOCO_API_KEY or pass -ChocoApiKey to push automatically.' -ForegroundColor Yellow
+            if ($nupkg -and $ChocoApiKey) {
+                Step "Pushing to the Chocolatey community repo"
+                choco push $nupkg --source https://push.chocolatey.org --api-key $ChocoApiKey
+                if ($LASTEXITCODE -ne 0) { Write-Warning 'choco push failed - push it by hand.' }
+                else { Write-Host 'Pushed OK' -ForegroundColor Green }
+            } elseif ($nupkg) {
+                Write-Host 'Skipping push - set CHOCO_API_KEY or pass -ChocoApiKey to push automatically.' -ForegroundColor Yellow
+            }
         }
+    } catch {
+        # The release is already out, so this warns instead of skipping the Store step.
+        Write-Warning "Chocolatey step failed: $($_.Exception.Message) Pack and push it by hand."
     }
 }
 
