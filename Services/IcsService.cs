@@ -490,7 +490,12 @@ namespace Killendar.Services
                                 throw new TimeZoneNotFoundException(
                                     "Unsupported calendar time zone: " + zoneId, ex);
                             }
-                            dt = TimeZoneInfo.ConvertTimeToUtc(dt, zone).ToLocalTime();
+                            // A time the clocks skipped over has no direct conversion. RFC 5545
+                            // reads it with the offset in force just before the gap.
+                            dt = zone.IsInvalidTime(dt)
+                                ? DateTime.SpecifyKind(dt - zone.GetUtcOffset(dt.AddHours(-12)),
+                                    DateTimeKind.Utc).ToLocalTime()
+                                : TimeZoneInfo.ConvertTimeToUtc(dt, zone).ToLocalTime();
                         }
                         return (dt, false);
                     }
@@ -523,7 +528,8 @@ namespace Killendar.Services
         {
             // Basic DURATION: P[nW][nD][T[nH][nM][nS]]
             var m = Regex.Match(value,
-                @"^(?<neg>-)?P(?:(?<w>\d+)W)?(?:(?<d>\d+)D)?(?:T(?:(?<h>\d+)H)?(?:(?<mn>\d+)M)?(?:(?<s>\d+)S)?)?$");
+                @"^(?<neg>-)?P(?:(?<w>\d+)W)?(?:(?<d>\d+)D)?(?:T(?:(?<h>\d+)H)?(?:(?<mn>\d+)M)?(?:(?<s>\d+)S)?)?$",
+                RegexOptions.IgnoreCase);
             if (!m.Success) return null;
 
             try

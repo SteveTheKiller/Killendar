@@ -142,5 +142,36 @@ namespace Killendar.Tests
             }
             finally { File.Delete(path); }
         }
+
+        [Fact]
+        public void TzidTimeInTheSpringForwardGapUsesTheOffsetBeforeTheGap()
+        {
+            const string ics = "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\n" +
+                "DTSTART;TZID=America/New_York:20260308T023000\r\n" +
+                "DTEND;TZID=America/New_York:20260308T040000\r\n" +
+                "SUMMARY:Early\r\nEND:VEVENT\r\n" +
+                "BEGIN:VEVENT\r\n" +
+                "DTSTART;TZID=America/New_York:20260309T090000\r\n" +
+                "DTEND;TZID=America/New_York:20260309T100000\r\n" +
+                "SUMMARY:Next day\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n";
+
+            var events = IcsService.ParseText(ics).Events;
+            Assert.Equal(2, events.Count);
+            var early = Assert.Single(events, e => e.Title == "Early");
+            Assert.Equal(new DateTime(2026, 3, 8, 7, 30, 0, DateTimeKind.Utc).ToLocalTime(), early.Start);
+            Assert.Equal(new DateTime(2026, 3, 8, 8, 0, 0, DateTimeKind.Utc).ToLocalTime(), early.End);
+        }
+
+        [Fact]
+        public void LowercaseDurationIsReadLikeUppercase()
+        {
+            const string ics = "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\n" +
+                "DTSTART:20260715T090000\r\n" +
+                "DURATION:pt1h30m\r\n" +
+                "SUMMARY:Meeting\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n";
+
+            var ev = Assert.Single(IcsService.ParseText(ics).Events);
+            Assert.Equal(new DateTime(2026, 7, 15, 10, 30, 0), ev.End);
+        }
     }
 }
