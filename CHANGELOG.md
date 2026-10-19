@@ -9,6 +9,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Fixed
 - Title bar buttons stay square when highlighted, like the caption buttons in the other apps, instead of rounding their top corner.
 - The Week and Day grid sits flat under the day headers instead of curving at its top corners.
+- The footer copyright sits a few pixels further from the corner grip instead of running into it.
 
 ## [1.3.1] - 2026-10-19
 
