@@ -92,6 +92,42 @@ namespace Killendar.Shell
             (KsCat.Help, "Str_KS_GrpHelp"),
         ];
 
+        /// <summary>
+        /// The keys bound to an action, written the way the overlay list writes them ("N / Ctrl+N"),
+        /// or null when the action has none. Tooltips and menus read their keys from here, so they
+        /// can never describe a key differently from the overlay.
+        /// </summary>
+        internal static string? ShortcutKeys(string labelKey)
+        {
+            var keys = KsAll.Where(b => b.LabelKey == labelKey).Select(b => b.Keys).ToArray();
+            return keys.Length == 0 ? null : string.Join(" / ", keys);
+        }
+
+        /// <summary>A tooltip with the action's keys after it, as in "Import (Ctrl+I)".</summary>
+        internal static string WithShortcut(string text, string labelKey)
+            => ShortcutKeys(labelKey) is { } keys ? text + " (" + keys + ")" : text;
+
+        /// <summary>
+        /// Every button that runs a bound action shows its keys (family rule: shortcuts appear on
+        /// every action surface). The toolbar sets its own in ToolbarStyle.cs. Called at startup
+        /// and after a language change, since these are set from code.
+        /// </summary>
+        private void ApplyShortcutTooltips()
+        {
+            PrevBtn.ToolTip = WithShortcut(Loc("Str_TT_Prev"), "Str_KS_Prev");
+            NextBtn.ToolTip = WithShortcut(Loc("Str_TT_Next"), "Str_KS_Next");
+            SidebarToggleBtn.ToolTip = PanelToggleTip();
+            VersionLabel.ToolTip = WithShortcut(Loc("Str_TT_About"), "Str_KS_About");
+            SaveAppointmentBtn.ToolTip = WithShortcut(Loc("Str_Btn_Save"), "Str_KS_SaveAppt");
+            DeleteAppointmentBtn.ToolTip = WithShortcut(Loc("Str_Btn_Delete"), "Str_KS_DeleteAppt");
+            AllDayToggle.ToolTip = WithShortcut(Loc("Str_KS_AllDay"), "Str_KS_AllDay");
+            RepeatFreqButton.ToolTip = WithShortcut(Loc("Str_KS_Repeats"), "Str_KS_Repeats");
+        }
+
+        /// <summary>The panel button's tooltip for its current state, with B.</summary>
+        private string PanelToggleTip()
+            => WithShortcut(Loc(_sidebarOpen ? "Str_TT_PanelHide" : "Str_TT_PanelShow"), "Str_KS_Panel");
+
         // Arrow and hamburger key caps, built from codepoints rather than typed literally. This
         // file is BOM-less UTF-8 and must stay 0 non-ASCII bytes - the same rule About.cs and the
         // rail chevrons follow, for the same reason: a literal glyph does not survive tooling.

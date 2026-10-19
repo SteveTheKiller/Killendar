@@ -75,7 +75,7 @@ namespace Killendar.Shell
             else SidebarSplitter.IsEnabled = true;
             SidebarToggleBtn.Content = ChevronClose;
             SidebarToggleBtn.Tag = "on";                  // lights the rail icon in the accent
-            SidebarToggleBtn.ToolTip = Loc("Str_TT_PanelHide");
+            SidebarToggleBtn.ToolTip = WithShortcut(Loc("Str_TT_PanelHide"), "Str_KS_Panel");
         }
 
         /// <summary>Slides the panel shut and drops whatever was being edited.</summary>
@@ -93,7 +93,7 @@ namespace Killendar.Shell
             if (was) { ShrinkAfterSidebar(); SlideSidebar(0); }
             SidebarToggleBtn.Content = ChevronOpen;
             SidebarToggleBtn.Tag = null;
-            SidebarToggleBtn.ToolTip = Loc("Str_TT_PanelShow");
+            SidebarToggleBtn.ToolTip = WithShortcut(Loc("Str_TT_PanelShow"), "Str_KS_Panel");
 
             _appointments.Clear();
             ResetDayAgenda();               // full close forgets the day agenda (DayAgendaPanel.cs)

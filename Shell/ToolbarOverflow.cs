@@ -285,6 +285,7 @@ namespace Killendar.Shell
             var mi = new MenuItem
             {
                 Header = ToolbarButtonLabel(btn),
+                InputGestureText = ShortcutKeys(ToolbarShortcutKey(btn)) ?? "",
                 Icon = GlyphFor(btn)
             };
             mi.Click += (s, e) => click(btn, e);
@@ -301,13 +302,16 @@ namespace Killendar.Shell
         }
 
         /// <summary>
-        /// A toolbar button's caption as text. In icon-only modes Content is a TextBlock holding a
-        /// glyph, which would put a private-use character in the menu, so fall back to the tooltip -
-        /// ToolbarStyle.cs sets it to the localized name in every mode.
+        /// A toolbar button's caption as text: its localized name from ToolbarItems(). Not the
+        /// Content, which in icon-only modes is a TextBlock holding a glyph, and not the tooltip,
+        /// which carries the shortcut after the name.
         /// </summary>
-        private static string ToolbarButtonLabel(Button btn) => btn.Content as string
-            ?? btn.ToolTip as string
-            ?? (btn.Tag as string ?? "");
+        private string ToolbarButtonLabel(Button btn)
+        {
+            foreach (var (b, _, key) in ToolbarItems())
+                if (ReferenceEquals(b, btn)) return Loc(key);
+            return btn.Content as string ?? btn.Tag as string ?? "";
+        }
 
         /// <summary>Rebuild the menu after a language change or a toolbar mode switch.</summary>
         private void RefreshViewOverflowMenu() => RebuildOverflowMenu();

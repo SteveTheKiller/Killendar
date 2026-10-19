@@ -46,8 +46,8 @@ namespace Killendar.Shell
             // The views are rebuilt wholesale, which re-reads every string they use.
             _calendar.Refresh();
 
-            // Rail tooltips track the panel state.
-            SidebarToggleBtn.ToolTip = Loc(_sidebarOpen ? "Str_TT_PanelHide" : "Str_TT_PanelShow");
+            // Tooltips that carry a shortcut, including the panel button's, which tracks its state.
+            ApplyShortcutTooltips();
 
             // The panel's own dynamic bits: heading and the all-day toggle.
             _appointments.RefreshLocalizedText();

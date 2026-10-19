@@ -84,6 +84,20 @@ namespace Killendar.Shell
             yield return (TabAgenda,   0xE8FD, "Str_View_Agenda");  // List              (confirmed)
         }
 
+        /// <summary>The overlay label key whose shortcut a toolbar button carries (ShortcutsOverlay.cs).</summary>
+        private string ToolbarShortcutKey(Button btn)
+        {
+            if (ReferenceEquals(btn, NewEventBtn)) return "Str_KS_New";
+            if (ReferenceEquals(btn, ImportBtn))   return "Str_KS_Import";
+            if (ReferenceEquals(btn, ExportBtn))   return "Str_KS_Export";
+            if (ReferenceEquals(btn, TodayBtn))    return "Str_KS_Today";
+            if (ReferenceEquals(btn, TabMonth))    return "Str_KS_Month";
+            if (ReferenceEquals(btn, TabWeek))     return "Str_KS_Week";
+            if (ReferenceEquals(btn, TabDay))      return "Str_KS_Day";
+            if (ReferenceEquals(btn, TabAgenda))   return "Str_KS_Agenda";
+            return "";
+        }
+
         private static readonly (IconSize Size, string LabelKey)[] IconSizes =
         [
             (IconSize.Small, "Str_Toolbar_SmallIcons"),
@@ -147,7 +161,7 @@ namespace Killendar.Shell
                 btn.Content = BuildToolbarContent(_iconSize, _labelMode, glyph, label);
                 SizeToolbarButton(btn, _iconSize, _labelMode);
                 // The name always stays reachable, which is what makes an icon-only bar usable.
-                btn.ToolTip = label;
+                btn.ToolTip = WithShortcut(label, ToolbarShortcutKey(btn));
             }
             // The Month dropdown arrow is not a toolbar item, but it must stand as tall as the
             // Month button it belongs to in every size and text mode.

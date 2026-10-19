@@ -81,6 +81,7 @@ namespace Killendar.Shell
             VersionLabel.Text = "v" + Services.AppInfo.Version;
 
             InitCalendar();   // store, the four views, navigation, ICS
+            ApplyShortcutTooltips();   // ShortcutsOverlay.cs - the keys on every bound button
         }
 
         /// <summary>The family rail order (RailOrder.cs): theme, language and shortcuts hold the
