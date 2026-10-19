@@ -32,6 +32,7 @@ namespace Killendar.Shell
             }
             InitSidebarResize();
             InitSidebarSide();   // SidebarDock.cs - left or right of the calendar
+            InitRailOrder();
 
             RestoreWindowPlacement();
             InitAppScale();
@@ -80,6 +81,37 @@ namespace Killendar.Shell
             VersionLabel.Text = "v" + Services.AppInfo.Version;
 
             InitCalendar();   // store, the four views, navigation, ICS
+        }
+
+        private RailOrder _railOrder = null!;
+
+        /// <summary>The family rail order (RailOrder.cs): theme, language and shortcuts hold the
+        /// rail's corner, and the other rail buttons can be dragged into any order.</summary>
+        private void InitRailOrder()
+        {
+            _railOrder = RailOrder.Attach(RailStack,
+                new FrameworkElement[] { ThemeButton, LangButton, ShortcutsButton },
+                new FrameworkElement[] { CategoriesButton, DensityBtn, DateSettingsButton },
+                Settings.Get("RailOrder"), value => Settings.Set("RailOrder", value));
+            ApplyRailFlip(Settings.Get("RailFlipped") == "1");
+        }
+
+        /// <summary>The rail menu's Move icons to the other side: the buttons take the top corner
+        /// and the chevron the bottom, or back. Theme stays outermost either way.</summary>
+        private void ToggleRailFlip()
+        {
+            bool flipped = !_railOrder.Flipped;
+            Settings.Set("RailFlipped", flipped ? "1" : "0");
+            ApplyRailFlip(flipped);
+        }
+
+        private void ApplyRailFlip(bool flipped)
+        {
+            SidebarToggleBtn.VerticalAlignment = flipped ? VerticalAlignment.Bottom : VerticalAlignment.Top;
+            SidebarToggleBtn.Margin = flipped ? new Thickness(0, 0, 0, 10) : new Thickness(0, 10, 0, 0);
+            RailStack.VerticalAlignment = flipped ? VerticalAlignment.Top : VerticalAlignment.Bottom;
+            RailStack.Margin = flipped ? new Thickness(0, 6, 0, 0) : new Thickness(0, 0, 0, 6);
+            _railOrder.SetFlipped(flipped);
         }
 
         /// <summary>The footer version label opens the About card.</summary>

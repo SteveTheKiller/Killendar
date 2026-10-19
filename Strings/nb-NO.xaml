@@ -457,4 +457,5 @@
     <sys:String x:Key="Str_Scroll_PageDown">Side ned</sys:String>
     <sys:String x:Key="Str_Scroll_PageLeft">Side til venstre</sys:String>
     <sys:String x:Key="Str_Scroll_PageRight">Side til høyre</sys:String>
+    <sys:String x:Key="Str_Rail_Flip">Flytt ikonene til den andre siden</sys:String>
 </ResourceDictionary>

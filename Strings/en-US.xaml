@@ -457,4 +457,5 @@
     <sys:String x:Key="Str_Scroll_PageDown">Page down</sys:String>
     <sys:String x:Key="Str_Scroll_PageLeft">Page left</sys:String>
     <sys:String x:Key="Str_Scroll_PageRight">Page right</sys:String>
+    <sys:String x:Key="Str_Rail_Flip">Move icons to the other side</sys:String>
 </ResourceDictionary>

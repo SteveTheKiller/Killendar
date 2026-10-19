@@ -431,4 +431,5 @@
     <sys:String x:Key="Str_Scroll_PageDown">Seite nach unten</sys:String>
     <sys:String x:Key="Str_Scroll_PageLeft">Seite nach links</sys:String>
     <sys:String x:Key="Str_Scroll_PageRight">Seite nach rechts</sys:String>
+    <sys:String x:Key="Str_Rail_Flip">Symbole auf die andere Seite verschieben</sys:String>
 </ResourceDictionary>

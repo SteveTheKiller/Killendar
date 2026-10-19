@@ -431,4 +431,5 @@
     <sys:String x:Key="Str_Scroll_PageDown">向下翻頁</sys:String>
     <sys:String x:Key="Str_Scroll_PageLeft">向左翻頁</sys:String>
     <sys:String x:Key="Str_Scroll_PageRight">向右翻頁</sys:String>
+    <sys:String x:Key="Str_Rail_Flip">將圖示移至另一側</sys:String>
 </ResourceDictionary>

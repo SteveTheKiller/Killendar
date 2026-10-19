@@ -378,4 +378,5 @@
     <sys:String x:Key="Str_Scroll_PageDown">Strona w dół</sys:String>
     <sys:String x:Key="Str_Scroll_PageLeft">Strona w lewo</sys:String>
     <sys:String x:Key="Str_Scroll_PageRight">Strona w prawo</sys:String>
+    <sys:String x:Key="Str_Rail_Flip">Przenieś ikony na drugą stronę</sys:String>
 </ResourceDictionary>

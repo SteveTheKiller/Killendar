@@ -457,4 +457,5 @@
     <sys:String x:Key="Str_Scroll_PageDown">На сторінку вниз</sys:String>
     <sys:String x:Key="Str_Scroll_PageLeft">На сторінку ліворуч</sys:String>
     <sys:String x:Key="Str_Scroll_PageRight">На сторінку праворуч</sys:String>
+    <sys:String x:Key="Str_Rail_Flip">Перемістити піктограми на інший бік</sys:String>
 </ResourceDictionary>

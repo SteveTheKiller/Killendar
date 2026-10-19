@@ -431,4 +431,5 @@
     <sys:String x:Key="Str_Scroll_PageDown">Bir sayfa aşağı</sys:String>
     <sys:String x:Key="Str_Scroll_PageLeft">Bir sayfa sola</sys:String>
     <sys:String x:Key="Str_Scroll_PageRight">Bir sayfa sağa</sys:String>
+    <sys:String x:Key="Str_Rail_Flip">Simgeleri diğer tarafa taşı</sys:String>
 </ResourceDictionary>

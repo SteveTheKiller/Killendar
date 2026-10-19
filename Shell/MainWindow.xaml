@@ -383,9 +383,11 @@
                                     Click="SidebarToggle_Click"
                                     ToolTip="{DynamicResource Str_TT_PanelShow}"/>
 
-                            <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,6">
+                            <!-- The family rail order (RailOrder.cs): theme, language and shortcuts
+                                 hold the bottom edge in that order; the buttons above them can be
+                                 dragged into any order. -->
+                            <StackPanel x:Name="RailStack" VerticalAlignment="Bottom" Margin="0,0,0,6">
 
-                                <!-- Date settings sit directly above language; theme stays last. -->
                                 <Button x:Name="CategoriesButton" Style="{StaticResource RailButton}"
                                         Click="CategoriesButton_Click" Content="&#xE8EC;" Margin="0,0,0,6"
                                         ToolTip="{DynamicResource Str_TT_Categories}"/>
@@ -400,6 +402,14 @@
                                         Content="&#xE8A1;" Margin="0,0,0,6"
                                         ToolTip="{DynamicResource Str_TT_Density}"/>
 
+                                <Button x:Name="DateSettingsButton" Style="{StaticResource RailButton}"
+                                        Click="DateSettingsButton_Click" Content="&#xE787;" Margin="0,0,0,6"
+                                        ToolTip="{DynamicResource Str_TT_DateSettings}">
+                                    <Button.ContextMenu>
+                                        <ContextMenu x:Name="DateSettingsContextMenu"/>
+                                    </Button.ContextMenu>
+                                </Button>
+
                                 <!-- The 5-day work-week toggle is NOT here: it lives in Week
                                      view's own header corner (TimeGridView.cs), beside the
                                      columns it drops. It sat on this rail for about an hour on
@@ -411,13 +421,6 @@
                                         Click="ShortcutsButton_Click" Content="?" FontFamily="Consolas"
                                         FontSize="18" Margin="0,0,0,6"
                                         ToolTip="{DynamicResource Str_TT_Shortcuts}"/>
-                                <Button x:Name="DateSettingsButton" Style="{StaticResource RailButton}"
-                                        Click="DateSettingsButton_Click" Content="&#xE787;" Margin="0,0,0,6"
-                                        ToolTip="{DynamicResource Str_TT_DateSettings}">
-                                    <Button.ContextMenu>
-                                        <ContextMenu x:Name="DateSettingsContextMenu"/>
-                                    </Button.ContextMenu>
-                                </Button>
                                 <Button x:Name="LangButton" Style="{StaticResource RailButton}"
                                         Click="LangButton_Click" Content="&#xF2B7;" Margin="0,0,0,6"
                                         ToolTip="{DynamicResource Str_TT_Language}">
