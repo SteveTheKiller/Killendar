@@ -1,6 +1,8 @@
 using System;
+using System.Runtime.InteropServices;   // Marshal.SizeOf for the monitor query
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Media;              // CompositionTarget - the per-frame width ride
 using System.Windows.Media.Animation;
 using Killendar.Controls;
@@ -146,24 +148,65 @@ namespace Killendar.Shell
             if (WindowState != WindowState.Normal) return;
             if (ActualWidth >= OpenMinWidth) return;      // already room; the calendar can just shrink
 
-            double grow = Math.Min(_sidebarWidth * _appScale,
-                                   SystemParameters.WorkArea.Width - ActualWidth);
+            var (grow, moved) = SidebarGrowFit(CurrentWorkArea(), Left, ActualWidth,
+                                               _sidebarWidth * _appScale);
             if (grow <= 0) return;
 
             _rideBase = ActualWidth;
             _rideGrow = grow;
             StartWidthRide();
 
-            // Keep it on screen: growing from a window already near the right edge would otherwise
-            // hang the new width off the side of the work area.
-            double right = SystemParameters.WorkArea.Right;
-            double target = _rideBase + grow;
-            if (Left + target > right)
+            if (Math.Abs(moved - Left) > 0.01)
             {
-                double moved = Math.Max(SystemParameters.WorkArea.Left, right - target);
                 _rideLeftShift = Left - moved;   // remembered so closing puts the window back
                 Left = moved;
             }
+        }
+
+        /// <summary>
+        /// How much a window at <paramref name="left"/> and <paramref name="width"/> can grow toward
+        /// <paramref name="want"/> inside <paramref name="area"/>, and where its left edge has to
+        /// go so the grown width stays on screen. Pure, so it can be checked without a monitor.
+        /// </summary>
+        internal static (double grow, double left) SidebarGrowFit(Rect area, double left, double width,
+                                                                   double want)
+        {
+            double grow = Math.Min(want, area.Width - width);
+            if (grow <= 0) return (0, left);
+
+            // Growing from a window already near the right edge would otherwise hang the new
+            // width off the side of the work area.
+            double target = width + grow;
+            if (left + target > area.Right) left = Math.Max(area.Left, area.Right - target);
+            return (grow, left);
+        }
+
+        /// <summary>
+        /// Work area of the monitor the window is on, in this window's DIPs.
+        /// SystemParameters.WorkArea is the primary monitor only, which would pull a window on
+        /// another monitor back to the primary.
+        /// </summary>
+        private Rect CurrentWorkArea()
+        {
+            try
+            {
+                var source = PresentationSource.FromVisual(this) as HwndSource;
+                if (source?.CompositionTarget != null)
+                {
+                    double sx = source.CompositionTarget.TransformToDevice.M11;
+                    double sy = source.CompositionTarget.TransformToDevice.M22;
+                    IntPtr monitor = MonitorFromWindow(source.Handle, MONITOR_DEFAULTTONEAREST);
+                    var info = new MONITORINFO { cbSize = Marshal.SizeOf<MONITORINFO>() };
+                    if (sx > 0 && sy > 0 && monitor != IntPtr.Zero && GetMonitorInfo(monitor, ref info))
+                    {
+                        RECT w = info.rcWork;
+                        return new Rect(w.left / sx, w.top / sy,
+                                        (w.right - w.left) / sx, (w.bottom - w.top) / sy);
+                    }
+                }
+            }
+            catch { /* fall back to the primary work area below */ }
+            return SystemParameters.WorkArea;   // monitor interop is declared in Chrome.cs
         }
 
         /// <summary>How far left the window had to be nudged to fit the grown width on screen.
@@ -222,7 +265,7 @@ namespace Killendar.Shell
             // still narrow makes WPF snap the width up instantly, which is the jump this whole
             // mechanism exists to avoid.
             if (_sidebarOpen)
-                MinWidth = Math.Min(OpenMinWidth, SystemParameters.WorkArea.Width);
+                MinWidth = Math.Min(OpenMinWidth, CurrentWorkArea().Width);
             else
                 _rideGrow = 0;
         }

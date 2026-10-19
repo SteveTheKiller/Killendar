@@ -49,7 +49,7 @@ namespace Killendar.Shell
             SidebarContent.Width = _sidebarWidth;
             SidebarCol.Width = new GridLength(_sidebarWidth);
             Settings.Set(SidebarWidthKey, _sidebarWidth.ToString(CultureInfo.InvariantCulture));
-            MinWidth = Math.Min(OpenMinWidth, SystemParameters.WorkArea.Width);
+            MinWidth = Math.Min(OpenMinWidth, CurrentWorkArea().Width);
         }
 
         private static double ClampSidebarWidth(double width) =>
