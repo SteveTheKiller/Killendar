@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using Killendar.Models;
+using TimeZoneConverter;
 
 namespace Killendar.Services
 {
@@ -423,7 +424,7 @@ namespace Killendar.Services
         /// and nothing anywhere told the user. A date that cannot be read is now a failure the
         /// caller has to deal with, not a guess dressed up as data.
         /// </summary>
-        private static (DateTime dt, bool allDay)? ParseDateTime(string value, string _)
+        private static (DateTime dt, bool allDay)? ParseDateTime(string value, string param)
         {
             value = value.Trim();
             if (value.Length == 0) return null;
@@ -453,9 +454,26 @@ namespace Killendar.Services
                     // 31 February, hour 25). The ctor throws; that is a bad line, not a crash.
                     try
                     {
-                        var kind = utc ? DateTimeKind.Utc : DateTimeKind.Local;
+                        string? zoneId = null;
+                        foreach (string item in param.Split(';'))
+                            if (item.StartsWith("TZID=", StringComparison.OrdinalIgnoreCase))
+                                zoneId = item.Substring(5).Trim().Trim('"');
+
+                        var kind = utc ? DateTimeKind.Utc : zoneId == null
+                            ? DateTimeKind.Local : DateTimeKind.Unspecified;
                         var dt   = new DateTime(yr, mo, dy, hr, mn, sc, kind);
                         if (utc) dt = dt.ToLocalTime();
+                        else if (zoneId != null)
+                        {
+                            TimeZoneInfo zone;
+                            try { zone = TZConvert.GetTimeZoneInfo(zoneId); }
+                            catch (TimeZoneNotFoundException ex)
+                            {
+                                throw new TimeZoneNotFoundException(
+                                    "Unsupported calendar time zone: " + zoneId, ex);
+                            }
+                            dt = TimeZoneInfo.ConvertTimeToUtc(dt, zone).ToLocalTime();
+                        }
                         return (dt, false);
                     }
                     catch (ArgumentOutOfRangeException) { return null; }

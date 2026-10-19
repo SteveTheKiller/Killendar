@@ -80,6 +80,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Text.Json" Version="10.0.11" />
+    <PackageReference Include="TimeZoneConverter" Version="8.0.0" />
     <!-- Transitive pins: Costura.Fody -> NETStandard.Library 1.6.1 resolves the vulnerable
          System.Net.Http 4.3.0 / System.Text.RegularExpressions 4.3.0 (GHSA-7jgj-8wvc-jh57,
          GHSA-cmhx-cq75-c4mj). Costura is build-time only and the app compiles against the net48

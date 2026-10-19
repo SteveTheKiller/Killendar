@@ -41,5 +41,35 @@ namespace Killendar.Tests
             var roundTripOverride = Assert.Single(again.Events, e => e.IsOverride);
             Assert.Equal(roundTripMaster.Id, roundTripOverride.SeriesId);
         }
+
+        [Theory]
+        [InlineData("America/New_York", "20260115T090000", 2026, 1, 15, 14)]
+        [InlineData("America/New_York", "20260715T090000", 2026, 7, 15, 13)]
+        [InlineData("Eastern Standard Time", "20260715T090000", 2026, 7, 15, 13)]
+        public void TzidUsesTheSourceZonesOffsetIncludingDaylightTime(
+            string zone, string stamp, int year, int month, int day, int utcHour)
+        {
+            string ics = "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\n" +
+                $"DTSTART;TZID={zone}:{stamp}\r\n" +
+                $"DTEND;TZID={zone}:{year:D4}{month:D2}{day:D2}T100000\r\n" +
+                "SUMMARY:Meeting\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n";
+
+            var ev = Assert.Single(IcsService.ParseText(ics).Events);
+            var expectedUtc = new DateTime(year, month, day, utcHour, 0, 0, DateTimeKind.Utc);
+            Assert.Equal(expectedUtc.ToLocalTime(), ev.Start);
+            Assert.Equal(expectedUtc.AddHours(1).ToLocalTime(), ev.End);
+        }
+
+        [Fact]
+        public void UnknownTzidReportsTheZoneInsteadOfGuessingLocalTime()
+        {
+            const string ics = "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\n" +
+                "DTSTART;TZID=Mars/Colony:20260715T090000\r\n" +
+                "DTEND;TZID=Mars/Colony:20260715T100000\r\n" +
+                "SUMMARY:Meeting\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n";
+
+            var error = Assert.Throws<TimeZoneNotFoundException>(() => IcsService.ParseText(ics));
+            Assert.Contains("Mars/Colony", error.Message);
+        }
     }
 }
