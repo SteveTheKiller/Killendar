@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- Native database cache corruption is repaired before loading, and native load failures are reported.
 - Long counted series retain every occurrence and stop at the requested count.
 - Failed password changes preserve the original calendar and complete recovery copies, and report temporary copies that cannot be removed.
 - Failed deletion of an edited recurring appointment preserves its edits and the original series.
