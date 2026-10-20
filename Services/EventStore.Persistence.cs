@@ -18,7 +18,7 @@ namespace Killendar.Services
             "SELECT id, title, start_utc, end_utc, all_day, location, description, attendees, " +
             "created_utc, modified_utc, categories, repeat_freq, repeat_interval, repeat_days, " +
             "repeat_until, repeat_count, skip_dates, series_id, occurrence_start, " +
-            "repeat_time_basis, repeat_anchor, repeat_zone_id FROM events";
+            "repeat_time_basis, repeat_anchor, repeat_zone_id, repeat_week_start FROM events";
 
         private void LoadIntoMemory()
         {
@@ -62,6 +62,8 @@ namespace Killendar.Services
                             ? RecurrenceTimeBasis.Local : (RecurrenceTimeBasis)r.GetInt64(19),
                         RepeatAnchor = r.IsDBNull(20) ? null : FromStoreNullable(r.GetString(20), true),
                         RepeatZoneId = r.IsDBNull(21) ? "" : r.GetString(21),
+                        RepeatWeekStart = r.IsDBNull(22) || r.GetInt64(22) < 0 || r.GetInt64(22) > 6
+                            ? DayOfWeek.Sunday : (DayOfWeek)r.GetInt64(22),
                     });
                 }
             }
@@ -97,14 +99,14 @@ namespace Killendar.Services
                 "INSERT INTO events(id, title, start_utc, end_utc, all_day, location, " +
                 "description, attendees, categories, created_utc, modified_utc, " +
                 "repeat_freq, repeat_interval, repeat_days, repeat_until, repeat_count, " +
-                "skip_dates, series_id, occurrence_start, repeat_time_basis, repeat_anchor, repeat_zone_id) " +
+                "skip_dates, series_id, occurrence_start, repeat_time_basis, repeat_anchor, repeat_zone_id, repeat_week_start) " +
                 "VALUES($id, $ti, $st, $en, $ad, $lo, $de, $at, $ca, $cr, $mo, " +
-                "$rf, $ri, $rd, $ru, $rc, $sk, $si, $os, $tb, $ra, $rz) " +
+                "$rf, $ri, $rd, $ru, $rc, $sk, $si, $os, $tb, $ra, $rz, $ws) " +
                 "ON CONFLICT(id) DO UPDATE SET title=$ti, start_utc=$st, end_utc=$en, " +
                 "all_day=$ad, location=$lo, description=$de, attendees=$at, categories=$ca, " +
                 "modified_utc=$mo, repeat_freq=$rf, repeat_interval=$ri, repeat_days=$rd, " +
                 "repeat_until=$ru, repeat_count=$rc, skip_dates=$sk, series_id=$si, " +
-                "occurrence_start=$os, repeat_time_basis=$tb, repeat_anchor=$ra, repeat_zone_id=$rz";
+                "occurrence_start=$os, repeat_time_basis=$tb, repeat_anchor=$ra, repeat_zone_id=$rz, repeat_week_start=$ws";
             cmd.Parameters.AddWithValue("$id", ev.Id.ToString());
             cmd.Parameters.AddWithValue("$ti", ev.Title ?? "");
             cmd.Parameters.AddWithValue("$st", ToStore(ev.Start, ev.AllDay));
@@ -128,6 +130,7 @@ namespace Killendar.Services
             cmd.Parameters.AddWithValue("$tb", (int)ev.RepeatTimeBasis);
             cmd.Parameters.AddWithValue("$ra", ev.RepeatAnchor.HasValue ? ToStore(ev.RepeatAnchor.Value, true) : "");
             cmd.Parameters.AddWithValue("$rz", ev.RepeatZoneId ?? "");
+            cmd.Parameters.AddWithValue("$ws", (int)ev.RepeatWeekStart);
             cmd.ExecuteNonQuery();
         }
 

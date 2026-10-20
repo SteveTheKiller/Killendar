@@ -234,13 +234,14 @@ namespace Killendar.Services
                     // is what an untouched weekly repeat should do.
                     var days = new List<DayOfWeek>(master.RepeatDays);
                     if (days.Count == 0) days.Add(first.DayOfWeek);
-                    days.Sort();
+                    int Offset(DayOfWeek day) => ((int)day - (int)master.RepeatWeekStart + 7) % 7;
+                    days.Sort((left, right) => Offset(left).CompareTo(Offset(right)));
 
                     // Whole weeks are walked from the start of the FIRST occurrence's week, so
                     // "every 2 weeks on Mon and Thu" keeps both days inside the same week instead
                     // of the two drifting apart.
-                    long firstWeek = first.Date.Ticks / TimeSpan.TicksPerDay - (int)first.DayOfWeek;
-                    long jumpWeek = jumpTo.Date.Ticks / TimeSpan.TicksPerDay - (int)jumpTo.DayOfWeek;
+                    long firstWeek = first.Date.Ticks / TimeSpan.TicksPerDay - Offset(first.DayOfWeek);
+                    long jumpWeek = jumpTo.Date.Ticks / TimeSpan.TicksPerDay - Offset(jumpTo.DayOfWeek);
                     var time      = first.TimeOfDay;
 
                     long weeks = (jumpWeek - firstWeek) / (7L * interval);
@@ -248,14 +249,14 @@ namespace Killendar.Services
                     long number = weeks * days.Count;
                     if (weeks > 0)
                         foreach (var dow in days)
-                            if ((int)dow < (int)first.DayOfWeek) number--;
+                            if (Offset(dow) < Offset(first.DayOfWeek)) number--;
 
                     long lastDay = DateTime.MaxValue.Ticks / TimeSpan.TicksPerDay;
                     for (long w = firstWeek + weeks * 7L * interval; w <= lastDay; w += 7L * interval)
                     {
                         foreach (var dow in days)
                         {
-                            long day = w + (int)dow;
+                            long day = w + Offset(dow);
                             if (day < 0) continue;
                             if (day > lastDay) yield break;
                             var d = new DateTime(day * TimeSpan.TicksPerDay + time.Ticks, first.Kind);

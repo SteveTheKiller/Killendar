@@ -41,7 +41,8 @@ namespace Killendar.Services
         // 3: repeats (repeat_* columns, skip_dates, and series_id / occurrence_start for the
         //    rows that replace a single date of a series).
         // 4: recurrence source time basis, wall-clock anchor, and source zone.
-        private const int SchemaVersion = 4;
+        // 5: recurrence week boundary, with Sunday preserving native series.
+        private const int SchemaVersion = 5;
 
         /// <summary>Default per-user folder. Manage Killendars can override it, including with
         /// the executable folder for a self-contained portable copy.</summary>

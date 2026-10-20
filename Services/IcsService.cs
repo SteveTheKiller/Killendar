@@ -341,6 +341,7 @@ namespace Killendar.Services
             var freq     = RepeatFreq.None;
             int interval = 1;
             int count    = 0;
+            var weekStart = DayOfWeek.Monday;
             DateTime? until = null;
             var days = new List<DayOfWeek>();
 
@@ -390,8 +391,10 @@ namespace Killendar.Services
                         }
                         break;
 
-                    // Harmless: the week start only matters to rules Killendar does not support.
                     case "WKST":
+                        var parsedWeekStart = ParseWeekday(val);
+                        if (!parsedWeekStart.HasValue) return false;
+                        weekStart = parsedWeekStart.Value;
                         break;
 
                     default:
@@ -408,6 +411,7 @@ namespace Killendar.Services
             ev.Repeat         = freq;
             ev.RepeatInterval = interval;
             ev.RepeatCount    = count;
+            ev.RepeatWeekStart = weekStart;
             ev.RepeatUntil    = until;
             ev.RepeatDays     = days;
             return true;
@@ -776,6 +780,9 @@ namespace Killendar.Services
                 foreach (var d in ev.RepeatDays) codes.Add(WeekdayCode(d));
                 sb.Append(";BYDAY=").Append(string.Join(",", codes));
             }
+
+            if (ev.Repeat == RepeatFreq.Weekly)
+                sb.Append(";WKST=").Append(WeekdayCode(ev.RepeatWeekStart));
 
             if (ev.RepeatCount > 0)
                 sb.Append(";COUNT=").Append(ev.RepeatCount);

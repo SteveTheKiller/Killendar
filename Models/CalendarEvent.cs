@@ -72,6 +72,7 @@ namespace Killendar.Models
 
         /// <summary>Stop after this many occurrences. 0 means no count limit.</summary>
         public int RepeatCount { get; set; }
+        public DayOfWeek RepeatWeekStart { get; set; } = DayOfWeek.Sunday;
 
         /// <summary>Local is the default for native and pre-migration series. Imported timed
         /// rules retain their source clock independently of display-local Start and End.</summary>
@@ -151,6 +152,7 @@ namespace Killendar.Models
             RepeatDays      = [.. RepeatDays],
             RepeatUntil     = RepeatUntil,
             RepeatCount     = RepeatCount,
+            RepeatWeekStart = RepeatWeekStart,
             RepeatTimeBasis = RepeatTimeBasis,
             RepeatAnchor    = RepeatAnchor,
             RepeatZoneId    = RepeatZoneId,
