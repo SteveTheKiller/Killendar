@@ -462,4 +462,6 @@
     <sys:String x:Key="Str_Rail_Flip">Flytt ikonene til den andre siden</sys:String>
     <sys:String x:Key="Str_Exp_CsvSafety">CSV-tekst som kan tolkes som en formel, begynner med en apostrof. Kalenderapper kan beholde den ved import.</sys:String>
     <sys:String x:Key="Str_Dlg_InvalidPath">Skriv inn et gyldig filnavn eller en gyldig bane.</sys:String>
+    <sys:String x:Key="Str_Exp_ForeverRange">Serier uten sluttdato eksporteres bare innenfor dette tidsrommet: {0} til {1}.</sys:String>
+    <sys:String x:Key="Str_Exp_RangeRequired">Eksport av hele kalenderen støtter opptil {0} gjentakende avtaler. Velg et datointervall.</sys:String>
 </ResourceDictionary>

@@ -36,8 +36,9 @@ namespace Killendar.Services
         {
             var culture = CultureInfo.CurrentCulture;
             from        = from.Date;
-            toExclusive = toExclusive.Date;
-            if (toExclusive <= from) toExclusive = from.AddDays(1);
+            toExclusive = toExclusive == DateTime.MaxValue ? DateTime.MaxValue : toExclusive.Date;
+            if (toExclusive <= from)
+                toExclusive = from == DateTime.MaxValue.Date ? DateTime.MaxValue : from.AddDays(1);
 
             // Month/weekday names and week start all come from Windows' culture, the same way the
             // in-app views get them - so the page reads like the app on the machine it came from.
@@ -45,7 +46,8 @@ namespace Killendar.Services
 
             var sb = new StringBuilder();
             string rangeLabel = DateFormatManager.Format(from) + " - "
-                              + DateFormatManager.Format(toExclusive.AddDays(-1));
+                              + DateFormatManager.Format(toExclusive == DateTime.MaxValue
+                                  ? toExclusive.Date : toExclusive.AddDays(-1));
 
             // Opens in the theme the app is wearing right now, so the page looks like the app
             // that made it; the switcher can take it anywhere from there.
@@ -71,6 +73,7 @@ namespace Killendar.Services
             while (monthStart < toExclusive)
             {
                 AppendMonth(sb, events, monthStart, from, toExclusive, culture, weekStart);
+                if (monthStart.Year == 9999 && monthStart.Month == 12) break;
                 monthStart = monthStart.AddMonths(1);
             }
 
@@ -98,17 +101,16 @@ namespace Killendar.Services
             }
             sb.Append("</tr></thead>\n<tbody>\n");
 
-            // Back up to the week's first day, exactly as MonthView lays its grid.
-            var cell = monthStart;
-            while (cell.DayOfWeek != weekStart) cell = cell.AddDays(-1);
-
-            var monthEnd = monthStart.AddMonths(1);
-            while (cell < monthEnd)
+            long firstDay = monthStart.Ticks / TimeSpan.TicksPerDay;
+            long lastDay = firstDay + DateTime.DaysInMonth(monthStart.Year, monthStart.Month) - 1;
+            int shift = ((int)monthStart.DayOfWeek - (int)weekStart + 7) % 7;
+            long day = firstDay - shift;
+            while (day <= lastDay)
             {
                 sb.Append("<tr>");
-                for (int i = 0; i < 7; i++, cell = cell.AddDays(1))
+                for (int i = 0; i < 7; i++, day++)
                 {
-                    if (cell.Month != monthStart.Month)
+                    if (day < firstDay || day > lastDay)
                     {
                         // Out-of-month cells stay empty rather than showing the neighbor month's
                         // appointments again - on paper a duplicate reads as a second appointment.
@@ -116,6 +118,7 @@ namespace Killendar.Services
                         continue;
                     }
 
+                    var cell = new DateTime(day * TimeSpan.TicksPerDay);
                     bool inRange = cell >= from && cell < toExclusive;
                     sb.Append(inRange ? "<td>" : "<td class=\"off\">");
                     sb.Append("<div class=\"dn\">").Append(cell.Day).Append("</div>");

@@ -436,4 +436,6 @@
     <sys:String x:Key="Str_Rail_Flip">Simgeleri diğer tarafa taşı</sys:String>
     <sys:String x:Key="Str_Exp_CsvSafety">Formül olarak yorumlanabilecek CSV metni bir kesme işaretiyle başlar. Takvim uygulamaları içe aktarırken bu işareti koruyabilir.</sys:String>
     <sys:String x:Key="Str_Dlg_InvalidPath">Geçerli bir dosya adı veya yol girin.</sys:String>
+    <sys:String x:Key="Str_Exp_ForeverRange">Bitiş tarihi olmayan seriler yalnızca şu aralıkta dışa aktarılır: {0} ile {1}.</sys:String>
+    <sys:String x:Key="Str_Exp_RangeRequired">Tüm takvim dışa aktarımı en fazla {0} yinelenen randevuyu destekler. Bir tarih aralığı seçin.</sys:String>
 </ResourceDictionary>

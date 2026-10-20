@@ -436,4 +436,6 @@
     <sys:String x:Key="Str_Rail_Flip">আইকন অন্য পাশে সরান</sys:String>
     <sys:String x:Key="Str_Exp_CsvSafety">সূত্র হিসেবে গণ্য হতে পারে এমন CSV লেখার শুরুতে একটি অ্যাপোস্ট্রফি যোগ করা হয়। ক্যালেন্ডার অ্যাপ আমদানির সময় এটি রেখে দিতে পারে।</sys:String>
     <sys:String x:Key="Str_Dlg_InvalidPath">একটি বৈধ ফাইলের নাম বা পথ লিখুন।</sys:String>
+    <sys:String x:Key="Str_Exp_ForeverRange">অন্তহীন পুনরাবৃত্তির ধারাগুলি শুধু এই সীমার মধ্যে রপ্তানি করা হবে: {0} থেকে {1}।</sys:String>
+    <sys:String x:Key="Str_Exp_RangeRequired">সম্পূর্ণ ক্যালেন্ডার রপ্তানিতে সর্বোচ্চ {0}টি পুনরাবৃত্ত সাক্ষাৎ সমর্থিত। একটি তারিখের সীমা বেছে নিন।</sys:String>
 </ResourceDictionary>

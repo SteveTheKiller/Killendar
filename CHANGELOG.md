@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- Whole-calendar exports include future and long finite series, disclose unbounded ranges and handle calendar date limits.
 - File pickers report malformed paths without closing and preserve wildcard filtering.
 - Weekly calendar rules preserve their week-start boundary through import, storage and export.
 - Date pickers support keyboard navigation, date selection and accessible control names.

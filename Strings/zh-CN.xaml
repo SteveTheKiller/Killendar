@@ -436,4 +436,6 @@
     <sys:String x:Key="Str_Rail_Flip">将图标移至另一侧</sys:String>
     <sys:String x:Key="Str_Exp_CsvSafety">可能被视为公式的 CSV 文本以单引号开头。日历应用在导入时可能会保留此单引号。</sys:String>
     <sys:String x:Key="Str_Dlg_InvalidPath">请输入有效的文件名或路径。</sys:String>
+    <sys:String x:Key="Str_Exp_ForeverRange">无限重复的系列仅导出此范围内的日程：{0} 至 {1}。</sys:String>
+    <sys:String x:Key="Str_Exp_RangeRequired">整个日历导出最多支持 {0} 个重复日程。请选择日期范围。</sys:String>
 </ResourceDictionary>

@@ -23,6 +23,7 @@ namespace Killendar.Features
     internal sealed class IcsTransfer
     {
         private const string SuppressExportWarningKey = "SuppressPlaintextExportWarning";
+        private const int WholeExportOccurrenceLimit = 50000;
 
         private readonly ICalendarHost _host;
         private readonly EventStore _store;
@@ -298,9 +299,8 @@ namespace Killendar.Features
 
         private void ConfirmWhole()
         {
-            WholeCalendarSpan(out var from, out var toEx);
             _scopePopup!.IsOpen = false;
-            RunExport(from, toEx, whole: true);
+            RunExport(DateTime.Today, DateTime.Today.AddDays(1), whole: true);
         }
 
         private void RangeBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -321,7 +321,7 @@ namespace Killendar.Features
             }
 
             _scopePopup!.IsOpen = false;
-            RunExport(f.Date, t.Date.AddDays(1), whole: false);
+            RunExport(f.Date, t.Date == DateTime.MaxValue.Date ? DateTime.MaxValue : t.Date.AddDays(1), whole: false);
         }
 
         private void RunExport(DateTime from, DateTime toEx, bool whole)
@@ -339,8 +339,23 @@ namespace Killendar.Features
 
             try
             {
+                string format = Path.GetExtension(dlg.FileName).ToLowerInvariant();
+                if (whole && (format == ".csv" || format == ".htm" || format == ".html"))
+                {
+                    WholeCalendarSpan(out from, out toEx);
+                    if (_store.Events.Any(e => e.IsSeries && e.RepeatCount <= 0 && !e.RepeatUntil.HasValue))
+                    {
+                        var lastDay = toEx == DateTime.MaxValue ? toEx.Date : toEx.AddDays(-1).Date;
+                        var warning = new ConfirmDialog(_host.Loc("Str_Dlg_ExportTitle"),
+                            string.Format(_host.Loc("Str_Exp_ForeverRange"),
+                                DateFormatManager.Format(from), DateFormatManager.Format(lastDay)),
+                            _host.Loc("Str_Btn_Export"), _host.Loc("Str_Btn_Cancel")) { Owner = _host.Window };
+                        warning.ShowDialog();
+                        if (!warning.Confirmed) return;
+                    }
+                }
                 int count;
-                switch (Path.GetExtension(dlg.FileName).ToLowerInvariant())
+                switch (format)
                 {
                     // CSV and HTML get EXPANDED occurrences - one row or chip per date, which is
                     // what a spreadsheet reader or a printed month expects. GetInRange does the
@@ -418,10 +433,10 @@ namespace Killendar.Features
         /// <summary>
         /// The span "whole calendar" means for the formats that need real dates (CSV, HTML).
         /// First appointment to last, where "last" for a series is its final occurrence - worked
-        /// out exactly for a count- or date-limited series, and capped at ONE YEAR from today for
-        /// a series that never ends, because "everything" of a forever-series has no last row.
+        /// out exactly for a count- or date-limited series. A never-ending series contributes
+        /// at least its first year, and its chosen export range is confirmed before publication.
         /// </summary>
-        private void WholeCalendarSpan(out DateTime from, out DateTime toEx)
+        internal void WholeCalendarSpan(out DateTime from, out DateTime toEx)
         {
             var today = DateTime.Today;
             from = today;
@@ -439,20 +454,33 @@ namespace Killendar.Features
 
                 if (e.RepeatCount <= 0 && !e.RepeatUntil.HasValue)
                 {
-                    var cap = today.AddYears(1);
+                    var anchor = e.Start.Date > today ? e.Start.Date : today;
+                    var cap = anchor.Year == 9999 ? DateTime.MaxValue.Date : anchor.AddYears(1);
                     if (cap > last) last = cap;
                     continue;
                 }
 
-                // Bounded series: expand to its real final occurrence. COUNT bounds the work by
-                // itself and UNTIL bounds the range, so this stays cheap.
-                var far = e.Start < DateTime.MaxValue.AddYears(-101) ? e.Start.AddYears(100) : DateTime.MaxValue;
-                foreach (var occ in Recurrence.Expand(e, e.Start, far))
+                int count = 0;
+                foreach (var occ in Recurrence.Expand(e, e.Start, DateTime.MaxValue))
+                {
+                    if (++count > WholeExportOccurrenceLimit) RequireExportRange();
                     if (occ.End.Date > last) last = occ.End.Date;
+                }
             }
 
-            toEx = last.AddDays(1);
+            toEx = last == DateTime.MaxValue.Date ? DateTime.MaxValue : last.AddDays(1);
+            // The combined span can extend another series beyond its individual horizon.
+            // Bound the total work before GetInRange materializes the flattened export.
+            int total = 0;
+            foreach (var e in _store.Events.Where(e => e.IsSeries))
+                foreach (var occurrence in Recurrence.Expand(e, from, toEx))
+                    if (++total > WholeExportOccurrenceLimit) RequireExportRange();
         }
+
+        private void RequireExportRange()
+            => throw new InvalidOperationException(string.Format(
+                _host?.Loc("Str_Exp_RangeRequired") ?? "Whole calendar export supports up to {0} recurring appointments. Choose a date range.",
+                WholeExportOccurrenceLimit.ToString("N0")));
 
         /// <summary>
         /// Appends one caveat sentence to the import status when its count is non-zero. No

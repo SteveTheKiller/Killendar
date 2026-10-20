@@ -436,4 +436,6 @@
     <sys:String x:Key="Str_Rail_Flip">Déplacer les icônes de l’autre côté</sys:String>
     <sys:String x:Key="Str_Exp_CsvSafety">Le texte CSV pouvant être une formule commence par une apostrophe. Les applications de calendrier peuvent la conserver à l’importation.</sys:String>
     <sys:String x:Key="Str_Dlg_InvalidPath">Saisissez un nom de fichier ou un chemin valide.</sys:String>
+    <sys:String x:Key="Str_Exp_ForeverRange">Les séries sans fin sont exportées uniquement sur cette période : du {0} au {1}.</sys:String>
+    <sys:String x:Key="Str_Exp_RangeRequired">L’exportation du calendrier entier prend en charge jusqu’à {0} rendez-vous récurrents. Choisissez une période.</sys:String>
 </ResourceDictionary>

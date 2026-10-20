@@ -462,4 +462,6 @@
     <sys:String x:Key="Str_Rail_Flip">Перемістити піктограми на інший бік</sys:String>
     <sys:String x:Key="Str_Exp_CsvSafety">Текст CSV, який може бути формулою, починається з апострофа. Програми календаря можуть зберегти його під час імпорту.</sys:String>
     <sys:String x:Key="Str_Dlg_InvalidPath">Введіть припустиме ім’я файлу або шлях.</sys:String>
+    <sys:String x:Key="Str_Exp_ForeverRange">Нескінченні серії експортуються лише за цей період: від {0} до {1}.</sys:String>
+    <sys:String x:Key="Str_Exp_RangeRequired">Експорт усього календаря підтримує до {0} повторюваних зустрічей. Виберіть діапазон дат.</sys:String>
 </ResourceDictionary>
