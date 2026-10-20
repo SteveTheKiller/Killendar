@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- Failed password changes preserve the original calendar and complete recovery copies.
 - Calendar command clients that stop sending or reading no longer block later commands.
 - Sidebar fades disappear at the scroll limits, leave scrollbars clear, and stay off in 98SE.
 - The shortcuts card puts its scroll bar at the outer edge and shows when more content is out of view.

@@ -24,7 +24,12 @@ namespace Killendar.Services
         /// the whole point of opt-in encryption. sqlcipher_export handles every direction.
         /// </summary>
         public void SetPassword(string? newPassword)
+            => SetPassword(newPassword, File.Replace);
+
+        /// <summary>Changes the password using the supplied filesystem replacement operation.</summary>
+        public void SetPassword(string? newPassword, Action<string, string, string> replaceFile)
         {
+            if (replaceFile == null) throw new ArgumentNullException(nameof(replaceFile));
             if (_db == null) throw new InvalidOperationException("no Killendar is open");
             if (string.IsNullOrEmpty(newPassword)) newPassword = null;
 
@@ -55,16 +60,24 @@ namespace Killendar.Services
             string bak = path + ".bak";
             try
             {
-                ReplaceWithRetry(tmp, path, bak);
+                ReplaceWithRetry(tmp, path, bak, replaceFile);
             }
-            catch
+            catch (Exception swapError)
             {
-                // The swap failed even after retries - something else still holds the file (an AV
-                // scan, a second handle). The original on disk is untouched, so bin the rewritten
-                // copy, reopen with the OLD key (the app must never be left with no Killendar
-                // open, or the next edit throws) and let the caller report it.
+                // Replacement can fail after moving the original to the backup. Keep both
+                // complete copies until the old calendar has actually reopened.
+                try
+                {
+                    RestoreReplacementDestination(path, bak);
+                    using var existing = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    Open(path, oldPassword);
+                }
+                catch (Exception recoveryError)
+                {
+                    throw new IOException("The calendar could not reopen after the password change failed. Recovery files were kept.",
+                        new AggregateException(swapError, recoveryError));
+                }
                 try { File.Delete(tmp); } catch { /* best effort */ }
-                Open(path, oldPassword);
                 throw;
             }
             Open(path, newPassword);
@@ -77,17 +90,19 @@ namespace Killendar.Services
         /// succeeds, falls back to a move-based swap - Replace needs simultaneous exclusive access
         /// to all three paths, while the moves need one file at a time and put the original back if
         /// the second move fails.</summary>
-        private static void ReplaceWithRetry(string source, string dest, string backup)
+        private static void ReplaceWithRetry(string source, string dest, string backup, Action<string, string, string> replaceFile)
         {
             for (int attempt = 1; attempt <= 8; attempt++)
             {
-                try { File.Replace(source, dest, backup); return; }
+                try { replaceFile(source, dest, backup); return; }
                 catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
                 {
+                    RestoreReplacementDestination(dest, backup);
                     System.Threading.Thread.Sleep(150 * attempt);   // ~150ms .. 1.2s
                 }
             }
-            if (File.Exists(backup)) File.Delete(backup);   // stale .bak from a past failure
+            RestoreReplacementDestination(dest, backup);
+            if (File.Exists(backup)) File.Delete(backup);   // the original is present at dest
             File.Move(dest, backup);
             try { File.Move(source, dest); }
             catch
@@ -95,6 +110,15 @@ namespace Killendar.Services
                 File.Move(backup, dest);   // put the original back; caller reports the error
                 throw;
             }
+        }
+
+        private static void RestoreReplacementDestination(string destination, string backup)
+        {
+            if (File.Exists(destination)) return;
+            if (!File.Exists(backup)) throw new IOException("The original calendar is unavailable. Recovery files were kept.");
+            string restored = destination + ".restore-" + Guid.NewGuid().ToString("N");
+            File.Copy(backup, restored);
+            File.Move(restored, destination);
         }
 
         /// <summary>Closes the active Killendar and renames it aside, for the unlock screen's
