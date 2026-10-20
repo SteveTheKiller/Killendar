@@ -96,15 +96,11 @@ namespace Killendar
                 // entry and a single uninstall entry. Settings are deliberately left alone.
                 RemovePerUserInstall();
 
-                Process.Start(new ProcessStartInfo(MachineInstallExe));
-                Current.Shutdown();
-                return true;
+                return new InstallRelaunch().StartInstalled(MachineInstallExe, () => Current.Shutdown());
             }
 
             if (!DoInstall(wantDesktop) || !File.Exists(InstallExe)) return false;
-            Process.Start(new ProcessStartInfo(InstallExe));
-            Current.Shutdown();
-            return true;
+            return new InstallRelaunch().StartInstalled(InstallExe, () => Current.Shutdown());
         }
 
         /// <summary>Re-run this exe elevated with /silent and wait for it to finish.</summary>

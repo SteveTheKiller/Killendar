@@ -85,6 +85,13 @@ namespace Killendar
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            var installRelaunch = new InstallRelaunch();
+            if (installRelaunch.TryRunHelper(e.Args, Process.GetCurrentProcess().MainModule?.FileName ?? "", out int helperExit))
+            {
+                Shutdown(helperExit);
+                return;
+            }
+
             KillerFamily.Accessibility.AccessibleControls.Initialize();
             KillerFamily.Theming.AccentShadow.Initialize();
             var cliArgs = KillerFamily.CommandLine.CommandLineEntry.GetArguments(e.Args, ["agenda", "create"]);

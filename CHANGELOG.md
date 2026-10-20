@@ -11,6 +11,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Updated SQLCipher to 4.19.0 and SQLite and JSON processing to 10.0.13.
 - Window resize minimums stay within the current monitor's work area on small or scaled displays.
 - Failed password changes preserve the original calendar and complete recovery copies.
+- Installing and reopening waits for the previous app to exit so the installed copy opens reliably.
 - Calendar command clients that stop sending or reading no longer block later commands.
 - Sidebar fades disappear at the scroll limits, leave scrollbars clear, and stay off in 98SE.
 - The shortcuts card puts its scroll bar at the outer edge and shows when more content is out of view.
