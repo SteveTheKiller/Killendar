@@ -52,6 +52,11 @@ namespace Killendar.Features
             try
             {
                 _store.Prepare();   // creates the data folder, migrates a pre-database events.json
+                if (_store.LoadError != null)
+                {
+                    _host.SetStatus(string.Format(_host.Loc("Str_Status_LoadError"), _store.LoadError));
+                    return false;
+                }
 
                 if (EventStore.ActiveIsEncrypted())
                 {

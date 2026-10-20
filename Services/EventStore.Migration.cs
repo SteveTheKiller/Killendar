@@ -56,37 +56,51 @@ namespace Killendar.Services
 
             // Written plaintext deliberately: migration cannot invent a password, and the lock
             // button is how the user opts in afterwards.
-            using (var c = new SqliteConnection(Cs(target, null)))
+            string temporary = target + ".migrate-" + Guid.NewGuid().ToString("N");
+            try
             {
-                c.Open();
-                using var schema = c.CreateCommand();
-                schema.CommandText = SchemaSql;
-                schema.ExecuteNonQuery();
-                // Seeded here, not on the next open: EnsureSchema only seeds when it finds no
-                // categories table, and the line above has just created one.
-                SeedDefaultCategories(c);
-
-                using var tx = c.BeginTransaction();
-                foreach (var ev in old)
+                using (var c = new SqliteConnection(Cs(temporary, null)))
                 {
-                    // The JSON holds naive local DateTimes. Stamp them Local so ToStore's
-                    // ToUniversalTime() uses the machine zone rather than treating them as
-                    // already-UTC, which would shift every appointment by the offset.
-                    if (!ev.AllDay)
+                    c.Open();
+                    using var schema = c.CreateCommand();
+                    schema.CommandText = SchemaSql;
+                    schema.ExecuteNonQuery();
+                    SeedDefaultCategories(c);
+
+                    using var tx = c.BeginTransaction();
+                    foreach (var ev in old)
                     {
-                        ev.Start = DateTime.SpecifyKind(ev.Start, DateTimeKind.Local);
-                        ev.End   = DateTime.SpecifyKind(ev.End,   DateTimeKind.Local);
+                        // Legacy timed values are local; all-day values remain floating dates.
+                        if (!ev.AllDay)
+                        {
+                            ev.Start = DateTime.SpecifyKind(ev.Start, DateTimeKind.Local);
+                            ev.End = DateTime.SpecifyKind(ev.End, DateTimeKind.Local);
+                        }
+                        Upsert(c, ev);
                     }
-                    Upsert(c, ev);
+                    var validation = new EventStore { _db = c };
+                    validation.LoadIntoMemory();
+                    validation.ListCategories();
+                    if (validation.Events.Count != old.Count)
+                        throw new InvalidDataException("The migrated calendar did not retain every appointment.");
+                    tx.Commit();
                 }
-                tx.Commit();
+                SqliteConnection.ClearAllPools();
+                // Move never overwrites a calendar created by another process during migration.
+                File.Move(temporary, target);
             }
-            SqliteConnection.ClearAllPools();
+            finally
+            {
+                SqliteConnection.ClearAllPools();
+                try { if (File.Exists(temporary)) File.Delete(temporary); }
+                catch (IOException) { }
+                catch (UnauthorizedAccessException) { }
+            }
 
             try
             {
                 string keep = json + ".migrated";
-                if (File.Exists(keep)) File.Delete(keep);
+                if (File.Exists(keep)) keep += "." + Guid.NewGuid().ToString("N");
                 File.Move(json, keep);
             }
             catch

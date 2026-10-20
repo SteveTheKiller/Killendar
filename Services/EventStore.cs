@@ -132,6 +132,7 @@ namespace Killendar.Services
         public void OpenActive(string? password = null)
         {
             Prepare();
+            if (LoadError != null) return;
             try { Open(ActivePath, password); }
             catch (SqliteException ex) when (IsKeyFailure(ex))
             {
