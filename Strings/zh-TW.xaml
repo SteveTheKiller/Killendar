@@ -107,6 +107,7 @@
     <sys:String x:Key="Str_Status_ImportRepeat">。其中 {0} 個是重複約會，只加入了第一個日期</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">。{0} 個的日期無法讀取，已略過</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">。{0} 個是工作或筆記，Killendar 不保存這類內容</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnsupportedRanges">。已略過 {0} 項影響後續重複約會的不支援變更</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">匯入失敗：{0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">已匯出 {0} 個約會</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">匯出失敗：{0}</sys:String>

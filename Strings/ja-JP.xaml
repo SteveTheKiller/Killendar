@@ -107,6 +107,7 @@
     <sys:String x:Key="Str_Status_ImportRepeat">。{0} 件は繰り返しの予定で、最初の日付のみ追加されました</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">。{0} 件は日付を読み取れずスキップしました</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">。{0} 件はタスクやメモで、Killendar では保存できません</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnsupportedRanges">。今後の繰り返しに影響する未対応の変更を {0} 件スキップしました</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">読み込みに失敗しました: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} 件の予定を書き出しました</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">書き出しに失敗しました: {0}</sys:String>

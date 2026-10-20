@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- Calendar imports report unsupported future-range edits instead of applying them to only one occurrence.
 - Ranged calendar exports include a moved appointment's series and its other exceptions.
 - Calendar exceptions retain their exact occurrence and end time through editing, storage and export.
 - Closed appointment panels no longer leave hidden editor controls enabled.

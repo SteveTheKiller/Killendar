@@ -107,6 +107,7 @@
     <sys:String x:Key="Str_Status_ImportRepeat">. {0} se repiten y solo se añadió la primera fecha</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">. {0} no tenían una fecha legible y se omitieron</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} eran tareas o notas, que Killendar no guarda</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Se omitieron cambios no compatibles que afectan a futuras repeticiones: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Error al importar: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Se exportaron {0} citas</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Error al exportar: {0}</sys:String>

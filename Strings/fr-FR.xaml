@@ -107,6 +107,7 @@
     <sys:String x:Key="Str_Status_ImportRepeat">. {0} se répètent, et seule la première date a été ajoutée</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">. {0} n'avaient pas de date lisible et ont été ignorés</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} étaient des tâches ou des notes, que Killendar ne conserve pas</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Des modifications non prises en charge affectant les occurrences futures ont été ignorées : {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Échec de l'importation : {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} rendez-vous exportés</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Échec de l'exportation : {0}</sys:String>

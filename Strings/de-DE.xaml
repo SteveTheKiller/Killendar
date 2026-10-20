@@ -107,6 +107,7 @@
     <sys:String x:Key="Str_Status_ImportRepeat">. {0} wiederholen sich, und nur der erste Termin wurde übernommen</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">. {0} hatten kein lesbares Datum und wurden übersprungen</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} waren Aufgaben oder Notizen, die Killendar nicht speichert</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Nicht unterstützte Änderungen an zukünftigen Terminen wurden übersprungen: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import fehlgeschlagen: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} Termine exportiert</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export fehlgeschlagen: {0}</sys:String>

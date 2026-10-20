@@ -23,8 +23,12 @@ namespace Killendar.Services
         public int Unreadable;
 
         /// <summary>VTODO / VJOURNAL / VFREEBUSY blocks. Killendar has nowhere to put a task,
-        /// a journal entry or a free/busy block, so they are dropped - but counted.</summary>
+        /// a journal entry or a free/busy block. Also includes unsupported future-range edits.
+        /// These components are dropped and counted.</summary>
         public int Unsupported;
+
+        /// <summary>The subset of unsupported components carrying future-range edits.</summary>
+        public int UnsupportedRanges;
 
         /// <summary>VEVENTs carrying RRULE or RDATE - a repeating appointment. Killendar has no
         /// repeat concept, so ONLY THE FIRST OCCURRENCE was imported and every later one is lost.
@@ -87,6 +91,7 @@ namespace Killendar.Services
             CalendarEvent? current = null;
             bool haveStart = false;   // no DTSTART means no appointment, however much else parsed
             bool repeating = false;
+            bool unsupportedRange = false;
             string? duration = null;
             DateTime? recurrenceId = null;   // set when this VEVENT replaces one date of a series
             bool recurrenceAllDay = false;
@@ -110,6 +115,7 @@ namespace Killendar.Services
                         current      = new CalendarEvent();
                         haveStart    = false;
                         repeating    = false;
+                        unsupportedRange = false;
                         duration     = null;
                         recurrenceId = null;
                         recurrenceAllDay = false;
@@ -132,7 +138,12 @@ namespace Killendar.Services
 
                     if (comp == "VEVENT" && current != null)
                     {
-                        if (!haveStart)
+                        if (unsupportedRange)
+                        {
+                            result.Unsupported++;
+                            result.UnsupportedRanges++;
+                        }
+                        else if (!haveStart)
                         {
                             result.Unreadable++;
                         }
@@ -279,6 +290,15 @@ namespace Killendar.Services
                     // override to whatever id the event happened to have at this point.
                     case "RECURRENCE-ID":
                     {
+                        foreach (string item in param.Split(';'))
+                        {
+                            int equals = item.IndexOf('=');
+                            if (equals < 0) continue;
+                            if (item.Substring(0, equals).Trim().Equals("RANGE", StringComparison.OrdinalIgnoreCase) &&
+                                item.Substring(equals + 1).Trim().Trim('"').Equals("THISANDFUTURE", StringComparison.OrdinalIgnoreCase))
+                                unsupportedRange = true;
+                        }
+                        if (unsupportedRange) break;
                         var rid = ParseDateTime(value, param);
                         if (rid != null)
                         {

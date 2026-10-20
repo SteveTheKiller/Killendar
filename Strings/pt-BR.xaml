@@ -149,6 +149,7 @@
     <sys:String x:Key="Str_Status_ImportRepeat">. {0} se repetem, e somente a primeira data foi adicionada</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">. {0} não tinham data legível e foram ignorados</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} eram tarefas ou notas, que o Killendar não armazena</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Alterações não compatíveis que afetam ocorrências futuras foram ignoradas: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Falha na importação: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} compromissos exportados</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Falha na exportação: {0}</sys:String>

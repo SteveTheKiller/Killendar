@@ -149,6 +149,7 @@
     <sys:String x:Key="Str_Status_ImportRepeat">. {0} ismétlés, és csak az első dátum került hozzáadásra</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">. A(z) {0} nem tartalmazott olvasható dátumot, ezért kihagyták</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} feladatok vagy megjegyzések voltak, amelyeket a Killendar nem tárol</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. A jövőbeli előfordulásokat érintő, nem támogatott módosítások kihagyva: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Sikertelen importálás: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} találkozó exportálva</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Az exportálás sikertelen: {0}</sys:String>

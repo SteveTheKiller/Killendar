@@ -107,6 +107,7 @@
     <sys:String x:Key="Str_Status_ImportRepeat">. {0} se opakuje a přidáno bylo jen první datum</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">. {0} nemělo čitelné datum a bylo přeskočeno</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} byly úkoly nebo poznámky, které Killendar neukládá</sys:String>
+    <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Byly přeskočeny nepodporované úpravy ovlivňující budoucí výskyty: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import selhal: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Exportováno {0} schůzek</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export selhal: {0}</sys:String>
