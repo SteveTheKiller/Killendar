@@ -496,7 +496,7 @@
                         <!-- Fixed width inside the clipped border: the column animates, the content
                              does not reflow, so nothing reflows mid-slide. Pinned right so it slides
                              out from under the rail rather than crawling in from the window edge. -->
-                        <Grid x:Name="SidebarContent" Width="330" HorizontalAlignment="Right">
+                        <Grid x:Name="SidebarContent" Width="330" HorizontalAlignment="Right" IsEnabled="False">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>   <!-- header -->
                                 <RowDefinition Height="*"/>      <!-- fields -->

@@ -69,6 +69,7 @@ namespace Killendar.Shell
             // _sidebarOpen goes true FIRST: EndWidthRide reads it to know it should raise MinWidth
             // to the open minimum once the panel is fully out.
             bool was = _sidebarOpen;
+            SidebarContent.IsEnabled = true;
             _sidebarOpen = true;
             Settings.Set("AppointmentSidebarOpen", "1");
             if (!was) { GrowForSidebar(); SlideSidebar(_sidebarWidth); }
@@ -88,6 +89,8 @@ namespace Killendar.Shell
             // reads the flag to decide whether to raise it again at the end of the slide.
             bool was = _sidebarOpen;
             _sidebarOpen = false;
+            SidebarContent.IsEnabled = false;
+            SidebarToggleBtn.Focus();
             Settings.Set("AppointmentSidebarOpen", "0");
             SidebarSplitter.IsEnabled = false;
             if (was) { ShrinkAfterSidebar(); SlideSidebar(0); }
