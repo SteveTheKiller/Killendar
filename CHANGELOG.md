@@ -7,19 +7,26 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
-- Date-format changes preserve appointment dates, duration and recurrence end dates.
-- Reimporting a calendar no longer duplicates edited recurring appointments.
-- Native database cache corruption is repaired before loading, and native load failures are reported.
-- Long counted series retain every occurrence and stop at the requested count.
 - Failed password changes preserve the original calendar and complete recovery copies, and report temporary copies that cannot be removed.
 - Failed deletion of an edited recurring appointment preserves its edits and the original series.
 - Category renames and deletions preserve all assignments when a save fails and show the error.
-- A calendar that fails to load closes cleanly instead of showing stale appointments.
-- Email invites preserve text encoded in their declared character set.
+- Failed legacy calendar migrations preserve the source and can retry without leaving an empty calendar.
+- Settings recover the selected calendar location from complete backup or temporary files after an interrupted save.
 - Failed self-updates retain complete executable copies and a recovery report.
+- A calendar that fails to load closes cleanly instead of showing stale appointments.
+- Native database cache corruption is repaired before loading, and native load failures are reported.
 - Large recurrence intervals and dates at the calendar limits no longer crash recurrence queries.
+- Calendar imports retain valid appointments when another row exceeds the supported date range.
+- Calendar round trips preserve literal backslashes and escaped text.
+- Reimporting a calendar no longer duplicates edited recurring appointments.
+- Email invites preserve text encoded in their declared character set.
 - Updated SQLCipher to 4.19.0 and SQLite and JSON processing to 10.0.13.
+- Appointment editing preserves morning and afternoon times in every language, including live language changes.
+- Date-format changes preserve appointment dates, duration and recurrence end dates.
+- Recurring appointments remain visible throughout multi-day overlaps.
+- Long counted series retain every occurrence and stop at the requested count.
 - Calendar command clients that stop sending or reading no longer block later commands.
+- File launches preserve the requested calendar path when forwarding to an existing window.
 - Installing and reopening waits for the previous app to exit so the installed copy opens reliably.
 - A silent install or update that finds Killendar running exits with 1618, which Intune, Configuration Manager and RMM tools retry, instead of a general failure.
 - Chocolatey publishing reports failure when validation is still failing after a retry.
@@ -30,13 +37,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Title bar buttons stay square when highlighted, like the caption buttons in the other apps, instead of rounding their top corner.
 - The Week and Day grid sits flat under the day headers instead of curving at its top corners.
 - The footer copyright sits a few pixels further from the corner grip instead of running into it.
-- Appointment editing preserves morning and afternoon times in every language, including live language changes.
-- Recurring appointments remain visible throughout multi-day overlaps.
-- Failed legacy calendar migrations preserve the source and can retry without leaving an empty calendar.
-- Settings recover the selected calendar location from complete backup or temporary files after an interrupted save.
-- Calendar imports retain valid appointments when another row exceeds the supported date range.
-- Calendar round trips preserve literal backslashes and escaped text.
-- File launches preserve the requested calendar path when forwarding to an existing window.
 
 ## [1.3.1] - 2026-10-19
 
