@@ -102,7 +102,7 @@ namespace Killendar.Features
                 return false;
             }
 
-            int added   = _store.ImportEvents(parsed.Events);
+            int added   = CsvService.ImportEvents(_store, parsed.Events);
             if (_store.LoadError != null) throw new InvalidOperationException(_store.LoadError);
             int skipped = parsed.Events.Count - added;
 

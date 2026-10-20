@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Killendar.Models;
@@ -110,6 +111,20 @@ namespace Killendar.Services
 
         // ── Import ────────────────────────────────────────────────────────────
 
+        public static int ImportEvents(EventStore store, IEnumerable<CalendarEvent> events)
+        {
+            var existing = store.Events.ToDictionary(e => e.Id);
+            return store.ImportEvents(events.Where(row =>
+            {
+                if (!existing.TryGetValue(LegacyStableId(row.Title, row.Start, row.End, row.Location), out var old))
+                    return true;
+                // Recognize exact rows imported by the older fingerprint without rewriting
+                // their identities or hiding another row that differs in a stored CSV field.
+                return old.Repeat != RepeatFreq.None || old.SeriesId.HasValue || old.Attendees.Count != 0 ||
+                       StableId(old) != row.Id;
+            }));
+        }
+
         public static CsvParseResult ParseFile(string path)
         {
             // ReadAllText detects and strips a BOM on its own, so Excel-written UTF-8 and
@@ -198,7 +213,7 @@ namespace Killendar.Services
                 // file twice skips the second copy in ImportEvents' existing Id check - a CSV
                 // carries no UID of its own to dedupe on. Two genuinely identical rows in one
                 // file collapse to one appointment, which is the right reading of a duplicate.
-                ev.Id = StableId(ev.Title, ev.Start, ev.End, ev.Location);
+                ev.Id = StableId(ev);
 
                 result.Events.Add(ev);
             }
@@ -258,7 +273,25 @@ namespace Killendar.Services
 
         /// <summary>Content-derived Guid: MD5 of the fields that make a row THIS appointment.
         /// MD5 is fine here - this is a fingerprint for dedupe, not security.</summary>
-        private static Guid StableId(string title, DateTime start, DateTime end, string location)
+        private static Guid StableId(CalendarEvent row)
+        {
+            using var bytes = new MemoryStream();
+            using (var writer = new BinaryWriter(bytes, Encoding.UTF8, leaveOpen: true))
+            {
+                writer.Write("Killendar CSV identity 2");
+                writer.Write(row.Title ?? "");
+                writer.Write(row.Start.Ticks);
+                writer.Write(row.End.Ticks);
+                writer.Write(row.AllDay);
+                writer.Write(row.Description ?? "");
+                writer.Write(row.Location ?? "");
+                writer.Write(EventStore.NormalizeCategories(row.Categories));
+            }
+            using var md5 = MD5.Create();
+            return new Guid(md5.ComputeHash(bytes.ToArray()));
+        }
+
+        private static Guid LegacyStableId(string title, DateTime start, DateTime end, string location)
         {
             string key = title + "\n" + start.Ticks.ToString(CultureInfo.InvariantCulture)
                        + "\n" + end.Ticks.ToString(CultureInfo.InvariantCulture) + "\n" + location;
