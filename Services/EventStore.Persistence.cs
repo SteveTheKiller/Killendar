@@ -278,18 +278,29 @@ namespace Killendar.Services
             var stray = _events.FirstOrDefault(
                 e => e.IsOverride && e.SeriesId == key &&
                      e.OccurrenceStart.HasValue && e.OccurrenceStart.Value.Date == day);
-            if (stray != null)
-            {
-                Delete(stray.Id);
-                if (LoadError != null) return;
-            }
-
             var master = GetSeriesMaster(occ);
             if (master == null) return;
-            if (master.SkipDates.Any(d => d.Date == day)) return;
+            bool skipped = master.SkipDates.Any(d => d.Date == day);
+            if (skipped && stray == null) return;
 
-            master.SkipDates.Add(day);
-            Update(master);
+            var updated = master.Clone();
+            if (!skipped) updated.SkipDates.Add(day);
+            updated.Modified = DateTime.UtcNow;
+            Commit(() =>
+            {
+                using var tx = _db!.BeginTransaction();
+                if (stray != null)
+                {
+                    using var cmd = _db.CreateCommand();
+                    cmd.CommandText = "DELETE FROM events WHERE id = $id";
+                    cmd.Parameters.AddWithValue("$id", stray.Id.ToString());
+                    cmd.ExecuteNonQuery();
+                }
+                Upsert(updated);
+                tx.Commit();
+                if (stray != null) _events.RemoveAll(e => e.Id == stray.Id);
+                _events[_events.FindIndex(e => e.Id == master.Id)] = updated;
+            });
         }
 
         /// <summary>Removes a whole series: the master and every single-date edit belonging to it.</summary>
