@@ -89,6 +89,7 @@ namespace Killendar.Services
             bool repeating = false;
             string? duration = null;
             DateTime? recurrenceId = null;   // set when this VEVENT replaces one date of a series
+            bool recurrenceAllDay = false;
 
             foreach (var raw in lines)
             {
@@ -107,6 +108,7 @@ namespace Killendar.Services
                         repeating    = false;
                         duration     = null;
                         recurrenceId = null;
+                        recurrenceAllDay = false;
                     }
                     else if (current == null &&
                              (comp == "VTODO" || comp == "VJOURNAL" || comp == "VFREEBUSY"))
@@ -163,13 +165,18 @@ namespace Killendar.Services
                             }
 
                             // Now that UID is final, an override can be pointed at its series. The
-                            // row gets a fresh id of its own: the UID names the SERIES, and reusing
-                            // it here would make the override collide with the master.
+                            // row identity combines that series with the original occurrence,
+                            // so repeated imports skip the same override even when it was moved.
                             if (recurrenceId.HasValue)
                             {
                                 current.SeriesId        = current.Id;
                                 current.OccurrenceStart = recurrenceId.Value;
-                                current.Id              = Guid.NewGuid();
+                                long occurrenceTicks = recurrenceAllDay
+                                    ? recurrenceId.Value.Date.Ticks
+                                    : recurrenceId.Value.ToUniversalTime().Ticks;
+                                current.Id = IdFromUid("override:" + current.SeriesId.Value.ToString("N") +
+                                    (recurrenceAllDay ? ":date:" : ":utc:") +
+                                    occurrenceTicks.ToString(System.Globalization.CultureInfo.InvariantCulture));
                                 current.Repeat          = RepeatFreq.None;
                             }
 
@@ -241,7 +248,11 @@ namespace Killendar.Services
                     case "RECURRENCE-ID":
                     {
                         var rid = ParseDateTime(value, param);
-                        if (rid != null) recurrenceId = rid.Value.dt;
+                        if (rid != null)
+                        {
+                            recurrenceId = rid.Value.dt;
+                            recurrenceAllDay = rid.Value.allDay;
+                        }
                         break;
                     }
 
