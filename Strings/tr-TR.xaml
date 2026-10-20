@@ -93,6 +93,7 @@
     <sys:String x:Key="Str_Btn_ThisDate">Yalnızca bu tarih</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Tüm seri</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Tekrarın ne zaman biteceğini belirt, ya da hiç bitmesin.</sys:String>
+    <sys:String x:Key="Str_Err_RepeatInterval">Sıfırdan büyük bir tam sayı gir.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Yalnızca bu tarih kaldırılır. Serinin geri kalanı durur.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">Bu serideki tüm tarihler kaldırılır. Bu geri alınamaz.</sys:String>
 

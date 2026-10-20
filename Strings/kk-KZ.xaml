@@ -133,6 +133,7 @@
     <sys:String x:Key="Str_Btn_ThisDate">Тек осы күн</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Бүкіл сериясы</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Қайталану қашан аяқталатынын көрсетіңіз немесе оны шексіз етіңіз.</sys:String>
+    <sys:String x:Key="Str_Err_RepeatInterval">Нөлден үлкен бүтін сан енгізіңіз.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Тек осы күн жойылады. Серияның қалғаны сақталады.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">Осы серияның барлық күні жойылады. Мұны кері қайтару мүмкін емес.</sys:String>
 

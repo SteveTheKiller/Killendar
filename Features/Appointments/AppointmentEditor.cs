@@ -334,6 +334,12 @@ namespace Killendar.Features
 
             // "Ends after N times" or "ends on a date" with nothing readable in the box would fall
             // through as "repeats forever", which is the one surprise this must never spring.
+            bool appliesPattern = _editing == null || !_editing.IsOccurrence || _view.EditWholeSeries;
+            if (appliesPattern && _view.FieldRepeat != RepeatFreq.None && _view.FieldRepeatEveryN < 1)
+            {
+                Reject("Str_Err_RepeatInterval", AppointmentField.RepeatInterval);
+                return;
+            }
             if (_view.RepeatEndIncomplete)
             {
                 Reject("Str_Err_RepeatEnd", AppointmentField.Title);

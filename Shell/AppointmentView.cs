@@ -71,6 +71,7 @@ namespace Killendar.Shell
                 AppointmentField.StartTime => FieldStartTime,
                 AppointmentField.EndDate   => FieldEndDate,
                 AppointmentField.EndTime   => FieldEndTime,
+                AppointmentField.RepeatInterval => FieldRepeatInterval,
                 _                          => FieldTitle,
             };
             box.Focus();

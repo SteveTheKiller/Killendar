@@ -93,6 +93,7 @@
     <sys:String x:Key="Str_Btn_ThisDate">僅這一天</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">整個系列</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">請說明重複何時結束，或設為永不結束。</sys:String>
+    <sys:String x:Key="Str_Err_RepeatInterval">請輸入大於零的整數。</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">只刪除這一天，系列中的其餘日期保留。</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">該系列的所有日期都會被刪除。此操作無法復原。</sys:String>
 

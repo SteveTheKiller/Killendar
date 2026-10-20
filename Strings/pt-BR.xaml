@@ -133,6 +133,7 @@
     <sys:String x:Key="Str_Btn_ThisDate">Somente esta data</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">A série inteira</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Informe quando a repetição termina ou defina para nunca terminar.</sys:String>
+    <sys:String x:Key="Str_Err_RepeatInterval">Digite um número inteiro maior que zero.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Somente esta data é removida. O restante da série permanece.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">Todas as datas desta série são removidas. Esta ação não pode ser desfeita.</sys:String>
 

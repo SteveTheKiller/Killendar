@@ -93,6 +93,7 @@
     <sys:String x:Key="Str_Btn_ThisDate">শুধু এই তারিখ</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">পুরো সিরিজ</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">পুনরাবৃত্তি কবে শেষ হবে বলুন, অথবা কখনও শেষ না হতে দিন।</sys:String>
+    <sys:String x:Key="Str_Err_RepeatInterval">শূন্যের চেয়ে বড় একটি পূর্ণসংখ্যা লিখুন।</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">শুধু এই তারিখটি সরানো হবে। সিরিজের বাকিটা থাকবে।</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">এই সিরিজের সব তারিখ সরানো হবে। এটি ফেরানো যাবে না।</sys:String>
 

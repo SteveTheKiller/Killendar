@@ -133,6 +133,7 @@
     <sys:String x:Key="Str_Btn_ThisDate">Лише цю дату</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Усю серію</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Вкажіть, коли повтор закінчується, або оберіть «Ніколи».</sys:String>
+    <sys:String x:Key="Str_Err_RepeatInterval">Введіть ціле число більше нуля.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Буде видалено лише цю дату. Решта серії залишиться.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">Усі дати цієї серії буде видалено. Цю дію не можна скасувати.</sys:String>
 

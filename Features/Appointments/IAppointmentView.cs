@@ -1,7 +1,7 @@
 namespace Killendar.Features
 {
     /// <summary>Which field to put the caret in when validation rejects an entry.</summary>
-    internal enum AppointmentField { Title, StartDate, StartTime, EndDate, EndTime }
+    internal enum AppointmentField { Title, StartDate, StartTime, EndDate, EndTime, RepeatInterval }
 
     /// <summary>
     /// The appointment panel as AppointmentEditor sees it: text in and out, plus a handful of
@@ -30,7 +30,7 @@ namespace Killendar.Features
         /// <summary>The repeat pattern, or None.</summary>
         Models.RepeatFreq FieldRepeat { get; set; }
 
-        /// <summary>The "every N" number. Never below 1.</summary>
+        /// <summary>The "every N" number, or zero while the interval input is invalid.</summary>
         int FieldRepeatEveryN { get; set; }
 
         /// <summary>Weekly only: which weekdays are ticked. Empty means the day it starts on.</summary>

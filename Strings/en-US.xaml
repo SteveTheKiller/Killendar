@@ -133,6 +133,7 @@
     <sys:String x:Key="Str_Btn_ThisDate">Just this date</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">The whole series</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Say when the repeat ends, or set it to never end.</sys:String>
+    <sys:String x:Key="Str_Err_RepeatInterval">Enter a whole number greater than zero.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Only this date is removed. The rest of the series stays.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">Every date in this series is removed. This cannot be undone.</sys:String>
 

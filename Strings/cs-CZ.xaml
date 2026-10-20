@@ -93,6 +93,7 @@
     <sys:String x:Key="Str_Btn_ThisDate">Jen toto datum</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Celou sérii</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Uveď, kdy opakování končí, nebo že nekončí nikdy.</sys:String>
+    <sys:String x:Key="Str_Err_RepeatInterval">Zadej celé číslo větší než nula.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Odstraní se jen toto datum. Zbytek série zůstane.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">Odstraní se všechna data této série. Tohle nejde vrátit zpět.</sys:String>
 

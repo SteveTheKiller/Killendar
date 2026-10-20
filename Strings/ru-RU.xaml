@@ -134,6 +134,7 @@
     <sys:String x:Key="Str_Btn_ThisDate">Только эту дату</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Всю серию</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Укажите, когда повтор заканчивается, или сделайте его бесконечным.</sys:String>
+    <sys:String x:Key="Str_Err_RepeatInterval">Введите целое число больше нуля.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Удаляется только эта дата. Остальная серия остаётся.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">Удаляются все даты этой серии. Это действие нельзя отменить.</sys:String>
 

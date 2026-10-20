@@ -46,7 +46,7 @@ namespace Killendar.Shell
 
         int IAppointmentView.FieldRepeatEveryN
         {
-            get => int.TryParse(FieldRepeatInterval.Text.Trim(), out int n) && n > 0 ? n : 1;
+            get => int.TryParse(FieldRepeatInterval.Text.Trim(), out int n) && n > 0 ? n : 0;
             set => FieldRepeatInterval.Text = value.ToString(CultureInfo.CurrentCulture);
         }
 
