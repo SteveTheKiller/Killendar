@@ -53,7 +53,8 @@ namespace Killendar.Services
             // count there is nothing to tally, so generation can jump straight to the range and a
             // ten-year-old daily series costs the same as a new one.
             bool counted  = master.RepeatCount > 0;
-            var  jumpTo   = counted ? master.Start : from;
+            var  jumpTo   = counted ? master.Start
+                : new DateTime(Math.Max(0L, from.Ticks - duration.Ticks), from.Kind);
 
             int emitted = 0;
             int steps   = 0;
