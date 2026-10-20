@@ -125,7 +125,7 @@ namespace Killendar.Controls
 
         private void KcList_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (SelectedItem == null) return;
+            if (e.OriginalSource is TextBox || SelectedItem == null) return;
             if (e.Key == Key.Enter) Open_Click(sender, e);
             else if (e.Key == Key.F2) BeginRename(SelectedItem);
             else if (e.Key == Key.Delete) Delete_Click(sender, e);
