@@ -49,6 +49,8 @@ namespace Killendar.Shell
                 if (!(alt && shift && !ctrl && e.SystemKey == Key.G)) return;
             }
 
+            if (HandleLocationSuggestionKey(e)) return;
+
             // Appointment-editor accelerators remain available while a text box owns focus.
             // Ctrl+Enter is used instead of Ctrl+S so a multiline description keeps its normal
             // editing behavior; destructive delete retains the editor's confirmation path.

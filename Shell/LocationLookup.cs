@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace Killendar.Shell
@@ -19,12 +20,20 @@ namespace Killendar.Shell
         private CancellationTokenSource? _photonCancel;
         private bool _photonEnabled;
         private bool _settingPhotonText;
+        internal Func<string, CancellationToken, Task<string>> PhotonRequestAsync { get; set; } = FetchPhotonAsync;
 
         private static HttpClient CreatePhotonClient()
         {
             var client = new HttpClient { Timeout = TimeSpan.FromSeconds(8) };
             client.DefaultRequestHeaders.UserAgent.ParseAdd("Killendar/1.1 (https://killendar.net)");
             return client;
+        }
+
+        private static async Task<string> FetchPhotonAsync(string url, CancellationToken cancellation)
+        {
+            using var response = await PhotonClient.GetAsync(url, cancellation);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync();
         }
 
         private void InitLocationLookup()
@@ -36,6 +45,17 @@ namespace Killendar.Shell
                 _photonDelay.Stop();
                 await QueryPhotonAsync(FieldLocation.Text.Trim());
             };
+            Closed += (_, _) => CancelLocationLookup();
+        }
+
+        private void CancelLocationLookup()
+        {
+            _photonDelay.Stop();
+            var cancellation = _photonCancel;
+            _photonCancel = null;
+            cancellation?.Cancel();
+            LocationSuggestionsPopup.IsOpen = false;
+            LocationSuggestionsList.Items.Clear();
         }
 
         private void PhotonLookupToggle_Changed(object sender, RoutedEventArgs e)
@@ -43,27 +63,21 @@ namespace Killendar.Shell
             _photonEnabled = PhotonLookupToggle.IsChecked == true;
             Settings.Set("PhotonLookup", _photonEnabled ? "1" : "0");
             if (_photonEnabled) return;
-            _photonDelay.Stop();
-            _photonCancel?.Cancel();
-            LocationSuggestionsPopup.IsOpen = false;
+            CancelLocationLookup();
         }
 
         private void FieldLocation_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!_photonEnabled || _settingPhotonText) return;
-            _photonDelay.Stop();
-            _photonCancel?.Cancel();
-            if (FieldLocation.Text.Trim().Length < 3)
-            {
-                LocationSuggestionsPopup.IsOpen = false;
-                return;
-            }
+            if (_settingPhotonText) return;
+            CancelLocationLookup();
+            if (!_photonEnabled || !_sidebarOpen || EditorScroll.Visibility != Visibility.Visible ||
+                FieldLocation.Text.Trim().Length < 3) return;
             _photonDelay.Start();
         }
 
         private async Task QueryPhotonAsync(string query)
         {
-            if (!_photonEnabled || query.Length < 3) return;
+            if (!_photonEnabled || !_sidebarOpen || EditorScroll.Visibility != Visibility.Visible || query.Length < 3) return;
             _photonCancel?.Cancel();
             var cancel = _photonCancel = new CancellationTokenSource();
             try
@@ -71,14 +85,22 @@ namespace Killendar.Shell
                 string lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
                 string url = "https://photon.komoot.io/api/?limit=12&lang=" + Uri.EscapeDataString(lang)
                            + "&q=" + Uri.EscapeDataString(query);
-                using var response = await PhotonClient.GetAsync(url, cancel.Token);
-                response.EnsureSuccessStatusCode();
-                string json = await response.Content.ReadAsStringAsync();
-                if (cancel.IsCancellationRequested || !_photonEnabled || FieldLocation.Text.Trim() != query) return;
+                string json = await PhotonRequestAsync(url, cancel.Token);
+                if (cancel.IsCancellationRequested || !ReferenceEquals(_photonCancel, cancel) || !_photonEnabled ||
+                    !_sidebarOpen || EditorScroll.Visibility != Visibility.Visible || FieldLocation.Text.Trim() != query) return;
                 ShowPhotonResults(ParsePhoton(json));
             }
             catch (OperationCanceledException) { }
-            catch { LocationSuggestionsPopup.IsOpen = false; }
+            catch
+            {
+                if (ReferenceEquals(_photonCancel, cancel) && !cancel.IsCancellationRequested)
+                    CancelLocationLookup();
+            }
+            finally
+            {
+                if (ReferenceEquals(_photonCancel, cancel)) _photonCancel = null;
+                cancel.Dispose();
+            }
         }
 
         private static IReadOnlyList<string> ParsePhoton(string json)
@@ -116,8 +138,53 @@ namespace Killendar.Shell
         }
 
         private void LocationSuggestion_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+            => AcceptLocationSuggestion();
+
+        private void LocationSuggestion_PreviewKeyDown(object sender, KeyEventArgs e)
+            => HandleLocationSuggestionKey(e);
+
+        private bool HandleLocationSuggestionKey(KeyEventArgs e)
+        {
+            if (!LocationSuggestionsPopup.IsOpen) return false;
+            bool inList = LocationSuggestionsList.IsKeyboardFocusWithin ||
+                ReferenceEquals(e.OriginalSource, LocationSuggestionsList) ||
+                (e.OriginalSource is DependencyObject origin && LocationSuggestionsList.IsAncestorOf(origin));
+            if (!inList && !FieldLocation.IsKeyboardFocusWithin &&
+                !ReferenceEquals(e.OriginalSource, FieldLocation)) return false;
+            if (e.Key == Key.Escape || e.Key == Key.Tab)
+            {
+                CancelLocationLookup();
+                if (e.Key == Key.Escape) FieldLocation.Focus();
+                else if (inList)
+                {
+                    FieldLocation.Focus();
+                    FieldLocation.MoveFocus(new TraversalRequest((Keyboard.Modifiers & ModifierKeys.Shift) != 0
+                        ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next));
+                }
+                e.Handled = e.Key == Key.Escape || inList;
+                return e.Handled;
+            }
+            if (Keyboard.Modifiers != ModifierKeys.None) return false;
+            if ((e.Key == Key.Down || e.Key == Key.Up) && LocationSuggestionsList.Items.Count > 0)
+            {
+                int current = LocationSuggestionsList.SelectedIndex;
+                int count = LocationSuggestionsList.Items.Count;
+                LocationSuggestionsList.SelectedIndex = e.Key == Key.Down
+                    ? Math.Min(count - 1, current + 1) : current < 0 ? count - 1 : Math.Max(0, current - 1);
+                LocationSuggestionsList.ScrollIntoView(LocationSuggestionsList.SelectedItem);
+                LocationSuggestionsList.Focus();
+            }
+            else if ((e.Key == Key.Enter || (e.Key == Key.Space && inList)) &&
+                LocationSuggestionsList.SelectedItem is string) AcceptLocationSuggestion();
+            else return false;
+            e.Handled = true;
+            return true;
+        }
+
+        private void AcceptLocationSuggestion()
         {
             if (LocationSuggestionsList.SelectedItem is not string address) return;
+            CancelLocationLookup();
             _settingPhotonText = true;
             FieldLocation.Text = address;
             FieldLocation.CaretIndex = address.Length;

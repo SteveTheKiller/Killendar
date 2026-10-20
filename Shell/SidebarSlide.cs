@@ -89,6 +89,7 @@ namespace Killendar.Shell
             // reads the flag to decide whether to raise it again at the end of the slide.
             bool was = _sidebarOpen;
             _sidebarOpen = false;
+            CancelLocationLookup();
             SidebarContent.IsEnabled = false;
             SidebarToggleBtn.Focus();
             Settings.Set("AppointmentSidebarOpen", "0");
