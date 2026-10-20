@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using Killendar.Models;
 using Killendar.Services;
 using Microsoft.Data.Sqlite;
@@ -70,6 +71,87 @@ namespace Killendar.Tests
             File.Copy(fixture.Path + ".bak", fixture.Path);
             fixture.Store.Open(fixture.Path, "old key");
             Assert.Equal("Surviving event", Assert.Single(fixture.Store.Events).Title);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("old key")]
+        public void FailedRestorationRenameRetiresOnlyItsOwnCopyBeforeALaterPasswordChange(string? oldKey)
+        {
+            using var fixture = new CalendarFixture(oldKey);
+            string directory = System.IO.Path.GetDirectoryName(fixture.Path)!;
+            string unrelated = fixture.Path + ".restore-unrelated";
+            File.WriteAllText(unrelated, "Independent retained file");
+            Assert.Throws<IOException>(() => fixture.Store.SetPassword("interrupted key", (source, destination, backup) =>
+            {
+                File.Move(destination, backup);
+                Directory.CreateDirectory(destination);
+                throw new IOException("Replacement failed after renaming the original.", unchecked((int)0x80070499));
+            }));
+            Assert.False(fixture.Store.IsOpen);
+            Assert.True(Directory.Exists(fixture.Path));
+            foreach (var copy in new[] { (Path: fixture.Path + ".bak", Key: oldKey), (Path: fixture.Path + ".rekey", Key: "interrupted key") })
+            {
+                using var database = new SqliteConnection(new SqliteConnectionStringBuilder
+                { DataSource = copy.Path, Password = copy.Key ?? "", Mode = SqliteOpenMode.ReadOnly, Pooling = false }.ConnectionString);
+                database.Open();
+                using var query = database.CreateCommand();
+                query.CommandText = "SELECT title FROM events";
+                Assert.Equal("Surviving event", query.ExecuteScalar());
+            }
+            string[] afterFailure = Directory.GetFiles(directory, System.IO.Path.GetFileName(fixture.Path) + ".restore-*")
+                .Where(path => path != unrelated).ToArray();
+            Directory.Delete(fixture.Path);
+            File.Move(fixture.Path + ".bak", fixture.Path);
+            fixture.Store.Open(fixture.Path, oldKey);
+            Assert.Equal("Surviving event", Assert.Single(fixture.Store.Events).Title);
+            fixture.Store.SetPassword("final key");
+            fixture.Store.Close();
+            Assert.Throws<SqliteException>(() => fixture.Store.Open(fixture.Path, oldKey));
+            fixture.Store.Open(fixture.Path, "final key");
+            Assert.Equal("Surviving event", Assert.Single(fixture.Store.Events).Title);
+            string[] afterSuccess = Directory.GetFiles(directory, System.IO.Path.GetFileName(fixture.Path) + ".restore-*")
+                .Where(path => path != unrelated).ToArray();
+            Assert.Equal("Independent retained file", File.ReadAllText(unrelated));
+            Assert.False(File.Exists(fixture.Path + ".bak"));
+            Assert.False(File.Exists(fixture.Path + ".rekey"));
+            Assert.True(afterFailure.Length == 0 && afterSuccess.Length == 0,
+                $"Owned restoration copies survived: after failure {afterFailure.Length}, after later password change {afterSuccess.Length}.");
+        }
+
+        [Fact]
+        public void CleanupDenialReportsEveryRetainedCopyInTheTopLevelMessage()
+        {
+            using var fixture = new CalendarFixture("old key");
+            var retained = new System.Collections.Generic.List<string>();
+            var error = Assert.Throws<IOException>(() => fixture.Store.SetPassword("new key", (source, destination, backup) =>
+            {
+                File.Move(destination, backup);
+                Directory.CreateDirectory(destination);
+                throw new IOException("Replacement failed after renaming the original.", unchecked((int)0x80070499));
+            }, path =>
+            {
+                retained.Add(path);
+                throw new UnauthorizedAccessException("Owned-copy cleanup was refused.");
+            }));
+            Assert.False(fixture.Store.IsOpen);
+            Assert.Equal(2, retained.Distinct().Count());
+            foreach (var copy in retained.Select(path => (Path: path, Key: "old key")).Concat(new[]
+            {
+                (Path: fixture.Path + ".bak", Key: "old key"), (Path: fixture.Path + ".rekey", Key: "new key")
+            }))
+            {
+                Assert.True(File.Exists(copy.Path));
+                using var database = new SqliteConnection(new SqliteConnectionStringBuilder
+                { DataSource = copy.Path, Password = copy.Key, Mode = SqliteOpenMode.ReadOnly, Pooling = false }.ConnectionString);
+                database.Open();
+                using var query = database.CreateCommand();
+                query.CommandText = "SELECT title FROM events";
+                Assert.Equal("Surviving event", query.ExecuteScalar());
+            }
+            Assert.IsType<AggregateException>(error.InnerException);
+            foreach (string path in retained.Concat(new[] { fixture.Path + ".bak", fixture.Path + ".rekey" }))
+                Assert.Contains(path, error.Message);
         }
 
         [Fact]

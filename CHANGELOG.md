@@ -13,7 +13,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Failed deletion of an edited recurring appointment preserves its edits and the original series.
 - Updated SQLCipher to 4.19.0 and SQLite and JSON processing to 10.0.13.
 - Window resize minimums stay within the current monitor's work area on small or scaled displays.
-- Failed password changes preserve the original calendar and complete recovery copies.
+- Failed password changes preserve the original calendar and complete recovery copies, and report temporary copies that cannot be removed.
 - Installing and reopening waits for the previous app to exit so the installed copy opens reliably.
 - Failed self-updates retain complete executable copies and a recovery report.
 - Calendar command clients that stop sending or reading no longer block later commands.
