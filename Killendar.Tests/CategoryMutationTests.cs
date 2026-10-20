@@ -14,6 +14,44 @@ namespace Killendar.Tests
         [Theory]
         [InlineData(false)]
         [InlineData(true)]
+        public void DefinitionWriteFailurePreservesCacheAssignmentsAndNotifications(bool delete)
+        {
+            using var fixture = new AppointmentFixture();
+            fixture.Store.Add(new CalendarEvent { Title = "Category", Start = new DateTime(2026, 1, 5, 9, 0, 0),
+                End = new DateTime(2026, 1, 5, 10, 0, 0), Categories = "Red, Blue" });
+            string color = CategoryManager.HexOf("Red");
+            int changes = 0;
+            fixture.Store.Changed += () => changes++;
+            Execute(fixture.Store.FilePath, "CREATE TRIGGER reject_definition BEFORE " + (delete ? "DELETE" : "UPDATE") +
+                " ON categories WHEN OLD.name = 'Red' BEGIN SELECT RAISE(ABORT, 'definition write fault'); END");
+
+            if (delete) fixture.Store.DeleteCategory("Red"); else fixture.Store.RenameCategory("Red", "Important");
+
+            Assert.NotNull(fixture.Store.LoadError);
+            Assert.Equal(1, changes);
+            Assert.Equal(color, CategoryManager.HexOf("Red"));
+            Assert.Equal(CategoryManager.OrphanHex, CategoryManager.HexOf("Important"));
+            Assert.Equal("Red, Blue", Assert.Single(fixture.Store.Events).Categories);
+            string path = fixture.Store.FilePath;
+            fixture.Store.Close();
+            fixture.Store.Open(path);
+            Assert.Equal(color, CategoryManager.HexOf("Red"));
+            Assert.Equal("Red, Blue", Assert.Single(fixture.Store.Events).Categories);
+            Execute(path, "DROP TRIGGER reject_definition");
+            changes = 0;
+
+            if (delete) fixture.Store.DeleteCategory("Red"); else fixture.Store.RenameCategory("Red", "Important");
+
+            Assert.Null(fixture.Store.LoadError);
+            Assert.Equal(1, changes);
+            Assert.Equal(CategoryManager.OrphanHex, CategoryManager.HexOf("Red"));
+            Assert.Equal(delete ? "Blue" : "Important, Blue", Assert.Single(fixture.Store.Events).Categories);
+            if (!delete) Assert.Equal(color, CategoryManager.HexOf("Important"));
+        }
+
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
         public void FailedCategoryRewriteRollsBackDefinitionAndEveryAppointment(bool delete)
         {
             string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation", Guid.NewGuid().ToString("N"));
