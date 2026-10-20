@@ -559,8 +559,31 @@ namespace Killendar.Services
         }
 
         private static string UnescapeText(string s)
-            => s.Replace("\\n", "\n").Replace("\\N", "\n")
-                .Replace("\\,", ",").Replace("\\;", ";").Replace("\\\\", "\\");
+        {
+            var decoded = new StringBuilder(s.Length);
+            for (int i = 0; i < s.Length; i++)
+            {
+                char c = s[i];
+                if (c == '\\' && i + 1 < s.Length)
+                {
+                    char next = s[i + 1];
+                    if (next == 'n' || next == 'N')
+                    {
+                        decoded.Append('\n');
+                        i++;
+                        continue;
+                    }
+                    if (next == '\\' || next == ',' || next == ';')
+                    {
+                        decoded.Append(next);
+                        i++;
+                        continue;
+                    }
+                }
+                decoded.Append(c);
+            }
+            return decoded.ToString();
+        }
 
         /// <summary>
         /// Splits an RFC-5545 CATEGORIES value. Unlike every other text property, this one is a
