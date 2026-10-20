@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- Calendar command clients that stop sending or reading no longer block later commands.
 - Sidebar fades disappear at the scroll limits, leave scrollbars clear, and stay off in 98SE.
 - The shortcuts card puts its scroll bar at the outer edge and shows when more content is out of view.
 - Title bar buttons stay square when highlighted, like the caption buttons in the other apps, instead of rounding their top corner.

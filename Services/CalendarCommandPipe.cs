@@ -4,24 +4,63 @@ using System.IO;
 using System.IO.Pipes;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace Killendar.Services
 {
     public static class CalendarCommandPipe
     {
+        internal static bool WriteResponse(Stream stream, string response, TimeSpan timeout)
+            => WriteResponseAsync(stream, response, timeout).GetAwaiter().GetResult();
+
+        private static async Task<bool> WriteResponseAsync(Stream stream, string response, TimeSpan timeout)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(response + "\n");
+            try
+            {
+                await Within(stream, stream.WriteAsync(bytes, 0, bytes.Length), timeout).ConfigureAwait(false);
+                return true;
+            }
+            catch (Exception ex) when (ex is IOException || ex is ObjectDisposedException || ex is TimeoutException)
+            { return false; }
+        }
+
+        private static readonly TimeSpan ExchangeTimeout = TimeSpan.FromSeconds(10);
+
+        private static async Task Within(Stream stream, Task operation, TimeSpan timeout)
+        {
+            using var deadline = new CancellationTokenSource();
+            if (await Task.WhenAny(operation, Task.Delay(timeout, deadline.Token)).ConfigureAwait(false) == operation)
+            {
+                deadline.Cancel();
+                await operation.ConfigureAwait(false);
+                return;
+            }
+            stream.Dispose();
+            try { await operation.ConfigureAwait(false); }
+            catch (Exception ex) when (ex is IOException || ex is ObjectDisposedException || ex is OperationCanceledException) { }
+            throw new TimeoutException("Calendar command exchange timed out.");
+        }
+
+        internal static string? ReadRequest(Stream stream, TimeSpan timeout)
+        {
+            using var reader = new StreamReader(stream, Encoding.UTF8, false, 1024, true);
+            Task<string?> read = reader.ReadLineAsync();
+            Within(stream, read, timeout).GetAwaiter().GetResult();
+            return read.GetAwaiter().GetResult();
+        }
+
         private static string PipeName => "Killendar-" + Process.GetCurrentProcess().SessionId + "-CalendarCommands";
 
         public static string Send(string request)
         {
             try
             {
-                using var pipe = new NamedPipeClientStream(".", PipeName, PipeDirection.InOut);
+                using var pipe = new NamedPipeClientStream(".", PipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
                 pipe.Connect(2000);
-                using var writer = new StreamWriter(pipe, new UTF8Encoding(false), 1024, true) { AutoFlush = true };
-                using var reader = new StreamReader(pipe, Encoding.UTF8, false, 1024, true);
-                writer.WriteLine(request);
-                return reader.ReadLine() ?? throw new IOException("Killendar did not answer the calendar command.");
+                if (!WriteResponse(pipe, request, ExchangeTimeout)) throw new IOException("Calendar command could not be sent.");
+                return ReadRequest(pipe, ExchangeTimeout) ?? throw new IOException("Killendar did not answer the calendar command.");
             }
             catch (Exception ex) when (ex is IOException || ex is TimeoutException)
             {
@@ -38,15 +77,13 @@ namespace Killendar.Services
                     try
                     {
                         using var pipe = new NamedPipeServerStream(PipeName, PipeDirection.InOut, 1,
-                            PipeTransmissionMode.Byte, PipeOptions.None);
+                            PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
                         pipe.WaitForConnection();
-                        using var reader = new StreamReader(pipe, Encoding.UTF8, false, 1024, true);
-                        using var writer = new StreamWriter(pipe, new UTF8Encoding(false), 1024, true) { AutoFlush = true };
-                        var request = reader.ReadLine();
+                        var request = ReadRequest(pipe, ExchangeTimeout);
                         var response = request == null || request.Length > 16384
                             ? "{\"error\":\"Invalid calendar command\"}"
                             : dispatcher.Invoke(() => execute(request));
-                        writer.WriteLine(response);
+                        WriteResponse(pipe, response, ExchangeTimeout);
                     }
                     catch (IOException) { }
                     catch (ObjectDisposedException) { return; }
