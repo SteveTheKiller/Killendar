@@ -86,6 +86,7 @@ namespace Killendar.Tests
             Directory.CreateDirectory(_root);
             Store.Open(Path.Combine(_root, "calendar.kcal"));
             Editor = new AppointmentEditor(View, Store);
+            View.StartChanged = Editor.StartEdited;
         }
         public void Dispose() { Store.Close(); Directory.Delete(_root, true); }
     }
@@ -102,15 +103,30 @@ namespace Killendar.Tests
         public string FieldDescription { get; set; } = "";
         public string FieldAttendees { get; set; } = "";
         public string FieldCategories { get; set; } = "";
-        public string FieldStartDate { get; set; } = "";
-        public string FieldStartTime { get; set; } = "";
+        private string _startDate = "", _startTime = "";
+        internal Action? StartChanged;
+        public string FieldStartDate
+        {
+            get => _startDate;
+            set { _startDate = value; StartChanged?.Invoke(); }
+        }
+        public string FieldStartTime
+        {
+            get => _startTime;
+            set { _startTime = value; StartChanged?.Invoke(); }
+        }
         public string FieldEndDate { get; set; } = "";
         public string FieldEndTime { get; set; } = "";
         public RepeatFreq FieldRepeat { get; set; }
         public int FieldRepeatEveryN { get; set; } = 1;
         public List<DayOfWeek> FieldRepeatDays { get; set; } = new List<DayOfWeek>();
         public int FieldRepeatCount { get; set; }
-        public DateTime? FieldRepeatUntil { get; set; }
+        public string RepeatDateText { get; set; } = "";
+        public DateTime? FieldRepeatUntil
+        {
+            get => DateFormatManager.TryParse(RepeatDateText, out var date) ? date : (DateTime?)null;
+            set => RepeatDateText = value.HasValue ? DateFormatManager.Format(value.Value) : "";
+        }
         public void ResetRepeat() { FieldRepeat = RepeatFreq.None; FieldRepeatUntil = null; FieldRepeatCount = 0; }
         public bool RepeatSectionVisible { private get; set; }
         public bool SeriesScopeVisible { private get; set; }

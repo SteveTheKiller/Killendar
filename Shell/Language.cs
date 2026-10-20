@@ -31,9 +31,10 @@ namespace Killendar.Shell
 
         /// <summary>An open editor is showing dates in the old pattern, so reformat what is in the
         /// fields rather than leaving a mix of the two.</summary>
-        private void ReformatOpenEditor()
+        private void ReformatOpenEditor(DateStyle style)
         {
-            if (_sidebarOpen) _appointments.ReformatDates();
+            if (_sidebarOpen) _appointments.ChangeDateStyle(style);
+            else DateFormatManager.Apply(style);
         }
 
         /// <summary>

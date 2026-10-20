@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- Date-format changes preserve appointment dates, duration and recurrence end dates.
 - Reimporting a calendar no longer duplicates edited recurring appointments.
 - Native database cache corruption is repaired before loading, and native load failures are reported.
 - Long counted series retain every occurrence and stop at the requested count.

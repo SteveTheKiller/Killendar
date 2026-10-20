@@ -233,11 +233,23 @@ namespace Killendar.Features
 
         /// <summary>After a date-format change: re-render the dates already typed so the panel does
         /// not show a mix of the old pattern and the new one, and update the hint with them.</summary>
-        internal void ReformatDates()
+        internal void ChangeDateStyle(DateStyle style)
         {
-            if (TryParseDate(_view.FieldStartDate, out var s)) _view.FieldStartDate = DateFormatManager.Format(s);
-            if (TryParseDate(_view.FieldEndDate, out var e)) _view.FieldEndDate = DateFormatManager.Format(e);
-            _view.DateHint = DateFormatManager.Hint;
+            bool haveStart = TryParseDate(_view.FieldStartDate, out var start);
+            bool haveEnd = TryParseDate(_view.FieldEndDate, out var end);
+            var until = _view.FieldRepeatUntil;
+            bool loading = _loading;
+            _loading = true;
+            try
+            {
+                DateFormatManager.Apply(style);
+                if (haveStart) _view.FieldStartDate = DateFormatManager.Format(start);
+                if (haveEnd) _view.FieldEndDate = DateFormatManager.Format(end);
+                if (until.HasValue) _view.FieldRepeatUntil = until;
+                _view.DateHint = DateFormatManager.Hint;
+            }
+            finally { _loading = loading; }
+            _followedStart = CurrentStart();
         }
 
         /// <summary>After a language change: re-render the panel's own strings.</summary>

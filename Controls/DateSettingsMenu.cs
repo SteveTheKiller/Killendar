@@ -19,11 +19,11 @@ namespace Killendar.Controls
 
         private readonly ContextMenu _menu;
         private readonly UIElement _anchor;
-        private readonly Action _dateStyleChanged;
+        private readonly Action<DateStyle> _dateStyleChanged;
         private readonly Action _weekStartChanged;
 
         internal DateSettingsMenu(ContextMenu menu, UIElement anchor,
-                                  Action dateStyleChanged, Action weekStartChanged)
+                                  Action<DateStyle> dateStyleChanged, Action weekStartChanged)
         {
             _menu = menu;
             _anchor = anchor;
@@ -101,8 +101,7 @@ namespace Killendar.Controls
             if (sender is RadioButton mi && mi.Tag is string tag &&
                 Enum.TryParse<DateStyle>(tag, out var style))
             {
-                DateFormatManager.Apply(style);
-                _dateStyleChanged();
+                _dateStyleChanged(style);
             }
         }
 
