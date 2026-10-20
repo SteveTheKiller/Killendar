@@ -76,6 +76,7 @@ namespace Killendar.Services
 
                 if (skips.Contains(start.Date)) continue;
 
+                if (duration.Ticks > DateTime.MaxValue.Ticks - start.Ticks) yield break;
                 var end = start + duration;
                 if (end <= from) continue;
 
@@ -134,8 +135,10 @@ namespace Killendar.Services
                 {
                     long n = (jumpTo.Date - first.Date).Days / interval;
                     if (n < 0) n = 0;
-                    for (var d = first.AddDays(n * interval); ; d = d.AddDays(interval))
-                        yield return d;
+                    long lastDay = (DateTime.MaxValue.Ticks - first.Ticks) / TimeSpan.TicksPerDay;
+                    for (long day = n * interval; day <= lastDay; day += interval)
+                        yield return first.AddDays(day);
+                    yield break;
                 }
 
                 case RepeatFreq.Weekly:
@@ -149,22 +152,27 @@ namespace Killendar.Services
                     // Whole weeks are walked from the start of the FIRST occurrence's week, so
                     // "every 2 weeks on Mon and Thu" keeps both days inside the same week instead
                     // of the two drifting apart.
-                    var firstWeek = first.Date.AddDays(-(int)first.DayOfWeek);
-                    var jumpWeek  = jumpTo.Date.AddDays(-(int)jumpTo.DayOfWeek);
+                    long firstWeek = first.Date.Ticks / TimeSpan.TicksPerDay - (int)first.DayOfWeek;
+                    long jumpWeek = jumpTo.Date.Ticks / TimeSpan.TicksPerDay - (int)jumpTo.DayOfWeek;
                     var time      = first.TimeOfDay;
 
-                    long weeks = (jumpWeek - firstWeek).Days / (7L * interval);
+                    long weeks = (jumpWeek - firstWeek) / (7L * interval);
                     if (weeks < 0) weeks = 0;
 
-                    for (var w = firstWeek.AddDays(weeks * 7 * interval); ; w = w.AddDays(7 * interval))
+                    long lastDay = DateTime.MaxValue.Ticks / TimeSpan.TicksPerDay;
+                    for (long w = firstWeek + weeks * 7L * interval; w <= lastDay; w += 7L * interval)
                     {
                         foreach (var dow in days)
                         {
-                            var d = w.AddDays((int)dow) + time;
+                            long day = w + (int)dow;
+                            if (day < 0) continue;
+                            if (day > lastDay) yield break;
+                            var d = new DateTime(day * TimeSpan.TicksPerDay + time.Ticks, first.Kind);
                             if (d < first) continue;   // days earlier in the series' opening week
                             yield return d;
                         }
                     }
+                    yield break;
                 }
 
                 case RepeatFreq.Monthly:
@@ -178,12 +186,14 @@ namespace Killendar.Services
                     int months = ((jumpTo.Year - first.Year) * 12) + jumpTo.Month - first.Month;
                     int start  = months > 0 ? (months / interval) * interval : 0;
 
-                    for (int i = start; ; i += interval)
+                    int lastMonth = (9999 - first.Year) * 12 + 12 - first.Month;
+                    for (long i = start; i <= lastMonth; i += interval)
                     {
-                        var anchor = new DateTime(first.Year, first.Month, 1).AddMonths(i);
+                        var anchor = new DateTime(first.Year, first.Month, 1).AddMonths((int)i);
                         if (day <= DateTime.DaysInMonth(anchor.Year, anchor.Month))
                             yield return new DateTime(anchor.Year, anchor.Month, day) + time;
                     }
+                    yield break;
                 }
 
                 case RepeatFreq.Yearly:
@@ -195,13 +205,13 @@ namespace Killendar.Services
                     int years = jumpTo.Year - first.Year;
                     int begin = years > 0 ? (years / interval) * interval : 0;
 
-                    for (int i = begin; ; i += interval)
+                    for (long i = begin; i <= 9999 - first.Year; i += interval)
                     {
-                        int year = first.Year + i;
-                        if (year > 9000) yield break;    // DateTime ceiling, not a real calendar
+                        int year = first.Year + (int)i;
                         if (day <= DateTime.DaysInMonth(year, month))
                             yield return new DateTime(year, month, day) + time;
                     }
+                    yield break;
                 }
 
                 default:

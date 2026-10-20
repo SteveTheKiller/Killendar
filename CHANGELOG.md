@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- Large recurrence intervals and dates at the calendar limits no longer crash recurrence queries.
 - A calendar that fails to load closes cleanly instead of showing stale appointments.
 - Category renames and deletions preserve all assignments when a save fails and show the error.
 - Failed deletion of an edited recurring appointment preserves its edits and the original series.
