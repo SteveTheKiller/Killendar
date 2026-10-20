@@ -20,10 +20,10 @@ namespace Killendar.Services
         /// <summary>The decoded iCalendar text, or null when the email carries no invite.</summary>
         public static string? ExtractCalendarText(string path)
         {
-            // Read as UTF-8: the MIME structure and any base64/quoted-printable body are ASCII,
-            // and an 8bit body in a saved invite is overwhelmingly UTF-8 already. A part that
-            // declares another charset is re-decoded from bytes in DecodeBody.
-            string raw = File.ReadAllText(path, Encoding.UTF8).Replace("\r\n", "\n");
+            // Map each original byte to one character while walking the ASCII MIME structure.
+            // Decode text only after selecting the part and its declared charset.
+            var byteEncoding = Encoding.GetEncoding(28591);
+            string raw = byteEncoding.GetString(File.ReadAllBytes(path)).Replace("\r\n", "\n");
 
             string? hit = FromEntity(raw);
             if (hit != null) return hit;
@@ -34,7 +34,8 @@ namespace Killendar.Services
             if (begin < 0) return null;
             int end = raw.LastIndexOf("END:VCALENDAR", StringComparison.OrdinalIgnoreCase);
             if (end < begin) return null;
-            return raw.Substring(begin, end - begin) + "END:VCALENDAR";
+            return Encoding.UTF8.GetString(byteEncoding.GetBytes(
+                raw.Substring(begin, end - begin) + "END:VCALENDAR"));
         }
 
         /// <summary>One MIME entity: headers, blank line, body. Recurses through multiparts.</summary>
@@ -149,9 +150,9 @@ namespace Killendar.Services
                     case "quoted-printable":
                         return DecodeQuotedPrintable(body, CharsetFor(charset));
 
-                    // 7bit, 8bit, binary, or nothing declared: the text is the text.
+                    // Unencoded bodies still carry bytes in the part's declared charset.
                     default:
-                        return body;
+                        return CharsetFor(charset).GetString(Encoding.GetEncoding(28591).GetBytes(body));
                 }
             }
             catch (FormatException)
