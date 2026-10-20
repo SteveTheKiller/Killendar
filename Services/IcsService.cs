@@ -512,12 +512,22 @@ namespace Killendar.Services
                                 throw new TimeZoneNotFoundException(
                                     "Unsupported calendar time zone: " + zoneId, ex);
                             }
-                            // A time the clocks skipped over has no direct conversion. RFC 5545
-                            // reads it with the offset in force just before the gap.
-                            dt = zone.IsInvalidTime(dt)
-                                ? DateTime.SpecifyKind(dt - zone.GetUtcOffset(dt.AddHours(-12)),
-                                    DateTimeKind.Utc).ToLocalTime()
-                                : TimeZoneInfo.ConvertTimeToUtc(dt, zone).ToLocalTime();
+                            if (zone.IsAmbiguousTime(dt))
+                            {
+                                // The larger offset gives the first UTC occurrence of a repeated hour.
+                                var offsets = zone.GetAmbiguousTimeOffsets(dt);
+                                var offset = offsets[0] > offsets[1] ? offsets[0] : offsets[1];
+                                dt = DateTime.SpecifyKind(dt - offset, DateTimeKind.Utc).ToLocalTime();
+                            }
+                            else
+                            {
+                                // A time the clocks skipped over has no direct conversion. RFC 5545
+                                // reads it with the offset in force just before the gap.
+                                dt = zone.IsInvalidTime(dt)
+                                    ? DateTime.SpecifyKind(dt - zone.GetUtcOffset(dt.AddHours(-12)),
+                                        DateTimeKind.Utc).ToLocalTime()
+                                    : TimeZoneInfo.ConvertTimeToUtc(dt, zone).ToLocalTime();
+                            }
                         }
                         return (dt, false);
                     }
