@@ -79,7 +79,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.Text.Json" Version="10.0.11" />
+    <PackageReference Include="System.Text.Json" Version="10.0.13" />
     <PackageReference Include="TimeZoneConverter" Version="8.0.0" />
     <!-- Transitive pins: Costura.Fody -> NETStandard.Library 1.6.1 resolves the vulnerable
          System.Net.Http 4.3.0 / System.Text.RegularExpressions 4.3.0 (GHSA-7jgj-8wvc-jh57,
@@ -95,7 +95,7 @@
          for Costura in-memory assemblies and crashes at startup. The static provider binds via
          plain DllImport, satisfied by SqlCipherBootstrap's preload. The .Core ADO.NET wrapper
          stays managed. Run the vulnerable-package scan at every release. -->
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="10.0.11" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="10.0.13" />
     <PackageReference Include="SQLitePCLRaw.provider.e_sqlcipher" Version="2.1.11" />
     <!-- The x64 SQLCipher native itself is VENDORED (third_party\sqlcipher\e_sqlcipher.dll,
          built from upstream source - see the README there), embedded as a resource and
@@ -135,6 +135,8 @@
     <EmbeddedResource Include="third_party\sqlcipher\e_sqlcipher.dll">
       <LogicalName>Killendar.SqlCipherNative.e_sqlcipher.dll</LogicalName>
     </EmbeddedResource>
+    <Content Include="third_party\sqlcipher\LICENSE-*.txt" CopyToOutputDirectory="PreserveNewest"
+             CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
   <Target Name="BundleSource" AfterTargets="Publish">
