@@ -282,6 +282,7 @@ namespace Killendar.Controls
             if (Exists(next)) { DlgStatus.Text = Loc("Str_Cat_Exists"); return; }
 
             _store.RenameCategory(oldName, next);
+            if (_store.LoadError != null) { DlgStatus.Text = _store.LoadError; return; }
             Changed(select: next);
         }
 
@@ -294,6 +295,7 @@ namespace Killendar.Controls
             confirm.ShowDialog();
             if (!confirm.Confirmed) return;
             _store.DeleteCategory(name);
+            if (_store.LoadError != null) { DlgStatus.Text = _store.LoadError; return; }
             Changed();
         }
 

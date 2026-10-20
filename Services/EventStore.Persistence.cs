@@ -125,18 +125,23 @@ namespace Killendar.Services
 
         /// <summary>Writes, then repaints. If persistence fails, reload the database so the
         /// calendar never presents an unsaved mutation as a saved appointment.</summary>
-        private bool Commit(Action write)
+        private bool Commit(Action write, bool refreshCategories = false)
         {
             try
             {
                 if (_db == null) throw new InvalidOperationException("No Killendar is open.");
                 write();
+                if (refreshCategories) CategoryManager.Refresh(this);
                 LoadError = null;
             }
             catch (Exception ex)
             {
                 LoadError = ex.Message;
-                try { if (_db != null) LoadIntoMemory(); else _events = []; }
+                try
+                {
+                    if (_db != null) LoadIntoMemory(); else _events = [];
+                    if (refreshCategories) CategoryManager.Refresh(this);
+                }
                 catch (Exception reloadError)
                 {
                     _events = [];

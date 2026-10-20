@@ -99,37 +99,32 @@ namespace Killendar.Services
         /// <summary>Renames a definition and rewrites it inside every event's assignment.</summary>
         public void RenameCategory(string oldName, string newName)
         {
-            if (_db == null) return;
-            using (var cmd = _db.CreateCommand())
+            RewriteCategoryInEvents(oldName, newName, () =>
             {
+                using var cmd = _db!.CreateCommand();
                 cmd.CommandText = "UPDATE categories SET name = $new WHERE name = $old";
                 cmd.Parameters.AddWithValue("$new", newName);
                 cmd.Parameters.AddWithValue("$old", oldName);
                 cmd.ExecuteNonQuery();
-            }
-            CategoryManager.Refresh(this);
-            RewriteCategoryInEvents(oldName, newName);
+            });
         }
 
         /// <summary>Deletes a definition and removes it from every event's assignment.</summary>
         public void DeleteCategory(string name)
         {
-            if (_db == null) return;
-            using (var cmd = _db.CreateCommand())
+            RewriteCategoryInEvents(name, null, () =>
             {
+                using var cmd = _db!.CreateCommand();
                 cmd.CommandText = "DELETE FROM categories WHERE name = $n";
                 cmd.Parameters.AddWithValue("$n", name);
                 cmd.ExecuteNonQuery();
-            }
-            CategoryManager.Refresh(this);
-            RewriteCategoryInEvents(name, null);
+            });
         }
 
         // Renames (newName != null) or removes (null) one category across every event. The
-        // in-memory mirror is rewritten first because reads are served from it, then only the
-        // events that actually changed are written back. Modified is deliberately left alone:
+        // definition and affected events share one transaction. Modified is left alone:
         // renaming a definition is not an edit to the appointment.
-        private void RewriteCategoryInEvents(string name, string? newName)
+        private void RewriteCategoryInEvents(string name, string? newName, Action writeDefinition)
         {
             var touched = new List<CalendarEvent>();
             foreach (var ev in _events)
@@ -147,13 +142,18 @@ namespace Killendar.Services
                     else kept.Add(c);
                 }
                 if (!hit) continue;
-                ev.Categories = string.Join(", ", kept);
-                touched.Add(ev);
+                var updated = ev.Clone();
+                updated.Categories = string.Join(", ", kept);
+                touched.Add(updated);
             }
             Commit(() =>
             {
+                using var tx = _db!.BeginTransaction();
+                writeDefinition();
                 foreach (var ev in touched) Upsert(ev);
-            });
+                tx.Commit();
+                foreach (var ev in touched) _events[_events.FindIndex(e => e.Id == ev.Id)] = ev;
+            }, refreshCategories: true);
         }
 
         /// <summary>Import events, skipping any whose Id is already present. Returns how many were
