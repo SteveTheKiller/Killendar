@@ -67,6 +67,7 @@
     <sys:String x:Key="Str_Err_StartTime">L'heure de début doit ressembler à 9:30 am ou 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndTime">L'heure de fin doit ressembler à 9:30 am ou 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">Il doit se terminer après son début.</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">Ce rendez-vous dépasse la plage de dates prise en charge.</sys:String>
 
     <sys:String x:Key="Str_Dlg_DeleteMsg">Supprimer "{0}" ?</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteDetail">Cette action est irréversible.</sys:String>

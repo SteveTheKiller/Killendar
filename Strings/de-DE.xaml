@@ -67,6 +67,7 @@
     <sys:String x:Key="Str_Err_StartTime">Die Startzeit sollte wie 9:30 am oder 21:30 aussehen.</sys:String>
     <sys:String x:Key="Str_Err_EndTime">Die Endzeit sollte wie 9:30 am oder 21:30 aussehen.</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">Es muss nach dem Beginn enden.</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">Dieser Termin geht über den unterstützten Datumsbereich hinaus.</sys:String>
 
     <sys:String x:Key="Str_Dlg_DeleteMsg">"{0}" löschen?</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteDetail">Das kann nicht rückgängig gemacht werden.</sys:String>

@@ -67,6 +67,7 @@
     <sys:String x:Key="Str_Err_StartTime">Čas začátku má vypadat jako 9:30 am nebo 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndTime">Čas konce má vypadat jako 9:30 am nebo 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">Musí skončit až po začátku.</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">Tato schůzka přesahuje podporovaný rozsah dat.</sys:String>
 
     <sys:String x:Key="Str_Dlg_DeleteMsg">Smazat "{0}"?</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteDetail">Tohle nejde vrátit zpět.</sys:String>

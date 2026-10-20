@@ -103,6 +103,7 @@
     <sys:String x:Key="Str_Err_StartTime">Час початку має виглядати так: 9:30 am або 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndTime">Час кінця має виглядати так: 9:30 am або 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">Кінець має бути пізніше за початок.</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">Ця зустріч виходить за межі підтримуваного діапазону дат.</sys:String>
 
     <!-- Delete confirmation. {0} is the appointment title. -->
     <sys:String x:Key="Str_Dlg_DeleteMsg">Видалити «{0}»?</sys:String>

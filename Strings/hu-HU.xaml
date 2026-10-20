@@ -103,6 +103,7 @@
     <sys:String x:Key="Str_Err_StartTime">A kezdési időpontnak ilyen formátumúnak kell lennie: 9:30 am vagy 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndTime">A befejezési időnek ilyen formátumúnak kell lennie: 9:30 am vagy 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">Be kell fejeződnie, miután elkezdődött.</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">Ez az esemény túlnyúlik a támogatott dátumtartományon.</sys:String>
 
     <!-- Delete confirmation. {0} is the appointment title. -->
     <sys:String x:Key="Str_Dlg_DeleteMsg">Törli a következőt: &quot;{0}&quot;?</sys:String>

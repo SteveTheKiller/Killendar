@@ -103,6 +103,7 @@
     <sys:String x:Key="Str_Err_StartTime">A hora de início deve ter este formato: 9:30 am ou 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndTime">A hora de término deve ter este formato: 9:30 am ou 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">O término deve ser depois do início.</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">Este compromisso ultrapassa o intervalo de datas suportado.</sys:String>
 
     <!-- Delete confirmation. {0} is the appointment title. -->
     <sys:String x:Key="Str_Dlg_DeleteMsg">Excluir “{0}”?</sys:String>

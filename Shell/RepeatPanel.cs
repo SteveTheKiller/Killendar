@@ -316,7 +316,6 @@ namespace Killendar.Shell
             var probe = new CalendarEvent
             {
                 Start          = start,
-                End            = start.AddHours(1),
                 Repeat         = _repeatFreq,
                 RepeatInterval = view.FieldRepeatEveryN,
                 RepeatDays     = view.FieldRepeatDays,
@@ -324,8 +323,8 @@ namespace Killendar.Shell
                 RepeatUntil    = view.FieldRepeatUntil
             };
 
-            var next = Recurrence.Expand(probe, start, start.AddYears(3)).Take(4).ToList();
-            if (next.Count == 0)
+            var next = AppointmentEditor.RepeatPreview(probe);
+            if (next.Length == 0)
             {
                 RepeatSummary.Text = Loc("Str_Rep_SummaryNone");
                 return;

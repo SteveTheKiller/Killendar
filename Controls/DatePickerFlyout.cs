@@ -14,6 +14,12 @@ namespace Killendar.Controls
     {
         internal static void Open(TextBox target, UIElement anchor)
         {
+            var menu = Create(target, anchor);
+            menu.IsOpen = true;
+        }
+
+        internal static ContextMenu Create(TextBox target, UIElement anchor)
+        {
             DateTime selected = DateFormatManager.TryParse(target.Text, out var parsed)
                 ? parsed.Date : DateTime.Today;
             var menu = new ContextMenu
@@ -22,7 +28,7 @@ namespace Killendar.Controls
                 Placement = PlacementMode.Bottom,
             };
             Build(menu, target, selected, new DateTime(selected.Year, selected.Month, 1));
-            menu.IsOpen = true;
+            return menu;
         }
 
         private static void Build(ContextMenu menu, TextBox target, DateTime selected, DateTime month)
@@ -34,14 +40,18 @@ namespace Killendar.Controls
             header.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(28) });
             header.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             header.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(28) });
-            header.Children.Add(Nav(((char)0xE76B).ToString(), () => Build(menu, target, selected, month.AddMonths(-1))));
+            bool canPrevious = month.Year > 1 || month.Month > 1;
+            bool canNext = month.Year < 9999 || month.Month < 12;
+            header.Children.Add(Nav(((char)0xE76B).ToString(),
+                () => { if (canPrevious) Build(menu, target, selected, month.AddMonths(-1)); }, canPrevious));
             var title = Text(month.ToString("MMMM yyyy", CultureInfo.CurrentCulture), "TextBrush", 12);
             title.FontWeight = FontWeights.SemiBold;
             title.HorizontalAlignment = HorizontalAlignment.Center;
             title.VerticalAlignment = VerticalAlignment.Center;
             Grid.SetColumn(title, 1);
             header.Children.Add(title);
-            var next = Nav(((char)0xE76C).ToString(), () => Build(menu, target, selected, month.AddMonths(1)));
+            var next = Nav(((char)0xE76C).ToString(),
+                () => { if (canNext) Build(menu, target, selected, month.AddMonths(1)); }, canNext);
             Grid.SetColumn(next, 2);
             header.Children.Add(next);
             root.Children.Add(header);
@@ -65,10 +75,13 @@ namespace Killendar.Controls
             }
 
             int shift = ((int)month.DayOfWeek - (int)firstDay + 7) % 7;
-            var start = month.AddDays(-shift);
+            long firstDayNumber = month.Ticks / TimeSpan.TicksPerDay - shift;
+            long lastDayNumber = DateTime.MaxValue.Ticks / TimeSpan.TicksPerDay;
             for (int i = 0; i < 42; i++)
             {
-                var date = start.AddDays(i);
+                long dayNumber = firstDayNumber + i;
+                if (dayNumber < 0 || dayNumber > lastDayNumber) continue;
+                var date = new DateTime(dayNumber * TimeSpan.TicksPerDay);
                 bool chosen = date == selected;
                 var number = Text(date.Day.ToString(CultureInfo.CurrentCulture),
                     chosen ? "SelectionFg" : date.Month == month.Month ? "TextBrush" : "DimTextBrush", 10.5);
@@ -107,16 +120,16 @@ namespace Killendar.Controls
             {
                 Header = root,
                 StaysOpenOnClick = true,
-                Style = (Style)Application.Current.FindResource("PanelMenuItem"),
+                Style = (Style)target.FindResource("PanelMenuItem"),
             });
         }
 
-        private static Border Nav(string glyph, Action click)
+        private static Border Nav(string glyph, Action click, bool enabled)
         {
             var label = Text(glyph, "TextBrush", 10, "Segoe MDL2 Assets");
             label.HorizontalAlignment = HorizontalAlignment.Center;
             label.VerticalAlignment = VerticalAlignment.Center;
-            var border = new Border { Child = label, CornerRadius = new CornerRadius(3), Cursor = Cursors.Hand };
+            var border = new Border { Child = label, CornerRadius = new CornerRadius(3), Cursor = Cursors.Hand, IsEnabled = enabled };
             border.MouseEnter += (_, _) => border.SetResourceReference(Border.BackgroundProperty, "RowHoverBrush");
             border.MouseLeave += (_, _) => border.Background = Brushes.Transparent;
             border.MouseLeftButtonUp += (_, e) => { e.Handled = true; click(); };

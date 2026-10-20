@@ -93,6 +93,7 @@
     <sys:String x:Key="Str_Err_StartTime">L'ora di inizio deve essere come 9:30 am o 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndTime">L'ora di fine deve essere come 9:30 am o 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">Deve finire dopo che è iniziato.</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">Questo appuntamento supera l'intervallo di date supportato.</sys:String>
 
     <sys:String x:Key="Str_Dlg_DeleteMsg">Eliminare "{0}"?</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteDetail">Questa operazione non si può annullare.</sys:String>

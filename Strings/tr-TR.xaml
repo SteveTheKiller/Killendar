@@ -67,6 +67,7 @@
     <sys:String x:Key="Str_Err_StartTime">Başlangıç saati 9:30 am veya 21:30 gibi olmalı.</sys:String>
     <sys:String x:Key="Str_Err_EndTime">Bitiş saati 9:30 am veya 21:30 gibi olmalı.</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">Başladıktan sonra bitmeli.</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">Bu randevu desteklenen tarih aralığının dışına taşıyor.</sys:String>
 
     <sys:String x:Key="Str_Dlg_DeleteMsg">"{0}" silinsin mi?</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteDetail">Bu geri alınamaz.</sys:String>

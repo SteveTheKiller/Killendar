@@ -67,6 +67,7 @@
     <sys:String x:Key="Str_Err_StartTime">開始時刻は 9:30 am または 21:30 のような形式にしてください。</sys:String>
     <sys:String x:Key="Str_Err_EndTime">終了時刻は 9:30 am または 21:30 のような形式にしてください。</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">開始より後に終了する必要があります。</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">この予定は対応する日付の範囲を超えています。</sys:String>
 
     <sys:String x:Key="Str_Dlg_DeleteMsg">"{0}" を削除しますか?</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteDetail">この操作は元に戻せません。</sys:String>

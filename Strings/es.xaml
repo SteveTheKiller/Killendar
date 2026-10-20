@@ -67,6 +67,7 @@
     <sys:String x:Key="Str_Err_StartTime">La hora de inicio debe ser como 9:30 a. m. o 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndTime">La hora de fin debe ser como 9:30 a. m. o 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">Tiene que terminar después de empezar.</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">Esta cita supera el intervalo de fechas admitido.</sys:String>
 
     <sys:String x:Key="Str_Dlg_DeleteMsg">¿Eliminar "{0}"?</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteDetail">Esto no se puede deshacer.</sys:String>

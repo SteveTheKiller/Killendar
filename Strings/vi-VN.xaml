@@ -95,6 +95,7 @@
   <sys:String x:Key="Str_Err_StartTime">Giờ bắt đầu phải có dạng 9:30 am hoặc 21:30.</sys:String>
   <sys:String x:Key="Str_Err_EndTime">Giờ kết thúc phải có dạng 9:30 am hoặc 21:30.</sys:String>
   <sys:String x:Key="Str_Err_EndBeforeStart">Thời điểm kết thúc phải sau thời điểm bắt đầu.</sys:String>
+  <sys:String x:Key="Str_Err_DateRange">Cuộc hẹn này vượt quá phạm vi ngày được hỗ trợ.</sys:String>
   <!-- Delete confirmation. {0} is the appointment title. -->
   <sys:String x:Key="Str_Dlg_DeleteMsg">Xóa "{0}"?</sys:String>
   <sys:String x:Key="Str_Dlg_DeleteDetail">Không thể hoàn tác thao tác này.</sys:String>

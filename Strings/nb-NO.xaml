@@ -103,6 +103,7 @@
     <sys:String x:Key="Str_Err_StartTime">Starttidspunktet må se slik ut: 9:30 am eller 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndTime">Sluttidspunktet må se slik ut: 9:30 am eller 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">Avtalen må slutte etter at den starter.</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">Denne avtalen strekker seg utenfor det støttede datointervallet.</sys:String>
 
     <!-- Delete confirmation. {0} is the appointment title. -->
     <sys:String x:Key="Str_Dlg_DeleteMsg">Slette «{0}»?</sys:String>

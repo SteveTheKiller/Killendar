@@ -103,6 +103,7 @@
     <sys:String x:Key="Str_Err_StartTime">Басталу уақыты былай болуы керек: 9:30 am немесе 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndTime">Аяқталу уақыты былай болуы керек: 9:30 am немесе 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">Аяқталуы басталуынан кейін болуы тиіс.</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">Бұл кездесу қолдау көрсетілетін күндер ауқымынан шығып кетеді.</sys:String>
 
     <!-- Delete confirmation. {0} is the appointment title. -->
     <sys:String x:Key="Str_Dlg_DeleteMsg">"{0}" жойылсын ба?</sys:String>

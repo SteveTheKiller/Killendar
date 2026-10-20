@@ -48,6 +48,13 @@ namespace Killendar.Features
 
         internal void NewAt(DateTime when)
         {
+            if (when.Ticks > DateTime.MaxValue.Ticks - TimeSpan.TicksPerHour)
+            {
+                var message = _view.Loc("Str_Err_DateRange");
+                _view.ShowError(message);
+                _view.SetStatus(message);
+                return;
+            }
             _loading = true;
             _timeCulture = CultureInfo.CurrentCulture;
             _editing = null;
@@ -181,10 +188,16 @@ namespace Killendar.Features
             var now = CurrentStart();
             if (now == null) return;
             var was = _followedStart;
-            _followedStart = now;
-            if (was == null || was == now) return;
+            if (was == null || was == now) { _followedStart = now; return; }
+            bool readableEnd = TryParseDate(_view.FieldEndDate, out _) &&
+                               (_allDay || TryParseTime(_view.FieldEndTime, out _));
             if (!TryFollowStart(was.Value, now.Value, _allDay, _view.FieldEndDate, _view.FieldEndTime,
-                                out var endDate, out var endTime)) return;
+                                out var endDate, out var endTime))
+            {
+                if (!readableEnd) _followedStart = now;
+                return;
+            }
+            _followedStart = now;
             _view.FieldEndDate = endDate;
             _view.FieldEndTime = endTime;
         }
@@ -203,12 +216,16 @@ namespace Killendar.Features
             {
                 // The time boxes are hidden; only whole days move, and the time text is kept for
                 // when all-day is toggled back off.
-                endDate = DateFormatManager.Format(d.Date + (now.Date - was.Date));
+                long ticks = d.Date.Ticks + (now.Date.Ticks - was.Date.Ticks);
+                if (ticks < DateTime.MinValue.Ticks || ticks > DateTime.MaxValue.Ticks) return false;
+                endDate = DateFormatManager.Format(new DateTime(ticks));
                 return true;
             }
 
             if (!TryParseTime(endTimeText, out var t)) return false;
-            var moved = d.Date + t + (now - was);
+            long movedTicks = d.Date.Ticks + t.Ticks + (now.Ticks - was.Ticks);
+            if (movedTicks < DateTime.MinValue.Ticks || movedTicks > DateTime.MaxValue.Ticks) return false;
+            var moved = new DateTime(movedTicks);
             endDate = DateFormatManager.Format(moved);
             endTime = FormatTime(moved);
             return true;
@@ -223,6 +240,16 @@ namespace Killendar.Features
             // The start now means something different (a day, or a day and a time), so the next
             // edit must measure from the new meaning, not shift the end by a whole time of day.
             _followedStart = CurrentStart();
+        }
+
+        internal static CalendarEvent[] RepeatPreview(CalendarEvent probe)
+        {
+            probe = probe.Clone();
+            long available = DateTime.MaxValue.Ticks - probe.Start.Ticks;
+            if (available == 0) return [];
+            probe.End = probe.Start.AddTicks(Math.Min(TimeSpan.TicksPerHour, available));
+            var limit = probe.Start.Year > 9996 ? DateTime.MaxValue : probe.Start.AddYears(3);
+            return Recurrence.Expand(probe, probe.Start, limit).Take(4).ToArray();
         }
 
         /// <summary>All-day hides the time fields rather than disabling them: a grayed-out box you
@@ -301,6 +328,11 @@ namespace Killendar.Features
             if (_allDay)
             {
                 start = startDate.Date;
+                if (endDate.Date == DateTime.MaxValue.Date || startDate.Date == DateTime.MaxValue.Date)
+                {
+                    Reject("Str_Err_DateRange", AppointmentField.EndDate);
+                    return;
+                }
                 // All-day is stored half-open, so a one-day event ends at the next midnight.
                 end = CalendarDateSpan.ExclusiveAllDayEnd(startDate, endDate);
             }

@@ -103,6 +103,7 @@
     <sys:String x:Key="Str_Err_StartTime">Start time should look like 9:30 am or 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndTime">End time should look like 9:30 am or 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">It has to end after it starts.</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">This appointment extends beyond the supported date range.</sys:String>
 
     <!-- Delete confirmation. {0} is the appointment title. -->
     <sys:String x:Key="Str_Dlg_DeleteMsg">Delete "{0}"?</sys:String>

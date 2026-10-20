@@ -67,6 +67,7 @@
     <sys:String x:Key="Str_Err_StartTime">開始時間應為 9:30 am 或 21:30 這樣的格式。</sys:String>
     <sys:String x:Key="Str_Err_EndTime">結束時間應為 9:30 am 或 21:30 這樣的格式。</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">結束時間必須晚於開始時間。</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">此行程超出了支援的日期範圍。</sys:String>
 
     <sys:String x:Key="Str_Dlg_DeleteMsg">刪除「{0}」?</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteDetail">此操作無法復原。</sys:String>

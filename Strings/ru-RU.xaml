@@ -104,6 +104,7 @@
     <sys:String x:Key="Str_Err_StartTime">Время начала должно выглядеть так: 9:30 am или 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndTime">Время окончания должно выглядеть так: 9:30 am или 21:30.</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">Окончание должно быть позже начала.</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">Эта встреча выходит за пределы поддерживаемого диапазона дат.</sys:String>
 
     <!-- Delete confirmation. {0} is the appointment title. -->
     <sys:String x:Key="Str_Dlg_DeleteMsg">Удалить "{0}"?</sys:String>

@@ -67,6 +67,7 @@
     <sys:String x:Key="Str_Err_StartTime">开始时间应为 9:30 am 或 21:30 这样的格式。</sys:String>
     <sys:String x:Key="Str_Err_EndTime">结束时间应为 9:30 am 或 21:30 这样的格式。</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">结束时间必须晚于开始时间。</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">此日程超出了支持的日期范围。</sys:String>
 
     <sys:String x:Key="Str_Dlg_DeleteMsg">删除"{0}"?</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteDetail">此操作无法撤销。</sys:String>

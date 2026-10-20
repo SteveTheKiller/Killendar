@@ -67,6 +67,7 @@
     <sys:String x:Key="Str_Err_StartTime">শুরুর সময় 9:30 am বা 21:30 এর মতো হওয়া উচিত।</sys:String>
     <sys:String x:Key="Str_Err_EndTime">শেষের সময় 9:30 am বা 21:30 এর মতো হওয়া উচিত।</sys:String>
     <sys:String x:Key="Str_Err_EndBeforeStart">শুরুর পরে শেষ হতে হবে।</sys:String>
+    <sys:String x:Key="Str_Err_DateRange">এই অ্যাপয়েন্টমেন্টটি সমর্থিত তারিখের সীমা ছাড়িয়ে যায়।</sys:String>
 
     <sys:String x:Key="Str_Dlg_DeleteMsg">"{0}" মুছবেন?</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteDetail">এটি ফেরানো যাবে না।</sys:String>

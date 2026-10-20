@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- Appointment editing, recurrence previews and date picking handle the supported date limits without crashing.
 - HTML calendars include all themes and accents, with accessible selection controls and valid saved preferences.
 - Invalid recurrence intervals show an error instead of silently saving a different schedule.
 - Stalled launch requests no longer block later launches, and failed forwarding returns an error.
