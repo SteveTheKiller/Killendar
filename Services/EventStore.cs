@@ -151,38 +151,44 @@ namespace Killendar.Services
         public void Open(string path, string? password = null)
         {
             Close();
-            var dir = Path.GetDirectoryName(path);
-            if (!string.IsNullOrEmpty(dir)) Directory.CreateDirectory(dir);
-
-            // Built locally and only published to _db once it is genuinely usable. Assigning the
-            // field first would make IsOpen true for a connection that failed to open or failed
-            // its key check, and every caller keys off IsOpen to decide whether to prompt.
-            var db = new SqliteConnection(Cs(path, password));
+            _events = [];
+            LoadError = null;
+            NeedsPassword = false;
+            SqliteConnection? db = null;
             try
             {
+                var dir = Path.GetDirectoryName(path);
+                if (!string.IsNullOrEmpty(dir)) Directory.CreateDirectory(dir);
+                db = new SqliteConnection(Cs(path, password));
                 db.Open();
                 // Force the key check right here. Open() on its own validates nothing, and a lazy
                 // failure surfaces later as a corrupt-looking calendar instead of a prompt.
                 using var probe = db.CreateCommand();
                 probe.CommandText = "SELECT count(*) FROM sqlite_master";
                 probe.ExecuteScalar();
+
+                // Initialize privately so a schema or decoding failure cannot expose a usable
+                // looking connection or appointments from the previous calendar.
+                var candidate = new EventStore { _db = db };
+                candidate.EnsureSchema();
+                candidate.LoadIntoMemory();
+                CategoryManager.Refresh(candidate);
+                _db = db;
+                _events = candidate._events;
+                _password = string.IsNullOrEmpty(password) ? null : password;
+                _file = path;
             }
-            catch
+            catch (Exception ex)
             {
-                db.Dispose();
+                db?.Dispose();
+                _db = null;
+                _events = [];
+                LoadError = ex.Message;
+                NeedsPassword = ex is SqliteException sqlite && IsKeyFailure(sqlite);
+                CategoryManager.Refresh(this);
                 SqliteConnection.ClearAllPools();
                 throw;
             }
-
-            _db = db;
-            _password = string.IsNullOrEmpty(password) ? null : password;
-            _file = path;
-            EnsureSchema();
-            LoadIntoMemory();
-            // Definitions are per-Killendar, so the cache is refreshed here rather than at the
-            // call sites: SecurityController alone opens the store from six places, and a cache
-            // left over from the previous file would paint this one's events in its colors.
-            CategoryManager.Refresh(this);
         }
 
         /// <summary>Loads an existing calendar for scriptable queries without creating files,
