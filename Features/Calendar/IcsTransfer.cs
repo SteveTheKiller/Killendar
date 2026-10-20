@@ -348,6 +348,14 @@ namespace Killendar.Features
                     case ".csv":
                     {
                         var rows = _store.GetInRange(from, toEx);
+                        if (CsvService.RequiresSpreadsheetProtection(rows))
+                        {
+                            var warning = new ConfirmDialog(_host.Loc("Str_Dlg_ExportTitle"),
+                                _host.Loc("Str_Exp_CsvSafety"), _host.Loc("Str_Btn_Export"),
+                                _host.Loc("Str_Btn_Cancel")) { Owner = _host.Window };
+                            warning.ShowDialog();
+                            if (!warning.Confirmed) return;
+                        }
                         CsvService.ExportToFile(rows, dlg.FileName);
                         count = rows.Count;
                         break;

@@ -462,4 +462,5 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Scroll_PageLeft">Egy oldallal balra</sys:String>
     <sys:String x:Key="Str_Scroll_PageRight">Egy oldallal jobbra</sys:String>
     <sys:String x:Key="Str_Rail_Flip">Ikonok áthelyezése a másik oldalra</sys:String>
+    <sys:String x:Key="Str_Exp_CsvSafety">A képletként értelmezhető CSV-szöveg aposztróffal kezdődik. A naptáralkalmazások importáláskor megtarthatják ezt.</sys:String>
 </ResourceDictionary>

@@ -434,4 +434,5 @@
     <sys:String x:Key="Str_Scroll_PageLeft">এক পৃষ্ঠা বাঁয়ে</sys:String>
     <sys:String x:Key="Str_Scroll_PageRight">এক পৃষ্ঠা ডানে</sys:String>
     <sys:String x:Key="Str_Rail_Flip">আইকন অন্য পাশে সরান</sys:String>
+    <sys:String x:Key="Str_Exp_CsvSafety">সূত্র হিসেবে গণ্য হতে পারে এমন CSV লেখার শুরুতে একটি অ্যাপোস্ট্রফি যোগ করা হয়। ক্যালেন্ডার অ্যাপ আমদানির সময় এটি রেখে দিতে পারে।</sys:String>
 </ResourceDictionary>

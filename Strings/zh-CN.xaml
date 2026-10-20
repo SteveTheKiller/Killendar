@@ -434,4 +434,5 @@
     <sys:String x:Key="Str_Scroll_PageLeft">向左翻页</sys:String>
     <sys:String x:Key="Str_Scroll_PageRight">向右翻页</sys:String>
     <sys:String x:Key="Str_Rail_Flip">将图标移至另一侧</sys:String>
+    <sys:String x:Key="Str_Exp_CsvSafety">可能被视为公式的 CSV 文本以单引号开头。日历应用在导入时可能会保留此单引号。</sys:String>
 </ResourceDictionary>

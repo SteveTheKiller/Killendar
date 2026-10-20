@@ -86,27 +86,41 @@ namespace Killendar.Services
                     endTime   = ev.End.ToString("HH:mm:ss", CultureInfo.InvariantCulture);
                 }
 
-                sb.Append(Escape(ev.Title)).Append(',')
+                sb.Append(SpreadsheetField(ev.Title)).Append(',')
                   .Append(startDate).Append(',')
                   .Append(startTime).Append(',')
                   .Append(endDate).Append(',')
                   .Append(endTime).Append(',')
                   .Append(ev.AllDay ? "TRUE" : "FALSE").Append(',')
-                  .Append(Escape(ev.Description)).Append(',')
-                  .Append(Escape(ev.Location)).Append(',')
-                  .Append(Escape(ev.Categories)).Append("\r\n");
+                  .Append(SpreadsheetField(ev.Description)).Append(',')
+                  .Append(SpreadsheetField(ev.Location)).Append(',')
+                  .Append(SpreadsheetField(ev.Categories)).Append("\r\n");
             }
 
             return sb.ToString();
         }
 
-        /// <summary>RFC 4180: a field containing a comma, a quote or a line break is quoted,
-        /// and quotes inside it are doubled. Everything else is written bare.</summary>
-        private static string Escape(string s)
+        public static bool RequiresSpreadsheetProtection(IEnumerable<CalendarEvent> rows)
+            => rows.Any(row => NeedsProtection(row.Title) || NeedsProtection(row.Description) ||
+                               NeedsProtection(row.Location) || NeedsProtection(row.Categories));
+
+        private static bool NeedsProtection(string? value)
         {
-            if (string.IsNullOrEmpty(s)) return "";
-            if (s.IndexOfAny([',', '"', '\n', '\r']) < 0) return s;
-            return "\"" + s.Replace("\"", "\"\"") + "\"";
+            string text = value ?? "";
+            int first = 0;
+            while (first < text.Length && (char.IsWhiteSpace(text[first]) || char.IsControl(text[first]))) first++;
+            if (first >= text.Length || "=+-@".IndexOf(text[first]) < 0) return false;
+            bool loneSign = (text[first] == '-' || text[first] == '+') && text.Substring(first + 1).Trim().Length == 0;
+            return !loneSign;
+        }
+
+        // Match the family spreadsheet policy: put protection before leading controls and
+        // quote every text cell. Calendar importers can retain the apostrophe as literal text.
+        private static string SpreadsheetField(string? value)
+        {
+            string text = value ?? "";
+            if (NeedsProtection(text)) text = "'" + text;
+            return "\"" + text.Replace("\"", "\"\"") + "\"";
         }
 
         // ── Import ────────────────────────────────────────────────────────────
