@@ -412,12 +412,14 @@ namespace Killendar.Features
         /// ones outside the range: an override is part of the series' truth, and dropping it
         /// resurrects the date it replaced.
         /// </summary>
-        private List<CalendarEvent> SelectForIcs(DateTime from, DateTime toEx)
+        internal List<CalendarEvent> SelectForIcs(DateTime from, DateTime toEx)
         {
             var masters = new HashSet<Guid>();
             foreach (var e in _store.Events)
                 if (e.IsSeries && Recurrence.Expand(e, from, toEx).Any())
                     masters.Add(e.Id);
+                else if (e.IsOverride && e.Start < toEx && e.End > from)
+                    masters.Add(e.SeriesKey);
 
             var result = new List<CalendarEvent>();
             foreach (var e in _store.Events)
