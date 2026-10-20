@@ -163,7 +163,7 @@ namespace Killendar
             _instance = new SingleInstanceGuard(AppName, Dispatcher, OnForwardedLaunch);
             if (!_instance.Claim(PendingOpenFile))
             {
-                Shutdown(0);
+                Shutdown(_instance.ForwardingSucceeded ? 0 : 1);
                 return;
             }
             CalendarCommandPipe.Start(Dispatcher, OnCalendarCommand);
