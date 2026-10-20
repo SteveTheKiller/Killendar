@@ -31,6 +31,7 @@ namespace Killendar.Features
         /// panel has finished loading, so filling the boxes never counts as an edit.</summary>
         private DateTime? _followedStart;
         private bool _loading;
+        private CultureInfo _timeCulture = CultureInfo.CurrentCulture;
 
         internal AppointmentEditor(IAppointmentView view, EventStore store)
         {
@@ -48,6 +49,7 @@ namespace Killendar.Features
         internal void NewAt(DateTime when)
         {
             _loading = true;
+            _timeCulture = CultureInfo.CurrentCulture;
             _editing = null;
             _allDay = false;
 
@@ -66,9 +68,9 @@ namespace Killendar.Features
 
             var end = when.AddHours(1);
             _view.FieldStartDate = DateFormatManager.Format(when);
-            _view.FieldStartTime = when.ToString("h:mm tt");
+            _view.FieldStartTime = FormatTime(when);
             _view.FieldEndDate = DateFormatManager.Format(end);
-            _view.FieldEndTime = end.ToString("h:mm tt");
+            _view.FieldEndTime = FormatTime(end);
 
             Show();
             _view.Focus(AppointmentField.Title);
@@ -78,6 +80,7 @@ namespace Killendar.Features
         {
             // Edit a copy: canceling must not leave half-typed changes on the stored object.
             _loading = true;
+            _timeCulture = CultureInfo.CurrentCulture;
             _editing = ev.Clone();
             _allDay = ev.AllDay;
 
@@ -107,7 +110,7 @@ namespace Killendar.Features
             LoadRepeatFrom(master ?? ev);
 
             _view.FieldStartDate = DateFormatManager.Format(ev.Start);
-            _view.FieldStartTime = ev.Start.ToString("h:mm tt");
+            _view.FieldStartTime = FormatTime(ev.Start);
             // The model keeps all-day ranges half-open (the stored end is the midnight after the
             // last covered day), while the editor asks for the last day the user can see. Showing
             // the stored boundary here made every edit-save cycle extend the event by one day.
@@ -115,7 +118,7 @@ namespace Killendar.Features
                 ? CalendarDateSpan.VisibleAllDayEnd(ev.Start, ev.End)
                 : ev.End;
             _view.FieldEndDate = DateFormatManager.Format(displayedEnd);
-            _view.FieldEndTime = ev.End.ToString("h:mm tt");
+            _view.FieldEndTime = FormatTime(ev.End);
 
             Show();
             _view.Focus(AppointmentField.Title, selectAll: true);
@@ -207,7 +210,7 @@ namespace Killendar.Features
             if (!TryParseTime(endTimeText, out var t)) return false;
             var moved = d.Date + t + (now - was);
             endDate = DateFormatManager.Format(moved);
-            endTime = moved.ToString("h:mm tt");
+            endTime = FormatTime(moved);
             return true;
         }
 
@@ -240,6 +243,18 @@ namespace Killendar.Features
         /// <summary>After a language change: re-render the panel's own strings.</summary>
         internal void RefreshLocalizedText()
         {
+            bool loading = _loading;
+            _loading = true;
+            try
+            {
+                if (TryParseTime(_view.FieldStartTime, _timeCulture, out var start))
+                    _view.FieldStartTime = FormatTime(DateTime.Today + start);
+                if (TryParseTime(_view.FieldEndTime, _timeCulture, out var end))
+                    _view.FieldEndTime = FormatTime(DateTime.Today + end);
+                _timeCulture = CultureInfo.CurrentCulture;
+            }
+            finally { _loading = loading; }
+            _followedStart = CurrentStart();
             _view.Heading = _view.Loc(_editing == null ? "Str_Side_New" : "Str_Side_Edit");
             ApplyAllDay();
         }
@@ -451,11 +466,24 @@ namespace Killendar.Features
 
         // ---- parsing ----
 
+        private static string FormatTime(DateTime value)
+        {
+            var culture = CultureInfo.CurrentCulture;
+            var format = culture.DateTimeFormat;
+            bool distinct = !string.IsNullOrWhiteSpace(format.AMDesignator) &&
+                            !string.IsNullOrWhiteSpace(format.PMDesignator) &&
+                            !string.Equals(format.AMDesignator, format.PMDesignator, StringComparison.OrdinalIgnoreCase);
+            return value.ToString(distinct ? "h:mm tt" : "HH:mm", culture);
+        }
+
         /// <summary>
         /// Accepts what people actually type: "9", "9:30", "9:30 pm", "21:30", "0930".
         /// False only when nothing sensible can be read out of it.
         /// </summary>
         internal static bool TryParseTime(string raw, out TimeSpan time)
+            => TryParseTime(raw, CultureInfo.CurrentCulture, out time);
+
+        private static bool TryParseTime(string raw, CultureInfo culture, out TimeSpan time)
         {
             time = TimeSpan.Zero;
             raw = (raw ?? "").Trim();
@@ -476,9 +504,9 @@ namespace Killendar.Features
                 "H:mm", "HH:mm", "Hmm", "HHmm", "%H", "HH",
                 "h:mm tt", "hh:mm tt", "h:mmtt", "hh:mmtt", "h tt", "htt"
             ];
-            if (DateTime.TryParseExact(raw, formats, CultureInfo.CurrentCulture,
+            if (DateTime.TryParseExact(raw, formats, culture,
                                        DateTimeStyles.None, out var dt) ||
-                DateTime.TryParse(raw, CultureInfo.CurrentCulture, DateTimeStyles.NoCurrentDateDefault, out dt))
+                DateTime.TryParse(raw, culture, DateTimeStyles.NoCurrentDateDefault, out dt))
             {
                 time = dt.TimeOfDay;
                 return true;

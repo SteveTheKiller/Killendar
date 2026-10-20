@@ -8,6 +8,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Fixed
 - Failed deletion of an edited recurring appointment preserves its edits and the original series.
+- Appointment editing preserves morning and afternoon times in every language, including live language changes.
 - Failed legacy calendar migrations preserve the source and can retry without leaving an empty calendar.
 - Failed password changes preserve the original calendar and complete recovery copies, and report temporary copies that cannot be removed.
 - Failed self-updates retain complete executable copies and a recovery report.
