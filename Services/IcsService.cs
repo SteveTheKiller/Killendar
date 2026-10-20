@@ -676,6 +676,7 @@ namespace Killendar.Services
 
         public static string BuildIcs(IEnumerable<CalendarEvent> events)
         {
+            var rows = new List<CalendarEvent>(events);
             var sb = new StringBuilder();
             sb.AppendLine("BEGIN:VCALENDAR");
             sb.AppendLine("VERSION:2.0");
@@ -683,7 +684,17 @@ namespace Killendar.Services
             sb.AppendLine("CALSCALE:GREGORIAN");
             sb.AppendLine("METHOD:PUBLISH");
 
-            foreach (var ev in events)
+            var zones = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var ev in rows)
+            {
+                if (!ev.IsSeries || !Recurrence.UsesTimeBasis(ev) ||
+                    ev.RepeatTimeBasis != RecurrenceTimeBasis.SourceZone || !zones.Add(ev.RepeatZoneId)) continue;
+                string definition = IcsTimeZoneWriter.Build(ev.RepeatZoneId, TZConvert.GetTimeZoneInfo(ev.RepeatZoneId));
+                foreach (string line in definition.Replace("\r\n", "\n").Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries))
+                    sb.AppendLine(FoldLine(line));
+            }
+
+            foreach (var ev in rows)
             {
                 sb.AppendLine("BEGIN:VEVENT");
 
@@ -700,6 +711,33 @@ namespace Killendar.Services
                 {
                     sb.AppendLine($"DTSTART;VALUE=DATE:{ev.Start:yyyyMMdd}");
                     sb.AppendLine($"DTEND;VALUE=DATE:{ev.End:yyyyMMdd}");
+                }
+                else if (ev.IsSeries && Recurrence.UsesTimeBasis(ev))
+                {
+                    var duration = ev.End.ToUniversalTime() - ev.Start.ToUniversalTime();
+                    if (duration <= TimeSpan.Zero) duration = TimeSpan.FromHours(1);
+                    var startUtc = Recurrence.FromTimeBasis(ev, ev.RepeatAnchor!.Value);
+                    var endUtc = startUtc + duration;
+                    if (ev.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone)
+                    {
+                        sb.AppendLine(FoldLine($"DTSTART;TZID=\"{ev.RepeatZoneId}\":{ev.RepeatAnchor.Value:yyyyMMdd'T'HHmmss}"));
+                        if (duration.Ticks % TimeSpan.TicksPerSecond != 0)
+                            throw new NotSupportedException("A calendar recurrence duration with fractional seconds cannot be exported.");
+                        long hours = duration.Ticks / TimeSpan.TicksPerHour;
+                        long seconds = duration.Ticks % TimeSpan.TicksPerHour / TimeSpan.TicksPerSecond;
+                        sb.AppendLine("DURATION:PT" + hours.ToString(System.Globalization.CultureInfo.InvariantCulture) + "H" +
+                            seconds.ToString(System.Globalization.CultureInfo.InvariantCulture) + "S");
+                    }
+                    else
+                    {
+                        sb.AppendLine($"DTSTART:{startUtc:yyyyMMdd'T'HHmmss'Z'}");
+                        sb.AppendLine($"DTEND:{endUtc:yyyyMMdd'T'HHmmss'Z'}");
+                    }
+                }
+                else if (ev.IsSeries)
+                {
+                    sb.AppendLine($"DTSTART:{ev.Start:yyyyMMdd'T'HHmmss}");
+                    sb.AppendLine($"DTEND:{ev.End:yyyyMMdd'T'HHmmss}");
                 }
                 else
                 {
