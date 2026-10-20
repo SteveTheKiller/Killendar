@@ -85,6 +85,13 @@ namespace Killendar
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            if (DeferredUninstall.IsHelperRequest(e.Args, Process.GetCurrentProcess().MainModule?.FileName ?? "",
+                MachineInstallDir, UninstallStagingRoot(false)))
+            {
+                Shutdown(e.Args.Length > 0 && e.Args[0] == DeferredUninstall.HelperArgument
+                    ? RunUninstallHelper(e.Args) : KillerFamily.Deployment.InstallerExitCodes.SecurityRejected);
+                return;
+            }
             var installRelaunch = new InstallRelaunch();
             if (installRelaunch.TryRunHelper(e.Args, Process.GetCurrentProcess().MainModule?.FileName ?? "", out int helperExit))
             {
@@ -142,8 +149,8 @@ namespace Killendar
                 bool silent = string.Equals(e.Args[0], "/uninstall-silent", StringComparison.OrdinalIgnoreCase);
                 if (!silent) ThemeManager.Initialize();
                 Controls.TaskbarIdentity.UseUninstall();
-                Uninstall(silent);
-                Shutdown();
+                Shutdown(e.Args.Length <= 2 ? Uninstall(silent, e.Args.Length == 2 ? e.Args[1] : null)
+                    : KillerFamily.Deployment.InstallerExitCodes.SecurityRejected);
                 return;
             }
 

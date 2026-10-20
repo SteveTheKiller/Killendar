@@ -325,96 +325,141 @@ namespace Killendar
         /// <summary>Machine-wide uninstall entries launch an asInvoker executable. If the
         /// Program Files copy is not already elevated, relaunch that same copy with UAC before
         /// showing the confirmation or touching HKLM/Program Files.</summary>
-        private static bool RelaunchMachineUninstallElevatedIfNeeded(bool machine, bool silent)
+        private static int? RelaunchMachineUninstallElevatedIfNeeded(bool machine, bool silent, string operationId)
         {
-            if (!machine) return false;
-            try
-            {
-                using var identity = System.Security.Principal.WindowsIdentity.GetCurrent();
-                var principal = new System.Security.Principal.WindowsPrincipal(identity);
-                if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
-                    return false;
-
-                Process.Start(new ProcessStartInfo(
-                    Process.GetCurrentProcess().MainModule!.FileName, silent ? "/uninstall-silent" : "/uninstall")
+            return UninstallWorkflow.RequestElevation(machine,
+                KillerFamily.Deployment.InstallerExitCodes.IsElevated,
+                () => Process.Start(new ProcessStartInfo(
+                    Process.GetCurrentProcess().MainModule!.FileName,
+                    (silent ? "/uninstall-silent " : "/uninstall ") + operationId)
                 {
                     UseShellExecute = true,
                     Verb = "runas",
+                }), ex =>
+                {
+                    string message = "Uninstall could not request administrator access:\n" + ex.Message;
+                    if (silent) Console.Error.WriteLine(message);
+                    else ShowInstallDialog(message);
                 });
-            }
-            catch (System.ComponentModel.Win32Exception ex) when (ex.NativeErrorCode == 1223)
-            {
-                // UAC was declined. Leave the installation untouched.
-            }
-            catch (Exception ex)
-            {
-                string message = "Uninstall could not request administrator access:\n" + ex.Message;
-                if (silent) Console.Error.WriteLine(message);
-                else ShowInstallDialog(message);
-            }
-            return true;
         }
 
-        private static void Uninstall(bool silent)
+        private static string UninstallStagingRoot(bool machine) => machine ? MachineInstallDir
+            : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppName);
+
+        private static int RunUninstallHelper(string[] args)
         {
+            if (args.Length != 3 || (args[1] != "machine" && args[1] != "user") || !Guid.TryParseExact(args[2], "N", out _))
+                return KillerFamily.Deployment.InstallerExitCodes.SecurityRejected;
+            bool machine = args[1] == "machine";
+            if (machine && !KillerFamily.Deployment.InstallerExitCodes.IsElevated())
+                return KillerFamily.Deployment.InstallerExitCodes.AccessDenied;
+            return new DeferredUninstall().RunWorker(Process.GetCurrentProcess().MainModule!.FileName,
+                UninstallStagingRoot(machine), machine ? MachineInstallDir : InstallDir, InstalledFiles,
+                machine, args[2], () => RemoveUninstallMetadata(machine));
+        }
+
+        private static int Uninstall(bool silent, string? requestedOperationId)
+        {
+            string operationId = requestedOperationId ?? Guid.NewGuid().ToString("N");
+            if (!Guid.TryParseExact(operationId, "N", out _)) return KillerFamily.Deployment.InstallerExitCodes.SecurityRejected;
             bool machine = string.Equals(Process.GetCurrentProcess().MainModule?.FileName,
                                          MachineInstallExe, StringComparison.OrdinalIgnoreCase);
-            if (RelaunchMachineUninstallElevatedIfNeeded(machine, silent)) return;
+            string operationDirectory = DeferredUninstall.OperationDirectory(UninstallStagingRoot(machine), operationId);
+            int? elevatedResult = RelaunchMachineUninstallElevatedIfNeeded(machine, silent, operationId);
+            if (elevatedResult.HasValue)
+            {
+                Console.Error.WriteLine("Uninstall result: " + elevatedResult.Value + ". Status and retained helper files: " + operationDirectory);
+                return elevatedResult.Value;
+            }
 
             if (!silent)
             {
                 var confirm = new Controls.ConfirmDialog(
                     "Uninstall Killendar?",
-                    "Your appointments will be kept.",
+                    "Your appointments will be kept.\n\nRemoval finishes after Killendar closes. Status and retained helper files:\n" + operationDirectory,
                     "Uninstall",
                     "Cancel")
                 { WindowStartupLocation = WindowStartupLocation.CenterScreen, ShowInTaskbar = true };
                 confirm.ShowDialog();
-                if (!confirm.Confirmed) return;
+                if (!confirm.Confirmed) return KillerFamily.Deployment.InstallerExitCodes.Cancelled;
             }
 
+            int result = new DeferredUninstall().Start(Process.GetCurrentProcess().MainModule!.FileName,
+                UninstallStagingRoot(machine), machine ? MachineInstallDir : InstallDir, InstalledFiles, machine, operationId);
+            Console.Error.WriteLine("Uninstall result: " + result + ". Status and retained helper files: " + operationDirectory);
+            if (result != UninstallWorkflow.Pending && !silent)
+                ShowInstallDialog("Uninstall could not start. Result: " + result + "\n\nRetained files and status, if created:\n" + operationDirectory);
+            return result;
+        }
+
+        private static void RemoveUninstallMetadata(bool machine)
+        {
             string startMenuDir = machine
                 ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms), AppName)
                 : StartMenuDir;
             string targetDir = machine ? MachineInstallDir : InstallDir;
 
-            try { File.Delete(Path.Combine(startMenuDir, AppName + ".lnk")); } catch { }
-            try { Directory.Delete(startMenuDir, recursive: false); } catch { }
-            try { File.Delete(DesktopLnk); } catch { }
+            string shortcut = Path.Combine(startMenuDir, AppName + ".lnk");
+            UninstallWorkflow.DeleteLiteral(shortcut);
+            UninstallWorkflow.DeleteLiteral(DesktopLnk);
+            if (!UninstallWorkflow.Absent(shortcut) || !UninstallWorkflow.Absent(DesktopLnk))
+                throw new IOException("An installed shortcut remains.");
+            if (Directory.Exists(startMenuDir) && Directory.GetFileSystemEntries(startMenuDir).Length == 0)
+                Directory.Delete(startMenuDir, recursive: false);
             Services.CommandLinePath.Unregister(targetDir, machine);
-            KillerFamily.Deployment.StartupRegistration.Remove(Services.AppInfo.DisplayName);
+            using (var environment = (machine ? Registry.LocalMachine : Registry.CurrentUser).OpenSubKey(machine
+                ? @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment" : "Environment"))
+            {
+                string value = environment?.GetValue("Path", "", RegistryValueOptions.DoNotExpandEnvironmentNames) as string ?? "";
+                if (Services.CommandLinePath.WithoutEntry(value, targetDir) != value)
+                    throw new IOException("The installed command path remains registered.");
+            }
+            if (!KillerFamily.Deployment.StartupRegistration.Set(Services.AppInfo.DisplayName, false))
+                throw new UnauthorizedAccessException("The startup registration could not be removed.");
+            using (var startup = Registry.CurrentUser.OpenSubKey(KillerFamily.Deployment.StartupRegistration.RunKeyPath))
+                if (startup?.GetValue(Services.AppInfo.DisplayName) != null)
+                    throw new IOException("The startup registration remains.");
 
             var hive = machine ? Registry.LocalMachine : Registry.CurrentUser;
-            try { hive.DeleteSubKeyTree(RegKey, throwOnMissingSubKey: false); } catch { }
-            try { hive.DeleteSubKeyTree(UninstallKey, throwOnMissingSubKey: false); } catch { }
 
             // Drop the association from the same scope that installed it. Also remove an HKCU
             // shadow left by older machine installs for the account performing this uninstall.
             if (machine)
             {
                 FileAssociations.Unregister(Registry.LocalMachine);
+                VerifyUninstallAssociations(Registry.LocalMachine);
                 FileAssociations.Unregister(Registry.CurrentUser);
+                VerifyUninstallAssociations(Registry.CurrentUser);
             }
             else
             {
                 FileAssociations.Unregister(Registry.CurrentUser);
+                VerifyUninstallAssociations(Registry.CurrentUser);
             }
 
-            // Self-delete, deferred through a batch file so this exe can exit first. Appointments
-            // in APPDATA are deliberately NOT touched: uninstalling the app should not throw away
-            // the user's calendar.
-            string bat = Path.Combine(Path.GetTempPath(), "killendar_uninstall.bat");
-            File.WriteAllText(bat,
-                "@echo off\r\n" +
-                "ping -n 3 127.0.0.1 >nul\r\n" +
-                KillerFamily.Deployment.InstalledFileCleanup.RemovalBatch(targetDir, InstalledFiles) +
-                "del \"%~f0\"\r\n");
-            Process.Start(new ProcessStartInfo("cmd.exe", "/c \"" + bat + "\"")
-            {
-                WindowStyle = ProcessWindowStyle.Hidden,
-                UseShellExecute = true
-            });
+            hive.DeleteSubKeyTree(RegKey, throwOnMissingSubKey: false);
+            using (var remaining = hive.OpenSubKey(RegKey))
+                if (remaining != null) throw new IOException("The install registration remains.");
+            // Keep the uninstall entry available until every mandatory cleanup check succeeded.
+            hive.DeleteSubKeyTree(UninstallKey, throwOnMissingSubKey: false);
+            using (var remaining = hive.OpenSubKey(UninstallKey))
+                if (remaining != null) throw new IOException("The uninstall registration remains.");
+        }
 
+        private static void VerifyUninstallAssociations(RegistryKey hive)
+        {
+            foreach (string key in new[] { @"Software\Classes\" + FileAssociations.ProgId,
+                @"Software\Classes\" + FileAssociations.IcsProgId, @"Software\Classes\Applications\Killendar.exe" })
+            {
+                using var remaining = hive.OpenSubKey(key);
+                if (remaining != null) throw new IOException("A Killendar file association remains: " + key);
+            }
+            using (var calendar = hive.OpenSubKey(@"Software\Classes\" + EventStore.Extension))
+                if (Equals(calendar?.GetValue(""), FileAssociations.ProgId))
+                    throw new IOException("The Killendar calendar association remains.");
+            using (var openWith = hive.OpenSubKey(@"Software\Classes\.ics\OpenWithProgids"))
+                if (openWith?.GetValue(FileAssociations.IcsProgId) != null)
+                    throw new IOException("The Killendar iCalendar association remains.");
         }
     }
 }

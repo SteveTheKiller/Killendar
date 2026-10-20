@@ -10,7 +10,7 @@ namespace KillerFamily.Deployment
     {
         public static void Remove(string directory, params string[] files)
         {
-            string[] paths = Paths(directory, files).ToArray();
+            string[] paths = OwnedPaths(directory, files);
             foreach (string path in paths)
                 try { File.Delete(path); } catch (IOException) { } catch (UnauthorizedAccessException) { }
             foreach (string folder in Folders(directory, paths))
@@ -24,7 +24,7 @@ namespace KillerFamily.Deployment
 
         public static string RemovalBatch(string directory, params string[] files)
         {
-            string[] paths = Paths(directory, files).ToArray();
+            string[] paths = OwnedPaths(directory, files);
             var script = new StringBuilder("setlocal DisableDelayedExpansion\r\n");
             foreach (string path in paths)
                 script.Append("del /q \"").Append(path.Replace("%", "%%")).Append("\" >nul 2>&1\r\n");
@@ -34,7 +34,7 @@ namespace KillerFamily.Deployment
             return script.ToString();
         }
 
-        private static IEnumerable<string> Paths(string directory, string[] files)
+        public static string[] OwnedPaths(string directory, params string[] files)
         {
             string root = Path.GetFullPath(directory).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
             if (root.Length == 0 || root == Path.GetPathRoot(root)?.TrimEnd(Path.DirectorySeparatorChar))
@@ -54,7 +54,7 @@ namespace KillerFamily.Deployment
                     if (Linked(parent)) { linked = true; break; }
                 if (!linked) result.Add(path);
             }
-            return result;
+            return result.ToArray();
         }
 
         private static bool Linked(string directory)
