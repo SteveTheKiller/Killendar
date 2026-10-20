@@ -61,7 +61,8 @@ namespace Killendar.Controls
             if (_mode == FileDialogMode.Save)
             {
                 string? newExt = ActiveFilterExt();
-                string  name   = FileNameBox.Text?.Trim() ?? "";
+                string  name   = TypedFileName();
+                if (name.Length > 0 && !TryResolveTypedPath(name, out _, wildcard: true)) return;
                 string  cur    = name.Length == 0 ? "" : Path.GetExtension(name);
                 if (newExt != null && cur.Length > 0 &&
                     !cur.Equals(newExt, StringComparison.OrdinalIgnoreCase) &&

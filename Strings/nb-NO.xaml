@@ -461,4 +461,5 @@
     <sys:String x:Key="Str_Scroll_PageRight">Side til høyre</sys:String>
     <sys:String x:Key="Str_Rail_Flip">Flytt ikonene til den andre siden</sys:String>
     <sys:String x:Key="Str_Exp_CsvSafety">CSV-tekst som kan tolkes som en formel, begynner med en apostrof. Kalenderapper kan beholde den ved import.</sys:String>
+    <sys:String x:Key="Str_Dlg_InvalidPath">Skriv inn et gyldig filnavn eller en gyldig bane.</sys:String>
 </ResourceDictionary>

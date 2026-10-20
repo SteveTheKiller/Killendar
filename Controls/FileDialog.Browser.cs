@@ -48,18 +48,19 @@ namespace Killendar.Controls
             if (e.Key != Key.Enter) return;
             e.Handled = true;
 
-            var typed = FileNameBox.Text?.Trim() ?? "";
+            var typed = TypedFileName();
+            bool wildcard = typed.IndexOfAny(['*', '?']) >= 0;
 
             // A directory typed into the name box navigates instead of accepting - matches the
             // Win32 dialogs, and is how people paste a path in.
             if (typed.Length > 0)
             {
-                var asDir = Path.IsPathRooted(typed) ? typed : Path.Combine(_currentDir, typed);
-                if (Directory.Exists(asDir)) { NavigateTo(asDir); FileNameBox.Clear(); return; }
+                if (!TryResolveTypedPath(typed, out string asDir, wildcard: true)) return;
+                if (!wildcard && Directory.Exists(asDir)) { NavigateTo(asDir); FileNameBox.Clear(); return; }
             }
 
             // A wildcard retargets the listing rather than naming a file.
-            if (typed.IndexOfAny(['*', '?']) >= 0)
+            if (wildcard)
             {
                 _filterPatterns.Insert(0, [typed]);
                 FilterCombo.Items.Insert(0, typed);

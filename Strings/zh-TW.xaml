@@ -435,4 +435,5 @@
     <sys:String x:Key="Str_Scroll_PageRight">向右翻頁</sys:String>
     <sys:String x:Key="Str_Rail_Flip">將圖示移至另一側</sys:String>
     <sys:String x:Key="Str_Exp_CsvSafety">可能被視為公式的 CSV 文字以單引號開頭。行事曆應用程式在匯入時可能會保留此單引號。</sys:String>
+    <sys:String x:Key="Str_Dlg_InvalidPath">請輸入有效的檔案名稱或路徑。</sys:String>
 </ResourceDictionary>

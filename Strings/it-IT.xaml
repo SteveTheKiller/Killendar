@@ -414,4 +414,5 @@
     <sys:String x:Key="Str_Scroll_PageRight">Pagina a destra</sys:String>
     <sys:String x:Key="Str_Rail_Flip">Sposta le icone sull'altro lato</sys:String>
     <sys:String x:Key="Str_Exp_CsvSafety">Il testo CSV che potrebbe essere una formula inizia con un apostrofo. Le app di calendario potrebbero conservarlo durante l'importazione.</sys:String>
+    <sys:String x:Key="Str_Dlg_InvalidPath">Inserisci un nome file o un percorso valido.</sys:String>
 </ResourceDictionary>

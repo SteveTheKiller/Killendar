@@ -435,4 +435,5 @@
     <sys:String x:Key="Str_Scroll_PageRight">O stránku doprava</sys:String>
     <sys:String x:Key="Str_Rail_Flip">Přesunout ikony na druhou stranu</sys:String>
     <sys:String x:Key="Str_Exp_CsvSafety">Text CSV, který by mohl být vzorcem, začíná apostrofem. Kalendářové aplikace ho mohou při importu ponechat.</sys:String>
+    <sys:String x:Key="Str_Dlg_InvalidPath">Zadejte platný název souboru nebo cestu.</sys:String>
 </ResourceDictionary>

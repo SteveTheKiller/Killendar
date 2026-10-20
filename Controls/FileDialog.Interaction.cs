@@ -33,7 +33,7 @@ namespace Killendar.Controls
                 return;
             }
 
-            var typed = FileNameBox.Text?.Trim().Trim('"') ?? "";
+            var typed = TypedFileName();
             if (typed.Length == 0)
             {
                 // Nothing typed but a file is highlighted: take that.
@@ -41,7 +41,7 @@ namespace Killendar.Controls
                 else { FileNameBox.Focus(); return; }
             }
 
-            var full = Path.IsPathRooted(typed) ? typed : Path.Combine(_currentDir, typed);
+            if (!TryResolveTypedPath(typed, out string full)) return;
 
             if (_mode == FileDialogMode.Save)
             {
@@ -55,6 +55,7 @@ namespace Killendar.Controls
                         ext = DefaultExt.StartsWith(".") ? DefaultExt : "." + DefaultExt;
                     if (ext != null) full += ext;
                 }
+                if (!TryResolveTypedPath(full, out full)) return;
 
                 // The directory must exist; we do not silently create trees on the user's behalf.
                 var dir = Path.GetDirectoryName(full);
@@ -92,6 +93,35 @@ namespace Killendar.Controls
             RememberAcceptedDirectory();
             DialogResult = true;
             Close();
+        }
+
+        private string TypedFileName()
+        {
+            string typed = FileNameBox.Text?.Trim() ?? "";
+            return typed.Length >= 2 && typed[0] == '"' && typed[typed.Length - 1] == '"'
+                ? typed.Substring(1, typed.Length - 2) : typed;
+        }
+
+        private bool TryResolveTypedPath(string typed, out string full, bool wildcard = false)
+        {
+            full = "";
+            try
+            {
+                string candidate = wildcard ? typed.Replace('*', 'x').Replace('?', 'x') : typed;
+                full = Path.GetFullPath(Path.IsPathRooted(candidate) ? candidate : Path.Combine(_currentDir, candidate));
+                foreach (string part in full.Split('\\', '/').Skip(1))
+                    if (part.Length > 255 || part.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+                        throw new ArgumentException("Invalid path component.");
+                return true;
+            }
+            catch (Exception ex) when (ex is ArgumentException || ex is NotSupportedException ||
+                ex is IOException || ex is UnauthorizedAccessException || ex is System.Security.SecurityException)
+            {
+                SelMeta.Text = Loc("Str_Dlg_InvalidPath");
+                FileNameBox.Focus();
+                FileNameBox.SelectAll();
+                return false;
+            }
         }
 
         private void RememberAcceptedDirectory()
