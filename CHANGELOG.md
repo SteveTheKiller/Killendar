@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- Language changes preserve day agenda headings and refresh appointment recurrence controls.
 - Calendar names can be edited with the keyboard without opening or deleting the calendar.
 - Failed installations preserve the previous executable and retain complete recovery copies.
 - Modal cards keep calendar and appointment shortcuts from changing work behind them.

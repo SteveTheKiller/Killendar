@@ -50,8 +50,18 @@ namespace Killendar.Shell
             // Tooltips that carry a shortcut, including the panel button's, which tracks its state.
             ApplyShortcutTooltips();
 
-            // The panel's own dynamic bits: heading and the all-day toggle.
-            _appointments.RefreshLocalizedText();
+            if (_agendaDay is System.DateTime day && AgendaScroll.Visibility == Visibility.Visible)
+            {
+                SidebarTitle.Text = day.ToString("D");
+                BuildDayAgendaRows();
+            }
+            else
+            {
+                // The editor can retain an agenda day as its return target.
+                _appointments.RefreshLocalizedText();
+                BuildRepeatChips();
+                BuildScopeChips();
+            }
 
             // Toolbar captions and its right-click menu are built in code, so they do not follow
             // a DynamicResource on their own.
