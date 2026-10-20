@@ -170,20 +170,28 @@ namespace Killendar.Services
                     Categories  = EventStore.NormalizeCategories(cats)
                 };
 
-                if (allDay)
+                try
                 {
-                    ev.Start = startDate;
-                    // Inclusive on disk, exclusive in the model - see the export note above.
-                    ev.End = TryDate(endD, out var lastDay) && lastDay >= startDate
-                        ? lastDay.AddDays(1)
-                        : startDate.AddDays(1);
+                    if (allDay)
+                    {
+                        ev.Start = startDate;
+                        // Inclusive on disk, exclusive in the model - see the export note above.
+                        ev.End = TryDate(endD, out var lastDay) && lastDay >= startDate
+                            ? lastDay.AddDays(1)
+                            : startDate.AddDays(1);
+                    }
+                    else
+                    {
+                        ev.Start = startDate + (TryTime(startT, out var st) ? st : TimeSpan.Zero);
+                        var endDate = TryDate(endD, out var ed) ? ed : startDate;
+                        ev.End = endDate + (TryTime(endT, out var et) ? et : TimeSpan.Zero);
+                        if (ev.End <= ev.Start) ev.End = ev.Start.AddHours(1);
+                    }
                 }
-                else
+                catch (ArgumentOutOfRangeException)
                 {
-                    ev.Start = startDate + (TryTime(startT, out var st) ? st : TimeSpan.Zero);
-                    var endDate = TryDate(endD, out var ed) ? ed : startDate;
-                    ev.End = endDate + (TryTime(endT, out var et) ? et : TimeSpan.Zero);
-                    if (ev.End <= ev.Start) ev.End = ev.Start.AddHours(1);
+                    result.Unreadable++;
+                    continue;
                 }
 
                 // The Id is DERIVED from the content rather than random, so importing the same

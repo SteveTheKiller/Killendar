@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- Calendar imports retain valid appointments when another row exceeds the supported date range.
 - Email invites preserve text encoded in their declared character set.
 - Large recurrence intervals and dates at the calendar limits no longer crash recurrence queries.
 - A calendar that fails to load closes cleanly instead of showing stale appointments.

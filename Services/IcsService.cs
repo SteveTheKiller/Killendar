@@ -147,9 +147,20 @@ namespace Killendar.Services
                                 }
                             }
                             if (current.End <= current.Start)
-                                current.End = current.AllDay
-                                    ? current.Start.AddDays(1)
-                                    : current.Start.AddHours(1);
+                            {
+                                try
+                                {
+                                    current.End = current.AllDay
+                                        ? current.Start.AddDays(1)
+                                        : current.Start.AddHours(1);
+                                }
+                                catch (ArgumentOutOfRangeException)
+                                {
+                                    result.Unreadable++;
+                                    current = null;
+                                    continue;
+                                }
+                            }
 
                             // Now that UID is final, an override can be pointed at its series. The
                             // row gets a fresh id of its own: the UID names the SERIES, and reusing
