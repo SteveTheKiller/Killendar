@@ -23,6 +23,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Installing and reopening waits for the previous app to exit so the installed copy opens reliably.
 - Window resize minimums stay within the current monitor's work area on small or scaled displays.
 - Calendar command clients that stop sending or reading no longer block later commands.
+- File launches preserve the requested calendar path when forwarding to an existing window.
 - Sidebar fades disappear at the scroll limits, leave scrollbars clear, and stay off in 98SE.
 - The shortcuts card puts its scroll bar at the outer edge and shows when more content is out of view.
 - Title bar buttons stay square when highlighted, like the caption buttons in the other apps, instead of rounding their top corner.

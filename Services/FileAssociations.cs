@@ -122,7 +122,7 @@ namespace Killendar.Services
             string extension = Path.GetExtension(path);
             if (!string.Equals(extension, EventStore.Extension, StringComparison.OrdinalIgnoreCase) &&
                 !string.Equals(extension, ".ics", StringComparison.OrdinalIgnoreCase)) return null;
-            return path;
+            return Path.GetFullPath(path);
         }
     }
 }
