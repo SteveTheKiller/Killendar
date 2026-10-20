@@ -20,6 +20,8 @@ namespace Killendar.Shell
         public MainWindow()
         {
             InitializeComponent();
+            Controls.SidebarEdgeFade.Attach(EditorScroll);
+            Controls.SidebarEdgeFade.Attach(AgendaScroll);
             _tray = KillerFamily.Shell.CloseToTray.Attach(this, Services.AppInfo.DisplayName, Loc, () => AboutController.CloseToTrayEnabled);
             new KillerFamily.Accessibility.OverlayFocus(this).Track(ShortcutsOverlay, AboutOverlay);
             var titleFrames = System.Windows.Media.Imaging.BitmapDecoder.Create(

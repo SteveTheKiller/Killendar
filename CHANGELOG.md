@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- Sidebar fades disappear at the scroll limits, leave scrollbars clear, and stay off in 98SE.
 - The shortcuts card puts its scroll bar at the outer edge and shows when more content is out of view.
 - Title bar buttons stay square when highlighted, like the caption buttons in the other apps, instead of rounding their top corner.
 - The Week and Day grid sits flat under the day headers instead of curving at its top corners.
