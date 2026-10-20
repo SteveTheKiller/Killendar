@@ -335,7 +335,7 @@ namespace Killendar.Tests
                     db.Open();
                     using var command = db.CreateCommand();
                     command.CommandText = "SELECT value FROM meta WHERE key='schema_version'";
-                    Assert.Equal("5", command.ExecuteScalar());
+                    Assert.Equal("6", command.ExecuteScalar());
                 }
             }
             finally

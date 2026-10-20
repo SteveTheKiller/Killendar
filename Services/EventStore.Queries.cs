@@ -39,20 +39,19 @@ namespace Killendar.Services
         {
             var result = new List<CalendarEvent>();
 
-            // Which generated dates have been replaced by an edited row. Keyed by date, because
-            // the override's own Start is wherever the user moved it to, and the thing being
-            // replaced is the date the series WOULD have produced.
-            var replaced = new HashSet<(Guid Series, DateTime Day)>();
+            // Match the original occurrence, independently of the override's moved start.
+            var masters = _events.Where(e => e.IsSeries).ToDictionary(e => e.Id);
+            var replaced = new HashSet<(Guid Series, long Identity)>();
             foreach (var e in _events)
-                if (e.IsOverride && e.OccurrenceStart.HasValue)
-                    replaced.Add((e.SeriesId!.Value, e.OccurrenceStart.Value.Date));
+                if (e.IsOverride && e.OccurrenceStart.HasValue && masters.TryGetValue(e.SeriesId!.Value, out var master))
+                    replaced.Add((master.Id, Recurrence.OccurrenceKey(master, e)));
 
             foreach (var e in _events)
             {
                 if (e.IsSeries)
                 {
                     foreach (var occ in Recurrence.Expand(e, start, end))
-                        if (!replaced.Contains((e.Id, occ.OccurrenceStart!.Value.Date)))
+                        if (!replaced.Contains((e.Id, Recurrence.OccurrenceKey(e, occ))))
                             result.Add(occ);
                     continue;
                 }

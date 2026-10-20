@@ -90,6 +90,10 @@ namespace Killendar.Services
             string? duration = null;
             DateTime? recurrenceId = null;   // set when this VEVENT replaces one date of a series
             bool recurrenceAllDay = false;
+            DateTime? recurrenceAnchor = null;
+            OccurrenceTimeBasis recurrenceBasis = OccurrenceTimeBasis.Date;
+            string recurrenceZone = "";
+            var exclusions = new List<(DateTime dt, bool allDay, RecurrenceTimeBasis basis, DateTime? anchor, string zone)>();
 
             foreach (var raw in lines)
             {
@@ -109,6 +113,9 @@ namespace Killendar.Services
                         duration     = null;
                         recurrenceId = null;
                         recurrenceAllDay = false;
+                        recurrenceAnchor = null;
+                        recurrenceZone = "";
+                        exclusions.Clear();
                     }
                     else if (current == null &&
                              (comp == "VTODO" || comp == "VJOURNAL" || comp == "VFREEBUSY"))
@@ -173,6 +180,21 @@ namespace Killendar.Services
                                 }
                             }
 
+                            foreach (var exclusion in exclusions)
+                            {
+                                if (exclusion.allDay) current.SkipDates.Add(exclusion.dt.Date);
+                                else if (current.AllDay) repeating = true;
+                                else current.SkipOccurrences.Add(CanonicalExclusion(current, exclusion));
+                            }
+                            if (current.RepeatUntil.HasValue &&
+                                (current.AllDay == current.RepeatUntilExact.HasValue ||
+                                 (!current.AllDay && current.RepeatUntilExact.HasValue &&
+                                  (current.RepeatTimeBasis == RecurrenceTimeBasis.Local) == (current.RepeatUntilExact.Value.Kind == DateTimeKind.Utc))))
+                            {
+                                current.Repeat = RepeatFreq.None;
+                                repeating = true;
+                            }
+
                             // Now that UID is final, an override can be pointed at its series. The
                             // row identity combines that series with the original occurrence,
                             // so repeated imports skip the same override even when it was moved.
@@ -180,6 +202,9 @@ namespace Killendar.Services
                             {
                                 current.SeriesId        = current.Id;
                                 current.OccurrenceStart = recurrenceId.Value;
+                                current.OccurrenceAnchor = recurrenceAnchor;
+                                current.OccurrenceBasis = recurrenceBasis;
+                                current.OccurrenceZoneId = recurrenceZone;
                                 long occurrenceTicks = recurrenceAllDay
                                     ? recurrenceId.Value.Date.Ticks
                                     : recurrenceId.Value.ToUniversalTime().Ticks;
@@ -240,13 +265,11 @@ namespace Killendar.Services
                         repeating = true;
                         break;
 
-                    // Dates removed from the series one at a time. Exactly Killendar's SkipDates,
-                    // so these round-trip properly.
                     case "EXDATE":
                         foreach (var part in value.Split(','))
                         {
                             var ex = ParseDateTime(part, param);
-                            if (ex != null) current.SkipDates.Add(ex.Value.dt.Date);
+                            if (ex != null) exclusions.Add(ex.Value);
                         }
                         break;
 
@@ -261,6 +284,11 @@ namespace Killendar.Services
                         {
                             recurrenceId = rid.Value.dt;
                             recurrenceAllDay = rid.Value.allDay;
+                            recurrenceAnchor = rid.Value.anchor ?? DateTime.SpecifyKind(rid.Value.dt, DateTimeKind.Unspecified);
+                            recurrenceBasis = rid.Value.allDay ? OccurrenceTimeBasis.Date : rid.Value.basis == RecurrenceTimeBasis.Utc
+                                ? OccurrenceTimeBasis.Utc : rid.Value.basis == RecurrenceTimeBasis.SourceZone
+                                    ? OccurrenceTimeBasis.SourceZone : OccurrenceTimeBasis.Floating;
+                            recurrenceZone = rid.Value.zone;
                         }
                         break;
                     }
@@ -343,6 +371,7 @@ namespace Killendar.Services
             int count    = 0;
             var weekStart = DayOfWeek.Monday;
             DateTime? until = null;
+            DateTime? untilExact = null;
             var days = new List<DayOfWeek>();
 
             foreach (var part in value.Split(';'))
@@ -379,6 +408,10 @@ namespace Killendar.Services
                         var u = ParseDateTime(val, "");
                         if (u == null) return false;
                         until = u.Value.dt.Date;
+                        if (!u.Value.allDay)
+                            untilExact = u.Value.basis == RecurrenceTimeBasis.Utc
+                                ? DateTime.SpecifyKind(u.Value.anchor!.Value, DateTimeKind.Utc)
+                                : DateTime.SpecifyKind(u.Value.dt, DateTimeKind.Unspecified);
                         break;
                     }
 
@@ -413,8 +446,20 @@ namespace Killendar.Services
             ev.RepeatCount    = count;
             ev.RepeatWeekStart = weekStart;
             ev.RepeatUntil    = until;
+            ev.RepeatUntilExact = untilExact;
             ev.RepeatDays     = days;
             return true;
+        }
+
+        private static DateTime CanonicalExclusion(CalendarEvent master,
+            (DateTime dt, bool allDay, RecurrenceTimeBasis basis, DateTime? anchor, string zone) exclusion)
+        {
+            if ((master.RepeatTimeBasis == RecurrenceTimeBasis.Utc && exclusion.basis == RecurrenceTimeBasis.Utc) ||
+                (master.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone && exclusion.basis == RecurrenceTimeBasis.SourceZone && master.RepeatZoneId == exclusion.zone))
+                return exclusion.anchor!.Value;
+            if (!Recurrence.UsesTimeBasis(master)) return DateTime.SpecifyKind(exclusion.dt, DateTimeKind.Unspecified);
+            try { return Recurrence.OriginalTimeBasisStart(master, exclusion.dt); }
+            catch (InvalidOperationException) { return Recurrence.ToTimeBasis(master, exclusion.dt); }
         }
 
         /// <summary>"MO" through "SU", or null for the ordinal form ("3MO") this cannot draw.</summary>
@@ -677,6 +722,19 @@ namespace Killendar.Services
         public static string BuildIcs(IEnumerable<CalendarEvent> events)
         {
             var rows = new List<CalendarEvent>(events);
+            var masters = new Dictionary<Guid, CalendarEvent>();
+            foreach (var row in rows) if (row.IsSeries) masters[row.Id] = row;
+            for (int i = 0; i < rows.Count; i++)
+            {
+                var row = rows[i];
+                if (!row.IsOverride || row.OccurrenceAnchor.HasValue) continue;
+                if (!row.SeriesId.HasValue || !masters.TryGetValue(row.SeriesId.Value, out var master) ||
+                    !row.OccurrenceStart.HasValue)
+                    throw new NotSupportedException("The original recurrence identity of this appointment cannot be recovered for export.");
+                row = row.Clone();
+                Recurrence.SetOccurrenceIdentity(row, master, Recurrence.CanonicalOccurrenceStart(master, row));
+                rows[i] = row;
+            }
             var sb = new StringBuilder();
             sb.AppendLine("BEGIN:VCALENDAR");
             sb.AppendLine("VERSION:2.0");
@@ -687,9 +745,11 @@ namespace Killendar.Services
             var zones = new HashSet<string>(StringComparer.Ordinal);
             foreach (var ev in rows)
             {
-                if (!ev.IsSeries || !Recurrence.UsesTimeBasis(ev) ||
-                    ev.RepeatTimeBasis != RecurrenceTimeBasis.SourceZone || !zones.Add(ev.RepeatZoneId)) continue;
-                string definition = IcsTimeZoneWriter.Build(ev.RepeatZoneId, TZConvert.GetTimeZoneInfo(ev.RepeatZoneId));
+                string zone = ev.IsOverride && ev.OccurrenceBasis == OccurrenceTimeBasis.SourceZone
+                    ? ev.OccurrenceZoneId : ev.IsSeries && Recurrence.UsesTimeBasis(ev) &&
+                        ev.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone ? ev.RepeatZoneId : "";
+                if (zone.Length == 0 || !zones.Add(zone)) continue;
+                string definition = IcsTimeZoneWriter.Build(zone, TZConvert.GetTimeZoneInfo(zone));
                 foreach (string line in definition.Replace("\r\n", "\n").Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries))
                     sb.AppendLine(FoldLine(line));
             }
@@ -745,22 +805,37 @@ namespace Killendar.Services
                     sb.AppendLine($"DTEND:{ev.End.ToUniversalTime():yyyyMMdd'T'HHmmss'Z'}");
                 }
 
-                if (ev.IsOverride && ev.OccurrenceStart.HasValue)
-                    sb.AppendLine(ev.AllDay
-                        ? $"RECURRENCE-ID;VALUE=DATE:{ev.OccurrenceStart.Value:yyyyMMdd}"
-                        : $"RECURRENCE-ID:{ev.OccurrenceStart.Value.ToUniversalTime():yyyyMMdd'T'HHmmss'Z'}");
+                if (ev.IsOverride && ev.OccurrenceAnchor.HasValue)
+                    sb.AppendLine(FoldLine(IdentityProperty("RECURRENCE-ID", ev.OccurrenceAnchor.Value,
+                        ev.OccurrenceBasis, ev.OccurrenceZoneId)));
 
                 if (ev.IsSeries)
                 {
                     sb.AppendLine(FoldLine(BuildRRule(ev)));
 
-                    // Dates the user removed one at a time. Written as floating DATE values to
-                    // match how they are stored and compared, which is by calendar date.
-                    if (ev.SkipDates != null && ev.SkipDates.Count > 0)
+                    if (ev.AllDay)
                     {
-                        var stamps = new List<string>();
-                        foreach (var d in ev.SkipDates) stamps.Add(d.ToString("yyyyMMdd"));
-                        sb.AppendLine(FoldLine("EXDATE;VALUE=DATE:" + string.Join(",", stamps)));
+                        foreach (var day in ev.SkipDates)
+                            sb.AppendLine(IdentityProperty("EXDATE", day, OccurrenceTimeBasis.Date, ""));
+                    }
+                    else
+                    {
+                        var skipped = new HashSet<long>();
+                        foreach (var nominal in ev.SkipOccurrences) skipped.Add(nominal.Ticks);
+                        var pattern = ev.Clone();
+                        pattern.SkipDates = [];
+                        pattern.SkipOccurrences = [];
+                        foreach (var day in ev.SkipDates)
+                        {
+                            var end = day.Date == DateTime.MaxValue.Date ? DateTime.MaxValue : day.Date.AddDays(1);
+                            foreach (var occurrence in Recurrence.Expand(pattern, day.Date, end))
+                                if (occurrence.Start.Date == day.Date)
+                                    skipped.Add(Recurrence.CanonicalOccurrenceStart(ev, occurrence).Ticks);
+                        }
+                        var basis = ev.RepeatTimeBasis == RecurrenceTimeBasis.Utc ? OccurrenceTimeBasis.Utc :
+                            ev.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone ? OccurrenceTimeBasis.SourceZone : OccurrenceTimeBasis.Floating;
+                        foreach (long ticks in skipped)
+                            sb.AppendLine(FoldLine(IdentityProperty("EXDATE", new DateTime(ticks), basis, ev.RepeatZoneId)));
                     }
                 }
 
@@ -824,10 +899,27 @@ namespace Killendar.Services
 
             if (ev.RepeatCount > 0)
                 sb.Append(";COUNT=").Append(ev.RepeatCount);
-            else if (ev.RepeatUntil.HasValue)
-                sb.Append(";UNTIL=").Append(ev.RepeatUntil.Value.ToString("yyyyMMdd'T'235959'Z'"));
+            else if (ev.RepeatUntilExact.HasValue || ev.RepeatUntil.HasValue)
+            {
+                var until = ev.RepeatUntilExact ?? ev.RepeatUntil!.Value.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+                if (ev.AllDay) sb.Append(";UNTIL=").Append(until.ToString("yyyyMMdd"));
+                else if (ev.RepeatTimeBasis == RecurrenceTimeBasis.Local)
+                    sb.Append(";UNTIL=").Append(until.ToString("yyyyMMdd'T'HHmmss"));
+                else
+                {
+                    if (until.Kind != DateTimeKind.Utc) until = DateTime.SpecifyKind(until, DateTimeKind.Local).ToUniversalTime();
+                    sb.Append(";UNTIL=").Append(until.ToString("yyyyMMdd'T'HHmmss'Z'"));
+                }
+            }
 
             return sb.ToString();
+        }
+
+        private static string IdentityProperty(string name, DateTime value, OccurrenceTimeBasis basis, string zone)
+        {
+            if (basis == OccurrenceTimeBasis.Date) return name + ";VALUE=DATE:" + value.ToString("yyyyMMdd");
+            if (basis == OccurrenceTimeBasis.SourceZone) return name + ";TZID=\"" + zone + "\":" + value.ToString("yyyyMMdd'T'HHmmss");
+            return name + ":" + value.ToString(basis == OccurrenceTimeBasis.Utc ? "yyyyMMdd'T'HHmmss'Z'" : "yyyyMMdd'T'HHmmss");
         }
 
         private static string EscapeText(string s)

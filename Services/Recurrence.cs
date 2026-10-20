@@ -55,7 +55,7 @@ namespace Killendar.Services
             {
                 var start = candidate.Start;
 
-                if (master.RepeatUntil.HasValue && start.Date > master.RepeatUntil.Value.Date)
+                if (AfterUntil(master, start, start))
                     yield break;
 
                 if (master.RepeatCount > 0 && candidate.Number > master.RepeatCount)
@@ -64,6 +64,7 @@ namespace Killendar.Services
                 if (start >= to) yield break;
 
                 if (skips.Contains(start.Date)) continue;
+                if (master.SkipOccurrences.Exists(value => value.Ticks == start.Ticks)) continue;
 
                 if (duration.Ticks > DateTime.MaxValue.Ticks - start.Ticks) yield break;
                 var end = start + duration;
@@ -74,6 +75,7 @@ namespace Killendar.Services
                 occ.End             = end;
                 occ.SeriesId        = master.Id;
                 occ.OccurrenceStart = start;
+                SetOccurrenceIdentity(occ, master, start);
                 yield return occ;
             }
         }
@@ -90,6 +92,7 @@ namespace Killendar.Services
             {
                 var pattern = master.Clone();
                 pattern.SkipDates.Clear();
+                pattern.SkipOccurrences.Clear();
                 var end = candidate.Date == DateTime.MaxValue.Date ? DateTime.MaxValue : candidate.Date.AddDays(1);
                 foreach (var occurrence in ExpandTimeBasis(pattern, candidate.Date, end))
                     if (occurrence.Start.Date == candidate.Date) return true;
@@ -98,7 +101,7 @@ namespace Killendar.Services
 
             var day = candidate.Date;
             if (day < master.Start.Date) return false;
-            if (master.RepeatUntil.HasValue && day > master.RepeatUntil.Value.Date) return false;
+            if (!master.RepeatUntilExact.HasValue && master.RepeatUntil.HasValue && day > master.RepeatUntil.Value.Date) return false;
 
             int interval = master.RepeatInterval > 0 ? master.RepeatInterval : 1;
 
@@ -107,7 +110,7 @@ namespace Killendar.Services
                 var start = occurrence.Start;
                 if (master.RepeatCount > 0 && occurrence.Number > master.RepeatCount) return false;
                 if (start.Date > day) return false;
-                if (start.Date == day) return true;
+                if (start.Date == day) return !AfterUntil(master, start, start);
             }
             return false;
         }
@@ -115,6 +118,71 @@ namespace Killendar.Services
         internal static bool UsesTimeBasis(CalendarEvent master) => !master.AllDay &&
             master.RepeatAnchor.HasValue && (master.RepeatTimeBasis == RecurrenceTimeBasis.Utc ||
             master.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone);
+
+        internal static bool AfterUntil(CalendarEvent master, DateTime nominal, DateTime local)
+        {
+            if (master.RepeatUntilExact.HasValue)
+                return master.RepeatUntilExact.Value.Kind == DateTimeKind.Utc
+                    ? local.ToUniversalTime() > master.RepeatUntilExact.Value
+                    : nominal.Ticks > master.RepeatUntilExact.Value.Ticks;
+            return master.RepeatUntil.HasValue && local.Date > master.RepeatUntil.Value.Date;
+        }
+
+        internal static void SetOccurrenceIdentity(CalendarEvent row, CalendarEvent master, DateTime nominal)
+        {
+            row.OccurrenceAnchor = DateTime.SpecifyKind(master.AllDay ? nominal.Date : nominal, DateTimeKind.Unspecified);
+            row.OccurrenceBasis = master.AllDay ? OccurrenceTimeBasis.Date : master.RepeatTimeBasis == RecurrenceTimeBasis.Utc
+                ? OccurrenceTimeBasis.Utc : master.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone
+                    ? OccurrenceTimeBasis.SourceZone : OccurrenceTimeBasis.Floating;
+            row.OccurrenceZoneId = row.OccurrenceBasis == OccurrenceTimeBasis.SourceZone ? master.RepeatZoneId : "";
+            row.OccurrenceStart = master.AllDay ? nominal.Date : UsesTimeBasis(master)
+                ? FromTimeBasis(master, nominal).ToLocalTime() : DateTime.SpecifyKind(nominal, DateTimeKind.Local);
+        }
+
+        internal static DateTime OriginalInstant(CalendarEvent row)
+        {
+            if (!row.OccurrenceAnchor.HasValue) return (row.OccurrenceStart ?? row.Start).ToUniversalTime();
+            var anchor = row.OccurrenceAnchor.Value;
+            if (row.OccurrenceBasis == OccurrenceTimeBasis.Utc) return DateTime.SpecifyKind(anchor, DateTimeKind.Utc);
+            if (row.OccurrenceBasis == OccurrenceTimeBasis.SourceZone)
+                return FromTimeBasis(new CalendarEvent { RepeatTimeBasis = RecurrenceTimeBasis.SourceZone, RepeatZoneId = row.OccurrenceZoneId }, anchor);
+            return DateTime.SpecifyKind(anchor, DateTimeKind.Local).ToUniversalTime();
+        }
+
+        internal static long OccurrenceKey(CalendarEvent master, CalendarEvent row) => master.AllDay
+            ? (row.OccurrenceAnchor.HasValue && row.OccurrenceBasis == OccurrenceTimeBasis.Date
+                ? row.OccurrenceAnchor.Value.Date : (row.OccurrenceStart ?? row.Start).Date).Ticks
+            : OriginalInstant(row).Ticks;
+
+        internal static DateTime CanonicalOccurrenceStart(CalendarEvent master, CalendarEvent row)
+        {
+            if (row.OccurrenceAnchor.HasValue &&
+                ((master.AllDay && row.OccurrenceBasis == OccurrenceTimeBasis.Date) ||
+                 (!master.AllDay && master.RepeatTimeBasis == RecurrenceTimeBasis.Local && row.OccurrenceBasis == OccurrenceTimeBasis.Floating) ||
+                 (!master.AllDay && master.RepeatTimeBasis == RecurrenceTimeBasis.Utc && row.OccurrenceBasis == OccurrenceTimeBasis.Utc) ||
+                 (!master.AllDay && master.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone && row.OccurrenceBasis == OccurrenceTimeBasis.SourceZone && master.RepeatZoneId == row.OccurrenceZoneId)))
+                return row.OccurrenceAnchor.Value;
+            var local = OriginalInstant(row).ToLocalTime();
+            if (master.AllDay) return local.Date;
+            return UsesTimeBasis(master) ? OriginalTimeBasisStart(master, local) : DateTime.SpecifyKind(local, DateTimeKind.Unspecified);
+        }
+
+        internal static bool GeneratesCanonicalStart(CalendarEvent master, DateTime nominal)
+        {
+            var pattern = master.Clone();
+            if (UsesTimeBasis(master)) pattern.Start = master.RepeatAnchor!.Value;
+            int interval = master.RepeatInterval > 0 ? master.RepeatInterval : 1;
+            foreach (var candidate in Starts(pattern, interval, nominal))
+            {
+                if (candidate.Start.Ticks > nominal.Ticks || (master.RepeatCount > 0 && candidate.Number > master.RepeatCount)) return false;
+                if (candidate.Start.Ticks == nominal.Ticks)
+                {
+                    var local = UsesTimeBasis(master) ? FromTimeBasis(master, nominal).ToLocalTime() : nominal;
+                    return !AfterUntil(master, nominal, local);
+                }
+            }
+            return false;
+        }
 
         internal static DateTime ToTimeBasis(CalendarEvent master, DateTime local)
         {
@@ -189,13 +257,15 @@ namespace Killendar.Services
                 catch (ArgumentOutOfRangeException) { continue; }
                 var start = utc.ToLocalTime();
                 var end = endUtc.ToLocalTime();
-                if (master.RepeatUntil.HasValue && start.Date > master.RepeatUntil.Value.Date) continue;
+                if (AfterUntil(master, candidate.Start, start)) continue;
                 if (skips.Contains(start.Date) || start >= to || end <= from) continue;
+                if (master.SkipOccurrences.Exists(value => value.Ticks == candidate.Start.Ticks)) continue;
                 var occurrence = master.Clone();
                 occurrence.Start = start;
                 occurrence.End = end;
                 occurrence.SeriesId = master.Id;
                 occurrence.OccurrenceStart = start;
+                SetOccurrenceIdentity(occurrence, master, candidate.Start);
                 yield return occurrence;
             }
         }

@@ -18,7 +18,8 @@ namespace Killendar.Services
             "SELECT id, title, start_utc, end_utc, all_day, location, description, attendees, " +
             "created_utc, modified_utc, categories, repeat_freq, repeat_interval, repeat_days, " +
             "repeat_until, repeat_count, skip_dates, series_id, occurrence_start, " +
-            "repeat_time_basis, repeat_anchor, repeat_zone_id, repeat_week_start FROM events";
+            "repeat_time_basis, repeat_anchor, repeat_zone_id, repeat_week_start, " +
+            "skip_occurrences, repeat_until_exact, occurrence_anchor, occurrence_basis, occurrence_zone_id FROM events";
 
         private void LoadIntoMemory()
         {
@@ -30,6 +31,8 @@ namespace Killendar.Services
                 while (r.Read())
                 {
                     bool allDay = r.GetInt64(4) != 0;
+                    bool originalAllDay = r.IsDBNull(25) || string.IsNullOrEmpty(r.GetString(25))
+                        ? allDay : !r.IsDBNull(26) && r.GetInt64(26) == (long)OccurrenceTimeBasis.Date;
                     list.Add(new CalendarEvent
                     {
                         Id          = Guid.TryParse(r.GetString(0), out var g) ? g : Guid.NewGuid(),
@@ -57,13 +60,19 @@ namespace Killendar.Services
                         SeriesId        = ParseGuid(r.IsDBNull(17) ? "" : r.GetString(17)),
                         OccurrenceStart = r.IsDBNull(18)
                                             ? null
-                                            : FromStoreNullable(r.GetString(18), allDay),
+                                            : FromStoreNullable(r.GetString(18), originalAllDay),
                         RepeatTimeBasis = r.IsDBNull(19) || r.GetInt64(19) < 0 || r.GetInt64(19) > 2
                             ? RecurrenceTimeBasis.Local : (RecurrenceTimeBasis)r.GetInt64(19),
                         RepeatAnchor = r.IsDBNull(20) ? null : FromStoreNullable(r.GetString(20), true),
                         RepeatZoneId = r.IsDBNull(21) ? "" : r.GetString(21),
                         RepeatWeekStart = r.IsDBNull(22) || r.GetInt64(22) < 0 || r.GetInt64(22) > 6
                             ? DayOfWeek.Sunday : (DayOfWeek)r.GetInt64(22),
+                        SkipOccurrences = SplitOccurrences(r.IsDBNull(23) ? "" : r.GetString(23)),
+                        RepeatUntilExact = FromStoreExact(r.IsDBNull(24) ? "" : r.GetString(24)),
+                        OccurrenceAnchor = FromStoreNullable(r.IsDBNull(25) ? "" : r.GetString(25), true),
+                        OccurrenceBasis = r.IsDBNull(26) || r.GetInt64(26) < 0 || r.GetInt64(26) > 3
+                            ? OccurrenceTimeBasis.Date : (OccurrenceTimeBasis)r.GetInt64(26),
+                        OccurrenceZoneId = r.IsDBNull(27) ? "" : r.GetString(27),
                     });
                 }
             }
@@ -99,14 +108,16 @@ namespace Killendar.Services
                 "INSERT INTO events(id, title, start_utc, end_utc, all_day, location, " +
                 "description, attendees, categories, created_utc, modified_utc, " +
                 "repeat_freq, repeat_interval, repeat_days, repeat_until, repeat_count, " +
-                "skip_dates, series_id, occurrence_start, repeat_time_basis, repeat_anchor, repeat_zone_id, repeat_week_start) " +
+                "skip_dates, series_id, occurrence_start, repeat_time_basis, repeat_anchor, repeat_zone_id, repeat_week_start, " +
+                "skip_occurrences, repeat_until_exact, occurrence_anchor, occurrence_basis, occurrence_zone_id) " +
                 "VALUES($id, $ti, $st, $en, $ad, $lo, $de, $at, $ca, $cr, $mo, " +
-                "$rf, $ri, $rd, $ru, $rc, $sk, $si, $os, $tb, $ra, $rz, $ws) " +
+                "$rf, $ri, $rd, $ru, $rc, $sk, $si, $os, $tb, $ra, $rz, $ws, $so, $ue, $oa, $ob, $oz) " +
                 "ON CONFLICT(id) DO UPDATE SET title=$ti, start_utc=$st, end_utc=$en, " +
                 "all_day=$ad, location=$lo, description=$de, attendees=$at, categories=$ca, " +
                 "modified_utc=$mo, repeat_freq=$rf, repeat_interval=$ri, repeat_days=$rd, " +
                 "repeat_until=$ru, repeat_count=$rc, skip_dates=$sk, series_id=$si, " +
-                "occurrence_start=$os, repeat_time_basis=$tb, repeat_anchor=$ra, repeat_zone_id=$rz, repeat_week_start=$ws";
+                "occurrence_start=$os, repeat_time_basis=$tb, repeat_anchor=$ra, repeat_zone_id=$rz, repeat_week_start=$ws, " +
+                "skip_occurrences=$so, repeat_until_exact=$ue, occurrence_anchor=$oa, occurrence_basis=$ob, occurrence_zone_id=$oz";
             cmd.Parameters.AddWithValue("$id", ev.Id.ToString());
             cmd.Parameters.AddWithValue("$ti", ev.Title ?? "");
             cmd.Parameters.AddWithValue("$st", ToStore(ev.Start, ev.AllDay));
@@ -126,11 +137,16 @@ namespace Killendar.Services
             cmd.Parameters.AddWithValue("$sk", JoinDates(ev.SkipDates ?? []));
             cmd.Parameters.AddWithValue("$si", ev.SeriesId?.ToString() ?? "");
             cmd.Parameters.AddWithValue("$os", ev.OccurrenceStart.HasValue
-                ? ToStore(ev.OccurrenceStart.Value, ev.AllDay) : "");
+                ? ToStore(ev.OccurrenceStart.Value, ev.OccurrenceAnchor.HasValue ? ev.OccurrenceBasis == OccurrenceTimeBasis.Date : ev.AllDay) : "");
             cmd.Parameters.AddWithValue("$tb", (int)ev.RepeatTimeBasis);
             cmd.Parameters.AddWithValue("$ra", ev.RepeatAnchor.HasValue ? ToStore(ev.RepeatAnchor.Value, true) : "");
             cmd.Parameters.AddWithValue("$rz", ev.RepeatZoneId ?? "");
             cmd.Parameters.AddWithValue("$ws", (int)ev.RepeatWeekStart);
+            cmd.Parameters.AddWithValue("$so", JoinOccurrences(ev.SkipOccurrences ?? []));
+            cmd.Parameters.AddWithValue("$ue", ToStoreExact(ev.RepeatUntilExact));
+            cmd.Parameters.AddWithValue("$oa", ev.OccurrenceAnchor.HasValue ? ToStore(ev.OccurrenceAnchor.Value, true) : "");
+            cmd.Parameters.AddWithValue("$ob", (int)ev.OccurrenceBasis);
+            cmd.Parameters.AddWithValue("$oz", ev.OccurrenceZoneId ?? "");
             cmd.ExecuteNonQuery();
         }
 
@@ -213,6 +229,7 @@ namespace Killendar.Services
                 var duration = edited.End > edited.Start ? edited.End - edited.Start : TimeSpan.FromHours(1);
                 var origin = edited.OccurrenceStart ?? master.Start;
                 var delta = edited.Start - origin;
+                var nominalDelta = delta;
                 var updated = master.Clone();
                 updated.Title       = edited.Title;
                 updated.Location    = edited.Location;
@@ -229,6 +246,7 @@ namespace Killendar.Services
                         : Recurrence.ToTimeBasis(master, edited.Start) -
                             Recurrence.OriginalTimeBasisStart(master, origin);
                     updated.RepeatAnchor = master.RepeatAnchor!.Value + sourceDelta;
+                    nominalDelta = sourceDelta;
                     updated.Start = Recurrence.FromTimeBasis(updated, updated.RepeatAnchor.Value).ToLocalTime();
                     var physicalDuration = edited.End.ToUniversalTime() - edited.Start.ToUniversalTime();
                     if (physicalDuration <= TimeSpan.Zero) physicalDuration = TimeSpan.FromHours(1);
@@ -245,6 +263,8 @@ namespace Killendar.Services
                 updated.RepeatInterval = edited.RepeatInterval > 0 ? edited.RepeatInterval : 1;
                 updated.RepeatDays     = [.. edited.RepeatDays ?? []];
                 updated.RepeatUntil    = edited.RepeatUntil;
+                updated.RepeatUntilExact = edited.AllDay == master.AllDay &&
+                    edited.RepeatUntil?.Date == master.RepeatUntil?.Date ? master.RepeatUntilExact : null;
                 updated.RepeatCount    = edited.RepeatCount;
                 updated.Modified       = DateTime.UtcNow;
 
@@ -254,21 +274,56 @@ namespace Killendar.Services
                     .Select(day => (day.Date + master.Start.TimeOfDay + delta).Date)
                     .Where(day => Recurrence.GeneratesDate(updated, day))
                     .ToList();
+                updated.SkipOccurrences = [];
+                foreach (var original in master.SkipOccurrences)
+                {
+                    if (updated.AllDay)
+                    {
+                        var local = Recurrence.UsesTimeBasis(master)
+                            ? Recurrence.FromTimeBasis(master, original).ToLocalTime() : original;
+                        var day = (local + delta).Date;
+                        if (Recurrence.GeneratesDate(updated, day) && !updated.SkipDates.Contains(day))
+                            updated.SkipDates.Add(day);
+                    }
+                    else
+                    {
+                        var shifted = original + nominalDelta;
+                        if (Recurrence.GeneratesCanonicalStart(updated, shifted)) updated.SkipOccurrences.Add(shifted);
+                    }
+                }
 
                 var retained = new List<CalendarEvent>();
                 var removed = new HashSet<Guid>();
                 foreach (var exception in _events.Where(e => e.SeriesId == master.Id))
                 {
-                    var identity = exception.OccurrenceStart + delta;
-                    if (!identity.HasValue || !Recurrence.GeneratesDate(updated, identity.Value))
+                    if (!exception.OccurrenceStart.HasValue)
+                    {
+                        removed.Add(exception.Id);
+                        continue;
+                    }
+                    var oldNominal = Recurrence.CanonicalOccurrenceStart(master, exception);
+                    var identity = master.AllDay != updated.AllDay
+                        ? (exception.OccurrenceStart.Value + delta).Date + updated.Start.TimeOfDay
+                        : oldNominal + nominalDelta;
+                    if (updated.AllDay) identity = identity.Date;
+                    if (!Recurrence.GeneratesCanonicalStart(updated, identity))
                     {
                         removed.Add(exception.Id);
                         continue;
                     }
                     var shifted = exception.Clone();
-                    shifted.OccurrenceStart = identity;
-                    shifted.Start += delta;
-                    shifted.End += delta;
+                    Recurrence.SetOccurrenceIdentity(shifted, updated, identity);
+                    if (Recurrence.UsesTimeBasis(master) && Recurrence.UsesTimeBasis(updated))
+                    {
+                        var physicalDelta = Recurrence.OriginalInstant(shifted) - Recurrence.OriginalInstant(exception);
+                        shifted.Start = (exception.Start.ToUniversalTime() + physicalDelta).ToLocalTime();
+                        shifted.End = (exception.End.ToUniversalTime() + physicalDelta).ToLocalTime();
+                    }
+                    else
+                    {
+                        shifted.Start += delta;
+                        shifted.End += delta;
+                    }
                     shifted.Modified = updated.Modified;
                     retained.Add(shifted);
                 }
@@ -297,63 +352,53 @@ namespace Killendar.Services
         /// </summary>
         public void SaveOccurrence(CalendarEvent edited)
         {
-            var key = edited.SeriesKey;
-            var day = (edited.OccurrenceStart ?? edited.Start).Date;
-
-            var existing = _events.FirstOrDefault(
-                e => e.IsOverride && e.SeriesId == key &&
-                     e.OccurrenceStart.HasValue && e.OccurrenceStart.Value.Date == day);
-
-            var row = edited.Clone();
-            row.SeriesId        = key;
-            row.OccurrenceStart = edited.OccurrenceStart ?? edited.Start;
-
-            // An override is one date. The SERIES repeats, not the row that replaces one of its
-            // dates - leaving the pattern on here would expand the override too and every later
-            // occurrence would appear twice.
-            row.Repeat         = RepeatFreq.None;
-            row.RepeatInterval = 1;
-            row.RepeatDays     = [];
-            row.RepeatUntil    = null;
-            row.RepeatCount    = 0;
-            row.SkipDates      = [];
-
-            if (existing != null)
+            Commit(() =>
             {
-                row.Id      = existing.Id;
-                row.Created = existing.Created;
-                Update(row);
-            }
-            else
-            {
-                // A NEW id, always. The occurrence handed out by Recurrence carries its master's
-                // id, and saving with that would overwrite the series with a single appointment.
-                row.Id = Guid.NewGuid();
-                Add(row);
-            }
+                var master = GetSeriesMaster(edited);
+                if (master == null) throw new InvalidOperationException("The recurring appointment could not be found.");
+                var row = edited.Clone();
+                var nominal = Recurrence.CanonicalOccurrenceStart(master, edited);
+                Recurrence.SetOccurrenceIdentity(row, master, nominal);
+                row.SeriesId = master.Id;
+                long identity = Recurrence.OccurrenceKey(master, row);
+                var existing = _events.FirstOrDefault(e => e.IsOverride && e.SeriesId == master.Id &&
+                    e.OccurrenceStart.HasValue && Recurrence.OccurrenceKey(master, e) == identity);
+                row.Id = existing?.Id ?? Guid.NewGuid();
+                row.Created = existing?.Created ?? DateTime.UtcNow;
+                row.Modified = DateTime.UtcNow;
+                row.Repeat = RepeatFreq.None;
+                row.RepeatInterval = 1;
+                row.RepeatDays = [];
+                row.RepeatUntil = null;
+                row.RepeatUntilExact = null;
+                row.RepeatCount = 0;
+                row.SkipDates = [];
+                row.SkipOccurrences = [];
+                Upsert(row);
+                if (existing == null) _events.Add(row);
+                else _events[_events.FindIndex(e => e.Id == existing.Id)] = row;
+            });
         }
 
         /// <summary>Removes ONE date from a series, leaving the rest of it alone.</summary>
         public void DeleteOccurrence(CalendarEvent occ)
         {
-            var key = occ.SeriesKey;
-            var day = (occ.OccurrenceStart ?? occ.Start).Date;
-
-            // If that date had been edited singly it is a real row, and it has to go too or the
-            // deleted occurrence survives its own deletion.
-            var stray = _events.FirstOrDefault(
-                e => e.IsOverride && e.SeriesId == key &&
-                     e.OccurrenceStart.HasValue && e.OccurrenceStart.Value.Date == day);
             var master = GetSeriesMaster(occ);
             if (master == null) return;
-            bool skipped = master.SkipDates.Any(d => d.Date == day);
-            if (skipped && stray == null) return;
-
-            var updated = master.Clone();
-            if (!skipped) updated.SkipDates.Add(day);
-            updated.Modified = DateTime.UtcNow;
             Commit(() =>
             {
+                var nominal = Recurrence.CanonicalOccurrenceStart(master, occ);
+                long identity = Recurrence.OccurrenceKey(master, occ);
+                var stray = _events.FirstOrDefault(e => e.IsOverride && e.SeriesId == master.Id &&
+                    e.OccurrenceStart.HasValue && Recurrence.OccurrenceKey(master, e) == identity);
+                var updated = master.Clone();
+                if (master.AllDay)
+                {
+                    if (!updated.SkipDates.Any(day => day.Date == nominal.Date)) updated.SkipDates.Add(nominal.Date);
+                }
+                else if (!updated.SkipOccurrences.Any(value => value.Ticks == nominal.Ticks))
+                    updated.SkipOccurrences.Add(nominal);
+                updated.Modified = DateTime.UtcNow;
                 using var tx = _db!.BeginTransaction();
                 if (stray != null)
                 {

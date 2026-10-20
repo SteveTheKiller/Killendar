@@ -87,7 +87,8 @@ namespace Killendar.Tests
             store.UpdateSeries(edited);
 
             Assert.Null(store.LoadError);
-            Assert.Equal(new[] { new DateTime(2026, 1, 20) }, store.GetById(edited.Id)!.SkipDates);
+            Assert.Empty(store.GetById(edited.Id)!.SkipDates);
+            Assert.Equal(new[] { new DateTime(2026, 1, 20, 8, 0, 0) }, store.GetById(edited.Id)!.SkipOccurrences);
             Assert.Empty(store.GetOnDay(new DateTime(2026, 1, 20)));
             Assert.Equal(new DateTime(2026, 1, 13, 8, 0, 0), Assert.Single(store.GetOnDay(new DateTime(2026, 1, 13))).Start);
             fixture.Reopen();

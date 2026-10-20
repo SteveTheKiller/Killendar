@@ -41,7 +41,12 @@ CREATE TABLE IF NOT EXISTS events (
     repeat_time_basis INTEGER NOT NULL DEFAULT 0,
     repeat_anchor TEXT NOT NULL DEFAULT '',
     repeat_zone_id TEXT NOT NULL DEFAULT '',
-    repeat_week_start INTEGER NOT NULL DEFAULT 0
+    repeat_week_start INTEGER NOT NULL DEFAULT 0,
+    skip_occurrences TEXT NOT NULL DEFAULT '',
+    repeat_until_exact TEXT NOT NULL DEFAULT '',
+    occurrence_anchor TEXT NOT NULL DEFAULT '',
+    occurrence_basis INTEGER NOT NULL DEFAULT 0,
+    occurrence_zone_id TEXT NOT NULL DEFAULT ''
 );
 CREATE INDEX IF NOT EXISTS events_range ON events (start_utc, end_utc);
 CREATE TABLE IF NOT EXISTS categories (
@@ -98,7 +103,7 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
             foreach (var (name, color) in DefaultCategories) AddCategory(db, name, color);
         }
 
-        /// <summary>Additive columns from v2 through v5. ALTER-on-open is needed because CREATE TABLE
+        /// <summary>Additive columns from v2 through v6. ALTER-on-open is needed because CREATE TABLE
         /// IF NOT EXISTS never touches an existing table, so a Killendar written by 1.0.0 keeps its
         /// original events table; PRAGMA-checking first keeps this idempotent and cheap.
         ///
@@ -133,6 +138,11 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
             AddColumn("repeat_anchor", "TEXT NOT NULL DEFAULT ''");
             AddColumn("repeat_zone_id", "TEXT NOT NULL DEFAULT ''");
             AddColumn("repeat_week_start", "INTEGER NOT NULL DEFAULT 0");
+            AddColumn("skip_occurrences", "TEXT NOT NULL DEFAULT ''");
+            AddColumn("repeat_until_exact", "TEXT NOT NULL DEFAULT ''");
+            AddColumn("occurrence_anchor", "TEXT NOT NULL DEFAULT ''");
+            AddColumn("occurrence_basis", "INTEGER NOT NULL DEFAULT 0");
+            AddColumn("occurrence_zone_id", "TEXT NOT NULL DEFAULT ''");
         }
 
         private string? GetMeta(string key)
@@ -272,5 +282,26 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
         /// <summary>Empty column reads as null rather than 0001-01-01.</summary>
         private static DateTime? FromStoreNullable(string s, bool allDay) =>
             string.IsNullOrWhiteSpace(s) ? null : FromStore(s, allDay);
+
+        private static string ToStoreExact(DateTime? value) => value.HasValue
+            ? DateTime.SpecifyKind(value.Value, value.Value.Kind == DateTimeKind.Utc ? DateTimeKind.Utc : DateTimeKind.Unspecified)
+                .ToString(RoundTrip, System.Globalization.CultureInfo.InvariantCulture) : "";
+
+        private static DateTime? FromStoreExact(string value) => DateTime.TryParseExact(value, RoundTrip,
+            System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.RoundtripKind, out var stamp)
+            ? stamp : (DateTime?)null;
+
+        private static string JoinOccurrences(IEnumerable<DateTime> values) => string.Join(",", values.Select(value => ToStore(value, true)));
+
+        private static List<DateTime> SplitOccurrences(string value)
+        {
+            var result = new List<DateTime>();
+            foreach (string part in value.Split(','))
+            {
+                var parsed = FromStoreExact(part);
+                if (parsed.HasValue) result.Add(DateTime.SpecifyKind(parsed.Value, DateTimeKind.Unspecified));
+            }
+            return result;
+        }
     }
 }

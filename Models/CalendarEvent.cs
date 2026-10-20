@@ -21,6 +21,14 @@ namespace Killendar.Models
         SourceZone = 2
     }
 
+    public enum OccurrenceTimeBasis
+    {
+        Date = 0,
+        Floating = 1,
+        Utc = 2,
+        SourceZone = 3
+    }
+
     /// <summary>
     /// One appointment. Field names are load-bearing: IcsService maps them straight onto
     /// RFC-5545 VEVENT properties, and EventStore serializes them as-is, so renaming a
@@ -69,6 +77,7 @@ namespace Killendar.Models
 
         /// <summary>Repeat until this date inclusive. Null with RepeatCount 0 means forever.</summary>
         public DateTime? RepeatUntil { get; set; }
+        public DateTime? RepeatUntilExact { get; set; }
 
         /// <summary>Stop after this many occurrences. 0 means no count limit.</summary>
         public int RepeatCount { get; set; }
@@ -84,6 +93,7 @@ namespace Killendar.Models
         /// <summary>Occurrence start dates the user deleted one at a time. Compared by DATE, so a
         /// "just this one" delete survives the series later being moved to a different time.</summary>
         public List<DateTime> SkipDates { get; set; } = [];
+        public List<DateTime> SkipOccurrences { get; set; } = [];
 
         /// <summary>Set on an override row: the Id of the master whose occurrence this replaces.</summary>
         public Guid? SeriesId { get; set; }
@@ -91,6 +101,9 @@ namespace Killendar.Models
         /// <summary>Set on an override row: which occurrence of the master this replaces, named by
         /// the start the master WOULD have generated. Not the same as Start once the user moves it.</summary>
         public DateTime? OccurrenceStart { get; set; }
+        public DateTime? OccurrenceAnchor { get; set; }
+        public OccurrenceTimeBasis OccurrenceBasis { get; set; }
+        public string OccurrenceZoneId { get; set; } = "";
 
         /// <summary>True on a series master - a row that stands for many dates.</summary>
         public bool IsSeries => Repeat != RepeatFreq.None && SeriesId == null;
@@ -151,14 +164,19 @@ namespace Killendar.Models
             RepeatInterval  = RepeatInterval,
             RepeatDays      = [.. RepeatDays],
             RepeatUntil     = RepeatUntil,
+            RepeatUntilExact = RepeatUntilExact,
             RepeatCount     = RepeatCount,
             RepeatWeekStart = RepeatWeekStart,
             RepeatTimeBasis = RepeatTimeBasis,
             RepeatAnchor    = RepeatAnchor,
             RepeatZoneId    = RepeatZoneId,
             SkipDates       = [.. SkipDates],
+            SkipOccurrences = [.. SkipOccurrences],
             SeriesId        = SeriesId,
-            OccurrenceStart = OccurrenceStart
+            OccurrenceStart = OccurrenceStart,
+            OccurrenceAnchor = OccurrenceAnchor,
+            OccurrenceBasis = OccurrenceBasis,
+            OccurrenceZoneId = OccurrenceZoneId
         };
     }
 }
