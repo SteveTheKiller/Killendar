@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- HTML calendars include all themes and accents, with accessible selection controls and valid saved preferences.
 - Invalid recurrence intervals show an error instead of silently saving a different schedule.
 - Stalled launch requests no longer block later launches, and failed forwarding returns an error.
 - Imported times in a repeated daylight-saving hour use the first occurrence.

@@ -15,7 +15,7 @@ namespace Killendar.Services
     /// finish the job without Killendar owning a PDF layout engine.
     ///
     /// The page carries its own theme and accent switchers, KillerScan's report pattern
-    /// (Export.cs there is the reference): all six family palettes are embedded as CSS variable
+    /// (Export.cs there is the reference): all thirteen family palettes are embedded as CSS variable
     /// blocks, the page opens in whatever theme the app was in when it exported, and the reader's
     /// choice persists in localStorage. No network, no dependencies - the file stays a single
     /// self-contained page.
@@ -50,6 +50,7 @@ namespace Killendar.Services
             // Opens in the theme the app is wearing right now, so the page looks like the app
             // that made it; the switcher can take it anywhere from there.
             string current = ThemeManager.Current.ToString().ToLowerInvariant();
+            if (!Array.Exists(Themes, theme => theme.Key == current)) current = "dark";
 
             sb.Append("<!DOCTYPE html>\n<html lang=\"")
               .Append(Html(culture.TwoLetterISOLanguageName))
@@ -61,8 +62,8 @@ namespace Killendar.Services
 
             sb.Append("<header><div class=\"wm\">The <span>Killendar</span></div>")
               .Append("<div class=\"side\">")
-              .Append("<div class=\"swrow\"><span class=\"swlabel\">Theme</span><div class=\"sw\" id=\"themesw\"></div></div>")
-              .Append("<div class=\"swrow\"><span class=\"swlabel\">Accent</span><div class=\"sw\" id=\"accentsw\"></div></div>")
+              .Append("<div class=\"swrow\"><span class=\"swlabel\" id=\"themelabel\">Theme</span><div class=\"sw\" id=\"themesw\" role=\"group\" aria-labelledby=\"themelabel\"></div></div>")
+              .Append("<div class=\"swrow\"><span class=\"swlabel\" id=\"accentlabel\">Accent</span><div class=\"sw\" id=\"accentsw\" role=\"group\" aria-labelledby=\"accentlabel\"></div></div>")
               .Append("<div class=\"range\">").Append(Html(rangeLabel)).Append("</div>")
               .Append("</div></header>\n<main>\n");
 
@@ -159,7 +160,7 @@ namespace Killendar.Services
 
         private static string Html(string s) => WebUtility.HtmlEncode(s ?? "");
 
-        // ── The six family palettes, embedded as CSS variable blocks ─────────────
+        // Family palettes, embedded as CSS variable blocks.
         // Neutral hexes from KillerScan's report table (the family's shared values); the three
         // neutral families carry Killendar's OWN reds - Dark #DD504B, Light #931A1A, Black
         // #FF2929 - because each neutral family defines its own red and Killendar's branding
@@ -179,6 +180,13 @@ namespace Killendar.Services
             new("blood",    "#240c0d", "#2c1012", "#e8485a", "#fffde8", "#f8c99e", "#c99f83", "#401d1d", "#1d090a"),
             new("greed",    "#002115", "#002e1c", "#3fbf6f", "#fffde8", "#e0d49a", "#a89f74", "#0f4a30", "#001a10"),
             new("cyanotic", "#001a28", "#00263a", "#3aa0d8", "#fffde8", "#e0d49a", "#a89f74", "#183450", "#001420"),
+            new("se98", "#c0c0c0", "#c0c0c0", "#004f00", "#000000", "#404040", "#4f4f4f", "#808080", "#ffffff"),
+            new("ectoplasm", "linear-gradient(90deg,#5e1764 0%,#25232b 100%)", "#314548", "#ead900", "#f4f4f0", "#d7d7cf", "#b4b6b1", "#109fa3", "#293c3f"),
+            new("decay", "linear-gradient(90deg,#3b3f46 0%,#50564b 100%)", "#514e48", "#d1c8aa", "#f2f4f3", "#d8cfb5", "#cdc7bd", "#6b705c", "#403f3b"),
+            new("mourning", "#3b3642", "#34373e", "#ffa9bd", "#f4f4f0", "#d7d7cf", "#b4b6b1", "#756b79", "#554c5d"),
+            new("sepulchre", "linear-gradient(90deg,#25282b 0%,#2c5458 100%)", "#454039", "#8ccac8", "#f4f4f0", "#d7d7cf", "#bdbfba", "#835a30", "#3a352f"),
+            new("delirium", "linear-gradient(90deg,#641d25 0%,#2f2853 100%)", "#3e3c50", "#f29200", "#f4f4f0", "#d7d7cf", "#b4b6b1", "#8e101c", "#343344"),
+            new("malaise", "linear-gradient(90deg,#563343 0%,#365b58 100%)", "#3f4947", "#ffb4c6", "#f2f4f3", "#d8cfb5", "#cec8bd", "#4a5154", "#232a2b"),
         ];
 
         /// <summary>One html.theme-X variable block per palette, built without interpolation so
@@ -207,18 +215,19 @@ namespace Killendar.Services
         private static string SwitcherScript(string current)
         {
             var b = new StringBuilder();
-            b.AppendLine("var THEMES=[['dark','Dark','#3a3a3a'],['light','Light','#e8e8e8'],['black','Black','#000000'],['blood','Blood','#4a1f20'],['greed','Greed','#0a5234'],['cyanotic','Cyanotic','#0a4a6e']];");
+            b.Append("var DEFAULT_THEME='").Append(current).AppendLine("';");
+            b.AppendLine("var THEMES=[['dark','Dark','#3a3a3a'],['light','Light','#e8e8e8'],['black','Black','#000000'],['blood','Blood','#4a1f20'],['greed','Greed','#0a5234'],['cyanotic','Cyanotic','#0a4a6e'],['se98','98SE','#c0c0c0'],['ectoplasm','Ectoplasm','#314548'],['decay','Decay','#514e48'],['mourning','Mourning','#34373e'],['sepulchre','Sepulchre','#454039'],['delirium','Delirium','#3e3c50'],['malaise','Malaise','#3f4947']];");
             b.AppendLine("var sw=document.getElementById('themesw');");
-            b.AppendLine("function setTheme(t){document.documentElement.className='theme-'+t;try{localStorage.setItem('kdTheme',t)}catch(e){}var k=sw.children;for(var i=0;i<k.length;i++)k[i].className=(k[i].getAttribute('data-t')===t)?'active':'';}");
-            b.AppendLine("THEMES.forEach(function(a){var x=document.createElement('button');x.title=a[1];x.setAttribute('data-t',a[0]);x.style.background=a[2];x.onclick=function(){setTheme(a[0])};sw.appendChild(x);});");
+            b.AppendLine("function setTheme(t){if(!THEMES.some(function(a){return a[0]===t}))t=DEFAULT_THEME;document.documentElement.className='theme-'+t;try{localStorage.setItem('kdTheme',t)}catch(e){}var k=sw.children;for(var i=0;i<k.length;i++){var active=k[i].getAttribute('data-t')===t;k[i].className=active?'active':'';k[i].setAttribute('aria-pressed',String(active));}}");
+            b.AppendLine("THEMES.forEach(function(a){var x=document.createElement('button');x.type='button';x.title=a[1];x.setAttribute('aria-label',a[1]);x.setAttribute('aria-pressed','false');x.setAttribute('data-t',a[0]);x.style.background=a[2];x.onclick=function(){setTheme(a[0])};sw.appendChild(x);});");
             b.AppendLine("var saved=null;try{saved=localStorage.getItem('kdTheme')}catch(e){}");
-            b.Append("setTheme(saved||'").Append(current).AppendLine("');");
-            b.AppendLine("var ACCENTS=[['#DD504B','Red'],['#E8962C','Orange'],['#1ea54c','Green'],['#1FB8A8','Teal'],['#50AEE8','Blue'],['#B982E3','Purple']];");
+            b.AppendLine("setTheme(saved);");
+            b.AppendLine("var ACCENTS=[['#DD504B','Red'],['#E8962C','Orange'],['#1ea54c','Green'],['#1FB8A8','Teal'],['#50AEE8','Blue'],['#B982E3','Purple'],['#EAD900','Yellow'],['#FF6CD1','Magenta']];");
             b.AppendLine("var asw=document.getElementById('accentsw');");
-            b.AppendLine("function setAccent(c){if(c){document.documentElement.style.setProperty('--accent',c);try{localStorage.setItem('kdAccent',c)}catch(e){}}var k=asw.children;for(var i=0;i<k.length;i++)k[i].className=(k[i].getAttribute('data-c')===c)?'active':'';}");
-            b.AppendLine("ACCENTS.forEach(function(a){var x=document.createElement('button');x.title=a[1];x.setAttribute('data-c',a[0]);x.style.background=a[0];x.onclick=function(){setAccent(a[0])};asw.appendChild(x);});");
+            b.AppendLine("function setAccent(c){if(!ACCENTS.some(function(a){return a[0]===c}))c=null;if(c){document.documentElement.style.setProperty('--accent',c);try{localStorage.setItem('kdAccent',c)}catch(e){}}else{document.documentElement.style.removeProperty('--accent');try{localStorage.removeItem('kdAccent')}catch(e){}}var k=asw.children;for(var i=0;i<k.length;i++){var active=k[i].getAttribute('data-c')===c;k[i].className=active?'active':'';k[i].setAttribute('aria-pressed',String(active));}}");
+            b.AppendLine("ACCENTS.forEach(function(a){var x=document.createElement('button');x.type='button';x.title=a[1];x.setAttribute('aria-label',a[1]);x.setAttribute('aria-pressed','false');x.setAttribute('data-c',a[0]);x.style.background=a[0];x.onclick=function(){setAccent(a[0])};asw.appendChild(x);});");
             b.AppendLine("var savedA=null;try{savedA=localStorage.getItem('kdAccent')}catch(e){}");
-            b.AppendLine("if(savedA)setAccent(savedA);");
+            b.AppendLine("setAccent(savedA);");
             return b.ToString();
         }
 
@@ -239,6 +248,7 @@ header { display: flex; align-items: flex-start; justify-content: space-between;
 .sw button { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border);
              cursor: pointer; padding: 0; outline: none; transition: transform .1s; }
 .sw button:hover { transform: scale(1.15); }
+.sw button:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
 .sw button.active { border-color: var(--text); }
 .range { color: var(--muted); font-family: Consolas, monospace; font-size: 13px; }
 .month { margin-bottom: 30px; }
