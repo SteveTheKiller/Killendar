@@ -385,6 +385,7 @@
   // The release script rewrites the hero facts by matching the plain English label spans, so
   // those labels carry no data-i18n and are translated here instead.
   var CHROME_EN = { ui_theme: 'Theme', ui_choose_theme: 'Choose theme', ui_accent: 'Accent color', ui_language: 'Language', ui_click: 'click me', ui_expand: 'Expand section', accent_label: 'accent:', mcp_gh: 'KillerMCP on GitHub' };
+  CHROME_EN.ui_more = 'More';
   function chromeText(l, key, english) {
     var d = I18N[l] || {};
     return d[key] || CHROME_EN[key] || english;
@@ -405,6 +406,7 @@
     label('#accentPop', 'ui_accent', 'aria-label');
     label('#langToggle', 'ui_language', 'title');
     label('#langToggle, .lang-switch', 'ui_language', 'aria-label');
+    label('.tb-more-toggle', 'ui_more', 'aria-label');
     label('#verEgg', 'ui_click', 'title');
     label('.ol-chev', 'ui_expand', 'aria-label');
     label('.mcp-github', 'mcp_gh', 'title');
@@ -526,7 +528,10 @@
   btn.className = 'tb-more-toggle';
   btn.setAttribute('aria-haspopup', 'true');
   btn.setAttribute('aria-expanded', 'false');
-  btn.setAttribute('aria-label', 'More');
+  var moreLang = document.documentElement.getAttribute('lang');
+  moreLang = moreLang === 'zh-Hant' ? 'zh-TW' : moreLang === 'zh-Hans' ? 'zh-CN' : moreLang;
+  var moreDict = window.I18N && window.I18N[moreLang];
+  btn.setAttribute('aria-label', moreDict && moreDict.ui_more ? moreDict.ui_more : 'More');
   btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>';
   var menu = document.createElement('div');
   menu.className = 'lang-menu tb-more-menu';
