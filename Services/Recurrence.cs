@@ -21,13 +21,6 @@ namespace Killendar.Services
     public static class Recurrence
     {
         /// <summary>
-        /// Safety net only, not the working limit: the generator jumps straight to the requested
-        /// range (see Starts), so a normal repaint takes a handful of steps however old the series
-        /// is. This exists so a corrupt interval or an absurd pattern cannot spin forever.
-        /// </summary>
-        private const int MaxSteps = 20000;
-
-        /// <summary>
         /// Occurrences of <paramref name="master"/> overlapping the half-open interval
         /// [from, to). Returns nothing when the master does not repeat: a plain appointment is
         /// not a one-occurrence series, and the caller handles it directly.
@@ -48,30 +41,19 @@ namespace Killendar.Services
             var skips = new HashSet<DateTime>();
             foreach (var d in master.SkipDates) skips.Add(d.Date);
 
-            // "Stop after N times" has to be counted from the FIRST occurrence, so a series with a
-            // count cannot be fast-forwarded - but the count bounds the work by itself. Without a
-            // count there is nothing to tally, so generation can jump straight to the range and a
-            // ten-year-old daily series costs the same as a new one.
-            bool counted  = master.RepeatCount > 0;
-            var  jumpTo   = counted ? master.Start
-                : new DateTime(Math.Max(0L, from.Ticks - duration.Ticks), from.Kind);
+            // Include starts before the range that can still overlap it. Pattern ordinals keep
+            // COUNT accurate after the jump, including positions consumed by skipped dates.
+            var jumpTo = new DateTime(Math.Max(0L, from.Ticks - duration.Ticks), from.Kind);
 
-            int emitted = 0;
-            int steps   = 0;
-
-            foreach (var start in Starts(master, interval, jumpTo))
+            foreach (var candidate in Starts(master, interval, jumpTo))
             {
-                if (++steps > MaxSteps) yield break;
+                var start = candidate.Start;
 
                 if (master.RepeatUntil.HasValue && start.Date > master.RepeatUntil.Value.Date)
                     yield break;
 
-                if (counted && emitted >= master.RepeatCount)
+                if (master.RepeatCount > 0 && candidate.Number > master.RepeatCount)
                     yield break;
-
-                // A skipped date still consumes its place in the count, exactly as it does in
-                // every other calendar: deleting one Tuesday does not add a Tuesday at the end.
-                emitted++;
 
                 if (start >= to) yield break;
 
@@ -104,11 +86,11 @@ namespace Killendar.Services
             if (master.RepeatUntil.HasValue && day > master.RepeatUntil.Value.Date) return false;
 
             int interval = master.RepeatInterval > 0 ? master.RepeatInterval : 1;
-            int steps = 0;
 
-            foreach (var start in Starts(master, interval, master.RepeatCount > 0 ? master.Start : day))
+            foreach (var occurrence in Starts(master, interval, day))
             {
-                if (++steps > MaxSteps) return false;
+                var start = occurrence.Start;
+                if (master.RepeatCount > 0 && occurrence.Number > master.RepeatCount) return false;
                 if (start.Date > day) return false;
                 if (start.Date == day) return true;
             }
@@ -116,15 +98,16 @@ namespace Killendar.Services
         }
 
         /// <summary>
-        /// The start dates the pattern produces, earliest first and unbounded. Every limit -
+        /// The start dates and one-based ordinals the pattern produces, earliest first within
+        /// DateTime bounds. Every limit -
         /// range, until, count, skips - is applied by the caller, so this stays one job.
         ///
         /// <paramref name="jumpTo"/> is a hint, not a filter: generation begins at the last
         /// pattern date at or before it, so asking for July 2026 of a series that began in 2019
         /// does not walk through seven years of dates first. Callers that need an accurate
-        /// running count pass the series start instead and get every date from the beginning.
+        /// running count use the ordinal, which includes valid pattern dates before the jump.
         /// </summary>
-        private static IEnumerable<DateTime> Starts(
+        private static IEnumerable<(DateTime Start, long Number)> Starts(
             CalendarEvent master, int interval, DateTime jumpTo)
         {
             var first = master.Start;
@@ -138,7 +121,7 @@ namespace Killendar.Services
                     if (n < 0) n = 0;
                     long lastDay = (DateTime.MaxValue.Ticks - first.Ticks) / TimeSpan.TicksPerDay;
                     for (long day = n * interval; day <= lastDay; day += interval)
-                        yield return first.AddDays(day);
+                        yield return (first.AddDays(day), day / interval + 1);
                     yield break;
                 }
 
@@ -159,6 +142,10 @@ namespace Killendar.Services
 
                     long weeks = (jumpWeek - firstWeek) / (7L * interval);
                     if (weeks < 0) weeks = 0;
+                    long number = weeks * days.Count;
+                    if (weeks > 0)
+                        foreach (var dow in days)
+                            if ((int)dow < (int)first.DayOfWeek) number--;
 
                     long lastDay = DateTime.MaxValue.Ticks / TimeSpan.TicksPerDay;
                     for (long w = firstWeek + weeks * 7L * interval; w <= lastDay; w += 7L * interval)
@@ -170,7 +157,7 @@ namespace Killendar.Services
                             if (day > lastDay) yield break;
                             var d = new DateTime(day * TimeSpan.TicksPerDay + time.Ticks, first.Kind);
                             if (d < first) continue;   // days earlier in the series' opening week
-                            yield return d;
+                            yield return (d, ++number);
                         }
                     }
                     yield break;
@@ -188,11 +175,16 @@ namespace Killendar.Services
                     int start  = months > 0 ? (months / interval) * interval : 0;
 
                     int lastMonth = (9999 - first.Year) * 12 + 12 - first.Month;
-                    for (long i = start; i <= lastMonth; i += interval)
+                    long number = 0;
+                    for (long i = master.RepeatCount > 0 ? 0 : start; i <= lastMonth; i += interval)
                     {
                         var anchor = new DateTime(first.Year, first.Month, 1).AddMonths((int)i);
                         if (day <= DateTime.DaysInMonth(anchor.Year, anchor.Month))
-                            yield return new DateTime(anchor.Year, anchor.Month, day) + time;
+                        {
+                            number++;
+                            if (i >= start)
+                                yield return (new DateTime(anchor.Year, anchor.Month, day) + time, number);
+                        }
                     }
                     yield break;
                 }
@@ -206,11 +198,16 @@ namespace Killendar.Services
                     int years = jumpTo.Year - first.Year;
                     int begin = years > 0 ? (years / interval) * interval : 0;
 
-                    for (long i = begin; i <= 9999 - first.Year; i += interval)
+                    long number = 0;
+                    for (long i = master.RepeatCount > 0 ? 0 : begin; i <= 9999 - first.Year; i += interval)
                     {
                         int year = first.Year + (int)i;
                         if (day <= DateTime.DaysInMonth(year, month))
-                            yield return new DateTime(year, month, day) + time;
+                        {
+                            number++;
+                            if (i >= begin)
+                                yield return (new DateTime(year, month, day) + time, number);
+                        }
                     }
                     yield break;
                 }
