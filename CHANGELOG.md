@@ -13,6 +13,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - The Week and Day grid sits flat under the day headers instead of curving at its top corners.
 - The footer copyright sits a few pixels further from the corner grip instead of running into it.
 - A silent install or update that finds Killendar running exits with 1618, which Intune, Configuration Manager and RMM tools retry, instead of a general failure.
+- Chocolatey publishing reports failure when validation is still failing after a retry.
 
 ## [1.3.1] - 2026-10-19
 
