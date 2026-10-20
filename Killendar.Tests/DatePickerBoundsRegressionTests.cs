@@ -29,7 +29,7 @@ namespace Killendar.Tests
                 var menu = DatePickerFlyout.Create(target, target);
                 var root = Assert.IsType<StackPanel>(Assert.IsType<MenuItem>(Assert.Single(menu.Items.Cast<object>())).Header);
                 var grid = Assert.IsType<Grid>(root.Children[1]);
-                var labels = grid.Children.OfType<Border>().Select(cell => Assert.IsType<TextBlock>(cell.Child).Text).ToArray();
+                var labels = grid.Children.OfType<ContentControl>().Select(cell => Assert.IsType<TextBlock>(cell.Content).Text).ToArray();
 
                 Assert.Contains("1", labels);
                 Assert.Contains("31", labels);
@@ -50,7 +50,7 @@ namespace Killendar.Tests
                 var menu = DatePickerFlyout.Create(target, target);
                 var root = (StackPanel)((MenuItem)menu.Items[0]).Header;
                 var header = (Grid)root.Children[0];
-                var disabled = (Border)header.Children[disabledIndex];
+                var disabled = (UIElement)header.Children[disabledIndex];
 
                 Assert.False(disabled.IsEnabled);
                 disabled.RaiseEvent(new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left)
@@ -72,6 +72,9 @@ namespace Killendar.Tests
             var style = new XElement(source.Descendants(w + "Style").Single(element => (string?)element.Attribute(x + "Key") == "PanelMenuItem"));
             style.SetAttributeValue(XNamespace.Xmlns + "x", x.NamespaceName);
             target.Resources["PanelMenuItem"] = (Style)XamlReader.Parse(style.ToString());
+            var strings = XDocument.Load(Path.Combine(root, "Strings", "en-US.xaml"));
+            foreach (string key in new[] { "Str_TT_Prev", "Str_TT_Next" })
+                target.Resources[key] = strings.Descendants().Single(element => (string?)element.Attribute(x + "Key") == key).Value;
             return target;
         }
 

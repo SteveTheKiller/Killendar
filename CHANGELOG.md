@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- Date pickers support keyboard navigation, date selection and accessible control names.
 - CSV exports protect formula-like text and explain that calendar imports may retain the protective apostrophe.
 - Imported recurring appointments preserve their UTC or source-zone schedule and elapsed duration across clock changes.
 - CSV imports preserve distinct descriptions, categories and all-day settings while recognizing matching older imports.
