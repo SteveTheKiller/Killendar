@@ -23,6 +23,32 @@ namespace Killendar.Shell
             bool shift = (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
             bool ctrlShortcut = ctrl && !alt;
 
+            if (AboutOverlay.Visibility == Visibility.Visible || ShortcutsOverlay.Visibility == Visibility.Visible)
+            {
+                if (e.Key == Key.Escape)
+                {
+                    if (AboutOverlay.Visibility == Visibility.Visible) AboutClose_Click(this, new RoutedEventArgs());
+                    else FadeOverlayOut(ShortcutsOverlay);
+                    e.Handled = true;
+                    return;
+                }
+                if (!ctrl && !alt && !shift && e.Key == Key.F1)
+                {
+                    ToggleShortcutsOverlay();
+                    e.Handled = true;
+                    return;
+                }
+                if (!ctrl && !alt && !shift && e.Key == Key.F12)
+                {
+                    ShowAboutOverlay();
+                    e.Handled = true;
+                    return;
+                }
+                // Let the focused overlay control handle its own input. Film grain is the
+                // existing global action that remains safe while a modal card is visible.
+                if (!(alt && shift && !ctrl && e.SystemKey == Key.G)) return;
+            }
+
             // Appointment-editor accelerators remain available while a text box owns focus.
             // Ctrl+Enter is used instead of Ctrl+S so a multiline description keeps its normal
             // editing behavior; destructive delete retains the editor's confirmation path.

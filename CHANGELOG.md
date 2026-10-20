@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- Modal cards keep calendar and appointment shortcuts from changing work behind them.
 - ICS exports preserve recurring wall-clock schedules, source time zones and elapsed durations across clock changes.
 - Uninstall and installation-conflict cleanup preserve calendars and other files stored beside the app.
 - Whole-calendar exports include future and long finite series, disclose unbounded ranges and handle calendar date limits.
