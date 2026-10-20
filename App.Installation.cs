@@ -10,6 +10,7 @@ namespace Killendar
 {
     public partial class App
     {
+        private static readonly string[] InstalledFiles = { "Killendar.exe" };
         // ============================================================
         // Install state
         // ============================================================
@@ -76,8 +77,9 @@ namespace Killendar
             try { Registry.LocalMachine.DeleteSubKeyTree(RegKey, false); } catch { }
             try { Registry.LocalMachine.DeleteSubKeyTree(UninstallKey, false); } catch { }
             FileAssociations.Unregister(Registry.LocalMachine);
-            try { if (Directory.Exists(common)) Directory.Delete(common, true); } catch { }
-            try { if (Directory.Exists(MachineInstallDir)) Directory.Delete(MachineInstallDir, true); } catch { }
+            try { File.Delete(Path.Combine(common, AppName + ".lnk")); } catch { }
+            try { if (Directory.Exists(common)) Directory.Delete(common, false); } catch { }
+            KillerFamily.Deployment.InstalledFileCleanup.Remove(MachineInstallDir, InstalledFiles);
             Services.CommandLinePath.Unregister(MachineInstallDir, machine: true);
         }
 
@@ -130,9 +132,9 @@ namespace Killendar
         private static void RemovePerUserInstall()
         {
             try { if (File.Exists(StartMenuLnk)) File.Delete(StartMenuLnk); } catch { }
-            try { if (Directory.Exists(StartMenuDir)) Directory.Delete(StartMenuDir, true); } catch { }
+            try { if (Directory.Exists(StartMenuDir)) Directory.Delete(StartMenuDir, false); } catch { }
             try { if (File.Exists(DesktopLnk)) File.Delete(DesktopLnk); } catch { }
-            try { if (Directory.Exists(InstallDir)) Directory.Delete(InstallDir, true); } catch { }
+            KillerFamily.Deployment.InstalledFileCleanup.Remove(InstallDir, InstalledFiles);
             Services.CommandLinePath.Unregister(InstallDir, machine: false);
             try
             {
@@ -409,7 +411,7 @@ namespace Killendar
             File.WriteAllText(bat,
                 "@echo off\r\n" +
                 "ping -n 3 127.0.0.1 >nul\r\n" +
-                "rmdir /s /q \"" + targetDir + "\"\r\n" +
+                KillerFamily.Deployment.InstalledFileCleanup.RemovalBatch(targetDir, InstalledFiles) +
                 "del \"%~f0\"\r\n");
             Process.Start(new ProcessStartInfo("cmd.exe", "/c \"" + bat + "\"")
             {
