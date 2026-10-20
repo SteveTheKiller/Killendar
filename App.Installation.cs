@@ -182,16 +182,14 @@ namespace Killendar
                 {
                     try { File.SetAttributes(installExe, FileAttributes.Normal); } catch { }
                 }
-                File.Copy(src, installExe, overwrite: true);
-                try { File.SetAttributes(installExe, FileAttributes.Normal); } catch { }
-
-                Directory.CreateDirectory(startMenuDir);
-                CreateShortcut(startMenuLnk, installExe);
-
-                WriteInstallKeys(hive, installDir, installExe);
-                FileAssociations.Register(hive, installExe);
-                // Last, so a failed install never leaves a PATH entry behind.
-                Services.CommandLinePath.Register(installDir, machine);
+                KillerFamily.Deployment.InstalledImagePublication.Publish(src, installExe, () =>
+                {
+                    Directory.CreateDirectory(startMenuDir);
+                    CreateShortcut(startMenuLnk, installExe);
+                    WriteInstallKeys(hive, installDir, installExe);
+                    FileAssociations.Register(hive, installExe);
+                    Services.CommandLinePath.Register(installDir, machine);
+                });
                 return KillerFamily.Deployment.InstallerExitCodes.Success;
             }
             catch (Exception ex)
@@ -245,26 +243,24 @@ namespace Killendar
                 }
                 try
                 {
-                    File.Copy(src, InstallExe, overwrite: true);
+                    KillerFamily.Deployment.InstalledImagePublication.Publish(src, InstallExe, () =>
+                    {
+                        Directory.CreateDirectory(StartMenuDir);
+                        CreateShortcut(StartMenuLnk, InstallExe);
+                        if (wantDesktop) CreateShortcut(DesktopLnk, InstallExe);
+                        WriteInstallKeys(Registry.CurrentUser, InstallDir, InstallExe);
+                        FileAssociations.Register(Registry.CurrentUser, InstallExe);
+                        Services.CommandLinePath.Register(InstallDir, machine: false);
+                    });
                 }
                 catch (Exception copyEx) when (copyEx is UnauthorizedAccessException or IOException)
                 {
                     ShowInstallDialog(
                         "Couldn't write the installed copy at:\n" + InstallExe +
-                        "\n\nClose any open Killendar window (and check Task Manager for " +
-                        "Killendar.exe), then run the installer again.");
+                        "\n\n" + copyEx.Message +
+                        "\n\nClose any open Killendar window, then run the installer again.");
                     return false;
                 }
-                try { File.SetAttributes(InstallExe, FileAttributes.Normal); } catch { }
-
-                Directory.CreateDirectory(StartMenuDir);
-                CreateShortcut(StartMenuLnk, InstallExe);
-                if (wantDesktop) CreateShortcut(DesktopLnk, InstallExe);
-
-                WriteInstallKeys(Registry.CurrentUser, InstallDir, InstallExe);
-                FileAssociations.Register(Registry.CurrentUser, InstallExe);
-                // Last, so a failed install never leaves a PATH entry behind.
-                Services.CommandLinePath.Register(InstallDir, machine: false);
                 return true;
             }
             catch (Exception ex)
