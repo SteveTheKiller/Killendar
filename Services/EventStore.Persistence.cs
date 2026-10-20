@@ -197,38 +197,69 @@ namespace Killendar.Services
             var master = GetSeriesMaster(edited);
             if (master == null) { Update(edited); return; }
 
-            var duration = edited.End > edited.Start ? edited.End - edited.Start : TimeSpan.FromHours(1);
-
-            // How far the user moved the occurrence they were looking at.
-            var origin = edited.OccurrenceStart ?? master.Start;
-            var delta  = edited.Start - origin;
-
-            master.Title       = edited.Title;
-            master.Location    = edited.Location;
-            master.Description = edited.Description;
-            master.Attendees   = [.. edited.Attendees ?? []];
-            master.Categories  = edited.Categories;
-            master.AllDay      = edited.AllDay;
-
-            master.Start += delta;
-            master.End   = master.Start + duration;
-
-            master.Repeat         = edited.Repeat;
-            master.RepeatInterval = edited.RepeatInterval > 0 ? edited.RepeatInterval : 1;
-            master.RepeatDays     = [.. edited.RepeatDays ?? []];
-            master.RepeatUntil    = edited.RepeatUntil;
-            master.RepeatCount    = edited.RepeatCount;
-
-            // Deleted dates move with the series. Leaving them put would silently un-delete the
-            // date the user removed and delete a different one instead.
-            if (delta.Days != 0)
+            Commit(() =>
             {
-                var shifted = new List<DateTime>();
-                foreach (var d in master.SkipDates) shifted.Add(d.Date.AddDays(delta.Days));
-                master.SkipDates = shifted;
-            }
+                var duration = edited.End > edited.Start ? edited.End - edited.Start : TimeSpan.FromHours(1);
+                var origin = edited.OccurrenceStart ?? master.Start;
+                var delta = edited.Start - origin;
+                var updated = master.Clone();
+                updated.Title       = edited.Title;
+                updated.Location    = edited.Location;
+                updated.Description = edited.Description;
+                updated.Attendees   = [.. edited.Attendees ?? []];
+                updated.Categories  = edited.Categories;
+                updated.AllDay      = edited.AllDay;
+                updated.Start       = master.Start + delta;
+                updated.End         = updated.Start + duration;
+                updated.Repeat         = edited.Repeat;
+                updated.RepeatInterval = edited.RepeatInterval > 0 ? edited.RepeatInterval : 1;
+                updated.RepeatDays     = [.. edited.RepeatDays ?? []];
+                updated.RepeatUntil    = edited.RepeatUntil;
+                updated.RepeatCount    = edited.RepeatCount;
+                updated.Modified       = DateTime.UtcNow;
 
-            Update(master);
+                // Recover each deleted occurrence's time before shifting its date. A move
+                // across midnight can change the day even when delta is less than 24 hours.
+                updated.SkipDates = master.SkipDates
+                    .Select(day => (day.Date + master.Start.TimeOfDay + delta).Date)
+                    .Where(day => Recurrence.GeneratesDate(updated, day))
+                    .ToList();
+
+                var retained = new List<CalendarEvent>();
+                var removed = new HashSet<Guid>();
+                foreach (var exception in _events.Where(e => e.SeriesId == master.Id))
+                {
+                    var identity = exception.OccurrenceStart + delta;
+                    if (!identity.HasValue || !Recurrence.GeneratesDate(updated, identity.Value))
+                    {
+                        removed.Add(exception.Id);
+                        continue;
+                    }
+                    var shifted = exception.Clone();
+                    shifted.OccurrenceStart = identity;
+                    shifted.Start += delta;
+                    shifted.End += delta;
+                    shifted.Modified = updated.Modified;
+                    retained.Add(shifted);
+                }
+
+                using var tx = _db!.BeginTransaction();
+                Upsert(updated);
+                foreach (var exception in retained) Upsert(exception);
+                foreach (var id in removed)
+                {
+                    using var cmd = _db.CreateCommand();
+                    cmd.CommandText = "DELETE FROM events WHERE id = $id";
+                    cmd.Parameters.AddWithValue("$id", id.ToString());
+                    cmd.ExecuteNonQuery();
+                }
+                tx.Commit();
+
+                _events.RemoveAll(e => removed.Contains(e.Id));
+                _events[_events.FindIndex(e => e.Id == master.Id)] = updated;
+                foreach (var exception in retained)
+                    _events[_events.FindIndex(e => e.Id == exception.Id)] = exception;
+            });
         }
 
         /// <summary>

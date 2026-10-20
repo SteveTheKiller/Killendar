@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- Whole-series edits move saved exceptions and remove dates outside the updated recurrence.
 - Failed password changes preserve the original calendar and complete recovery copies, and report temporary copies that cannot be removed.
 - Failed deletion of an edited recurring appointment preserves its edits and the original series.
 - Category renames and deletions preserve all assignments when a save fails and show the error.
