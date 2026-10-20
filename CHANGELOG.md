@@ -27,7 +27,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Stalled launch requests no longer block later launches, and failed forwarding returns an error.
 - Imported times in a repeated daylight-saving hour use the first occurrence.
 - Whole-series edits move saved exceptions and remove dates outside the updated recurrence.
-- Failed password changes preserve the original calendar and complete recovery copies, and report temporary copies that cannot be removed.
+- Failed password changes preserve the original calendar and recovery copies, allow retries and report cleanup errors.
 - Failed deletion of an edited recurring appointment preserves its edits and the original series.
 - Category renames and deletions preserve all assignments when a save fails and show the error.
 - Failed legacy calendar migrations preserve the source and can retry without leaving an empty calendar.

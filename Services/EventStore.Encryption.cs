@@ -50,8 +50,25 @@ namespace Killendar.Services
                 cmd.Parameters.AddWithValue("$key", newPassword ?? "");
                 cmd.ExecuteNonQuery();
             }
-            Exec("SELECT sqlcipher_export('rekeyed')");
-            Exec("DETACH DATABASE rekeyed");
+            try { Exec("SELECT sqlcipher_export('rekeyed')"); }
+            catch (Exception exportError)
+            {
+                try { Exec("DETACH DATABASE rekeyed"); }
+                catch (Exception detachError)
+                {
+                    Close();
+                    throw new IOException("The password export failed and its temporary database could not detach. " +
+                        "The calendar was closed. Original: " + path + ". Temporary: " + tmp,
+                        new AggregateException(exportError, detachError));
+                }
+                throw;
+            }
+            try { Exec("DETACH DATABASE rekeyed"); }
+            catch
+            {
+                Close();
+                throw;
+            }
             Close();
 
             // Clearing the pool alone is not always enough: a straggler
