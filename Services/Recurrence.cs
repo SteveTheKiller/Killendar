@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Killendar.Models;
+using TimeZoneConverter;
 
 namespace Killendar.Services
 {
@@ -29,6 +30,11 @@ namespace Killendar.Services
             CalendarEvent master, DateTime from, DateTime to)
         {
             if (master == null || !master.IsSeries) yield break;
+            if (UsesTimeBasis(master))
+            {
+                foreach (var occurrence in ExpandTimeBasis(master, from, to)) yield return occurrence;
+                yield break;
+            }
 
             var duration = master.End > master.Start
                 ? master.End - master.Start
@@ -80,6 +86,15 @@ namespace Killendar.Services
         public static bool GeneratesDate(CalendarEvent master, DateTime candidate)
         {
             if (master == null || !master.IsSeries) return false;
+            if (UsesTimeBasis(master))
+            {
+                var pattern = master.Clone();
+                pattern.SkipDates.Clear();
+                var end = candidate.Date == DateTime.MaxValue.Date ? DateTime.MaxValue : candidate.Date.AddDays(1);
+                foreach (var occurrence in ExpandTimeBasis(pattern, candidate.Date, end))
+                    if (occurrence.Start.Date == candidate.Date) return true;
+                return false;
+            }
 
             var day = candidate.Date;
             if (day < master.Start.Date) return false;
@@ -95,6 +110,94 @@ namespace Killendar.Services
                 if (start.Date == day) return true;
             }
             return false;
+        }
+
+        internal static bool UsesTimeBasis(CalendarEvent master) => !master.AllDay &&
+            master.RepeatAnchor.HasValue && (master.RepeatTimeBasis == RecurrenceTimeBasis.Utc ||
+            master.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone);
+
+        internal static DateTime ToTimeBasis(CalendarEvent master, DateTime local)
+        {
+            var utc = local.ToUniversalTime();
+            return DateTime.SpecifyKind(master.RepeatTimeBasis == RecurrenceTimeBasis.Utc ? utc :
+                TimeZoneInfo.ConvertTimeFromUtc(utc, TZConvert.GetTimeZoneInfo(master.RepeatZoneId)),
+                DateTimeKind.Unspecified);
+        }
+
+        internal static DateTime FromTimeBasis(CalendarEvent master, DateTime source)
+        {
+            source = DateTime.SpecifyKind(source, DateTimeKind.Unspecified);
+            if (master.RepeatTimeBasis == RecurrenceTimeBasis.Utc)
+                return DateTime.SpecifyKind(source, DateTimeKind.Utc);
+            var zone = TZConvert.GetTimeZoneInfo(master.RepeatZoneId);
+            if (zone.IsAmbiguousTime(source))
+            {
+                var offsets = zone.GetAmbiguousTimeOffsets(source);
+                return DateTime.SpecifyKind(source - (offsets[0] > offsets[1] ? offsets[0] : offsets[1]), DateTimeKind.Utc);
+            }
+            if (zone.IsInvalidTime(source))
+                return DateTime.SpecifyKind(source - zone.GetUtcOffset(source.AddHours(-12)), DateTimeKind.Utc);
+            return TimeZoneInfo.ConvertTimeToUtc(source, zone);
+        }
+
+        internal static DateTime OriginalTimeBasisStart(CalendarEvent master, DateTime occurrenceStart)
+        {
+            var approximate = ToTimeBasis(master, occurrenceStart);
+            var expectedUtc = occurrenceStart.ToUniversalTime();
+            long margin = TimeSpan.FromDays(2).Ticks;
+            var from = new DateTime(Math.Max(0, approximate.Ticks - margin));
+            var to = new DateTime(approximate.Ticks + Math.Min(margin, DateTime.MaxValue.Ticks - approximate.Ticks));
+            var pattern = master.Clone();
+            pattern.Start = master.RepeatAnchor!.Value;
+            int interval = master.RepeatInterval > 0 ? master.RepeatInterval : 1;
+            foreach (var candidate in Starts(pattern, interval, from))
+            {
+                if (candidate.Start > to || (master.RepeatCount > 0 && candidate.Number > master.RepeatCount)) break;
+                DateTime utc;
+                try { utc = FromTimeBasis(master, candidate.Start); }
+                catch (ArgumentOutOfRangeException) { continue; }
+                if (utc == expectedUtc) return candidate.Start;
+            }
+            throw new InvalidOperationException("The original recurrence occurrence could not be located in its source time basis.");
+        }
+
+        private static IEnumerable<CalendarEvent> ExpandTimeBasis(CalendarEvent master, DateTime from, DateTime to)
+        {
+            var duration = master.End.ToUniversalTime() - master.Start.ToUniversalTime();
+            if (duration <= TimeSpan.Zero) duration = TimeSpan.FromHours(1);
+            var pattern = master.Clone();
+            pattern.Start = master.RepeatAnchor!.Value;
+            // Source and display offsets can differ by up to 28 hours. Padding the jump and
+            // stop bounds keeps every candidate; actual overlap is checked after conversion.
+            long margin = TimeSpan.FromDays(2).Ticks;
+            long earliestOverlap = Math.Max(0, from.Ticks - duration.Ticks);
+            var jump = new DateTime(Math.Max(0, earliestOverlap - margin));
+            var stop = new DateTime(to.Ticks + Math.Min(margin, DateTime.MaxValue.Ticks - to.Ticks));
+            var skips = new HashSet<DateTime>();
+            foreach (var day in master.SkipDates) skips.Add(day.Date);
+            int interval = master.RepeatInterval > 0 ? master.RepeatInterval : 1;
+            foreach (var candidate in Starts(pattern, interval, jump))
+            {
+                if (candidate.Start >= stop || (master.RepeatCount > 0 && candidate.Number > master.RepeatCount)) yield break;
+                DateTime utc;
+                DateTime endUtc;
+                try
+                {
+                    utc = FromTimeBasis(master, candidate.Start);
+                    endUtc = utc + duration;
+                }
+                catch (ArgumentOutOfRangeException) { continue; }
+                var start = utc.ToLocalTime();
+                var end = endUtc.ToLocalTime();
+                if (master.RepeatUntil.HasValue && start.Date > master.RepeatUntil.Value.Date) continue;
+                if (skips.Contains(start.Date) || start >= to || end <= from) continue;
+                var occurrence = master.Clone();
+                occurrence.Start = start;
+                occurrence.End = end;
+                occurrence.SeriesId = master.Id;
+                occurrence.OccurrenceStart = start;
+                yield return occurrence;
+            }
         }
 
         /// <summary>

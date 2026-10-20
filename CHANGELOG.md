@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- Imported recurring appointments preserve their UTC or source-zone schedule and elapsed duration across clock changes.
 - CSV imports preserve distinct descriptions, categories and all-day settings while recognizing matching older imports.
 - Appointment editing, recurrence previews and date picking handle the supported date limits without crashing.
 - HTML calendars include all themes and accents, with accessible selection controls and valid saved preferences.

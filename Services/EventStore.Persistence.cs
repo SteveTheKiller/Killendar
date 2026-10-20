@@ -17,7 +17,8 @@ namespace Killendar.Services
         private const string SelectAll =
             "SELECT id, title, start_utc, end_utc, all_day, location, description, attendees, " +
             "created_utc, modified_utc, categories, repeat_freq, repeat_interval, repeat_days, " +
-            "repeat_until, repeat_count, skip_dates, series_id, occurrence_start FROM events";
+            "repeat_until, repeat_count, skip_dates, series_id, occurrence_start, " +
+            "repeat_time_basis, repeat_anchor, repeat_zone_id FROM events";
 
         private void LoadIntoMemory()
         {
@@ -57,6 +58,10 @@ namespace Killendar.Services
                         OccurrenceStart = r.IsDBNull(18)
                                             ? null
                                             : FromStoreNullable(r.GetString(18), allDay),
+                        RepeatTimeBasis = r.IsDBNull(19) || r.GetInt64(19) < 0 || r.GetInt64(19) > 2
+                            ? RecurrenceTimeBasis.Local : (RecurrenceTimeBasis)r.GetInt64(19),
+                        RepeatAnchor = r.IsDBNull(20) ? null : FromStoreNullable(r.GetString(20), true),
+                        RepeatZoneId = r.IsDBNull(21) ? "" : r.GetString(21),
                     });
                 }
             }
@@ -92,14 +97,14 @@ namespace Killendar.Services
                 "INSERT INTO events(id, title, start_utc, end_utc, all_day, location, " +
                 "description, attendees, categories, created_utc, modified_utc, " +
                 "repeat_freq, repeat_interval, repeat_days, repeat_until, repeat_count, " +
-                "skip_dates, series_id, occurrence_start) " +
+                "skip_dates, series_id, occurrence_start, repeat_time_basis, repeat_anchor, repeat_zone_id) " +
                 "VALUES($id, $ti, $st, $en, $ad, $lo, $de, $at, $ca, $cr, $mo, " +
-                "$rf, $ri, $rd, $ru, $rc, $sk, $si, $os) " +
+                "$rf, $ri, $rd, $ru, $rc, $sk, $si, $os, $tb, $ra, $rz) " +
                 "ON CONFLICT(id) DO UPDATE SET title=$ti, start_utc=$st, end_utc=$en, " +
                 "all_day=$ad, location=$lo, description=$de, attendees=$at, categories=$ca, " +
                 "modified_utc=$mo, repeat_freq=$rf, repeat_interval=$ri, repeat_days=$rd, " +
                 "repeat_until=$ru, repeat_count=$rc, skip_dates=$sk, series_id=$si, " +
-                "occurrence_start=$os";
+                "occurrence_start=$os, repeat_time_basis=$tb, repeat_anchor=$ra, repeat_zone_id=$rz";
             cmd.Parameters.AddWithValue("$id", ev.Id.ToString());
             cmd.Parameters.AddWithValue("$ti", ev.Title ?? "");
             cmd.Parameters.AddWithValue("$st", ToStore(ev.Start, ev.AllDay));
@@ -120,6 +125,9 @@ namespace Killendar.Services
             cmd.Parameters.AddWithValue("$si", ev.SeriesId?.ToString() ?? "");
             cmd.Parameters.AddWithValue("$os", ev.OccurrenceStart.HasValue
                 ? ToStore(ev.OccurrenceStart.Value, ev.AllDay) : "");
+            cmd.Parameters.AddWithValue("$tb", (int)ev.RepeatTimeBasis);
+            cmd.Parameters.AddWithValue("$ra", ev.RepeatAnchor.HasValue ? ToStore(ev.RepeatAnchor.Value, true) : "");
+            cmd.Parameters.AddWithValue("$rz", ev.RepeatZoneId ?? "");
             cmd.ExecuteNonQuery();
         }
 
@@ -211,6 +219,25 @@ namespace Killendar.Services
                 updated.AllDay      = edited.AllDay;
                 updated.Start       = master.Start + delta;
                 updated.End         = updated.Start + duration;
+                if (Recurrence.UsesTimeBasis(master) && !updated.AllDay)
+                {
+                    var sourceDelta = edited.Start.ToUniversalTime() == origin.ToUniversalTime()
+                        ? TimeSpan.Zero
+                        : Recurrence.ToTimeBasis(master, edited.Start) -
+                            Recurrence.OriginalTimeBasisStart(master, origin);
+                    updated.RepeatAnchor = master.RepeatAnchor!.Value + sourceDelta;
+                    updated.Start = Recurrence.FromTimeBasis(updated, updated.RepeatAnchor.Value).ToLocalTime();
+                    var physicalDuration = edited.End.ToUniversalTime() - edited.Start.ToUniversalTime();
+                    if (physicalDuration <= TimeSpan.Zero) physicalDuration = TimeSpan.FromHours(1);
+                    updated.End = (updated.Start.ToUniversalTime() + physicalDuration).ToLocalTime();
+                    delta = updated.Start - master.Start;
+                }
+                else if (updated.AllDay)
+                {
+                    updated.RepeatTimeBasis = RecurrenceTimeBasis.Local;
+                    updated.RepeatAnchor = null;
+                    updated.RepeatZoneId = "";
+                }
                 updated.Repeat         = edited.Repeat;
                 updated.RepeatInterval = edited.RepeatInterval > 0 ? edited.RepeatInterval : 1;
                 updated.RepeatDays     = [.. edited.RepeatDays ?? []];

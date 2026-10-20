@@ -40,7 +40,8 @@ namespace Killendar.Services
         // 2: categories (events.categories assignment string + the categories definition table).
         // 3: repeats (repeat_* columns, skip_dates, and series_id / occurrence_start for the
         //    rows that replace a single date of a series).
-        private const int SchemaVersion = 3;
+        // 4: recurrence source time basis, wall-clock anchor, and source zone.
+        private const int SchemaVersion = 4;
 
         /// <summary>Default per-user folder. Manage Killendars can override it, including with
         /// the executable folder for a self-contained portable copy.</summary>

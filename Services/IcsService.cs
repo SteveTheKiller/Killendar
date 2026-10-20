@@ -140,7 +140,12 @@ namespace Killendar.Services
                                     current = null;
                                     continue;
                                 }
-                                try { current.End = current.Start + span.Value; }
+                                try
+                                {
+                                    current.End = Recurrence.UsesTimeBasis(current)
+                                        ? (current.Start.ToUniversalTime() + span.Value).ToLocalTime()
+                                        : current.Start + span.Value;
+                                }
                                 catch (ArgumentOutOfRangeException)
                                 {
                                     result.Unreadable++;
@@ -148,13 +153,17 @@ namespace Killendar.Services
                                     continue;
                                 }
                             }
-                            if (current.End <= current.Start)
+                            if (Recurrence.UsesTimeBasis(current)
+                                ? current.End.ToUniversalTime() <= current.Start.ToUniversalTime()
+                                : current.End <= current.Start)
                             {
                                 try
                                 {
                                     current.End = current.AllDay
                                         ? current.Start.AddDays(1)
-                                        : current.Start.AddHours(1);
+                                        : Recurrence.UsesTimeBasis(current)
+                                            ? current.Start.ToUniversalTime().AddHours(1).ToLocalTime()
+                                            : current.Start.AddHours(1);
                                 }
                                 catch (ArgumentOutOfRangeException)
                                 {
@@ -262,6 +271,9 @@ namespace Killendar.Services
                         if (parsed == null) break;      // haveStart stays false -> counted, not guessed
                         current.Start  = parsed.Value.dt;
                         current.AllDay = parsed.Value.allDay;
+                        current.RepeatTimeBasis = parsed.Value.basis;
+                        current.RepeatAnchor = parsed.Value.anchor;
+                        current.RepeatZoneId = parsed.Value.zone;
                         haveStart      = true;
                         break;
                     }
@@ -464,7 +476,7 @@ namespace Killendar.Services
         /// and nothing anywhere told the user. A date that cannot be read is now a failure the
         /// caller has to deal with, not a guess dressed up as data.
         /// </summary>
-        private static (DateTime dt, bool allDay)? ParseDateTime(string value, string param)
+        private static (DateTime dt, bool allDay, RecurrenceTimeBasis basis, DateTime? anchor, string zone)? ParseDateTime(string value, string param)
         {
             value = value.Trim();
             if (value.Length == 0) return null;
@@ -473,7 +485,7 @@ namespace Killendar.Services
             if (value.Length == 8 && !value.Contains('T'))
             {
                 if (TryParseDate(value, out var d))
-                    return (d, true);
+                    return (d, true, RecurrenceTimeBasis.Local, null, "");
                 return null;
             }
 
@@ -502,6 +514,7 @@ namespace Killendar.Services
                         var kind = utc ? DateTimeKind.Utc : zoneId == null
                             ? DateTimeKind.Local : DateTimeKind.Unspecified;
                         var dt   = new DateTime(yr, mo, dy, hr, mn, sc, kind);
+                        var anchor = DateTime.SpecifyKind(dt, DateTimeKind.Unspecified);
                         if (utc) dt = dt.ToLocalTime();
                         else if (zoneId != null)
                         {
@@ -529,7 +542,9 @@ namespace Killendar.Services
                                     : TimeZoneInfo.ConvertTimeToUtc(dt, zone).ToLocalTime();
                             }
                         }
-                        return (dt, false);
+                        return (dt, false, utc ? RecurrenceTimeBasis.Utc : zoneId == null
+                            ? RecurrenceTimeBasis.Local : RecurrenceTimeBasis.SourceZone,
+                            utc || zoneId != null ? anchor : (DateTime?)null, zoneId ?? "");
                     }
                     catch (ArgumentOutOfRangeException) { return null; }
                 }

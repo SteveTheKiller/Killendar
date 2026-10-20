@@ -14,6 +14,13 @@ namespace Killendar.Models
         Yearly  = 4
     }
 
+    public enum RecurrenceTimeBasis
+    {
+        Local = 0,
+        Utc = 1,
+        SourceZone = 2
+    }
+
     /// <summary>
     /// One appointment. Field names are load-bearing: IcsService maps them straight onto
     /// RFC-5545 VEVENT properties, and EventStore serializes them as-is, so renaming a
@@ -65,6 +72,13 @@ namespace Killendar.Models
 
         /// <summary>Stop after this many occurrences. 0 means no count limit.</summary>
         public int RepeatCount { get; set; }
+
+        /// <summary>Local is the default for native and pre-migration series. Imported timed
+        /// rules retain their source clock independently of display-local Start and End.</summary>
+        public RecurrenceTimeBasis RepeatTimeBasis { get; set; }
+        /// <summary>The original DTSTART clock fields, without a machine-local zone conversion.</summary>
+        public DateTime? RepeatAnchor { get; set; }
+        public string RepeatZoneId { get; set; } = "";
 
         /// <summary>Occurrence start dates the user deleted one at a time. Compared by DATE, so a
         /// "just this one" delete survives the series later being moved to a different time.</summary>
@@ -137,6 +151,9 @@ namespace Killendar.Models
             RepeatDays      = [.. RepeatDays],
             RepeatUntil     = RepeatUntil,
             RepeatCount     = RepeatCount,
+            RepeatTimeBasis = RepeatTimeBasis,
+            RepeatAnchor    = RepeatAnchor,
+            RepeatZoneId    = RepeatZoneId,
             SkipDates       = [.. SkipDates],
             SeriesId        = SeriesId,
             OccurrenceStart = OccurrenceStart

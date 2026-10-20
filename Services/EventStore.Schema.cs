@@ -37,7 +37,10 @@ CREATE TABLE IF NOT EXISTS events (
     repeat_count     INTEGER NOT NULL DEFAULT 0,
     skip_dates       TEXT    NOT NULL DEFAULT '',
     series_id        TEXT    NOT NULL DEFAULT '',
-    occurrence_start TEXT    NOT NULL DEFAULT ''
+    occurrence_start TEXT    NOT NULL DEFAULT '',
+    repeat_time_basis INTEGER NOT NULL DEFAULT 0,
+    repeat_anchor TEXT NOT NULL DEFAULT '',
+    repeat_zone_id TEXT NOT NULL DEFAULT ''
 );
 CREATE INDEX IF NOT EXISTS events_range ON events (start_utc, end_utc);
 CREATE TABLE IF NOT EXISTS categories (
@@ -94,12 +97,11 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
             foreach (var (name, color) in DefaultCategories) AddCategory(db, name, color);
         }
 
-        /// <summary>Additive columns from v2 and v3. ALTER-on-open is needed because CREATE TABLE
+        /// <summary>Additive columns from v2 through v4. ALTER-on-open is needed because CREATE TABLE
         /// IF NOT EXISTS never touches an existing table, so a Killendar written by 1.0.0 keeps its
         /// original events table; PRAGMA-checking first keeps this idempotent and cheap.
         ///
-        /// Every column added here MUST have a default that reads back as "not repeating", so an
-        /// older Killendar opens with its appointments unchanged rather than acquiring repeats.
+        /// Defaults preserve older appointments and their native local recurrence basis.
         /// </summary>
         private void EnsureColumns()
         {
@@ -126,6 +128,9 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
             AddColumn("skip_dates",       "TEXT NOT NULL DEFAULT ''");
             AddColumn("series_id",        "TEXT NOT NULL DEFAULT ''");
             AddColumn("occurrence_start", "TEXT NOT NULL DEFAULT ''");
+            AddColumn("repeat_time_basis", "INTEGER NOT NULL DEFAULT 0");
+            AddColumn("repeat_anchor", "TEXT NOT NULL DEFAULT ''");
+            AddColumn("repeat_zone_id", "TEXT NOT NULL DEFAULT ''");
         }
 
         private string? GetMeta(string key)
