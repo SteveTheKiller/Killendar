@@ -73,6 +73,72 @@ namespace Killendar.Tests
             }
             finally { CultureInfo.CurrentCulture = previous; }
         }
+
+        [Theory]
+        [InlineData("en-US", "fr-FR", DateStyle.FollowWindows, false)]
+        [InlineData("en-US", "fr-FR", DateStyle.FollowWindows, true)]
+        [InlineData("de-DE", "en-US", DateStyle.US, false)]
+        [InlineData("de-DE", "en-US", DateStyle.US, true)]
+        [InlineData("hu-HU", "en-US", DateStyle.EU, false)]
+        [InlineData("hu-HU", "en-US", DateStyle.EU, true)]
+        public void LiveLanguageChangePreservesAmbiguousDates(string before, string after,
+            DateStyle selectedStyle, bool allDay)
+        {
+            var previous = CultureInfo.CurrentCulture;
+            var style = DateFormatManager.Current;
+            using var fixture = new AppointmentFixture();
+            try
+            {
+                CultureInfo.CurrentCulture = new CultureInfo(before);
+                DateFormatManager.Apply(selectedStyle);
+                fixture.Editor.NewAt(new DateTime(2026, 11, 12, 15, 30, 0));
+                fixture.View.FieldTitle = "Keep November appointment";
+                fixture.View.FieldRepeat = Models.RepeatFreq.Daily;
+                fixture.View.FieldRepeatUntil = new DateTime(2026, 12, 11);
+                if (allDay) fixture.Editor.ToggleAllDay();
+                CultureInfo.CurrentCulture = new CultureInfo(after);
+                fixture.Editor.RefreshLocalizedText();
+                fixture.Editor.Save();
+                Assert.Null(fixture.View.Error);
+                var saved = Assert.Single(fixture.Store.Events);
+                Assert.Equal(allDay ? new DateTime(2026, 11, 12) : new DateTime(2026, 11, 12, 15, 30, 0), saved.Start);
+                Assert.Equal(allDay ? new DateTime(2026, 11, 13) : new DateTime(2026, 11, 12, 16, 30, 0), saved.End);
+                Assert.Equal(allDay, saved.AllDay);
+                Assert.Equal(Models.RepeatFreq.Daily, saved.Repeat);
+                Assert.Equal(new DateTime(2026, 12, 11), saved.RepeatUntil);
+                Assert.Equal(after, CultureInfo.CurrentCulture.Name);
+            }
+            finally { CultureInfo.CurrentCulture = previous; DateFormatManager.Apply(style); }
+        }
+
+        [Fact]
+        public void LiveLanguageChangePreservesIncompleteDateInput()
+        {
+            var previous = CultureInfo.CurrentCulture;
+            var style = DateFormatManager.Current;
+            using var fixture = new AppointmentFixture();
+            try
+            {
+                CultureInfo.CurrentCulture = new CultureInfo("en-US");
+                DateFormatManager.Apply(DateStyle.FollowWindows);
+                fixture.Editor.NewAt(new DateTime(2026, 11, 12, 15, 30, 0));
+                fixture.View.FieldTitle = "Incomplete dates";
+                fixture.View.FieldStartDate = "11/";
+                fixture.View.FieldEndDate = "11/";
+                fixture.View.RepeatDateText = "12/";
+                CultureInfo.CurrentCulture = new CultureInfo("fr-FR");
+                fixture.Editor.RefreshLocalizedText();
+                Assert.Equal("11/", fixture.View.FieldStartDate);
+                Assert.Equal("11/", fixture.View.FieldEndDate);
+                Assert.Equal("12/", fixture.View.RepeatDateText);
+                fixture.Editor.Save();
+                Assert.NotNull(fixture.View.Error);
+                Assert.False(fixture.View.Closed);
+                Assert.Empty(fixture.Store.Events);
+                Assert.Equal("fr-FR", CultureInfo.CurrentCulture.Name);
+            }
+            finally { CultureInfo.CurrentCulture = previous; DateFormatManager.Apply(style); }
+        }
     }
 
     internal sealed class AppointmentFixture : IDisposable

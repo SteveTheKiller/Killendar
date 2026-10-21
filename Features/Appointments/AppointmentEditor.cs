@@ -309,10 +309,28 @@ namespace Killendar.Features
         /// <summary>After a language change: re-render the panel's own strings.</summary>
         internal void RefreshLocalizedText()
         {
+            // The locale has already changed, but the open fields still use the previous
+            // culture's date pattern and separators. Capture them before reformatting.
+            var culture = CultureInfo.CurrentCulture;
+            bool haveStartDate, haveEndDate;
+            DateTime startDate, endDate;
+            DateTime? until;
+            try
+            {
+                CultureInfo.CurrentCulture = _timeCulture;
+                haveStartDate = TryParseDate(_view.FieldStartDate, out startDate);
+                haveEndDate = TryParseDate(_view.FieldEndDate, out endDate);
+                until = _view.FieldRepeatUntil;
+            }
+            finally { CultureInfo.CurrentCulture = culture; }
             bool loading = _loading;
             _loading = true;
             try
             {
+                if (haveStartDate) _view.FieldStartDate = DateFormatManager.Format(startDate);
+                if (haveEndDate) _view.FieldEndDate = DateFormatManager.Format(endDate);
+                if (until.HasValue) _view.FieldRepeatUntil = until;
+                _view.DateHint = DateFormatManager.Hint;
                 if (TryParseTime(_view.FieldStartTime, _timeCulture, out var start))
                     _view.FieldStartTime = FormatTime(DateTime.Today + start);
                 if (TryParseTime(_view.FieldEndTime, _timeCulture, out var end))

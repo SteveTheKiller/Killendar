@@ -9,7 +9,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Fixed
 - Imported day and week durations preserve calendar-day meaning across clock changes, editing and export.
 - Recurring appointments skip nonexistent source-zone times without consuming their occurrence count.
-- Appointment title edits preserve exact times during a repeated daylight-saving hour.
+- Appointment editing preserves dates during language changes and exact times during a repeated daylight-saving hour.
 - Read-only agenda queries support older calendars without changing their files.
 - Uninstall reports canceled, failed and pending removal; Chocolatey verifies the final status receipt.
 - Address suggestions support keyboard selection and stop pending lookups when the editor closes.
