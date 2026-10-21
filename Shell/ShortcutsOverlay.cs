@@ -245,7 +245,6 @@ namespace Killendar.Shell
                 var header = new TextBlock
                 {
                     Text = Loc(titleKey),
-                    FontFamily = new FontFamily("Consolas"),
                     FontSize = 11,
                     FontWeight = FontWeights.SemiBold,
                     Margin = new Thickness(0, host.Children.Count == 0 ? 0 : 14, 0, 6),
@@ -262,7 +261,7 @@ namespace Killendar.Shell
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                     var keys = new TextBlock
                     {
-                        Text = shortcutKeys, FontFamily = new FontFamily("Consolas"),
+                        Text = shortcutKeys,
                         FontSize = 11.5, Margin = new Thickness(0, 0, 10, 0),
                         TextWrapping = TextWrapping.Wrap,
                     };
@@ -315,7 +314,7 @@ namespace Killendar.Shell
             // ellipsized on a narrow cap is still recoverable.
             _kbDetail = new TextBlock
             {
-                Text = " ", FontFamily = new FontFamily("Consolas"), FontSize = 12.5,
+                Text = " ", FontSize = 12.5,
                 Margin = new Thickness(2, 10, 0, 0), Height = 18,
             };
             _kbDetail.SetResourceReference(TextBlock.ForegroundProperty, "PrimaryBrush");
@@ -358,7 +357,7 @@ namespace Killendar.Shell
         {
             var capText = new TextBlock
             {
-                Text = cap, FontFamily = new FontFamily("Consolas"), FontSize = 11,
+                Text = cap, FontSize = 11,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Top, Margin = new Thickness(0, 5, 0, 0),
             };
