@@ -142,6 +142,7 @@
     <sys:String x:Key="Str_Del_Header">In den letzten 30 Tagen gelöscht. Zum Wiederherstellen anklicken.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Gelöscht am {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Wiederhergestellt: {0}</sys:String>
+    <sys:String x:Key="Str_Status_BackupFailed">Sicherung fehlgeschlagen: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import fehlgeschlagen: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} Termine exportiert</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export fehlgeschlagen: {0}</sys:String>
@@ -275,6 +276,10 @@
     <sys:String x:Key="Str_Kc_LoadTitle">Killendar laden</sys:String>
     <sys:String x:Key="Str_Kc_Filter">Killendar-Dateien (*.kcal)|*.kcal|Alle Dateien (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">Kopie als {0} geladen</sys:String>
+    <sys:String x:Key="Str_Ctx_RestoreBackup">Sicherung wiederherstellen</sys:String>
+    <sys:String x:Key="Str_Kc_NoBackups">Noch keine Sicherungen</sys:String>
+    <sys:String x:Key="Str_Kc_LastBackup">Letzte Sicherung: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Restored">Sicherung als {0} wiederhergestellt</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">Laden fehlgeschlagen: {0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} liegt in der Zwischenablage - überall einfügen, wo eine Datei erwartet wird</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">Kopieren fehlgeschlagen: {0}</sys:String>

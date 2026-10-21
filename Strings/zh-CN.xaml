@@ -142,6 +142,7 @@
     <sys:String x:Key="Str_Del_Header">过去 30 天内删除的项目。点击即可恢复。</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">删除于 {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">已恢复：{0}</sys:String>
+    <sys:String x:Key="Str_Status_BackupFailed">备份失败：{0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">导入失败：{0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">已导出 {0} 个约会</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">导出失败：{0}</sys:String>
@@ -275,6 +276,10 @@
     <sys:String x:Key="Str_Kc_LoadTitle">加载 Killendar</sys:String>
     <sys:String x:Key="Str_Kc_Filter">Killendar 文件 (*.kcal)|*.kcal|所有文件 (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">已加载副本，名为 {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_RestoreBackup">恢复备份</sys:String>
+    <sys:String x:Key="Str_Kc_NoBackups">还没有备份</sys:String>
+    <sys:String x:Key="Str_Kc_LastBackup">上次备份：{0}</sys:String>
+    <sys:String x:Key="Str_Kc_Restored">已将备份恢复为 {0}</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">加载失败：{0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} 已复制到剪贴板，可粘贴到任何接受文件的位置</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">复制失败：{0}</sys:String>

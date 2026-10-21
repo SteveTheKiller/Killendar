@@ -184,6 +184,7 @@
     <sys:String x:Key="Str_Del_Header">Slettet de siste 30 dagene. Klikk for å gjenopprette.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Slettet {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Gjenopprettet: {0}</sys:String>
+    <sys:String x:Key="Str_Status_BackupFailed">Sikkerhetskopiering mislyktes: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Importen mislyktes: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Eksporterte {0} avtaler</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Eksporten mislyktes: {0}</sys:String>
@@ -325,6 +326,10 @@
     <sys:String x:Key="Str_Kc_LoadTitle">Last inn en Killendar</sys:String>
     <sys:String x:Key="Str_Kc_Filter">Killendar-filer (*.kcal)|*.kcal|Alle filer (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">Lastet inn en kopi som {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_RestoreBackup">Gjenopprett en sikkerhetskopi</sys:String>
+    <sys:String x:Key="Str_Kc_NoBackups">Ingen sikkerhetskopier ennå</sys:String>
+    <sys:String x:Key="Str_Kc_LastBackup">Siste sikkerhetskopi: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Restored">Sikkerhetskopien ble gjenopprettet som {0}</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">Innlastingen mislyktes: {0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} ligger på utklippstavlen - lim den inn hvor som helst som tar imot en fil</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">Kopieringen mislyktes: {0}</sys:String>

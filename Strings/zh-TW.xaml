@@ -142,6 +142,7 @@
     <sys:String x:Key="Str_Del_Header">過去 30 天內刪除的項目。按一下即可還原。</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">刪除於 {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">已還原：{0}</sys:String>
+    <sys:String x:Key="Str_Status_BackupFailed">備份失敗：{0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">匯入失敗：{0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">已匯出 {0} 個約會</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">匯出失敗：{0}</sys:String>
@@ -275,6 +276,10 @@
     <sys:String x:Key="Str_Kc_LoadTitle">載入 Killendar</sys:String>
     <sys:String x:Key="Str_Kc_Filter">Killendar 檔案 (*.kcal)|*.kcal|所有檔案 (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">已載入副本，名為 {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_RestoreBackup">還原備份</sys:String>
+    <sys:String x:Key="Str_Kc_NoBackups">尚無備份</sys:String>
+    <sys:String x:Key="Str_Kc_LastBackup">上次備份：{0}</sys:String>
+    <sys:String x:Key="Str_Kc_Restored">已將備份還原為 {0}</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">載入失敗：{0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} 已複製到剪貼簿，可貼到任何接受檔案的位置</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">複製失敗：{0}</sys:String>

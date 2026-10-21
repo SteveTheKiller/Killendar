@@ -81,6 +81,8 @@ namespace Killendar.Features
                 return false;
             }
 
+            if (_store.BackupIfDue(DateTime.Now) == null && _store.LastBackupError != null)
+                _pendingStatus ??= string.Format(_host.Loc("Str_Status_BackupFailed"), _store.LastBackupError);
             RefreshLockState();
             RefreshActiveLabel();
             return true;

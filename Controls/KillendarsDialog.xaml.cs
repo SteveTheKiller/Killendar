@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -275,6 +276,50 @@ namespace Killendar.Controls
                 string name = EventStore.ImportKillendar(dlg.FileName);
                 RefreshList(name);
                 DlgStatus.Text = string.Format(Loc("Str_Kc_Loaded"), name);
+            }
+            catch (Exception ex)
+            {
+                DlgStatus.Text = string.Format(Loc("Str_Kc_LoadFailed"), ex.Message);
+            }
+        }
+
+        /// <summary>Under the data folder, when the backup was last taken for the selected row.</summary>
+        private void KcList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SelectedFile is not string name) return;
+            var last = EventStore.ListBackupsFor(Path.Combine(EventStore.DataDir, name)).FirstOrDefault();
+            DlgStatus.Text = EventStore.DataDir + Environment.NewLine + (last == null
+                ? Loc("Str_Kc_NoBackups")
+                : string.Format(Loc("Str_Kc_LastBackup"), last.Taken.ToString("yyyy-MM-dd HH:mm")));
+        }
+
+        /// <summary>Lists the selected calendar's backups under Restore a backup, newest first.</summary>
+        private void RowMenu_Opened(object sender, RoutedEventArgs e)
+        {
+            RestoreBackupMenu.Items.Clear();
+            var backups = SelectedFile is string name
+                ? EventStore.ListBackupsFor(Path.Combine(EventStore.DataDir, name))
+                : [];
+            foreach (var backup in backups)
+            {
+                var item = new MenuItem { Header = backup.Taken.ToString("yyyy-MM-dd HH:mm"), Tag = backup.Path };
+                item.Click += RestoreBackup_Click;
+                RestoreBackupMenu.Items.Add(item);
+            }
+            if (backups.Count == 0)
+                RestoreBackupMenu.Items.Add(new MenuItem { Header = Loc("Str_Kc_NoBackups"), IsEnabled = false });
+        }
+
+        /// <summary>A backup comes back as a calendar of its own beside the original, never over
+        /// it: what changed since is still in the original, and the user picks what to keep.</summary>
+        private void RestoreBackup_Click(object sender, RoutedEventArgs e)
+        {
+            if ((sender as MenuItem)?.Tag is not string path) return;
+            try
+            {
+                string name = EventStore.ImportKillendar(path);
+                RefreshList(name);
+                DlgStatus.Text = string.Format(Loc("Str_Kc_Restored"), name);
             }
             catch (Exception ex)
             {

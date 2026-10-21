@@ -184,6 +184,7 @@
     <sys:String x:Key="Str_Del_Header">Az elmúlt 30 napban törölve. Kattintson a visszaállításhoz.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Törölve: {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Visszaállítva: {0}</sys:String>
+    <sys:String x:Key="Str_Status_BackupFailed">A biztonsági mentés sikertelen: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Sikertelen importálás: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} találkozó exportálva</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Az exportálás sikertelen: {0}</sys:String>
@@ -325,6 +326,10 @@
     <sys:String x:Key="Str_Kc_LoadTitle">Töltsön be egy Killendart</sys:String>
     <sys:String x:Key="Str_Kc_Filter">Killendar-fájlok (*.kcal)|*.kcal|Minden fájl (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">Másolat betöltve mint {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_RestoreBackup">Biztonsági mentés visszaállítása</sys:String>
+    <sys:String x:Key="Str_Kc_NoBackups">Még nincs biztonsági mentés</sys:String>
+    <sys:String x:Key="Str_Kc_LastBackup">Utolsó biztonsági mentés: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Restored">A biztonsági mentés visszaállítva ezen a néven: {0}</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">Sikertelen betöltés: {0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">A {0} a vágólapon van - illessze be bárhová, ahol fájl van</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">A másolás nem sikerült: {0}</sys:String>

@@ -98,10 +98,11 @@
                         <ListBox x:Name="KcList" Height="180" Background="Transparent" BorderThickness="0"
                                  HorizontalContentAlignment="Stretch" Margin="4"
                                  MouseDoubleClick="KcList_MouseDoubleClick"
+                                 SelectionChanged="KcList_SelectionChanged"
                                  PreviewKeyDown="KcList_PreviewKeyDown"
                                  PreviewMouseRightButtonDown="KcList_PreviewMouseRightButtonDown">
                             <ListBox.ContextMenu>
-                                <ContextMenu>
+                                <ContextMenu Opened="RowMenu_Opened">
                                     <MenuItem Header="{DynamicResource Str_Ctx_Open}" Click="Open_Click" InputGestureText="Enter">
                                         <MenuItem.Icon><a11y:Glyph Text="&#xE8E5;" FontFamily="Segoe MDL2 Assets"/></MenuItem.Icon>
                                     </MenuItem>
@@ -118,6 +119,11 @@
                                     </MenuItem>
                                     <MenuItem Header="{DynamicResource Str_Ctx_Reveal}" Click="RevealMenu_Click">
                                         <MenuItem.Icon><a11y:Glyph Text="&#xE838;" FontFamily="Segoe MDL2 Assets"/></MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator/>
+                                    <!-- Filled with the selected calendar's backups as the menu opens. -->
+                                    <MenuItem x:Name="RestoreBackupMenu" Header="{DynamicResource Str_Ctx_RestoreBackup}">
+                                        <MenuItem.Icon><a11y:Glyph Text="&#xE81C;" FontFamily="Segoe MDL2 Assets"/></MenuItem.Icon>
                                     </MenuItem>
                                 </ContextMenu>
                             </ListBox.ContextMenu>

@@ -168,6 +168,7 @@
     <sys:String x:Key="Str_Del_Header">Eliminati negli ultimi 30 giorni. Fai clic per ripristinare.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Eliminato il {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Ripristinato: {0}</sys:String>
+    <sys:String x:Key="Str_Status_BackupFailed">Backup non riuscito: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Importazione non riuscita: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Esportati {0} appuntamenti</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Esportazione non riuscita: {0}</sys:String>
@@ -293,6 +294,10 @@
     <sys:String x:Key="Str_Kc_LoadTitle">Carica un Killendar</sys:String>
     <sys:String x:Key="Str_Kc_Filter">File Killendar (*.kcal)|*.kcal|Tutti i file (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">Caricata una copia come {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_RestoreBackup">Ripristina un backup</sys:String>
+    <sys:String x:Key="Str_Kc_NoBackups">Ancora nessun backup</sys:String>
+    <sys:String x:Key="Str_Kc_LastBackup">Ultimo backup: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Restored">Backup ripristinato come {0}</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">Impossibile caricare: {0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} è negli appunti - incollalo ovunque si accetti un file</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">Impossibile copiare: {0}</sys:String>

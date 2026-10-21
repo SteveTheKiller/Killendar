@@ -184,6 +184,7 @@
     <sys:String x:Key="Str_Del_Header">Соңғы 30 күнде жойылғандар. Қалпына келтіру үшін басыңыз.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Жойылған уақыты: {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Қалпына келтірілді: {0}</sys:String>
+    <sys:String x:Key="Str_Status_BackupFailed">Сақтық көшірме жасалмады: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Импорттау сәтсіз аяқталды: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} кездесу экспортталды</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Экспорттау сәтсіз аяқталды: {0}</sys:String>
@@ -325,6 +326,10 @@
     <sys:String x:Key="Str_Kc_LoadTitle">Killendar жүктеу</sys:String>
     <sys:String x:Key="Str_Kc_Filter">Killendar файлдары (*.kcal)|*.kcal|Барлық файлдар (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">Көшірмесі {0} ретінде жүктелді</sys:String>
+    <sys:String x:Key="Str_Ctx_RestoreBackup">Сақтық көшірмені қалпына келтіру</sys:String>
+    <sys:String x:Key="Str_Kc_NoBackups">Әзірге сақтық көшірме жоқ</sys:String>
+    <sys:String x:Key="Str_Kc_LastBackup">Соңғы сақтық көшірме: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Restored">Сақтық көшірме {0} ретінде қалпына келтірілді</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">Жүктеу сәтсіз аяқталды: {0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} алмасу буферінде - файл қабылдайтын кез келген жерге қойыңыз</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">Көшіру сәтсіз аяқталды: {0}</sys:String>

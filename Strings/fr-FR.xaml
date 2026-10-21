@@ -142,6 +142,7 @@
     <sys:String x:Key="Str_Del_Header">Supprimés ces 30 derniers jours. Cliquez pour restaurer.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Supprimé le {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Restauré : {0}</sys:String>
+    <sys:String x:Key="Str_Status_BackupFailed">Échec de la sauvegarde : {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Échec de l'importation : {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} rendez-vous exportés</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Échec de l'exportation : {0}</sys:String>
@@ -275,6 +276,10 @@
     <sys:String x:Key="Str_Kc_LoadTitle">Charger un Killendar</sys:String>
     <sys:String x:Key="Str_Kc_Filter">Fichiers Killendar (*.kcal)|*.kcal|Tous les fichiers (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">Copie chargée sous le nom {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_RestoreBackup">Restaurer une sauvegarde</sys:String>
+    <sys:String x:Key="Str_Kc_NoBackups">Aucune sauvegarde pour l’instant</sys:String>
+    <sys:String x:Key="Str_Kc_LastBackup">Dernière sauvegarde : {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Restored">Sauvegarde restaurée sous {0}</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">Échec du chargement : {0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} est dans le presse-papiers - collez-le partout où un fichier est accepté</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">Échec de la copie : {0}</sys:String>

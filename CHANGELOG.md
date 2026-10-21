@@ -56,6 +56,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Added a time format choice (Follow Windows, 12-hour or 24-hour) to the date settings.
 - Added undo and redo (Ctrl+Z, Ctrl+Y) for adding, editing, moving and deleting appointments and for imports, up to the last 50 changes.
 - Added Recently deleted: a toolbar list of appointments and series deleted in the last 30 days, kept inside the calendar file (encrypted with it) and restored with a click.
+- Added verified backups: each calendar is copied to a Backups folder beside it on the first open of each day and before imports and password changes, reopened and checked, encrypted with the calendar's own password, and kept for 7 days and 4 weeks. Manage Killendars shows the last backup and restores one as a separate calendar.
 
 ### Changed
 

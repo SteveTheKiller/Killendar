@@ -231,6 +231,7 @@
     <sys:String x:Key="Str_Del_Header">Usunięte w ciągu ostatnich 30 dni. Kliknij, aby przywrócić.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Usunięto {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Przywrócono: {0}</sys:String>
+    <sys:String x:Key="Str_Status_BackupFailed">Nie udało się utworzyć kopii zapasowej: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import nie powiódł się: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Eksport nie powiódł się: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Brak danych do wyeksportowania</sys:String>
@@ -324,6 +325,10 @@
     <sys:String x:Key="Str_Kc_LoadTitle">Wczytaj Killendar</sys:String>
     <sys:String x:Key="Str_Kc_Filter">Pliki Killendar (*.kcal)|*.kcal|Wszystkie pliki (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">Wczytano kopię jako {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_RestoreBackup">Przywróć kopię zapasową</sys:String>
+    <sys:String x:Key="Str_Kc_NoBackups">Brak kopii zapasowych</sys:String>
+    <sys:String x:Key="Str_Kc_LastBackup">Ostatnia kopia zapasowa: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Restored">Przywrócono kopię zapasową jako {0}</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">Wczytywanie nie powiodło się: {0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} znajduje się w schowku - wklej go w dowolnym miejscu przyjmującym pliki</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">Kopiowanie nie powiodło się: {0}</sys:String>

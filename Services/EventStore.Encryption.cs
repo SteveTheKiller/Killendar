@@ -46,6 +46,7 @@ namespace Killendar.Services
             if (deleteRestorationCopy == null) throw new ArgumentNullException(nameof(deleteRestorationCopy));
             if (_db == null) throw new InvalidOperationException("no Killendar is open");
             if (string.IsNullOrEmpty(newPassword)) newPassword = null;
+            BackupNow(DateTime.Now);   // best effort: a failed backup is reported, not a reason to refuse
 
             string? oldPassword = _password;   // Close() clears it; kept for the rollback
             string path = _file;
@@ -122,6 +123,7 @@ namespace Killendar.Services
                 throw;
             }
             Open(path, newPassword);
+            RekeyBackups(oldPassword, newPassword);
 
             // The change has committed once the rewritten file opens. A backup that will not delete
             // (antivirus, permissions) is reported, not thrown: throwing here would tell the user a

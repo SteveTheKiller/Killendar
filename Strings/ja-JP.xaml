@@ -142,6 +142,7 @@
     <sys:String x:Key="Str_Del_Header">過去 30 日間に削除された予定。クリックすると元に戻します。</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">削除日時 {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">{0} を元に戻しました</sys:String>
+    <sys:String x:Key="Str_Status_BackupFailed">バックアップに失敗しました: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">読み込みに失敗しました: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} 件の予定を書き出しました</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">書き出しに失敗しました: {0}</sys:String>
@@ -275,6 +276,10 @@
     <sys:String x:Key="Str_Kc_LoadTitle">Killendar を読み込む</sys:String>
     <sys:String x:Key="Str_Kc_Filter">Killendar ファイル (*.kcal)|*.kcal|すべてのファイル (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">コピーを {0} として読み込みました</sys:String>
+    <sys:String x:Key="Str_Ctx_RestoreBackup">バックアップから復元</sys:String>
+    <sys:String x:Key="Str_Kc_NoBackups">バックアップはまだありません</sys:String>
+    <sys:String x:Key="Str_Kc_LastBackup">最終バックアップ: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Restored">バックアップを {0} として復元しました</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">読み込みに失敗しました: {0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} をクリップボードにコピーしました。ファイルを受け付ける場所に貼り付けられます</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">コピーに失敗しました: {0}</sys:String>

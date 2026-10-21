@@ -185,6 +185,7 @@
     <sys:String x:Key="Str_Del_Header">Удалено за последние 30 дней. Нажмите, чтобы восстановить.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Удалено {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Восстановлено: {0}</sys:String>
+    <sys:String x:Key="Str_Status_BackupFailed">Не удалось создать резервную копию: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Импорт не удался: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Экспортировано встреч: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Экспорт не удался: {0}</sys:String>
@@ -326,6 +327,10 @@
     <sys:String x:Key="Str_Kc_LoadTitle">Загрузить Killendar</sys:String>
     <sys:String x:Key="Str_Kc_Filter">Файлы Killendar (*.kcal)|*.kcal|Все файлы (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">Копия загружена как {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_RestoreBackup">Восстановить резервную копию</sys:String>
+    <sys:String x:Key="Str_Kc_NoBackups">Резервных копий пока нет</sys:String>
+    <sys:String x:Key="Str_Kc_LastBackup">Последняя резервная копия: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Restored">Резервная копия восстановлена как {0}</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">Загрузка не удалась: {0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} в буфере обмена - вставьте куда угодно, где принимают файл</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">Копирование не удалось: {0}</sys:String>

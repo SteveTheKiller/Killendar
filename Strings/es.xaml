@@ -142,6 +142,7 @@
     <sys:String x:Key="Str_Del_Header">Eliminadas en los últimos 30 días. Haga clic en una para restaurarla.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Eliminada el {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Restaurada: {0}</sys:String>
+    <sys:String x:Key="Str_Status_BackupFailed">La copia de seguridad falló: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Error al importar: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Se exportaron {0} citas</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Error al exportar: {0}</sys:String>
@@ -275,6 +276,10 @@
     <sys:String x:Key="Str_Kc_LoadTitle">Cargar un Killendar</sys:String>
     <sys:String x:Key="Str_Kc_Filter">Archivos Killendar (*.kcal)|*.kcal|Todos los archivos (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">Se cargó una copia como {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_RestoreBackup">Restaurar una copia de seguridad</sys:String>
+    <sys:String x:Key="Str_Kc_NoBackups">Aún no hay copias de seguridad</sys:String>
+    <sys:String x:Key="Str_Kc_LastBackup">Última copia de seguridad: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Restored">Copia de seguridad restaurada como {0}</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">No se pudo cargar: {0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} está en el portapapeles: pégalo donde acepten un archivo</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">No se pudo copiar: {0}</sys:String>

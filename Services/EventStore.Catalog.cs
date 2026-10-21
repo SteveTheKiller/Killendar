@@ -58,6 +58,7 @@ namespace Killendar.Services
         {
             SqliteConnection.ClearAllPools();
             File.Move(Path.Combine(DataDir, oldName), Path.Combine(DataDir, newName));
+            RenameBackups(Path.Combine(DataDir, oldName), Path.Combine(DataDir, newName));
             LastRename = (oldName, newName);
             if (string.Equals(oldName, ActiveFile, StringComparison.OrdinalIgnoreCase))
                 SetActive(newName);

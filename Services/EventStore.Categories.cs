@@ -169,6 +169,7 @@ namespace Killendar.Services
             var plan = PlanImport(incoming);
             if (plan.Fresh.Count == 0) return 0;
 
+            BackupNow(DateTime.Now);
             _events.AddRange(plan.Fresh);
             bool saved = Commit(() => WriteRows(plan.Fresh, CancellationToken.None, null));
             return saved ? plan.Fresh.Count : 0;
@@ -205,6 +206,7 @@ namespace Killendar.Services
             lock (_writeGate)
             {
                 _importing = true;
+                BackupNow(DateTime.Now);
                 try { WriteRows(plan.Fresh, cancel, afterRow); }
                 finally { _importing = false; }
             }

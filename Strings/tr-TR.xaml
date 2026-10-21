@@ -142,6 +142,7 @@
     <sys:String x:Key="Str_Del_Header">Son 30 günde silinenler. Geri yüklemek için tıklayın.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Silinme: {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Geri yüklendi: {0}</sys:String>
+    <sys:String x:Key="Str_Status_BackupFailed">Yedekleme başarısız oldu: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">İçe aktarma başarısız: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} randevu dışa aktarıldı</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Dışa aktarma başarısız: {0}</sys:String>
@@ -275,6 +276,10 @@
     <sys:String x:Key="Str_Kc_LoadTitle">Killendar yükle</sys:String>
     <sys:String x:Key="Str_Kc_Filter">Killendar dosyaları (*.kcal)|*.kcal|Tüm dosyalar (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">Kopya {0} olarak yüklendi</sys:String>
+    <sys:String x:Key="Str_Ctx_RestoreBackup">Yedekten geri yükle</sys:String>
+    <sys:String x:Key="Str_Kc_NoBackups">Henüz yedek yok</sys:String>
+    <sys:String x:Key="Str_Kc_LastBackup">Son yedek: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Restored">Yedek {0} olarak geri yüklendi</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">Yükleme başarısız: {0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} panoda - dosya kabul eden her yere yapıştırın</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">Kopyalama başarısız: {0}</sys:String>

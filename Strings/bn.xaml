@@ -142,6 +142,7 @@
     <sys:String x:Key="Str_Del_Header">গত 30 দিনে মোছা হয়েছে। ফেরাতে একটিতে ক্লিক করুন।</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">মোছা হয়েছে {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">ফেরানো হয়েছে {0}</sys:String>
+    <sys:String x:Key="Str_Status_BackupFailed">ব্যাকআপ ব্যর্থ হয়েছে: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">ইমপোর্ট ব্যর্থ: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} টি অ্যাপয়েন্টমেন্ট এক্সপোর্ট করা হয়েছে</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">এক্সপোর্ট ব্যর্থ: {0}</sys:String>
@@ -275,6 +276,10 @@
     <sys:String x:Key="Str_Kc_LoadTitle">Killendar লোড করুন</sys:String>
     <sys:String x:Key="Str_Kc_Filter">Killendar ফাইল (*.kcal)|*.kcal|সব ফাইল (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">একটি কপি {0} নামে লোড হয়েছে</sys:String>
+    <sys:String x:Key="Str_Ctx_RestoreBackup">ব্যাকআপ ফেরত আনুন</sys:String>
+    <sys:String x:Key="Str_Kc_NoBackups">এখনও কোনো ব্যাকআপ নেই</sys:String>
+    <sys:String x:Key="Str_Kc_LastBackup">শেষ ব্যাকআপ: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Restored">ব্যাকআপটি {0} হিসেবে ফেরত আনা হয়েছে</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">লোড করা যায়নি: {0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} ক্লিপবোর্ডে আছে - ফাইল নেয় এমন যেকোনো জায়গায় পেস্ট করুন</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">কপি করা যায়নি: {0}</sys:String>

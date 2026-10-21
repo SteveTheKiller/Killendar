@@ -157,6 +157,7 @@
     <sys:String x:Key="Str_Del_Header">Izbrisano v zadnjih 30 dneh. Kliknite za obnovitev.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Izbrisano {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Obnovljeno: {0}</sys:String>
+    <sys:String x:Key="Str_Status_BackupFailed">Varnostno kopiranje ni uspelo: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Uvoz ni uspel: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Izvoženi dogodki: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Izvoz ni uspel: {0}</sys:String>
@@ -270,6 +271,10 @@
     <sys:String x:Key="Str_Kc_LoadTitle">Naloži Killendar</sys:String>
     <sys:String x:Key="Str_Kc_Filter">Datoteke Killendar (*.kcal)|*.kcal|Vse datoteke (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">Kopija je naložena kot {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_RestoreBackup">Obnovi varnostno kopijo</sys:String>
+    <sys:String x:Key="Str_Kc_NoBackups">Še ni varnostnih kopij</sys:String>
+    <sys:String x:Key="Str_Kc_LastBackup">Zadnja varnostna kopija: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Restored">Varnostna kopija obnovljena kot {0}</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">Nalaganje ni uspelo: {0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} je v odložišču. Prilepi ga kamor koli, kjer so podprte datoteke</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">Kopiranje ni uspelo: {0}</sys:String>

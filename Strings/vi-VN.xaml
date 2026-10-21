@@ -173,6 +173,7 @@
   <sys:String x:Key="Str_Del_Header">Đã xóa trong 30 ngày qua. Bấm để khôi phục.</sys:String>
   <sys:String x:Key="Str_Del_DeletedOn">Đã xóa lúc {0}</sys:String>
   <sys:String x:Key="Str_Status_Restored">Đã khôi phục: {0}</sys:String>
+  <sys:String x:Key="Str_Status_BackupFailed">Sao lưu thất bại: {0}</sys:String>
   <sys:String x:Key="Str_Status_ImportFailed">Nhập không thành công: {0}</sys:String>
   <sys:String x:Key="Str_Status_Exported">Đã xuất {0} cuộc hẹn</sys:String>
   <sys:String x:Key="Str_Status_ExportFailed">Xuất không thành công: {0}</sys:String>
@@ -302,6 +303,10 @@
   <sys:String x:Key="Str_Kc_LoadTitle">Tải một Killendar</sys:String>
   <sys:String x:Key="Str_Kc_Filter">Tệp Killendar (*.kcal)|*.kcal|Tất cả tệp (*.*)|*.*</sys:String>
   <sys:String x:Key="Str_Kc_Loaded">Đã tải một bản sao với tên {0}</sys:String>
+  <sys:String x:Key="Str_Ctx_RestoreBackup">Khôi phục bản sao lưu</sys:String>
+  <sys:String x:Key="Str_Kc_NoBackups">Chưa có bản sao lưu nào</sys:String>
+  <sys:String x:Key="Str_Kc_LastBackup">Bản sao lưu gần nhất: {0}</sys:String>
+  <sys:String x:Key="Str_Kc_Restored">Đã khôi phục bản sao lưu thành {0}</sys:String>
   <sys:String x:Key="Str_Kc_LoadFailed">Không thể tải: {0}</sys:String>
   <sys:String x:Key="Str_Kc_Copied">{0} đã được đặt vào bảng tạm. Bạn có thể dán tệp vào bất kỳ nơi nào chấp nhận tệp</sys:String>
   <sys:String x:Key="Str_Kc_CopyFailed">Không thể sao chép: {0}</sys:String>

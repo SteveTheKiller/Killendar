@@ -184,6 +184,7 @@
     <sys:String x:Key="Str_Del_Header">Deleted in the last 30 days. Click one to restore it.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Deleted {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Restored {0}</sys:String>
+    <sys:String x:Key="Str_Status_BackupFailed">Backup failed: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import failed: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Exported {0} appointments</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export failed: {0}</sys:String>
@@ -325,6 +326,10 @@
     <sys:String x:Key="Str_Kc_LoadTitle">Load a Killendar</sys:String>
     <sys:String x:Key="Str_Kc_Filter">Killendar files (*.kcal)|*.kcal|All files (*.*)|*.*</sys:String>
     <sys:String x:Key="Str_Kc_Loaded">Loaded a copy as {0}</sys:String>
+    <sys:String x:Key="Str_Ctx_RestoreBackup">Restore a backup</sys:String>
+    <sys:String x:Key="Str_Kc_NoBackups">No backups yet</sys:String>
+    <sys:String x:Key="Str_Kc_LastBackup">Last backup: {0}</sys:String>
+    <sys:String x:Key="Str_Kc_Restored">Restored the backup as {0}</sys:String>
     <sys:String x:Key="Str_Kc_LoadFailed">Load failed: {0}</sys:String>
     <sys:String x:Key="Str_Kc_Copied">{0} is on the clipboard - paste it anywhere that takes a file</sys:String>
     <sys:String x:Key="Str_Kc_CopyFailed">Copy failed: {0}</sys:String>
