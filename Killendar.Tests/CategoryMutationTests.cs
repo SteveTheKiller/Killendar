@@ -86,6 +86,39 @@ namespace Killendar.Tests
             finally { store.Close(); Directory.Delete(root, true); }
         }
 
+        // BF-011: add and recolor go through the same recoverable boundary as rename and delete.
+        [Fact]
+        public void FailedCategoryAddIsReportedInsteadOfThrown()
+        {
+            using var fixture = new AppointmentFixture();
+            Execute(fixture.Store.FilePath, "CREATE TRIGGER reject_add BEFORE INSERT ON categories " +
+                "BEGIN SELECT RAISE(ABORT, 'add fault'); END");
+
+            bool saved = fixture.Store.AddCategory("Travel", "#123456");
+
+            Assert.False(saved);
+            Assert.Contains("add fault", fixture.Store.LoadError);
+            Assert.DoesNotContain(fixture.Store.ListCategories(), c => c.Name == "Travel");
+            Assert.Equal(CategoryManager.OrphanHex, CategoryManager.HexOf("Travel"));
+        }
+
+        [Fact]
+        public void FailedRecolorKeepsTheStoredColorEverywhere()
+        {
+            using var fixture = new AppointmentFixture();
+            Assert.True(fixture.Store.AddCategory("Travel", "#123456"));
+            Execute(fixture.Store.FilePath, "CREATE TRIGGER reject_color BEFORE UPDATE ON categories " +
+                "BEGIN SELECT RAISE(ABORT, 'color fault'); END");
+            CategoryManager.Preview("Travel", "#ABCDEF");
+
+            bool saved = fixture.Store.SetCategoryColor("Travel", "#ABCDEF");
+
+            Assert.False(saved);
+            Assert.Contains("color fault", fixture.Store.LoadError);
+            Assert.Equal("#123456", fixture.Store.ListCategories().Single(c => c.Name == "Travel").Color);
+            Assert.Equal("#123456", CategoryManager.HexOf("Travel"), ignoreCase: true);
+        }
+
         private static void Execute(string path, string sql)
         {
             using var db = new SqliteConnection("Data Source=" + path);

@@ -14,6 +14,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Installation cleanup and uninstall preserve calendars and other files stored beside the app.
 - Failed password changes preserve the original calendar and recovery copies, support retries and report cleanup errors.
 - CSV exports protect formula-like text and explain that calendar imports may retain the protective apostrophe.
+- Failed category additions and color changes show an error, keep the typed name and restore the saved color instead of escaping as an unhandled error.
 - Failed deletion of edited recurring occurrences and failed category renames or deletions preserve existing edits and assignments.
 - Failed calendar migrations preserve the source; interrupted settings saves recover the selected calendar location.
 - Recurring calendar imports and exports preserve time zones, wall-clock schedules, elapsed durations and calendar-day durations across clock changes.

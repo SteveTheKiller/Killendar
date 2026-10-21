@@ -55,21 +55,15 @@ namespace Killendar.Services
             return list;
         }
 
-        /// <summary>Adds a definition; an existing name (case-insensitive) wins.</summary>
-        public void AddCategory(string name, string color)
+        /// <summary>Adds a definition; an existing name (case-insensitive) wins. False when the
+        /// write failed, with the reason in LoadError.</summary>
+        public bool AddCategory(string name, string color)
         {
-            if (_db == null) return;
-            AddCategory(_db, name, color);
-            AfterDefinitionChange();
-        }
-
-        // Every definition edit has to refresh the paint cache BEFORE the repaint, or the views
-        // redraw from the colors that were just replaced. Seeding does not come through here - it
-        // uses the static overload - so this cannot fire mid-Open.
-        private void AfterDefinitionChange()
-        {
-            CategoryManager.Refresh(this);
-            Changed?.Invoke();
+            if (_db == null) return false;
+            // Commit refreshes the paint cache BEFORE the repaint, or the views redraw from the
+            // colors that were just replaced. Seeding uses the static overload, so this cannot
+            // fire mid-Open.
+            return Commit(() => AddCategory(_db, name, color), refreshCategories: true);
         }
 
         private static void AddCategory(SqliteConnection db, string name, string color)
@@ -81,19 +75,21 @@ namespace Killendar.Services
             cmd.ExecuteNonQuery();
         }
 
-        public void SetCategoryColor(string name, string color)
+        /// <summary>False when the write failed; the paint cache then holds the stored color again,
+        /// which also discards any live preview.</summary>
+        public bool SetCategoryColor(string name, string color)
         {
-            if (_db == null) return;
-            using (var cmd = _db.CreateCommand())
+            if (_db == null) return false;
+            // Assignment strings hold names, not colors, so nothing to rewrite - but the views
+            // paint from the definitions, so they still need telling.
+            return Commit(() =>
             {
+                using var cmd = _db.CreateCommand();
                 cmd.CommandText = "UPDATE categories SET color = $c WHERE name = $n";
                 cmd.Parameters.AddWithValue("$c", color);
                 cmd.Parameters.AddWithValue("$n", name);
                 cmd.ExecuteNonQuery();
-            }
-            // Assignment strings hold names, not colors, so nothing to rewrite - but the views
-            // paint from the definitions, so they still need telling.
-            AfterDefinitionChange();
+            }, refreshCategories: true);
         }
 
         /// <summary>Renames a definition and rewrites it inside every event's assignment.</summary>

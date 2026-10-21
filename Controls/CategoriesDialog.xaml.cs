@@ -184,7 +184,8 @@ namespace Killendar.Controls
             if (name.Length == 0) { DlgStatus.Text = Loc("Str_Cat_NeedName"); return; }
             if (Exists(name)) { DlgStatus.Text = Loc("Str_Cat_Exists"); return; }
 
-            _store.AddCategory(name, _newColor);
+            // A failed write keeps the typed name so the user can retry.
+            if (!_store.AddCategory(name, _newColor)) { DlgStatus.Text = _store.LoadError; return; }
             NewNameBox.Text = "";
             DlgStatus.Text = "";
             Changed(select: name);
@@ -212,8 +213,14 @@ namespace Killendar.Controls
             };
             if (dlg.ShowDialog() == true)
             {
-                _store.SetCategoryColor(name, HexFromColor(dlg.SelectedColor));
-                Changed(select: name);
+                if (_store.SetCategoryColor(name, HexFromColor(dlg.SelectedColor)))
+                {
+                    Changed(select: name);
+                    return;
+                }
+                // The store has already put the stored color back in the paint cache.
+                DlgStatus.Text = _store.LoadError;
+                PreviewRowSwatch(name, ColorFromHex(cur));
             }
             else
             {
