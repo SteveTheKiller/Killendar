@@ -61,6 +61,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Added reminders: none, at the start, 5, 10, 15 or 30 minutes, 1 hour or 1 day before, and 9:00 the day before for all-day appointments. A reminders window in the corner of the screen offers Snooze (5, 10, 15 or 60 minutes) and Dismiss, reminders missed while Killendar was closed show at the next launch, and a locked calendar shows only how many are due. New appointments use the default reminder from the date settings menu (none until chosen). Calendar files keep their alarms: an imported alarm sets the reminder, and one set here is exported as an alarm.
 
 ### Changed
+- Light's background, sidebar and footer are a slightly darker gray (#d4d4d4), and fields a touch lighter, so content stands apart from the chrome.
 
 - Updated SQLCipher to 4.19.0, SQLite and JSON processing to 10.0.13, and SQLitePCLRaw to 3.0.5.
 - HTML calendars support all themes and accents, accessible selection controls, saved preferences and clearer accent-colored tables.

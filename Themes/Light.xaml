@@ -16,8 +16,8 @@
     <SolidColorBrush x:Key="InputHoverBrush"     Color="#8a8a8a" po:Freeze="True"/>
     <SolidColorBrush x:Key="TextFooter"          Color="#5F5F5F" po:Freeze="True"/>
 
-    <SolidColorBrush x:Key="BackgroundBrush"     Color="#dcdcdc" po:Freeze="True"/>
-    <SolidColorBrush x:Key="SurfaceBrush"        Color="#f0f0f0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BackgroundBrush"     Color="#d4d4d4" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SurfaceBrush"        Color="#f4f4f4" po:Freeze="True"/>
     <SolidColorBrush x:Key="PaneBrush"           Color="#e8e8e8" po:Freeze="True"/>
     <SolidColorBrush x:Key="TableHeaderBrush"    Color="#f0f0f0" po:Freeze="True"/>
     <SolidColorBrush x:Key="CardBorderBrush"     Color="#c0c0c0" po:Freeze="True"/>
@@ -87,7 +87,7 @@
     <sys:Double x:Key="PaneShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.6</sys:Double>
     <SolidColorBrush x:Key="TitleBarBrush" Color="#FFDCDCDC" po:Freeze="True"/>
     <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#FFB2B2B2" po:Freeze="True"/>
-    <SolidColorBrush x:Key="FooterBackgroundBrush" Color="#FFDCDCDC" po:Freeze="True"/>
+    <SolidColorBrush x:Key="FooterBackgroundBrush" Color="#FFD4D4D4" po:Freeze="True"/>
     <SolidColorBrush x:Key="MenuSeparatorBrush" Color="#FFC0C0C0" po:Freeze="True"/>
     <SolidColorBrush x:Key="FileDialogPaneBrush" Color="#b8b8b8" po:Freeze="True"/>
 </ResourceDictionary>
