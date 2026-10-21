@@ -142,24 +142,26 @@ namespace Killendar.Views
                     e.Handled = true;
                     DaySelected?.Invoke(headDate.Date);
                 };
-                head.ContextMenu = CalendarChrome.DayMenu(
-                    headDate.Date.AddHours(9), d => SlotSelected?.Invoke(d));
                 var dayName = CalendarChrome.Text(
                     isToday ? Services.LocaleManager.Loc("Str_Cal_Today") : date.ToString("dddd").ToUpperInvariant(),
                     isToday ? "PrimaryBrush" : "MutedTextBrush", 10,
                     isToday ? FontWeights.Bold : (FontWeight?)null);
                 dayName.Margin = new Thickness(0, 0, 8, 0);
                 dayName.VerticalAlignment = VerticalAlignment.Center;
-                var dayDate = CalendarChrome.Text(date.ToString("MMM d"), "TextBrush", 13);
+                // The culture's own month-and-day order ("October 22", "22. Oktober").
+                var dayDate = CalendarChrome.Text(
+                    date.ToString(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthDayPattern), "TextBrush", 13);
                 dayDate.VerticalAlignment = VerticalAlignment.Center;
                 head.Children.Add(dayName);
                 head.Children.Add(dayDate);
-                // The heading's click and menu stay on the panel; the border around it is what
-                // the keyboard and a screen reader reach. The margin moves out so the focus ring
-                // hugs the heading.
+                // The click stays on the panel; the border around it is what the keyboard and a
+                // screen reader reach, so it carries the create menu too (Shift+F10 opens the
+                // focused element's menu, never a child's). The margin moves out so the focus
+                // ring hugs the heading.
                 var headBox = new CalendarKeyboard.DayBorder(() => DaySelected?.Invoke(headDate.Date))
                 {
-                    Child = head, Margin = head.Margin, HorizontalAlignment = HorizontalAlignment.Left
+                    Child = head, Margin = head.Margin, HorizontalAlignment = HorizontalAlignment.Left,
+                    ContextMenu = CalendarChrome.DayMenu(headDate.Date.AddHours(9), d => SlotSelected?.Invoke(d))
                 };
                 head.Margin = new Thickness(0);
                 CalendarKeyboard.MakeDay(headBox, headDate, rows: false);

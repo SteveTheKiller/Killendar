@@ -76,8 +76,13 @@ namespace Killendar.Views
                     return;
                 }
                 if (DayTarget(date.Date, e.Key, rows) is not DateTime target || day.Parent is not Panel siblings) return;
-                e.Handled = true;
-                siblings.Children.OfType<DayBorder>().FirstOrDefault(d => d.Tag is DateTime t && t == target)?.Focus();
+                // Handled only when a neighboring day is actually there; otherwise the key keeps
+                // its ordinary meaning (Agenda headings each sit alone in their own group).
+                if (siblings.Children.OfType<DayBorder>().FirstOrDefault(d => d.Tag is DateTime t && t == target) is { } next)
+                {
+                    e.Handled = true;
+                    next.Focus();
+                }
             };
         }
 
