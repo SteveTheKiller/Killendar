@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using System.Text;
+using System.Threading;
 
 namespace Killendar.Services
 {
@@ -69,8 +71,42 @@ namespace Killendar.Services
 
         internal static void PublishVerifiedCache(string target, byte[] contents)
         {
+            target = Path.GetFullPath(target);
             byte[] expectedHash;
             using (var hash = SHA256.Create()) expectedHash = hash.ComputeHash(contents);
+            string mutexName;
+            using (var hash = SHA256.Create())
+                mutexName = @"Global\Killendar.SqlCipherCache." + BitConverter.ToString(
+                    hash.ComputeHash(Encoding.UTF8.GetBytes(target.ToUpperInvariant()))).Replace("-", "");
+            Mutex mutex;
+            try { mutex = new Mutex(false, mutexName); }
+            catch (Exception ex) when (ex is UnauthorizedAccessException || ex is IOException ||
+                                       ex is WaitHandleCannotBeOpenedException)
+            {
+                throw new IOException("Could not open the SQLCipher cache publication lock: " + target, ex);
+            }
+            using (mutex)
+            {
+                bool acquired = false;
+                try
+                {
+                    try { acquired = mutex.WaitOne(TimeSpan.FromSeconds(5)); }
+                    catch (AbandonedMutexException) { acquired = true; }
+                    catch (Exception ex) when (ex is UnauthorizedAccessException || ex is IOException ||
+                                               ex is WaitHandleCannotBeOpenedException)
+                    {
+                        throw new IOException("Could not acquire the SQLCipher cache publication lock: " + target, ex);
+                    }
+                    if (!acquired)
+                        throw new IOException("Timed out waiting for the SQLCipher cache publication lock: " + target);
+                    PublishVerifiedCacheLocked(target, contents, expectedHash);
+                }
+                finally { if (acquired) mutex.ReleaseMutex(); }
+            }
+        }
+
+        private static void PublishVerifiedCacheLocked(string target, byte[] contents, byte[] expectedHash)
+        {
             string directory = Path.GetDirectoryName(target)!;
             Directory.CreateDirectory(directory);
             if (!CachedMatches(target, expectedHash))
