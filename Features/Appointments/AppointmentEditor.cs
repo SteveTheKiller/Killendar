@@ -350,8 +350,13 @@ namespace Killendar.Features
                 }
                 start = startDate.Date + startTime;
                 end = endDate.Date + endTime;
+                if (_editing != null && !_editing.AllDay)
+                {
+                    start = PreserveDisplayedInstant(start, _editing.Start);
+                    end = PreserveDisplayedInstant(end, _editing.End);
+                }
 
-                if (end <= start)
+                if (end.ToUniversalTime() <= start.ToUniversalTime())
                 {
                     Reject("Str_Err_EndBeforeStart", AppointmentField.EndTime);
                     return;
@@ -515,6 +520,14 @@ namespace Killendar.Features
         }
 
         // ---- parsing ----
+
+        private static DateTime PreserveDisplayedInstant(DateTime entered, DateTime original)
+        {
+            // The fields display minutes, so an unchanged value must retain hidden seconds
+            // and the original daylight-saving occurrence of a repeated local hour.
+            long displayedTicks = original.Ticks - original.Ticks % TimeSpan.TicksPerMinute;
+            return entered.Ticks == displayedTicks ? original : entered;
+        }
 
         private static string FormatTime(DateTime value)
         {
