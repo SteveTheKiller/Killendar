@@ -223,6 +223,7 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">日期格式</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">每週開始日</sys:String>
+    <sys:String x:Key="Str_Lbl_DefaultReminder">新約會的提醒</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">跟隨 Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">美國 (7/29/2026)</sys:String>
@@ -392,6 +393,23 @@
     <sys:String x:Key="Str_KS_Close">關閉面板或卡片</sys:String>
 
     <sys:String x:Key="Str_Fld_Categories">類別</sys:String>
+    <sys:String x:Key="Str_Fld_Reminder">提醒</sys:String>
+    <sys:String x:Key="Str_Rem_None">不提醒</sys:String>
+    <sys:String x:Key="Str_Rem_AtStart">開始時</sys:String>
+    <sys:String x:Key="Str_Rem_Minutes">提前 {0} 分鐘</sys:String>
+    <sys:String x:Key="Str_Rem_Hour">提前 1 小時</sys:String>
+    <sys:String x:Key="Str_Rem_Hours">提前 {0} 小時</sys:String>
+    <sys:String x:Key="Str_Rem_Day">提前 1 天</sys:String>
+    <sys:String x:Key="Str_Rem_Days">提前 {0} 天</sys:String>
+    <sys:String x:Key="Str_Rem_DayBeforeAt">前一天 {0}</sys:String>
+    <sys:String x:Key="Str_Rem_Head">提醒</sys:String>
+    <sys:String x:Key="Str_Rem_Snooze">稍後提醒</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeFor">{0} 分鐘後</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeHour">1 小時後</sys:String>
+    <sys:String x:Key="Str_Rem_Dismiss">關閉</sys:String>
+    <sys:String x:Key="Str_Rem_DismissAll">全部關閉</sys:String>
+    <sys:String x:Key="Str_Rem_Open">開啟 Killendar</sys:String>
+    <sys:String x:Key="Str_Rem_Locked">有 {0} 則提醒到期。請解鎖 Killendar 查看。</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">還沒有類別。可從側邊欄新增。</sys:String>
     <sys:String x:Key="Str_TT_Categories">類別</sys:String>
     <sys:String x:Key="Str_TT_Density">格線密度 - 按一下或捲動</sys:String>

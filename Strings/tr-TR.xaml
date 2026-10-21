@@ -223,6 +223,7 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">tarih biçimi</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">haftanın başlangıcı</sys:String>
+    <sys:String x:Key="Str_Lbl_DefaultReminder">yeni randevuların hatırlatıcısı</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Windows'u izle</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">ABD (7/29/2026)</sys:String>
@@ -392,6 +393,23 @@
     <sys:String x:Key="Str_KS_Close">Paneli veya kartı kapat</sys:String>
 
     <sys:String x:Key="Str_Fld_Categories">KATEGORİLER</sys:String>
+    <sys:String x:Key="Str_Fld_Reminder">HATIRLATICI</sys:String>
+    <sys:String x:Key="Str_Rem_None">Hatırlatıcı yok</sys:String>
+    <sys:String x:Key="Str_Rem_AtStart">Başlangıç saatinde</sys:String>
+    <sys:String x:Key="Str_Rem_Minutes">{0} dakika önce</sys:String>
+    <sys:String x:Key="Str_Rem_Hour">1 saat önce</sys:String>
+    <sys:String x:Key="Str_Rem_Hours">{0} saat önce</sys:String>
+    <sys:String x:Key="Str_Rem_Day">1 gün önce</sys:String>
+    <sys:String x:Key="Str_Rem_Days">{0} gün önce</sys:String>
+    <sys:String x:Key="Str_Rem_DayBeforeAt">Bir gün önce {0}</sys:String>
+    <sys:String x:Key="Str_Rem_Head">Hatırlatıcılar</sys:String>
+    <sys:String x:Key="Str_Rem_Snooze">Ertele</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeFor">{0} dakika</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeHour">1 saat</sys:String>
+    <sys:String x:Key="Str_Rem_Dismiss">Kapat</sys:String>
+    <sys:String x:Key="Str_Rem_DismissAll">Tümünü kapat</sys:String>
+    <sys:String x:Key="Str_Rem_Open">Killendar'ı aç</sys:String>
+    <sys:String x:Key="Str_Rem_Locked">{0} hatırlatıcının zamanı geldi. Görmek için Killendar'ın kilidini açın.</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Henüz kategori yok. Kenar çubuğundan ekleyin.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategoriler</sys:String>
     <sys:String x:Key="Str_TT_Density">Izgara yoğunluğu - tıklayın veya kaydırın</sys:String>

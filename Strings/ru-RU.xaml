@@ -275,6 +275,7 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">формат даты</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">начало недели</sys:String>
+    <sys:String x:Key="Str_Lbl_DefaultReminder">напоминание для новых встреч</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Как в Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">США (7/29/2026)</sys:String>
@@ -472,6 +473,23 @@
 
     <!-- Categories -->
     <sys:String x:Key="Str_Fld_Categories">КАТЕГОРИИ</sys:String>
+    <sys:String x:Key="Str_Fld_Reminder">НАПОМИНАНИЕ</sys:String>
+    <sys:String x:Key="Str_Rem_None">Без напоминания</sys:String>
+    <sys:String x:Key="Str_Rem_AtStart">Во время начала</sys:String>
+    <sys:String x:Key="Str_Rem_Minutes">За {0} мин</sys:String>
+    <sys:String x:Key="Str_Rem_Hour">За 1 час</sys:String>
+    <sys:String x:Key="Str_Rem_Hours">За {0} ч</sys:String>
+    <sys:String x:Key="Str_Rem_Day">За 1 день</sys:String>
+    <sys:String x:Key="Str_Rem_Days">За {0} дн.</sys:String>
+    <sys:String x:Key="Str_Rem_DayBeforeAt">Накануне в {0}</sys:String>
+    <sys:String x:Key="Str_Rem_Head">Напоминания</sys:String>
+    <sys:String x:Key="Str_Rem_Snooze">Отложить</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeFor">На {0} мин</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeHour">На 1 час</sys:String>
+    <sys:String x:Key="Str_Rem_Dismiss">Закрыть</sys:String>
+    <sys:String x:Key="Str_Rem_DismissAll">Закрыть все</sys:String>
+    <sys:String x:Key="Str_Rem_Open">Открыть Killendar</sys:String>
+    <sys:String x:Key="Str_Rem_Locked">Напоминаний: {0}. Разблокируйте Killendar, чтобы их увидеть.</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Категорий пока нет. Добавьте их на боковой панели.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Категории</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

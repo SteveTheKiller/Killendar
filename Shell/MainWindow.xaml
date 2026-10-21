@@ -703,6 +703,11 @@
                                                 ToolTip="{DynamicResource Str_TT_OpenInMaps}"/>
                                     </Grid>
 
+                                    <!-- Choices built in code (ReminderField.cs): their labels change with all-day. -->
+                                    <TextBlock Text="{DynamicResource Str_Fld_Reminder}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
+                                    <ComboBox x:Name="FieldReminder" HorizontalAlignment="Left" MinWidth="180" Margin="0,2,0,10"
+                                              AutomationProperties.Name="{DynamicResource Str_Fld_Reminder}"/>
+
                                     <TextBlock Text="{DynamicResource Str_Fld_Description}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
                                     <TextBox x:Name="FieldDescription" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="4,3" Margin="0,2,0,10"
                                              AutomationProperties.Name="{DynamicResource Str_Fld_Description}"

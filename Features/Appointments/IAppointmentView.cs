@@ -23,6 +23,9 @@ namespace Killendar.Features
         /// like every other field, even though the shell renders it as toggle chips, so the
         /// editor's logic stays exercisable without a window.</summary>
         string FieldCategories  { get; set; }
+
+        /// <summary>Minutes before the start to remind, or null for none.</summary>
+        int? FieldReminder { get; set; }
         string FieldStartDate   { get; set; }
         string FieldStartTime   { get; set; }
         string FieldEndDate     { get; set; }

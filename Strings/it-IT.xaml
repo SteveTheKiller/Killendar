@@ -250,6 +250,7 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">formato data</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">inizio settimana</sys:String>
+    <sys:String x:Key="Str_Lbl_DefaultReminder">promemoria dei nuovi appuntamenti</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Segui Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">USA (7/29/2026)</sys:String>
@@ -427,6 +428,23 @@
     <sys:String x:Key="Str_Kc_DataFolderFailed">Impossibile usare quella cartella: {0}</sys:String>
 
     <sys:String x:Key="Str_Fld_Categories">CATEGORIE</sys:String>
+    <sys:String x:Key="Str_Fld_Reminder">PROMEMORIA</sys:String>
+    <sys:String x:Key="Str_Rem_None">Nessun promemoria</sys:String>
+    <sys:String x:Key="Str_Rem_AtStart">All’ora di inizio</sys:String>
+    <sys:String x:Key="Str_Rem_Minutes">{0} minuti prima</sys:String>
+    <sys:String x:Key="Str_Rem_Hour">1 ora prima</sys:String>
+    <sys:String x:Key="Str_Rem_Hours">{0} ore prima</sys:String>
+    <sys:String x:Key="Str_Rem_Day">1 giorno prima</sys:String>
+    <sys:String x:Key="Str_Rem_Days">{0} giorni prima</sys:String>
+    <sys:String x:Key="Str_Rem_DayBeforeAt">Il giorno prima alle {0}</sys:String>
+    <sys:String x:Key="Str_Rem_Head">Promemoria</sys:String>
+    <sys:String x:Key="Str_Rem_Snooze">Posticipa</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeFor">Di {0} minuti</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeHour">Di 1 ora</sys:String>
+    <sys:String x:Key="Str_Rem_Dismiss">Ignora</sys:String>
+    <sys:String x:Key="Str_Rem_DismissAll">Ignora tutti</sys:String>
+    <sys:String x:Key="Str_Rem_Open">Apri Killendar</sys:String>
+    <sys:String x:Key="Str_Rem_Locked">{0} promemoria in scadenza. Sblocca Killendar per vederli.</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Ancora nessuna categoria. Aggiungile dalla barra laterale.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categorie</sys:String>
     <sys:String x:Key="Str_TT_Density">Densità della griglia - clic o rotellina</sys:String>

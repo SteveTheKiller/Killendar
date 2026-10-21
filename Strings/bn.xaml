@@ -223,6 +223,7 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">তারিখের বিন্যাস</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">সপ্তাহের শুরু</sys:String>
+    <sys:String x:Key="Str_Lbl_DefaultReminder">নতুন অ্যাপয়েন্টমেন্টের রিমাইন্ডার</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Windows অনুসরণ করুন</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">মার্কিন যুক্তরাষ্ট্র (7/29/2026)</sys:String>
@@ -392,6 +393,23 @@
     <sys:String x:Key="Str_KS_Close">প্যানেল বা কার্ড বন্ধ করুন</sys:String>
 
     <sys:String x:Key="Str_Fld_Categories">বিভাগ</sys:String>
+    <sys:String x:Key="Str_Fld_Reminder">রিমাইন্ডার</sys:String>
+    <sys:String x:Key="Str_Rem_None">কোনো রিমাইন্ডার নেই</sys:String>
+    <sys:String x:Key="Str_Rem_AtStart">শুরুর সময়ে</sys:String>
+    <sys:String x:Key="Str_Rem_Minutes">{0} মিনিট আগে</sys:String>
+    <sys:String x:Key="Str_Rem_Hour">১ ঘণ্টা আগে</sys:String>
+    <sys:String x:Key="Str_Rem_Hours">{0} ঘণ্টা আগে</sys:String>
+    <sys:String x:Key="Str_Rem_Day">১ দিন আগে</sys:String>
+    <sys:String x:Key="Str_Rem_Days">{0} দিন আগে</sys:String>
+    <sys:String x:Key="Str_Rem_DayBeforeAt">আগের দিন {0}-এ</sys:String>
+    <sys:String x:Key="Str_Rem_Head">রিমাইন্ডার</sys:String>
+    <sys:String x:Key="Str_Rem_Snooze">পরে মনে করান</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeFor">{0} মিনিটের জন্য</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeHour">১ ঘণ্টার জন্য</sys:String>
+    <sys:String x:Key="Str_Rem_Dismiss">বাতিল করুন</sys:String>
+    <sys:String x:Key="Str_Rem_DismissAll">সব বাতিল করুন</sys:String>
+    <sys:String x:Key="Str_Rem_Open">Killendar খুলুন</sys:String>
+    <sys:String x:Key="Str_Rem_Locked">{0}টি রিমাইন্ডারের সময় হয়েছে। দেখতে Killendar আনলক করুন।</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">এখনও কোনো বিভাগ নেই। সাইডবার থেকে যোগ করুন।</sys:String>
     <sys:String x:Key="Str_TT_Categories">বিভাগ</sys:String>
     <sys:String x:Key="Str_TT_Density">গ্রিড ঘনত্ব - ক্লিক বা স্ক্রল</sys:String>

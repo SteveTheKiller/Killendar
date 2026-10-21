@@ -223,6 +223,7 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">日付形式</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">週の開始</sys:String>
+    <sys:String x:Key="Str_Lbl_DefaultReminder">新しい予定のリマインダー</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Windows に合わせる</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">米国 (7/29/2026)</sys:String>
@@ -392,6 +393,23 @@
     <sys:String x:Key="Str_KS_Close">パネルまたはカードを閉じる</sys:String>
 
     <sys:String x:Key="Str_Fld_Categories">カテゴリ</sys:String>
+    <sys:String x:Key="Str_Fld_Reminder">リマインダー</sys:String>
+    <sys:String x:Key="Str_Rem_None">リマインダーなし</sys:String>
+    <sys:String x:Key="Str_Rem_AtStart">開始時刻</sys:String>
+    <sys:String x:Key="Str_Rem_Minutes">{0} 分前</sys:String>
+    <sys:String x:Key="Str_Rem_Hour">1 時間前</sys:String>
+    <sys:String x:Key="Str_Rem_Hours">{0} 時間前</sys:String>
+    <sys:String x:Key="Str_Rem_Day">1 日前</sys:String>
+    <sys:String x:Key="Str_Rem_Days">{0} 日前</sys:String>
+    <sys:String x:Key="Str_Rem_DayBeforeAt">前日の {0}</sys:String>
+    <sys:String x:Key="Str_Rem_Head">リマインダー</sys:String>
+    <sys:String x:Key="Str_Rem_Snooze">再通知</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeFor">{0} 分後</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeHour">1 時間後</sys:String>
+    <sys:String x:Key="Str_Rem_Dismiss">閉じる</sys:String>
+    <sys:String x:Key="Str_Rem_DismissAll">すべて閉じる</sys:String>
+    <sys:String x:Key="Str_Rem_Open">Killendar を開く</sys:String>
+    <sys:String x:Key="Str_Rem_Locked">{0} 件のリマインダーがあります。表示するには Killendar のロックを解除してください。</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">カテゴリがまだありません。サイドバーから追加してください。</sys:String>
     <sys:String x:Key="Str_TT_Categories">カテゴリ</sys:String>
     <sys:String x:Key="Str_TT_Density">グリッド密度 - クリックまたはスクロール</sys:String>

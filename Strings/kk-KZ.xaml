@@ -274,6 +274,7 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">күн пішімі</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">аптаның басталуы</sys:String>
+    <sys:String x:Key="Str_Lbl_DefaultReminder">жаңа кездесулер ескерткіші</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Windows бойынша</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">АҚШ (7/29/2026)</sys:String>
@@ -471,6 +472,23 @@
 
     <!-- Categories -->
     <sys:String x:Key="Str_Fld_Categories">САНАТТАР</sys:String>
+    <sys:String x:Key="Str_Fld_Reminder">ЕСКЕРТКІШ</sys:String>
+    <sys:String x:Key="Str_Rem_None">Ескерткіш жоқ</sys:String>
+    <sys:String x:Key="Str_Rem_AtStart">Басталу уақытында</sys:String>
+    <sys:String x:Key="Str_Rem_Minutes">{0} минут бұрын</sys:String>
+    <sys:String x:Key="Str_Rem_Hour">1 сағат бұрын</sys:String>
+    <sys:String x:Key="Str_Rem_Hours">{0} сағат бұрын</sys:String>
+    <sys:String x:Key="Str_Rem_Day">1 күн бұрын</sys:String>
+    <sys:String x:Key="Str_Rem_Days">{0} күн бұрын</sys:String>
+    <sys:String x:Key="Str_Rem_DayBeforeAt">Алдыңғы күні {0}</sys:String>
+    <sys:String x:Key="Str_Rem_Head">Ескерткіштер</sys:String>
+    <sys:String x:Key="Str_Rem_Snooze">Кейінге қалдыру</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeFor">{0} минутқа</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeHour">1 сағатқа</sys:String>
+    <sys:String x:Key="Str_Rem_Dismiss">Жабу</sys:String>
+    <sys:String x:Key="Str_Rem_DismissAll">Барлығын жабу</sys:String>
+    <sys:String x:Key="Str_Rem_Open">Killendar ашу</sys:String>
+    <sys:String x:Key="Str_Rem_Locked">{0} ескерткіш уақыты келді. Көру үшін Killendar құлпын ашыңыз.</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Әзірге санат жоқ. Оларды бүйір тақтадан қосыңыз.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Санаттар</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

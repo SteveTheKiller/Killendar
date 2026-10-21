@@ -53,7 +53,10 @@ namespace Killendar.Shell
             // Overlays and menus could still show text from the calendar.
             if (ShortcutsOverlay.Visibility == Visibility.Visible) ToggleShortcutsOverlay();
             if (_deletedMenu != null) _deletedMenu.IsOpen = false;
+            var pending = _store.HasPassword ? _store.DueReminders(DateTime.Now).Count : 0;
+            var coming = _store.HasPassword ? _store.UpcomingReminderTimes(DateTime.Now, TimeSpan.FromDays(1)) : [];
             if (!_security.Lock()) return;
+            RemindWhileLocked(pending, coming);   // ReminderAlerts.cs
             Dispatcher.BeginInvoke(new Action(AskToUnlockWhenSeen), DispatcherPriority.Background);
         }
 
@@ -63,6 +66,7 @@ namespace Killendar.Shell
             _unlockAsking = true;
             try { _security.Unlock(); }
             finally { _unlockAsking = false; }
+            if (!_security.IsLocked) CheckReminders();
         }
 
         private void LockShortcut()

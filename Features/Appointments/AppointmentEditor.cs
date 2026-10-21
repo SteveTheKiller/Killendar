@@ -81,7 +81,7 @@ namespace Killendar.Features
         /// <summary>Every value the panel would save, as one comparable string.</summary>
         private string Snapshot() => string.Join("\u0001",
             _view.FieldTitle, _view.FieldLocation, _view.FieldDescription, _view.FieldAttendees,
-            _view.FieldCategories, _view.FieldStartDate, _view.FieldStartTime, _view.FieldEndDate,
+            _view.FieldCategories, _view.FieldReminder, _view.FieldStartDate, _view.FieldStartTime, _view.FieldEndDate,
             _view.FieldEndTime, _allDay, _view.FieldRepeat, _view.FieldRepeatEveryN,
             string.Join(",", _view.FieldRepeatDays ?? []), _view.FieldRepeatCount,
             _view.FieldRepeatUntil?.Ticks, _view.EditWholeSeries);
@@ -110,6 +110,7 @@ namespace Killendar.Features
             _view.FieldDescription = "";
             _view.FieldAttendees = "";
             _view.FieldCategories = "";
+            _view.FieldReminder = Reminders.ParseDefault(Settings.Get(Reminders.DefaultSetting));
 
             _view.ResetRepeat();
             _view.RepeatSectionVisible = true;
@@ -143,6 +144,7 @@ namespace Killendar.Features
             _view.FieldDescription = ev.Description;
             _view.FieldAttendees = string.Join(", ", ev.Attendees);
             _view.FieldCategories = ev.Categories;
+            _view.FieldReminder = ev.ReminderMinutes;
 
             // Which of the three kinds of appointment this is decides what the panel offers.
             //   - a plain one: the pattern controls, no scope question;
@@ -515,7 +517,8 @@ namespace Killendar.Features
                     Location    = _view.FieldLocation.Trim(),
                     Description = _view.FieldDescription.Trim(),
                     Attendees   = attendees,
-                    Categories  = EventStore.NormalizeCategories(_view.FieldCategories)
+                    Categories  = EventStore.NormalizeCategories(_view.FieldCategories),
+                    ReminderMinutes = _view.FieldReminder,
                 };
                 ApplyRepeatFromPanel(ev);
                 _store.Add(ev);
@@ -539,7 +542,10 @@ namespace Killendar.Features
                 _editing.Description = _view.FieldDescription.Trim();
                 _editing.Attendees   = attendees;
                 _editing.Categories  = EventStore.NormalizeCategories(_view.FieldCategories);
+                int? previousReminder = _editing.ReminderMinutes;
+                _editing.ReminderMinutes = _view.FieldReminder;
                 IcsService.DropStaleKeptProperties(_editing, previousDescription, previousAllDay);
+                IcsService.DropStaleAlarms(_editing, previousReminder);
 
                 bool oneDateOfASeries = _store.GetSeriesMaster(_editing) != null;
 

@@ -46,7 +46,7 @@ namespace Killendar.Services
         // 7: nominal calendar days and elapsed subday duration components.
         // 8: the imported UID and the meeting details carried through, kept verbatim for export;
         //    the `deleted` table behind Recently deleted.
-        private const int SchemaVersion = 8;
+        private const int SchemaVersion = 9;
 
         /// <summary>Default per-user folder. Manage Killendars can override it, including with
         /// the executable folder for a self-contained portable copy.</summary>

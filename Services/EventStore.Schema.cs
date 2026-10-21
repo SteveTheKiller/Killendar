@@ -50,7 +50,8 @@ CREATE TABLE IF NOT EXISTS events (
     duration_days INTEGER NOT NULL DEFAULT 0,
     duration_time_ticks INTEGER NOT NULL DEFAULT 0,
     external_uid TEXT NOT NULL DEFAULT '',
-    kept_properties TEXT NOT NULL DEFAULT ''
+    kept_properties TEXT NOT NULL DEFAULT '',
+    reminder_minutes INTEGER NOT NULL DEFAULT -1
 );
 CREATE INDEX IF NOT EXISTS events_range ON events (start_utc, end_utc);
 CREATE TABLE IF NOT EXISTS categories (
@@ -64,6 +65,14 @@ CREATE TABLE IF NOT EXISTS deleted (
     title       TEXT NOT NULL DEFAULT '',
     start_utc   TEXT NOT NULL DEFAULT '',
     rows        TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS reminder_state (
+    event_id     TEXT NOT NULL,
+    occurrence   TEXT NOT NULL,
+    dismissed    INTEGER NOT NULL DEFAULT 0,
+    snooze_until TEXT NOT NULL DEFAULT '',
+    updated_utc  TEXT NOT NULL,
+    PRIMARY KEY (event_id, occurrence)
 );";
 
         private void EnsureSchema()
@@ -78,6 +87,7 @@ CREATE TABLE IF NOT EXISTS deleted (
             if (!hadCategories) SeedDefaultCategories();
             SetMeta("schema_version", SchemaVersion.ToString());
             PurgeDeleted(DateTime.UtcNow);
+            PurgeReminderState(DateTime.UtcNow);
             // Stamped once, for forensics on a file that turns up years later. Read straight off
             // the assembly rather than through About.cs, whose version helper is private to
             // MainWindow.
@@ -115,7 +125,7 @@ CREATE TABLE IF NOT EXISTS deleted (
             foreach (var (name, color) in DefaultCategories) AddCategory(db, name, color);
         }
 
-        /// <summary>Additive columns from v2 through v8. ALTER-on-open is needed because CREATE TABLE
+        /// <summary>Additive columns from v2 through v9. ALTER-on-open is needed because CREATE TABLE
         /// IF NOT EXISTS never touches an existing table, so a Killendar written by 1.0.0 keeps its
         /// original events table; PRAGMA-checking first keeps this idempotent and cheap.
         ///
@@ -159,6 +169,7 @@ CREATE TABLE IF NOT EXISTS deleted (
             AddColumn("duration_time_ticks", "INTEGER NOT NULL DEFAULT 0");
             AddColumn("external_uid", "TEXT NOT NULL DEFAULT ''");
             AddColumn("kept_properties", "TEXT NOT NULL DEFAULT ''");
+            AddColumn("reminder_minutes", "INTEGER NOT NULL DEFAULT -1");
         }
 
         private string? GetMeta(string key)

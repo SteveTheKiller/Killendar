@@ -103,6 +103,7 @@ namespace Killendar.Tests
             public string FieldDescription { get; set; } = "";
             public string FieldAttendees { get; set; } = "";
             public string FieldCategories { get; set; } = "";
+            public int? FieldReminder { get; set; }
             public string FieldStartDate { get; set; } = "";
             public string FieldStartTime { get; set; } = "";
             public string FieldEndDate { get; set; } = "";

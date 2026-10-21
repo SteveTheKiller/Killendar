@@ -274,6 +274,7 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">dátumformátum</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">a hét kezdete</sys:String>
+    <sys:String x:Key="Str_Lbl_DefaultReminder">új találkozók emlékeztetője</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Kövesse a Windows rendszert</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">USA (7/29/2026)</sys:String>
@@ -473,6 +474,23 @@ A Killendar újraindul a telepített helyről.</sys:String>
 
     <!-- Categories -->
     <sys:String x:Key="Str_Fld_Categories">KATEGÓRIÁK</sys:String>
+    <sys:String x:Key="Str_Fld_Reminder">EMLÉKEZTETŐ</sys:String>
+    <sys:String x:Key="Str_Rem_None">Nincs emlékeztető</sys:String>
+    <sys:String x:Key="Str_Rem_AtStart">A kezdéskor</sys:String>
+    <sys:String x:Key="Str_Rem_Minutes">{0} perccel előtte</sys:String>
+    <sys:String x:Key="Str_Rem_Hour">1 órával előtte</sys:String>
+    <sys:String x:Key="Str_Rem_Hours">{0} órával előtte</sys:String>
+    <sys:String x:Key="Str_Rem_Day">1 nappal előtte</sys:String>
+    <sys:String x:Key="Str_Rem_Days">{0} nappal előtte</sys:String>
+    <sys:String x:Key="Str_Rem_DayBeforeAt">Előző nap {0}-kor</sys:String>
+    <sys:String x:Key="Str_Rem_Head">Emlékeztetők</sys:String>
+    <sys:String x:Key="Str_Rem_Snooze">Halasztás</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeFor">{0} percre</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeHour">1 órára</sys:String>
+    <sys:String x:Key="Str_Rem_Dismiss">Elvetés</sys:String>
+    <sys:String x:Key="Str_Rem_DismissAll">Összes elvetése</sys:String>
+    <sys:String x:Key="Str_Rem_Open">Killendar megnyitása</sys:String>
+    <sys:String x:Key="Str_Rem_Locked">{0} emlékeztető esedékes. A megtekintéshez oldja fel a Killendart.</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Még nincsenek kategóriák. Adjon hozzá néhányat az oldalsó sínről.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategóriák</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

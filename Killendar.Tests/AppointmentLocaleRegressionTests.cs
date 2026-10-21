@@ -177,6 +177,7 @@ namespace Killendar.Tests
         public string FieldDescription { get; set; } = "";
         public string FieldAttendees { get; set; } = "";
         public string FieldCategories { get; set; } = "";
+        public int? FieldReminder { get; set; }
         private string _startDate = "", _startTime = "";
         internal Action? StartChanged;
         public string FieldStartDate

@@ -274,6 +274,7 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">формат дати</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">тиждень починається з</sys:String>
+    <sys:String x:Key="Str_Lbl_DefaultReminder">нагадування для нових зустрічей</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Як у Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">США (7/29/2026)</sys:String>
@@ -471,6 +472,23 @@
 
     <!-- Categories -->
     <sys:String x:Key="Str_Fld_Categories">КАТЕГОРІЇ</sys:String>
+    <sys:String x:Key="Str_Fld_Reminder">НАГАДУВАННЯ</sys:String>
+    <sys:String x:Key="Str_Rem_None">Без нагадування</sys:String>
+    <sys:String x:Key="Str_Rem_AtStart">Під час початку</sys:String>
+    <sys:String x:Key="Str_Rem_Minutes">За {0} хв</sys:String>
+    <sys:String x:Key="Str_Rem_Hour">За 1 годину</sys:String>
+    <sys:String x:Key="Str_Rem_Hours">За {0} год</sys:String>
+    <sys:String x:Key="Str_Rem_Day">За 1 день</sys:String>
+    <sys:String x:Key="Str_Rem_Days">За {0} дн.</sys:String>
+    <sys:String x:Key="Str_Rem_DayBeforeAt">Напередодні о {0}</sys:String>
+    <sys:String x:Key="Str_Rem_Head">Нагадування</sys:String>
+    <sys:String x:Key="Str_Rem_Snooze">Відкласти</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeFor">На {0} хв</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeHour">На 1 годину</sys:String>
+    <sys:String x:Key="Str_Rem_Dismiss">Закрити</sys:String>
+    <sys:String x:Key="Str_Rem_DismissAll">Закрити всі</sys:String>
+    <sys:String x:Key="Str_Rem_Open">Відкрити Killendar</sys:String>
+    <sys:String x:Key="Str_Rem_Locked">Нагадувань: {0}. Розблокуйте Killendar, щоб їх побачити.</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Категорій ще немає. Додайте їх на бічній панелі.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Категорії</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

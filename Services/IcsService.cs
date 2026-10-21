@@ -280,6 +280,7 @@ namespace Killendar.Services
                                 current.Repeat          = RepeatFreq.None;
                             }
 
+                            current.ReminderMinutes = Reminders.FromAlarms(current.KeptProperties);
                             if (repeating) result.Repeating++;
                             if (lostDetails) result.LostDetails++;
                             result.Events.Add(current);
@@ -621,6 +622,24 @@ namespace Killendar.Services
             if (ev.AllDay != previousAllDay)
                 ev.KeptProperties.RemoveAll(line => KeptName(line) == "X-MICROSOFT-CDO-ALLDAYEVENT");
         }
+
+        /// <summary>A reminder changed here replaces the imported alarms: they described the old
+        /// one, and other calendars would fire both.</summary>
+        internal static void DropStaleAlarms(CalendarEvent ev, int? previousReminder)
+        {
+            if (ev.ReminderMinutes == previousReminder) return;
+            var kept = new List<string>();
+            bool inAlarm = false;
+            foreach (var line in ev.KeptProperties)
+            {
+                if (IsAlarmStart(line)) inAlarm = true;
+                else if (!inAlarm) kept.Add(line);
+                else if (line.StartsWith("END:VALARM", StringComparison.OrdinalIgnoreCase)) inAlarm = false;
+            }
+            ev.KeptProperties = kept;
+        }
+
+        private static bool IsAlarmStart(string line) => line.StartsWith("BEGIN:VALARM", StringComparison.OrdinalIgnoreCase);
 
         private static string KeptName(string line) => SplitProperty(line).name.ToUpperInvariant();
 
@@ -1047,6 +1066,9 @@ namespace Killendar.Services
                 }
                 foreach (var line in ev.KeptProperties)
                     if (!line.StartsWith("ATTENDEE", StringComparison.OrdinalIgnoreCase)) sb.AppendLine(FoldLine(line));
+                // An imported alarm went back above; a reminder set here gets one of its own.
+                if (!ev.KeptProperties.Any(IsAlarmStart))
+                    foreach (var line in Reminders.AlarmLines(ev)) sb.AppendLine(line);
 
                 // CATEGORIES is a comma-separated LIST, so each name is escaped on its own and
                 // the separators are then written raw. Running EscapeText over the whole string

@@ -223,6 +223,7 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">datumsformat</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">wochenbeginn</sys:String>
+    <sys:String x:Key="Str_Lbl_DefaultReminder">erinnerung für neue termine</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Windows folgen</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">USA (7/29/2026)</sys:String>
@@ -392,6 +393,23 @@
     <sys:String x:Key="Str_KS_Close">Bereich oder Karte schließen</sys:String>
 
     <sys:String x:Key="Str_Fld_Categories">KATEGORIEN</sys:String>
+    <sys:String x:Key="Str_Fld_Reminder">ERINNERUNG</sys:String>
+    <sys:String x:Key="Str_Rem_None">Keine Erinnerung</sys:String>
+    <sys:String x:Key="Str_Rem_AtStart">Zum Beginn</sys:String>
+    <sys:String x:Key="Str_Rem_Minutes">{0} Minuten vorher</sys:String>
+    <sys:String x:Key="Str_Rem_Hour">1 Stunde vorher</sys:String>
+    <sys:String x:Key="Str_Rem_Hours">{0} Stunden vorher</sys:String>
+    <sys:String x:Key="Str_Rem_Day">1 Tag vorher</sys:String>
+    <sys:String x:Key="Str_Rem_Days">{0} Tage vorher</sys:String>
+    <sys:String x:Key="Str_Rem_DayBeforeAt">Am Vortag um {0}</sys:String>
+    <sys:String x:Key="Str_Rem_Head">Erinnerungen</sys:String>
+    <sys:String x:Key="Str_Rem_Snooze">Später erinnern</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeFor">In {0} Minuten</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeHour">In 1 Stunde</sys:String>
+    <sys:String x:Key="Str_Rem_Dismiss">Schließen</sys:String>
+    <sys:String x:Key="Str_Rem_DismissAll">Alle schließen</sys:String>
+    <sys:String x:Key="Str_Rem_Open">Killendar öffnen</sys:String>
+    <sys:String x:Key="Str_Rem_Locked">{0} Erinnerungen sind fällig. Entsperren Sie Killendar, um sie zu sehen.</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Noch keine Kategorien. Legen Sie welche über die Seitenleiste an.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorien</sys:String>
     <sys:String x:Key="Str_TT_Density">Rasterdichte - klicken oder scrollen</sys:String>

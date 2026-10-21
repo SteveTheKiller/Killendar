@@ -274,6 +274,7 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">date format</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">week starts on</sys:String>
+    <sys:String x:Key="Str_Lbl_DefaultReminder">new appointments remind</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Follow Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">US (7/29/2026)</sys:String>
@@ -471,6 +472,23 @@
 
     <!-- Categories -->
     <sys:String x:Key="Str_Fld_Categories">CATEGORIES</sys:String>
+    <sys:String x:Key="Str_Fld_Reminder">REMINDER</sys:String>
+    <sys:String x:Key="Str_Rem_None">No reminder</sys:String>
+    <sys:String x:Key="Str_Rem_AtStart">At the start time</sys:String>
+    <sys:String x:Key="Str_Rem_Minutes">{0} minutes before</sys:String>
+    <sys:String x:Key="Str_Rem_Hour">1 hour before</sys:String>
+    <sys:String x:Key="Str_Rem_Hours">{0} hours before</sys:String>
+    <sys:String x:Key="Str_Rem_Day">1 day before</sys:String>
+    <sys:String x:Key="Str_Rem_Days">{0} days before</sys:String>
+    <sys:String x:Key="Str_Rem_DayBeforeAt">The day before at {0}</sys:String>
+    <sys:String x:Key="Str_Rem_Head">Reminders</sys:String>
+    <sys:String x:Key="Str_Rem_Snooze">Snooze</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeFor">For {0} minutes</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeHour">For 1 hour</sys:String>
+    <sys:String x:Key="Str_Rem_Dismiss">Dismiss</sys:String>
+    <sys:String x:Key="Str_Rem_DismissAll">Dismiss all</sys:String>
+    <sys:String x:Key="Str_Rem_Open">Open Killendar</sys:String>
+    <sys:String x:Key="Str_Rem_Locked">{0} reminders are due. Unlock Killendar to see them.</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">No categories yet. Add some from the sidebar rail.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categories</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

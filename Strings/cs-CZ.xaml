@@ -223,6 +223,7 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">formát data</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">začátek týdne</sys:String>
+    <sys:String x:Key="Str_Lbl_DefaultReminder">připomenutí nových schůzek</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Podle Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">USA (7/29/2026)</sys:String>
@@ -392,6 +393,23 @@
     <sys:String x:Key="Str_KS_Close">Zavřít panel nebo kartu</sys:String>
 
     <sys:String x:Key="Str_Fld_Categories">KATEGORIE</sys:String>
+    <sys:String x:Key="Str_Fld_Reminder">PŘIPOMENUTÍ</sys:String>
+    <sys:String x:Key="Str_Rem_None">Bez připomenutí</sys:String>
+    <sys:String x:Key="Str_Rem_AtStart">V čase začátku</sys:String>
+    <sys:String x:Key="Str_Rem_Minutes">{0} minut předem</sys:String>
+    <sys:String x:Key="Str_Rem_Hour">1 hodinu předem</sys:String>
+    <sys:String x:Key="Str_Rem_Hours">{0} hodin předem</sys:String>
+    <sys:String x:Key="Str_Rem_Day">1 den předem</sys:String>
+    <sys:String x:Key="Str_Rem_Days">{0} dnů předem</sys:String>
+    <sys:String x:Key="Str_Rem_DayBeforeAt">Den předem v {0}</sys:String>
+    <sys:String x:Key="Str_Rem_Head">Připomenutí</sys:String>
+    <sys:String x:Key="Str_Rem_Snooze">Odložit</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeFor">O {0} minut</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeHour">O 1 hodinu</sys:String>
+    <sys:String x:Key="Str_Rem_Dismiss">Zavřít</sys:String>
+    <sys:String x:Key="Str_Rem_DismissAll">Zavřít vše</sys:String>
+    <sys:String x:Key="Str_Rem_Open">Otevřít Killendar</sys:String>
+    <sys:String x:Key="Str_Rem_Locked">Počet připomenutí: {0}. Odemkněte Killendar a zobrazte je.</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Zatím žádné kategorie. Přidejte je z postranního panelu.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorie</sys:String>
     <sys:String x:Key="Str_TT_Density">Hustota mřížky - klik nebo kolečko</sys:String>

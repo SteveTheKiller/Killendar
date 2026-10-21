@@ -72,6 +72,10 @@ namespace Killendar.Models
         /// appointment is a new appointment and must clear it.</summary>
         public string       ExternalUid { get; set; } = "";
 
+        /// <summary>Minutes before the start to remind, or null for no reminder. An all-day
+        /// appointment with any reminder is reminded at 9:00 the day before (Services.Reminders).</summary>
+        public int?         ReminderMinutes { get; set; }
+
         /// <summary>Meeting details Killendar does not edit but must not lose: the raw, unfolded
         /// ORGANIZER, ATTENDEE, TRANSP, CLASS, URL, SEQUENCE and X- lines and whole VALARM blocks,
         /// in their original order. Export writes them back unchanged; an ATTENDEE line is written
@@ -173,6 +177,7 @@ namespace Killendar.Models
             Attendees   = [.. Attendees],
             Categories  = Categories,
             ExternalUid = ExternalUid,
+            ReminderMinutes = ReminderMinutes,
             KeptProperties = [.. KeptProperties],
             Created     = Created,
             Modified    = Modified,

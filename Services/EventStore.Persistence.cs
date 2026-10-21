@@ -20,7 +20,7 @@ namespace Killendar.Services
             "repeat_until, repeat_count, skip_dates, series_id, occurrence_start, " +
             "repeat_time_basis, repeat_anchor, repeat_zone_id, repeat_week_start, " +
             "skip_occurrences, repeat_until_exact, occurrence_anchor, occurrence_basis, occurrence_zone_id, " +
-            "duration_days, duration_time_ticks, external_uid, kept_properties FROM events";
+            "duration_days, duration_time_ticks, external_uid, kept_properties, reminder_minutes FROM events";
 
         private void LoadIntoMemory()
         {
@@ -92,6 +92,8 @@ namespace Killendar.Services
                         // One unfolded content line per row; a content line cannot contain a newline.
                         KeptProperties = r.IsDBNull(31) || r.GetString(31).Length == 0
                             ? [] : [.. r.GetString(31).Split('\n')],
+                        ReminderMinutes = r.IsDBNull(32) || r.GetInt64(32) < 0 || r.GetInt64(32) > int.MaxValue
+                            ? null : (int)r.GetInt64(32),
                     });
                 }
             }
@@ -138,16 +140,16 @@ namespace Killendar.Services
                 "description, attendees, categories, created_utc, modified_utc, " +
                 "repeat_freq, repeat_interval, repeat_days, repeat_until, repeat_count, " +
                 "skip_dates, series_id, occurrence_start, repeat_time_basis, repeat_anchor, repeat_zone_id, repeat_week_start, " +
-                "skip_occurrences, repeat_until_exact, occurrence_anchor, occurrence_basis, occurrence_zone_id, duration_days, duration_time_ticks, external_uid, kept_properties) " +
+                "skip_occurrences, repeat_until_exact, occurrence_anchor, occurrence_basis, occurrence_zone_id, duration_days, duration_time_ticks, external_uid, kept_properties, reminder_minutes) " +
                 "VALUES($id, $ti, $st, $en, $ad, $lo, $de, $at, $ca, $cr, $mo, " +
-                "$rf, $ri, $rd, $ru, $rc, $sk, $si, $os, $tb, $ra, $rz, $ws, $so, $ue, $oa, $ob, $oz, $dd, $dt, $xu, $kp) " +
+                "$rf, $ri, $rd, $ru, $rc, $sk, $si, $os, $tb, $ra, $rz, $ws, $so, $ue, $oa, $ob, $oz, $dd, $dt, $xu, $kp, $rm) " +
                 "ON CONFLICT(id) DO UPDATE SET title=$ti, start_utc=$st, end_utc=$en, " +
                 "all_day=$ad, location=$lo, description=$de, attendees=$at, categories=$ca, " +
                 "modified_utc=$mo, repeat_freq=$rf, repeat_interval=$ri, repeat_days=$rd, " +
                 "repeat_until=$ru, repeat_count=$rc, skip_dates=$sk, series_id=$si, " +
                 "occurrence_start=$os, repeat_time_basis=$tb, repeat_anchor=$ra, repeat_zone_id=$rz, repeat_week_start=$ws, " +
                 "skip_occurrences=$so, repeat_until_exact=$ue, occurrence_anchor=$oa, occurrence_basis=$ob, occurrence_zone_id=$oz, " +
-                "duration_days=$dd, duration_time_ticks=$dt, external_uid=$xu, kept_properties=$kp";
+                "duration_days=$dd, duration_time_ticks=$dt, external_uid=$xu, kept_properties=$kp, reminder_minutes=$rm";
             return cmd;
         }
 
@@ -187,6 +189,7 @@ namespace Killendar.Services
             cmd.Parameters.AddWithValue("$dt", ev.DurationTimeTicks);
             cmd.Parameters.AddWithValue("$xu", ev.ExternalUid ?? "");
             cmd.Parameters.AddWithValue("$kp", string.Join("\n", ev.KeptProperties ?? []));
+            cmd.Parameters.AddWithValue("$rm", ev.ReminderMinutes ?? -1);
         }
 
         /// <summary>Writes, then repaints. If persistence fails, reload the database so the
@@ -297,6 +300,7 @@ namespace Killendar.Services
                 // An occurrence carries its series' kept meeting lines; the editor may have dropped
                 // ones this edit made stale.
                 updated.KeptProperties = [.. edited.KeptProperties ?? []];
+                updated.ReminderMinutes = edited.ReminderMinutes;
                 updated.AllDay      = edited.AllDay;
                 updated.DurationDays = edited.AllDay ? 0 : edited.DurationDays;
                 updated.DurationTimeTicks = edited.AllDay ? 0 : edited.DurationTimeTicks;

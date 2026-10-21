@@ -223,6 +223,7 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">formato de fecha</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">inicio de la semana</sys:String>
+    <sys:String x:Key="Str_Lbl_DefaultReminder">recordatorio de las citas nuevas</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Seguir Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">EE. UU. (7/29/2026)</sys:String>
@@ -392,6 +393,23 @@
     <sys:String x:Key="Str_KS_Close">Cerrar el panel o una tarjeta</sys:String>
 
     <sys:String x:Key="Str_Fld_Categories">CATEGORÍAS</sys:String>
+    <sys:String x:Key="Str_Fld_Reminder">RECORDATORIO</sys:String>
+    <sys:String x:Key="Str_Rem_None">Sin recordatorio</sys:String>
+    <sys:String x:Key="Str_Rem_AtStart">A la hora de inicio</sys:String>
+    <sys:String x:Key="Str_Rem_Minutes">{0} minutos antes</sys:String>
+    <sys:String x:Key="Str_Rem_Hour">1 hora antes</sys:String>
+    <sys:String x:Key="Str_Rem_Hours">{0} horas antes</sys:String>
+    <sys:String x:Key="Str_Rem_Day">1 día antes</sys:String>
+    <sys:String x:Key="Str_Rem_Days">{0} días antes</sys:String>
+    <sys:String x:Key="Str_Rem_DayBeforeAt">El día anterior a las {0}</sys:String>
+    <sys:String x:Key="Str_Rem_Head">Recordatorios</sys:String>
+    <sys:String x:Key="Str_Rem_Snooze">Posponer</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeFor">{0} minutos</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeHour">1 hora</sys:String>
+    <sys:String x:Key="Str_Rem_Dismiss">Descartar</sys:String>
+    <sys:String x:Key="Str_Rem_DismissAll">Descartar todos</sys:String>
+    <sys:String x:Key="Str_Rem_Open">Abrir Killendar</sys:String>
+    <sys:String x:Key="Str_Rem_Locked">Hay {0} recordatorios pendientes. Desbloquea Killendar para verlos.</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Todavía no hay categorías. Añádelas desde la barra lateral.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categorías</sys:String>
     <sys:String x:Key="Str_TT_Density">Densidad de la cuadrícula - clic o rueda</sys:String>

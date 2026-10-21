@@ -256,6 +256,7 @@
          so they read the same in every language. -->
   <sys:String x:Key="Str_Lbl_DateFormat">định dạng ngày</sys:String>
   <sys:String x:Key="Str_Lbl_WeekStart">tuần bắt đầu vào</sys:String>
+  <sys:String x:Key="Str_Lbl_DefaultReminder">nhắc nhở cho cuộc hẹn mới</sys:String>
   <sys:String x:Key="Str_Date_FollowWindows">Theo Windows</sys:String>
   <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
   <sys:String x:Key="Str_Date_US">Hoa Kỳ (7/29/2026)</sys:String>
@@ -441,6 +442,23 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Kc_DataFolderFailed">Không thể dùng thư mục đó: {0}</sys:String>
   <!-- Categories -->
   <sys:String x:Key="Str_Fld_Categories">DANH MỤC</sys:String>
+  <sys:String x:Key="Str_Fld_Reminder">NHẮC NHỞ</sys:String>
+  <sys:String x:Key="Str_Rem_None">Không nhắc</sys:String>
+  <sys:String x:Key="Str_Rem_AtStart">Vào giờ bắt đầu</sys:String>
+  <sys:String x:Key="Str_Rem_Minutes">Trước {0} phút</sys:String>
+  <sys:String x:Key="Str_Rem_Hour">Trước 1 giờ</sys:String>
+  <sys:String x:Key="Str_Rem_Hours">Trước {0} giờ</sys:String>
+  <sys:String x:Key="Str_Rem_Day">Trước 1 ngày</sys:String>
+  <sys:String x:Key="Str_Rem_Days">Trước {0} ngày</sys:String>
+  <sys:String x:Key="Str_Rem_DayBeforeAt">Ngày hôm trước lúc {0}</sys:String>
+  <sys:String x:Key="Str_Rem_Head">Nhắc nhở</sys:String>
+  <sys:String x:Key="Str_Rem_Snooze">Báo lại</sys:String>
+  <sys:String x:Key="Str_Rem_SnoozeFor">Sau {0} phút</sys:String>
+  <sys:String x:Key="Str_Rem_SnoozeHour">Sau 1 giờ</sys:String>
+  <sys:String x:Key="Str_Rem_Dismiss">Bỏ qua</sys:String>
+  <sys:String x:Key="Str_Rem_DismissAll">Bỏ qua tất cả</sys:String>
+  <sys:String x:Key="Str_Rem_Open">Mở Killendar</sys:String>
+  <sys:String x:Key="Str_Rem_Locked">Có {0} lời nhắc đến hạn. Hãy mở khóa Killendar để xem.</sys:String>
   <sys:String x:Key="Str_Hint_NoCategories">Chưa có danh mục nào. Hãy thêm danh mục từ thanh bên.</sys:String>
   <sys:String x:Key="Str_TT_Categories">Danh mục</sys:String>
   <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

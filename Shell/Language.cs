@@ -77,6 +77,7 @@ namespace Killendar.Shell
                 _appointments.RefreshLocalizedText();
                 BuildRepeatChips();
                 BuildScopeChips();
+                BuildReminderChoices();   // ReminderField.cs
             }
 
             // Toolbar captions and its right-click menu are built in code, so they do not follow

@@ -36,6 +36,7 @@ namespace Killendar.Shell
             InitSidebarSide();   // SidebarDock.cs - left or right of the calendar
             InitRailOrder();
             AttachAutoLock();   // Lock.cs - idle and Windows locks
+            InitReminderField();   // ReminderField.cs
 
             RestoreWindowPlacement();
             InitAppScale();
@@ -53,6 +54,7 @@ namespace Killendar.Shell
                 {
                     OpenCalendarData();        // opens, unlocks if needed, paints
                     HandlePendingOpenFile();   // a shell-opened .kcal or .ics, if any
+                    StartReminders();          // ReminderAlerts.cs - shows what was missed while closed
                     if (string.Equals(Settings.Get("AppointmentSidebarOpen"), "1",
                                       System.StringComparison.Ordinal))
                         RestoreSidebarPanel();

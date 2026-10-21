@@ -223,6 +223,7 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">format de date</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">début de la semaine</sys:String>
+    <sys:String x:Key="Str_Lbl_DefaultReminder">rappel des nouveaux rendez-vous</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Suivre Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">États-Unis (7/29/2026)</sys:String>
@@ -392,6 +393,23 @@
     <sys:String x:Key="Str_KS_Close">Fermer le panneau ou une carte</sys:String>
 
     <sys:String x:Key="Str_Fld_Categories">CATÉGORIES</sys:String>
+    <sys:String x:Key="Str_Fld_Reminder">RAPPEL</sys:String>
+    <sys:String x:Key="Str_Rem_None">Aucun rappel</sys:String>
+    <sys:String x:Key="Str_Rem_AtStart">À l’heure de début</sys:String>
+    <sys:String x:Key="Str_Rem_Minutes">{0} minutes avant</sys:String>
+    <sys:String x:Key="Str_Rem_Hour">1 heure avant</sys:String>
+    <sys:String x:Key="Str_Rem_Hours">{0} heures avant</sys:String>
+    <sys:String x:Key="Str_Rem_Day">1 jour avant</sys:String>
+    <sys:String x:Key="Str_Rem_Days">{0} jours avant</sys:String>
+    <sys:String x:Key="Str_Rem_DayBeforeAt">La veille à {0}</sys:String>
+    <sys:String x:Key="Str_Rem_Head">Rappels</sys:String>
+    <sys:String x:Key="Str_Rem_Snooze">Reporter</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeFor">De {0} minutes</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeHour">D’une heure</sys:String>
+    <sys:String x:Key="Str_Rem_Dismiss">Ignorer</sys:String>
+    <sys:String x:Key="Str_Rem_DismissAll">Tout ignorer</sys:String>
+    <sys:String x:Key="Str_Rem_Open">Ouvrir Killendar</sys:String>
+    <sys:String x:Key="Str_Rem_Locked">{0} rappels sont échus. Déverrouillez Killendar pour les voir.</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Aucune catégorie pour l'instant. Ajoutez-en depuis la barre latérale.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Catégories</sys:String>
     <sys:String x:Key="Str_TT_Density">Densité de la grille - clic ou molette</sys:String>

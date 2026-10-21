@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -6,7 +7,7 @@ using Killendar.Services;
 
 namespace Killendar.Controls
 {
-    /// <summary>Date format and first-day-of-week choices for the rail.</summary>
+    /// <summary>Date format, first-day-of-week and default reminder choices for the rail.</summary>
     internal sealed class DateSettingsMenu
     {
         private static readonly (DateStyle Style, string Key)[] DateStyles =
@@ -110,6 +111,25 @@ namespace Killendar.Controls
                 };
                 week.Checked += WeekStartItem_Click;
                 panel.Children.Add(week);
+            }
+            AddSeparator(panel);
+            panel.Children.Add(new TextBlock
+            {
+                Text = LocaleManager.Loc("Str_Lbl_DefaultReminder"), FontSize = 10,
+                Margin = new Thickness(0, 0, 0, 6)
+            });
+            int? currentReminder = Reminders.ParseDefault(Settings.Get(Reminders.DefaultSetting));
+            foreach (int? minutes in new int?[] { null }.Concat(Reminders.Choices.Select(m => (int?)m)))
+            {
+                var reminder = new RadioButton
+                {
+                    Content = Reminders.Label(minutes, false, LocaleManager.Loc), GroupName = "ReminderGroup",
+                    Style = (Style)Application.Current.FindResource("ThemeRadio"),
+                    IsChecked = minutes == currentReminder,
+                };
+                reminder.Checked += (_, _) => Settings.Set(Reminders.DefaultSetting,
+                    minutes?.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? "");
+                panel.Children.Add(reminder);
             }
             _menu.Items.Add(new MenuItem
             {

@@ -274,6 +274,7 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">datoformat</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">uken starter på</sys:String>
+    <sys:String x:Key="Str_Lbl_DefaultReminder">påminnelse for nye avtaler</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Følg Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">USA (7/29/2026)</sys:String>
@@ -471,6 +472,23 @@
 
     <!-- Categories -->
     <sys:String x:Key="Str_Fld_Categories">KATEGORIER</sys:String>
+    <sys:String x:Key="Str_Fld_Reminder">PÅMINNELSE</sys:String>
+    <sys:String x:Key="Str_Rem_None">Ingen påminnelse</sys:String>
+    <sys:String x:Key="Str_Rem_AtStart">Ved starttid</sys:String>
+    <sys:String x:Key="Str_Rem_Minutes">{0} minutter før</sys:String>
+    <sys:String x:Key="Str_Rem_Hour">1 time før</sys:String>
+    <sys:String x:Key="Str_Rem_Hours">{0} timer før</sys:String>
+    <sys:String x:Key="Str_Rem_Day">1 dag før</sys:String>
+    <sys:String x:Key="Str_Rem_Days">{0} dager før</sys:String>
+    <sys:String x:Key="Str_Rem_DayBeforeAt">Dagen før kl. {0}</sys:String>
+    <sys:String x:Key="Str_Rem_Head">Påminnelser</sys:String>
+    <sys:String x:Key="Str_Rem_Snooze">Slumre</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeFor">I {0} minutter</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeHour">I 1 time</sys:String>
+    <sys:String x:Key="Str_Rem_Dismiss">Avvis</sys:String>
+    <sys:String x:Key="Str_Rem_DismissAll">Avvis alle</sys:String>
+    <sys:String x:Key="Str_Rem_Open">Åpne Killendar</sys:String>
+    <sys:String x:Key="Str_Rem_Locked">{0} påminnelser er forfalt. Lås opp Killendar for å se dem.</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Ingen kategorier ennå. Legg til noen fra sidelinjen.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorier</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

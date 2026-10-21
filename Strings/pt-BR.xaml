@@ -274,6 +274,7 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">formato de data</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">a semana começa em</sys:String>
+    <sys:String x:Key="Str_Lbl_DefaultReminder">lembrete dos novos compromissos</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Seguir o Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>
     <sys:String x:Key="Str_Date_US">EUA (7/29/2026)</sys:String>
@@ -471,6 +472,23 @@
 
     <!-- Categories -->
     <sys:String x:Key="Str_Fld_Categories">CATEGORIAS</sys:String>
+    <sys:String x:Key="Str_Fld_Reminder">LEMBRETE</sys:String>
+    <sys:String x:Key="Str_Rem_None">Sem lembrete</sys:String>
+    <sys:String x:Key="Str_Rem_AtStart">Na hora de início</sys:String>
+    <sys:String x:Key="Str_Rem_Minutes">{0} minutos antes</sys:String>
+    <sys:String x:Key="Str_Rem_Hour">1 hora antes</sys:String>
+    <sys:String x:Key="Str_Rem_Hours">{0} horas antes</sys:String>
+    <sys:String x:Key="Str_Rem_Day">1 dia antes</sys:String>
+    <sys:String x:Key="Str_Rem_Days">{0} dias antes</sys:String>
+    <sys:String x:Key="Str_Rem_DayBeforeAt">No dia anterior às {0}</sys:String>
+    <sys:String x:Key="Str_Rem_Head">Lembretes</sys:String>
+    <sys:String x:Key="Str_Rem_Snooze">Adiar</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeFor">Por {0} minutos</sys:String>
+    <sys:String x:Key="Str_Rem_SnoozeHour">Por 1 hora</sys:String>
+    <sys:String x:Key="Str_Rem_Dismiss">Dispensar</sys:String>
+    <sys:String x:Key="Str_Rem_DismissAll">Dispensar todos</sys:String>
+    <sys:String x:Key="Str_Rem_Open">Abrir o Killendar</sys:String>
+    <sys:String x:Key="Str_Rem_Locked">{0} lembretes pendentes. Desbloqueie o Killendar para vê-los.</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Nenhuma categoria ainda. Adicione algumas na barra lateral.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categorias</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads
