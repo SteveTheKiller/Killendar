@@ -46,7 +46,9 @@ CREATE TABLE IF NOT EXISTS events (
     repeat_until_exact TEXT NOT NULL DEFAULT '',
     occurrence_anchor TEXT NOT NULL DEFAULT '',
     occurrence_basis INTEGER NOT NULL DEFAULT 0,
-    occurrence_zone_id TEXT NOT NULL DEFAULT ''
+    occurrence_zone_id TEXT NOT NULL DEFAULT '',
+    duration_days INTEGER NOT NULL DEFAULT 0,
+    duration_time_ticks INTEGER NOT NULL DEFAULT 0
 );
 CREATE INDEX IF NOT EXISTS events_range ON events (start_utc, end_utc);
 CREATE TABLE IF NOT EXISTS categories (
@@ -103,7 +105,7 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
             foreach (var (name, color) in DefaultCategories) AddCategory(db, name, color);
         }
 
-        /// <summary>Additive columns from v2 through v6. ALTER-on-open is needed because CREATE TABLE
+        /// <summary>Additive columns from v2 through v7. ALTER-on-open is needed because CREATE TABLE
         /// IF NOT EXISTS never touches an existing table, so a Killendar written by 1.0.0 keeps its
         /// original events table; PRAGMA-checking first keeps this idempotent and cheap.
         ///
@@ -143,6 +145,8 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
             AddColumn("occurrence_anchor", "TEXT NOT NULL DEFAULT ''");
             AddColumn("occurrence_basis", "INTEGER NOT NULL DEFAULT 0");
             AddColumn("occurrence_zone_id", "TEXT NOT NULL DEFAULT ''");
+            AddColumn("duration_days", "INTEGER NOT NULL DEFAULT 0");
+            AddColumn("duration_time_ticks", "INTEGER NOT NULL DEFAULT 0");
         }
 
         private string? GetMeta(string key)

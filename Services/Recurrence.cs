@@ -49,7 +49,7 @@ namespace Killendar.Services
 
             // Include starts before the range that can still overlap it. Pattern ordinals keep
             // COUNT accurate after the jump, including positions consumed by skipped dates.
-            var jumpTo = new DateTime(Math.Max(0L, from.Ticks - duration.Ticks), from.Kind);
+            var jumpTo = new DateTime(Math.Max(0L, from.Ticks - NominalDuration.LookBackTicks(master, duration.Ticks)), from.Kind);
 
             foreach (var candidate in Starts(master, interval, jumpTo))
             {
@@ -67,7 +67,9 @@ namespace Killendar.Services
                 if (master.SkipOccurrences.Exists(value => value.Ticks == start.Ticks)) continue;
 
                 if (duration.Ticks > DateTime.MaxValue.Ticks - start.Ticks) yield break;
-                var end = start + duration;
+                DateTime end;
+                try { end = NominalDuration.HasValue(master) ? NominalDuration.EndLocal(master, start) : start + duration; }
+                catch (ArgumentOutOfRangeException) { yield break; }
                 if (end <= from) continue;
 
                 var occ = master.Clone();
@@ -234,7 +236,7 @@ namespace Killendar.Services
             // Source and display offsets can differ by up to 28 hours. Padding the jump and
             // stop bounds keeps every candidate; actual overlap is checked after conversion.
             long margin = TimeSpan.FromDays(2).Ticks;
-            long earliestOverlap = Math.Max(0, from.Ticks - duration.Ticks);
+            long earliestOverlap = Math.Max(0, from.Ticks - NominalDuration.LookBackTicks(master, duration.Ticks));
             var jump = new DateTime(Math.Max(0, earliestOverlap - margin));
             var stop = new DateTime(to.Ticks + Math.Min(margin, DateTime.MaxValue.Ticks - to.Ticks));
             var skips = new HashSet<DateTime>();
@@ -247,7 +249,8 @@ namespace Killendar.Services
                 try
                 {
                     utc = FromTimeBasis(master, candidate.Start);
-                    endUtc = utc + duration;
+                    endUtc = NominalDuration.HasValue(master)
+                        ? NominalDuration.EndLocal(master, candidate.Start).ToUniversalTime() : utc + duration;
                 }
                 catch (ArgumentOutOfRangeException) { continue; }
                 var start = utc.ToLocalTime();

@@ -160,9 +160,15 @@ namespace Killendar.Services
                                 }
                                 try
                                 {
-                                    current.End = Recurrence.UsesTimeBasis(current)
-                                        ? (current.Start.ToUniversalTime() + span.Value).ToLocalTime()
-                                        : current.Start + span.Value;
+                                    if (!current.AllDay && span.Value.days > 0)
+                                    {
+                                        current.DurationDays = span.Value.days;
+                                        current.DurationTimeTicks = span.Value.timeTicks;
+                                        current.End = NominalDuration.EndAfterStartChange(current, current.Start);
+                                    }
+                                    else current.End = Recurrence.UsesTimeBasis(current)
+                                        ? (current.Start.ToUniversalTime() + span.Value.span).ToLocalTime()
+                                        : current.Start + span.Value.span;
                                 }
                                 catch (ArgumentOutOfRangeException)
                                 {
@@ -640,7 +646,7 @@ namespace Killendar.Services
             return false;
         }
 
-        private static TimeSpan? ParseDuration(string value)
+        private static (TimeSpan span, int days, long timeTicks)? ParseDuration(string value)
         {
             // Basic DURATION: P[nW][nD][T[nH][nM][nS]]
             var m = Regex.Match(value,
@@ -656,8 +662,10 @@ namespace Killendar.Services
                 int minutes = m.Groups["mn"].Success ? int.Parse(m.Groups["mn"].Value) : 0;
                 int seconds = m.Groups["s"].Success  ? int.Parse(m.Groups["s"].Value)  : 0;
 
-                var ts = new TimeSpan(checked(weeks * 7 + days), hours, minutes, seconds);
-                return m.Groups["neg"].Success ? ts.Negate() : ts;
+                int nominalDays = checked(weeks * 7 + days);
+                var time = new TimeSpan(hours, minutes, seconds);
+                var ts = new TimeSpan(nominalDays, 0, 0, 0) + time;
+                return m.Groups["neg"].Success ? (ts.Negate(), 0, 0L) : (ts, nominalDays, time.Ticks);
             }
             catch (OverflowException) { return null; }
             catch (ArgumentOutOfRangeException) { return null; }
@@ -765,13 +773,17 @@ namespace Killendar.Services
             var zones = new HashSet<string>(StringComparer.Ordinal);
             foreach (var ev in rows)
             {
-                string zone = ev.IsOverride && ev.OccurrenceBasis == OccurrenceTimeBasis.SourceZone
-                    ? ev.OccurrenceZoneId : ev.IsSeries && Recurrence.UsesTimeBasis(ev) &&
-                        ev.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone ? ev.RepeatZoneId : "";
-                if (zone.Length == 0 || !zones.Add(zone)) continue;
-                string definition = IcsTimeZoneWriter.Build(zone, TZConvert.GetTimeZoneInfo(zone));
-                foreach (string line in definition.Replace("\r\n", "\n").Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries))
-                    sb.AppendLine(FoldLine(line));
+                var used = new List<string>();
+                if (ev.IsOverride && ev.OccurrenceBasis == OccurrenceTimeBasis.SourceZone) used.Add(ev.OccurrenceZoneId);
+                if ((ev.IsSeries || NominalDuration.HasValue(ev)) && Recurrence.UsesTimeBasis(ev) &&
+                    ev.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone) used.Add(ev.RepeatZoneId);
+                foreach (string zone in used)
+                {
+                    if (zone.Length == 0 || !zones.Add(zone)) continue;
+                    string definition = IcsTimeZoneWriter.Build(zone, TZConvert.GetTimeZoneInfo(zone));
+                    foreach (string line in definition.Replace("\r\n", "\n").Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries))
+                        sb.AppendLine(FoldLine(line));
+                }
             }
 
             foreach (var ev in rows)
@@ -792,32 +804,41 @@ namespace Killendar.Services
                     sb.AppendLine($"DTSTART;VALUE=DATE:{ev.Start:yyyyMMdd}");
                     sb.AppendLine($"DTEND;VALUE=DATE:{ev.End:yyyyMMdd}");
                 }
-                else if (ev.IsSeries && Recurrence.UsesTimeBasis(ev))
+                else if ((ev.IsSeries || NominalDuration.HasValue(ev)) && Recurrence.UsesTimeBasis(ev))
                 {
                     var duration = ev.End.ToUniversalTime() - ev.Start.ToUniversalTime();
                     if (duration <= TimeSpan.Zero) duration = TimeSpan.FromHours(1);
-                    var startUtc = Recurrence.FromTimeBasis(ev, ev.RepeatAnchor!.Value);
+                    var nominalStart = ev.IsSeries ? ev.RepeatAnchor!.Value : NominalDuration.SourceStart(ev, ev.Start);
+                    var startUtc = Recurrence.FromTimeBasis(ev, nominalStart);
+                    if (NominalDuration.HasValue(ev) && startUtc != ev.Start.ToUniversalTime())
+                        throw new NotSupportedException("This source-zone start cannot represent the appointment's exact instant for export.");
                     var endUtc = startUtc + duration;
                     if (ev.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone)
                     {
-                        sb.AppendLine(FoldLine($"DTSTART;TZID=\"{ev.RepeatZoneId}\":{ev.RepeatAnchor.Value:yyyyMMdd'T'HHmmss}"));
-                        if (duration.Ticks % TimeSpan.TicksPerSecond != 0)
-                            throw new NotSupportedException("A calendar recurrence duration with fractional seconds cannot be exported.");
-                        long hours = duration.Ticks / TimeSpan.TicksPerHour;
-                        long seconds = duration.Ticks % TimeSpan.TicksPerHour / TimeSpan.TicksPerSecond;
-                        sb.AppendLine("DURATION:PT" + hours.ToString(System.Globalization.CultureInfo.InvariantCulture) + "H" +
-                            seconds.ToString(System.Globalization.CultureInfo.InvariantCulture) + "S");
+                        sb.AppendLine(FoldLine($"DTSTART;TZID=\"{ev.RepeatZoneId}\":{nominalStart:yyyyMMdd'T'HHmmss}"));
+                        if (NominalDuration.HasValue(ev)) sb.AppendLine("DURATION:" + NominalDuration.Format(ev));
+                        else
+                        {
+                            if (duration.Ticks % TimeSpan.TicksPerSecond != 0)
+                                throw new NotSupportedException("A calendar recurrence duration with fractional seconds cannot be exported.");
+                            long hours = duration.Ticks / TimeSpan.TicksPerHour;
+                            long seconds = duration.Ticks % TimeSpan.TicksPerHour / TimeSpan.TicksPerSecond;
+                            sb.AppendLine("DURATION:PT" + hours.ToString(System.Globalization.CultureInfo.InvariantCulture) + "H" +
+                                seconds.ToString(System.Globalization.CultureInfo.InvariantCulture) + "S");
+                        }
                     }
                     else
                     {
                         sb.AppendLine($"DTSTART:{startUtc:yyyyMMdd'T'HHmmss'Z'}");
-                        sb.AppendLine($"DTEND:{endUtc:yyyyMMdd'T'HHmmss'Z'}");
+                        if (NominalDuration.HasValue(ev)) sb.AppendLine("DURATION:" + NominalDuration.Format(ev));
+                        else sb.AppendLine($"DTEND:{endUtc:yyyyMMdd'T'HHmmss'Z'}");
                     }
                 }
-                else if (ev.IsSeries)
+                else if (ev.IsSeries || NominalDuration.HasValue(ev))
                 {
                     sb.AppendLine($"DTSTART:{ev.Start:yyyyMMdd'T'HHmmss}");
-                    sb.AppendLine($"DTEND:{ev.End:yyyyMMdd'T'HHmmss}");
+                    if (NominalDuration.HasValue(ev)) sb.AppendLine("DURATION:" + NominalDuration.Format(ev));
+                    else sb.AppendLine($"DTEND:{ev.End:yyyyMMdd'T'HHmmss}");
                 }
                 else
                 {

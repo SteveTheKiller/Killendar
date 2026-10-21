@@ -32,7 +32,7 @@ namespace Killendar.Tests
                 {
                     db.Open();
                     using var command = db.CreateCommand();
-                    string[] columns = { "skip_occurrences", "repeat_until_exact", "occurrence_anchor", "occurrence_basis", "occurrence_zone_id" };
+                    string[] columns = { "skip_occurrences", "repeat_until_exact", "occurrence_anchor", "occurrence_basis", "occurrence_zone_id", "duration_days", "duration_time_ticks" };
                     command.CommandText = string.Join(";", columns.Select(name => "ALTER TABLE events DROP COLUMN " + name));
                     if (version < 5) command.CommandText += ";ALTER TABLE events DROP COLUMN repeat_week_start";
                     if (version < 4) command.CommandText += ";ALTER TABLE events DROP COLUMN repeat_time_basis;ALTER TABLE events DROP COLUMN repeat_anchor;ALTER TABLE events DROP COLUMN repeat_zone_id";

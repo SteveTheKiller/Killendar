@@ -32,6 +32,7 @@ namespace Killendar.Features
         private DateTime? _followedStart;
         private bool _loading;
         private CultureInfo _timeCulture = CultureInfo.CurrentCulture;
+        private DateTime? _nominalEnd;
 
         internal AppointmentEditor(IAppointmentView view, EventStore store)
         {
@@ -44,7 +45,7 @@ namespace Killendar.Features
         internal bool IsEditingExisting => _editing != null;
 
         /// <summary>Forgets the loaded appointment. Called when the panel closes.</summary>
-        internal void Clear() => _editing = null;
+        internal void Clear() { _editing = null; _nominalEnd = null; }
 
         internal void NewAt(DateTime when)
         {
@@ -58,6 +59,7 @@ namespace Killendar.Features
             _loading = true;
             _timeCulture = CultureInfo.CurrentCulture;
             _editing = null;
+            _nominalEnd = null;
             _allDay = false;
 
             _view.Heading = _view.Loc("Str_Side_New");
@@ -89,6 +91,7 @@ namespace Killendar.Features
             _loading = true;
             _timeCulture = CultureInfo.CurrentCulture;
             _editing = ev.Clone();
+            _nominalEnd = !ev.AllDay && NominalDuration.HasValue(ev) ? ev.End : (DateTime?)null;
             _allDay = ev.AllDay;
 
             _view.Heading = _view.Loc("Str_Side_Edit");
@@ -191,6 +194,29 @@ namespace Killendar.Features
             if (was == null || was == now) { _followedStart = now; return; }
             bool readableEnd = TryParseDate(_view.FieldEndDate, out _) &&
                                (_allDay || TryParseTime(_view.FieldEndTime, out _));
+            if (_nominalEnd.HasValue && _editing != null && !_allDay)
+            {
+                if (NominalDuration.HasValue(_editing) &&
+                    TryParseDate(_view.FieldEndDate, out var nominalEndDate) &&
+                    TryParseTime(_view.FieldEndTime, out var nominalEndTime) &&
+                    MatchesDisplayedInstant(nominalEndDate.Date + nominalEndTime, _nominalEnd.Value))
+                {
+                    DateTime movedEnd;
+                    try
+                    {
+                        movedEnd = NominalDuration.EndAfterStartChange(_editing,
+                            PreserveDisplayedInstant(now.Value, _editing.Start));
+                    }
+                    catch (ArgumentOutOfRangeException) { return; }
+                    catch (OverflowException) { return; }
+                    _followedStart = now;
+                    _nominalEnd = movedEnd;
+                    _view.FieldEndDate = DateFormatManager.Format(movedEnd);
+                    _view.FieldEndTime = FormatTime(movedEnd);
+                    return;
+                }
+                _nominalEnd = null;
+            }
             if (!TryFollowStart(was.Value, now.Value, _allDay, _view.FieldEndDate, _view.FieldEndTime,
                                 out var endDate, out var endTime))
             {
@@ -233,6 +259,7 @@ namespace Killendar.Features
 
         internal void ToggleAllDay()
         {
+            _nominalEnd = null;
             _allDay = !_allDay;
             ApplyAllDay();
             // All-day has no slot, so the time band has to go (and come back on un-toggling).
@@ -325,6 +352,7 @@ namespace Killendar.Features
             }
 
             DateTime start, end;
+            bool preserveNominalDuration = false;
             if (_allDay)
             {
                 start = startDate.Date;
@@ -350,10 +378,12 @@ namespace Killendar.Features
                 }
                 start = startDate.Date + startTime;
                 end = endDate.Date + endTime;
+                preserveNominalDuration = _editing != null && !_editing.AllDay &&
+                    _nominalEnd.HasValue && MatchesDisplayedInstant(end, _nominalEnd.Value);
                 if (_editing != null && !_editing.AllDay)
                 {
                     start = PreserveDisplayedInstant(start, _editing.Start);
-                    end = PreserveDisplayedInstant(end, _editing.End);
+                    end = preserveNominalDuration ? _nominalEnd!.Value : PreserveDisplayedInstant(end, _editing.End);
                 }
 
                 if (end.ToUniversalTime() <= start.ToUniversalTime())
@@ -407,6 +437,11 @@ namespace Killendar.Features
                 _editing.Start       = start;
                 _editing.End         = end;
                 _editing.AllDay      = _allDay;
+                if (!preserveNominalDuration)
+                {
+                    _editing.DurationDays = 0;
+                    _editing.DurationTimeTicks = 0;
+                }
                 _editing.Location    = _view.FieldLocation.Trim();
                 _editing.Description = _view.FieldDescription.Trim();
                 _editing.Attendees   = attendees;
@@ -525,9 +560,11 @@ namespace Killendar.Features
         {
             // The fields display minutes, so an unchanged value must retain hidden seconds
             // and the original daylight-saving occurrence of a repeated local hour.
-            long displayedTicks = original.Ticks - original.Ticks % TimeSpan.TicksPerMinute;
-            return entered.Ticks == displayedTicks ? original : entered;
+            return MatchesDisplayedInstant(entered, original) ? original : entered;
         }
+
+        private static bool MatchesDisplayedInstant(DateTime entered, DateTime original)
+            => entered.Ticks == original.Ticks - original.Ticks % TimeSpan.TicksPerMinute;
 
         private static string FormatTime(DateTime value)
         {

@@ -19,7 +19,8 @@ namespace Killendar.Services
             "created_utc, modified_utc, categories, repeat_freq, repeat_interval, repeat_days, " +
             "repeat_until, repeat_count, skip_dates, series_id, occurrence_start, " +
             "repeat_time_basis, repeat_anchor, repeat_zone_id, repeat_week_start, " +
-            "skip_occurrences, repeat_until_exact, occurrence_anchor, occurrence_basis, occurrence_zone_id FROM events";
+            "skip_occurrences, repeat_until_exact, occurrence_anchor, occurrence_basis, occurrence_zone_id, " +
+            "duration_days, duration_time_ticks FROM events";
 
         private void LoadIntoMemory()
         {
@@ -85,6 +86,8 @@ namespace Killendar.Services
                         OccurrenceBasis = r.IsDBNull(26) || r.GetInt64(26) < 0 || r.GetInt64(26) > 3
                             ? OccurrenceTimeBasis.Date : (OccurrenceTimeBasis)r.GetInt64(26),
                         OccurrenceZoneId = r.IsDBNull(27) ? "" : r.GetString(27),
+                        DurationDays = r.IsDBNull(28) ? 0 : (int)Math.Min(int.MaxValue, Math.Max(0L, r.GetInt64(28))),
+                        DurationTimeTicks = r.IsDBNull(29) ? 0 : Math.Max(0L, r.GetInt64(29)),
                     });
                 }
             }
@@ -121,15 +124,16 @@ namespace Killendar.Services
                 "description, attendees, categories, created_utc, modified_utc, " +
                 "repeat_freq, repeat_interval, repeat_days, repeat_until, repeat_count, " +
                 "skip_dates, series_id, occurrence_start, repeat_time_basis, repeat_anchor, repeat_zone_id, repeat_week_start, " +
-                "skip_occurrences, repeat_until_exact, occurrence_anchor, occurrence_basis, occurrence_zone_id) " +
+                "skip_occurrences, repeat_until_exact, occurrence_anchor, occurrence_basis, occurrence_zone_id, duration_days, duration_time_ticks) " +
                 "VALUES($id, $ti, $st, $en, $ad, $lo, $de, $at, $ca, $cr, $mo, " +
-                "$rf, $ri, $rd, $ru, $rc, $sk, $si, $os, $tb, $ra, $rz, $ws, $so, $ue, $oa, $ob, $oz) " +
+                "$rf, $ri, $rd, $ru, $rc, $sk, $si, $os, $tb, $ra, $rz, $ws, $so, $ue, $oa, $ob, $oz, $dd, $dt) " +
                 "ON CONFLICT(id) DO UPDATE SET title=$ti, start_utc=$st, end_utc=$en, " +
                 "all_day=$ad, location=$lo, description=$de, attendees=$at, categories=$ca, " +
                 "modified_utc=$mo, repeat_freq=$rf, repeat_interval=$ri, repeat_days=$rd, " +
                 "repeat_until=$ru, repeat_count=$rc, skip_dates=$sk, series_id=$si, " +
                 "occurrence_start=$os, repeat_time_basis=$tb, repeat_anchor=$ra, repeat_zone_id=$rz, repeat_week_start=$ws, " +
-                "skip_occurrences=$so, repeat_until_exact=$ue, occurrence_anchor=$oa, occurrence_basis=$ob, occurrence_zone_id=$oz";
+                "skip_occurrences=$so, repeat_until_exact=$ue, occurrence_anchor=$oa, occurrence_basis=$ob, occurrence_zone_id=$oz, " +
+                "duration_days=$dd, duration_time_ticks=$dt";
             cmd.Parameters.AddWithValue("$id", ev.Id.ToString());
             cmd.Parameters.AddWithValue("$ti", ev.Title ?? "");
             cmd.Parameters.AddWithValue("$st", ToStore(ev.Start, ev.AllDay));
@@ -159,6 +163,8 @@ namespace Killendar.Services
             cmd.Parameters.AddWithValue("$oa", ev.OccurrenceAnchor.HasValue ? ToStore(ev.OccurrenceAnchor.Value, true) : "");
             cmd.Parameters.AddWithValue("$ob", (int)ev.OccurrenceBasis);
             cmd.Parameters.AddWithValue("$oz", ev.OccurrenceZoneId ?? "");
+            cmd.Parameters.AddWithValue("$dd", ev.DurationDays);
+            cmd.Parameters.AddWithValue("$dt", ev.DurationTimeTicks);
             cmd.ExecuteNonQuery();
         }
 
@@ -249,6 +255,8 @@ namespace Killendar.Services
                 updated.Attendees   = [.. edited.Attendees ?? []];
                 updated.Categories  = edited.Categories;
                 updated.AllDay      = edited.AllDay;
+                updated.DurationDays = edited.AllDay ? 0 : edited.DurationDays;
+                updated.DurationTimeTicks = edited.AllDay ? 0 : edited.DurationTimeTicks;
                 updated.Start       = master.Start + delta;
                 updated.End         = updated.Start + duration;
                 if (Recurrence.UsesTimeBasis(master) && !updated.AllDay)
@@ -272,6 +280,8 @@ namespace Killendar.Services
                     updated.RepeatZoneId = "";
                 }
                 updated.Repeat         = edited.Repeat;
+                if (NominalDuration.HasValue(updated))
+                    updated.End = NominalDuration.EndAfterStartChange(updated, updated.Start);
                 updated.RepeatInterval = edited.RepeatInterval > 0 ? edited.RepeatInterval : 1;
                 updated.RepeatDays     = [.. edited.RepeatDays ?? []];
                 updated.RepeatUntil    = edited.RepeatUntil;
@@ -337,6 +347,8 @@ namespace Killendar.Services
                         shifted.End += delta;
                     }
                     shifted.Modified = updated.Modified;
+                    if (NominalDuration.HasValue(shifted))
+                        shifted.End = NominalDuration.EndAfterStartChange(shifted, shifted.Start);
                     retained.Add(shifted);
                 }
 

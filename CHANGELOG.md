@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.3.2] - Unreleased
 
 ### Fixed
+- Imported day and week durations preserve calendar-day meaning across clock changes, editing and export.
 - Recurring appointments skip nonexistent source-zone times without consuming their occurrence count.
 - Appointment title edits preserve exact times during a repeated daylight-saving hour.
 - Read-only agenda queries support older calendars without changing their files.

@@ -50,6 +50,8 @@ namespace Killendar.Models
         public string       Title       { get; set; } = "";
         public DateTime     Start       { get; set; }
         public DateTime     End         { get; set; }
+        public int DurationDays { get; set; }
+        public long DurationTimeTicks { get; set; }
         public bool         AllDay      { get; set; }
         public string       Location    { get; set; } = "";
         public string       Description { get; set; } = "";
@@ -150,6 +152,8 @@ namespace Killendar.Models
             Title       = Title,
             Start       = Start,
             End         = End,
+            DurationDays = DurationDays,
+            DurationTimeTicks = DurationTimeTicks,
             AllDay      = AllDay,
             Location    = Location,
             Description = Description,

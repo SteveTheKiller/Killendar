@@ -43,7 +43,8 @@ namespace Killendar.Services
         // 4: recurrence source time basis, wall-clock anchor, and source zone.
         // 5: recurrence week boundary, with Sunday preserving native series.
         // 6: precise recurrence exclusions, end limits, and original occurrence identities.
-        private const int SchemaVersion = 6;
+        // 7: nominal calendar days and elapsed subday duration components.
+        private const int SchemaVersion = 7;
 
         /// <summary>Default per-user folder. Manage Killendars can override it, including with
         /// the executable folder for a self-contained portable copy.</summary>
