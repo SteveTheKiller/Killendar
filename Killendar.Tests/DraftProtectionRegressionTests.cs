@@ -109,6 +109,47 @@ namespace Killendar.Tests
             Assert.Equal(1, fixture.View.DiscardQuestions);
         }
 
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void RenamedOrDeletedActiveKillendarIsNeverRecreatedEmpty(bool delete)
+        {
+            string root = Path.Combine(TestScratch.Root, "draft-rename", Guid.NewGuid().ToString("N"));
+            string? savedDir = Settings.Get("KillendarDataDir"), savedActive = Settings.Get("ActiveKillendar");
+            var store = new EventStore();
+            try
+            {
+                Directory.CreateDirectory(root);
+                EventStore.SetDataDir(root);
+                foreach (string name in new[] { "Current.kcal", "Other.kcal" })
+                {
+                    store.Open(Path.Combine(root, name));
+                    store.Close();
+                }
+                EventStore.SetActive("Current.kcal");
+                EventStore.LastRename = null;
+                // What Manage Killendars does: rename the active file, or delete it and move on.
+                if (delete) { EventStore.DeleteKillendar("Current.kcal"); EventStore.SetActive("Other.kcal"); }
+                else EventStore.RenameKillendar("Current.kcal", "Renamed.kcal");
+                var host = new SecurityHostFake { LeaveDraft = false };
+
+                new SecurityController(host, store).ApplyKillendarSelection(null, "Current.kcal", root,
+                    Path.Combine(root, "Current.kcal"));
+
+                Assert.False(File.Exists(Path.Combine(root, "Current.kcal")));
+                Assert.Equal(0, host.DraftQuestions);
+                Assert.Equal(Path.Combine(root, delete ? "Other.kcal" : "Renamed.kcal"), store.FilePath, ignoreCase: true);
+            }
+            finally
+            {
+                store.Close();
+                EventStore.LastRename = null;
+                Settings.Set("KillendarDataDir", savedDir ?? "");
+                Settings.Set("ActiveKillendar", savedActive ?? "");
+                Directory.Delete(root, true);
+            }
+        }
+
         [Fact]
         public void SwitchingKillendarsWithADraftStaysPutWhenTheUserKeepsEditing()
         {

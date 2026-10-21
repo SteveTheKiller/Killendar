@@ -50,10 +50,15 @@ namespace Killendar.Services
         /// <summary>Renames a Killendar inside the data folder. Retargets the active setting when
         /// the active file is the one renamed - without that the app would quietly create a fresh
         /// empty Killendar at the old name on the next open.</summary>
+        /// <summary>The most recent rename, so a caller holding the old name (Manage Killendars'
+        /// return path) can follow it instead of reopening, and so recreating, the old file.</summary>
+        internal static (string From, string To)? LastRename;
+
         public static void RenameKillendar(string oldName, string newName)
         {
             SqliteConnection.ClearAllPools();
             File.Move(Path.Combine(DataDir, oldName), Path.Combine(DataDir, newName));
+            LastRename = (oldName, newName);
             if (string.Equals(oldName, ActiveFile, StringComparison.OrdinalIgnoreCase))
                 SetActive(newName);
         }

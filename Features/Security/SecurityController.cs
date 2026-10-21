@@ -168,6 +168,7 @@ namespace Killendar.Features
             string previousDir = EventStore.DataDir;
             string previousPath = EventStore.ActivePath;
             _store.Close();
+            EventStore.LastRename = null;
 
             var dlg = new KillendarsDialog { Owner = _host.Window };
             dlg.ShowDialog();
@@ -186,9 +187,21 @@ namespace Killendar.Features
                 _password = null;
             }
 
+            // A rename in the dialog moved the previous Killendar without changing it: follow it, so
+            // it is still the one the panel's input belongs to. A previous file that is gone (the
+            // dialog deleted it) is never named again: opening a missing path creates an empty one.
+            if (EventStore.LastRename is { } rename &&
+                string.Equals(rename.From, previous, StringComparison.OrdinalIgnoreCase))
+            {
+                previous = rename.To;
+                previousPath = Path.Combine(previousDir, rename.To);
+            }
+            bool previousExists = File.Exists(previousPath);
+
             // A switch would close the panel and lose unsaved input. Keeping it means staying on
             // the Killendar the input belongs to.
-            if (!string.Equals(EventStore.ActivePath, previousPath, StringComparison.OrdinalIgnoreCase) &&
+            if (previousExists &&
+                !string.Equals(EventStore.ActivePath, previousPath, StringComparison.OrdinalIgnoreCase) &&
                 !_host.ConfirmLeaveDraft())
             {
                 if (!string.Equals(EventStore.DataDir, previousDir, StringComparison.OrdinalIgnoreCase))
@@ -198,7 +211,7 @@ namespace Killendar.Features
 
             bool opened = Open(exitOnCancel: false);
             string? failure = _lastOpenError;
-            if (!opened)
+            if (!opened && previousExists)
             {
                 // Opening the chosen Killendar failed or its unlock was canceled - fall back to
                 // the previous one rather than leaving the app with nothing open.
