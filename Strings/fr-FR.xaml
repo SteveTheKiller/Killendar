@@ -138,7 +138,18 @@
     <sys:String x:Key="Str_KS_Undo">Annuler la dernière modification d'un rendez-vous</sys:String>
     <sys:String x:Key="Str_KS_Redo">Rétablir</sys:String>
     <sys:String x:Key="Str_KS_Lock">Verrouiller le Killendar</sys:String>
+    <sys:String x:Key="Str_KS_Search">Rechercher des rendez-vous</sys:String>
+    <sys:String x:Key="Str_KS_GoToDate">Aller à une date</sys:String>
     <sys:String x:Key="Str_Btn_Deleted">Supprimés</sys:String>
+    <sys:String x:Key="Str_Btn_Search">Rechercher</sys:String>
+    <sys:String x:Key="Str_Search_Box">Rechercher des rendez-vous</sys:String>
+    <sys:String x:Key="Str_Search_Hint">Tapez des mots pour trouver des rendez-vous, ou une date pour y aller.</sys:String>
+    <sys:String x:Key="Str_Search_Results">Résultats de la recherche</sys:String>
+    <sys:String x:Key="Str_Search_Any">Toutes dates</sys:String>
+    <sys:String x:Key="Str_Search_Upcoming">À venir</sys:String>
+    <sys:String x:Key="Str_Search_Past">Passés</sys:String>
+    <sys:String x:Key="Str_Search_GoTo">Aller au {0}</sys:String>
+    <sys:String x:Key="Str_Search_None">Aucun rendez-vous ne correspond.</sys:String>
     <sys:String x:Key="Str_Del_Empty">Rien n'a été supprimé ces 30 derniers jours</sys:String>
     <sys:String x:Key="Str_Del_Header">Supprimés ces 30 derniers jours. Cliquez pour restaurer.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Supprimé le {0}</sys:String>
@@ -223,6 +234,8 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">format de date</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">début de la semaine</sys:String>
+    <sys:String x:Key="Str_Lbl_AgendaDays">l’agenda affiche</sys:String>
+    <sys:String x:Key="Str_Agenda_Days">{0} jours</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">rappel des nouveaux rendez-vous</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Suivre Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>

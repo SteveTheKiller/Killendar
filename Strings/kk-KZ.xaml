@@ -180,7 +180,18 @@
     <sys:String x:Key="Str_KS_Undo">Кездесудегі соңғы өзгерісті болдырмау</sys:String>
     <sys:String x:Key="Str_KS_Redo">Қайталау</sys:String>
     <sys:String x:Key="Str_KS_Lock">Killendar құлыптау</sys:String>
+    <sys:String x:Key="Str_KS_Search">Кездесулерді іздеу</sys:String>
+    <sys:String x:Key="Str_KS_GoToDate">Күнге өту</sys:String>
     <sys:String x:Key="Str_Btn_Deleted">Жойылғандар</sys:String>
+    <sys:String x:Key="Str_Btn_Search">Іздеу</sys:String>
+    <sys:String x:Key="Str_Search_Box">Кездесулерді іздеу</sys:String>
+    <sys:String x:Key="Str_Search_Hint">Кездесулерді табу үшін сөз, ал өту үшін күн енгізіңіз.</sys:String>
+    <sys:String x:Key="Str_Search_Results">Іздеу нәтижелері</sys:String>
+    <sys:String x:Key="Str_Search_Any">Кез келген уақыт</sys:String>
+    <sys:String x:Key="Str_Search_Upcoming">Алдағы</sys:String>
+    <sys:String x:Key="Str_Search_Past">Өткен</sys:String>
+    <sys:String x:Key="Str_Search_GoTo">{0} күніне өту</sys:String>
+    <sys:String x:Key="Str_Search_None">Сәйкес кездесу жоқ.</sys:String>
     <sys:String x:Key="Str_Del_Empty">Соңғы 30 күнде ештеңе жойылмады</sys:String>
     <sys:String x:Key="Str_Del_Header">Соңғы 30 күнде жойылғандар. Қалпына келтіру үшін басыңыз.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Жойылған уақыты: {0}</sys:String>
@@ -274,6 +285,8 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">күн пішімі</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">аптаның басталуы</sys:String>
+    <sys:String x:Key="Str_Lbl_AgendaDays">күн тәртібі көрсетеді</sys:String>
+    <sys:String x:Key="Str_Agenda_Days">{0} күн</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">жаңа кездесулер ескерткіші</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Windows бойынша</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>

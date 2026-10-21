@@ -138,7 +138,18 @@
     <sys:String x:Key="Str_KS_Undo">予定の最後の変更を元に戻す</sys:String>
     <sys:String x:Key="Str_KS_Redo">やり直し</sys:String>
     <sys:String x:Key="Str_KS_Lock">Killendar をロック</sys:String>
+    <sys:String x:Key="Str_KS_Search">予定を検索</sys:String>
+    <sys:String x:Key="Str_KS_GoToDate">日付に移動</sys:String>
     <sys:String x:Key="Str_Btn_Deleted">削除済み</sys:String>
+    <sys:String x:Key="Str_Btn_Search">検索</sys:String>
+    <sys:String x:Key="Str_Search_Box">予定を検索</sys:String>
+    <sys:String x:Key="Str_Search_Hint">予定を探すには語句を、移動するには日付を入力します。</sys:String>
+    <sys:String x:Key="Str_Search_Results">検索結果</sys:String>
+    <sys:String x:Key="Str_Search_Any">すべて</sys:String>
+    <sys:String x:Key="Str_Search_Upcoming">今後</sys:String>
+    <sys:String x:Key="Str_Search_Past">過去</sys:String>
+    <sys:String x:Key="Str_Search_GoTo">{0} に移動</sys:String>
+    <sys:String x:Key="Str_Search_None">一致する予定はありません。</sys:String>
     <sys:String x:Key="Str_Del_Empty">過去 30 日間に削除された予定はありません</sys:String>
     <sys:String x:Key="Str_Del_Header">過去 30 日間に削除された予定。クリックすると元に戻します。</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">削除日時 {0}</sys:String>
@@ -223,6 +234,8 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">日付形式</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">週の開始</sys:String>
+    <sys:String x:Key="Str_Lbl_AgendaDays">アジェンダの表示期間</sys:String>
+    <sys:String x:Key="Str_Agenda_Days">{0} 日</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">新しい予定のリマインダー</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Windows に合わせる</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>

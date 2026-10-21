@@ -138,7 +138,18 @@
     <sys:String x:Key="Str_KS_Undo">অ্যাপয়েন্টমেন্টের শেষ পরিবর্তন ফেরান</sys:String>
     <sys:String x:Key="Str_KS_Redo">আবার করুন</sys:String>
     <sys:String x:Key="Str_KS_Lock">Killendar লক করুন</sys:String>
+    <sys:String x:Key="Str_KS_Search">অ্যাপয়েন্টমেন্ট খুঁজুন</sys:String>
+    <sys:String x:Key="Str_KS_GoToDate">একটি তারিখে যান</sys:String>
     <sys:String x:Key="Str_Btn_Deleted">মুছে ফেলা</sys:String>
+    <sys:String x:Key="Str_Btn_Search">খুঁজুন</sys:String>
+    <sys:String x:Key="Str_Search_Box">অ্যাপয়েন্টমেন্ট খুঁজুন</sys:String>
+    <sys:String x:Key="Str_Search_Hint">অ্যাপয়েন্টমেন্ট খুঁজতে শব্দ লিখুন, অথবা সেই দিনে যেতে একটি তারিখ।</sys:String>
+    <sys:String x:Key="Str_Search_Results">খোঁজার ফল</sys:String>
+    <sys:String x:Key="Str_Search_Any">যেকোনো সময়</sys:String>
+    <sys:String x:Key="Str_Search_Upcoming">আসন্ন</sys:String>
+    <sys:String x:Key="Str_Search_Past">অতীত</sys:String>
+    <sys:String x:Key="Str_Search_GoTo">{0}-এ যান</sys:String>
+    <sys:String x:Key="Str_Search_None">কোনো অ্যাপয়েন্টমেন্ট মেলেনি।</sys:String>
     <sys:String x:Key="Str_Del_Empty">গত 30 দিনে কিছু মোছা হয়নি</sys:String>
     <sys:String x:Key="Str_Del_Header">গত 30 দিনে মোছা হয়েছে। ফেরাতে একটিতে ক্লিক করুন।</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">মোছা হয়েছে {0}</sys:String>
@@ -223,6 +234,8 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">তারিখের বিন্যাস</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">সপ্তাহের শুরু</sys:String>
+    <sys:String x:Key="Str_Lbl_AgendaDays">এজেন্ডায় দেখায়</sys:String>
+    <sys:String x:Key="Str_Agenda_Days">{0} দিন</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">নতুন অ্যাপয়েন্টমেন্টের রিমাইন্ডার</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Windows অনুসরণ করুন</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>

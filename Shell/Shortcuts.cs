@@ -132,6 +132,8 @@ namespace Killendar.Shell
                     case Key.E: _ics.Export();          e.Handled = true; return;
                     case Key.N: _calendar.NewAtAnchor(); e.Handled = true; return;
                     case Key.L: LockShortcut();          e.Handled = true; return;   // Lock.cs
+                    case Key.F: OpenSearch();            e.Handled = true; return;   // Search.cs
+                    case Key.G: OpenSearch();            e.Handled = true; return;   // the same box takes a date
                     // A text box keeps its own Ctrl+Z, and an open editor holds a copy of the row
                     // an undo might rewrite, so calendar undo waits until neither is in the way.
                     case Key.Z when !TypingInField() && !editingAppointment: UndoRedo(undo: true);  e.Handled = true; return;

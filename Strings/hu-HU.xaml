@@ -180,7 +180,18 @@
     <sys:String x:Key="Str_KS_Undo">A találkozó utolsó módosításának visszavonása</sys:String>
     <sys:String x:Key="Str_KS_Redo">Újra</sys:String>
     <sys:String x:Key="Str_KS_Lock">A Killendar zárolása</sys:String>
+    <sys:String x:Key="Str_KS_Search">Találkozók keresése</sys:String>
+    <sys:String x:Key="Str_KS_GoToDate">Ugrás egy dátumra</sys:String>
     <sys:String x:Key="Str_Btn_Deleted">Törölt</sys:String>
+    <sys:String x:Key="Str_Btn_Search">Keresés</sys:String>
+    <sys:String x:Key="Str_Search_Box">Találkozók keresése</sys:String>
+    <sys:String x:Key="Str_Search_Hint">Írjon be szavakat a találkozók kereséséhez, vagy egy dátumot az odaugráshoz.</sys:String>
+    <sys:String x:Key="Str_Search_Results">Keresési eredmények</sys:String>
+    <sys:String x:Key="Str_Search_Any">Bármikor</sys:String>
+    <sys:String x:Key="Str_Search_Upcoming">Közelgő</sys:String>
+    <sys:String x:Key="Str_Search_Past">Korábbi</sys:String>
+    <sys:String x:Key="Str_Search_GoTo">Ugrás ide: {0}</sys:String>
+    <sys:String x:Key="Str_Search_None">Nincs egyező találkozó.</sys:String>
     <sys:String x:Key="Str_Del_Empty">Az elmúlt 30 napban semmi sem lett törölve</sys:String>
     <sys:String x:Key="Str_Del_Header">Az elmúlt 30 napban törölve. Kattintson a visszaállításhoz.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Törölve: {0}</sys:String>
@@ -274,6 +285,8 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">dátumformátum</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">a hét kezdete</sys:String>
+    <sys:String x:Key="Str_Lbl_AgendaDays">a napirend mutatja</sys:String>
+    <sys:String x:Key="Str_Agenda_Days">{0} nap</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">új találkozók emlékeztetője</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Kövesse a Windows rendszert</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>

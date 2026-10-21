@@ -138,7 +138,18 @@
     <sys:String x:Key="Str_KS_Undo">Letzte Änderung an einem Termin rückgängig machen</sys:String>
     <sys:String x:Key="Str_KS_Redo">Wiederherstellen</sys:String>
     <sys:String x:Key="Str_KS_Lock">Killendar sperren</sys:String>
+    <sys:String x:Key="Str_KS_Search">Termine suchen</sys:String>
+    <sys:String x:Key="Str_KS_GoToDate">Zu einem Datum wechseln</sys:String>
     <sys:String x:Key="Str_Btn_Deleted">Gelöscht</sys:String>
+    <sys:String x:Key="Str_Btn_Search">Suchen</sys:String>
+    <sys:String x:Key="Str_Search_Box">Termine suchen</sys:String>
+    <sys:String x:Key="Str_Search_Hint">Geben Sie Wörter ein, um Termine zu finden, oder ein Datum, um dorthin zu springen.</sys:String>
+    <sys:String x:Key="Str_Search_Results">Suchergebnisse</sys:String>
+    <sys:String x:Key="Str_Search_Any">Jederzeit</sys:String>
+    <sys:String x:Key="Str_Search_Upcoming">Anstehend</sys:String>
+    <sys:String x:Key="Str_Search_Past">Vergangen</sys:String>
+    <sys:String x:Key="Str_Search_GoTo">Zu {0} wechseln</sys:String>
+    <sys:String x:Key="Str_Search_None">Keine passenden Termine.</sys:String>
     <sys:String x:Key="Str_Del_Empty">In den letzten 30 Tagen wurde nichts gelöscht</sys:String>
     <sys:String x:Key="Str_Del_Header">In den letzten 30 Tagen gelöscht. Zum Wiederherstellen anklicken.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Gelöscht am {0}</sys:String>
@@ -223,6 +234,8 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">datumsformat</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">wochenbeginn</sys:String>
+    <sys:String x:Key="Str_Lbl_AgendaDays">agenda zeigt</sys:String>
+    <sys:String x:Key="Str_Agenda_Days">{0} Tage</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">erinnerung für neue termine</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Windows folgen</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>

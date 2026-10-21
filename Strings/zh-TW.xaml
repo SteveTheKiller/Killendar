@@ -138,7 +138,18 @@
     <sys:String x:Key="Str_KS_Undo">復原對約會的上一次變更</sys:String>
     <sys:String x:Key="Str_KS_Redo">重做</sys:String>
     <sys:String x:Key="Str_KS_Lock">鎖定 Killendar</sys:String>
+    <sys:String x:Key="Str_KS_Search">搜尋約會</sys:String>
+    <sys:String x:Key="Str_KS_GoToDate">前往日期</sys:String>
     <sys:String x:Key="Str_Btn_Deleted">已刪除</sys:String>
+    <sys:String x:Key="Str_Btn_Search">搜尋</sys:String>
+    <sys:String x:Key="Str_Search_Box">搜尋約會</sys:String>
+    <sys:String x:Key="Str_Search_Hint">輸入文字尋找約會，或輸入日期前往該日。</sys:String>
+    <sys:String x:Key="Str_Search_Results">搜尋結果</sys:String>
+    <sys:String x:Key="Str_Search_Any">任何時間</sys:String>
+    <sys:String x:Key="Str_Search_Upcoming">即將到來</sys:String>
+    <sys:String x:Key="Str_Search_Past">已過去</sys:String>
+    <sys:String x:Key="Str_Search_GoTo">前往 {0}</sys:String>
+    <sys:String x:Key="Str_Search_None">沒有符合的約會。</sys:String>
     <sys:String x:Key="Str_Del_Empty">過去 30 天內沒有刪除任何內容</sys:String>
     <sys:String x:Key="Str_Del_Header">過去 30 天內刪除的項目。按一下即可還原。</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">刪除於 {0}</sys:String>
@@ -223,6 +234,8 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">日期格式</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">每週開始日</sys:String>
+    <sys:String x:Key="Str_Lbl_AgendaDays">議程顯示</sys:String>
+    <sys:String x:Key="Str_Agenda_Days">{0} 天</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">新約會的提醒</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">跟隨 Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>

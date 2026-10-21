@@ -180,7 +180,18 @@
     <sys:String x:Key="Str_KS_Undo">Angre den siste endringen av en avtale</sys:String>
     <sys:String x:Key="Str_KS_Redo">Gjør om</sys:String>
     <sys:String x:Key="Str_KS_Lock">Lås Killendar</sys:String>
+    <sys:String x:Key="Str_KS_Search">Søk i avtaler</sys:String>
+    <sys:String x:Key="Str_KS_GoToDate">Gå til en dato</sys:String>
     <sys:String x:Key="Str_Btn_Deleted">Slettet</sys:String>
+    <sys:String x:Key="Str_Btn_Search">Søk</sys:String>
+    <sys:String x:Key="Str_Search_Box">Søk i avtaler</sys:String>
+    <sys:String x:Key="Str_Search_Hint">Skriv ord for å finne avtaler, eller en dato for å gå til den.</sys:String>
+    <sys:String x:Key="Str_Search_Results">Søkeresultater</sys:String>
+    <sys:String x:Key="Str_Search_Any">Når som helst</sys:String>
+    <sys:String x:Key="Str_Search_Upcoming">Kommende</sys:String>
+    <sys:String x:Key="Str_Search_Past">Tidligere</sys:String>
+    <sys:String x:Key="Str_Search_GoTo">Gå til {0}</sys:String>
+    <sys:String x:Key="Str_Search_None">Ingen avtaler samsvarer.</sys:String>
     <sys:String x:Key="Str_Del_Empty">Ingenting er slettet de siste 30 dagene</sys:String>
     <sys:String x:Key="Str_Del_Header">Slettet de siste 30 dagene. Klikk for å gjenopprette.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Slettet {0}</sys:String>
@@ -274,6 +285,8 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">datoformat</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">uken starter på</sys:String>
+    <sys:String x:Key="Str_Lbl_AgendaDays">agendaen viser</sys:String>
+    <sys:String x:Key="Str_Agenda_Days">{0} dager</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">påminnelse for nye avtaler</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Følg Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>

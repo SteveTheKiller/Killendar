@@ -180,7 +180,18 @@
     <sys:String x:Key="Str_KS_Undo">Desfazer a última alteração de um compromisso</sys:String>
     <sys:String x:Key="Str_KS_Redo">Refazer</sys:String>
     <sys:String x:Key="Str_KS_Lock">Bloquear o Killendar</sys:String>
+    <sys:String x:Key="Str_KS_Search">Pesquisar compromissos</sys:String>
+    <sys:String x:Key="Str_KS_GoToDate">Ir para uma data</sys:String>
     <sys:String x:Key="Str_Btn_Deleted">Excluídos</sys:String>
+    <sys:String x:Key="Str_Btn_Search">Pesquisar</sys:String>
+    <sys:String x:Key="Str_Search_Box">Pesquisar compromissos</sys:String>
+    <sys:String x:Key="Str_Search_Hint">Digite palavras para encontrar compromissos, ou uma data para ir até ela.</sys:String>
+    <sys:String x:Key="Str_Search_Results">Resultados da pesquisa</sys:String>
+    <sys:String x:Key="Str_Search_Any">Qualquer data</sys:String>
+    <sys:String x:Key="Str_Search_Upcoming">Próximos</sys:String>
+    <sys:String x:Key="Str_Search_Past">Passados</sys:String>
+    <sys:String x:Key="Str_Search_GoTo">Ir para {0}</sys:String>
+    <sys:String x:Key="Str_Search_None">Nenhum compromisso corresponde.</sys:String>
     <sys:String x:Key="Str_Del_Empty">Nada foi excluído nos últimos 30 dias</sys:String>
     <sys:String x:Key="Str_Del_Header">Excluídos nos últimos 30 dias. Clique para restaurar.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Excluído em {0}</sys:String>
@@ -274,6 +285,8 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">formato de data</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">a semana começa em</sys:String>
+    <sys:String x:Key="Str_Lbl_AgendaDays">a agenda mostra</sys:String>
+    <sys:String x:Key="Str_Agenda_Days">{0} dias</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">lembrete dos novos compromissos</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Seguir o Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>

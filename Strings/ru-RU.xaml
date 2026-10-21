@@ -181,7 +181,18 @@
     <sys:String x:Key="Str_KS_Undo">Отменить последнее изменение встречи</sys:String>
     <sys:String x:Key="Str_KS_Redo">Повторить</sys:String>
     <sys:String x:Key="Str_KS_Lock">Заблокировать Killendar</sys:String>
+    <sys:String x:Key="Str_KS_Search">Поиск встреч</sys:String>
+    <sys:String x:Key="Str_KS_GoToDate">Перейти к дате</sys:String>
     <sys:String x:Key="Str_Btn_Deleted">Удалённые</sys:String>
+    <sys:String x:Key="Str_Btn_Search">Поиск</sys:String>
+    <sys:String x:Key="Str_Search_Box">Поиск встреч</sys:String>
+    <sys:String x:Key="Str_Search_Hint">Введите слова, чтобы найти встречи, или дату, чтобы перейти к ней.</sys:String>
+    <sys:String x:Key="Str_Search_Results">Результаты поиска</sys:String>
+    <sys:String x:Key="Str_Search_Any">Любое время</sys:String>
+    <sys:String x:Key="Str_Search_Upcoming">Предстоящие</sys:String>
+    <sys:String x:Key="Str_Search_Past">Прошедшие</sys:String>
+    <sys:String x:Key="Str_Search_GoTo">Перейти к {0}</sys:String>
+    <sys:String x:Key="Str_Search_None">Подходящих встреч нет.</sys:String>
     <sys:String x:Key="Str_Del_Empty">За последние 30 дней ничего не удалено</sys:String>
     <sys:String x:Key="Str_Del_Header">Удалено за последние 30 дней. Нажмите, чтобы восстановить.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Удалено {0}</sys:String>
@@ -275,6 +286,8 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">формат даты</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">начало недели</sys:String>
+    <sys:String x:Key="Str_Lbl_AgendaDays">повестка показывает</sys:String>
+    <sys:String x:Key="Str_Agenda_Days">{0} дн.</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">напоминание для новых встреч</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Как в Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>

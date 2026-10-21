@@ -7,7 +7,7 @@ using Killendar.Services;
 
 namespace Killendar.Controls
 {
-    /// <summary>Date format, first-day-of-week and default reminder choices for the rail.</summary>
+    /// <summary>Date format, first day of the week, agenda length and default reminder choices for the rail.</summary>
     internal sealed class DateSettingsMenu
     {
         private static readonly (DateStyle Style, string Key)[] DateStyles =
@@ -111,6 +111,28 @@ namespace Killendar.Controls
                 };
                 week.Checked += WeekStartItem_Click;
                 panel.Children.Add(week);
+            }
+            AddSeparator(panel);
+            panel.Children.Add(new TextBlock
+            {
+                Text = LocaleManager.Loc("Str_Lbl_AgendaDays"), FontSize = 10,
+                Margin = new Thickness(0, 0, 0, 6)
+            });
+            int currentDays = Views.AgendaView.HorizonDays(Settings.Get(Views.AgendaView.HorizonSetting));
+            foreach (int days in Views.AgendaView.HorizonChoices)
+            {
+                var agenda = new RadioButton
+                {
+                    Content = string.Format(LocaleManager.Loc("Str_Agenda_Days"), days), GroupName = "AgendaGroup",
+                    Style = (Style)Application.Current.FindResource("ThemeRadio"),
+                    IsChecked = days == currentDays,
+                };
+                agenda.Checked += (_, _) =>
+                {
+                    Settings.Set(Views.AgendaView.HorizonSetting, days.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                    _weekStartChanged();   // repaints the views, the agenda's length with them
+                };
+                panel.Children.Add(agenda);
             }
             AddSeparator(panel);
             panel.Children.Add(new TextBlock

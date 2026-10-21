@@ -138,7 +138,18 @@
     <sys:String x:Key="Str_KS_Undo">Bir randevudaki son değişikliği geri al</sys:String>
     <sys:String x:Key="Str_KS_Redo">Yinele</sys:String>
     <sys:String x:Key="Str_KS_Lock">Killendar'ı kilitle</sys:String>
+    <sys:String x:Key="Str_KS_Search">Randevularda ara</sys:String>
+    <sys:String x:Key="Str_KS_GoToDate">Bir tarihe git</sys:String>
     <sys:String x:Key="Str_Btn_Deleted">Silinenler</sys:String>
+    <sys:String x:Key="Str_Btn_Search">Ara</sys:String>
+    <sys:String x:Key="Str_Search_Box">Randevularda ara</sys:String>
+    <sys:String x:Key="Str_Search_Hint">Randevu bulmak için sözcük, gitmek için tarih yazın.</sys:String>
+    <sys:String x:Key="Str_Search_Results">Arama sonuçları</sys:String>
+    <sys:String x:Key="Str_Search_Any">Her zaman</sys:String>
+    <sys:String x:Key="Str_Search_Upcoming">Yaklaşan</sys:String>
+    <sys:String x:Key="Str_Search_Past">Geçmiş</sys:String>
+    <sys:String x:Key="Str_Search_GoTo">{0} tarihine git</sys:String>
+    <sys:String x:Key="Str_Search_None">Eşleşen randevu yok.</sys:String>
     <sys:String x:Key="Str_Del_Empty">Son 30 günde hiçbir şey silinmedi</sys:String>
     <sys:String x:Key="Str_Del_Header">Son 30 günde silinenler. Geri yüklemek için tıklayın.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Silinme: {0}</sys:String>
@@ -223,6 +234,8 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">tarih biçimi</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">haftanın başlangıcı</sys:String>
+    <sys:String x:Key="Str_Lbl_AgendaDays">ajanda gösterir</sys:String>
+    <sys:String x:Key="Str_Agenda_Days">{0} gün</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">yeni randevuların hatırlatıcısı</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Windows'u izle</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>

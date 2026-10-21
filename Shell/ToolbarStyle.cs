@@ -73,6 +73,7 @@ namespace Killendar.Shell
             yield return (ImportBtn,   0xE8B5, "Str_Btn_Import");   // Import
             yield return (ExportBtn,   0xEDE1, "Str_Btn_Export");   // Export
             yield return (DeletedBtn,  0xE74D, "Str_Btn_Deleted");  // Delete (trash can), not yet confirmed from a build
+            yield return (SearchBtn,   0xE721, "Str_Btn_Search");   // Search (magnifier), not yet confirmed from a build
             // E787 is the calendar - confirmed from a build that it renders as one, so it
             // belongs on MONTH. It was on Today, and E736 (guessed as GridView) was on Month and
             // actually draws an open book. Today moved to E8D1. (2026-07-30, both picked

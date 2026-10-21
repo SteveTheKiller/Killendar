@@ -180,7 +180,18 @@
     <sys:String x:Key="Str_KS_Undo">Undo the last change to an appointment</sys:String>
     <sys:String x:Key="Str_KS_Redo">Redo</sys:String>
     <sys:String x:Key="Str_KS_Lock">Lock the Killendar</sys:String>
+    <sys:String x:Key="Str_KS_Search">Search appointments</sys:String>
+    <sys:String x:Key="Str_KS_GoToDate">Go to a date</sys:String>
     <sys:String x:Key="Str_Btn_Deleted">Deleted</sys:String>
+    <sys:String x:Key="Str_Btn_Search">Search</sys:String>
+    <sys:String x:Key="Str_Search_Box">Search appointments</sys:String>
+    <sys:String x:Key="Str_Search_Hint">Type words to find appointments, or a date to go to it.</sys:String>
+    <sys:String x:Key="Str_Search_Results">Search results</sys:String>
+    <sys:String x:Key="Str_Search_Any">Any time</sys:String>
+    <sys:String x:Key="Str_Search_Upcoming">Upcoming</sys:String>
+    <sys:String x:Key="Str_Search_Past">Past</sys:String>
+    <sys:String x:Key="Str_Search_GoTo">Go to {0}</sys:String>
+    <sys:String x:Key="Str_Search_None">No appointments match.</sys:String>
     <sys:String x:Key="Str_Del_Empty">Nothing deleted in the last 30 days</sys:String>
     <sys:String x:Key="Str_Del_Header">Deleted in the last 30 days. Click one to restore it.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Deleted {0}</sys:String>
@@ -274,6 +285,8 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">date format</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">week starts on</sys:String>
+    <sys:String x:Key="Str_Lbl_AgendaDays">agenda shows</sys:String>
+    <sys:String x:Key="Str_Agenda_Days">{0} days</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">new appointments remind</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Follow Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>

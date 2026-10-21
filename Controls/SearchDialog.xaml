@@ -1,0 +1,111 @@
+<!-- Search (Ctrl+F) and go to a date (Ctrl+G): one box. Words find appointments in the open
+     calendar; a date offers to show it. Same chrome as ConfirmDialog; rows are built in code. -->
+<Window x:Class="Killendar.Controls.SearchDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:theme="clr-namespace:KillerFamily.Theming"
+        xmlns:icons="clr-namespace:Killendar.Controls"
+        xmlns:kui="clr-namespace:Killendar.Controls"
+        Title="Killendar"
+        Width="460" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType"
+        UseLayoutRounding="True" SnapsToDevicePixels="True"
+        ShowInTaskbar="False">
+
+    <!-- Margin is a transparent halo so the drop shadow has room to render (AllowsTransparency window,
+         so WPF draws the shadow rather than the OS). -->
+    <!-- Dialog cards sit on the dark tier. Inputs and DimTextBrush are calibrated against it;
+         on SurfaceBrush a field is the same color as the card behind it. -->
+    <kui:PickerBorder x:Name="RootBorder" Opacity="0"
+            Background="{StaticResource BackgroundBrush}"
+            BorderBrush="{StaticResource CardBorderBrush}"
+            BorderThickness="1"
+            CornerRadius="{DynamicResource PanelCornerRadius}"
+            Margin="{DynamicResource DialogHaloMargin}">
+        <kui:PickerBorder.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="18" ShadowDepth="3" Direction="270" Opacity="{DynamicResource AboutShadowOpacity}"/>
+        </kui:PickerBorder.Effect>
+        <Grid>
+            <!-- Film grain over the whole dialog (behind content), so it reads as one continuous
+                 surface like the main window chrome. -->
+            <Border IsHitTestVisible="False" CornerRadius="{DynamicResource PanelCornerRadius}"
+                    Opacity="{DynamicResource GrainOpacity}"
+                    Background="{DynamicResource GrainTileBrush}"/>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- The title brush has its own grain overlay and follows the card's top corners. -->
+                <Border Grid.Row="0" Background="{DynamicResource DialogTitleBarBrush}"
+                        Height="{DynamicResource DialogTitleBarHeight}"
+                        CornerRadius="{DynamicResource DialogTitleCornerRadius}"
+                        MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" Panel.ZIndex="1">
+                    <Grid>
+                        <Border IsHitTestVisible="False" CornerRadius="{DynamicResource DialogTitleCornerRadius}"
+                                Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Margin="{DynamicResource DialogTitleMargin}">
+                        <!-- The app icon leads the caption, as it does in the main title bar. -->
+                        <icons:AppIcon x:Name="TitleIcon"
+                               Width="{DynamicResource TitleIconSize}" Height="{DynamicResource TitleIconSize}"
+                               Margin="{DynamicResource TitleIconMargin}" VerticalAlignment="Center"
+                               RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                        <!-- Wordmark with the same soft dark shadow copy the main title bar uses. -->
+                        <Grid VerticalAlignment="Center"
+                              Visibility="{DynamicResource WordmarkVisibility}" Margin="0,-18,0,-22">
+                            <Grid.RenderTransform><TranslateTransform Y="-5"/></Grid.RenderTransform>
+                            <StackPanel Orientation="Horizontal" Margin="1,2,0,0"
+                                        Opacity="{DynamicResource WordmarkShadowOpacity}">
+                                <StackPanel.Effect><BlurEffect Radius="3"/></StackPanel.Effect>
+                                <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="{DynamicResource TitleWordmarkSize}"><Run Text="The " Foreground="#D8000000"/><Run FontFamily="{DynamicResource WordmarkAccentFont}" Text="Killendar" FontSize="{DynamicResource TitleWordmarkBoldSize}" Foreground="#D8000000"/></TextBlock>
+                            </StackPanel>
+                            <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="{DynamicResource TitleWordmarkSize}" Margin="1,2,0,0" IsHitTestVisible="False" Opacity="{DynamicResource WordmarkAccentShadowOpacity}"><TextBlock.Effect><BlurEffect Radius="3"/></TextBlock.Effect><Run Text="The " Foreground="Transparent"/><Run FontFamily="{DynamicResource WordmarkAccentFont}" Text="Killendar" FontSize="{DynamicResource TitleWordmarkBoldSize}" Foreground="#D8000000"/></TextBlock>
+                            <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="{DynamicResource TitleWordmarkSize}"><Run Text="The " Foreground="{DynamicResource TextBrush}"/><Run FontFamily="{DynamicResource WordmarkAccentFont}" Text="Killendar" FontSize="{DynamicResource TitleWordmarkBoldSize}" Foreground="{DynamicResource AccentLogo}"/></TextBlock>
+                        </Grid>
+                        <TextBlock Text="Killendar" Visibility="{DynamicResource PlainTitleVisibility}"
+                                   VerticalAlignment="Center"
+                                   FontFamily="{DynamicResource ChromeFontFamily}" FontSize="11" FontWeight="Bold"
+                                   Foreground="{DynamicResource ChromeTextBrush}"/>
+                        </StackPanel>
+                        <!-- Same X as the About card: the family overlay glyph on a card, the classic caption button on 98SE. -->
+                        <Button Content="&#xE8BB;" Click="Close_Click" Style="{StaticResource ChromeCloseButton}"
+                                HorizontalAlignment="Right" VerticalAlignment="Center"
+                                Margin="{DynamicResource DialogCaptionCloseMargin}" Visibility="{DynamicResource PlainTitleVisibility}"/>
+                        <Button Content="&#x2715;" Click="Close_Click" Style="{StaticResource OverlayCloseButton}"
+                                ToolTip="{DynamicResource Str_Sys_Close}"
+                                HorizontalAlignment="Right" VerticalAlignment="Center" Width="28" Height="26" Margin="0,0,3,0"
+                                Visibility="{DynamicResource AboutModernCloseVisibility}"/>
+                    </Grid>
+                </Border>
+
+                <StackPanel Grid.Row="1" Margin="22,14,22,18">
+                    <TextBox x:Name="QueryBox" Style="{StaticResource DarkTextBox}" FontSize="13" Padding="6,4"
+                             AutomationProperties.Name="{DynamicResource Str_Search_Box}"
+                             TextChanged="QueryBox_TextChanged" PreviewKeyDown="QueryBox_PreviewKeyDown"/>
+                    <TextBlock x:Name="HintText" Text="{DynamicResource Str_Search_Hint}" FontSize="10.5"
+                               Foreground="{DynamicResource DimTextBrush}" TextWrapping="Wrap" Margin="0,4,0,8"/>
+                    <StackPanel x:Name="SpanRow" Orientation="Horizontal" Margin="0,0,0,8"/>
+                    <ListBox x:Name="Results" MaxHeight="320" MinHeight="40" Background="Transparent" BorderThickness="0"
+                             HorizontalContentAlignment="Stretch"
+                             AutomationProperties.Name="{DynamicResource Str_Search_Results}"
+                             MouseDoubleClick="Results_MouseDoubleClick" PreviewKeyDown="Results_PreviewKeyDown"/>
+                    <TextBlock x:Name="EmptyText" FontSize="11" Foreground="{DynamicResource DimTextBrush}"
+                               Visibility="Collapsed" Margin="0,4,0,0"/>
+                </StackPanel>
+            </Grid>
+            <Border Panel.ZIndex="9000" IsHitTestVisible="False" BorderBrush="{DynamicResource OverlayBevelOuterLightBrush}" BorderThickness="{DynamicResource OverlayBevelLightThickness}"/>
+            <Border Panel.ZIndex="9000" IsHitTestVisible="False" BorderBrush="{DynamicResource OverlayBevelOuterDarkBrush}" BorderThickness="{DynamicResource OverlayBevelDarkThickness}"/>
+            <Border Panel.ZIndex="9001" IsHitTestVisible="False" Margin="{DynamicResource OverlayBevelInnerMargin}" BorderBrush="{DynamicResource OverlayBevelInnerLightBrush}" BorderThickness="{DynamicResource OverlayBevelLightThickness}"/>
+            <Border Panel.ZIndex="9001" IsHitTestVisible="False" Margin="{DynamicResource OverlayBevelInnerMargin}" BorderBrush="{DynamicResource OverlayBevelInnerDarkBrush}" BorderThickness="{DynamicResource OverlayBevelDarkThickness}"/>
+        </Grid>
+    </kui:PickerBorder>
+</Window>

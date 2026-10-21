@@ -53,6 +53,8 @@
     <sys:String x:Key="Str_Sc_Title">Skróty klawiaturowe</sys:String>
     <sys:String x:Key="Str_Lbl_DateFormat">format daty</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">początek tygodnia</sys:String>
+    <sys:String x:Key="Str_Lbl_AgendaDays">agenda pokazuje</sys:String>
+    <sys:String x:Key="Str_Agenda_Days">{0} dni</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">przypomnienie nowych spotkań</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Zgodnie z Windows</sys:String>
     <sys:String x:Key="Str_Btn_Unlock">Odblokuj</sys:String>
@@ -228,7 +230,18 @@
     <sys:String x:Key="Str_KS_Undo">Cofnij ostatnią zmianę spotkania</sys:String>
     <sys:String x:Key="Str_KS_Redo">Ponów</sys:String>
     <sys:String x:Key="Str_KS_Lock">Zablokuj Killendar</sys:String>
+    <sys:String x:Key="Str_KS_Search">Szukaj spotkań</sys:String>
+    <sys:String x:Key="Str_KS_GoToDate">Przejdź do daty</sys:String>
     <sys:String x:Key="Str_Btn_Deleted">Usunięte</sys:String>
+    <sys:String x:Key="Str_Btn_Search">Szukaj</sys:String>
+    <sys:String x:Key="Str_Search_Box">Szukaj spotkań</sys:String>
+    <sys:String x:Key="Str_Search_Hint">Wpisz słowa, aby znaleźć spotkania, lub datę, aby do niej przejść.</sys:String>
+    <sys:String x:Key="Str_Search_Results">Wyniki wyszukiwania</sys:String>
+    <sys:String x:Key="Str_Search_Any">Dowolny czas</sys:String>
+    <sys:String x:Key="Str_Search_Upcoming">Nadchodzące</sys:String>
+    <sys:String x:Key="Str_Search_Past">Minione</sys:String>
+    <sys:String x:Key="Str_Search_GoTo">Przejdź do {0}</sys:String>
+    <sys:String x:Key="Str_Search_None">Brak pasujących spotkań.</sys:String>
     <sys:String x:Key="Str_Del_Empty">W ciągu ostatnich 30 dni nic nie usunięto</sys:String>
     <sys:String x:Key="Str_Del_Header">Usunięte w ciągu ostatnich 30 dni. Kliknij, aby przywrócić.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Usunięto {0}</sys:String>

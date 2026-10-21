@@ -91,6 +91,7 @@ namespace Killendar.Shell
                 // ever be changed in one place. Hardcoding them here meant that moving Today's
                 // glyph left the overflow menu still drawing the old one. (2026-07-30)
                 new ShedItem { Element = DeletedBtn,   MenuItems = () => One(DeletedBtn,  DeletedBtn_Click) },
+                new ShedItem { Element = SearchBtn,    MenuItems = () => One(SearchBtn,   SearchBtn_Click) },
                 new ShedItem { Element = ExportBtn,    MenuItems = () => One(ExportBtn,   ExportBtn_Click) },
                 new ShedItem { Element = ImportBtn,    MenuItems = () => One(ImportBtn,   ImportBtn_Click) },
                 new ShedItem { Element = TodayBtn,     MenuItems = () => One(TodayBtn,    TodayBtn_Click) },

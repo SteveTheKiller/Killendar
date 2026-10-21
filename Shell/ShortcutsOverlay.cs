@@ -58,6 +58,8 @@ namespace Killendar.Shell
             new("Alt+Shift+G", "Str_Theme_FilmGrain", KsCat.View, false, "G"),
             new("Alt+Shift+Left / Right", "Str_KS_SidebarSide", KsCat.View, false, "Left", "Right"),
 
+            new("Ctrl+F",   "Str_KS_Search",   KsCat.Nav,  true,  "F"),
+            new("Ctrl+G",   "Str_KS_GoToDate", KsCat.Nav,  true,  "G"),
             new("Left / ,", "Str_KS_Prev",     KsCat.Nav,  false, "Left", "Comma"),
             new("Right / .","Str_KS_Next",     KsCat.Nav,  false, "Right", "Period"),
             new("T",        "Str_KS_Today",    KsCat.Nav,  false, "T"),

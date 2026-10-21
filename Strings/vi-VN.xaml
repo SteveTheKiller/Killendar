@@ -169,7 +169,18 @@
   <sys:String x:Key="Str_KS_Undo">Hoàn tác thay đổi gần nhất của cuộc hẹn</sys:String>
   <sys:String x:Key="Str_KS_Redo">Làm lại</sys:String>
   <sys:String x:Key="Str_KS_Lock">Khóa Killendar</sys:String>
+  <sys:String x:Key="Str_KS_Search">Tìm cuộc hẹn</sys:String>
+  <sys:String x:Key="Str_KS_GoToDate">Đi đến một ngày</sys:String>
   <sys:String x:Key="Str_Btn_Deleted">Đã xóa</sys:String>
+  <sys:String x:Key="Str_Btn_Search">Tìm</sys:String>
+  <sys:String x:Key="Str_Search_Box">Tìm cuộc hẹn</sys:String>
+  <sys:String x:Key="Str_Search_Hint">Gõ từ để tìm cuộc hẹn, hoặc một ngày để chuyển đến ngày đó.</sys:String>
+  <sys:String x:Key="Str_Search_Results">Kết quả tìm kiếm</sys:String>
+  <sys:String x:Key="Str_Search_Any">Mọi lúc</sys:String>
+  <sys:String x:Key="Str_Search_Upcoming">Sắp tới</sys:String>
+  <sys:String x:Key="Str_Search_Past">Đã qua</sys:String>
+  <sys:String x:Key="Str_Search_GoTo">Đi đến {0}</sys:String>
+  <sys:String x:Key="Str_Search_None">Không có cuộc hẹn nào khớp.</sys:String>
   <sys:String x:Key="Str_Del_Empty">Không có gì bị xóa trong 30 ngày qua</sys:String>
   <sys:String x:Key="Str_Del_Header">Đã xóa trong 30 ngày qua. Bấm để khôi phục.</sys:String>
   <sys:String x:Key="Str_Del_DeletedOn">Đã xóa lúc {0}</sys:String>
@@ -256,6 +267,8 @@
          so they read the same in every language. -->
   <sys:String x:Key="Str_Lbl_DateFormat">định dạng ngày</sys:String>
   <sys:String x:Key="Str_Lbl_WeekStart">tuần bắt đầu vào</sys:String>
+  <sys:String x:Key="Str_Lbl_AgendaDays">lịch trình hiển thị</sys:String>
+  <sys:String x:Key="Str_Agenda_Days">{0} ngày</sys:String>
   <sys:String x:Key="Str_Lbl_DefaultReminder">nhắc nhở cho cuộc hẹn mới</sys:String>
   <sys:String x:Key="Str_Date_FollowWindows">Theo Windows</sys:String>
   <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>

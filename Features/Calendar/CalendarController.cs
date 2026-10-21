@@ -140,6 +140,13 @@ namespace Killendar.Features
             }
         }
 
+        internal void GoTo(DateTime day)
+        {
+            _anchor = day.Date;
+            _active.Anchor = _anchor;
+            RefreshPeriodLabel();
+        }
+
         internal void GoToday()
         {
             _anchor = DateTime.Today;

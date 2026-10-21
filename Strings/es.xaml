@@ -138,7 +138,18 @@
     <sys:String x:Key="Str_KS_Undo">Deshacer el último cambio de una cita</sys:String>
     <sys:String x:Key="Str_KS_Redo">Rehacer</sys:String>
     <sys:String x:Key="Str_KS_Lock">Bloquear el Killendar</sys:String>
+    <sys:String x:Key="Str_KS_Search">Buscar citas</sys:String>
+    <sys:String x:Key="Str_KS_GoToDate">Ir a una fecha</sys:String>
     <sys:String x:Key="Str_Btn_Deleted">Eliminadas</sys:String>
+    <sys:String x:Key="Str_Btn_Search">Buscar</sys:String>
+    <sys:String x:Key="Str_Search_Box">Buscar citas</sys:String>
+    <sys:String x:Key="Str_Search_Hint">Escribe palabras para encontrar citas, o una fecha para ir a ella.</sys:String>
+    <sys:String x:Key="Str_Search_Results">Resultados de la búsqueda</sys:String>
+    <sys:String x:Key="Str_Search_Any">Cualquier fecha</sys:String>
+    <sys:String x:Key="Str_Search_Upcoming">Próximas</sys:String>
+    <sys:String x:Key="Str_Search_Past">Pasadas</sys:String>
+    <sys:String x:Key="Str_Search_GoTo">Ir a {0}</sys:String>
+    <sys:String x:Key="Str_Search_None">Ninguna cita coincide.</sys:String>
     <sys:String x:Key="Str_Del_Empty">No se eliminó nada en los últimos 30 días</sys:String>
     <sys:String x:Key="Str_Del_Header">Eliminadas en los últimos 30 días. Haga clic en una para restaurarla.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Eliminada el {0}</sys:String>
@@ -223,6 +234,8 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">formato de fecha</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">inicio de la semana</sys:String>
+    <sys:String x:Key="Str_Lbl_AgendaDays">la agenda muestra</sys:String>
+    <sys:String x:Key="Str_Agenda_Days">{0} días</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">recordatorio de las citas nuevas</sys:String>
     <sys:String x:Key="Str_Date_FollowWindows">Seguir Windows</sys:String>
     <sys:String x:Key="Str_Date_Iso">ISO (2026-07-29)</sys:String>

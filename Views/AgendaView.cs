@@ -9,13 +9,21 @@ using Killendar.Services;
 namespace Killendar.Views
 {
     /// <summary>
-    /// A flat, scrolling list of what is coming up, grouped by day. Shows the 60 days from the
-    /// anchor forward: an agenda is for reading ahead, so it deliberately does not page backwards
+    /// A flat, scrolling list of what is coming up, grouped by day. Shows the chosen number of
+    /// days (60 unless the date settings menu says otherwise) from the anchor forward: an agenda is for reading ahead, so it deliberately does not page backwards
     /// the way the grid views do - prev/next shifts the window a month at a time.
     /// </summary>
     internal sealed class AgendaView : UserControl, ICalendarView
     {
-        private const int WindowDays = 60;
+        /// <summary>The agenda lengths the date settings menu offers.</summary>
+        internal static readonly int[] HorizonChoices = [7, 14, 30, 60, 90, 180, 365];
+        internal const string HorizonSetting = "AgendaDays";
+        private const int DefaultHorizon = 60;
+
+        internal static int HorizonDays(string? setting) =>
+            int.TryParse(setting, out int days) && Array.IndexOf(HorizonChoices, days) >= 0 ? days : DefaultHorizon;
+
+        private static int WindowDays => HorizonDays(Settings.Get(HorizonSetting));
         private const double ColumnMinWidth = 480;
         private const double ColumnGap = 24;
 
