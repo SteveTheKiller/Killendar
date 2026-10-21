@@ -79,7 +79,10 @@ namespace Killendar.Controls
         private static FrameworkElement Row(string main, string detail)
         {
             var row = new StackPanel { Margin = new Thickness(2, 3, 2, 3) };
-            row.Children.Add(new TextBlock { Text = main, FontSize = 12.5, TextTrimming = TextTrimming.CharacterEllipsis });
+            // Brushes set explicitly: a TextBlock built in code inherits black, not the theme.
+            var heading = new TextBlock { Text = main, FontSize = 12.5, TextTrimming = TextTrimming.CharacterEllipsis };
+            heading.SetResourceReference(TextBlock.ForegroundProperty, "TextBrush");
+            row.Children.Add(heading);
             if (detail.Length > 0)
             {
                 var line = new TextBlock { Text = detail, FontSize = 10.5, TextTrimming = TextTrimming.CharacterEllipsis };

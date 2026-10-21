@@ -57,11 +57,13 @@ namespace Killendar.Controls
             _due = [];
             Rows.Children.Clear();
             DismissAllButton.Visibility = Visibility.Collapsed;
-            Rows.Children.Add(new TextBlock
+            var message = new TextBlock
             {
                 Text = string.Format(Loc("Str_Rem_Locked"), count),
                 TextWrapping = TextWrapping.Wrap, FontSize = 12, Margin = new Thickness(0, 4, 0, 8),
-            });
+            };
+            message.SetResourceReference(TextBlock.ForegroundProperty, "TextBrush");
+            Rows.Children.Add(message);
         }
 
         private FrameworkElement Row(DueReminder reminder, string when)
@@ -72,7 +74,10 @@ namespace Killendar.Controls
 
             var text = new StackPanel { Cursor = Cursors.Hand, Background = System.Windows.Media.Brushes.Transparent };
             string title = string.IsNullOrWhiteSpace(reminder.Title) ? Loc("Str_Cal_NoTitle") : reminder.Title;
-            text.Children.Add(new TextBlock { Text = title, FontSize = 13, FontWeight = FontWeights.SemiBold, TextTrimming = TextTrimming.CharacterEllipsis });
+            // Brushes set explicitly: a TextBlock built in code inherits black, not the theme.
+            var heading = new TextBlock { Text = title, FontSize = 13, FontWeight = FontWeights.SemiBold, TextTrimming = TextTrimming.CharacterEllipsis };
+            heading.SetResourceReference(TextBlock.ForegroundProperty, "TextBrush");
+            text.Children.Add(heading);
             var detail = new TextBlock { Text = when, FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis };
             detail.SetResourceReference(TextBlock.ForegroundProperty, "MutedTextBrush");
             text.Children.Add(detail);
