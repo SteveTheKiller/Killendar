@@ -5751,3 +5751,25 @@ I18N.sl = {
   "mcp_version": "Različica",
   "mcp_store": "Prenesi KillerMCP iz trgovine Microsoft Store"
 };
+
+// 1.4.0 shortcuts: undo, redo, search, go to a date and lock. Same wording as the app's F1 list.
+if (I18N["en"]) Object.assign(I18N["en"], {"tk_kd_undo": "Undo the last change to an appointment", "tk_kd_redo": "Redo", "tk_kd_search": "Search appointments", "tk_kd_goto": "Go to a date", "tk_kd_lock": "Lock the Killendar"});
+if (I18N["vi"]) Object.assign(I18N["vi"], {"tk_kd_undo": "Hoàn tác thay đổi gần nhất của cuộc hẹn", "tk_kd_redo": "Làm lại", "tk_kd_search": "Tìm cuộc hẹn", "tk_kd_goto": "Đi đến một ngày", "tk_kd_lock": "Khóa Killendar"});
+if (I18N["hu"]) Object.assign(I18N["hu"], {"tk_kd_undo": "A találkozó utolsó módosításának visszavonása", "tk_kd_redo": "Újra", "tk_kd_search": "Találkozók keresése", "tk_kd_goto": "Ugrás egy dátumra", "tk_kd_lock": "A Killendar zárolása"});
+if (I18N["es"]) Object.assign(I18N["es"], {"tk_kd_undo": "Deshacer el último cambio de una cita", "tk_kd_redo": "Rehacer", "tk_kd_search": "Buscar citas", "tk_kd_goto": "Ir a una fecha", "tk_kd_lock": "Bloquear el Killendar"});
+if (I18N["fr"]) Object.assign(I18N["fr"], {"tk_kd_undo": "Annuler la dernière modification d'un rendez-vous", "tk_kd_redo": "Rétablir", "tk_kd_search": "Rechercher des rendez-vous", "tk_kd_goto": "Aller à une date", "tk_kd_lock": "Verrouiller le Killendar"});
+if (I18N["de"]) Object.assign(I18N["de"], {"tk_kd_undo": "Letzte Änderung an einem Termin rückgängig machen", "tk_kd_redo": "Wiederherstellen", "tk_kd_search": "Termine suchen", "tk_kd_goto": "Zu einem Datum wechseln", "tk_kd_lock": "Killendar sperren"});
+if (I18N["cs"]) Object.assign(I18N["cs"], {"tk_kd_undo": "Vrátit poslední změnu schůzky", "tk_kd_redo": "Znovu", "tk_kd_search": "Hledat schůzky", "tk_kd_goto": "Přejít na datum", "tk_kd_lock": "Zamknout Killendar"});
+if (I18N["tr"]) Object.assign(I18N["tr"], {"tk_kd_undo": "Bir randevudaki son değişikliği geri al", "tk_kd_redo": "Yinele", "tk_kd_search": "Randevularda ara", "tk_kd_goto": "Bir tarihe git", "tk_kd_lock": "Killendar'ı kilitle"});
+if (I18N["ja"]) Object.assign(I18N["ja"], {"tk_kd_undo": "予定の最後の変更を元に戻す", "tk_kd_redo": "やり直し", "tk_kd_search": "予定を検索", "tk_kd_goto": "日付に移動", "tk_kd_lock": "Killendar をロック"});
+if (I18N["pl"]) Object.assign(I18N["pl"], {"tk_kd_undo": "Cofnij ostatnią zmianę spotkania", "tk_kd_redo": "Ponów", "tk_kd_search": "Szukaj spotkań", "tk_kd_goto": "Przejdź do daty", "tk_kd_lock": "Zablokuj Killendar"});
+if (I18N["bn"]) Object.assign(I18N["bn"], {"tk_kd_undo": "অ্যাপয়েন্টমেন্টের শেষ পরিবর্তন ফেরান", "tk_kd_redo": "আবার করুন", "tk_kd_search": "অ্যাপয়েন্টমেন্ট খুঁজুন", "tk_kd_goto": "একটি তারিখে যান", "tk_kd_lock": "Killendar লক করুন"});
+if (I18N["zh-CN"]) Object.assign(I18N["zh-CN"], {"tk_kd_undo": "撤销对约会的上一次更改", "tk_kd_redo": "重做", "tk_kd_search": "搜索约会", "tk_kd_goto": "转到日期", "tk_kd_lock": "锁定 Killendar"});
+if (I18N["zh-TW"]) Object.assign(I18N["zh-TW"], {"tk_kd_undo": "復原對約會的上一次變更", "tk_kd_redo": "重做", "tk_kd_search": "搜尋約會", "tk_kd_goto": "前往日期", "tk_kd_lock": "鎖定 Killendar"});
+if (I18N["it"]) Object.assign(I18N["it"], {"tk_kd_undo": "Annulla l'ultima modifica a un appuntamento", "tk_kd_redo": "Ripeti", "tk_kd_search": "Cerca appuntamenti", "tk_kd_goto": "Vai a una data", "tk_kd_lock": "Blocca il Killendar"});
+if (I18N["ru"]) Object.assign(I18N["ru"], {"tk_kd_undo": "Отменить последнее изменение встречи", "tk_kd_redo": "Повторить", "tk_kd_search": "Поиск встреч", "tk_kd_goto": "Перейти к дате", "tk_kd_lock": "Заблокировать Killendar"});
+if (I18N["kk"]) Object.assign(I18N["kk"], {"tk_kd_undo": "Кездесудегі соңғы өзгерісті болдырмау", "tk_kd_redo": "Қайталау", "tk_kd_search": "Кездесулерді іздеу", "tk_kd_goto": "Күнге өту", "tk_kd_lock": "Killendar құлыптау"});
+if (I18N["uk"]) Object.assign(I18N["uk"], {"tk_kd_undo": "Скасувати останню зміну зустрічі", "tk_kd_redo": "Повторити", "tk_kd_search": "Пошук зустрічей", "tk_kd_goto": "Перейти до дати", "tk_kd_lock": "Заблокувати Killendar"});
+if (I18N["nb"]) Object.assign(I18N["nb"], {"tk_kd_undo": "Angre den siste endringen av en avtale", "tk_kd_redo": "Gjør om", "tk_kd_search": "Søk i avtaler", "tk_kd_goto": "Gå til en dato", "tk_kd_lock": "Lås Killendar"});
+if (I18N["pt"]) Object.assign(I18N["pt"], {"tk_kd_undo": "Desfazer a última alteração de um compromisso", "tk_kd_redo": "Refazer", "tk_kd_search": "Pesquisar compromissos", "tk_kd_goto": "Ir para uma data", "tk_kd_lock": "Bloquear o Killendar"});
+if (I18N["sl"]) Object.assign(I18N["sl"], {"tk_kd_undo": "Razveljavi zadnjo spremembo dogodka", "tk_kd_redo": "Uveljavi znova", "tk_kd_search": "Iskanje dogodkov", "tk_kd_goto": "Pojdi na datum", "tk_kd_lock": "Zakleni Killendar"});
