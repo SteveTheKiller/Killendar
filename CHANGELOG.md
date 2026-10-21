@@ -60,6 +60,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - A silent install or update that finds Killendar running exits with 1618, which Intune, Configuration Manager and RMM tools retry, instead of a general failure.
 - Chocolatey publishing reports failure when validation is still failing after a retry.
 - Window resize minimums stay within the current monitor's work area on small or scaled displays.
+- The database name uses KillerPDF's embedded filename font and size, with its bottom aligned to the database icon. Buttons, menus, tooltips and shortcuts use the embedded interface font.
+- Film grain has crisper specks and fades midtones across app and website themes without dimming bright highlights.
 - The shortcuts card wraps long key labels, puts its scroll bar at the outer edge and shows when more content is out of view.
 - The website's More button uses the selected language for its accessible name.
 - Sidebar fades disappear at the scroll limits, leave scrollbars clear, and stay off in 98SE.
