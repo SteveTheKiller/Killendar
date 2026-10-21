@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="System.Net.Http" />
     <ProjectReference Include="..\Killendar.csproj" />
   </ItemGroup>
 </Project>

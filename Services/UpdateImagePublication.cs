@@ -76,8 +76,10 @@ function Invoke-UpdateImagePublication {
     try {
         $bytes = & $ops.Read $plan.Download
         if ((& $ops.Hash $bytes) -ne $plan.Hash) { throw 'The download no longer matches its verified SHA-256.' }
+        if (!(& $ops.VerifySignature $plan.Download)) { throw 'The downloaded update has no valid Authenticode signature.' }
         & $ops.Stage $plan.Staged $bytes
         if ((& $ops.Hash (& $ops.Read $plan.Staged)) -ne $plan.Hash) { throw 'The staged image failed SHA-256 verification.' }
+        if (!(& $ops.VerifySignature $plan.Staged)) { throw 'The staged update has no valid Authenticode signature.' }
         $stageVerified = $true
         if (& $ops.Exists $plan.Target) { & $ops.Replace $plan.Staged $plan.Target $plan.Backup }
         else { & $ops.Move $plan.Staged $plan.Target }
@@ -116,6 +118,66 @@ $ops = @{
         $hash = [Security.Cryptography.SHA256]::Create()
         try { [BitConverter]::ToString($hash.ComputeHash([byte[]]$bytes)).Replace('-', '') }
         finally { $hash.Dispose() }
+    }
+    VerifySignature = { param($path)
+        if (-not ('KillendarUpdateTrust' -as [type])) {
+            Add-Type -TypeDefinition @'
+using System;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
+public static class KillendarUpdateTrust
+{
+    [StructLayout(LayoutKind.Sequential)]
+    private struct FileInfo
+    {
+        public uint Size;
+        public IntPtr Path, File, Subject;
+    }
+    [StructLayout(LayoutKind.Sequential)]
+    private struct TrustData
+    {
+        public uint Size;
+        public IntPtr Policy, Sip;
+        public uint UiChoice, RevocationChecks, UnionChoice;
+        public IntPtr File;
+        public uint StateAction;
+        public IntPtr StateData, Url;
+        public uint ProviderFlags, UiContext;
+        public IntPtr SignatureSettings;
+    }
+    [DllImport("wintrust.dll", ExactSpelling = true, CharSet = CharSet.Unicode)]
+    private static extern uint WinVerifyTrust(IntPtr window, ref Guid action, IntPtr data);
+    public static bool IsValid(string path)
+    {
+        IntPtr name = IntPtr.Zero, file = IntPtr.Zero, data = IntPtr.Zero;
+        try
+        {
+            using (var certificate = X509Certificate.CreateFromSignedFile(path)) { }
+            name = Marshal.StringToHGlobalUni(path);
+            file = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(FileInfo)));
+            data = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(TrustData)));
+            Marshal.StructureToPtr(new FileInfo {
+                Size = (uint)Marshal.SizeOf(typeof(FileInfo)), Path = name
+            }, file, false);
+            Marshal.StructureToPtr(new TrustData {
+                Size = (uint)Marshal.SizeOf(typeof(TrustData)), UiChoice = 2,
+                UnionChoice = 1, File = file, ProviderFlags = 0x1000
+            }, data, false);
+            var action = new Guid("00AAC56B-CD44-11d0-8CC2-00C04FC295EE");
+            return WinVerifyTrust(IntPtr.Zero, ref action, data) == 0;
+        }
+        catch { return false; }
+        finally
+        {
+            if (data != IntPtr.Zero) Marshal.FreeHGlobal(data);
+            if (file != IntPtr.Zero) Marshal.FreeHGlobal(file);
+            if (name != IntPtr.Zero) Marshal.FreeHGlobal(name);
+        }
+    }
+}
+'@
+        }
+        [KillendarUpdateTrust]::IsValid($path)
     }
     Stage = { param($path, $bytes)
         $stream = New-Object IO.FileStream($path, [IO.FileMode]::CreateNew, [IO.FileAccess]::Write,

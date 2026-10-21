@@ -41,7 +41,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Category renames and deletions preserve all assignments when a save fails and show the error.
 - Failed legacy calendar migrations preserve the source and can retry without leaving an empty calendar.
 - Settings recover the selected calendar location from complete backup or temporary files after an interrupted save.
-- Failed self-updates retain complete executable copies and a recovery report.
+- Self-updates reject unsigned or invalid images and retain complete executable copies and a recovery report when publication fails.
 - A calendar that fails to load closes cleanly instead of showing stale appointments.
 - Native database cache corruption is repaired before loading, and native load failures are reported.
 - Large recurrence intervals and dates at the calendar limits no longer crash recurrence queries.

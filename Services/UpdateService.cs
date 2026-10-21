@@ -61,13 +61,18 @@ namespace Killendar.Services
         }
 
         /// <summary>Downloads the released exe for <paramref name="tag"/>, checks it against the
-        /// published SHA256SUMS.txt and writes it to a temp file, whose path is returned. Throws if
-        /// the download fails, the checksum entry is missing, or the hash does not match: an update
+        /// published SHA256SUMS.txt and requires a valid cache-only Authenticode signature before
+        /// returning its temp file. Throws if the download fails, the checksum entry is missing,
+        /// the hash does not match, or the signature is invalid: an update
         /// that cannot be verified must not be installed.</summary>
         internal static async Task<string> DownloadAsync(string tag)
         {
             using var http = NewClient(90);
+            return await DownloadAsync(tag, http, Path.GetTempPath()).ConfigureAwait(false);
+        }
 
+        internal static async Task<string> DownloadAsync(string tag, HttpClient http, string downloadDirectory)
+        {
             var exeUrl = $"https://github.com/{AppInfo.GitHubRepo}/releases/download/{tag}/{AppInfo.ExeName}";
             // The checksums come from the release asset next to the exe, not from the repo at the
             // tag. Both files are uploaded to the release together, so the hash cannot drift from
@@ -95,9 +100,14 @@ namespace Killendar.Services
             if (!actual.Equals(expected, StringComparison.OrdinalIgnoreCase))
                 throw new Exception("checksum mismatch");
 
-            var path = Path.Combine(Path.GetTempPath(),
+            var path = Path.Combine(downloadDirectory,
                                     $"{AppInfo.DisplayName}_update_{Guid.NewGuid():N}.exe");
             File.WriteAllBytes(path, exeBytes);
+            if (!CodeSignature.GetSignerInfo(path).valid)
+            {
+                DiscardDownload(path);
+                throw new InvalidDataException("The update has no valid Authenticode signature.");
+            }
             UpdateImagePublication.RememberVerified(path, actual);
             return path;
         }

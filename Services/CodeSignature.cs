@@ -57,13 +57,22 @@ namespace Killendar.Services
         /// so the chain still builds offline.</summary>
         internal static (bool valid, string subject, string thumb) GetSignerInfo()
         {
-            var subject = "(not signed)";
-            var thumb   = "(none)";
-            string? exePath;
             try
             {
-                exePath = Process.GetCurrentProcess().MainModule?.FileName ?? string.Empty;
+                string exePath = Process.GetCurrentProcess().MainModule?.FileName ?? string.Empty;
                 if (exePath.Length == 0) return (false, "(unavailable)", "(none)");
+                return GetSignerInfo(exePath);
+            }
+            catch { return (false, "(not signed)", "(none)"); }
+        }
+
+        /// <summary>Validates a candidate using the same cache-only trust policy as the running image.</summary>
+        internal static (bool valid, string subject, string thumb) GetSignerInfo(string exePath)
+        {
+            var subject = "(not signed)";
+            var thumb   = "(none)";
+            try
+            {
                 using var cert = new X509Certificate2(X509Certificate.CreateFromSignedFile(exePath));
                 var subj = cert.GetNameInfo(X509NameType.SimpleName, false);
                 subject = string.IsNullOrEmpty(subj) ? cert.Subject : subj;
