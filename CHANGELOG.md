@@ -1,4 +1,4 @@
-# Changelog
+# Killendar Changelog
 
 All notable changes to Killendar are documented here.
 
