@@ -28,8 +28,8 @@ namespace Killendar.Services
     {
         public static void ExportToFile(List<CalendarEvent> events, DateTime from, DateTime toExclusive, string path)
         {
-            File.WriteAllText(path, Build(events, from, toExclusive),
-                              new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+            FilePublication.WriteText(path, Build(events, from, toExclusive),
+                                      new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
         }
 
         public static string Build(List<CalendarEvent> events, DateTime from, DateTime toExclusive)

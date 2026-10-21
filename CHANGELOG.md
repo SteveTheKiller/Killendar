@@ -8,6 +8,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Fixed
 
+- Failed exports leave an existing calendar, CSV or HTML file untouched instead of truncating it.
 - Self-updates reject unsigned or invalid images. Failed installations and updates retain complete executable recovery copies.
 - Installation cleanup and uninstall preserve calendars and other files stored beside the app.
 - Failed password changes preserve the original calendar and recovery copies, support retries and report cleanup errors.
@@ -40,7 +41,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 - Updated SQLCipher to 4.19.0, SQLite and JSON processing to 10.0.13, and SQLitePCLRaw to 3.0.5.
 - HTML calendars support all themes and accents, accessible selection controls, saved preferences and clearer accent-colored tables.
-- Refined embedded fonts, film grain and calendar chrome. File pickers use theme content colors for files and bookmarks. Dialogs show app icons, with full bevels and compact fields in 98SE. Sidebar fades leave scrollbars clear, and the shortcuts card wraps long labels and shows overflow.
+- Enlarged date headings and improved calendar-list contrast, grain, embedded fonts and file-picker colors. Dialogs show app icons, with full bevels and compact fields in 98SE. Sidebar fades leave scrollbars clear, and the shortcuts card wraps long labels and shows overflow.
 
 ## [1.3.1] - 2026-10-19
 

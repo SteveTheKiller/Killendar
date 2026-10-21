@@ -52,7 +52,7 @@ namespace Killendar.Services
         /// </summary>
         public static void ExportToFile(IEnumerable<CalendarEvent> rows, string path)
         {
-            File.WriteAllText(path, BuildCsv(rows), new UTF8Encoding(encoderShouldEmitUTF8Identifier: true));
+            FilePublication.WriteText(path, BuildCsv(rows), new UTF8Encoding(encoderShouldEmitUTF8Identifier: true));
         }
 
         public static string BuildCsv(IEnumerable<CalendarEvent> rows)

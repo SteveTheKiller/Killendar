@@ -744,7 +744,7 @@ namespace Killendar.Services
 
         public static void ExportToFile(IEnumerable<CalendarEvent> events, string path)
         {
-            File.WriteAllText(path, BuildIcs(events), new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+            FilePublication.WriteText(path, BuildIcs(events), new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
         }
 
         public static string BuildIcs(IEnumerable<CalendarEvent> events)
