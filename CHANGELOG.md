@@ -40,7 +40,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 - Updated SQLCipher to 4.19.0, SQLite and JSON processing to 10.0.13, and SQLitePCLRaw to 3.0.5.
 - HTML calendars support all themes and accents, accessible selection controls, saved preferences and clearer accent-colored tables.
-- Refined embedded fonts, film grain and calendar chrome. Sidebar fades leave scrollbars clear, and the shortcuts card wraps long labels and shows overflow.
+- Refined embedded fonts, film grain and calendar chrome. File pickers use theme content colors for files and bookmarks. Sidebar fades leave scrollbars clear, and the shortcuts card wraps long labels and shows overflow.
 
 ## [1.3.1] - 2026-10-19
 

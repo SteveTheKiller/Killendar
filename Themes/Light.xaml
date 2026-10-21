@@ -89,4 +89,5 @@
     <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#FFB2B2B2" po:Freeze="True"/>
     <SolidColorBrush x:Key="FooterBackgroundBrush" Color="#FFDCDCDC" po:Freeze="True"/>
     <SolidColorBrush x:Key="MenuSeparatorBrush" Color="#FFC0C0C0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="FileDialogPaneBrush" Color="#b8b8b8" po:Freeze="True"/>
 </ResourceDictionary>

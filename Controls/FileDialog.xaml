@@ -218,21 +218,15 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- NOT a raised pane, deliberately (2026-07-30): KillerShell's sidebar
-                     sits flat on the chrome background, and this one matches - only the file
-                     LIST is the lifted card. No fill, no shadow, no grain of its own; the
-                     dialog card's shared grain shows through.
-
-                     KillerShell's own arrangement, not Explorer's: the tree fills the panel and
-                     the pinned places sit BELOW it, the same slot its favorites drawer occupies,
-                     so the two apps read identically. Draggable divider between. -->
+                <!-- The file and bookmark lists share the theme's content surface.
+                     Keep the existing tree, places and divider arrangement. -->
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0"/>
                         <RowDefinition Height="0"/>
                         <RowDefinition x:Name="PlacesRow" Height="*" MinHeight="56"/>
                     </Grid.RowDefinitions>
-                    <Border Grid.Row="2" Background="{DynamicResource PaneBrush}"
+                    <Border Grid.Row="2" Background="{DynamicResource FileDialogPaneBrush}"
                             BorderBrush="{DynamicResource PaneBorderBrush}" BorderThickness="1"
                             CornerRadius="{DynamicResource PanelCornerRadius}"/>
                     <ListBox x:Name="PlacesList" Grid.Row="2" Background="Transparent" BorderThickness="0" Padding="2,4"
@@ -368,7 +362,7 @@
                             </LinearGradientBrush>
                         </Border.OpacityMask>
                         <Grid>
-                            <Border Background="{DynamicResource BackgroundBrush}"/>
+                            <Border Background="{DynamicResource FileDialogPaneBrush}"/>
                             <Border Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
                         </Grid>
                     </Border>
@@ -381,19 +375,19 @@
                             </LinearGradientBrush>
                         </Border.OpacityMask>
                         <Grid>
-                            <Border Background="{DynamicResource BackgroundBrush}"/>
+                            <Border Background="{DynamicResource FileDialogPaneBrush}"/>
                             <Border Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
                         </Grid>
                     </Border>
                 </Grid>
 
                 <Grid Grid.Column="2">
-                  <Border Background="{DynamicResource PaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}" IsHitTestVisible="False">
+                  <Border Background="{DynamicResource FileDialogPaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}" IsHitTestVisible="False">
                     <Border.Effect>
                       <DropShadowEffect Color="Black" BlurRadius="14" ShadowDepth="2" Direction="270" Opacity="{DynamicResource PaneShadowOpacity}"/>
                     </Border.Effect>
                   </Border>
-                  <Border Background="{DynamicResource PaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}">
+                  <Border Background="{DynamicResource FileDialogPaneBrush}" CornerRadius="{DynamicResource ControlCornerRadius}">
                   <Grid>
                     <Border IsHitTestVisible="False" CornerRadius="{DynamicResource ControlCornerRadius}"
                             Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
