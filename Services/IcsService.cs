@@ -296,7 +296,7 @@ namespace Killendar.Services
                     // override to whatever id the event happened to have at this point.
                     case "RECURRENCE-ID":
                     {
-                        foreach (string item in param.Split(';'))
+                        foreach (string item in SplitParams(param))
                         {
                             int equals = item.IndexOf('=');
                             if (equals < 0) continue;
@@ -528,19 +528,46 @@ namespace Killendar.Services
             return new Guid(bytes);
         }
 
+        /// <summary>Splits NAME;PARAM=val:VALUE. A quoted parameter value (CN="Team: West") may
+        /// contain ':', ';' and ',', so only delimiters outside quotes count.</summary>
         private static (string name, string param, string value) SplitProperty(string line)
         {
-            // Split NAME;PARAM=val:VALUE
-            int colon = line.IndexOf(':');
+            int colon = IndexOutsideQuotes(line, ':', 0);
             if (colon < 0) return (line, "", "");
 
             var left  = line.Substring(0, colon);
             var value = line.Substring(colon + 1);
 
-            int semi = left.IndexOf(';');
+            int semi = left.IndexOf(';');   // a property name never contains a quote
             if (semi < 0) return (left, "", value);
 
             return (left.Substring(0, semi), left.Substring(semi + 1), value);
+        }
+
+        /// <summary>The ';'-separated parameters of a property, with quoted values kept whole.</summary>
+        private static List<string> SplitParams(string param)
+        {
+            var items = new List<string>();
+            int start = 0;
+            while (start <= param.Length)
+            {
+                int semi = IndexOutsideQuotes(param, ';', start);
+                if (semi < 0) semi = param.Length;
+                if (semi > start) items.Add(param.Substring(start, semi - start));
+                start = semi + 1;
+            }
+            return items;
+        }
+
+        private static int IndexOutsideQuotes(string text, char delimiter, int start)
+        {
+            bool quoted = false;
+            for (int i = start; i < text.Length; i++)
+            {
+                if (text[i] == '"') quoted = !quoted;
+                else if (!quoted && text[i] == delimiter) return i;
+            }
+            return -1;
         }
 
         /// <summary>
@@ -582,7 +609,7 @@ namespace Killendar.Services
                     try
                     {
                         string? zoneId = null;
-                        foreach (string item in param.Split(';'))
+                        foreach (string item in SplitParams(param))
                             if (item.StartsWith("TZID=", StringComparison.OrdinalIgnoreCase))
                                 zoneId = item.Substring(5).Trim().Trim('"');
 
