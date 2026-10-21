@@ -43,13 +43,59 @@ namespace Killendar.Services
             throw new TimeoutException("Calendar command exchange timed out.");
         }
 
+        internal const int MaxRequestChars = 16384;
+
+        /// <summary>UTF-8 needs at most four bytes per character, so this byte ceiling can never
+        /// refuse a request the character limit would accept.</summary>
+        internal const int MaxRequestBytes = MaxRequestChars * 4;
+
+        /// <summary>One line, read in small chunks against the byte ceiling. The deadline bounds
+        /// how long a client may take; the ceiling bounds how much it may send in that time,
+        /// checked as the bytes arrive rather than after a whole line has been buffered.</summary>
         internal static string? ReadRequest(Stream stream, TimeSpan timeout)
         {
-            using var reader = new StreamReader(stream, Encoding.UTF8, false, 1024, true);
-            Task<string?> read = reader.ReadLineAsync();
+            Task<string?> read = ReadLineAsync(stream);
             Within(stream, read, timeout).GetAwaiter().GetResult();
             return read.GetAwaiter().GetResult();
         }
+
+        private static async Task<string?> ReadLineAsync(Stream stream)
+        {
+            var line = new MemoryStream();
+            var chunk = new byte[1024];
+            while (true)
+            {
+                int read = await stream.ReadAsync(chunk, 0, chunk.Length).ConfigureAwait(false);
+                if (read == 0) return line.Length == 0 ? null : Decode(line);
+                int newline = Array.IndexOf(chunk, (byte)'\n', 0, read);
+                int take = newline < 0 ? read : newline;
+                if (line.Length + take > MaxRequestBytes)
+                    throw new InvalidDataException("Calendar command exceeds " + MaxRequestBytes + " bytes.");
+                line.Write(chunk, 0, take);
+                if (newline >= 0) return Decode(line);
+            }
+        }
+
+        private static string Decode(MemoryStream line) =>
+            Encoding.UTF8.GetString(line.GetBuffer(), 0, (int)line.Length).TrimEnd('\r');
+
+        /// <summary>One connection: read a request, answer it. An oversized or unreadable request
+        /// gets an error reply, and the next connection starts clean.</summary>
+        internal static void Serve(Stream pipe, Func<string, string> execute)
+        {
+            string response;
+            try
+            {
+                var request = ReadRequest(pipe, ExchangeTimeout);
+                response = request == null || request.Length > MaxRequestChars
+                    ? InvalidCommand
+                    : execute(request);
+            }
+            catch (InvalidDataException) { response = InvalidCommand; }
+            WriteResponse(pipe, response, ExchangeTimeout);
+        }
+
+        private const string InvalidCommand = "{\"error\":\"Invalid calendar command\"}";
 
         private static string PipeName => "Killendar-" + Process.GetCurrentProcess().SessionId + "-CalendarCommands";
 
@@ -79,11 +125,7 @@ namespace Killendar.Services
                         using var pipe = new NamedPipeServerStream(PipeName, PipeDirection.InOut, 1,
                             PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
                         pipe.WaitForConnection();
-                        var request = ReadRequest(pipe, ExchangeTimeout);
-                        var response = request == null || request.Length > 16384
-                            ? "{\"error\":\"Invalid calendar command\"}"
-                            : dispatcher.Invoke(() => execute(request));
-                        WriteResponse(pipe, response, ExchangeTimeout);
+                        Serve(pipe, request => dispatcher.Invoke(() => execute(request)));
                     }
                     catch (IOException) { }
                     catch (ObjectDisposedException) { return; }
