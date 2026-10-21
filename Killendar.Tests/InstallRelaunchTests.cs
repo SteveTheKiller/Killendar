@@ -116,7 +116,7 @@ namespace Killendar.Tests
         [Fact]
         public void RealHelperWaitsForOwnedParentExitBeforeClaimingItsMutex()
         {
-            string root = Path.Combine(Path.GetTempPath(), "KillendarInstallRelaunchTests", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\install-relaunch", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             string executable = Path.Combine(root, "OwnedHandoff.exe");
             string marker = Path.Combine(root, "normal.txt");
@@ -157,7 +157,20 @@ namespace Killendar.Tests
             {
                 release.Set();
                 if (parent != null && !parent.WaitForExit(10000)) { parent.Kill(); parent.WaitForExit(5000); }
-                try { Directory.Delete(root, true); } catch (IOException) { }
+                var cleanup = Stopwatch.StartNew();
+                while (true)
+                {
+                    try
+                    {
+                        // The result marker precedes process exit. Remove the executable first
+                        // so a still-running owned child keeps its evidence until it exits.
+                        File.Delete(executable);
+                        Directory.Delete(root, true);
+                        break;
+                    }
+                    catch (IOException) when (cleanup.ElapsedMilliseconds < 5000) { Thread.Sleep(25); }
+                    catch (UnauthorizedAccessException) when (cleanup.ElapsedMilliseconds < 5000) { Thread.Sleep(25); }
+                }
             }
         }
 
