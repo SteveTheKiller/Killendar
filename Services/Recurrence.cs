@@ -172,7 +172,8 @@ namespace Killendar.Services
             var pattern = master.Clone();
             if (UsesTimeBasis(master)) pattern.Start = master.RepeatAnchor!.Value;
             int interval = master.RepeatInterval > 0 ? master.RepeatInterval : 1;
-            foreach (var candidate in Starts(pattern, interval, nominal))
+            foreach (var candidate in UsesTimeBasis(master)
+                ? TimeBasisStarts(master, nominal) : Starts(pattern, interval, nominal))
             {
                 if (candidate.Start.Ticks > nominal.Ticks || (master.RepeatCount > 0 && candidate.Number > master.RepeatCount)) return false;
                 if (candidate.Start.Ticks == nominal.Ticks)
@@ -215,10 +216,7 @@ namespace Killendar.Services
             long margin = TimeSpan.FromDays(2).Ticks;
             var from = new DateTime(Math.Max(0, approximate.Ticks - margin));
             var to = new DateTime(approximate.Ticks + Math.Min(margin, DateTime.MaxValue.Ticks - approximate.Ticks));
-            var pattern = master.Clone();
-            pattern.Start = master.RepeatAnchor!.Value;
-            int interval = master.RepeatInterval > 0 ? master.RepeatInterval : 1;
-            foreach (var candidate in Starts(pattern, interval, from))
+            foreach (var candidate in TimeBasisStarts(master, from))
             {
                 if (candidate.Start > to || (master.RepeatCount > 0 && candidate.Number > master.RepeatCount)) break;
                 DateTime utc;
@@ -233,8 +231,6 @@ namespace Killendar.Services
         {
             var duration = master.End.ToUniversalTime() - master.Start.ToUniversalTime();
             if (duration <= TimeSpan.Zero) duration = TimeSpan.FromHours(1);
-            var pattern = master.Clone();
-            pattern.Start = master.RepeatAnchor!.Value;
             // Source and display offsets can differ by up to 28 hours. Padding the jump and
             // stop bounds keeps every candidate; actual overlap is checked after conversion.
             long margin = TimeSpan.FromDays(2).Ticks;
@@ -243,8 +239,7 @@ namespace Killendar.Services
             var stop = new DateTime(to.Ticks + Math.Min(margin, DateTime.MaxValue.Ticks - to.Ticks));
             var skips = new HashSet<DateTime>();
             foreach (var day in master.SkipDates) skips.Add(day.Date);
-            int interval = master.RepeatInterval > 0 ? master.RepeatInterval : 1;
-            foreach (var candidate in Starts(pattern, interval, jump))
+            foreach (var candidate in TimeBasisStarts(master, jump))
             {
                 if (candidate.Start >= stop || (master.RepeatCount > 0 && candidate.Number > master.RepeatCount)) yield break;
                 DateTime utc;
@@ -267,6 +262,25 @@ namespace Killendar.Services
                 occurrence.OccurrenceStart = start;
                 SetOccurrenceIdentity(occurrence, master, candidate.Start);
                 yield return occurrence;
+            }
+        }
+
+        private static IEnumerable<(DateTime Start, long Number)> TimeBasisStarts(CalendarEvent master, DateTime jumpTo)
+        {
+            var pattern = master.Clone();
+            pattern.Start = master.RepeatAnchor!.Value;
+            int interval = master.RepeatInterval > 0 ? master.RepeatInterval : 1;
+            var zone = master.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone
+                ? TZConvert.GetTimeZoneInfo(master.RepeatZoneId) : null;
+            bool countValid = zone != null && master.RepeatCount > 0;
+            long number = 0;
+            // COUNT applies to valid local times, so a range jump must include earlier gaps
+            // in its accounting. Explicit DTSTART keeps its separate gap interpretation.
+            foreach (var candidate in Starts(pattern, interval, countValid ? pattern.Start : jumpTo))
+            {
+                if (zone != null && candidate.Start.Ticks != pattern.Start.Ticks &&
+                    zone.IsInvalidTime(DateTime.SpecifyKind(candidate.Start, DateTimeKind.Unspecified))) continue;
+                yield return (candidate.Start, countValid ? ++number : candidate.Number);
             }
         }
 

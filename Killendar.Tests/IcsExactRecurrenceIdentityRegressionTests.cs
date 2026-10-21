@@ -204,19 +204,23 @@ namespace Killendar.Tests
         }
 
         [Theory]
-        [InlineData("DTSTART:20261101T073000Z", "EXDATE:20261101T073000Z", "20261102T073000Z")]
-        [InlineData("DTSTART;TZID=America/New_York:20260307T023000", "EXDATE;TZID=America/New_York:20260308T023000", "20260309T023000")]
-        public void ExactExclusionUsesOriginalCandidateAndCountBeforeExclusion(string start, string exclusion, string retained)
+        [InlineData("DTSTART:20261101T073000Z", "EXDATE:20261101T073000Z", "20261102T073000Z", 2)]
+        [InlineData("DTSTART;TZID=America/New_York:20260307T023000", "EXDATE;TZID=America/New_York:20260308T023000", "20260309T023000", 3)]
+        [InlineData("DTSTART;TZID=America/New_York:20260307T023000", "EXDATE;TZID=America/New_York:20260309T023000", "20260310T023000", 2)]
+        public void ExactExclusionUsesOriginalCandidateAndCountBeforeExclusion(string start, string exclusion, string retained, int expectedCount)
         {
             string text = "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\nUID:exclude\r\n" + exclusion + "\r\nRRULE:FREQ=DAILY;COUNT=3\r\n" + start +
                 "\r\nDURATION:PT1H\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n";
             var parsed = IcsService.ParseText(text);
             var master = Assert.Single(parsed.Events);
             var from = start.Contains("202603") ? new DateTime(2026, 3, 6) : new DateTime(2026, 10, 31);
-            Assert.Equal(2, Recurrence.Expand(master, from, from.AddDays(6)).Count());
+            Assert.Equal(expectedCount, Recurrence.Expand(master, from, from.AddDays(6)).Count());
+            if (expectedCount == 3)
+                Assert.Equal(new[] { "20260307T023000", "20260309T023000", "20260310T023000" },
+                    Recurrence.Expand(master, from, from.AddDays(6)).Select(e => e.OccurrenceAnchor!.Value.ToString("yyyyMMdd'T'HHmmss")).ToArray());
             string output = IcsService.BuildIcs(parsed.Events);
             Assert.Contains(exclusion.Replace("TZID=America/New_York", "TZID=\"America/New_York\""), output);
-            Assert.Equal(2, Recurrence.Expand(Assert.Single(IcsService.ParseText(output).Events), from, from.AddDays(6)).Count());
+            Assert.Equal(expectedCount, Recurrence.Expand(Assert.Single(IcsService.ParseText(output).Events), from, from.AddDays(6)).Count());
             Assert.Contains(Recurrence.Expand(master, from, from.AddDays(6)), occurrence =>
                 occurrence.OccurrenceAnchor!.Value.ToString("yyyyMMdd'T'HHmmss") == retained.TrimEnd('Z'));
         }
