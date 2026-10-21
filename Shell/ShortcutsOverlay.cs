@@ -70,6 +70,8 @@ namespace Killendar.Shell
             new("Alt+A",    "Str_KS_AllDay",   KsCat.Appt, false, "A"),
             new("Alt+R",    "Str_KS_Repeats",  KsCat.Appt, false, "R"),
             new("Ctrl+Shift+M", "Str_KS_ShrinkAppt", KsCat.Appt, true, "M"),
+            new("Ctrl+Z",   "Str_KS_Undo",     KsCat.Appt, true,  "Z"),
+            new("Ctrl+Y",   "Str_KS_Redo",     KsCat.Appt, true,  "Y"),
 
             new("Ctrl+I",   "Str_KS_Import",   KsCat.File, true,  "I"),
             new("Ctrl+E",   "Str_KS_Export",   KsCat.File, true,  "E"),

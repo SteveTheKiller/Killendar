@@ -172,6 +172,13 @@
     <sys:String x:Key="Str_Time_12">12 сағаттық</sys:String>
     <sys:String x:Key="Str_Time_24">24 сағаттық</sys:String>
     <sys:String x:Key="Str_Rep_IntervalName">Қайталау аралығы ({0})</sys:String>
+    <sys:String x:Key="Str_Status_Undone">Болдырылмады</sys:String>
+    <sys:String x:Key="Str_Status_Redone">Қайталанды</sys:String>
+    <sys:String x:Key="Str_Status_NothingToUndo">Болдырмайтын ештеңе жоқ</sys:String>
+    <sys:String x:Key="Str_Status_NothingToRedo">Қайталайтын ештеңе жоқ</sys:String>
+    <sys:String x:Key="Str_Status_UndoFailed">Болдырмау мүмкін болмады: {0}</sys:String>
+    <sys:String x:Key="Str_KS_Undo">Кездесудегі соңғы өзгерісті болдырмау</sys:String>
+    <sys:String x:Key="Str_KS_Redo">Қайталау</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Импорттау сәтсіз аяқталды: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} кездесу экспортталды</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Экспорттау сәтсіз аяқталды: {0}</sys:String>

@@ -172,6 +172,13 @@
     <sys:String x:Key="Str_Time_12">12 órás</sys:String>
     <sys:String x:Key="Str_Time_24">24 órás</sys:String>
     <sys:String x:Key="Str_Rep_IntervalName">Ismétlési időköz ({0})</sys:String>
+    <sys:String x:Key="Str_Status_Undone">Visszavonva</sys:String>
+    <sys:String x:Key="Str_Status_Redone">Újra végrehajtva</sys:String>
+    <sys:String x:Key="Str_Status_NothingToUndo">Nincs mit visszavonni</sys:String>
+    <sys:String x:Key="Str_Status_NothingToRedo">Nincs mit újra végrehajtani</sys:String>
+    <sys:String x:Key="Str_Status_UndoFailed">Nem sikerült visszavonni: {0}</sys:String>
+    <sys:String x:Key="Str_KS_Undo">A találkozó utolsó módosításának visszavonása</sys:String>
+    <sys:String x:Key="Str_KS_Redo">Újra</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Sikertelen importálás: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} találkozó exportálva</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Az exportálás sikertelen: {0}</sys:String>

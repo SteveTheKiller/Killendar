@@ -219,6 +219,13 @@
     <sys:String x:Key="Str_Time_12">12-godzinny</sys:String>
     <sys:String x:Key="Str_Time_24">24-godzinny</sys:String>
     <sys:String x:Key="Str_Rep_IntervalName">Odstęp powtarzania ({0})</sys:String>
+    <sys:String x:Key="Str_Status_Undone">Cofnięto</sys:String>
+    <sys:String x:Key="Str_Status_Redone">Ponowiono</sys:String>
+    <sys:String x:Key="Str_Status_NothingToUndo">Nie ma czego cofnąć</sys:String>
+    <sys:String x:Key="Str_Status_NothingToRedo">Nie ma czego ponowić</sys:String>
+    <sys:String x:Key="Str_Status_UndoFailed">Nie można cofnąć: {0}</sys:String>
+    <sys:String x:Key="Str_KS_Undo">Cofnij ostatnią zmianę spotkania</sys:String>
+    <sys:String x:Key="Str_KS_Redo">Ponów</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import nie powiódł się: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Eksport nie powiódł się: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Brak danych do wyeksportowania</sys:String>

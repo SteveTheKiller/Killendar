@@ -164,7 +164,7 @@ namespace Killendar.Services
         /// added. One transaction, because a 2000-event .ics one INSERT at a time is slow enough
         /// to be visible. The interactive import uses the three steps below separately so the
         /// write can run away from the window.</summary>
-        public int ImportEvents(IEnumerable<CalendarEvent> incoming)
+        public int ImportEvents(IEnumerable<CalendarEvent> incoming) => Recorded(() =>
         {
             var plan = PlanImport(incoming);
             if (plan.Fresh.Count == 0) return 0;
@@ -172,7 +172,7 @@ namespace Killendar.Services
             _events.AddRange(plan.Fresh);
             bool saved = Commit(() => WriteRows(plan.Fresh, CancellationToken.None, null));
             return saved ? plan.Fresh.Count : 0;
-        }
+        });
 
         /// <summary>Which incoming appointments are new. Reads only the in-memory mirror.</summary>
         public ImportPlan PlanImport(IEnumerable<CalendarEvent> incoming)
@@ -226,12 +226,12 @@ namespace Killendar.Services
         }
 
         /// <summary>Shows a written import: adds it to the mirror and repaints once.</summary>
-        public int PublishImport(ImportPlan plan)
+        public int PublishImport(ImportPlan plan) => Recorded(() =>
         {
             _events.AddRange(plan.Fresh);
             LoadError = null;
             Changed?.Invoke();
             return plan.Fresh.Count;
-        }
+        });
     }
 }

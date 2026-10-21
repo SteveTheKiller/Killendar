@@ -130,6 +130,13 @@
     <sys:String x:Key="Str_Time_12">12 Stunden</sys:String>
     <sys:String x:Key="Str_Time_24">24 Stunden</sys:String>
     <sys:String x:Key="Str_Rep_IntervalName">Wiederholungsintervall ({0})</sys:String>
+    <sys:String x:Key="Str_Status_Undone">Rückgängig gemacht</sys:String>
+    <sys:String x:Key="Str_Status_Redone">Wiederhergestellt</sys:String>
+    <sys:String x:Key="Str_Status_NothingToUndo">Nichts rückgängig zu machen</sys:String>
+    <sys:String x:Key="Str_Status_NothingToRedo">Nichts wiederherzustellen</sys:String>
+    <sys:String x:Key="Str_Status_UndoFailed">Rückgängig machen fehlgeschlagen: {0}</sys:String>
+    <sys:String x:Key="Str_KS_Undo">Letzte Änderung an einem Termin rückgängig machen</sys:String>
+    <sys:String x:Key="Str_KS_Redo">Wiederherstellen</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import fehlgeschlagen: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} Termine exportiert</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export fehlgeschlagen: {0}</sys:String>

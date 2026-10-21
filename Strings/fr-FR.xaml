@@ -130,6 +130,13 @@
     <sys:String x:Key="Str_Time_12">12 heures</sys:String>
     <sys:String x:Key="Str_Time_24">24 heures</sys:String>
     <sys:String x:Key="Str_Rep_IntervalName">Intervalle de répétition ({0})</sys:String>
+    <sys:String x:Key="Str_Status_Undone">Annulé</sys:String>
+    <sys:String x:Key="Str_Status_Redone">Rétabli</sys:String>
+    <sys:String x:Key="Str_Status_NothingToUndo">Rien à annuler</sys:String>
+    <sys:String x:Key="Str_Status_NothingToRedo">Rien à rétablir</sys:String>
+    <sys:String x:Key="Str_Status_UndoFailed">Impossible d'annuler : {0}</sys:String>
+    <sys:String x:Key="Str_KS_Undo">Annuler la dernière modification d'un rendez-vous</sys:String>
+    <sys:String x:Key="Str_KS_Redo">Rétablir</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Échec de l'importation : {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} rendez-vous exportés</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Échec de l'exportation : {0}</sys:String>

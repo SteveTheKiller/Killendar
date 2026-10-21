@@ -239,6 +239,7 @@ namespace Killendar.Services
             _db = null;
             _password = null;
             _file = "";
+            ForgetHistory();
             // Dispose does NOT release the file handle - the pool keeps it. Anything that swaps
             // the file underneath (password change, switching Killendars) needs this.
             SqliteConnection.ClearAllPools();

@@ -12,6 +12,16 @@ namespace Killendar.Shell
 {
     public partial class MainWindow
     {
+        private void UndoRedo(bool undo)
+        {
+            bool done = undo ? _store.Undo() : _store.Redo();
+            if (done && _agendaDay != null) BuildDayAgendaRows();
+            StatusText.Text = _store.LoadError != null
+                ? string.Format(Loc("Str_Status_UndoFailed"), _store.LoadError)
+                : Loc(done ? (undo ? "Str_Status_Undone" : "Str_Status_Redone")
+                           : (undo ? "Str_Status_NothingToUndo" : "Str_Status_NothingToRedo"));
+        }
+
         /// <summary>True when a text field has focus, so a bare letter belongs to the field.</summary>
         private static bool TypingInField()
             => Keyboard.FocusedElement is TextBox || Keyboard.FocusedElement is PasswordBox;
@@ -121,6 +131,10 @@ namespace Killendar.Shell
                     case Key.I: _ics.Import();          e.Handled = true; return;
                     case Key.E: _ics.Export();          e.Handled = true; return;
                     case Key.N: _calendar.NewAtAnchor(); e.Handled = true; return;
+                    // A text box keeps its own Ctrl+Z, and an open editor holds a copy of the row
+                    // an undo might rewrite, so calendar undo waits until neither is in the way.
+                    case Key.Z when !TypingInField() && !editingAppointment: UndoRedo(undo: true);  e.Handled = true; return;
+                    case Key.Y when !TypingInField() && !editingAppointment: UndoRedo(undo: false); e.Handled = true; return;
                 }
                 return;
             }

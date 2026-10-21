@@ -172,6 +172,13 @@
     <sys:String x:Key="Str_Time_12">12-hour</sys:String>
     <sys:String x:Key="Str_Time_24">24-hour</sys:String>
     <sys:String x:Key="Str_Rep_IntervalName">Repeat interval ({0})</sys:String>
+    <sys:String x:Key="Str_Status_Undone">Undone</sys:String>
+    <sys:String x:Key="Str_Status_Redone">Redone</sys:String>
+    <sys:String x:Key="Str_Status_NothingToUndo">Nothing to undo</sys:String>
+    <sys:String x:Key="Str_Status_NothingToRedo">Nothing to redo</sys:String>
+    <sys:String x:Key="Str_Status_UndoFailed">Could not undo: {0}</sys:String>
+    <sys:String x:Key="Str_KS_Undo">Undo the last change to an appointment</sys:String>
+    <sys:String x:Key="Str_KS_Redo">Redo</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import failed: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Exported {0} appointments</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export failed: {0}</sys:String>

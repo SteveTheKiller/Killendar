@@ -145,6 +145,13 @@
     <sys:String x:Key="Str_Time_12">12-urna</sys:String>
     <sys:String x:Key="Str_Time_24">24-urna</sys:String>
     <sys:String x:Key="Str_Rep_IntervalName">Interval ponavljanja ({0})</sys:String>
+    <sys:String x:Key="Str_Status_Undone">Razveljavljeno</sys:String>
+    <sys:String x:Key="Str_Status_Redone">Uveljavljeno znova</sys:String>
+    <sys:String x:Key="Str_Status_NothingToUndo">Ni česa razveljaviti</sys:String>
+    <sys:String x:Key="Str_Status_NothingToRedo">Ni česa uveljaviti znova</sys:String>
+    <sys:String x:Key="Str_Status_UndoFailed">Razveljavitev ni uspela: {0}</sys:String>
+    <sys:String x:Key="Str_KS_Undo">Razveljavi zadnjo spremembo dogodka</sys:String>
+    <sys:String x:Key="Str_KS_Redo">Uveljavi znova</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Uvoz ni uspel: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Izvoženi dogodki: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Izvoz ni uspel: {0}</sys:String>

@@ -96,6 +96,7 @@ namespace Killendar.Services
                 }
             }
             _events = list;
+            ForgetHistory();   // every row is a new object now; recorded steps no longer match
         }
 
         /// <summary>Re-reads the open database. Public because the unlock and switch paths call
@@ -197,7 +198,9 @@ namespace Killendar.Services
                 if (_db == null) throw new InvalidOperationException("No Killendar is open.");
                 // Waits out an import writing on a worker thread; the connection is not shared.
                 lock (_writeGate) write();
-                if (refreshCategories) CategoryManager.Refresh(this);
+                // Category definitions are not part of an undo step, and a rename rewrites rows
+                // the history still holds old copies of.
+                if (refreshCategories) { CategoryManager.Refresh(this); ForgetHistory(); }
                 LoadError = null;
             }
             catch (Exception ex)
@@ -220,14 +223,16 @@ namespace Killendar.Services
             return true;
         }
 
-        public void Add(CalendarEvent ev)
+        public void Add(CalendarEvent ev) => Recorded(() =>
         {
             ev.Created = ev.Modified = DateTime.UtcNow;
             _events.Add(ev);
             Commit(() => Upsert(ev));
-        }
+        });
 
-        public void Update(CalendarEvent ev)
+        public void Update(CalendarEvent ev) => Recorded(() => UpdateRow(ev));
+
+        private void UpdateRow(CalendarEvent ev)
         {
             var idx = _events.FindIndex(e => e.Id == ev.Id);
             if (idx < 0) return;
@@ -243,7 +248,7 @@ namespace Killendar.Services
             Commit(() => Upsert(ev));
         }
 
-        public void Delete(Guid id)
+        public void Delete(Guid id) => Recorded(() =>
         {
             if (_events.RemoveAll(e => e.Id == id) == 0) return;
             Commit(() =>
@@ -253,7 +258,7 @@ namespace Killendar.Services
                 cmd.Parameters.AddWithValue("$id", id.ToString());
                 cmd.ExecuteNonQuery();
             });
-        }
+        });
 
         // ============================================================
         // Series. The four things "this one or the whole series" can mean.
@@ -265,10 +270,12 @@ namespace Killendar.Services
         /// master keeps being the anchor of the pattern rather than jumping to the date the user
         /// happened to be looking at.
         /// </summary>
-        public void UpdateSeries(CalendarEvent edited)
+        public void UpdateSeries(CalendarEvent edited) => Recorded(() => UpdateSeriesRows(edited));
+
+        private void UpdateSeriesRows(CalendarEvent edited)
         {
             var master = GetSeriesMaster(edited);
-            if (master == null) { Update(edited); return; }
+            if (master == null) { UpdateRow(edited); return; }
 
             Commit(() =>
             {
@@ -405,7 +412,7 @@ namespace Killendar.Services
         /// <summary>
         /// Saves an edit to ONE date of a series, as a row that stands in for that occurrence.
         /// </summary>
-        public void SaveOccurrence(CalendarEvent edited)
+        public void SaveOccurrence(CalendarEvent edited) => Recorded(() =>
         {
             Commit(() =>
             {
@@ -433,10 +440,10 @@ namespace Killendar.Services
                 if (existing == null) _events.Add(row);
                 else _events[_events.FindIndex(e => e.Id == existing.Id)] = row;
             });
-        }
+        });
 
         /// <summary>Removes ONE date from a series, leaving the rest of it alone.</summary>
-        public void DeleteOccurrence(CalendarEvent occ)
+        public void DeleteOccurrence(CalendarEvent occ) => Recorded(() =>
         {
             var master = GetSeriesMaster(occ);
             if (master == null) return;
@@ -467,10 +474,10 @@ namespace Killendar.Services
                 if (stray != null) _events.RemoveAll(e => e.Id == stray.Id);
                 _events[_events.FindIndex(e => e.Id == master.Id)] = updated;
             });
-        }
+        });
 
         /// <summary>Removes a whole series: the master and every single-date edit belonging to it.</summary>
-        public void DeleteSeries(Guid masterId)
+        public void DeleteSeries(Guid masterId) => Recorded(() =>
         {
             var ids = _events.Where(e => e.Id == masterId || e.SeriesId == masterId)
                              .Select(e => e.Id).ToList();
@@ -491,6 +498,6 @@ namespace Killendar.Services
                 }
                 tx.Commit();
             });
-        }
+        });
     }
 }

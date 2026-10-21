@@ -173,6 +173,13 @@
     <sys:String x:Key="Str_Time_12">12-часовой</sys:String>
     <sys:String x:Key="Str_Time_24">24-часовой</sys:String>
     <sys:String x:Key="Str_Rep_IntervalName">Интервал повторения ({0})</sys:String>
+    <sys:String x:Key="Str_Status_Undone">Отменено</sys:String>
+    <sys:String x:Key="Str_Status_Redone">Повторено</sys:String>
+    <sys:String x:Key="Str_Status_NothingToUndo">Нечего отменять</sys:String>
+    <sys:String x:Key="Str_Status_NothingToRedo">Нечего повторять</sys:String>
+    <sys:String x:Key="Str_Status_UndoFailed">Не удалось отменить: {0}</sys:String>
+    <sys:String x:Key="Str_KS_Undo">Отменить последнее изменение встречи</sys:String>
+    <sys:String x:Key="Str_KS_Redo">Повторить</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Импорт не удался: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Экспортировано встреч: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Экспорт не удался: {0}</sys:String>
