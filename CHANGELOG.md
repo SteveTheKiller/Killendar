@@ -9,6 +9,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Fixed
 
 - Failed exports leave an existing calendar, CSV or HTML file untouched instead of truncating it.
+- An imported appointment that is moved and made to repeat in the same edit repeats from its new time, not the original one.
 - Exported appointments keep the UID they were imported with, so other calendars recognize them instead of adding duplicates.
 - Imported attendee addresses and time zones stay intact when a quoted name or parameter contains a colon, comma or semicolon.
 - Password changes that succeed no longer report failure when the old copy cannot be deleted; the app names the leftover copy instead. Failed password removals delete their partial unencrypted copy or say where it is.

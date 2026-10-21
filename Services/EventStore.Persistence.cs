@@ -212,6 +212,13 @@ namespace Killendar.Services
         {
             var idx = _events.FindIndex(e => e.Id == ev.Id);
             if (idx < 0) return;
+            // An imported one-off keeps the source clock it arrived with. Once it has been moved,
+            // that clock still names the OLD start, and a repeat added now would generate from
+            // there. A stored one-off therefore always re-anchors to the start being saved;
+            // existing series go through UpdateSeries, which shifts the anchor by the edit.
+            if (!_events[idx].IsSeries && !ev.IsOverride && Recurrence.UsesTimeBasis(ev) &&
+                Recurrence.FromTimeBasis(ev, ev.RepeatAnchor!.Value) != ev.Start.ToUniversalTime())
+                ev.RepeatAnchor = Recurrence.ToTimeBasis(ev, ev.Start);
             ev.Modified = DateTime.UtcNow;
             _events[idx] = ev;
             Commit(() => Upsert(ev));
