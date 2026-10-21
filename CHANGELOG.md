@@ -9,6 +9,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Fixed
 
 - Failed exports leave an existing calendar, CSV or HTML file untouched instead of truncating it.
+- The website's screenshot viewer keeps keyboard focus inside it while open, and the website no longer claims import and export have no external dependencies.
 - Screen readers announce the repeat interval box as the repeat interval with its current unit instead of an unnamed number.
 - Times in the calendar, agenda, day panel, editor and HTML export follow the chosen date format and the language's clock instead of always showing US month/day and 12-hour times.
 - Unsaved appointment input is no longer replaced silently. Starting a new appointment, opening another one or a day, switching or reloading the Killendar, or quitting asks first; Cancel, Esc and closing the panel still discard on purpose.

@@ -224,7 +224,8 @@ writes an unencrypted copy, and the app warns you at the moment of export rather
 
 <section class="tech-sec" id="icalendar">
 <h2 data-i18n="tk_43">iCalendar</h2>
-<p data-i18n="tk_44">Import and export are written against RFC 5545 directly, with no external dependencies.
+<p data-i18n="tk_44">Import and export are written against RFC 5545 directly by Killendar's own parser; only time zone
+names are looked up with the TimeZoneConverter library.
 Import skips appointments already in the calendar and reports how many were added and how many
 were skipped.</p>
 <p data-i18n="tk_45">Categories travel through both, using the standard <b>CATEGORIES</b> property, so they

@@ -245,18 +245,34 @@
       if (caption) caption.textContent = description;
       box.setAttribute('aria-hidden', 'false');
       box.classList.add('show');
+      setBackgroundInert(true);
       box.focus();
     });
+    // aria-modal only describes a modal; it does not make one. While the screenshot is open,
+    // everything else on the page is inert (no focus, no clicks, hidden from screen readers),
+    // and Tab stays on the dialog, which has nothing else to move to.
+    function setBackgroundInert(on) {
+      Array.prototype.forEach.call(document.body.children, function (el) {
+        if (el === box || el.tagName === 'SCRIPT') return;
+        if (on) el.setAttribute('inert', '');
+        else el.removeAttribute('inert');
+      });
+    }
     function closeBox() {
       if (!box.classList.contains('show')) return;
       box.classList.remove('show');
       box.setAttribute('aria-hidden', 'true');
+      setBackgroundInert(false);
       if (lastTrigger) lastTrigger.focus();
     }
     box.addEventListener('click', closeBox);
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && box.classList.contains('show')) {
+      if (!box.classList.contains('show')) return;
+      if (e.key === 'Escape') {
         closeBox();
+        e.preventDefault();
+      } else if (e.key === 'Tab') {
+        box.focus();
         e.preventDefault();
       }
     });
