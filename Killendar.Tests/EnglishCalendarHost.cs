@@ -49,8 +49,15 @@ namespace Killendar.Tests
             return ConfirmAnswer;
         }
 
+        /// <summary>Runs once on the "window" thread while the first wait is under way, standing
+        /// in for whatever the dispatcher pumps during a real progress card.</summary>
+        internal Action? WhileWaiting;
+
         public bool WaitOrCancel(string message, Task work)
         {
+            var during = WhileWaiting;
+            WhileWaiting = null;
+            during?.Invoke();
             if (CancelWhile != null && message.StartsWith(CancelWhile, StringComparison.Ordinal)) return true;
             try { work.Wait(); } catch (AggregateException) { }
             return false;

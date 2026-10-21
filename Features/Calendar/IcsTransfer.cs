@@ -76,6 +76,13 @@ namespace Killendar.Features
                     return;
                 }
 
+                // Back on the window's thread: compare against the calendar as it is now.
+                if (source.Csv)
+                {
+                    var importable = CsvService.Importable(_store, source.Events);
+                    source.AlreadyPresent = source.Events.Count - importable.Count;
+                    source.Events = importable;
+                }
                 var plan = _store.PlanImport(source.Events);
                 plan.AlreadyPresent += source.AlreadyPresent;
                 if (plan.Fresh.Count > 0 && source.Losses(plan) &&
@@ -111,7 +118,8 @@ namespace Killendar.Features
         private void Stopped() => _host.SetStatus(_host.Loc("Str_Status_ImportStopped"));
 
         /// <summary>What a file yielded, whichever format it was. Runs on a worker thread, so it
-        /// reads the store only for the CSV fingerprint check, which looks at the mirror.</summary>
+        /// never touches the store: the window keeps running while it reads, and a command-line
+        /// request can change the calendar in the meantime.</summary>
         private ImportSource Read(string path, string extension, CancellationToken cancel)
         {
             switch (extension)
@@ -123,11 +131,10 @@ namespace Killendar.Features
                     // Guessing at arbitrary columns means guessing what "Date" means and getting
                     // it wrong, which corrupts quietly - worse than a clear no.
                     if (!parsed.HeaderValid) return new ImportSource { Refusal = "Str_Status_CsvBadHeader" };
-                    var importable = CsvService.Importable(_store, parsed.Events);
                     return new ImportSource
                     {
-                        Events = importable,
-                        AlreadyPresent = parsed.Events.Count - importable.Count,
+                        Events = parsed.Events,
+                        Csv = true,
                         Unreadable = parsed.Unreadable,
                         Malformed = parsed.Malformed,
                     };
@@ -183,6 +190,7 @@ namespace Killendar.Features
         {
             internal List<CalendarEvent> Events = [];
             internal string? Refusal;
+            internal bool Csv;
             internal int AlreadyPresent, Repeating, Unreadable, Malformed, Unsupported, UnsupportedRanges, Canceled, LostDetails;
 
             internal static ImportSource From(IcsParseResult parsed) => new()

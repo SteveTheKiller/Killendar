@@ -69,19 +69,22 @@ namespace Killendar.Services
 
         public static IcsParseResult ParseText(string icsText, CancellationToken cancel)
         {
-            var lines = UnfoldLines(icsText);
+            cancel.ThrowIfCancellationRequested();
+            var lines = UnfoldLines(icsText, cancel);
             return ParseLines(lines, cancel);
         }
 
-        private static List<string> UnfoldLines(string raw)
+        private static List<string> UnfoldLines(string raw, CancellationToken cancel)
         {
             // RFC-5545 line unfolding: CRLF + space/tab = continuation
             raw = raw.Replace("\r\n", "\n").Replace("\r", "\n");
             var sb     = new StringBuilder();
             var result = new List<string>();
 
+            int read = 0;
             foreach (var line in raw.Split('\n'))
             {
+                if ((read++ & 4095) == 0) cancel.ThrowIfCancellationRequested();
                 if (line.Length > 0 && (line[0] == ' ' || line[0] == '\t'))
                 {
                     sb.Append(line.Substring(1));

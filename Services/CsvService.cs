@@ -166,7 +166,7 @@ namespace Killendar.Services
         public static CsvParseResult ParseText(string text, CancellationToken cancel)
         {
             var result  = new CsvParseResult();
-            var records = ParseRecords(text);
+            var records = ParseRecords(text, cancel);
             if (records.Count == 0) { result.HeaderValid = false; return result; }
 
             // Columns are found BY NAME so Outlook's full export (22 columns) reads as well as
@@ -356,7 +356,7 @@ namespace Killendar.Services
         /// Description would shear the file. Line breaks inside a quoted field are normalized
         /// to '\n'; CR outside one is dropped as half of a CRLF.
         /// </summary>
-        private static List<List<string>> ParseRecords(string text)
+        private static List<List<string>> ParseRecords(string text, CancellationToken cancel)
         {
             var records = new List<List<string>>();
             var fields  = new List<string>();
@@ -366,6 +366,7 @@ namespace Killendar.Services
             int i = 0;
             while (i < text.Length)
             {
+                if ((i & 0xFFFF) == 0) cancel.ThrowIfCancellationRequested();
                 char c = text[i];
 
                 if (inQuotes)

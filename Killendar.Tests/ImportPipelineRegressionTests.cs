@@ -167,6 +167,33 @@ namespace Killendar.Tests
         }
 
         [Fact]
+        public void CsvParsingStopsWhenCanceled()
+        {
+            using var cancel = new CancellationTokenSource();
+            cancel.Cancel();
+
+            Assert.Throws<OperationCanceledException>(() => CsvService.ParseText(
+                "Subject,Start Date\r\nA,2026-10-22\r\n", cancel.Token));
+        }
+
+        [Fact]
+        public void CsvDuplicateCheckUsesTheCalendarAsItIsWhenReadingEnds()
+        {
+            using var fixture = new AppointmentFixture();
+            string file = Path.Combine(Path.GetDirectoryName(fixture.Store.FilePath)!, "rows.csv");
+            File.WriteAllText(file, "Subject,Start Date,Start Time,End Date,End Time,All day event\r\n" +
+                "Row,2026-10-22,09:00,2026-10-22,10:00,FALSE\r\n");
+            // A command-line create lands while the file is being read; the import still sees it.
+            var host = new EnglishCalendarHost();
+            host.WhileWaiting = () => fixture.Store.ImportEvents(CsvService.ParseFile(file).Events);
+
+            new IcsTransfer(host, fixture.Store).Import(file);
+
+            Assert.Single(fixture.Store.Events);
+            Assert.Equal("Imported 0 appointments, skipped 1 already present", host.Status);
+        }
+
+        [Fact]
         public void DeeplyNestedEmailIsRefused()
         {
             string mail = "Content-Type: text/calendar\n\nBEGIN:VCALENDAR\nEND:VCALENDAR\n";
