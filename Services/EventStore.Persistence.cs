@@ -24,9 +24,21 @@ namespace Killendar.Services
         private void LoadIntoMemory()
         {
             var list = new List<CalendarEvent>();
+            var available = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            using (var schema = _db!.CreateCommand())
+            {
+                schema.CommandText = "PRAGMA table_info(events)";
+                using var columns = schema.ExecuteReader();
+                while (columns.Read()) available.Add(columns.GetString(1));
+            }
+            // Read-only callers cannot migrate historical calendars. Missing additive columns
+            // use the row decoder's existing defaults without writing to the database.
+            var projection = SelectAll.Substring(7, SelectAll.Length - 7 - " FROM events".Length)
+                .Split(',').Select(name => name.Trim()).Select((name, index) =>
+                    index >= 10 && !available.Contains(name) ? "NULL AS " + name : name);
             using (var cmd = _db!.CreateCommand())
             {
-                cmd.CommandText = SelectAll;
+                cmd.CommandText = "SELECT " + string.Join(", ", projection) + " FROM events";
                 using var r = cmd.ExecuteReader();
                 while (r.Read())
                 {
