@@ -124,11 +124,11 @@ namespace Killendar.Controls
             // Accent heading, draggable like the family dialog title bars.
             var title = new TextBlock
             {
-                Text = L("Str_Dlg_PickColor", "Pick a color"), Foreground = R("PrimaryBrush"),
+                Text = L("Str_Dlg_PickColor", "Pick a color"),
                 FontSize = 14, FontWeight = FontWeights.SemiBold, Margin = new Thickness(0, 0, 0, 12),
-                Effect = new System.Windows.Media.Effects.DropShadowEffect { Color = Colors.Black, BlurRadius = 2, ShadowDepth = 1, Direction = 270, Opacity = 0.7 },
                 Cursor = DragCursors.Open
             };
+            KillerFamily.Theming.HeadingAccent.SetEnabled(title, true);
             title.MouseLeftButtonDown += (_, e) =>
             {
                 if (e.ButtonState != MouseButtonState.Pressed) return;

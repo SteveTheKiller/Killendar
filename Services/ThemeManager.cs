@@ -32,7 +32,7 @@ namespace Killendar.Services
     public static class ThemeManager
     {
         /// <summary>Killer Sans UI (Killer Sans scaled to Segoe UI proportions) with the Segoe fallback stack.</summary>
-        internal static readonly FontFamily KillerSansUiStack = new(new Uri("pack://application:,,,/"), "./Fonts/#Killer Sans UI, Segoe UI, Microsoft JhengHei UI, Nirmala UI");
+        internal static readonly FontFamily KillerSansUiStack = new(new Uri("pack://application:,,,/Killendar;component/"), "./Fonts/#Killer Sans UI, Segoe UI, Microsoft JhengHei UI, Nirmala UI");
         internal static readonly FontFamily LacquerHeadingStack = new(new Uri("pack://application:,,,/"), "./Fonts/#Lacquer, ./Fonts/#Killer Sans UI, Segoe UI, Microsoft JhengHei UI, Nirmala UI");
         internal static readonly FontFamily KillerSansFont = new(new Uri("pack://application:,,,/"), "./Fonts/#Killer Sans");
         // ---- Persistence hooks (optional). Default: in-memory only. ----
@@ -370,7 +370,8 @@ namespace Killendar.Services
             // Context menus, as in every family app: Killer Sans UI at 12. 98SE states its own face and size.
             if (!d.Contains("MenuFontFamily")) d["MenuFontFamily"] = KillerSansUiStack;
             if (!d.Contains("MenuFontSize")) d["MenuFontSize"] = 12.0;
-            if (!d.Contains("FileNameFont")) d["FileNameFont"] = square ? d["UiFont"] : KillerSansFont;
+            if (!d.Contains("FileNameFont")) d["FileNameFont"] = square ? d["UiFont"] :
+                new FontFamily(new Uri("pack://application:,,,/Killendar;component/"), "./Fonts/#Killer Sans");
             // Primary headings (dialog headings, page and period titles): Lacquer, the app-name face of
             // the wordmark, falling back to Killer Sans UI for scripts Lacquer does not cover. 98SE keeps
             // Killer Sans. Secondary headings, the footer and the interface stay Killer Sans.
@@ -378,7 +379,7 @@ namespace Killendar.Services
             if (!d.Contains("FileNameFontSize")) d["FileNameFontSize"] = square ? 11d : 18d;
             if (!d.Contains("FileNameTransform"))
             {
-                var fileNameShift = new TranslateTransform(0, square ? 0 : 1);
+                var fileNameShift = new TranslateTransform(0, 0);
                 fileNameShift.Freeze();
                 d["FileNameTransform"] = fileNameShift;
             }

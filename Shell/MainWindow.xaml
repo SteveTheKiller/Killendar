@@ -7,6 +7,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:a11y="clr-namespace:KillerFamily.Accessibility"
+        xmlns:theme="clr-namespace:KillerFamily.Theming"
         xmlns:icons="clr-namespace:Killendar.Controls"
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         Title="The Killendar"
@@ -239,10 +240,8 @@
                                 Style="{StaticResource ToolbarButton}" Padding="8,5" Margin="2,0,0,0"
                                 Click="NextBtn_Click" ToolTip="{DynamicResource Str_TT_Next}"/>
 
-                        <!-- Typewriter, and clearly bigger than the buttons around it: this is the
-                             one label that says where you are, so it carries the wordmark's face
-                             rather than the UI font. 22 in a 42px row -
-                             the typewriter's line box is tall, so going much past this crowds it. -->
+                        <!-- The period heading stays larger than the toolbar labels while its
+                             line box and shadow fit within the existing minimum row height. -->
                     </StackPanel>
 
                     <!-- The date, in its own flexible column. TextTrimming, because this is the one
@@ -259,15 +258,15 @@
                          writing one element. -->
                     <Grid Grid.Column="1" Margin="12,0,6,0" VerticalAlignment="Center">
                         <TextBlock Text="{Binding Text, ElementName=PeriodLabel}"
-                                   FontFamily="{DynamicResource HeadingFont}" FontSize="22"
+                                   FontFamily="{DynamicResource HeadingFont}" FontSize="26"
                                    Margin="1,2,0,0" IsHitTestVisible="False"
                                    TextTrimming="CharacterEllipsis" Foreground="#C0000000"
                                    Opacity="{DynamicResource IconShadowOpacity}">
                             <TextBlock.Effect><BlurEffect Radius="3"/></TextBlock.Effect>
                         </TextBlock>
                         <TextBlock x:Name="PeriodLabel" TextTrimming="CharacterEllipsis"
-                                   FontFamily="{DynamicResource HeadingFont}" FontSize="22"
-                                   Foreground="{DynamicResource PrimaryBrush}"/>
+                                   FontFamily="{DynamicResource HeadingFont}" FontSize="26"
+                                   theme:HeadingAccent.Enabled="True"/>
                     </Grid>
 
                     <!-- Overflow. Shown INSTEAD of the four view buttons when the toolbar runs out
@@ -525,7 +524,7 @@
                                         </TextBlock>
                                         <TextBlock x:Name="SidebarTitle" Text="{DynamicResource Str_Side_New}" FontSize="20"
                                                    FontFamily="{DynamicResource SidebarHeadingFont}" FontWeight="{DynamicResource SidebarHeadingWeight}"
-                                                   VerticalAlignment="Center" Foreground="{DynamicResource PrimaryBrush}"/>
+                                                   VerticalAlignment="Center" theme:HeadingAccent.Enabled="True"/>
                                     </Grid>
                                 </Viewbox>
                                 <Button x:Name="SidebarDensityBtn" Grid.Column="1"
@@ -1008,7 +1007,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{DynamicResource Str_KS_Title}" Foreground="{DynamicResource TextBrush}"
+                                <TextBlock Text="{DynamicResource Str_KS_Title}" theme:HeadingAccent.Enabled="True"
                                            FontFamily="{DynamicResource UiFont}" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" TextWrapping="Wrap"/>
                                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="12,0">
                                     <Button x:Name="KsViewList" Style="{StaticResource KsToggle}" Tag="on"

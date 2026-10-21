@@ -98,7 +98,7 @@ namespace Killendar.Controls
             {
                 meta.Opacity = 1;
                 name.SetResourceReference(TextBlock.ForegroundProperty, active ? "PrimaryBrush" : "TextBrush");
-                meta.SetResourceReference(TextBlock.ForegroundProperty, "MutedTextBrush");
+                meta.SetResourceReference(TextBlock.ForegroundProperty, "TextBrush");
             }
         }
 

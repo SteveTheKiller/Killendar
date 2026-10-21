@@ -7,6 +7,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:a11y="clr-namespace:KillerFamily.Accessibility"
+        xmlns:theme="clr-namespace:KillerFamily.Theming"
         xmlns:icons="clr-namespace:Killendar.Controls"
         xmlns:kui="clr-namespace:Killendar.Controls"
         Title="{DynamicResource Str_Kc_Title}"
@@ -64,7 +65,7 @@
                             </TextBlock>
                             <TextBlock Text="{DynamicResource Str_Kc_Title}"
                                        FontFamily="{DynamicResource HeadingFont}" FontSize="18"
-                                       Foreground="{DynamicResource PrimaryBrush}"/>
+                                       theme:HeadingAccent.Enabled="True"/>
                         </Grid>
                         <TextBlock Text="{DynamicResource Str_Kc_Title}" Visibility="{DynamicResource PlainTitleVisibility}"
                                    VerticalAlignment="Center"
@@ -83,7 +84,7 @@
                 </Border>
 
                 <StackPanel Grid.Row="1" Margin="24,14,24,12">
-                    <TextBlock Text="{DynamicResource Str_Kc_Hint}" Foreground="{DynamicResource MutedTextBrush}"
+                    <TextBlock Text="{DynamicResource Str_Kc_Hint}" Foreground="{DynamicResource TextBrush}"
                                FontSize="11" TextWrapping="Wrap" Margin="0,0,0,8"/>
                     <Grid>
                     <Border IsHitTestVisible="False" Background="{DynamicResource PaneBrush}"
@@ -148,10 +149,8 @@
                     </Border>
                     <Border IsHitTestVisible="False" BorderBrush="{DynamicResource PaneBevelDarkBrush}" BorderThickness="{DynamicResource BevelLightThickness}"/>
                     <Border IsHitTestVisible="False" BorderBrush="{DynamicResource PaneBevelLightBrush}" BorderThickness="{DynamicResource BevelDarkThickness}"/>
-                    <Border IsHitTestVisible="False" CornerRadius="{DynamicResource ControlCornerRadius}"
-                            Opacity="{DynamicResource GrainOpacity}" Background="{DynamicResource GrainTileBrush}"/>
                     </Grid>
-                    <TextBlock x:Name="DlgStatus" Foreground="{DynamicResource DimTextBrush}"
+                    <TextBlock x:Name="DlgStatus" Foreground="{DynamicResource TextBrush}"
                                FontSize="10.5" Margin="0,6,0,0" TextWrapping="Wrap"/>
                 </StackPanel>
 

@@ -4,6 +4,7 @@
 <Window x:Class="Killendar.Controls.ConfirmDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:theme="clr-namespace:KillerFamily.Theming"
         xmlns:icons="clr-namespace:Killendar.Controls"
         xmlns:kui="clr-namespace:Killendar.Controls"
         Title="Killendar"
@@ -96,7 +97,7 @@
                     </Border>
                     <StackPanel Grid.Column="1">
                     <TextBlock x:Name="HeadingText" Text="Install Killendar to your user profile?"
-                               Foreground="{StaticResource TextBrush}"
+                               theme:HeadingAccent.Enabled="True"
                                FontFamily="{DynamicResource HeadingFont}" FontSize="18"
                                                TextOptions.TextFormattingMode="Ideal" TextWrapping="Wrap"/>
                     <TextBlock x:Name="DetailText" Foreground="{StaticResource MutedTextBrush}"
