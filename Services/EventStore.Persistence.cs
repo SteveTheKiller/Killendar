@@ -20,7 +20,7 @@ namespace Killendar.Services
             "repeat_until, repeat_count, skip_dates, series_id, occurrence_start, " +
             "repeat_time_basis, repeat_anchor, repeat_zone_id, repeat_week_start, " +
             "skip_occurrences, repeat_until_exact, occurrence_anchor, occurrence_basis, occurrence_zone_id, " +
-            "duration_days, duration_time_ticks FROM events";
+            "duration_days, duration_time_ticks, external_uid FROM events";
 
         private void LoadIntoMemory()
         {
@@ -88,6 +88,7 @@ namespace Killendar.Services
                         OccurrenceZoneId = r.IsDBNull(27) ? "" : r.GetString(27),
                         DurationDays = r.IsDBNull(28) ? 0 : (int)Math.Min(int.MaxValue, Math.Max(0L, r.GetInt64(28))),
                         DurationTimeTicks = r.IsDBNull(29) ? 0 : Math.Max(0L, r.GetInt64(29)),
+                        ExternalUid = r.IsDBNull(30) ? "" : r.GetString(30),
                     });
                 }
             }
@@ -124,16 +125,16 @@ namespace Killendar.Services
                 "description, attendees, categories, created_utc, modified_utc, " +
                 "repeat_freq, repeat_interval, repeat_days, repeat_until, repeat_count, " +
                 "skip_dates, series_id, occurrence_start, repeat_time_basis, repeat_anchor, repeat_zone_id, repeat_week_start, " +
-                "skip_occurrences, repeat_until_exact, occurrence_anchor, occurrence_basis, occurrence_zone_id, duration_days, duration_time_ticks) " +
+                "skip_occurrences, repeat_until_exact, occurrence_anchor, occurrence_basis, occurrence_zone_id, duration_days, duration_time_ticks, external_uid) " +
                 "VALUES($id, $ti, $st, $en, $ad, $lo, $de, $at, $ca, $cr, $mo, " +
-                "$rf, $ri, $rd, $ru, $rc, $sk, $si, $os, $tb, $ra, $rz, $ws, $so, $ue, $oa, $ob, $oz, $dd, $dt) " +
+                "$rf, $ri, $rd, $ru, $rc, $sk, $si, $os, $tb, $ra, $rz, $ws, $so, $ue, $oa, $ob, $oz, $dd, $dt, $xu) " +
                 "ON CONFLICT(id) DO UPDATE SET title=$ti, start_utc=$st, end_utc=$en, " +
                 "all_day=$ad, location=$lo, description=$de, attendees=$at, categories=$ca, " +
                 "modified_utc=$mo, repeat_freq=$rf, repeat_interval=$ri, repeat_days=$rd, " +
                 "repeat_until=$ru, repeat_count=$rc, skip_dates=$sk, series_id=$si, " +
                 "occurrence_start=$os, repeat_time_basis=$tb, repeat_anchor=$ra, repeat_zone_id=$rz, repeat_week_start=$ws, " +
                 "skip_occurrences=$so, repeat_until_exact=$ue, occurrence_anchor=$oa, occurrence_basis=$ob, occurrence_zone_id=$oz, " +
-                "duration_days=$dd, duration_time_ticks=$dt";
+                "duration_days=$dd, duration_time_ticks=$dt, external_uid=$xu";
             cmd.Parameters.AddWithValue("$id", ev.Id.ToString());
             cmd.Parameters.AddWithValue("$ti", ev.Title ?? "");
             cmd.Parameters.AddWithValue("$st", ToStore(ev.Start, ev.AllDay));
@@ -165,6 +166,7 @@ namespace Killendar.Services
             cmd.Parameters.AddWithValue("$oz", ev.OccurrenceZoneId ?? "");
             cmd.Parameters.AddWithValue("$dd", ev.DurationDays);
             cmd.Parameters.AddWithValue("$dt", ev.DurationTimeTicks);
+            cmd.Parameters.AddWithValue("$xu", ev.ExternalUid ?? "");
             cmd.ExecuteNonQuery();
         }
 

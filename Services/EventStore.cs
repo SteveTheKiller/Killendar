@@ -44,7 +44,8 @@ namespace Killendar.Services
         // 5: recurrence week boundary, with Sunday preserving native series.
         // 6: precise recurrence exclusions, end limits, and original occurrence identities.
         // 7: nominal calendar days and elapsed subday duration components.
-        private const int SchemaVersion = 7;
+        // 8: the imported UID, kept verbatim for export.
+        private const int SchemaVersion = 8;
 
         /// <summary>Default per-user folder. Manage Killendars can override it, including with
         /// the executable folder for a self-contained portable copy.</summary>

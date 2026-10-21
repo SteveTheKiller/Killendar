@@ -66,6 +66,12 @@ namespace Killendar.Models
         /// in step, and one string is trivial to read, filter and export.</summary>
         public string       Categories  { get; set; } = "";
 
+        /// <summary>The UID an imported appointment arrived with, exactly as written, or empty for
+        /// one created here. Id is derived from it but is not it: other calendars match updates
+        /// and reimports on this text, so export hands it back unchanged. A duplicate of the
+        /// appointment is a new appointment and must clear it.</summary>
+        public string       ExternalUid { get; set; } = "";
+
         // ── Repeats ───────────────────────────────────────────────────────────────────────
 
         /// <summary>None for an ordinary appointment. Set on a series master.</summary>
@@ -159,6 +165,7 @@ namespace Killendar.Models
             Description = Description,
             Attendees   = [.. Attendees],
             Categories  = Categories,
+            ExternalUid = ExternalUid,
             Created     = Created,
             Modified    = Modified,
 

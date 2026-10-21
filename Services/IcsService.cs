@@ -250,7 +250,11 @@ namespace Killendar.Services
                 switch (upper)
                 {
                     case "UID":
-                        if (value.Length > 0) current.Id = IdFromUid(value);
+                        if (value.Length > 0)
+                        {
+                            current.Id = IdFromUid(value);
+                            current.ExternalUid = value;
+                        }
                         break;
 
                     case "SUMMARY":
@@ -821,7 +825,13 @@ namespace Killendar.Services
                 // plus a RECURRENCE-ID saying which date - that pairing is how every other
                 // calendar links the two, and writing the override's own id instead would arrive
                 // at the other end as an unrelated appointment sitting on top of the series.
-                sb.AppendLine($"UID:{ev.SeriesKey}");
+                // An imported UID goes back out exactly as it came in; only Killendar's own
+                // appointments use the internal id.
+                string uid = ev.IsOverride && ev.SeriesId.HasValue && masters.TryGetValue(ev.SeriesId.Value, out var owner) &&
+                             owner.ExternalUid.Length > 0
+                    ? owner.ExternalUid
+                    : ev.ExternalUid.Length > 0 ? ev.ExternalUid : ev.SeriesKey.ToString();
+                sb.AppendLine(FoldLine("UID:" + uid));
                 sb.AppendLine($"DTSTAMP:{DateTime.UtcNow:yyyyMMdd'T'HHmmss'Z'}");
                 sb.AppendLine($"CREATED:{ev.Created.ToUniversalTime():yyyyMMdd'T'HHmmss'Z'}");
                 sb.AppendLine($"LAST-MODIFIED:{ev.Modified.ToUniversalTime():yyyyMMdd'T'HHmmss'Z'}");
