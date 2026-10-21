@@ -10,7 +10,7 @@
         <!-- The active month is painted as one stepped silhouette. Spillover dates have no
              cell fill at all: their numbers sit directly on the textured window background. -->
         <Path x:Name="MonthSilhouette" Grid.RowSpan="2"
-              Fill="{DynamicResource PaneBrush}" IsHitTestVisible="False"
+              Fill="{DynamicResource ContentPaneBrush}" IsHitTestVisible="False"
               SnapsToDevicePixels="True">
             <Path.Effect>
                 <DropShadowEffect Color="Black" BlurRadius="16" ShadowDepth="0"

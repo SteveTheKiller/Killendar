@@ -157,7 +157,7 @@ namespace Killendar.Shell
             }
             else
             {
-                ContentPane.SetResourceReference(Border.BackgroundProperty, "PaneBrush");
+                ContentPane.SetResourceReference(Border.BackgroundProperty, "ContentPaneBrush");
                 ContentPane.BorderThickness = new Thickness(1);
                 ContentPaneGrain.Visibility = Visibility.Visible;
             }

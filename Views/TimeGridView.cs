@@ -208,7 +208,8 @@ namespace Killendar.Views
             // Week/Day use Month's surface rule: labels live directly on the app background,
             // while the actual calendar body owns the pane fill and grain beneath them.
             _bodySurface = new Border { BorderThickness = new Thickness(0) };
-            _bodySurface.SetResourceReference(Border.BackgroundProperty, "PaneBrush");
+            // ContentPaneBrush (PaneBrush unless a theme states its own), like Month and Agenda.
+            _bodySurface.SetResourceReference(Border.BackgroundProperty, "ContentPaneBrush");
             Grid.SetRow(_bodySurface, 1);
             Grid.SetRowSpan(_bodySurface, 2);
             root.Children.Add(_bodySurface);
