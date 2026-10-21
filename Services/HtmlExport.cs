@@ -272,6 +272,16 @@ td.off .dn { color: var(--border); }
 .ev.cont { border-left-color: var(--dim); color: var(--muted); }
 .tm { font-family: Consolas, monospace; color: var(--muted); font-size: 10.5px; }
 footer { color: var(--dim); font-family: Consolas, monospace; font-size: 11px; margin-top: 10px; }
+@media screen {
+  th { background: color-mix(in srgb, var(--accent) 22%, var(--surface)); color: var(--text);
+       box-shadow: inset 0 -2px 0 var(--accent); }
+  th, td { border-color: color-mix(in srgb, var(--accent) 35%, var(--border)); }
+  .dn { color: var(--text); color: color-mix(in srgb, var(--accent) 30%, var(--text)); font-weight: 600; }
+  .ev { background: var(--surface); background: color-mix(in srgb, var(--accent) 16%, var(--surface)); }
+  .ev.allday { background: var(--surface); background: color-mix(in srgb, var(--accent) 24%, var(--surface));
+               color: var(--text); box-shadow: inset 0 0 0 1px var(--accent); }
+  .ev.cont, .tm { color: var(--text); }
+}
 @media print {
   body { background: #fff; color: #111; }
   .sw, .swrow { display: none; }
