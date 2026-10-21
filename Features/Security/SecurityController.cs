@@ -49,12 +49,13 @@ namespace Killendar.Features
         /// when the user cancels; with exitOnCancel the host window closes instead.</summary>
         internal bool Open(bool exitOnCancel)
         {
+            _lastOpenError = null;
             try
             {
                 _store.Prepare();   // creates the data folder, migrates a pre-database events.json
                 if (_store.LoadError != null)
                 {
-                    _host.SetStatus(string.Format(_host.Loc("Str_Status_LoadError"), _store.LoadError));
+                    ReportOpenError(_store.LoadError);
                     return false;
                 }
 
@@ -76,13 +77,23 @@ namespace Killendar.Features
             }
             catch (Exception ex)
             {
-                _host.SetStatus(string.Format(_host.Loc("Str_Status_LoadError"), ex.Message));
+                ReportOpenError(ex.Message);
                 return false;
             }
 
             RefreshLockState();
             RefreshActiveLabel();
             return true;
+        }
+
+        /// <summary>Why the last Open failed, as shown; null after a success or a canceled unlock,
+        /// which has nothing to report.</summary>
+        private string? _lastOpenError;
+
+        private void ReportOpenError(string message)
+        {
+            _lastOpenError = string.Format(_host.Loc("Str_Status_LoadError"), message);
+            _host.SetStatus(_lastOpenError);
         }
 
         private bool PromptUnlock(bool exitOnCancel)
@@ -161,21 +172,31 @@ namespace Killendar.Features
             var dlg = new KillendarsDialog { Owner = _host.Window };
             dlg.ShowDialog();
 
-            if (dlg.Selected != null &&
-                !string.Equals(dlg.Selected, EventStore.ActiveFile, StringComparison.OrdinalIgnoreCase))
+            ApplyKillendarSelection(dlg.Selected, previous, previousDir, previousPath);
+        }
+
+        /// <summary>Opens what Manage Killendars selected (or reopens the active file), falling
+        /// back to the previous Killendar when that fails or is canceled.</summary>
+        internal void ApplyKillendarSelection(string? selected, string previous, string previousDir, string previousPath)
+        {
+            if (selected != null &&
+                !string.Equals(selected, EventStore.ActiveFile, StringComparison.OrdinalIgnoreCase))
             {
-                EventStore.SetActive(dlg.Selected);
+                EventStore.SetActive(selected);
                 _password = null;
             }
 
-            if (!Open(exitOnCancel: false))
+            bool opened = Open(exitOnCancel: false);
+            string? failure = _lastOpenError;
+            if (!opened)
             {
-                // Unlocking the chosen Killendar was canceled - fall back to the previous one
-                // rather than leaving the app with nothing open.
+                // Opening the chosen Killendar failed or its unlock was canceled - fall back to
+                // the previous one rather than leaving the app with nothing open.
                 EventStore.SetDataDir(previousDir);
                 EventStore.SetActive(previous);
                 _password = null;
-                Open(exitOnCancel: false);
+                opened = Open(exitOnCancel: false);
+                failure ??= _lastOpenError;
             }
 
             // Only now, and only if we actually landed on a different Killendar - see the note at
@@ -185,8 +206,12 @@ namespace Killendar.Features
 
             _host.RefreshView();
             RefreshActiveLabel();
-            _host.SetStatus(TakePendingStatus()
-                            ?? string.Format(_host.Loc("Str_Status_Opened"), _store.DisplayName));
+            // "Opened" only describes a verified open with nothing worse to say. A failure stays
+            // on screen even when the fallback worked, so a broken file does not pass silently.
+            if (failure != null) _host.SetStatus(failure);
+            else if (opened)
+                _host.SetStatus(TakePendingStatus()
+                                ?? string.Format(_host.Loc("Str_Status_Opened"), _store.DisplayName));
         }
 
         /// <summary>Opens a .kcal in the data folder or copies an external one there first,
