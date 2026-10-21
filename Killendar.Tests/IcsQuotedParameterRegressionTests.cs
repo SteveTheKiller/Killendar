@@ -20,7 +20,8 @@ namespace Killendar.Tests
 
             var ev = Assert.Single(parsed.Events);
             Assert.Equal(expected, Assert.Single(ev.Attendees));
-            Assert.Contains("ATTENDEE;PARTSTAT=NEEDS-ACTION:mailto:" + expected, IcsService.BuildIcs(parsed.Events).Replace("\r\n ", ""));
+            Assert.Contains(attendee, IcsService.BuildIcs(parsed.Events).Replace("\r\n ", "")
+                .Split(new[] { "\r\n" }, StringSplitOptions.None));
         }
 
         [Fact]

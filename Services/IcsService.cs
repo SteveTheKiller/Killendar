@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -39,6 +40,11 @@ namespace Killendar.Services
         /// never imported as appointments; a canceled date of a series in the same file removes
         /// that date from the series instead.</summary>
         public int Canceled;
+
+        /// <summary>Appointments that arrived with details Killendar neither stores nor carries
+        /// through (attachments, a location's coordinates, nested components other than alarms).
+        /// Counted once per appointment so the import can say something was left out.</summary>
+        public int LostDetails;
     }
 
     /// <summary>
@@ -109,6 +115,7 @@ namespace Killendar.Services
             // A METHOD:CANCEL calendar cancels every event in it; STATUS:CANCELLED cancels one.
             bool calendarCanceled = false;
             bool canceled = false;
+            bool lostDetails = false;
             var canceledDates = new List<(Guid series, (DateTime dt, bool allDay, RecurrenceTimeBasis basis, DateTime? anchor, string zone) date)>();
 
             foreach (var raw in lines)
@@ -120,6 +127,15 @@ namespace Killendar.Services
                 {
                     string comp = value.Trim().ToUpperInvariant();
                     stack.Add(comp);
+
+                    // Inside an appointment: an alarm is carried through whole, anything else
+                    // nested is a detail Killendar cannot keep.
+                    if (current != null)
+                    {
+                        if (stack.Contains("VALARM")) current.KeptProperties.Add(raw);
+                        else lostDetails = true;
+                        continue;
+                    }
 
                     if (comp == "VEVENT" && current == null)
                     {
@@ -134,6 +150,7 @@ namespace Killendar.Services
                         recurrenceZone = "";
                         recurrenceIdValue = null;
                         canceled = false;
+                        lostDetails = false;
                         exclusions.Clear();
                     }
                     else if (current == null &&
@@ -147,6 +164,7 @@ namespace Killendar.Services
                 if (upper == "END")
                 {
                     string comp = value.Trim().ToUpperInvariant();
+                    if (current != null && stack.Contains("VALARM")) current.KeptProperties.Add(raw);
                     if (stack.Count > 0) stack.RemoveAt(stack.Count - 1);
 
                     if (comp == "VEVENT" && current != null)
@@ -252,6 +270,7 @@ namespace Killendar.Services
                             }
 
                             if (repeating) result.Repeating++;
+                            if (lostDetails) result.LostDetails++;
                             result.Events.Add(current);
                         }
                         current = null;
@@ -269,7 +288,13 @@ namespace Killendar.Services
                 // A property counts only when VEVENT is the component we are DIRECTLY inside.
                 // A VALARM nested in a VEVENT carries its own DESCRIPTION, DURATION and ATTENDEE:
                 // without this guard the reminder's text overwrote the appointment's description
-                // and the reminder's address was added to the appointment's attendee list.
+                // and the reminder's address was added to the appointment's attendee list. The
+                // alarm itself is kept verbatim instead.
+                if (stack.Contains("VALARM"))
+                {
+                    current.KeptProperties.Add(raw);
+                    continue;
+                }
                 if (stack.Count == 0 || stack[stack.Count - 1] != "VEVENT") continue;
 
                 switch (upper)
@@ -395,18 +420,29 @@ namespace Killendar.Services
 
                     case "ATTENDEE":
                     {
-                        // Value is "mailto:user@example.com" or raw email.
-                        // Also check CN= parameter for display name (ignored for now).
-                        string addr = value.Trim();
-                        if (addr.StartsWith("mailto:", StringComparison.OrdinalIgnoreCase))
-                            addr = addr.Substring(7);
-                        if (!string.IsNullOrWhiteSpace(addr) && addr.Contains("@"))
+                        // The address is what Killendar edits. The whole line, with the name and
+                        // the answer the attendee gave, is kept for export.
+                        string addr = AttendeeAddress(value);
+                        if (addr.Length > 0)
+                        {
                             current.Attendees.Add(addr);
+                            current.KeptProperties.Add(raw);
+                        }
                         break;
                     }
 
+                    // Organizer-owned details Killendar shows nothing of yet but must hand back.
                     case "ORGANIZER":
-                        // Could store organizer; for now skip
+                    case "TRANSP":
+                    case "CLASS":
+                    case "URL":
+                    case "SEQUENCE":
+                        current.KeptProperties.Add(raw);
+                        break;
+
+                    default:
+                        if (upper.StartsWith("X-", StringComparison.Ordinal)) current.KeptProperties.Add(raw);
+                        else lostDetails = true;
                         break;
                 }
             }
@@ -558,6 +594,15 @@ namespace Killendar.Services
                 DayOfWeek.Friday => "FR",
                 _ => "SA",
             };
+        }
+
+        /// <summary>The email address of an ATTENDEE value ("mailto:user@example.com" or a bare
+        /// address), or empty when it is not one.</summary>
+        private static string AttendeeAddress(string value)
+        {
+            string addr = value.Trim();
+            if (addr.StartsWith("mailto:", StringComparison.OrdinalIgnoreCase)) addr = addr.Substring(7);
+            return !string.IsNullOrWhiteSpace(addr) && addr.Contains("@") ? addr : "";
         }
 
         private static Guid IdFromUid(string uid)
@@ -963,8 +1008,17 @@ namespace Killendar.Services
                 if (!string.IsNullOrEmpty(ev.Description))
                     sb.AppendLine(FoldLine($"DESCRIPTION:{EscapeText(ev.Description)}"));
 
+                // An imported attendee goes back with the line it arrived on, answer included. Only
+                // someone added here is a fresh invitation.
+                var keptAttendees = ev.KeptProperties.Where(line => line.StartsWith("ATTENDEE", StringComparison.OrdinalIgnoreCase)).ToList();
                 foreach (var attendee in ev.Attendees)
-                    sb.AppendLine(FoldLine($"ATTENDEE;PARTSTAT=NEEDS-ACTION:mailto:{attendee}"));
+                {
+                    string? kept = keptAttendees.FirstOrDefault(line =>
+                        string.Equals(AttendeeAddress(SplitProperty(line).value), attendee, StringComparison.OrdinalIgnoreCase));
+                    sb.AppendLine(FoldLine(kept ?? $"ATTENDEE;PARTSTAT=NEEDS-ACTION:mailto:{attendee}"));
+                }
+                foreach (var line in ev.KeptProperties)
+                    if (!line.StartsWith("ATTENDEE", StringComparison.OrdinalIgnoreCase)) sb.AppendLine(FoldLine(line));
 
                 // CATEGORIES is a comma-separated LIST, so each name is escaped on its own and
                 // the separators are then written raw. Running EscapeText over the whole string

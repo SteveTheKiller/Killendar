@@ -151,6 +151,7 @@
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} тапсырма немесе жазба болды, оларды Killendar сақтамайды</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Болашақ қайталануларға әсер ететін қолдау көрсетілмейтін өзгерістер өткізіп жіберілді: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportCanceled">. Күші жойылған кездесулер қосылмады: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportLostDetails">. Killendar сақтамайтын мәліметтер қалдырылды: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Импорттау сәтсіз аяқталды: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} кездесу экспортталды</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Экспорттау сәтсіз аяқталды: {0}</sys:String>

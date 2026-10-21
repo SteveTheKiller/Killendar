@@ -124,6 +124,7 @@
     <sys:String x:Key="Str_Status_ImportUnsupported">. Opravila ali zapiski, ki jih Killendar ne shranjuje: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Preskočene nepodprte spremembe prihodnjih ponovitev: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportCanceled">. Preklicani sestanki niso bili dodani: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportLostDetails">. Izpuščene podrobnosti, ki jih Killendar ne shranjuje: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Uvoz ni uspel: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Izvoženi dogodki: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Izvoz ni uspel: {0}</sys:String>

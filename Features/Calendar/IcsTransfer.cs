@@ -84,6 +84,7 @@ namespace Killendar.Features
             Note(status, parsed.Unsupported - parsed.UnsupportedRanges, "Str_Status_ImportUnsupported");
             Note(status, parsed.UnsupportedRanges, "Str_Status_ImportUnsupportedRanges");
             Note(status, parsed.Canceled, "Str_Status_ImportCanceled");
+            Note(status, parsed.LostDetails, "Str_Status_ImportLostDetails");
 
             _host.SetStatus(status.ToString());
             return true;

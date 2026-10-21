@@ -151,6 +151,7 @@
     <sys:String x:Key="Str_Status_ImportUnsupported">. Завдань або нотаток, які Killendar не зберігає: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Пропущено непідтримувані зміни майбутніх повторень: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportCanceled">. Скасовані зустрічі не додано: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportLostDetails">. Пропущено відомості, які Killendar не зберігає: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Не вдалося імпортувати: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Експортовано зустрічей: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Не вдалося експортувати: {0}</sys:String>

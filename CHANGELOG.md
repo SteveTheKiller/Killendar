@@ -9,6 +9,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Fixed
 
 - Failed exports leave an existing calendar, CSV or HTML file untouched instead of truncating it.
+- Imported meetings keep their organizer, attendee answers, reminders, free/busy setting, privacy, meeting link and revision when exported, instead of resetting every attendee to "needs action". Details Killendar cannot keep are counted in the import message.
 - Canceled meetings in calendar files and email invites are no longer imported as ordinary appointments. The import message counts them, and a canceled date of a series removes that date.
 - An imported appointment that is moved and made to repeat in the same edit repeats from its new time, not the original one.
 - Exported appointments keep the UID they were imported with, so other calendars recognize them instead of adding duplicates.

@@ -72,6 +72,12 @@ namespace Killendar.Models
         /// appointment is a new appointment and must clear it.</summary>
         public string       ExternalUid { get; set; } = "";
 
+        /// <summary>Meeting details Killendar does not edit but must not lose: the raw, unfolded
+        /// ORGANIZER, ATTENDEE, TRANSP, CLASS, URL, SEQUENCE and X- lines and whole VALARM blocks,
+        /// in their original order. Export writes them back unchanged; an ATTENDEE line is written
+        /// only while that address is still in Attendees.</summary>
+        public List<string> KeptProperties { get; set; } = [];
+
         // ── Repeats ───────────────────────────────────────────────────────────────────────
 
         /// <summary>None for an ordinary appointment. Set on a series master.</summary>
@@ -166,6 +172,7 @@ namespace Killendar.Models
             Attendees   = [.. Attendees],
             Categories  = Categories,
             ExternalUid = ExternalUid,
+            KeptProperties = [.. KeptProperties],
             Created     = Created,
             Modified    = Modified,
 

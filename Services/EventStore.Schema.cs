@@ -49,7 +49,8 @@ CREATE TABLE IF NOT EXISTS events (
     occurrence_zone_id TEXT NOT NULL DEFAULT '',
     duration_days INTEGER NOT NULL DEFAULT 0,
     duration_time_ticks INTEGER NOT NULL DEFAULT 0,
-    external_uid TEXT NOT NULL DEFAULT ''
+    external_uid TEXT NOT NULL DEFAULT '',
+    kept_properties TEXT NOT NULL DEFAULT ''
 );
 CREATE INDEX IF NOT EXISTS events_range ON events (start_utc, end_utc);
 CREATE TABLE IF NOT EXISTS categories (
@@ -149,6 +150,7 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
             AddColumn("duration_days", "INTEGER NOT NULL DEFAULT 0");
             AddColumn("duration_time_ticks", "INTEGER NOT NULL DEFAULT 0");
             AddColumn("external_uid", "TEXT NOT NULL DEFAULT ''");
+            AddColumn("kept_properties", "TEXT NOT NULL DEFAULT ''");
         }
 
         private string? GetMeta(string key)
