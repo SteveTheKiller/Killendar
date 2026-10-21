@@ -317,8 +317,6 @@ namespace Killendar.Features
             => _view.SetAllDay(_view.Loc(_allDay ? "Str_Chk_AllDayOn" : "Str_Chk_AllDayOff"),
                                timesVisible: !_allDay);
 
-        /// <summary>After a date-format change: re-render the dates already typed so the panel does
-        /// not show a mix of the old pattern and the new one, and update the hint with them.</summary>
         /// <summary>The clock changed: show the time boxes in it. Like a date style change, this
         /// is not an edit, so a panel with nothing unsaved stays that way.</summary>
         internal void ChangeTimeStyle(TimeStyle style)
@@ -346,6 +344,8 @@ namespace Killendar.Features
             if (clean && _baseline != null) _baseline = Snapshot();
         }
 
+        /// <summary>After a date-format change: re-render the dates already typed so the panel does
+        /// not show a mix of the old pattern and the new one, and update the hint with them.</summary>
         internal void ChangeDateStyle(DateStyle style)
         {
             bool clean = !HasUnsavedChanges;
