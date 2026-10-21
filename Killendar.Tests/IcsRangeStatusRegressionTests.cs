@@ -64,6 +64,12 @@ namespace Killendar.Tests
             public string PeriodLabel { set { } }
             public string Loc(string key) => _strings.TryGetValue(key, out var value) ? value : key;
             public void SetStatus(string text) => Status = text;
+            public bool ConfirmImport(string heading, string detail) => true;
+            public bool WaitOrCancel(string message, System.Threading.Tasks.Task work)
+            {
+                try { work.Wait(); } catch (AggregateException) { }
+                return false;
+            }
             public void ShowView(object view) { }
             public void HighlightTab(string which) { }
             public void ShowFineMonthNavigation(bool visible) { }

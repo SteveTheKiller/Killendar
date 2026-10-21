@@ -153,6 +153,17 @@
     <sys:String x:Key="Str_Status_ImportCanceled">. Скасовані зустрічі не додано: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">. Пропущено відомості, які Killendar не зберігає: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportMalformed">. Пропущено через нечитану дату або час: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportStopped">Імпорт скасовано. Нічого не додано.</sys:String>
+    <sys:String x:Key="Str_Status_ImportTooLarge">Цей файл завеликий або надто складний для імпорту. Killendar імпортує за раз не більше {0} МБ і {1} зустрічей.</sys:String>
+    <sys:String x:Key="Str_Imp_Reading">Читання {0}</sys:String>
+    <sys:String x:Key="Str_Imp_Saving">Додавання зустрічей: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_ProgressHint">Поки імпорт не завершиться, нічого не буде додано.</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewHead">Імпортувати зустрічі ({0})?</sys:String>
+    <sys:String x:Key="Str_Imp_PvDuplicates">Уже є в цьому Killendar, буде пропущено: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCanceled">Скасовані зустрічі, не буде додано: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvLost">Містять відомості, які Killendar не зберігає: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvRepeat">Повторюються так, як Killendar не може показати, буде додано лише першу дату: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvSkipped">Нечитані або непідтримувані, буде пропущено: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Не вдалося імпортувати: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Експортовано зустрічей: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Не вдалося експортувати: {0}</sys:String>

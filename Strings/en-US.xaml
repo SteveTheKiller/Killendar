@@ -153,6 +153,17 @@
     <sys:String x:Key="Str_Status_ImportCanceled">. {0} were canceled meetings and were not added</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">. Some details Killendar does not store were left out of {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportMalformed">. {0} had a date or time that could not be read and were skipped</sys:String>
+    <sys:String x:Key="Str_Status_ImportStopped">Import canceled. Nothing was added.</sys:String>
+    <sys:String x:Key="Str_Status_ImportTooLarge">This file is too large or too complex to import. Killendar imports up to {0} MB and {1} appointments at once.</sys:String>
+    <sys:String x:Key="Str_Imp_Reading">Reading {0}</sys:String>
+    <sys:String x:Key="Str_Imp_Saving">Adding {0} appointments</sys:String>
+    <sys:String x:Key="Str_Imp_ProgressHint">Nothing is added until the import finishes.</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewHead">Import {0} appointments?</sys:String>
+    <sys:String x:Key="Str_Imp_PvDuplicates">Already in this Killendar, will be skipped: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCanceled">Canceled meetings, will not be added: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvLost">Have details Killendar does not store: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvRepeat">Repeat in a way Killendar cannot show, only the first date will be added: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvSkipped">Unreadable or unsupported, will be skipped: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import failed: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Exported {0} appointments</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export failed: {0}</sys:String>

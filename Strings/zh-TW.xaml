@@ -111,6 +111,17 @@
     <sys:String x:Key="Str_Status_ImportCanceled">。已略過 {0} 個已取消的會議</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">。{0} 個約會中有 Killendar 不儲存的詳細資料，已略去</sys:String>
     <sys:String x:Key="Str_Status_ImportMalformed">。{0} 個的日期或時間無法讀取，已略過</sys:String>
+    <sys:String x:Key="Str_Status_ImportStopped">已取消匯入。未新增任何內容。</sys:String>
+    <sys:String x:Key="Str_Status_ImportTooLarge">此檔案太大或太複雜，無法匯入。Killendar 一次最多匯入 {0} MB 和 {1} 個約會。</sys:String>
+    <sys:String x:Key="Str_Imp_Reading">正在讀取 {0}</sys:String>
+    <sys:String x:Key="Str_Imp_Saving">正在新增 {0} 個約會</sys:String>
+    <sys:String x:Key="Str_Imp_ProgressHint">匯入完成前不會新增任何內容。</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewHead">要匯入 {0} 個約會嗎？</sys:String>
+    <sys:String x:Key="Str_Imp_PvDuplicates">已在此 Killendar 中，將略過：{0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCanceled">已取消的會議，不會新增：{0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvLost">包含 Killendar 不儲存的詳細資料：{0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvRepeat">重複方式 Killendar 無法顯示，只新增第一個日期：{0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvSkipped">無法讀取或不支援，將略過：{0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">匯入失敗：{0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">已匯出 {0} 個約會</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">匯出失敗：{0}</sys:String>

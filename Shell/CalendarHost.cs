@@ -99,6 +99,35 @@ namespace Killendar.Shell
 
         void ICalendarHost.StepDensity(int direction) => DensityStepped(direction);   // Density.cs
 
+        bool ICalendarHost.ConfirmImport(string heading, string detail)
+        {
+            var dlg = new Controls.ConfirmDialog(heading, detail, Loc("Str_Btn_Import"), Loc("Str_Btn_Cancel")) { Owner = this };
+            dlg.ShowDialog();
+            return dlg.Confirmed;
+        }
+
+        /// <summary>
+        /// Half a second of plain waiting first: most imports end inside it and never flash a card.
+        /// Past that, the themed notice card with a single Cancel button stands in for a progress
+        /// dialog; it runs its own message loop, so the window keeps painting, and it closes itself
+        /// when the work ends. Dismissing the card any other way while the work is still running
+        /// also counts as Cancel, so the window is never left blocked behind a closed card.
+        /// </summary>
+        bool ICalendarHost.WaitOrCancel(string message, System.Threading.Tasks.Task work)
+        {
+            try { if (work.Wait(500)) return false; }
+            catch (System.AggregateException) { return false; }
+
+            var card = new Controls.ConfirmDialog(message, Loc("Str_Imp_ProgressHint"), Loc("Str_Btn_Cancel"), "") { Owner = this };
+            work.ContinueWith(_ => card.Dispatcher.BeginInvoke(new System.Action(() =>
+            {
+                if (card.IsVisible) card.Close();
+                else card.Loaded += (_, _) => card.Close();
+            }), System.Windows.Threading.DispatcherPriority.Background), System.Threading.Tasks.TaskScheduler.Default);
+            card.ShowDialog();
+            return card.Confirmed || !work.IsCompleted;
+        }
+
         /// <summary>
         /// Calendar view selection follows the family colors, with a brown tile in Sepulchre.
         /// </summary>

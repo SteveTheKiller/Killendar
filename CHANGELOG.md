@@ -9,6 +9,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Fixed
 
 - Failed exports leave an existing calendar, CSV or HTML file untouched instead of truncating it.
+- Large imports no longer freeze the window. Reading and saving run in the background with a Cancel card for anything slower than half a second, and a canceled import adds nothing.
+- Imports that would skip, lose or duplicate something show what and ask before adding anything. Files over 50 MB or 100,000 appointments, and emails nested more than 10 levels deep, are refused with a clear message.
 - CSV rows with an unreadable time or end date, or an end before the start, are skipped and counted instead of being imported at a guessed time.
 - Imported meetings keep their organizer, attendee answers, reminders, free/busy setting, privacy, meeting link and revision when exported, instead of resetting every attendee to "needs action". Details Killendar cannot keep are counted in the import message.
 - Canceled meetings in calendar files and email invites are no longer imported as ordinary appointments. The import message counts them, and a canceled date of a series removes that date.

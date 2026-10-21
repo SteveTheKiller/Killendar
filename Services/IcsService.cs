@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Killendar.Models;
 using TimeZoneConverter;
 
@@ -55,16 +56,21 @@ namespace Killendar.Services
     {
         // ── Import ────────────────────────────────────────────────────────────
 
-        public static IcsParseResult ParseFile(string path)
+        public static IcsParseResult ParseFile(string path) => ParseFile(path, CancellationToken.None);
+
+        /// <summary>Refuses a file over ImportLimits before reading it.</summary>
+        public static IcsParseResult ParseFile(string path, CancellationToken cancel)
         {
-            var lines = UnfoldLines(File.ReadAllText(path, Encoding.UTF8));
-            return ParseLines(lines);
+            ImportLimits.CheckFile(path);
+            return ParseText(File.ReadAllText(path, Encoding.UTF8), cancel);
         }
 
-        public static IcsParseResult ParseText(string icsText)
+        public static IcsParseResult ParseText(string icsText) => ParseText(icsText, CancellationToken.None);
+
+        public static IcsParseResult ParseText(string icsText, CancellationToken cancel)
         {
             var lines = UnfoldLines(icsText);
-            return ParseLines(lines);
+            return ParseLines(lines, cancel);
         }
 
         private static List<string> UnfoldLines(string raw)
@@ -91,7 +97,7 @@ namespace Killendar.Services
             return result;
         }
 
-        private static IcsParseResult ParseLines(List<string> lines)
+        private static IcsParseResult ParseLines(List<string> lines, CancellationToken cancel)
         {
             var result = new IcsParseResult();
 
@@ -118,8 +124,10 @@ namespace Killendar.Services
             bool lostDetails = false;
             var canceledDates = new List<(Guid series, (DateTime dt, bool allDay, RecurrenceTimeBasis basis, DateTime? anchor, string zone) date)>();
 
+            int read = 0;
             foreach (var raw in lines)
             {
+                if ((read++ & 1023) == 0) cancel.ThrowIfCancellationRequested();
                 var (name, param, value) = SplitProperty(raw);
                 string upper = name.ToUpperInvariant();
 
@@ -272,6 +280,7 @@ namespace Killendar.Services
                             if (repeating) result.Repeating++;
                             if (lostDetails) result.LostDetails++;
                             result.Events.Add(current);
+                            ImportLimits.CheckCount(result.Events.Count);
                         }
                         current = null;
                     }

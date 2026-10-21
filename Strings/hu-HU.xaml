@@ -153,6 +153,17 @@
     <sys:String x:Key="Str_Status_ImportCanceled">. Lemondott értekezletek, nem lettek hozzáadva: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">. A Killendar által nem tárolt részletek kimaradtak: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportMalformed">. Olvashatatlan dátum vagy idő miatt kihagyva: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportStopped">Az importálás megszakítva. Semmi sem került hozzáadásra.</sys:String>
+    <sys:String x:Key="Str_Status_ImportTooLarge">Ez a fájl túl nagy vagy túl összetett az importáláshoz. A Killendar egyszerre legfeljebb {0} MB-ot és {1} találkozót importál.</sys:String>
+    <sys:String x:Key="Str_Imp_Reading">{0} beolvasása</sys:String>
+    <sys:String x:Key="Str_Imp_Saving">{0} találkozó hozzáadása</sys:String>
+    <sys:String x:Key="Str_Imp_ProgressHint">Az importálás befejezéséig semmi sem kerül hozzáadásra.</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewHead">Importál {0} találkozót?</sys:String>
+    <sys:String x:Key="Str_Imp_PvDuplicates">Már szerepelnek ebben a Killendarban, kimaradnak: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCanceled">Lemondott értekezletek, nem kerülnek hozzáadásra: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvLost">A Killendar által nem tárolt részleteket tartalmaznak: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvRepeat">A Killendar által nem megjeleníthető módon ismétlődnek, csak az első dátum kerül hozzáadásra: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvSkipped">Olvashatatlan vagy nem támogatott, kimaradnak: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Sikertelen importálás: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} találkozó exportálva</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Az exportálás sikertelen: {0}</sys:String>

@@ -111,6 +111,17 @@
     <sys:String x:Key="Str_Status_ImportCanceled">。キャンセルされた会議 {0} 件は追加しませんでした</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">。Killendar が保存しない詳細を {0} 件の予定から除外しました</sys:String>
     <sys:String x:Key="Str_Status_ImportMalformed">。日付または時刻を読み取れなかった {0} 件をスキップしました</sys:String>
+    <sys:String x:Key="Str_Status_ImportStopped">読み込みをキャンセルしました。何も追加されていません。</sys:String>
+    <sys:String x:Key="Str_Status_ImportTooLarge">このファイルは大きすぎるか複雑すぎるため読み込めません。Killendar が一度に読み込めるのは最大 {0} MB、{1} 件の予定です。</sys:String>
+    <sys:String x:Key="Str_Imp_Reading">{0} を読み込んでいます</sys:String>
+    <sys:String x:Key="Str_Imp_Saving">{0} 件の予定を追加しています</sys:String>
+    <sys:String x:Key="Str_Imp_ProgressHint">読み込みが終わるまで何も追加されません。</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewHead">{0} 件の予定を読み込みますか?</sys:String>
+    <sys:String x:Key="Str_Imp_PvDuplicates">この Killendar に既にあるためスキップ: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCanceled">キャンセルされた会議のため追加しない: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvLost">Killendar が保存しない詳細を含む: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvRepeat">Killendar で表示できない繰り返しのため最初の日付だけ追加: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvSkipped">読み取れないか未対応のためスキップ: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">読み込みに失敗しました: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} 件の予定を書き出しました</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">書き出しに失敗しました: {0}</sys:String>

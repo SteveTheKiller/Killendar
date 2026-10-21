@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using Killendar.Models;
 
 namespace Killendar.Services
@@ -130,10 +131,15 @@ namespace Killendar.Services
 
         // ── Import ────────────────────────────────────────────────────────────
 
-        public static int ImportEvents(EventStore store, IEnumerable<CalendarEvent> events)
+        public static int ImportEvents(EventStore store, IEnumerable<CalendarEvent> events) =>
+            store.ImportEvents(Importable(store, events));
+
+        /// <summary>The rows that are not already present under the fingerprint older Killendars
+        /// used for CSV rows.</summary>
+        public static List<CalendarEvent> Importable(EventStore store, IEnumerable<CalendarEvent> events)
         {
             var existing = store.Events.ToDictionary(e => e.Id);
-            return store.ImportEvents(events.Where(row =>
+            return [.. events.Where(row =>
             {
                 if (!existing.TryGetValue(LegacyStableId(row.Title, row.Start, row.End, row.Location), out var old))
                     return true;
@@ -141,17 +147,23 @@ namespace Killendar.Services
                 // their identities or hiding another row that differs in a stored CSV field.
                 return old.Repeat != RepeatFreq.None || old.SeriesId.HasValue || old.Attendees.Count != 0 ||
                        StableId(old) != row.Id;
-            }));
+            })];
         }
 
-        public static CsvParseResult ParseFile(string path)
+        public static CsvParseResult ParseFile(string path) => ParseFile(path, CancellationToken.None);
+
+        /// <summary>Refuses a file over ImportLimits before reading it.</summary>
+        public static CsvParseResult ParseFile(string path, CancellationToken cancel)
         {
+            ImportLimits.CheckFile(path);
             // ReadAllText detects and strips a BOM on its own, so Excel-written UTF-8 and
             // Killendar's own export both arrive clean.
-            return ParseText(File.ReadAllText(path));
+            return ParseText(File.ReadAllText(path), cancel);
         }
 
-        public static CsvParseResult ParseText(string text)
+        public static CsvParseResult ParseText(string text) => ParseText(text, CancellationToken.None);
+
+        public static CsvParseResult ParseText(string text, CancellationToken cancel)
         {
             var result  = new CsvParseResult();
             var records = ParseRecords(text);
@@ -172,8 +184,10 @@ namespace Killendar.Services
                 return result;
             }
 
+            ImportLimits.CheckCount(records.Count - 1);
             for (int r = 1; r < records.Count; r++)
             {
+                if ((r & 1023) == 0) cancel.ThrowIfCancellationRequested();
                 var row = records[r];
 
                 // A trailing newline yields one empty record; blank lines likewise. Not data.

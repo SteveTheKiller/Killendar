@@ -12,6 +12,8 @@ namespace Killendar.Services
 
         public static string Create(EventStore store, string request)
         {
+            // An import writing on a worker thread owns the database until it finishes.
+            if (store.IsImporting) return Error("Killendar is busy importing a calendar. Try again when it finishes.");
             try
             {
                 using var document = JsonDocument.Parse(request);

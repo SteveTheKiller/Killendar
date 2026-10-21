@@ -153,6 +153,17 @@
     <sys:String x:Key="Str_Status_ImportCanceled">. Reuniões canceladas não foram adicionadas: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">. Detalhes que o Killendar não armazena foram omitidos: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportMalformed">. Ignorados por data ou hora ilegível: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportStopped">Importação cancelada. Nada foi adicionado.</sys:String>
+    <sys:String x:Key="Str_Status_ImportTooLarge">Este arquivo é grande ou complexo demais para importar. O Killendar importa até {0} MB e {1} compromissos por vez.</sys:String>
+    <sys:String x:Key="Str_Imp_Reading">Lendo {0}</sys:String>
+    <sys:String x:Key="Str_Imp_Saving">Adicionando {0} compromissos</sys:String>
+    <sys:String x:Key="Str_Imp_ProgressHint">Nada é adicionado até a importação terminar.</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewHead">Importar {0} compromissos?</sys:String>
+    <sys:String x:Key="Str_Imp_PvDuplicates">Já estão neste Killendar, serão ignorados: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCanceled">Reuniões canceladas, não serão adicionadas: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvLost">Têm detalhes que o Killendar não armazena: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvRepeat">Repetem-se de um jeito que o Killendar não consegue mostrar, só a primeira data será adicionada: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvSkipped">Ilegíveis ou não compatíveis, serão ignorados: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Falha na importação: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} compromissos exportados</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Falha na exportação: {0}</sys:String>

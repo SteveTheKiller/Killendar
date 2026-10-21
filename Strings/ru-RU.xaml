@@ -154,6 +154,17 @@
     <sys:String x:Key="Str_Status_ImportCanceled">. Отменённые встречи не добавлены: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">. Пропущены сведения, которые Killendar не хранит: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportMalformed">. Пропущено из-за нечитаемой даты или времени: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportStopped">Импорт отменён. Ничего не добавлено.</sys:String>
+    <sys:String x:Key="Str_Status_ImportTooLarge">Этот файл слишком большой или сложный для импорта. Killendar импортирует за раз не более {0} МБ и {1} встреч.</sys:String>
+    <sys:String x:Key="Str_Imp_Reading">Чтение {0}</sys:String>
+    <sys:String x:Key="Str_Imp_Saving">Добавление встреч: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_ProgressHint">Пока импорт не завершится, ничего не будет добавлено.</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewHead">Импортировать встречи ({0})?</sys:String>
+    <sys:String x:Key="Str_Imp_PvDuplicates">Уже есть в этом Killendar, будут пропущены: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCanceled">Отменённые встречи, не будут добавлены: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvLost">Содержат сведения, которые Killendar не хранит: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvRepeat">Повторяются так, как Killendar не может показать, будет добавлена только первая дата: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvSkipped">Нечитаемые или неподдерживаемые, будут пропущены: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Импорт не удался: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Экспортировано встреч: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Экспорт не удался: {0}</sys:String>

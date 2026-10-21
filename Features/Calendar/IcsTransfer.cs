@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -48,16 +50,57 @@ namespace Killendar.Features
             Import(dlg.FileName);
         }
 
+        /// <summary>
+        /// Reads, plans and writes an import. Reading and writing run on a worker thread while the
+        /// host waits, so a large file never freezes the window and can be canceled; nothing is
+        /// written until the whole file has been read and, when something in it would be skipped
+        /// or lost, the user has agreed. A canceled or failed import changes nothing.
+        /// </summary>
         internal void Import(string path)
         {
             try
             {
-                _ = Path.GetExtension(path).ToLowerInvariant() switch
+                using var cancel = new CancellationTokenSource();
+                string extension = Path.GetExtension(path).ToLowerInvariant();
+
+                var reading = Task.Run(() => Read(path, extension, cancel.Token), cancel.Token);
+                if (_host.WaitOrCancel(string.Format(_host.Loc("Str_Imp_Reading"), Path.GetFileName(path)), reading))
+                    cancel.Cancel();
+                ImportSource source;
+                try { source = reading.GetAwaiter().GetResult(); }
+                catch (OperationCanceledException) { Stopped(); return; }
+
+                if (source.Refusal != null)
                 {
-                    ".csv" => ImportCsv(path),
-                    ".eml" => ImportEml(path),
-                    _ => ImportIcs(IcsService.ParseFile(path)),
-                };
+                    _host.SetStatus(_host.Loc(source.Refusal));
+                    return;
+                }
+
+                var plan = _store.PlanImport(source.Events);
+                plan.AlreadyPresent += source.AlreadyPresent;
+                if (plan.Fresh.Count > 0 && source.Losses(plan) &&
+                    !_host.ConfirmImport(string.Format(_host.Loc("Str_Imp_PreviewHead"), plan.Fresh.Count), Preview(source, plan)))
+                {
+                    Stopped();
+                    return;
+                }
+
+                if (plan.Fresh.Count > 0)
+                {
+                    var writing = Task.Run(() => _store.WriteImport(plan, cancel.Token), cancel.Token);
+                    if (_host.WaitOrCancel(string.Format(_host.Loc("Str_Imp_Saving"), plan.Fresh.Count), writing))
+                        cancel.Cancel();
+                    try { writing.GetAwaiter().GetResult(); }
+                    catch (OperationCanceledException) { Stopped(); return; }
+                    _store.PublishImport(plan);
+                }
+
+                _host.SetStatus(Summary(source, plan));
+            }
+            catch (ImportLimitException)
+            {
+                _host.SetStatus(string.Format(_host.Loc("Str_Status_ImportTooLarge"),
+                    ImportLimits.MaxBytes / (1024 * 1024), ImportLimits.MaxEvents));
             }
             catch (Exception ex)
             {
@@ -65,67 +108,97 @@ namespace Killendar.Features
             }
         }
 
-        private bool ImportIcs(IcsParseResult parsed)
-        {
-            int added   = _store.ImportEvents(parsed.Events);
-            if (_store.LoadError != null) throw new InvalidOperationException(_store.LoadError);
-            int skipped = parsed.Events.Count - added;
+        private void Stopped() => _host.SetStatus(_host.Loc("Str_Status_ImportStopped"));
 
-            var status = new StringBuilder(skipped > 0
-                ? string.Format(_host.Loc("Str_Status_ImportedSkipped"), added, skipped)
+        /// <summary>What a file yielded, whichever format it was. Runs on a worker thread, so it
+        /// reads the store only for the CSV fingerprint check, which looks at the mirror.</summary>
+        private ImportSource Read(string path, string extension, CancellationToken cancel)
+        {
+            switch (extension)
+            {
+                case ".csv":
+                {
+                    var parsed = CsvService.ParseFile(path, cancel);
+                    // Not the Outlook column set: refused whole, with the expected columns named.
+                    // Guessing at arbitrary columns means guessing what "Date" means and getting
+                    // it wrong, which corrupts quietly - worse than a clear no.
+                    if (!parsed.HeaderValid) return new ImportSource { Refusal = "Str_Status_CsvBadHeader" };
+                    var importable = CsvService.Importable(_store, parsed.Events);
+                    return new ImportSource
+                    {
+                        Events = importable,
+                        AlreadyPresent = parsed.Events.Count - importable.Count,
+                        Unreadable = parsed.Unreadable,
+                        Malformed = parsed.Malformed,
+                    };
+                }
+                case ".eml":
+                {
+                    string? ics = EmlService.ExtractCalendarText(path);
+                    if (ics == null) return new ImportSource { Refusal = "Str_Status_NoInvite" };
+                    return ImportSource.From(IcsService.ParseText(ics, cancel));
+                }
+                default:
+                    return ImportSource.From(IcsService.ParseFile(path, cancel));
+            }
+        }
+
+        private string Preview(ImportSource source, ImportPlan plan)
+        {
+            var lines = new List<string>();
+            void Line(int count, string key)
+            {
+                if (count > 0) lines.Add(string.Format(_host.Loc(key), count));
+            }
+            Line(plan.AlreadyPresent, "Str_Imp_PvDuplicates");
+            Line(source.Canceled, "Str_Imp_PvCanceled");
+            Line(source.LostDetails, "Str_Imp_PvLost");
+            Line(source.Repeating, "Str_Imp_PvRepeat");
+            Line(source.Unreadable + source.Malformed + source.Unsupported, "Str_Imp_PvSkipped");
+            return string.Join("\n", lines);
+        }
+
+        private string Summary(ImportSource source, ImportPlan plan)
+        {
+            int added = plan.Fresh.Count;
+            var status = new StringBuilder(plan.AlreadyPresent > 0
+                ? string.Format(_host.Loc("Str_Status_ImportedSkipped"), added, plan.AlreadyPresent)
                 : string.Format(_host.Loc("Str_Status_Imported"), added));
 
             // Everything the file contained that Killendar could not keep is SAID, not
             // swallowed. A repeat rule too exotic to draw in particular imports as a single
             // date, and the user has no way of discovering that except by missing the second
             // occurrence.
-            Note(status, parsed.Repeating,   "Str_Status_ImportRepeat");
-            Note(status, parsed.Unreadable,  "Str_Status_ImportUnreadable");
-            Note(status, parsed.Unsupported - parsed.UnsupportedRanges, "Str_Status_ImportUnsupported");
-            Note(status, parsed.UnsupportedRanges, "Str_Status_ImportUnsupportedRanges");
-            Note(status, parsed.Canceled, "Str_Status_ImportCanceled");
-            Note(status, parsed.LostDetails, "Str_Status_ImportLostDetails");
-
-            _host.SetStatus(status.ToString());
-            return true;
+            Note(status, source.Repeating,   "Str_Status_ImportRepeat");
+            Note(status, source.Unreadable,  "Str_Status_ImportUnreadable");
+            Note(status, source.Malformed,   "Str_Status_ImportMalformed");
+            Note(status, source.Unsupported - source.UnsupportedRanges, "Str_Status_ImportUnsupported");
+            Note(status, source.UnsupportedRanges, "Str_Status_ImportUnsupportedRanges");
+            Note(status, source.Canceled, "Str_Status_ImportCanceled");
+            Note(status, source.LostDetails, "Str_Status_ImportLostDetails");
+            return status.ToString();
         }
 
-        private bool ImportCsv(string path)
+        private sealed class ImportSource
         {
-            var parsed = CsvService.ParseFile(path);
+            internal List<CalendarEvent> Events = [];
+            internal string? Refusal;
+            internal int AlreadyPresent, Repeating, Unreadable, Malformed, Unsupported, UnsupportedRanges, Canceled, LostDetails;
 
-            // Not the Outlook column set: refused whole, with the expected columns named.
-            // Guessing at arbitrary columns means guessing what "Date" means and getting it
-            // wrong, which corrupts quietly - worse than a clear no.
-            if (!parsed.HeaderValid)
+            internal static ImportSource From(IcsParseResult parsed) => new()
             {
-                _host.SetStatus(_host.Loc("Str_Status_CsvBadHeader"));
-                return false;
-            }
+                Events = parsed.Events,
+                Repeating = parsed.Repeating,
+                Unreadable = parsed.Unreadable,
+                Unsupported = parsed.Unsupported,
+                UnsupportedRanges = parsed.UnsupportedRanges,
+                Canceled = parsed.Canceled,
+                LostDetails = parsed.LostDetails,
+            };
 
-            int added   = CsvService.ImportEvents(_store, parsed.Events);
-            if (_store.LoadError != null) throw new InvalidOperationException(_store.LoadError);
-            int skipped = parsed.Events.Count - added;
-
-            var status = new StringBuilder(skipped > 0
-                ? string.Format(_host.Loc("Str_Status_ImportedSkipped"), added, skipped)
-                : string.Format(_host.Loc("Str_Status_Imported"), added));
-            Note(status, parsed.Unreadable, "Str_Status_ImportUnreadable");
-            Note(status, parsed.Malformed, "Str_Status_ImportMalformed");
-
-            _host.SetStatus(status.ToString());
-            return true;
-        }
-
-        private bool ImportEml(string path)
-        {
-            string? ics = EmlService.ExtractCalendarText(path);
-            if (ics == null)
-            {
-                _host.SetStatus(_host.Loc("Str_Status_NoInvite"));
-                return false;
-            }
-            return ImportIcs(IcsService.ParseText(ics));
+            /// <summary>Anything the user would not get back by importing this file.</summary>
+            internal bool Losses(ImportPlan plan) => plan.AlreadyPresent + Repeating + Unreadable + Malformed +
+                                                     Unsupported + Canceled + LostDetails > 0;
         }
 
         // ── Export: scope flyout, then the picker, then the format the extension names ──

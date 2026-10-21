@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
 using Microsoft.Data.Sqlite;
 using Killendar.Models;
 
 namespace Killendar.Services
 {
+    /// <summary>The new appointments of an import, and how many were already present.</summary>
+    public sealed class ImportPlan
+    {
+        public List<CalendarEvent> Fresh { get; } = [];
+        public int AlreadyPresent { get; internal set; }
+    }
+
     public partial class EventStore
     {
         // ============================================================
@@ -154,26 +162,74 @@ namespace Killendar.Services
 
         /// <summary>Import events, skipping any whose Id is already present. Returns how many were
         /// added. One transaction, because a 2000-event .ics one INSERT at a time is slow enough
-        /// to be visible.</summary>
+        /// to be visible. The interactive import uses the three steps below separately so the
+        /// write can run away from the window.</summary>
         public int ImportEvents(IEnumerable<CalendarEvent> incoming)
         {
-            var fresh = new List<CalendarEvent>();
+            var plan = PlanImport(incoming);
+            if (plan.Fresh.Count == 0) return 0;
+
+            _events.AddRange(plan.Fresh);
+            bool saved = Commit(() => WriteRows(plan.Fresh, CancellationToken.None, null));
+            return saved ? plan.Fresh.Count : 0;
+        }
+
+        /// <summary>Which incoming appointments are new. Reads only the in-memory mirror.</summary>
+        public ImportPlan PlanImport(IEnumerable<CalendarEvent> incoming)
+        {
+            var plan = new ImportPlan();
             var have = new HashSet<Guid>(_events.Select(e => e.Id));
             foreach (var ev in incoming)
             {
-                if (!have.Add(ev.Id)) continue;
-                fresh.Add(ev);
+                if (have.Add(ev.Id)) plan.Fresh.Add(ev);
+                else plan.AlreadyPresent++;
             }
-            if (fresh.Count == 0) return 0;
+            return plan;
+        }
 
-            _events.AddRange(fresh);
-            bool saved = Commit(() =>
+        /// <summary>True while WriteImport runs. Anything else that would use the database on
+        /// another thread - the command pipe - must refuse rather than share the connection.</summary>
+        public bool IsImporting => _importing;
+        private volatile bool _importing;
+        private readonly object _writeGate = new();
+
+        /// <summary>
+        /// Writes a planned import in one transaction WITHOUT touching the in-memory mirror or
+        /// raising Changed, so it may run on a worker thread while the window waits. Cancellation is
+        /// checked between rows and once more before the commit: a canceled import rolls back and
+        /// writes nothing. Follow with PublishImport on the window's thread.
+        /// </summary>
+        public void WriteImport(ImportPlan plan, CancellationToken cancel, Action? afterRow = null)
+        {
+            if (_db == null) throw new InvalidOperationException("No Killendar is open.");
+            lock (_writeGate)
             {
-                using var tx = _db!.BeginTransaction();
-                foreach (var ev in fresh) Upsert(ev);
-                tx.Commit();
-            });
-            return saved ? fresh.Count : 0;
+                _importing = true;
+                try { WriteRows(plan.Fresh, cancel, afterRow); }
+                finally { _importing = false; }
+            }
+        }
+
+        private void WriteRows(List<CalendarEvent> rows, CancellationToken cancel, Action? afterRow)
+        {
+            using var tx = _db!.BeginTransaction();
+            foreach (var ev in rows)
+            {
+                cancel.ThrowIfCancellationRequested();
+                Upsert(ev);
+                afterRow?.Invoke();
+            }
+            cancel.ThrowIfCancellationRequested();
+            tx.Commit();
+        }
+
+        /// <summary>Shows a written import: adds it to the mirror and repaints once.</summary>
+        public int PublishImport(ImportPlan plan)
+        {
+            _events.AddRange(plan.Fresh);
+            LoadError = null;
+            Changed?.Invoke();
+            return plan.Fresh.Count;
         }
     }
 }

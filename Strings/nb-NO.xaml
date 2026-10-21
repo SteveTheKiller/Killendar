@@ -153,6 +153,17 @@
     <sys:String x:Key="Str_Status_ImportCanceled">. Avlyste møter ble ikke lagt til: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">. Detaljer som Killendar ikke lagrer, ble utelatt: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportMalformed">. Hoppet over på grunn av uleselig dato eller klokkeslett: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportStopped">Importen ble avbrutt. Ingenting ble lagt til.</sys:String>
+    <sys:String x:Key="Str_Status_ImportTooLarge">Denne filen er for stor eller kompleks til å importeres. Killendar importerer opptil {0} MB og {1} avtaler om gangen.</sys:String>
+    <sys:String x:Key="Str_Imp_Reading">Leser {0}</sys:String>
+    <sys:String x:Key="Str_Imp_Saving">Legger til {0} avtaler</sys:String>
+    <sys:String x:Key="Str_Imp_ProgressHint">Ingenting legges til før importen er ferdig.</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewHead">Importere {0} avtaler?</sys:String>
+    <sys:String x:Key="Str_Imp_PvDuplicates">Finnes allerede i denne Killendar-filen, hoppes over: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCanceled">Avlyste møter, legges ikke til: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvLost">Har detaljer som Killendar ikke lagrer: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvRepeat">Gjentas på en måte Killendar ikke kan vise, bare første dato legges til: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvSkipped">Uleselige eller ikke støttet, hoppes over: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Importen mislyktes: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Eksporterte {0} avtaler</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Eksporten mislyktes: {0}</sys:String>

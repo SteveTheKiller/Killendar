@@ -111,6 +111,17 @@
     <sys:String x:Key="Str_Status_ImportCanceled">. Zrušené schůzky nebyly přidány: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">. Podrobnosti, které Killendar neukládá, byly vynechány: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportMalformed">. Přeskočeno kvůli nečitelnému datu nebo času: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportStopped">Import zrušen. Nic nebylo přidáno.</sys:String>
+    <sys:String x:Key="Str_Status_ImportTooLarge">Tento soubor je příliš velký nebo složitý pro import. Killendar najednou importuje nejvýše {0} MB a {1} schůzek.</sys:String>
+    <sys:String x:Key="Str_Imp_Reading">Načítání souboru {0}</sys:String>
+    <sys:String x:Key="Str_Imp_Saving">Přidávání schůzek: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_ProgressHint">Dokud import neskončí, nic se nepřidá.</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewHead">Importovat schůzky ({0})?</sys:String>
+    <sys:String x:Key="Str_Imp_PvDuplicates">Již jsou v tomto Killendaru, budou přeskočeny: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCanceled">Zrušené schůzky, nebudou přidány: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvLost">Obsahují podrobnosti, které Killendar neukládá: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvRepeat">Opakují se způsobem, který Killendar neumí zobrazit, přidá se jen první datum: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvSkipped">Nečitelné nebo nepodporované, budou přeskočeny: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import selhal: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Exportováno {0} schůzek</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export selhal: {0}</sys:String>

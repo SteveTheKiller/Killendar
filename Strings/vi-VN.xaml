@@ -142,6 +142,17 @@
   <sys:String x:Key="Str_Status_ImportCanceled">. Không thêm các cuộc họp đã bị hủy: {0}</sys:String>
   <sys:String x:Key="Str_Status_ImportLostDetails">. Đã bỏ qua các chi tiết Killendar không lưu: {0}</sys:String>
   <sys:String x:Key="Str_Status_ImportMalformed">. Đã bỏ qua do ngày hoặc giờ không đọc được: {0}</sys:String>
+  <sys:String x:Key="Str_Status_ImportStopped">Đã hủy nhập. Không có gì được thêm.</sys:String>
+  <sys:String x:Key="Str_Status_ImportTooLarge">Tệp này quá lớn hoặc quá phức tạp để nhập. Killendar nhập tối đa {0} MB và {1} cuộc hẹn mỗi lần.</sys:String>
+  <sys:String x:Key="Str_Imp_Reading">Đang đọc {0}</sys:String>
+  <sys:String x:Key="Str_Imp_Saving">Đang thêm {0} cuộc hẹn</sys:String>
+  <sys:String x:Key="Str_Imp_ProgressHint">Sẽ không thêm gì cho đến khi nhập xong.</sys:String>
+  <sys:String x:Key="Str_Imp_PreviewHead">Nhập {0} cuộc hẹn?</sys:String>
+  <sys:String x:Key="Str_Imp_PvDuplicates">Đã có trong Killendar này, sẽ bỏ qua: {0}</sys:String>
+  <sys:String x:Key="Str_Imp_PvCanceled">Cuộc họp đã hủy, sẽ không thêm: {0}</sys:String>
+  <sys:String x:Key="Str_Imp_PvLost">Có chi tiết Killendar không lưu: {0}</sys:String>
+  <sys:String x:Key="Str_Imp_PvRepeat">Lặp lại theo cách Killendar không hiển thị được, chỉ thêm ngày đầu tiên: {0}</sys:String>
+  <sys:String x:Key="Str_Imp_PvSkipped">Không đọc được hoặc không được hỗ trợ, sẽ bỏ qua: {0}</sys:String>
   <sys:String x:Key="Str_Status_ImportFailed">Nhập không thành công: {0}</sys:String>
   <sys:String x:Key="Str_Status_Exported">Đã xuất {0} cuộc hẹn</sys:String>
   <sys:String x:Key="Str_Status_ExportFailed">Xuất không thành công: {0}</sys:String>

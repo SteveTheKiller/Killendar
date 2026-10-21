@@ -111,6 +111,17 @@
     <sys:String x:Key="Str_Status_ImportCanceled">. İptal edilen toplantılar eklenmedi: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">. Killendar'ın saklamadığı ayrıntılar atlandı: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportMalformed">. Tarihi veya saati okunamadığı için atlandı: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportStopped">İçe aktarma iptal edildi. Hiçbir şey eklenmedi.</sys:String>
+    <sys:String x:Key="Str_Status_ImportTooLarge">Bu dosya içe aktarmak için çok büyük veya çok karmaşık. Killendar tek seferde en fazla {0} MB ve {1} randevu içe aktarır.</sys:String>
+    <sys:String x:Key="Str_Imp_Reading">{0} okunuyor</sys:String>
+    <sys:String x:Key="Str_Imp_Saving">{0} randevu ekleniyor</sys:String>
+    <sys:String x:Key="Str_Imp_ProgressHint">İçe aktarma bitene kadar hiçbir şey eklenmez.</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewHead">{0} randevu içe aktarılsın mı?</sys:String>
+    <sys:String x:Key="Str_Imp_PvDuplicates">Bu Killendar'da zaten var, atlanacak: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCanceled">İptal edilen toplantılar, eklenmeyecek: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvLost">Killendar'ın saklamadığı ayrıntılar içeriyor: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvRepeat">Killendar'ın gösteremeyeceği şekilde tekrarlanıyor, yalnızca ilk tarih eklenecek: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvSkipped">Okunamıyor veya desteklenmiyor, atlanacak: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">İçe aktarma başarısız: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} randevu dışa aktarıldı</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Dışa aktarma başarısız: {0}</sys:String>

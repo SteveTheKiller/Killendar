@@ -111,6 +111,17 @@
     <sys:String x:Key="Str_Status_ImportCanceled">. Abgesagte Besprechungen wurden nicht hinzugefügt: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">. Details, die Killendar nicht speichert, wurden weggelassen: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportMalformed">. Wegen eines unlesbaren Datums oder einer unlesbaren Uhrzeit übersprungen: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportStopped">Import abgebrochen. Es wurde nichts hinzugefügt.</sys:String>
+    <sys:String x:Key="Str_Status_ImportTooLarge">Diese Datei ist zu groß oder zu komplex für den Import. Killendar importiert höchstens {0} MB und {1} Termine auf einmal.</sys:String>
+    <sys:String x:Key="Str_Imp_Reading">{0} wird gelesen</sys:String>
+    <sys:String x:Key="Str_Imp_Saving">{0} Termine werden hinzugefügt</sys:String>
+    <sys:String x:Key="Str_Imp_ProgressHint">Bis der Import abgeschlossen ist, wird nichts hinzugefügt.</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewHead">{0} Termine importieren?</sys:String>
+    <sys:String x:Key="Str_Imp_PvDuplicates">Bereits in diesem Killendar, werden übersprungen: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCanceled">Abgesagte Besprechungen, werden nicht hinzugefügt: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvLost">Enthalten Details, die Killendar nicht speichert: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvRepeat">Wiederholen sich auf eine Weise, die Killendar nicht darstellen kann, nur der erste Termin wird hinzugefügt: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvSkipped">Unlesbar oder nicht unterstützt, werden übersprungen: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import fehlgeschlagen: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} Termine exportiert</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export fehlgeschlagen: {0}</sys:String>

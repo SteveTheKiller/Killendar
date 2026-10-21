@@ -181,7 +181,8 @@ namespace Killendar.Services
             try
             {
                 if (_db == null) throw new InvalidOperationException("No Killendar is open.");
-                write();
+                // Waits out an import writing on a worker thread; the connection is not shared.
+                lock (_writeGate) write();
                 if (refreshCategories) CategoryManager.Refresh(this);
                 LoadError = null;
             }

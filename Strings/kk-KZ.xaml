@@ -153,6 +153,17 @@
     <sys:String x:Key="Str_Status_ImportCanceled">. Күші жойылған кездесулер қосылмады: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">. Killendar сақтамайтын мәліметтер қалдырылды: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportMalformed">. Күні не уақыты оқылмағандықтан өткізіп жіберілді: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportStopped">Импорт тоқтатылды. Ештеңе қосылмады.</sys:String>
+    <sys:String x:Key="Str_Status_ImportTooLarge">Бұл файл импорттау үшін тым үлкен немесе тым күрделі. Killendar бір рет ең көбі {0} МБ және {1} кездесу импорттайды.</sys:String>
+    <sys:String x:Key="Str_Imp_Reading">{0} оқылуда</sys:String>
+    <sys:String x:Key="Str_Imp_Saving">{0} кездесу қосылуда</sys:String>
+    <sys:String x:Key="Str_Imp_ProgressHint">Импорт аяқталмайынша ештеңе қосылмайды.</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewHead">{0} кездесуді импорттау керек пе?</sys:String>
+    <sys:String x:Key="Str_Imp_PvDuplicates">Бұл Killendar-да бар, өткізіп жіберіледі: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCanceled">Күші жойылған кездесулер, қосылмайды: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvLost">Killendar сақтамайтын мәліметтері бар: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvRepeat">Killendar көрсете алмайтын түрде қайталанады, тек бірінші күні қосылады: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvSkipped">Оқылмайды немесе қолдау көрсетілмейді, өткізіп жіберіледі: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Импорттау сәтсіз аяқталды: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} кездесу экспортталды</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Экспорттау сәтсіз аяқталды: {0}</sys:String>

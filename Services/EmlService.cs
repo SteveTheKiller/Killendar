@@ -20,12 +20,13 @@ namespace Killendar.Services
         /// <summary>The decoded iCalendar text, or null when the email carries no invite.</summary>
         public static string? ExtractCalendarText(string path)
         {
+            ImportLimits.CheckFile(path);
             // Map each original byte to one character while walking the ASCII MIME structure.
             // Decode text only after selecting the part and its declared charset.
             var byteEncoding = Encoding.GetEncoding(28591);
             string raw = byteEncoding.GetString(File.ReadAllBytes(path)).Replace("\r\n", "\n");
 
-            string? hit = FromEntity(raw);
+            string? hit = FromEntity(raw, 0);
             if (hit != null) return hit;
 
             // Last resort for non-MIME mails and mangled structure: an unencoded invite is
@@ -38,9 +39,13 @@ namespace Killendar.Services
                 raw.Substring(begin, end - begin) + "END:VCALENDAR"));
         }
 
-        /// <summary>One MIME entity: headers, blank line, body. Recurses through multiparts.</summary>
-        private static string? FromEntity(string entity)
+        /// <summary>One MIME entity: headers, blank line, body. Recurses through multiparts, to a
+        /// bounded depth: real mail nests two or three levels, and a hostile file nested
+        /// thousands deep must not exhaust the stack.</summary>
+        private static string? FromEntity(string entity, int depth)
         {
+            if (depth > ImportLimits.MaxMimeDepth)
+                throw new ImportLimitException("The email is nested more than " + ImportLimits.MaxMimeDepth + " levels deep.");
             int split   = entity.IndexOf("\n\n", StringComparison.Ordinal);
             string head = split < 0 ? entity : entity.Substring(0, split);
             string body = split < 0 ? ""     : entity.Substring(split + 2);
@@ -58,7 +63,7 @@ namespace Killendar.Services
 
                 foreach (var part in SplitParts(body, boundary))
                 {
-                    var hit = FromEntity(part);
+                    var hit = FromEntity(part, depth + 1);
                     if (hit != null) return hit;
                 }
             }

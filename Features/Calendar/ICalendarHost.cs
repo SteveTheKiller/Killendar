@@ -30,5 +30,15 @@ namespace Killendar.Features
         /// appointment that was clicked, or null when a bare day was.
         /// </summary>
         void ShowDayAgenda(System.DateTime day, Killendar.Models.CalendarEvent? highlight);
+
+        /// <summary>Asks before an import that would skip or lose something. True to import.</summary>
+        bool ConfirmImport(string heading, string detail);
+
+        /// <summary>
+        /// Waits for import work running on a worker thread. Work that finishes within a moment
+        /// shows nothing; longer work shows a card with Cancel that closes itself when the work
+        /// ends. True when the user canceled; the caller then cancels the work.
+        /// </summary>
+        bool WaitOrCancel(string message, System.Threading.Tasks.Task work);
     }
 }
