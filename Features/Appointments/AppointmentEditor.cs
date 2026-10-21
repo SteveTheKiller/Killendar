@@ -514,6 +514,8 @@ namespace Killendar.Features
             }
             else
             {
+                string previousDescription = _editing.Description;
+                bool previousAllDay = _editing.AllDay;
                 _editing.Title       = title;
                 _editing.Start       = start;
                 _editing.End         = end;
@@ -527,6 +529,7 @@ namespace Killendar.Features
                 _editing.Description = _view.FieldDescription.Trim();
                 _editing.Attendees   = attendees;
                 _editing.Categories  = EventStore.NormalizeCategories(_view.FieldCategories);
+                IcsService.DropStaleKeptProperties(_editing, previousDescription, previousAllDay);
 
                 bool oneDateOfASeries = _store.GetSeriesMaster(_editing) != null;
 

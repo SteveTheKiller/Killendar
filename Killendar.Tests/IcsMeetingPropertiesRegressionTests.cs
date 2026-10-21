@@ -65,6 +65,38 @@ namespace Killendar.Tests
             Assert.Contains("ATTENDEE;PARTSTAT=NEEDS-ACTION:mailto:new@example.com", lines);
         }
 
+        [Theory]
+        [InlineData("title", true, true)]
+        [InlineData("description", false, true)]
+        [InlineData("allday", true, false)]
+        public void EditedFieldsDropTheirStaleOutlookCopies(string edit, bool keepsAltDesc, bool keepsAllDayFlag)
+        {
+            var culture = System.Globalization.CultureInfo.CurrentCulture;
+            var style = DateFormatManager.Current;
+            using var fixture = new AppointmentFixture();
+            try
+            {
+                System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+                DateFormatManager.Apply(DateStyle.Iso);
+                fixture.Store.ImportEvents(IcsService.ParseText(Meeting(
+                    "DESCRIPTION:Agenda", "X-ALT-DESC;FMTTYPE=text/html:<p>Agenda</p>",
+                    "X-MICROSOFT-CDO-ALLDAYEVENT:FALSE", "SEQUENCE:2")).Events);
+                fixture.Editor.Load(Assert.Single(fixture.Store.Events));
+                if (edit == "title") fixture.View.FieldTitle = "Planning, renamed";
+                if (edit == "description") fixture.View.FieldDescription = "New agenda";
+                if (edit == "allday") fixture.Editor.ToggleAllDay();
+                fixture.Editor.Save();
+                Assert.Null(fixture.View.Error);
+
+                var lines = Unfolded(IcsService.BuildIcs(fixture.Store.Events));
+
+                Assert.Equal(keepsAltDesc, lines.Any(l => l.StartsWith("X-ALT-DESC", StringComparison.Ordinal)));
+                Assert.Equal(keepsAllDayFlag, lines.Any(l => l.StartsWith("X-MICROSOFT-CDO-ALLDAYEVENT", StringComparison.Ordinal)));
+                Assert.Contains("SEQUENCE:2", lines);
+            }
+            finally { System.Globalization.CultureInfo.CurrentCulture = culture; DateFormatManager.Apply(style); }
+        }
+
         [Fact]
         public void AlarmPropertiesStillDoNotLeakIntoTheAppointment()
         {

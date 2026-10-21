@@ -608,6 +608,22 @@ namespace Killendar.Services
             };
         }
 
+        /// <summary>
+        /// Kept lines that restate a field Killendar edits go stale when that field changes, and
+        /// Outlook trusts them over the standard property: an old X-ALT-DESC shows the previous
+        /// description, an old X-MICROSOFT-CDO-ALLDAYEVENT contradicts the times. They are dropped
+        /// once the field they copy is edited; everything else, SEQUENCE included, is kept as is.
+        /// </summary>
+        internal static void DropStaleKeptProperties(CalendarEvent ev, string previousDescription, bool previousAllDay)
+        {
+            if (!string.Equals(ev.Description, previousDescription, StringComparison.Ordinal))
+                ev.KeptProperties.RemoveAll(line => KeptName(line) == "X-ALT-DESC");
+            if (ev.AllDay != previousAllDay)
+                ev.KeptProperties.RemoveAll(line => KeptName(line) == "X-MICROSOFT-CDO-ALLDAYEVENT");
+        }
+
+        private static string KeptName(string line) => SplitProperty(line).name.ToUpperInvariant();
+
         /// <summary>The email address of an ATTENDEE value ("mailto:user@example.com" or a bare
         /// address), or empty when it is not one.</summary>
         private static string AttendeeAddress(string value)

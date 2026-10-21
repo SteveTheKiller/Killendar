@@ -282,6 +282,9 @@ namespace Killendar.Services
                 updated.Description = edited.Description;
                 updated.Attendees   = [.. edited.Attendees ?? []];
                 updated.Categories  = edited.Categories;
+                // An occurrence carries its series' kept meeting lines; the editor may have dropped
+                // ones this edit made stale.
+                updated.KeptProperties = [.. edited.KeptProperties ?? []];
                 updated.AllDay      = edited.AllDay;
                 updated.DurationDays = edited.AllDay ? 0 : edited.DurationDays;
                 updated.DurationTimeTicks = edited.AllDay ? 0 : edited.DurationTimeTicks;
