@@ -155,6 +155,7 @@
     <sys:String x:Key="Str_Lbl_TimeFormat">formato ora</sys:String>
     <sys:String x:Key="Str_Time_12">12 ore</sys:String>
     <sys:String x:Key="Str_Time_24">24 ore</sys:String>
+    <sys:String x:Key="Str_Rep_IntervalName">Intervallo di ripetizione ({0})</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Importazione non riuscita: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Esportati {0} appuntamenti</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Esportazione non riuscita: {0}</sys:String>

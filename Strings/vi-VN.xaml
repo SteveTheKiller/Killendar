@@ -160,6 +160,7 @@
   <sys:String x:Key="Str_Lbl_TimeFormat">định dạng giờ</sys:String>
   <sys:String x:Key="Str_Time_12">12 giờ</sys:String>
   <sys:String x:Key="Str_Time_24">24 giờ</sys:String>
+  <sys:String x:Key="Str_Rep_IntervalName">Khoảng lặp lại ({0})</sys:String>
   <sys:String x:Key="Str_Status_ImportFailed">Nhập không thành công: {0}</sys:String>
   <sys:String x:Key="Str_Status_Exported">Đã xuất {0} cuộc hẹn</sys:String>
   <sys:String x:Key="Str_Status_ExportFailed">Xuất không thành công: {0}</sys:String>

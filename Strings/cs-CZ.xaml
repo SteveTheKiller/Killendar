@@ -129,6 +129,7 @@
     <sys:String x:Key="Str_Lbl_TimeFormat">formát času</sys:String>
     <sys:String x:Key="Str_Time_12">12hodinový</sys:String>
     <sys:String x:Key="Str_Time_24">24hodinový</sys:String>
+    <sys:String x:Key="Str_Rep_IntervalName">Interval opakování ({0})</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import selhal: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Exportováno {0} schůzek</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export selhal: {0}</sys:String>

@@ -171,6 +171,7 @@
     <sys:String x:Key="Str_Lbl_TimeFormat">уақыт пішімі</sys:String>
     <sys:String x:Key="Str_Time_12">12 сағаттық</sys:String>
     <sys:String x:Key="Str_Time_24">24 сағаттық</sys:String>
+    <sys:String x:Key="Str_Rep_IntervalName">Қайталау аралығы ({0})</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Импорттау сәтсіз аяқталды: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} кездесу экспортталды</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Экспорттау сәтсіз аяқталды: {0}</sys:String>

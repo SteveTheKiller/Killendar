@@ -129,6 +129,7 @@
     <sys:String x:Key="Str_Lbl_TimeFormat">সময়ের বিন্যাস</sys:String>
     <sys:String x:Key="Str_Time_12">12 ঘণ্টা</sys:String>
     <sys:String x:Key="Str_Time_24">24 ঘণ্টা</sys:String>
+    <sys:String x:Key="Str_Rep_IntervalName">পুনরাবৃত্তির ব্যবধান ({0})</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">ইমপোর্ট ব্যর্থ: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} টি অ্যাপয়েন্টমেন্ট এক্সপোর্ট করা হয়েছে</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">এক্সপোর্ট ব্যর্থ: {0}</sys:String>

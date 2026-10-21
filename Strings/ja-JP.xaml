@@ -129,6 +129,7 @@
     <sys:String x:Key="Str_Lbl_TimeFormat">時刻形式</sys:String>
     <sys:String x:Key="Str_Time_12">12 時間制</sys:String>
     <sys:String x:Key="Str_Time_24">24 時間制</sys:String>
+    <sys:String x:Key="Str_Rep_IntervalName">繰り返しの間隔 ({0})</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">読み込みに失敗しました: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} 件の予定を書き出しました</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">書き出しに失敗しました: {0}</sys:String>

@@ -199,6 +199,10 @@ namespace Killendar.Shell
                 if (!repeats) return;
 
                 RepeatUnitLabel.Text = Loc(UnitKey(_repeatFreq));
+                // The box sits between "Every" and the unit with no label of its own, so a screen
+                // reader would announce only the number. Name it with both, and update the unit.
+                System.Windows.Automation.AutomationProperties.SetName(FieldRepeatInterval,
+                    IntervalAccessibleName(_repeatFreq, Loc));
 
                 // Weekdays belong to a weekly pattern only. "Every 2 months on a Tuesday" is an
                 // ordinal rule, which Killendar does not draw and the .ics importer refuses.
@@ -370,5 +374,9 @@ namespace Killendar.Shell
                 _ => "Str_Rep_UnitYears",
             };
         }
+
+        /// <summary>The interval box's accessible name: "Repeat interval (days)".</summary>
+        internal static string IntervalAccessibleName(RepeatFreq f, Func<string, string> loc)
+            => string.Format(loc("Str_Rep_IntervalName"), loc(UnitKey(f)));
     }
 }

@@ -129,6 +129,7 @@
     <sys:String x:Key="Str_Lbl_TimeFormat">时间格式</sys:String>
     <sys:String x:Key="Str_Time_12">12 小时制</sys:String>
     <sys:String x:Key="Str_Time_24">24 小时制</sys:String>
+    <sys:String x:Key="Str_Rep_IntervalName">重复间隔（{0}）</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">导入失败：{0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">已导出 {0} 个约会</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">导出失败：{0}</sys:String>
