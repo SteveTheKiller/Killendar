@@ -3,6 +3,9 @@ namespace Killendar.Features
     /// <summary>Which field to put the caret in when validation rejects an entry.</summary>
     internal enum AppointmentField { Title, StartDate, StartTime, EndDate, EndTime, RepeatInterval }
 
+    /// <summary>What to do with unsaved appointment input that is about to be replaced.</summary>
+    internal enum DraftChoice { KeepEditing, Save, Discard }
+
     /// <summary>
     /// The appointment panel as AppointmentEditor sees it: text in and out, plus a handful of
     /// commands. Everything is a string or a bool rather than a TextBox, so the editor's parsing and
@@ -75,9 +78,9 @@ namespace Killendar.Features
         void ShowError(string message);
         void ClearError();
 
-        /// <summary>Asks before typed changes are replaced by something else. True to discard
-        /// them; false (also Esc and the close button) keeps editing.</summary>
-        bool ConfirmDiscardDraft();
+        /// <summary>Asks before typed changes are replaced by something else: save them, discard
+        /// them, or keep editing (also Esc and the close button).</summary>
+        DraftChoice AskAboutDraft();
 
         void Focus(AppointmentField field, bool selectAll = false);
 

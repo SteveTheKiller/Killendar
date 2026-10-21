@@ -148,7 +148,7 @@
     <sys:String x:Key="Str_Imp_PvLost">Contengono dettagli che Killendar non memorizza: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvRepeat">Si ripetono in un modo che Killendar non può mostrare, sarà aggiunta solo la prima data: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvSkipped">Illeggibili o non supportati, saranno ignorati: {0}</sys:String>
-    <sys:String x:Key="Str_Dlg_DiscardDraftHead">Annullare le modifiche a questo appuntamento?</sys:String>
+    <sys:String x:Key="Str_Dlg_UnsavedDraftHead">Salvare le modifiche a questo appuntamento?</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">Ciò che hai scritto non è ancora stato salvato.</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Annulla modifiche</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Continua a modificare</sys:String>

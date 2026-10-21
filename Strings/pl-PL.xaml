@@ -211,7 +211,7 @@
     <sys:String x:Key="Str_Imp_PvLost">Zawierają szczegóły, których Killendar nie przechowuje: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvRepeat">Powtarzają się w sposób, którego Killendar nie potrafi pokazać, zostanie dodana tylko pierwsza data: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvSkipped">Nieczytelne lub nieobsługiwane, zostaną pominięte: {0}</sys:String>
-    <sys:String x:Key="Str_Dlg_DiscardDraftHead">Odrzucić zmiany w tym spotkaniu?</sys:String>
+    <sys:String x:Key="Str_Dlg_UnsavedDraftHead">Zapisać zmiany w tym spotkaniu?</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">To, co wpisano, nie zostało jeszcze zapisane.</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Odrzuć</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Kontynuuj edycję</sys:String>

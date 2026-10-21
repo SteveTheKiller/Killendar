@@ -153,7 +153,7 @@
   <sys:String x:Key="Str_Imp_PvLost">Có chi tiết Killendar không lưu: {0}</sys:String>
   <sys:String x:Key="Str_Imp_PvRepeat">Lặp lại theo cách Killendar không hiển thị được, chỉ thêm ngày đầu tiên: {0}</sys:String>
   <sys:String x:Key="Str_Imp_PvSkipped">Không đọc được hoặc không được hỗ trợ, sẽ bỏ qua: {0}</sys:String>
-  <sys:String x:Key="Str_Dlg_DiscardDraftHead">Bỏ các thay đổi của cuộc hẹn này?</sys:String>
+  <sys:String x:Key="Str_Dlg_UnsavedDraftHead">Lưu các thay đổi của cuộc hẹn này?</sys:String>
   <sys:String x:Key="Str_Dlg_DiscardDraftBody">Nội dung bạn nhập chưa được lưu.</sys:String>
   <sys:String x:Key="Str_Btn_Discard">Bỏ thay đổi</sys:String>
   <sys:String x:Key="Str_Btn_KeepEditing">Tiếp tục chỉnh sửa</sys:String>

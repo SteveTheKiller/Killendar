@@ -165,7 +165,7 @@
     <sys:String x:Key="Str_Imp_PvLost">Содержат сведения, которые Killendar не хранит: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvRepeat">Повторяются так, как Killendar не может показать, будет добавлена только первая дата: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvSkipped">Нечитаемые или неподдерживаемые, будут пропущены: {0}</sys:String>
-    <sys:String x:Key="Str_Dlg_DiscardDraftHead">Отменить изменения этой встречи?</sys:String>
+    <sys:String x:Key="Str_Dlg_UnsavedDraftHead">Сохранить изменения этой встречи?</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">Введённое ещё не сохранено.</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Не сохранять</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Продолжить правку</sys:String>

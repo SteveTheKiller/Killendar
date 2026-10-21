@@ -122,7 +122,7 @@
     <sys:String x:Key="Str_Imp_PvLost">Killendar'ın saklamadığı ayrıntılar içeriyor: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvRepeat">Killendar'ın gösteremeyeceği şekilde tekrarlanıyor, yalnızca ilk tarih eklenecek: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvSkipped">Okunamıyor veya desteklenmiyor, atlanacak: {0}</sys:String>
-    <sys:String x:Key="Str_Dlg_DiscardDraftHead">Bu randevudaki değişiklikler atılsın mı?</sys:String>
+    <sys:String x:Key="Str_Dlg_UnsavedDraftHead">Bu randevudaki değişiklikler kaydedilsin mi?</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">Yazdıklarınız henüz kaydedilmedi.</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Değişiklikleri at</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Düzenlemeye devam et</sys:String>

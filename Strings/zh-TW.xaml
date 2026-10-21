@@ -122,7 +122,7 @@
     <sys:String x:Key="Str_Imp_PvLost">包含 Killendar 不儲存的詳細資料：{0}</sys:String>
     <sys:String x:Key="Str_Imp_PvRepeat">重複方式 Killendar 無法顯示，只新增第一個日期：{0}</sys:String>
     <sys:String x:Key="Str_Imp_PvSkipped">無法讀取或不支援，將略過：{0}</sys:String>
-    <sys:String x:Key="Str_Dlg_DiscardDraftHead">要捨棄此約會的變更嗎？</sys:String>
+    <sys:String x:Key="Str_Dlg_UnsavedDraftHead">要儲存此約會的變更嗎？</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">您輸入的內容尚未儲存。</sys:String>
     <sys:String x:Key="Str_Btn_Discard">捨棄</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">繼續編輯</sys:String>

@@ -63,9 +63,19 @@ namespace Killendar.Features
         internal bool ConfirmReplace()
         {
             if (!HasUnsavedChanges) return true;
-            if (!_view.ConfirmDiscardDraft()) return false;
-            Clear();
-            return true;
+            switch (_view.AskAboutDraft())
+            {
+                case DraftChoice.Save:
+                    // A save that is refused (a bad date, a failed write) leaves the panel open
+                    // with its error, so nothing replaces it.
+                    Save();
+                    return !HasUnsavedChanges;
+                case DraftChoice.Discard:
+                    Clear();
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         /// <summary>Every value the panel would save, as one comparable string.</summary>

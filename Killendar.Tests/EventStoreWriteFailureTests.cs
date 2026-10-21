@@ -97,7 +97,7 @@ namespace Killendar.Tests
             public bool Closed { get; private set; }
             public string Loc(string key) => key;
             public void SetStatus(string text) => Status = text;
-            public bool ConfirmDiscardDraft() => true;
+            public DraftChoice AskAboutDraft() => DraftChoice.Discard;
             public string FieldTitle { get; set; } = "";
             public string FieldLocation { get; set; } = "";
             public string FieldDescription { get; set; } = "";

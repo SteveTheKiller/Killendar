@@ -127,6 +127,23 @@ namespace Killendar.Controls
             Close();
         }
 
+        /// <summary>True when the optional middle button closed the dialog. Confirmed is false then.</summary>
+        public bool AltChosen { get; private set; }
+
+        /// <summary>Shows a third, middle button. Esc and the close button still mean Cancel.</summary>
+        public void ShowAlternative(string text)
+        {
+            AltButton.Content = text;
+            AltButton.Visibility = Visibility.Visible;
+        }
+
+        private void Alt_Click(object sender, RoutedEventArgs e)
+        {
+            AltChosen = true;
+            Confirmed = false;
+            Close();
+        }
+
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
             => DragMove();
     }

@@ -122,7 +122,7 @@
     <sys:String x:Key="Str_Imp_PvLost">Tienen detalles que Killendar no guarda: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvRepeat">Se repiten de una forma que Killendar no puede mostrar, solo se añadirá la primera fecha: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvSkipped">Ilegibles o no compatibles, se omitirán: {0}</sys:String>
-    <sys:String x:Key="Str_Dlg_DiscardDraftHead">¿Descartar los cambios de esta cita?</sys:String>
+    <sys:String x:Key="Str_Dlg_UnsavedDraftHead">¿Guardar los cambios de esta cita?</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">Lo que escribió aún no se ha guardado.</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Descartar</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Seguir editando</sys:String>

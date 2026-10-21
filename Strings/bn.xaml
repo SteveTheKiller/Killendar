@@ -122,7 +122,7 @@
     <sys:String x:Key="Str_Imp_PvLost">Killendar সংরক্ষণ করে না এমন তথ্য আছে: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvRepeat">এমনভাবে পুনরাবৃত্তি হয় যা Killendar দেখাতে পারে না, শুধু প্রথম তারিখ যোগ হবে: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvSkipped">পড়া যায় না বা সমর্থিত নয়, বাদ দেওয়া হবে: {0}</sys:String>
-    <sys:String x:Key="Str_Dlg_DiscardDraftHead">এই অ্যাপয়েন্টমেন্টে করা পরিবর্তন বাতিল করবেন?</sys:String>
+    <sys:String x:Key="Str_Dlg_UnsavedDraftHead">এই অ্যাপয়েন্টমেন্টে করা পরিবর্তন সংরক্ষণ করবেন?</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">আপনি যা লিখেছেন তা এখনও সংরক্ষণ করা হয়নি।</sys:String>
     <sys:String x:Key="Str_Btn_Discard">বাতিল করুন</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">সম্পাদনা চালিয়ে যান</sys:String>

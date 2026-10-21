@@ -44,6 +44,36 @@ namespace Killendar.Tests
         }
 
         [Fact]
+        public void SaveChoiceSavesTheDraftAndThenMovesOn()
+        {
+            using var fixture = new AppointmentFixture();
+            fixture.Editor.NewAt(new DateTime(2026, 10, 22, 9, 0, 0));
+            fixture.View.FieldTitle = "Saved from the prompt";
+            fixture.View.DraftAnswer = DraftChoice.Save;
+
+            fixture.Editor.NewAt(new DateTime(2026, 10, 23, 9, 0, 0));
+
+            Assert.Equal("Saved from the prompt", Assert.Single(fixture.Store.Events).Title);
+            Assert.Equal("", fixture.View.FieldTitle);
+        }
+
+        [Fact]
+        public void RefusedSaveFromThePromptKeepsTheDraft()
+        {
+            using var fixture = new AppointmentFixture();
+            fixture.Editor.NewAt(new DateTime(2026, 10, 22, 9, 0, 0));
+            fixture.View.FieldTitle = "Bad end";
+            fixture.View.FieldEndDate = "not a date";
+            fixture.View.DraftAnswer = DraftChoice.Save;
+
+            fixture.Editor.NewAt(new DateTime(2026, 10, 23, 9, 0, 0));
+
+            Assert.Empty(fixture.Store.Events);
+            Assert.Equal("Bad end", fixture.View.FieldTitle);
+            Assert.NotNull(fixture.View.Error);
+        }
+
+        [Fact]
         public void UntouchedPanelIsReplacedWithoutAsking()
         {
             using var fixture = new AppointmentFixture();
