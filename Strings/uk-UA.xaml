@@ -164,6 +164,10 @@
     <sys:String x:Key="Str_Imp_PvLost">Містять відомості, які Killendar не зберігає: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvRepeat">Повторюються так, як Killendar не може показати, буде додано лише першу дату: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvSkipped">Нечитані або непідтримувані, буде пропущено: {0}</sys:String>
+    <sys:String x:Key="Str_Dlg_DiscardDraftHead">Скасувати зміни цієї зустрічі?</sys:String>
+    <sys:String x:Key="Str_Dlg_DiscardDraftBody">Введене ще не збережено.</sys:String>
+    <sys:String x:Key="Str_Btn_Discard">Не зберігати</sys:String>
+    <sys:String x:Key="Str_Btn_KeepEditing">Продовжити редагування</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Не вдалося імпортувати: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Експортовано зустрічей: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Не вдалося експортувати: {0}</sys:String>

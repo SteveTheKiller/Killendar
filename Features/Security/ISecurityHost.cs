@@ -24,5 +24,9 @@ namespace Killendar.Features
         /// <summary>Closes the appointment sidebar; what it was editing may be about to disappear
         /// with the Killendar being closed.</summary>
         void CloseSidebar();
+
+        /// <summary>True when there is no unsaved appointment input, or the user chose to discard
+        /// it. False means stay on the current Killendar.</summary>
+        bool ConfirmLeaveDraft();
     }
 }

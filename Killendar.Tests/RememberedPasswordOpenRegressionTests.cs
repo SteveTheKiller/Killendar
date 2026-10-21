@@ -135,6 +135,7 @@ namespace Killendar.Tests
             public bool IsSidebarOpen => false;
             public void RestoreSidebar() { }
             public void CloseSidebar() { }
+            public bool ConfirmLeaveDraft() => true;
         }
     }
 }

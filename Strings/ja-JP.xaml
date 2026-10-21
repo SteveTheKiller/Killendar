@@ -122,6 +122,10 @@
     <sys:String x:Key="Str_Imp_PvLost">Killendar が保存しない詳細を含む: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvRepeat">Killendar で表示できない繰り返しのため最初の日付だけ追加: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvSkipped">読み取れないか未対応のためスキップ: {0}</sys:String>
+    <sys:String x:Key="Str_Dlg_DiscardDraftHead">この予定の変更を破棄しますか?</sys:String>
+    <sys:String x:Key="Str_Dlg_DiscardDraftBody">入力した内容はまだ保存されていません。</sys:String>
+    <sys:String x:Key="Str_Btn_Discard">破棄</sys:String>
+    <sys:String x:Key="Str_Btn_KeepEditing">編集を続ける</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">読み込みに失敗しました: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} 件の予定を書き出しました</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">書き出しに失敗しました: {0}</sys:String>

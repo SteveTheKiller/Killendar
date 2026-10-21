@@ -9,6 +9,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Fixed
 
 - Failed exports leave an existing calendar, CSV or HTML file untouched instead of truncating it.
+- Unsaved appointment input is no longer replaced silently. Starting a new appointment, opening another one or a day, switching or reloading the Killendar, or quitting asks first; Cancel, Esc and closing the panel still discard on purpose.
 - Command-line requests over the size limit are refused as they arrive instead of being read into memory first, and the next request still works.
 - Large imports no longer freeze the window. Reading and saving run in the background with a Cancel card for anything slower than half a second, and a canceled import adds nothing. Saving an import is about twice as fast.
 - Imports that would skip, lose or duplicate something show what and ask before adding anything. Files over 50 MB or 100,000 appointments, and emails nested more than 10 levels deep, are refused with a clear message.

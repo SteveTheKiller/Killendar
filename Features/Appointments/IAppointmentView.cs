@@ -75,6 +75,10 @@ namespace Killendar.Features
         void ShowError(string message);
         void ClearError();
 
+        /// <summary>Asks before typed changes are replaced by something else. True to discard
+        /// them; false (also Esc and the close button) keeps editing.</summary>
+        bool ConfirmDiscardDraft();
+
         void Focus(AppointmentField field, bool selectAll = false);
 
         /// <summary>Slides the panel open, or shut and forgets what was being edited.</summary>

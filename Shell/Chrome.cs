@@ -66,10 +66,23 @@ namespace Killendar.Shell
             base.OnClosed(e);
         }
 
+        // The same WPF shutdown flag CloseToTray reads; that family file stays a verbatim copy.
+        private static readonly System.Reflection.PropertyInfo? s_isShuttingDown = typeof(Application)
+            .GetProperty("IsShuttingDown", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+
+        private static bool ShutdownStarted() => s_isShuttingDown?.GetValue(null) is true;
+
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             // Close to system tray: hide before the fade, so the window comes back as it was.
             if (_tray.HideInstead(e)) return;
+            // Quitting would lose unsaved appointment input. A shutdown ignores a cancel, so it
+            // is not asked about; the fade's second pass through here finds nothing left to ask.
+            if (!_closeFaded && !ShutdownStarted() && !_appointments.ConfirmReplace())
+            {
+                e.Cancel = true;
+                return;
+            }
             if (Anim.FadeOutAndClose(this, ref _closeFaded))
             {
                 e.Cancel = true;

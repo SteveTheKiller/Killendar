@@ -44,11 +44,41 @@ namespace Killendar.Features
         /// meaningful.</summary>
         internal bool IsEditingExisting => _editing != null;
 
-        /// <summary>Forgets the loaded appointment. Called when the panel closes.</summary>
-        internal void Clear() { _editing = null; _nominalEnd = null; }
+        /// <summary>Forgets the loaded appointment. Called when the panel closes, which is how
+        /// Cancel, Esc and the panel chevron discard on purpose.</summary>
+        internal void Clear() { _editing = null; _nominalEnd = null; _baseline = null; }
+
+        /// <summary>The panel's contents as they were right after it opened. Null while the panel
+        /// is not composing or editing anything.</summary>
+        private string? _baseline;
+
+        /// <summary>True when the panel holds input that differs from what it opened with.</summary>
+        internal bool HasUnsavedChanges => _baseline != null && Snapshot() != _baseline;
+
+        /// <summary>
+        /// Called before anything replaces the panel's contents: a new appointment, another one,
+        /// a day's agenda, another Killendar, or quitting. True when there is nothing to lose or the
+        /// user chose to discard it; false means leave everything as it is.
+        /// </summary>
+        internal bool ConfirmReplace()
+        {
+            if (!HasUnsavedChanges) return true;
+            if (!_view.ConfirmDiscardDraft()) return false;
+            Clear();
+            return true;
+        }
+
+        /// <summary>Every value the panel would save, as one comparable string.</summary>
+        private string Snapshot() => string.Join("\u0001",
+            _view.FieldTitle, _view.FieldLocation, _view.FieldDescription, _view.FieldAttendees,
+            _view.FieldCategories, _view.FieldStartDate, _view.FieldStartTime, _view.FieldEndDate,
+            _view.FieldEndTime, _allDay, _view.FieldRepeat, _view.FieldRepeatEveryN,
+            string.Join(",", _view.FieldRepeatDays ?? []), _view.FieldRepeatCount,
+            _view.FieldRepeatUntil?.Ticks, _view.EditWholeSeries);
 
         internal void NewAt(DateTime when)
         {
+            if (!ConfirmReplace()) return;
             if (when.Ticks > DateTime.MaxValue.Ticks - TimeSpan.TicksPerHour)
             {
                 var message = _view.Loc("Str_Err_DateRange");
@@ -87,6 +117,7 @@ namespace Killendar.Features
 
         internal void Load(CalendarEvent ev)
         {
+            if (!ConfirmReplace()) return;
             // Edit a copy: canceling must not leave half-typed changes on the stored object.
             _loading = true;
             _timeCulture = CultureInfo.CurrentCulture;
@@ -143,6 +174,7 @@ namespace Killendar.Features
             SyncHighlightedSelection();
             _loading = false;
             _followedStart = CurrentStart();
+            _baseline = Snapshot();
         }
 
         /// <summary>
@@ -488,6 +520,7 @@ namespace Killendar.Features
                 _view.SetStatus(string.Format(_view.Loc("Str_Status_Saved"), _editing.Title));
             }
 
+            _baseline = null;   // saved: nothing left to lose
             _view.ClosePanel();
         }
 
@@ -523,6 +556,7 @@ namespace Killendar.Features
 
             if (_store.LoadError != null) { _view.ShowError(_store.LoadError); return; }
             _view.SetStatus(string.Format(_view.Loc("Str_Status_Deleted"), title));
+            _baseline = null;
             _view.ClosePanel();
         }
 

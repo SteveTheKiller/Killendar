@@ -35,6 +35,8 @@ namespace Killendar.Shell
 
         void ISecurityHost.CloseSidebar() => CloseSidebar();
 
+        bool ISecurityHost.ConfirmLeaveDraft() => _appointments.ConfirmReplace();
+
         /// <summary>Routes a shell-opened file after the active Killendar has opened. Internal:
         /// App also calls this for a path forwarded from a blocked second launch.</summary>
         internal void HandlePendingOpenFile()

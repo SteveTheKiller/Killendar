@@ -164,6 +164,10 @@
     <sys:String x:Key="Str_Imp_PvLost">Have details Killendar does not store: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvRepeat">Repeat in a way Killendar cannot show, only the first date will be added: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvSkipped">Unreadable or unsupported, will be skipped: {0}</sys:String>
+    <sys:String x:Key="Str_Dlg_DiscardDraftHead">Discard your changes to this appointment?</sys:String>
+    <sys:String x:Key="Str_Dlg_DiscardDraftBody">What you typed has not been saved.</sys:String>
+    <sys:String x:Key="Str_Btn_Discard">Discard</sys:String>
+    <sys:String x:Key="Str_Btn_KeepEditing">Keep editing</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import failed: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Exported {0} appointments</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export failed: {0}</sys:String>

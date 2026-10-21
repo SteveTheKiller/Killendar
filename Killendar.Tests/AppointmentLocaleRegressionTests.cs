@@ -164,6 +164,9 @@ namespace Killendar.Tests
         public bool Closed { get; private set; }
         public string Loc(string key) => key;
         public void SetStatus(string text) { }
+        internal bool DiscardAnswer = true;
+        internal int DiscardQuestions;
+        public bool ConfirmDiscardDraft() { DiscardQuestions++; return DiscardAnswer; }
         public string FieldTitle { get; set; } = "";
         public string FieldLocation { get; set; } = "";
         public string FieldDescription { get; set; } = "";

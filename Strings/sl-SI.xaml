@@ -137,6 +137,10 @@
     <sys:String x:Key="Str_Imp_PvLost">Vsebujejo podrobnosti, ki jih Killendar ne shranjuje: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvRepeat">Ponavljajo se na način, ki ga Killendar ne more prikazati, dodan bo le prvi datum: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvSkipped">Neberljivi ali nepodprti, bodo preskočeni: {0}</sys:String>
+    <sys:String x:Key="Str_Dlg_DiscardDraftHead">Zavržem spremembe tega dogodka?</sys:String>
+    <sys:String x:Key="Str_Dlg_DiscardDraftBody">Vneseno še ni shranjeno.</sys:String>
+    <sys:String x:Key="Str_Btn_Discard">Zavrzi</sys:String>
+    <sys:String x:Key="Str_Btn_KeepEditing">Nadaljuj urejanje</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Uvoz ni uspel: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Izvoženi dogodki: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Izvoz ni uspel: {0}</sys:String>

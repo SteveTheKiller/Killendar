@@ -10,6 +10,9 @@ namespace Killendar.Tests
     {
         internal readonly List<string> Statuses = [];
         internal bool? LockState;
+        internal bool LeaveDraft = true;
+        internal int DraftQuestions;
+        public bool ConfirmLeaveDraft() { DraftQuestions++; return LeaveDraft; }
         public Window Window => null!;
         public string Loc(string key) => key + " {0}";
         public void SetStatus(string text) => Statuses.Add(text);

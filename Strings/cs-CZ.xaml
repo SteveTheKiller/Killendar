@@ -122,6 +122,10 @@
     <sys:String x:Key="Str_Imp_PvLost">Obsahují podrobnosti, které Killendar neukládá: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvRepeat">Opakují se způsobem, který Killendar neumí zobrazit, přidá se jen první datum: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvSkipped">Nečitelné nebo nepodporované, budou přeskočeny: {0}</sys:String>
+    <sys:String x:Key="Str_Dlg_DiscardDraftHead">Zahodit změny této schůzky?</sys:String>
+    <sys:String x:Key="Str_Dlg_DiscardDraftBody">To, co jste napsali, ještě není uloženo.</sys:String>
+    <sys:String x:Key="Str_Btn_Discard">Zahodit</sys:String>
+    <sys:String x:Key="Str_Btn_KeepEditing">Pokračovat v úpravách</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import selhal: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Exportováno {0} schůzek</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export selhal: {0}</sys:String>

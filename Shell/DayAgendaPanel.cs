@@ -22,8 +22,13 @@ namespace Killendar.Shell
         /// selection fill. Survives an edit round-trip so the row stays marked after Save.</summary>
         private Guid? _agendaHighlight;
 
+        // A click on the calendar is the one route here that can replace typed input, so it asks
+        // first. Save, Cancel and Delete come back through the private overload and do not.
         void ICalendarHost.ShowDayAgenda(DateTime day, CalendarEvent? highlight)
-            => ShowDayAgenda(day, highlight?.Id);
+        {
+            if (!_appointments.ConfirmReplace()) return;
+            ShowDayAgenda(day, highlight?.Id);
+        }
 
         private void ShowDayAgenda(DateTime day, Guid? highlight)
         {

@@ -186,6 +186,16 @@ namespace Killendar.Features
                 _password = null;
             }
 
+            // A switch would close the panel and lose unsaved input. Keeping it means staying on
+            // the Killendar the input belongs to.
+            if (!string.Equals(EventStore.ActivePath, previousPath, StringComparison.OrdinalIgnoreCase) &&
+                !_host.ConfirmLeaveDraft())
+            {
+                if (!string.Equals(EventStore.DataDir, previousDir, StringComparison.OrdinalIgnoreCase))
+                    EventStore.SetDataDir(previousDir);
+                EventStore.SetActive(previous);
+            }
+
             bool opened = Open(exitOnCancel: false);
             string? failure = _lastOpenError;
             if (!opened)
@@ -219,6 +229,7 @@ namespace Killendar.Features
         /// Returns the status text to show.</summary>
         internal string AdoptFile(string path)
         {
+            if (!_host.ConfirmLeaveDraft()) return string.Empty;
             _host.CloseSidebar();
 
             string previous = EventStore.ActiveFile;
@@ -370,6 +381,7 @@ namespace Killendar.Features
         /// visible immediately. The session password is retained for encrypted Killendars.</summary>
         internal void ReloadActive()
         {
+            if (!_host.ConfirmLeaveDraft()) return;
             bool restoreSidebar = _host.IsSidebarOpen;
             _host.CloseSidebar();
             _store.Close();

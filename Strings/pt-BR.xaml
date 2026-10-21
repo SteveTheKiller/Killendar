@@ -164,6 +164,10 @@
     <sys:String x:Key="Str_Imp_PvLost">Têm detalhes que o Killendar não armazena: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvRepeat">Repetem-se de um jeito que o Killendar não consegue mostrar, só a primeira data será adicionada: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvSkipped">Ilegíveis ou não compatíveis, serão ignorados: {0}</sys:String>
+    <sys:String x:Key="Str_Dlg_DiscardDraftHead">Descartar as alterações deste compromisso?</sys:String>
+    <sys:String x:Key="Str_Dlg_DiscardDraftBody">O que você digitou ainda não foi salvo.</sys:String>
+    <sys:String x:Key="Str_Btn_Discard">Descartar</sys:String>
+    <sys:String x:Key="Str_Btn_KeepEditing">Continuar editando</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Falha na importação: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} compromissos exportados</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Falha na exportação: {0}</sys:String>

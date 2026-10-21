@@ -164,6 +164,10 @@
     <sys:String x:Key="Str_Imp_PvLost">A Killendar által nem tárolt részleteket tartalmaznak: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvRepeat">A Killendar által nem megjeleníthető módon ismétlődnek, csak az első dátum kerül hozzáadásra: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvSkipped">Olvashatatlan vagy nem támogatott, kimaradnak: {0}</sys:String>
+    <sys:String x:Key="Str_Dlg_DiscardDraftHead">Elveti a találkozó módosításait?</sys:String>
+    <sys:String x:Key="Str_Dlg_DiscardDraftBody">A beírtak még nincsenek mentve.</sys:String>
+    <sys:String x:Key="Str_Btn_Discard">Elvetés</sys:String>
+    <sys:String x:Key="Str_Btn_KeepEditing">Szerkesztés folytatása</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Sikertelen importálás: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} találkozó exportálva</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Az exportálás sikertelen: {0}</sys:String>

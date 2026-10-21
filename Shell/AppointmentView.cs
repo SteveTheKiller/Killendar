@@ -90,6 +90,17 @@ namespace Killendar.Shell
         // return to the day's list instead of shutting the panel (DayAgendaPanel.cs).
         void IAppointmentView.ClosePanel() => CloseEditorPanel();
 
+        /// <summary>Discard is the confirm button; Keep editing, Esc and the close button all keep
+        /// the draft and put the caret back in it.</summary>
+        bool IAppointmentView.ConfirmDiscardDraft()
+        {
+            var dlg = new Controls.ConfirmDialog(Loc("Str_Dlg_DiscardDraftHead"), Loc("Str_Dlg_DiscardDraftBody"),
+                Loc("Str_Btn_Discard"), Loc("Str_Btn_KeepEditing")) { Owner = this };
+            dlg.ShowDialog();
+            if (!dlg.Confirmed) FieldTitle.Focus();
+            return dlg.Confirmed;
+        }
+
         /// <summary>The editor knows nothing about the calendar; the shell owns both and forwards.</summary>
         void IAppointmentView.HighlightSelection(System.DateTime? day, System.TimeSpan? timeOfDay)
             => _calendar.SetSelection(day, timeOfDay);

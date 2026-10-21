@@ -122,6 +122,10 @@
     <sys:String x:Key="Str_Imp_PvLost">Enthalten Details, die Killendar nicht speichert: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvRepeat">Wiederholen sich auf eine Weise, die Killendar nicht darstellen kann, nur der erste Termin wird hinzugefügt: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvSkipped">Unlesbar oder nicht unterstützt, werden übersprungen: {0}</sys:String>
+    <sys:String x:Key="Str_Dlg_DiscardDraftHead">Änderungen an diesem Termin verwerfen?</sys:String>
+    <sys:String x:Key="Str_Dlg_DiscardDraftBody">Ihre Eingaben sind noch nicht gespeichert.</sys:String>
+    <sys:String x:Key="Str_Btn_Discard">Verwerfen</sys:String>
+    <sys:String x:Key="Str_Btn_KeepEditing">Weiter bearbeiten</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import fehlgeschlagen: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} Termine exportiert</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export fehlgeschlagen: {0}</sys:String>
