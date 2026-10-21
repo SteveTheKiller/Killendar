@@ -81,14 +81,14 @@
     </PackageReference>
     <PackageReference Include="System.Text.Json" Version="10.0.13" />
     <PackageReference Include="TimeZoneConverter" Version="8.0.0" />
-    <!-- Transitive pins: Costura.Fody -> NETStandard.Library 1.6.1 resolves the vulnerable
-         System.Net.Http 4.3.0 / System.Text.RegularExpressions 4.3.0 (GHSA-7jgj-8wvc-jh57,
-         GHSA-cmhx-cq75-c4mj). Costura is build-time only and the app compiles against the net48
-         framework assemblies, so nothing from that graph ships - these pins just move the
-         resolved versions to the patched releases. ExcludeAssets=all keeps them out of compile
-         and output entirely. -->
+    <!-- Keep the legacy framework package graph on patched versions. The app uses net48
+         framework assemblies; ExcludeAssets=all keeps these inventory pins out of compilation
+         and output, including the older runtime and cryptography dependencies of System.Net.Http. -->
     <PackageReference Include="System.Net.Http" Version="4.3.4" ExcludeAssets="all" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" ExcludeAssets="all" />
+    <PackageReference Include="System.Runtime" Version="4.3.1" ExcludeAssets="all" />
+    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.1" ExcludeAssets="all" />
+    <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" ExcludeAssets="all" />
     <!-- The Killendar store: SQLite, encrypted at rest with SQLCipher (AES-256) when a password
          is set. The STATIC provider (not bundle_e_sqlcipher) is deliberate for the single-exe
          build: the bundle's Batteries_V2 dynamic loader probes Assembly.Location, which is empty
@@ -96,6 +96,7 @@
          plain DllImport, satisfied by SqlCipherBootstrap's preload. The .Core ADO.NET wrapper
          stays managed. Run the vulnerable-package scan at every release. -->
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="10.0.13" />
+    <PackageReference Include="SQLitePCLRaw.core" Version="3.0.5" />
     <PackageReference Include="SQLitePCLRaw.provider.e_sqlcipher" Version="2.1.11" />
     <!-- The x64 SQLCipher native itself is VENDORED (third_party\sqlcipher\e_sqlcipher.dll,
          built from upstream source - see the README there), embedded as a resource and

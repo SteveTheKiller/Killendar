@@ -49,7 +49,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Calendar round trips preserve literal backslashes and escaped text.
 - Reimporting a calendar no longer duplicates edited recurring appointments.
 - Email invites preserve text encoded in their declared character set.
-- Updated SQLCipher to 4.19.0 and SQLite and JSON processing to 10.0.13.
+- Updated SQLCipher to 4.19.0, SQLite and JSON processing to 10.0.13, and SQLitePCLRaw to 3.0.5.
 - Appointment editing preserves morning and afternoon times in every language, including live language changes.
 - Date-format changes preserve appointment dates, duration and recurrence end dates.
 - Recurring appointments remain visible throughout multi-day overlaps.
