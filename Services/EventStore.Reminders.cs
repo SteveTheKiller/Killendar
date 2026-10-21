@@ -26,19 +26,24 @@ namespace Killendar.Services
             if (!_events.Any(e => e.ReminderMinutes.HasValue)) return [];
             var lead = _events.Max(Reminders.Lead);
             var states = ReminderStates();
-            var due = new List<DueReminder>();
+            // A missed date of a series is overtaken by the next one: only the latest due date of
+            // each appointment counts, and dismissing or snoozing it quiets the older ones too.
+            var latest = new Dictionary<Guid, (CalendarEvent Occ, DateTime Fire)>();
             foreach (var occ in GetInRange(now - Reminders.MissedGrace - lead, now + lead + TimeSpan.FromMinutes(1)))
             {
                 if (Reminders.FireTime(occ) is not DateTime fire || fire > now) continue;
                 if (occ.End <= now - Reminders.MissedGrace) continue;
+                if (!latest.TryGetValue(occ.Id, out var seen) || occ.Start > seen.Occ.Start) latest[occ.Id] = (occ, fire);
+            }
+            var due = new List<DueReminder>();
+            foreach (var (occ, fire) in latest.Values)
+            {
                 if (states.TryGetValue((occ.Id, OccurrenceKey(occ)), out var state) &&
                     (state.Dismissed || state.SnoozeUntil > now)) continue;
                 due.Add(new DueReminder(occ.Id, occ.Start, occ.Title, occ.Location, occ.Start, occ.End, occ.AllDay,
                     state.SnoozeUntil > fire ? state.SnoozeUntil : fire));
             }
-            // A missed date of a series is overtaken by the next one: only the latest is shown.
-            return [.. due.GroupBy(d => d.Id).Select(g => g.OrderBy(d => d.Start).Last())
-                          .OrderBy(d => d.Fire).ThenBy(d => d.Start)];
+            return [.. due.OrderBy(d => d.Fire).ThenBy(d => d.Start)];
         }
 
         /// <summary>When reminders will next come due in the coming span, snoozes included. Taken
@@ -79,8 +84,10 @@ namespace Killendar.Services
                 cmd.Parameters.AddWithValue("$until", snoozeUntil == DateTime.MinValue ? ""
                     : snoozeUntil.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture));
                 cmd.Parameters.AddWithValue("$now", DateTime.UtcNow.ToString("o", CultureInfo.InvariantCulture));
+                // Not LoadError: that would block backups and read as a failed undo. A reminder that
+                // could not be marked simply shows again on the next check.
                 try { cmd.ExecuteNonQuery(); }
-                catch (SqliteException ex) { LoadError = ex.Message; }
+                catch (SqliteException) { }
             }
         }
 

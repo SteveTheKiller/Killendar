@@ -68,6 +68,7 @@ namespace Killendar.Services
         {
             SqliteConnection.ClearAllPools();
             File.Delete(Path.Combine(DataDir, name));
+            DeleteBackups(Path.Combine(DataDir, name));
         }
 
         /// <summary>Uses an existing .kcal in the data folder or copies an external one into it.

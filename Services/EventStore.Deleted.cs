@@ -15,6 +15,7 @@ namespace Killendar.Services
         public DateTime DeletedUtc { get; internal set; }
         public string Title { get; internal set; } = "";
         public DateTime Start { get; internal set; }
+        public bool AllDay { get; internal set; }
         /// <summary>Rows the deletion removed: 1 for an appointment, more for a series with
         /// single-date edits.</summary>
         public int Rows { get; internal set; }
@@ -39,8 +40,25 @@ namespace Killendar.Services
         private void Trash(List<CalendarEvent> rows)
         {
             if (rows.Count == 0) return;
+            // Deleted again after an undo: the newer filing replaces the older, stale one.
+            var ids = new HashSet<Guid>(rows.Select(r => r.Id));
+            var superseded = new List<string>();
+            using (var find = _db!.CreateCommand())
+            {
+                find.CommandText = "SELECT id, rows FROM deleted";
+                using var r = find.ExecuteReader();
+                while (r.Read())
+                    if (Rows(r.GetString(1)).Any(row => ids.Contains(row.Id))) superseded.Add(r.GetString(0));
+            }
+            foreach (var old in superseded)
+            {
+                using var drop = _db.CreateCommand();
+                drop.CommandText = "DELETE FROM deleted WHERE id = $id";
+                drop.Parameters.AddWithValue("$id", old);
+                drop.ExecuteNonQuery();
+            }
             var head = rows.FirstOrDefault(r => !r.IsOverride) ?? rows[0];
-            using var cmd = _db!.CreateCommand();
+            using var cmd = _db.CreateCommand();
             cmd.CommandText = "INSERT INTO deleted(id, deleted_utc, title, start_utc, rows) VALUES ($id, $at, $ti, $st, $rows)";
             cmd.Parameters.AddWithValue("$id", Guid.NewGuid().ToString());
             cmd.Parameters.AddWithValue("$at", DateTime.UtcNow.ToString("o", CultureInfo.InvariantCulture));
@@ -71,6 +89,7 @@ namespace Killendar.Services
                     Title = r.GetString(2),
                     Start = DateTime.Parse(r.GetString(3), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToLocalTime(),
                     Rows = rows.Count,
+                    AllDay = (rows.FirstOrDefault(row => !row.IsOverride) ?? rows[0]).AllDay,
                 });
             }
             return list;

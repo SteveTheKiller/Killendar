@@ -196,6 +196,8 @@
     <sys:String x:Key="Str_Del_Header">Az elmúlt 30 napban törölve. Kattintson a visszaállításhoz.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Törölve: {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Visszaállítva: {0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">{0} nem állítható vissza.</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">Ezeket a biztonsági mentéseket nem sikerült újratitkosítani, és továbbra is a korábbi jelszóval vagy jelszó nélkül nyílnak meg. Törölje őket: {0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">A biztonsági mentés sikertelen: {0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">Zárolás most</sys:String>
     <sys:String x:Key="Str_Lock_Change">Jelszó módosítása vagy eltávolítása</sys:String>

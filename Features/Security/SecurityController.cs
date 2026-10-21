@@ -47,7 +47,8 @@ namespace Killendar.Features
         internal bool Lock()
         {
             if (IsLocked) return true;
-            if (!_store.IsOpen) return false;
+            // An import writing on a worker thread owns the connection; the caller retries later.
+            if (!_store.IsOpen || _store.IsImporting) return false;
             if (!_store.HasPassword)
             {
                 _host.SetStatus(_host.Loc("Str_Status_LockNeedsPassword"));
@@ -197,6 +198,7 @@ namespace Killendar.Features
         /// </summary>
         internal void ShowKillendars()
         {
+            if (IsLocked) return;   // the unlock prompt is the only way back in
             // The panel is NOT closed here. It used to be, unconditionally, which meant merely
             // LOOKING at the Killendars list threw away whatever you were composing - and on a
             // narrow window it also gave back the width the panel had borrowed, so the main window
@@ -332,6 +334,7 @@ namespace Killendar.Features
         /// Confirm before copying an external file and changing the open Killendar.</summary>
         internal void AdoptPendingFile()
         {
+            if (IsLocked) return;   // the file stays pending until the unlock
             string? path = App.PendingOpenFile;
             App.PendingOpenFile = null;
             if (path == null || !_store.IsOpen) return;
@@ -360,7 +363,7 @@ namespace Killendar.Features
         /// <summary>Sets, changes or removes the password on the open Killendar.</summary>
         internal void ToggleLock()
         {
-            if (!_store.IsOpen) return;
+            if (IsLocked || !_store.IsOpen) return;
 
             try
             {
@@ -380,7 +383,7 @@ namespace Killendar.Features
                     }
                     var outcome = _store.SetPassword(dlg.Password);
                     _password = dlg.Password;
-                    _host.SetStatus(PasswordStatus(outcome, "Str_Status_Encrypted"));
+                    _host.SetStatus(WithBackupWarning(PasswordStatus(outcome, "Str_Status_Encrypted")));
                 }
                 else
                 {
@@ -400,8 +403,8 @@ namespace Killendar.Features
                     }
                     var outcome = _store.SetPassword(string.IsNullOrEmpty(dlg.Password) ? null : dlg.Password);
                     _password = string.IsNullOrEmpty(dlg.Password) ? null : dlg.Password;
-                    _host.SetStatus(PasswordStatus(outcome, _store.HasPassword
-                        ? "Str_Status_PwChanged" : "Str_Status_PwRemoved"));
+                    _host.SetStatus(WithBackupWarning(PasswordStatus(outcome, _store.HasPassword
+                        ? "Str_Status_PwChanged" : "Str_Status_PwRemoved")));
                 }
             }
             catch (Exception ex)
@@ -418,6 +421,12 @@ namespace Killendar.Features
                 ? _host.Loc(successKey)
                 : string.Format(_host.Loc(outcome.RetainedBackupIsUnencrypted
                     ? "Str_Status_PwPlainBackupKept" : "Str_Status_PwBackupKept"), outcome.RetainedBackup);
+
+        /// <summary>A backup that could not be rewritten under the new password still opens with
+        /// the old one, or with none; the user has to know which files to delete.</summary>
+        private string WithBackupWarning(string status) =>
+            _store.BackupsNotRekeyed.Count == 0 ? status
+                : status + " " + string.Format(_host.Loc("Str_Status_BackupNotRekeyed"), string.Join(", ", _store.BackupsNotRekeyed));
 
         internal void RefreshLockState() => _host.ShowLockState(_store.HasPassword);
 
@@ -436,6 +445,7 @@ namespace Killendar.Features
         /// visible immediately. The session password is retained for encrypted Killendars.</summary>
         internal void ReloadActive()
         {
+            if (IsLocked) return;
             if (!_host.ConfirmLeaveDraft()) return;
             bool restoreSidebar = _host.IsSidebarOpen;
             _host.CloseSidebar();

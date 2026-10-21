@@ -154,6 +154,8 @@
     <sys:String x:Key="Str_Del_Header">Eliminadas en los últimos 30 días. Haga clic en una para restaurarla.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Eliminada el {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Restaurada: {0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">No se pudo restaurar {0}.</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">Estas copias de seguridad no se pudieron volver a cifrar y aún se abren con la contraseña anterior o sin ninguna. Elimínalas: {0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">La copia de seguridad falló: {0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">Bloquear ahora</sys:String>
     <sys:String x:Key="Str_Lock_Change">Cambiar o quitar la contraseña</sys:String>

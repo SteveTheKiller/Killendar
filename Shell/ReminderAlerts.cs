@@ -40,6 +40,7 @@ namespace Killendar.Shell
         private void CheckReminders()
         {
             if (_reminderTimer == null) return;   // not started: the first open has not finished
+            if (_store.IsImporting) return;       // the worker owns the connection; next tick
             if (_security.IsLocked)
             {
                 int count = _lockedPending + _lockedComing.Count(t => t <= DateTime.Now);

@@ -196,6 +196,8 @@
     <sys:String x:Key="Str_Del_Header">Deleted in the last 30 days. Click one to restore it.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Deleted {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Restored {0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">Could not restore {0}.</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">These backups could not be re-encrypted and still open with the previous password, or with none. Delete them: {0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">Backup failed: {0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">Lock now</sys:String>
     <sys:String x:Key="Str_Lock_Change">Change or remove password</sys:String>

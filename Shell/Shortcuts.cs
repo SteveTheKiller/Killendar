@@ -33,6 +33,14 @@ namespace Killendar.Shell
             bool shift = (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
             bool ctrlShortcut = ctrl && !alt;
 
+            // Locked: no shortcut reaches the calendar; a key press asks for the password (Lock.cs).
+            if (_security.IsLocked)
+            {
+                e.Handled = true;
+                AskToUnlockWhenSeen();
+                return;
+            }
+
             if (AboutOverlay.Visibility == Visibility.Visible || ShortcutsOverlay.Visibility == Visibility.Visible)
             {
                 if (e.Key == Key.Escape)

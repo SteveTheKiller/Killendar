@@ -26,7 +26,8 @@ namespace Killendar.Shell
                 string title = string.IsNullOrWhiteSpace(item.Title) ? Loc("Str_Cal_NoTitle") : item.Title;
                 var entry = new MenuItem
                 {
-                    Header = title + "    " + DateFormatManager.MonthDay(item.Start) + " " + DateFormatManager.Time(item.Start),
+                    Header = title + "    " + DateFormatManager.MonthDay(item.Start)
+                             + (item.AllDay ? "" : " " + DateFormatManager.Time(item.Start)),
                     ToolTip = string.Format(Loc("Str_Del_DeletedOn"),
                         DateFormatManager.Format(item.DeletedUtc.ToLocalTime()) + " " + DateFormatManager.Time(item.DeletedUtc.ToLocalTime())),
                 };
@@ -37,7 +38,7 @@ namespace Killendar.Shell
                     if (_agendaDay != null) BuildDayAgendaRows();
                     StatusText.Text = restored
                         ? string.Format(Loc("Str_Status_Restored"), title)
-                        : string.Format(Loc("Str_Status_UndoFailed"), _store.LoadError ?? "");
+                        : string.Format(Loc("Str_Status_RestoreFailed"), title);
                 };
                 _deletedMenu.Items.Add(entry);
             }

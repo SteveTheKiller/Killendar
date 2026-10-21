@@ -196,6 +196,8 @@
     <sys:String x:Key="Str_Del_Header">Excluídos nos últimos 30 dias. Clique para restaurar.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Excluído em {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Restaurado: {0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">Não foi possível restaurar {0}.</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">Estes backups não puderam ser criptografados de novo e ainda abrem com a senha anterior, ou sem senha. Exclua-os: {0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">Falha no backup: {0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">Bloquear agora</sys:String>
     <sys:String x:Key="Str_Lock_Change">Alterar ou remover a senha</sys:String>

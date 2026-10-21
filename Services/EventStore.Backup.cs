@@ -60,7 +60,12 @@ namespace Killendar.Services
         /// LastBackupError set. Never throws: a backup is a safety net, not a reason to stop.</summary>
         public string? BackupNow(DateTime now)
         {
-            if (_db == null || LoadError != null) return null;
+            if (_db == null) return null;
+            if (LoadError != null)
+            {
+                LastBackupError = LoadError;   // a calendar that failed to load is not backed up over a good copy
+                return null;
+            }
             lock (_writeGate)
             {
                 string final = Path.Combine(BackupDir,
@@ -70,14 +75,20 @@ namespace Killendar.Services
                     Directory.CreateDirectory(BackupDir);
                     string staged = final + ".partial";
                     ExportVerified(_db, staged, _password);
+                    // Same second: the newer copy wins, but the earlier one is only set aside until
+                    // the newer is in place, so a failed move costs nothing.
+                    string aside = final + ".old";
                     try
                     {
-                        if (File.Exists(final)) File.Delete(final);   // same second: the newer copy wins
+                        TryDelete(aside);
+                        if (File.Exists(final)) File.Move(final, aside);
                         File.Move(staged, final);
+                        TryDelete(aside);
                     }
                     catch
                     {
                         TryDelete(staged);
+                        try { if (!File.Exists(final) && File.Exists(aside)) File.Move(aside, final); } catch { /* best effort */ }
                         throw;
                     }
                 }
@@ -95,8 +106,13 @@ namespace Killendar.Services
         /// <summary>After a password change, rewrites every backup under the new key, so a
         /// calendar that was just encrypted leaves no readable copy behind and an old password
         /// opens nothing. A backup that cannot be rewritten is left as it was and reported.</summary>
+        /// <summary>Backups the last password change could not rewrite, which still open with the
+        /// old password (or none). Empty when every one was rewritten.</summary>
+        public List<string> BackupsNotRekeyed { get; } = [];
+
         private void RekeyBackups(string? oldPassword, string? newPassword)
         {
+            BackupsNotRekeyed.Clear();
             foreach (var backup in ListBackups())
             {
                 string staged = backup.Path + ".rekey";
@@ -115,6 +131,7 @@ namespace Killendar.Services
                 {
                     TryDelete(staged);
                     LastBackupError = ex.Message;
+                    BackupsNotRekeyed.Add(backup.Path);
                 }
             }
         }
@@ -186,6 +203,13 @@ namespace Killendar.Services
                 keep.Add(week.First().Path);
             foreach (var old in all.Where(b => !keep.Contains(b.Path)))
                 TryDelete(old.Path);
+        }
+
+        /// <summary>A deleted calendar's backups go with it: the delete promises the appointments
+        /// are gone, and a new calendar of the same name must not inherit them.</summary>
+        private static void DeleteBackups(string calendarPath)
+        {
+            foreach (var backup in ListBackupsFor(calendarPath)) TryDelete(backup.Path);
         }
 
         /// <summary>Renames a calendar's backups along with it, so they stay listed under it.</summary>

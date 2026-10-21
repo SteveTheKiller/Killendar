@@ -154,6 +154,8 @@
     <sys:String x:Key="Str_Del_Header">In den letzten 30 Tagen gelöscht. Zum Wiederherstellen anklicken.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Gelöscht am {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Wiederhergestellt: {0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">{0} konnte nicht wiederhergestellt werden.</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">Diese Sicherungen konnten nicht neu verschlüsselt werden und lassen sich weiter mit dem bisherigen Passwort oder ohne öffnen. Löschen Sie sie: {0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">Sicherung fehlgeschlagen: {0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">Jetzt sperren</sys:String>
     <sys:String x:Key="Str_Lock_Change">Passwort ändern oder entfernen</sys:String>

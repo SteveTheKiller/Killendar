@@ -154,6 +154,8 @@
     <sys:String x:Key="Str_Del_Header">过去 30 天内删除的项目。点击即可恢复。</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">删除于 {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">已恢复：{0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">无法恢复 {0}。</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">这些备份无法重新加密，仍可用之前的密码或无密码打开。请删除它们：{0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">备份失败：{0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">立即锁定</sys:String>
     <sys:String x:Key="Str_Lock_Change">更改或移除密码</sys:String>

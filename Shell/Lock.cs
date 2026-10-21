@@ -16,6 +16,8 @@ namespace Killendar.Shell
     {
         private DispatcherTimer? _idleTimer;
         private bool _unlockAsking;
+        /// <summary>A lock that came while an import was writing; taken once it finishes.</summary>
+        private bool _lockWaiting;
 
         /// <summary>Hidden, not collapsed: the layout holds still and the panel keeps its draft.</summary>
         void ISecurityHost.ShowLocked(bool locked) =>
@@ -26,6 +28,7 @@ namespace Killendar.Shell
             _idleTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(15) };
             _idleTimer.Tick += (_, _) =>
             {
+                if (_lockWaiting && !_store.IsImporting) { LockAndAsk(); return; }
                 if (_store.HasPassword && !_security.IsLocked &&
                     AutoLock.IdleDue(AutoLock.IdleTime(), AutoLock.IdleMinutes(Settings.Get(AutoLock.IdleSetting))))
                     LockAndAsk();
@@ -40,6 +43,8 @@ namespace Killendar.Shell
             };
             // A window locked while hidden or minimized asks when it comes back.
             Activated += (_, _) => AskToUnlockWhenSeen();
+            // Restoring from the taskbar can activate before the state leaves Minimized.
+            StateChanged += (_, _) => AskToUnlockWhenSeen();
         }
 
         private void OnSessionSwitch(object sender, SessionSwitchEventArgs e)
@@ -50,9 +55,13 @@ namespace Killendar.Shell
 
         private void LockAndAsk()
         {
-            // Overlays and menus could still show text from the calendar.
+            // An import writing on a worker thread owns the connection: lock when it is done.
+            _lockWaiting = _store.IsImporting;
+            if (_lockWaiting || !_store.HasPassword) return;
+            // Overlays, menus and dialogs (search results above all) could still show the calendar.
             if (ShortcutsOverlay.Visibility == Visibility.Visible) ToggleShortcutsOverlay();
             if (_deletedMenu != null) _deletedMenu.IsOpen = false;
+            foreach (Window owned in OwnedWindows.Cast<Window>().ToList()) owned.Close();
             var pending = _store.HasPassword ? _store.DueReminders(DateTime.Now).Count : 0;
             var coming = _store.HasPassword ? _store.UpcomingReminderTimes(DateTime.Now, TimeSpan.FromDays(1)) : [];
             if (!_security.Lock()) return;

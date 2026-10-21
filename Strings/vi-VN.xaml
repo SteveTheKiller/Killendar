@@ -185,6 +185,8 @@
   <sys:String x:Key="Str_Del_Header">Đã xóa trong 30 ngày qua. Bấm để khôi phục.</sys:String>
   <sys:String x:Key="Str_Del_DeletedOn">Đã xóa lúc {0}</sys:String>
   <sys:String x:Key="Str_Status_Restored">Đã khôi phục: {0}</sys:String>
+  <sys:String x:Key="Str_Status_RestoreFailed">Không thể khôi phục {0}.</sys:String>
+  <sys:String x:Key="Str_Status_BackupNotRekeyed">Không thể mã hóa lại các bản sao lưu này, chúng vẫn mở được bằng mật khẩu cũ hoặc không cần mật khẩu. Hãy xóa chúng: {0}</sys:String>
   <sys:String x:Key="Str_Status_BackupFailed">Sao lưu thất bại: {0}</sys:String>
   <sys:String x:Key="Str_Lock_Now">Khóa ngay</sys:String>
   <sys:String x:Key="Str_Lock_Change">Đổi hoặc gỡ mật khẩu</sys:String>

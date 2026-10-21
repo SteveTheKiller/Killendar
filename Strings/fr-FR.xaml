@@ -154,6 +154,8 @@
     <sys:String x:Key="Str_Del_Header">Supprimés ces 30 derniers jours. Cliquez pour restaurer.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Supprimé le {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Restauré : {0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">Impossible de restaurer {0}.</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">Ces sauvegardes n’ont pas pu être rechiffrées et s’ouvrent encore avec l’ancien mot de passe, ou sans. Supprimez-les : {0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">Échec de la sauvegarde : {0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">Verrouiller maintenant</sys:String>
     <sys:String x:Key="Str_Lock_Change">Modifier ou supprimer le mot de passe</sys:String>

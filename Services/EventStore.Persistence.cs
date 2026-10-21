@@ -92,7 +92,7 @@ namespace Killendar.Services
                         // One unfolded content line per row; a content line cannot contain a newline.
                         KeptProperties = r.IsDBNull(31) || r.GetString(31).Length == 0
                             ? [] : [.. r.GetString(31).Split('\n')],
-                        ReminderMinutes = r.IsDBNull(32) || r.GetInt64(32) < 0 || r.GetInt64(32) > int.MaxValue
+                        ReminderMinutes = r.IsDBNull(32) || r.GetInt64(32) < 0 || r.GetInt64(32) > Reminders.MaxMinutes
                             ? null : (int)r.GetInt64(32),
                     });
                 }

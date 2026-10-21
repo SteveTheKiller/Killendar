@@ -197,6 +197,8 @@
     <sys:String x:Key="Str_Del_Header">Удалено за последние 30 дней. Нажмите, чтобы восстановить.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Удалено {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Восстановлено: {0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">Не удалось восстановить {0}.</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">Эти резервные копии не удалось перешифровать, они по-прежнему открываются старым паролем или без него. Удалите их: {0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">Не удалось создать резервную копию: {0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">Заблокировать сейчас</sys:String>
     <sys:String x:Key="Str_Lock_Change">Изменить или удалить пароль</sys:String>

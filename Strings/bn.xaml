@@ -154,6 +154,8 @@
     <sys:String x:Key="Str_Del_Header">গত 30 দিনে মোছা হয়েছে। ফেরাতে একটিতে ক্লিক করুন।</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">মোছা হয়েছে {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">ফেরানো হয়েছে {0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">{0} ফেরত আনা যায়নি।</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">এই ব্যাকআপগুলো আবার এনক্রিপ্ট করা যায়নি, আগের পাসওয়ার্ড দিয়ে বা পাসওয়ার্ড ছাড়াই খোলে। এগুলো মুছে ফেলুন: {0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">ব্যাকআপ ব্যর্থ হয়েছে: {0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">এখনই লক করুন</sys:String>
     <sys:String x:Key="Str_Lock_Change">পাসওয়ার্ড বদলান বা সরান</sys:String>

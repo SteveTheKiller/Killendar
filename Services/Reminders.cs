@@ -32,9 +32,13 @@ namespace Killendar.Services
 
         private const int AllDayHour = 9;
 
+        /// <summary>The longest lead kept as a reminder: four weeks. An imported alarm further
+        /// out stays in the file for other calendars but reminds nothing here.</summary>
+        public const int MaxMinutes = 28 * 1440;
+
         public static DateTime? FireTime(CalendarEvent ev)
         {
-            if (ev.ReminderMinutes is not int minutes) return null;
+            if (ev.ReminderMinutes is not int minutes || minutes < 0 || minutes > MaxMinutes) return null;
             try
             {
                 return ev.AllDay ? ev.Start.Date.AddDays(-1).AddHours(AllDayHour) : ev.Start.AddMinutes(-minutes);
@@ -44,7 +48,7 @@ namespace Killendar.Services
 
         /// <summary>How far before its start an appointment can remind, for the range to scan.</summary>
         public static TimeSpan Lead(CalendarEvent ev) =>
-            ev.ReminderMinutes is not int minutes ? TimeSpan.Zero
+            ev.ReminderMinutes is not int minutes || minutes < 0 || minutes > MaxMinutes ? TimeSpan.Zero
             : ev.AllDay ? TimeSpan.FromHours(24 - AllDayHour) : TimeSpan.FromMinutes(minutes);
 
         /// <summary>What a reminder choice reads as. An all-day appointment says when it will
@@ -108,10 +112,14 @@ namespace Killendar.Services
         {
             var m = Duration.Match(value.ToUpperInvariant());
             if (!m.Success) return null;
+            // A part past seven digits is far beyond MaxMinutes already; never parse it, and the
+            // sum of seven-digit parts cannot overflow a long.
+            foreach (var name in new[] { "w", "d", "h", "m", "s" })
+                if (m.Groups[name].Value.Length > 7) return null;
             long Part(string name) => m.Groups[name].Success ? long.Parse(m.Groups[name].Value, CultureInfo.InvariantCulture) : 0;
             long minutes = Part("w") * 7 * 1440 + Part("d") * 1440 + Part("h") * 60 + Part("m") + (Part("s") + 59) / 60;
             if (minutes == 0) return 0;
-            if (m.Groups["sign"].Value != "-" || minutes > int.MaxValue) return null;
+            if (m.Groups["sign"].Value != "-" || minutes > MaxMinutes) return null;
             return (int)minutes;
         }
 

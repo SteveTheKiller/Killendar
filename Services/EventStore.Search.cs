@@ -30,19 +30,26 @@ namespace Killendar.Services
             if (terms.Length == 0) return [];
             var upcoming = new List<CalendarEvent>();
             var past = new List<CalendarEvent>();
+            // Dates a single-date edit replaced are found through that edit's own row instead.
+            var masters = _events.Where(e => e.IsSeries).ToDictionary(e => e.Id);
+            var replaced = new HashSet<(Guid, long)>();
+            foreach (var e in _events)
+                if (e.IsOverride && e.OccurrenceStart.HasValue && masters.TryGetValue(e.SeriesId!.Value, out var master))
+                    replaced.Add((master.Id, Recurrence.OccurrenceKey(master, e)));
+            bool Live(CalendarEvent occ) => !replaced.Contains((occ.Id, Recurrence.OccurrenceKey(masters[occ.Id], occ)));
             foreach (var row in _events)
             {
                 if (!Matches(row, terms)) continue;
                 if (row.IsSeries)
                 {
                     if (span != SearchSpan.Past &&
-                        Recurrence.Expand(row, now, now + SearchReach).FirstOrDefault(o => o.End > now) is CalendarEvent next)
+                        Recurrence.Expand(row, now, now + SearchReach).FirstOrDefault(o => o.End > now && Live(o)) is CalendarEvent next)
                     {
                         upcoming.Add(next);
                         continue;
                     }
                     if (span != SearchSpan.Upcoming &&
-                        Recurrence.Expand(row, now - SearchReach, now).LastOrDefault(o => o.End <= now) is CalendarEvent last)
+                        Recurrence.Expand(row, now - SearchReach, now).LastOrDefault(o => o.End <= now && Live(o)) is CalendarEvent last)
                         past.Add(last);
                     continue;
                 }

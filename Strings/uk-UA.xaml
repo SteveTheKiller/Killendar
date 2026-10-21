@@ -196,6 +196,8 @@
     <sys:String x:Key="Str_Del_Header">Видалено за останні 30 днів. Натисніть, щоб відновити.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Видалено {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Відновлено: {0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">Не вдалося відновити {0}.</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">Ці резервні копії не вдалося повторно зашифрувати, вони досі відкриваються попереднім паролем або без нього. Видаліть їх: {0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">Не вдалося створити резервну копію: {0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">Заблокувати зараз</sys:String>
     <sys:String x:Key="Str_Lock_Change">Змінити або видалити пароль</sys:String>

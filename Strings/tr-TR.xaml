@@ -154,6 +154,8 @@
     <sys:String x:Key="Str_Del_Header">Son 30 günde silinenler. Geri yüklemek için tıklayın.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Silinme: {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Geri yüklendi: {0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">{0} geri yüklenemedi.</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">Bu yedekler yeniden şifrelenemedi ve hâlâ önceki parolayla ya da parolasız açılıyor. Silin: {0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">Yedekleme başarısız oldu: {0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">Şimdi kilitle</sys:String>
     <sys:String x:Key="Str_Lock_Change">Parolayı değiştir veya kaldır</sys:String>

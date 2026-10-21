@@ -290,8 +290,10 @@ namespace Killendar.Controls
             var last = EventStore.ListBackupsFor(Path.Combine(EventStore.DataDir, name)).FirstOrDefault();
             DlgStatus.Text = EventStore.DataDir + Environment.NewLine + (last == null
                 ? Loc("Str_Kc_NoBackups")
-                : string.Format(Loc("Str_Kc_LastBackup"), last.Taken.ToString("yyyy-MM-dd HH:mm")));
+                : string.Format(Loc("Str_Kc_LastBackup"), BackupTime(last.Taken)));
         }
+
+        private static string BackupTime(DateTime taken) => DateFormatManager.Format(taken) + " " + DateFormatManager.Time(taken);
 
         /// <summary>Lists the selected calendar's backups under Restore a backup, newest first.</summary>
         private void RowMenu_Opened(object sender, RoutedEventArgs e)
@@ -302,7 +304,7 @@ namespace Killendar.Controls
                 : [];
             foreach (var backup in backups)
             {
-                var item = new MenuItem { Header = backup.Taken.ToString("yyyy-MM-dd HH:mm"), Tag = backup.Path };
+                var item = new MenuItem { Header = BackupTime(backup.Taken), Tag = backup.Path };
                 item.Click += RestoreBackup_Click;
                 RestoreBackupMenu.Items.Add(item);
             }

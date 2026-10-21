@@ -246,6 +246,8 @@
     <sys:String x:Key="Str_Del_Header">Usunięte w ciągu ostatnich 30 dni. Kliknij, aby przywrócić.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Usunięto {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Przywrócono: {0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">Nie udało się przywrócić {0}.</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">Tych kopii zapasowych nie udało się ponownie zaszyfrować i nadal otwierają się poprzednim hasłem lub bez hasła. Usuń je: {0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">Nie udało się utworzyć kopii zapasowej: {0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">Zablokuj teraz</sys:String>
     <sys:String x:Key="Str_Lock_Change">Zmień lub usuń hasło</sys:String>

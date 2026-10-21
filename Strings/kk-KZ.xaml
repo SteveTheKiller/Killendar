@@ -196,6 +196,8 @@
     <sys:String x:Key="Str_Del_Header">Соңғы 30 күнде жойылғандар. Қалпына келтіру үшін басыңыз.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Жойылған уақыты: {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Қалпына келтірілді: {0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">{0} қалпына келтірілмеді.</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">Бұл сақтық көшірмелер қайта шифрланбады және әлі де бұрынғы құпиясөзбен немесе құпиясөзсіз ашылады. Оларды жойыңыз: {0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">Сақтық көшірме жасалмады: {0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">Қазір құлыптау</sys:String>
     <sys:String x:Key="Str_Lock_Change">Құпиясөзді өзгерту немесе алып тастау</sys:String>

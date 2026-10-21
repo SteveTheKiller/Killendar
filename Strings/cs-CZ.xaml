@@ -154,6 +154,8 @@
     <sys:String x:Key="Str_Del_Header">Smazáno za posledních 30 dní. Kliknutím položku obnovíte.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Smazáno {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Obnoveno: {0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">{0} se nepodařilo obnovit.</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">Tyto zálohy se nepodařilo znovu zašifrovat a stále se otevřou předchozím heslem nebo bez hesla. Smažte je: {0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">Zálohování selhalo: {0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">Zamknout</sys:String>
     <sys:String x:Key="Str_Lock_Change">Změnit nebo odebrat heslo</sys:String>

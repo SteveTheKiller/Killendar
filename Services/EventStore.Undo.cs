@@ -92,6 +92,11 @@ namespace Killendar.Services
             {
                 using (var tx = _db!.BeginTransaction())
                 {
+                    // Rows this step takes away (undoing a restore or an add) go to Recently
+                    // deleted, so stepping back never loses an appointment for good.
+                    Trash([.. step.Rows.Where(r => (back ? r.Before : r.After) == null)
+                                       .Select(r => _events.FirstOrDefault(e => e.Id == r.Id))
+                                       .Where(e => e != null)!]);
                     foreach (var (id, before, after) in step.Rows)
                     {
                         var target = back ? before : after;

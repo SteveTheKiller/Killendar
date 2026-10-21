@@ -169,6 +169,8 @@
     <sys:String x:Key="Str_Del_Header">Izbrisano v zadnjih 30 dneh. Kliknite za obnovitev.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Izbrisano {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Obnovljeno: {0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">{0} ni bilo mogoče obnoviti.</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">Teh varnostnih kopij ni bilo mogoče znova šifrirati in se še vedno odprejo s prejšnjim geslom ali brez njega. Izbrišite jih: {0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">Varnostno kopiranje ni uspelo: {0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">Zakleni zdaj</sys:String>
     <sys:String x:Key="Str_Lock_Change">Spremeni ali odstrani geslo</sys:String>

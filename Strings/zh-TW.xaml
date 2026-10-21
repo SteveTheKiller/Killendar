@@ -154,6 +154,8 @@
     <sys:String x:Key="Str_Del_Header">過去 30 天內刪除的項目。按一下即可還原。</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">刪除於 {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">已還原：{0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">無法還原 {0}。</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">這些備份無法重新加密，仍可用先前的密碼或無密碼開啟。請刪除它們：{0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">備份失敗：{0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">立即鎖定</sys:String>
     <sys:String x:Key="Str_Lock_Change">變更或移除密碼</sys:String>

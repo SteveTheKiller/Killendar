@@ -240,6 +240,7 @@ namespace Killendar.Services
             _db = null;
             _password = null;
             _file = "";
+            _events = [];   // a closed (or locked) calendar keeps nothing readable in memory
             ForgetHistory();
             // Dispose does NOT release the file handle - the pool keeps it. Anything that swaps
             // the file underneath (password change, switching Killendars) needs this.

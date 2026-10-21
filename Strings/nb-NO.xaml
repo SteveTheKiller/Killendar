@@ -196,6 +196,8 @@
     <sys:String x:Key="Str_Del_Header">Slettet de siste 30 dagene. Klikk for å gjenopprette.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Slettet {0}</sys:String>
     <sys:String x:Key="Str_Status_Restored">Gjenopprettet: {0}</sys:String>
+    <sys:String x:Key="Str_Status_RestoreFailed">Kunne ikke gjenopprette {0}.</sys:String>
+    <sys:String x:Key="Str_Status_BackupNotRekeyed">Disse sikkerhetskopiene kunne ikke krypteres på nytt og åpnes fortsatt med det forrige passordet, eller uten. Slett dem: {0}</sys:String>
     <sys:String x:Key="Str_Status_BackupFailed">Sikkerhetskopiering mislyktes: {0}</sys:String>
     <sys:String x:Key="Str_Lock_Now">Lås nå</sys:String>
     <sys:String x:Key="Str_Lock_Change">Endre eller fjern passordet</sys:String>
