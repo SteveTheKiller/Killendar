@@ -138,6 +138,14 @@ namespace Killendar.Shell
 
             if (TypingInField()) return;
 
+            // A focused day or time slot uses the arrows to move between days and slots
+            // (Views/CalendarKeyboard.cs); this preview handler runs first, so it must step aside
+            // or Left/Right would page the calendar instead.
+            if ((e.Key == Key.Left || e.Key == Key.Right) &&
+                (Keyboard.FocusedElement is Views.CalendarKeyboard.DayBorder ||
+                 Keyboard.FocusedElement is Views.CalendarKeyboard.SlotCanvas))
+                return;
+
             switch (e.Key)
             {
                 case Key.N:      _calendar.NewAtAnchor(); break;
