@@ -108,6 +108,7 @@
     <sys:String x:Key="Str_Status_ImportUnreadable">. {0} tanesinin tarihi okunamadı ve atlandı</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} tanesi görev veya nottu; Killendar bunları saklamaz</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Gelecekteki tekrarları etkileyen desteklenmeyen değişiklikler atlandı: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportCanceled">. İptal edilen toplantılar eklenmedi: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">İçe aktarma başarısız: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} randevu dışa aktarıldı</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Dışa aktarma başarısız: {0}</sys:String>

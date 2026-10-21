@@ -139,6 +139,7 @@
   <sys:String x:Key="Str_Status_ImportUnreadable">. Có {0} mục không có ngày hợp lệ nên đã bị bỏ qua</sys:String>
   <sys:String x:Key="Str_Status_ImportUnsupported">. Có {0} mục là tác vụ hoặc ghi chú mà Killendar không lưu trữ</sys:String>
   <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Đã bỏ qua các thay đổi không được hỗ trợ có ảnh hưởng đến những lần lặp sau: {0}</sys:String>
+  <sys:String x:Key="Str_Status_ImportCanceled">. Không thêm các cuộc họp đã bị hủy: {0}</sys:String>
   <sys:String x:Key="Str_Status_ImportFailed">Nhập không thành công: {0}</sys:String>
   <sys:String x:Key="Str_Status_Exported">Đã xuất {0} cuộc hẹn</sys:String>
   <sys:String x:Key="Str_Status_ExportFailed">Xuất không thành công: {0}</sys:String>

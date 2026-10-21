@@ -197,6 +197,7 @@
     <sys:String x:Key="Str_Status_ImportUnreadable">. {0} nie miało czytelnej daty i zostało pominiętych</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} było zadaniami lub notatkami, których Killendar nie przechowuje</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Pominięto nieobsługiwane zmiany dotyczące przyszłych wystąpień: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportCanceled">. Nie dodano odwołanych spotkań: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import nie powiódł się: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Eksport nie powiódł się: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Brak danych do wyeksportowania</sys:String>

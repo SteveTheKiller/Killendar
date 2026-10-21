@@ -34,6 +34,11 @@ namespace Killendar.Services
         /// repeat concept, so ONLY THE FIRST OCCURRENCE was imported and every later one is lost.
         /// Counted so the import can say so out loud. Remove this when repeats are modeled.</summary>
         public int Repeating;
+
+        /// <summary>Canceled meetings (STATUS:CANCELLED or a METHOD:CANCEL calendar). They are
+        /// never imported as appointments; a canceled date of a series in the same file removes
+        /// that date from the series instead.</summary>
+        public int Canceled;
     }
 
     /// <summary>
@@ -99,6 +104,12 @@ namespace Killendar.Services
             OccurrenceTimeBasis recurrenceBasis = OccurrenceTimeBasis.Date;
             string recurrenceZone = "";
             var exclusions = new List<(DateTime dt, bool allDay, RecurrenceTimeBasis basis, DateTime? anchor, string zone)>();
+            (DateTime dt, bool allDay, RecurrenceTimeBasis basis, DateTime? anchor, string zone)? recurrenceIdValue = null;
+
+            // A METHOD:CANCEL calendar cancels every event in it; STATUS:CANCELLED cancels one.
+            bool calendarCanceled = false;
+            bool canceled = false;
+            var canceledDates = new List<(Guid series, (DateTime dt, bool allDay, RecurrenceTimeBasis basis, DateTime? anchor, string zone) date)>();
 
             foreach (var raw in lines)
             {
@@ -121,6 +132,8 @@ namespace Killendar.Services
                         recurrenceAllDay = false;
                         recurrenceAnchor = null;
                         recurrenceZone = "";
+                        recurrenceIdValue = null;
+                        canceled = false;
                         exclusions.Clear();
                     }
                     else if (current == null &&
@@ -142,6 +155,13 @@ namespace Killendar.Services
                         {
                             result.Unsupported++;
                             result.UnsupportedRanges++;
+                        }
+                        else if (canceled || calendarCanceled)
+                        {
+                            // Never an appointment. A canceled date of a series is noted so the
+                            // series in this file can drop it once everything has been read.
+                            result.Canceled++;
+                            if (recurrenceIdValue.HasValue) canceledDates.Add((current.Id, recurrenceIdValue.Value));
                         }
                         else if (!haveStart)
                         {
@@ -239,7 +259,12 @@ namespace Killendar.Services
                     continue;
                 }
 
-                if (current == null) continue;
+                if (current == null)
+                {
+                    if (upper == "METHOD" && stack.Count > 0 && stack[stack.Count - 1] == "VCALENDAR")
+                        calendarCanceled = value.Trim().Equals("CANCEL", StringComparison.OrdinalIgnoreCase);
+                    continue;
+                }
 
                 // A property counts only when VEVENT is the component we are DIRECTLY inside.
                 // A VALARM nested in a VEVENT carries its own DESCRIPTION, DURATION and ATTENDEE:
@@ -259,6 +284,10 @@ namespace Killendar.Services
 
                     case "SUMMARY":
                         current.Title = UnescapeText(value);
+                        break;
+
+                    case "STATUS":
+                        canceled = value.Trim().Equals("CANCELLED", StringComparison.OrdinalIgnoreCase);
                         break;
 
                     case "DESCRIPTION":
@@ -312,6 +341,7 @@ namespace Killendar.Services
                         var rid = ParseDateTime(value, param);
                         if (rid != null)
                         {
+                            recurrenceIdValue = rid.Value;
                             recurrenceId = rid.Value.dt;
                             recurrenceAllDay = rid.Value.allDay;
                             recurrenceAnchor = rid.Value.anchor ?? DateTime.SpecifyKind(rid.Value.dt, DateTimeKind.Unspecified);
@@ -379,6 +409,14 @@ namespace Killendar.Services
                         // Could store organizer; for now skip
                         break;
                 }
+            }
+
+            foreach (var (series, date) in canceledDates)
+            {
+                var master = result.Events.Find(e => e.Id == series && e.IsSeries);
+                if (master == null) continue;
+                if (date.allDay) master.SkipDates.Add(date.dt.Date);
+                else if (!master.AllDay) master.SkipOccurrences.Add(CanonicalExclusion(master, date));
             }
 
             return result;

@@ -150,6 +150,7 @@
     <sys:String x:Key="Str_Status_ImportUnreadable">. {0} hadde ingen lesbar dato og ble hoppet over</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} var oppgaver eller notater, som Killendar ikke lagrer</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Endringer som påvirker framtidige gjentakelser, ble hoppet over fordi de ikke støttes: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportCanceled">. Avlyste møter ble ikke lagt til: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Importen mislyktes: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Eksporterte {0} avtaler</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Eksporten mislyktes: {0}</sys:String>

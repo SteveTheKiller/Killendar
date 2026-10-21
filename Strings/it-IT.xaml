@@ -134,6 +134,7 @@
     <sys:String x:Key="Str_Status_ImportUnreadable">. {0} non avevano una data leggibile e sono stati ignorati</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} erano attività o note, che Killendar non memorizza</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Modifiche non supportate che interessano le occorrenze future ignorate: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportCanceled">. Riunioni annullate non aggiunte: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Importazione non riuscita: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Esportati {0} appuntamenti</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Esportazione non riuscita: {0}</sys:String>
