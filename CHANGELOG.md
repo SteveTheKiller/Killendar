@@ -4,73 +4,43 @@ All notable changes to Killendar are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.3.2] - Unreleased
+## [1.4.0] - Unreleased
 
 ### Fixed
-- Imported day and week durations preserve calendar-day meaning across clock changes, editing and export.
-- Recurring appointments skip nonexistent source-zone times without consuming their occurrence count.
-- Appointment editing preserves dates during language changes and exact times during a repeated daylight-saving hour.
-- Read-only agenda queries support older calendars without changing their files.
-- Uninstall reports canceled, failed and pending removal; Chocolatey verifies the final status receipt.
-- Address suggestions support keyboard selection and stop pending lookups when the editor closes.
-- Calendar imports report unsupported future-range edits instead of applying them to only one occurrence.
-- Ranged calendar exports include a moved appointment's series and its other exceptions.
-- Calendar exceptions retain their exact occurrence and end time through editing, storage and export.
-- Closed appointment panels no longer leave hidden editor controls enabled.
-- Language changes preserve day agenda headings and refresh appointment recurrence controls.
-- Calendar names can be edited with the keyboard without opening or deleting the calendar.
-- Failed installations preserve the previous executable and retain complete recovery copies.
-- Modal cards keep calendar and appointment shortcuts from changing work behind them.
-- ICS exports preserve recurring wall-clock schedules, source time zones and elapsed durations across clock changes.
-- Uninstall and installation-conflict cleanup preserve calendars and other files stored beside the app.
-- Whole-calendar exports include future and long finite series, disclose unbounded ranges and handle calendar date limits.
-- File pickers report malformed paths without closing and preserve wildcard filtering.
-- Weekly calendar rules preserve their week-start boundary through import, storage and export.
-- Date pickers support keyboard navigation, date selection and accessible control names.
+
+- Self-updates reject unsigned or invalid images. Failed installations and updates retain complete executable recovery copies.
+- Installation cleanup and uninstall preserve calendars and other files stored beside the app.
+- Failed password changes preserve the original calendar and recovery copies, support retries and report cleanup errors.
 - CSV exports protect formula-like text and explain that calendar imports may retain the protective apostrophe.
-- Imported recurring appointments preserve their UTC or source-zone schedule and elapsed duration across clock changes.
-- CSV imports preserve distinct descriptions, categories and all-day settings while recognizing matching older imports.
-- Appointment editing, recurrence previews and date picking handle the supported date limits without crashing.
-- HTML calendars include all themes and accents, accessible selection controls, valid saved preferences and clearer accent-colored tables.
-- Invalid recurrence intervals show an error instead of silently saving a different schedule.
-- Stalled launch requests no longer block later launches, and failed forwarding returns an error.
-- Imported times in a repeated daylight-saving hour use the first occurrence.
-- Whole-series edits move saved exceptions and remove dates outside the updated recurrence.
-- Failed password changes preserve the original calendar and recovery copies, allow retries and report cleanup errors.
-- Failed deletion of an edited recurring appointment preserves its edits and the original series.
-- Category renames and deletions preserve all assignments when a save fails and show the error.
-- Failed legacy calendar migrations preserve the source and can retry without leaving an empty calendar.
-- Settings recover the selected calendar location from complete backup or temporary files after an interrupted save.
-- Self-updates reject unsigned or invalid images and retain complete executable copies and a recovery report when publication fails.
-- A calendar that fails to load closes cleanly instead of showing stale appointments.
-- Native database cache repairs are verified and serialized across concurrent launches, and native load failures are reported.
-- Large recurrence intervals and dates at the calendar limits no longer crash recurrence queries.
-- Calendar imports retain valid appointments when another row exceeds the supported date range.
-- Calendar round trips preserve literal backslashes and escaped text.
-- Reimporting a calendar no longer duplicates edited recurring appointments.
-- Email invites preserve text encoded in their declared character set.
-- Updated SQLCipher to 4.19.0, SQLite and JSON processing to 10.0.13, and SQLitePCLRaw to 3.0.5.
-- Appointment editing preserves morning and afternoon times in every language, including live language changes.
-- Date-format changes preserve appointment dates, duration and recurrence end dates.
-- Recurring appointments remain visible throughout multi-day overlaps.
-- Long counted series retain every occurrence and stop at the requested count.
-- Calendar command clients that stop sending or reading no longer block later commands.
-- File launches preserve the requested calendar path when forwarding to an existing window.
-- Installing and reopening waits for the previous app to exit so the installed copy opens reliably.
-- A silent install or update that finds Killendar running exits with 1618, which Intune, Configuration Manager and RMM tools retry, instead of a general failure.
-- Chocolatey publishing reports failure when validation is still failing after a retry.
-- Window resize minimums stay within the current monitor's work area on small or scaled displays.
-- The database name uses KillerPDF's embedded filename font and size, with its bottom aligned to the database icon. Buttons, menus, tooltips and shortcuts use the embedded interface font.
-- Film grain has crisper specks and fades midtones across app and website themes without dimming bright highlights.
-- The shortcuts card wraps long key labels, puts its scroll bar at the outer edge and shows when more content is out of view.
-- The website's More button uses the selected language for its accessible name.
-- Sidebar fades disappear at the scroll limits, leave scrollbars clear, and stay off in 98SE.
-- Title bar buttons stay square when highlighted, like the caption buttons in the other apps, instead of rounding their top corner.
-- The Week and Day grid sits flat under the day headers instead of curving at its top corners.
-- The footer copyright sits a few pixels further from the corner grip instead of running into it.
+- Failed deletion of edited recurring occurrences and failed category renames or deletions preserve existing edits and assignments.
+- Failed calendar migrations preserve the source; interrupted settings saves recover the selected calendar location.
+- Recurring calendar imports and exports preserve time zones, wall-clock schedules, elapsed durations and calendar-day durations across clock changes.
+- Recurrence exceptions retain their exact times, follow whole-series edits, survive ranged exports and no longer duplicate on reimport.
+- Recurring appointments preserve week-start boundaries, counts and multi-day overlaps, skip nonexistent source-zone times and reject invalid intervals.
+- Whole-calendar exports include future and long finite series and disclose unbounded ranges.
+- Calendar imports retain valid rows when another date is unsupported and report unsupported future-range edits.
+- Calendar round trips preserve escaped text, email invites honor their character encoding, and CSV imports retain distinct appointment details.
+- Appointment editing preserves dates, times, durations and recurrence end dates during language or date-format changes, including repeated daylight-saving hours.
+- Read-only queries support older calendars without changing their files; failed calendar loads close cleanly without stale appointments.
+- Calendar editing, recurrence queries and file pickers handle date limits and malformed paths without crashing.
+- Native database cache repairs are verified across concurrent launches, and load failures are reported.
+- Stalled command clients and launch requests no longer block later commands. Forwarded file launches preserve the requested path and report failures.
+- Installation waits for the previous app to exit and reports running-app conflicts with retryable exit 1618.
+- Uninstall and Chocolatey report canceled, failed or pending removal; Chocolatey package publishing reports validation failures.
+- Date pickers, calendar names and address suggestions support keyboard operation; closing the editor cancels pending lookups.
+- Modal cards block background shortcuts, and closed appointment panels leave no hidden controls enabled.
+- Language changes refresh agenda headings and recurrence controls; the website's More button has a translated accessible name.
+- Window resizing respects small and scaled monitor work areas.
 
 ### Added
+
 - Added Slovenian across the app, installation prompts, website and technical help.
+
+### Changed
+
+- Updated SQLCipher to 4.19.0, SQLite and JSON processing to 10.0.13, and SQLitePCLRaw to 3.0.5.
+- HTML calendars support all themes and accents, accessible selection controls, saved preferences and clearer accent-colored tables.
+- Refined embedded fonts, film grain and calendar chrome. Sidebar fades leave scrollbars clear, and the shortcuts card wraps long labels and shows overflow.
 
 ## [1.3.1] - 2026-10-19
 
