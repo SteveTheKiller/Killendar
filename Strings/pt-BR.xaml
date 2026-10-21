@@ -179,6 +179,11 @@
     <sys:String x:Key="Str_Status_UndoFailed">Não foi possível desfazer: {0}</sys:String>
     <sys:String x:Key="Str_KS_Undo">Desfazer a última alteração de um compromisso</sys:String>
     <sys:String x:Key="Str_KS_Redo">Refazer</sys:String>
+    <sys:String x:Key="Str_Btn_Deleted">Excluídos</sys:String>
+    <sys:String x:Key="Str_Del_Empty">Nada foi excluído nos últimos 30 dias</sys:String>
+    <sys:String x:Key="Str_Del_Header">Excluídos nos últimos 30 dias. Clique para restaurar.</sys:String>
+    <sys:String x:Key="Str_Del_DeletedOn">Excluído em {0}</sys:String>
+    <sys:String x:Key="Str_Status_Restored">Restaurado: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Falha na importação: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} compromissos exportados</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Falha na exportação: {0}</sys:String>

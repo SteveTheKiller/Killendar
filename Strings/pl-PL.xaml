@@ -226,6 +226,11 @@
     <sys:String x:Key="Str_Status_UndoFailed">Nie można cofnąć: {0}</sys:String>
     <sys:String x:Key="Str_KS_Undo">Cofnij ostatnią zmianę spotkania</sys:String>
     <sys:String x:Key="Str_KS_Redo">Ponów</sys:String>
+    <sys:String x:Key="Str_Btn_Deleted">Usunięte</sys:String>
+    <sys:String x:Key="Str_Del_Empty">W ciągu ostatnich 30 dni nic nie usunięto</sys:String>
+    <sys:String x:Key="Str_Del_Header">Usunięte w ciągu ostatnich 30 dni. Kliknij, aby przywrócić.</sys:String>
+    <sys:String x:Key="Str_Del_DeletedOn">Usunięto {0}</sys:String>
+    <sys:String x:Key="Str_Status_Restored">Przywrócono: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import nie powiódł się: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Eksport nie powiódł się: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Brak danych do wyeksportowania</sys:String>

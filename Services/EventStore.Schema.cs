@@ -57,7 +57,14 @@ CREATE TABLE IF NOT EXISTS categories (
     name  TEXT PRIMARY KEY COLLATE NOCASE,
     color TEXT NOT NULL
 );
-CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
+CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS deleted (
+    id          TEXT PRIMARY KEY,
+    deleted_utc TEXT NOT NULL,
+    title       TEXT NOT NULL DEFAULT '',
+    start_utc   TEXT NOT NULL DEFAULT '',
+    rows        TEXT NOT NULL
+);";
 
         private void EnsureSchema()
         {
@@ -70,6 +77,7 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);";
             // deletions must never resurrect (KillerNotes tags design, same rule).
             if (!hadCategories) SeedDefaultCategories();
             SetMeta("schema_version", SchemaVersion.ToString());
+            PurgeDeleted(DateTime.UtcNow);
             // Stamped once, for forensics on a file that turns up years later. Read straight off
             // the assembly rather than through About.cs, whose version helper is private to
             // MainWindow.

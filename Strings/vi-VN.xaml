@@ -168,6 +168,11 @@
   <sys:String x:Key="Str_Status_UndoFailed">Không thể hoàn tác: {0}</sys:String>
   <sys:String x:Key="Str_KS_Undo">Hoàn tác thay đổi gần nhất của cuộc hẹn</sys:String>
   <sys:String x:Key="Str_KS_Redo">Làm lại</sys:String>
+  <sys:String x:Key="Str_Btn_Deleted">Đã xóa</sys:String>
+  <sys:String x:Key="Str_Del_Empty">Không có gì bị xóa trong 30 ngày qua</sys:String>
+  <sys:String x:Key="Str_Del_Header">Đã xóa trong 30 ngày qua. Bấm để khôi phục.</sys:String>
+  <sys:String x:Key="Str_Del_DeletedOn">Đã xóa lúc {0}</sys:String>
+  <sys:String x:Key="Str_Status_Restored">Đã khôi phục: {0}</sys:String>
   <sys:String x:Key="Str_Status_ImportFailed">Nhập không thành công: {0}</sys:String>
   <sys:String x:Key="Str_Status_Exported">Đã xuất {0} cuộc hẹn</sys:String>
   <sys:String x:Key="Str_Status_ExportFailed">Xuất không thành công: {0}</sys:String>

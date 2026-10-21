@@ -137,6 +137,11 @@
     <sys:String x:Key="Str_Status_UndoFailed">Impossible d'annuler : {0}</sys:String>
     <sys:String x:Key="Str_KS_Undo">Annuler la dernière modification d'un rendez-vous</sys:String>
     <sys:String x:Key="Str_KS_Redo">Rétablir</sys:String>
+    <sys:String x:Key="Str_Btn_Deleted">Supprimés</sys:String>
+    <sys:String x:Key="Str_Del_Empty">Rien n'a été supprimé ces 30 derniers jours</sys:String>
+    <sys:String x:Key="Str_Del_Header">Supprimés ces 30 derniers jours. Cliquez pour restaurer.</sys:String>
+    <sys:String x:Key="Str_Del_DeletedOn">Supprimé le {0}</sys:String>
+    <sys:String x:Key="Str_Status_Restored">Restauré : {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Échec de l'importation : {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} rendez-vous exportés</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Échec de l'exportation : {0}</sys:String>

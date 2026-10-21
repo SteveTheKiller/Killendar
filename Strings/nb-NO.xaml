@@ -179,6 +179,11 @@
     <sys:String x:Key="Str_Status_UndoFailed">Kunne ikke angre: {0}</sys:String>
     <sys:String x:Key="Str_KS_Undo">Angre den siste endringen av en avtale</sys:String>
     <sys:String x:Key="Str_KS_Redo">Gjør om</sys:String>
+    <sys:String x:Key="Str_Btn_Deleted">Slettet</sys:String>
+    <sys:String x:Key="Str_Del_Empty">Ingenting er slettet de siste 30 dagene</sys:String>
+    <sys:String x:Key="Str_Del_Header">Slettet de siste 30 dagene. Klikk for å gjenopprette.</sys:String>
+    <sys:String x:Key="Str_Del_DeletedOn">Slettet {0}</sys:String>
+    <sys:String x:Key="Str_Status_Restored">Gjenopprettet: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Importen mislyktes: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Eksporterte {0} avtaler</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Eksporten mislyktes: {0}</sys:String>

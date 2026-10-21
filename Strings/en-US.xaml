@@ -179,6 +179,11 @@
     <sys:String x:Key="Str_Status_UndoFailed">Could not undo: {0}</sys:String>
     <sys:String x:Key="Str_KS_Undo">Undo the last change to an appointment</sys:String>
     <sys:String x:Key="Str_KS_Redo">Redo</sys:String>
+    <sys:String x:Key="Str_Btn_Deleted">Deleted</sys:String>
+    <sys:String x:Key="Str_Del_Empty">Nothing deleted in the last 30 days</sys:String>
+    <sys:String x:Key="Str_Del_Header">Deleted in the last 30 days. Click one to restore it.</sys:String>
+    <sys:String x:Key="Str_Del_DeletedOn">Deleted {0}</sys:String>
+    <sys:String x:Key="Str_Status_Restored">Restored {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import failed: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Exported {0} appointments</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export failed: {0}</sys:String>

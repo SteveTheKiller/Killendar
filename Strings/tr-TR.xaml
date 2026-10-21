@@ -137,6 +137,11 @@
     <sys:String x:Key="Str_Status_UndoFailed">Geri alınamadı: {0}</sys:String>
     <sys:String x:Key="Str_KS_Undo">Bir randevudaki son değişikliği geri al</sys:String>
     <sys:String x:Key="Str_KS_Redo">Yinele</sys:String>
+    <sys:String x:Key="Str_Btn_Deleted">Silinenler</sys:String>
+    <sys:String x:Key="Str_Del_Empty">Son 30 günde hiçbir şey silinmedi</sys:String>
+    <sys:String x:Key="Str_Del_Header">Son 30 günde silinenler. Geri yüklemek için tıklayın.</sys:String>
+    <sys:String x:Key="Str_Del_DeletedOn">Silinme: {0}</sys:String>
+    <sys:String x:Key="Str_Status_Restored">Geri yüklendi: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">İçe aktarma başarısız: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} randevu dışa aktarıldı</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Dışa aktarma başarısız: {0}</sys:String>

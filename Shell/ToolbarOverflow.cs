@@ -18,11 +18,12 @@ using System.Windows.Threading;
 //
 // SHED ORDER (first to go, last to go). The rule is: the further something is from "what am I
 // looking at", the earlier it goes.
-//   1. Export .ics             - rarest action
-//   2. Import .ics
-//   3. Today                   - the arrows still navigate without it
-//   4. the four view buttons   - important context, retained until file actions are gone
-//   5. New                     - the primary action, so it holds on longest
+//   1. Recently deleted        - a recovery tool, needed least often
+//   2. Export .ics             - rarest action
+//   3. Import .ics
+//   4. Today                   - the arrows still navigate without it
+//   5. the four view buttons   - important context, retained until file actions are gone
+//   6. New                     - the primary action, so it holds on longest
 // Prev, Next and the period label NEVER shed. They are the answer to "where am I and how do I
 // move", and a calendar with neither is not a calendar.
 //
@@ -89,6 +90,7 @@ namespace Killendar.Shell
                 // ToolbarItems() - the same table that draws the button - so a codepoint can only
                 // ever be changed in one place. Hardcoding them here meant that moving Today's
                 // glyph left the overflow menu still drawing the old one. (2026-07-30)
+                new ShedItem { Element = DeletedBtn,   MenuItems = () => One(DeletedBtn,  DeletedBtn_Click) },
                 new ShedItem { Element = ExportBtn,    MenuItems = () => One(ExportBtn,   ExportBtn_Click) },
                 new ShedItem { Element = ImportBtn,    MenuItems = () => One(ImportBtn,   ImportBtn_Click) },
                 new ShedItem { Element = TodayBtn,     MenuItems = () => One(TodayBtn,    TodayBtn_Click) },

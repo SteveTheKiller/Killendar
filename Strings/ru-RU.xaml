@@ -180,6 +180,11 @@
     <sys:String x:Key="Str_Status_UndoFailed">Не удалось отменить: {0}</sys:String>
     <sys:String x:Key="Str_KS_Undo">Отменить последнее изменение встречи</sys:String>
     <sys:String x:Key="Str_KS_Redo">Повторить</sys:String>
+    <sys:String x:Key="Str_Btn_Deleted">Удалённые</sys:String>
+    <sys:String x:Key="Str_Del_Empty">За последние 30 дней ничего не удалено</sys:String>
+    <sys:String x:Key="Str_Del_Header">Удалено за последние 30 дней. Нажмите, чтобы восстановить.</sys:String>
+    <sys:String x:Key="Str_Del_DeletedOn">Удалено {0}</sys:String>
+    <sys:String x:Key="Str_Status_Restored">Восстановлено: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Импорт не удался: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Экспортировано встреч: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Экспорт не удался: {0}</sys:String>

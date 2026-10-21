@@ -163,6 +163,11 @@
     <sys:String x:Key="Str_Status_UndoFailed">Impossibile annullare: {0}</sys:String>
     <sys:String x:Key="Str_KS_Undo">Annulla l'ultima modifica a un appuntamento</sys:String>
     <sys:String x:Key="Str_KS_Redo">Ripeti</sys:String>
+    <sys:String x:Key="Str_Btn_Deleted">Eliminati</sys:String>
+    <sys:String x:Key="Str_Del_Empty">Nulla eliminato negli ultimi 30 giorni</sys:String>
+    <sys:String x:Key="Str_Del_Header">Eliminati negli ultimi 30 giorni. Fai clic per ripristinare.</sys:String>
+    <sys:String x:Key="Str_Del_DeletedOn">Eliminato il {0}</sys:String>
+    <sys:String x:Key="Str_Status_Restored">Ripristinato: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Importazione non riuscita: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Esportati {0} appuntamenti</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Esportazione non riuscita: {0}</sys:String>

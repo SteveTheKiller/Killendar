@@ -55,6 +55,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Added Slovenian across the app, installation prompts, website and technical help.
 - Added a time format choice (Follow Windows, 12-hour or 24-hour) to the date settings.
 - Added undo and redo (Ctrl+Z, Ctrl+Y) for adding, editing, moving and deleting appointments and for imports, up to the last 50 changes.
+- Added Recently deleted: a toolbar list of appointments and series deleted in the last 30 days, kept inside the calendar file (encrypted with it) and restored with a click.
 
 ### Changed
 

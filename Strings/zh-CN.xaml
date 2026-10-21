@@ -137,6 +137,11 @@
     <sys:String x:Key="Str_Status_UndoFailed">无法撤销：{0}</sys:String>
     <sys:String x:Key="Str_KS_Undo">撤销对约会的上一次更改</sys:String>
     <sys:String x:Key="Str_KS_Redo">重做</sys:String>
+    <sys:String x:Key="Str_Btn_Deleted">已删除</sys:String>
+    <sys:String x:Key="Str_Del_Empty">过去 30 天内没有删除任何内容</sys:String>
+    <sys:String x:Key="Str_Del_Header">过去 30 天内删除的项目。点击即可恢复。</sys:String>
+    <sys:String x:Key="Str_Del_DeletedOn">删除于 {0}</sys:String>
+    <sys:String x:Key="Str_Status_Restored">已恢复：{0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">导入失败：{0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">已导出 {0} 个约会</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">导出失败：{0}</sys:String>

@@ -152,6 +152,11 @@
     <sys:String x:Key="Str_Status_UndoFailed">Razveljavitev ni uspela: {0}</sys:String>
     <sys:String x:Key="Str_KS_Undo">Razveljavi zadnjo spremembo dogodka</sys:String>
     <sys:String x:Key="Str_KS_Redo">Uveljavi znova</sys:String>
+    <sys:String x:Key="Str_Btn_Deleted">Izbrisano</sys:String>
+    <sys:String x:Key="Str_Del_Empty">V zadnjih 30 dneh ni bilo nič izbrisano</sys:String>
+    <sys:String x:Key="Str_Del_Header">Izbrisano v zadnjih 30 dneh. Kliknite za obnovitev.</sys:String>
+    <sys:String x:Key="Str_Del_DeletedOn">Izbrisano {0}</sys:String>
+    <sys:String x:Key="Str_Status_Restored">Obnovljeno: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Uvoz ni uspel: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Izvoženi dogodki: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Izvoz ni uspel: {0}</sys:String>

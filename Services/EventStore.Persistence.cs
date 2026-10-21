@@ -250,13 +250,18 @@ namespace Killendar.Services
 
         public void Delete(Guid id) => Recorded(() =>
         {
-            if (_events.RemoveAll(e => e.Id == id) == 0) return;
+            var gone = _events.Where(e => e.Id == id).ToList();
+            if (gone.Count == 0) return;
+            _events.RemoveAll(e => e.Id == id);
             Commit(() =>
             {
-                using var cmd = _db!.CreateCommand();
+                using var tx = _db!.BeginTransaction();
+                Trash(gone);
+                using var cmd = _db.CreateCommand();
                 cmd.CommandText = "DELETE FROM events WHERE id = $id";
                 cmd.Parameters.AddWithValue("$id", id.ToString());
                 cmd.ExecuteNonQuery();
+                tx.Commit();
             });
         });
 
@@ -484,11 +489,13 @@ namespace Killendar.Services
             if (ids.Count == 0) return;
 
             var gone = new HashSet<Guid>(ids);
+            var rows = _events.Where(e => gone.Contains(e.Id)).ToList();
             _events.RemoveAll(e => gone.Contains(e.Id));
 
             Commit(() =>
             {
                 using var tx = _db!.BeginTransaction();
+                Trash(rows);
                 foreach (var id in ids)
                 {
                     using var cmd = _db.CreateCommand();

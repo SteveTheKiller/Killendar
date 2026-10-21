@@ -137,6 +137,11 @@
     <sys:String x:Key="Str_Status_UndoFailed">No se pudo deshacer: {0}</sys:String>
     <sys:String x:Key="Str_KS_Undo">Deshacer el último cambio de una cita</sys:String>
     <sys:String x:Key="Str_KS_Redo">Rehacer</sys:String>
+    <sys:String x:Key="Str_Btn_Deleted">Eliminadas</sys:String>
+    <sys:String x:Key="Str_Del_Empty">No se eliminó nada en los últimos 30 días</sys:String>
+    <sys:String x:Key="Str_Del_Header">Eliminadas en los últimos 30 días. Haga clic en una para restaurarla.</sys:String>
+    <sys:String x:Key="Str_Del_DeletedOn">Eliminada el {0}</sys:String>
+    <sys:String x:Key="Str_Status_Restored">Restaurada: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Error al importar: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Se exportaron {0} citas</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Error al exportar: {0}</sys:String>

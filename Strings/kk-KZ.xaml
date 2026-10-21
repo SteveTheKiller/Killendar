@@ -179,6 +179,11 @@
     <sys:String x:Key="Str_Status_UndoFailed">Болдырмау мүмкін болмады: {0}</sys:String>
     <sys:String x:Key="Str_KS_Undo">Кездесудегі соңғы өзгерісті болдырмау</sys:String>
     <sys:String x:Key="Str_KS_Redo">Қайталау</sys:String>
+    <sys:String x:Key="Str_Btn_Deleted">Жойылғандар</sys:String>
+    <sys:String x:Key="Str_Del_Empty">Соңғы 30 күнде ештеңе жойылмады</sys:String>
+    <sys:String x:Key="Str_Del_Header">Соңғы 30 күнде жойылғандар. Қалпына келтіру үшін басыңыз.</sys:String>
+    <sys:String x:Key="Str_Del_DeletedOn">Жойылған уақыты: {0}</sys:String>
+    <sys:String x:Key="Str_Status_Restored">Қалпына келтірілді: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Импорттау сәтсіз аяқталды: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} кездесу экспортталды</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Экспорттау сәтсіз аяқталды: {0}</sys:String>

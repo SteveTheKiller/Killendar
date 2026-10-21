@@ -137,6 +137,11 @@
     <sys:String x:Key="Str_Status_UndoFailed">Nelze vrátit zpět: {0}</sys:String>
     <sys:String x:Key="Str_KS_Undo">Vrátit poslední změnu schůzky</sys:String>
     <sys:String x:Key="Str_KS_Redo">Znovu</sys:String>
+    <sys:String x:Key="Str_Btn_Deleted">Smazané</sys:String>
+    <sys:String x:Key="Str_Del_Empty">Za posledních 30 dní nebylo nic smazáno</sys:String>
+    <sys:String x:Key="Str_Del_Header">Smazáno za posledních 30 dní. Kliknutím položku obnovíte.</sys:String>
+    <sys:String x:Key="Str_Del_DeletedOn">Smazáno {0}</sys:String>
+    <sys:String x:Key="Str_Status_Restored">Obnoveno: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import selhal: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Exportováno {0} schůzek</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export selhal: {0}</sys:String>

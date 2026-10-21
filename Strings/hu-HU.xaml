@@ -179,6 +179,11 @@
     <sys:String x:Key="Str_Status_UndoFailed">Nem sikerült visszavonni: {0}</sys:String>
     <sys:String x:Key="Str_KS_Undo">A találkozó utolsó módosításának visszavonása</sys:String>
     <sys:String x:Key="Str_KS_Redo">Újra</sys:String>
+    <sys:String x:Key="Str_Btn_Deleted">Törölt</sys:String>
+    <sys:String x:Key="Str_Del_Empty">Az elmúlt 30 napban semmi sem lett törölve</sys:String>
+    <sys:String x:Key="Str_Del_Header">Az elmúlt 30 napban törölve. Kattintson a visszaállításhoz.</sys:String>
+    <sys:String x:Key="Str_Del_DeletedOn">Törölve: {0}</sys:String>
+    <sys:String x:Key="Str_Status_Restored">Visszaállítva: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Sikertelen importálás: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} találkozó exportálva</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Az exportálás sikertelen: {0}</sys:String>

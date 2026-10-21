@@ -137,6 +137,11 @@
     <sys:String x:Key="Str_Status_UndoFailed">Rückgängig machen fehlgeschlagen: {0}</sys:String>
     <sys:String x:Key="Str_KS_Undo">Letzte Änderung an einem Termin rückgängig machen</sys:String>
     <sys:String x:Key="Str_KS_Redo">Wiederherstellen</sys:String>
+    <sys:String x:Key="Str_Btn_Deleted">Gelöscht</sys:String>
+    <sys:String x:Key="Str_Del_Empty">In den letzten 30 Tagen wurde nichts gelöscht</sys:String>
+    <sys:String x:Key="Str_Del_Header">In den letzten 30 Tagen gelöscht. Zum Wiederherstellen anklicken.</sys:String>
+    <sys:String x:Key="Str_Del_DeletedOn">Gelöscht am {0}</sys:String>
+    <sys:String x:Key="Str_Status_Restored">Wiederhergestellt: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import fehlgeschlagen: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} Termine exportiert</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export fehlgeschlagen: {0}</sys:String>

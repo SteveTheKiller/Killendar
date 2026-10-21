@@ -214,6 +214,8 @@
                                 Click="ImportBtn_Click"/>
                         <Button x:Name="ExportBtn" Content="{DynamicResource Str_Btn_Export}" Style="{StaticResource ToolbarButton}"
                                 Click="ExportBtn_Click"/>
+                        <Button x:Name="DeletedBtn" Content="{DynamicResource Str_Btn_Deleted}" Style="{StaticResource ToolbarButton}"
+                                Click="DeletedBtn_Click"/>
 
                         <Rectangle Width="1" Fill="{DynamicResource CardBorderBrush}" Margin="4,6"/>
 
