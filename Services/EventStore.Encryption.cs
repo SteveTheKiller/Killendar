@@ -8,6 +8,15 @@ using Killendar.Models;
 
 namespace Killendar.Services
 {
+    /// <summary>A password change that returned has committed: the calendar is open with the new
+    /// password. A non-null RetainedBackup is the previous file, left behind because it could not
+    /// be deleted, and the caller must tell the user where it is.</summary>
+    public sealed class PasswordChangeOutcome(string? retainedBackup, bool retainedBackupIsUnencrypted)
+    {
+        public string? RetainedBackup { get; } = retainedBackup;
+        public bool RetainedBackupIsUnencrypted { get; } = retainedBackupIsUnencrypted;
+    }
+
     public partial class EventStore
     {
         // ============================================================
@@ -23,15 +32,15 @@ namespace Killendar.Services
         /// Not PRAGMA rekey: rekey cannot take a plaintext database to an encrypted one, which is
         /// the whole point of opt-in encryption. sqlcipher_export handles every direction.
         /// </summary>
-        public void SetPassword(string? newPassword)
+        public PasswordChangeOutcome SetPassword(string? newPassword)
             => SetPassword(newPassword, File.Replace);
 
         /// <summary>Changes the password using the supplied filesystem replacement operation.</summary>
-        public void SetPassword(string? newPassword, Action<string, string, string> replaceFile)
+        public PasswordChangeOutcome SetPassword(string? newPassword, Action<string, string, string> replaceFile)
             => SetPassword(newPassword, replaceFile, File.Delete);
 
         /// <summary>Changes the password using supplied replacement and owned restoration-copy deletion operations.</summary>
-        public void SetPassword(string? newPassword, Action<string, string, string> replaceFile, Action<string> deleteRestorationCopy)
+        public PasswordChangeOutcome SetPassword(string? newPassword, Action<string, string, string> replaceFile, Action<string> deleteRestorationCopy)
         {
             if (replaceFile == null) throw new ArgumentNullException(nameof(replaceFile));
             if (deleteRestorationCopy == null) throw new ArgumentNullException(nameof(deleteRestorationCopy));
@@ -58,8 +67,17 @@ namespace Killendar.Services
                 {
                     Close();
                     throw new IOException("The password export failed and its temporary database could not detach. " +
-                        "The calendar was closed. Original: " + path + ". Temporary: " + tmp,
+                        "The calendar was closed. Original: " + path + ". Temporary (" + Protection(newPassword) + "): " + tmp,
                         new AggregateException(exportError, detachError));
+                }
+                // The stage may hold part of the calendar, unencrypted when the password was being
+                // removed. It is ours, so it goes; if it cannot, the user has to know where it is.
+                try { if (File.Exists(tmp)) deleteRestorationCopy(tmp); }
+                catch (Exception cleanupError)
+                {
+                    throw new IOException("The password change failed and its " + Protection(newPassword) +
+                        " temporary copy could not be removed. Retained: " + tmp,
+                        new AggregateException(exportError, cleanupError));
                 }
                 throw;
             }
@@ -104,8 +122,19 @@ namespace Killendar.Services
                 throw;
             }
             Open(path, newPassword);
-            File.Delete(bak);   // only once the rewritten file opened cleanly
+
+            // The change has committed once the rewritten file opens. A backup that will not delete
+            // (antivirus, permissions) is reported, not thrown: throwing here would tell the user a
+            // committed password change had failed.
+            try { deleteRestorationCopy(bak); }
+            catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
+            {
+                return new PasswordChangeOutcome(bak, oldPassword == null);
+            }
+            return new PasswordChangeOutcome(null, false);
         }
+
+        private static string Protection(string? password) => password == null ? "unencrypted" : "encrypted";
 
         /// <summary>File.Replace with backoff retries. Antivirus and indexer scans of the freshly
         /// written rekey file cause transient sharing violations on the swap; waiting a moment and

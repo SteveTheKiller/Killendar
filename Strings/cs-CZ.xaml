@@ -210,6 +210,8 @@
     <sys:String x:Key="Str_Status_PwRemoved">Heslo odebráno - tento Killendar již není zašifrovaný</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">Hesla se neshodují</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">Heslo nelze změnit: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwBackupKept">Heslo změněno, ale předchozí kopii nelze odebrat: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwPlainBackupKept">Tento Killendar je nyní zašifrovaný, ale předchozí nezašifrovanou kopii nelze odebrat. Smažte ji ručně: {0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">Nový Killendar vytvořen; zamčený byl ponechán jako {0}</sys:String>
 
 

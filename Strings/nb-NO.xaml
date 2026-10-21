@@ -261,6 +261,8 @@
     <sys:String x:Key="Str_Status_PwRemoved">Passordet er fjernet - denne Killendar-filen er ikke lenger kryptert</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">De to passordene er ikke like</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">Kunne ikke endre passordet: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwBackupKept">Passordet er endret, men den forrige kopien kunne ikke fjernes: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwPlainBackupKept">Denne Killendar-filen er nå kryptert, men den forrige ukrypterte kopien kunne ikke fjernes. Slett den selv: {0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">Ny Killendar startet; den låste ble beholdt som {0}</sys:String>
 
     <!-- Exporting an encrypted Killendar to .ics writes plain text, which quietly undoes the

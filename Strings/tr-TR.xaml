@@ -210,6 +210,8 @@
     <sys:String x:Key="Str_Status_PwRemoved">Parola kaldırıldı - bu Killendar artık şifreli değil</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">İki parola birbiriyle uyuşmuyor</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">Parola değiştirilemedi: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwBackupKept">Parola değiştirildi ancak önceki kopya kaldırılamadı: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwPlainBackupKept">Bu Killendar artık şifreli ancak şifrelenmemiş önceki kopya kaldırılamadı. Kendiniz silin: {0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">Yeni Killendar oluşturuldu; kilitli olan {0} olarak saklandı</sys:String>
 
 

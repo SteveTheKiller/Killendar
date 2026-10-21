@@ -210,6 +210,8 @@
     <sys:String x:Key="Str_Status_PwRemoved">Mot de passe supprimé - ce Killendar n'est plus chiffré</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">Les deux mots de passe ne correspondent pas</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">Impossible de modifier le mot de passe : {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwBackupKept">Mot de passe modifié, mais l'ancienne copie n'a pas pu être supprimée : {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwPlainBackupKept">Ce Killendar est maintenant chiffré, mais l'ancienne copie non chiffrée n'a pas pu être supprimée. Supprimez-la vous-même : {0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">Nouveau Killendar créé ; l'ancien a été conservé sous le nom {0}</sys:String>
 
 

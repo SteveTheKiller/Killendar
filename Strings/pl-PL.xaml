@@ -268,6 +268,8 @@
     <sys:String x:Key="Str_Status_PwRemoved">Hasło usunięto - ten Killendar nie jest już zaszyfrowany</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">Hasła nie są zgodne</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">Nie można zmienić hasła: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwBackupKept">Hasło zostało zmienione, ale nie można usunąć poprzedniej kopii: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwPlainBackupKept">Ten Killendar jest teraz zaszyfrowany, ale nie można usunąć poprzedniej niezaszyfrowanej kopii. Usuń ją ręcznie: {0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">Utworzono nowy Killendar; zablokowany zachowano jako {0}</sys:String>
     <sys:String x:Key="Str_Exp_WarnHead">Eksportować z zaszyfrowanego Killendara?</sys:String>
     <sys:String x:Key="Str_Exp_WarnBody">Plik .ics jest zwykłym tekstem. Każdy, kto go otworzy, może odczytać wyeksportowane dane; hasło Killendara już ich nie chroni.</sys:String>

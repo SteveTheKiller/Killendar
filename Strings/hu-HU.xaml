@@ -261,6 +261,8 @@
     <sys:String x:Key="Str_Status_PwRemoved">Jelszó eltávolítva - ez a Killendar már nincs titkosítva</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">A két jelszó nem egyezik</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">Nem sikerült megváltoztatni a jelszót: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwBackupKept">Jelszó megváltozott, de az előző másolatot nem sikerült eltávolítani: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwPlainBackupKept">Ez a Killendar most titkosítva van, de az előző titkosítatlan másolatot nem sikerült eltávolítani. Törölje kézzel: {0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">Új Killendar indult; a zárolt a következőként maradt meg: {0}</sys:String>
 
     <!-- Exporting an encrypted Killendar to .ics writes plain text, which quietly undoes the

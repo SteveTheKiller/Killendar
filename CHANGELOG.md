@@ -9,6 +9,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Fixed
 
 - Failed exports leave an existing calendar, CSV or HTML file untouched instead of truncating it.
+- Password changes that succeed no longer report failure when the old copy cannot be deleted; the app names the leftover copy instead. Failed password removals delete their partial unencrypted copy or say where it is.
 - Self-updates reject unsigned or invalid images. Failed installations and updates retain complete executable recovery copies.
 - Installation cleanup and uninstall preserve calendars and other files stored beside the app.
 - Failed password changes preserve the original calendar and recovery copies, support retries and report cleanup errors.

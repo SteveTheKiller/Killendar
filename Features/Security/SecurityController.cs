@@ -287,9 +287,9 @@ namespace Killendar.Features
                         _host.SetStatus(_host.Loc("Str_Status_PwMismatch"));
                         return;
                     }
-                    _store.SetPassword(dlg.Password);
+                    var outcome = _store.SetPassword(dlg.Password);
                     _password = dlg.Password;
-                    _host.SetStatus(_host.Loc("Str_Status_Encrypted"));
+                    _host.SetStatus(PasswordStatus(outcome, "Str_Status_Encrypted"));
                 }
                 else
                 {
@@ -307,9 +307,9 @@ namespace Killendar.Features
                         _host.SetStatus(_host.Loc("Str_Status_PwMismatch"));
                         return;
                     }
-                    _store.SetPassword(string.IsNullOrEmpty(dlg.Password) ? null : dlg.Password);
+                    var outcome = _store.SetPassword(string.IsNullOrEmpty(dlg.Password) ? null : dlg.Password);
                     _password = string.IsNullOrEmpty(dlg.Password) ? null : dlg.Password;
-                    _host.SetStatus(_host.Loc(_store.HasPassword
+                    _host.SetStatus(PasswordStatus(outcome, _store.HasPassword
                         ? "Str_Status_PwChanged" : "Str_Status_PwRemoved"));
                 }
             }
@@ -319,6 +319,14 @@ namespace Killendar.Features
             }
             RefreshLockState();
         }
+
+        /// <summary>A committed change that left its previous copy behind names that copy, and an
+        /// unencrypted one asks to be deleted.</summary>
+        internal string PasswordStatus(PasswordChangeOutcome outcome, string successKey) =>
+            outcome.RetainedBackup == null
+                ? _host.Loc(successKey)
+                : string.Format(_host.Loc(outcome.RetainedBackupIsUnencrypted
+                    ? "Str_Status_PwPlainBackupKept" : "Str_Status_PwBackupKept"), outcome.RetainedBackup);
 
         internal void RefreshLockState() => _host.ShowLockState(_store.HasPassword);
 

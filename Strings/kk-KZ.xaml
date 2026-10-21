@@ -261,6 +261,8 @@
     <sys:String x:Key="Str_Status_PwRemoved">Құпия сөз алынды - бұл Killendar енді шифрланбаған</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">Екі құпия сөз сәйкес келмейді</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">Құпия сөзді өзгерту мүмкін болмады: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwBackupKept">Құпия сөз өзгертілді, бірақ алдыңғы көшірмені алу мүмкін болмады: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwPlainBackupKept">Бұл Killendar енді шифрланды, бірақ шифрланбаған алдыңғы көшірмені алу мүмкін болмады. Оны өзіңіз жойыңыз: {0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">Жаңа Killendar басталды; құлыпталғаны {0} ретінде сақталды</sys:String>
 
     <!-- Exporting an encrypted Killendar to .ics writes plain text, which quietly undoes the

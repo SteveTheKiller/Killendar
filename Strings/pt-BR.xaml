@@ -261,6 +261,8 @@
     <sys:String x:Key="Str_Status_PwRemoved">Senha removida - este Killendar não está mais criptografado</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">As duas senhas não coincidem</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">Não foi possível alterar a senha: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwBackupKept">Senha alterada, mas não foi possível remover a cópia anterior: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwPlainBackupKept">Este Killendar agora está criptografado, mas não foi possível remover a cópia anterior não criptografada. Exclua-a manualmente: {0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">Novo Killendar iniciado; o bloqueado foi mantido como {0}</sys:String>
 
     <!-- Exporting an encrypted Killendar to .ics writes plain text, which quietly undoes the

@@ -261,6 +261,8 @@
     <sys:String x:Key="Str_Status_PwRemoved">Password removed - this Killendar is no longer encrypted</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">The two passwords do not match</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">Could not change the password: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwBackupKept">Password changed, but the previous copy could not be removed: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwPlainBackupKept">This Killendar is now encrypted, but the previous unencrypted copy could not be removed. Delete it yourself: {0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">New Killendar started; the locked one was kept as {0}</sys:String>
 
     <!-- Exporting an encrypted Killendar to .ics writes plain text, which quietly undoes the

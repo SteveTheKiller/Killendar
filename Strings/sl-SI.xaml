@@ -213,6 +213,8 @@
     <sys:String x:Key="Str_Status_PwRemoved">Geslo je odstranjeno. Ta Killendar ni več šifriran</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">Gesli se ne ujemata</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">Gesla ni bilo mogoče spremeniti: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwBackupKept">Geslo je spremenjeno, vendar prejšnje kopije ni bilo mogoče odstraniti: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwPlainBackupKept">Ta Killendar je zdaj šifriran, vendar prejšnje nešifrirane kopije ni bilo mogoče odstraniti. Izbrišite jo ročno: {0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">Ustvarjen je nov Killendar; zaklenjeni je ohranjen kot {0}</sys:String>
     <sys:String x:Key="Str_Exp_WarnHead">Izvozim iz šifriranega koledarja Killendar?</sys:String>
     <sys:String x:Key="Str_Exp_WarnBody">Datoteka .ics je navadno besedilo. Izvoženo vsebino lahko prebere vsak, ki jo odpre; geslo tega koledarja Killendar je ne ščiti več.</sys:String>

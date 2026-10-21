@@ -210,6 +210,8 @@
     <sys:String x:Key="Str_Status_PwRemoved">Contraseña quitada: este Killendar ya no está cifrado</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">Las dos contraseñas no coinciden</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">No se pudo cambiar la contraseña: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwBackupKept">Contraseña cambiada, pero no se pudo quitar la copia anterior: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwPlainBackupKept">Este Killendar ya está cifrado, pero no se pudo quitar la copia anterior sin cifrar. Elimínela manualmente: {0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">Killendar nuevo creado; el bloqueado se conservó como {0}</sys:String>
 
 

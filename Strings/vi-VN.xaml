@@ -241,6 +241,8 @@
   <sys:String x:Key="Str_Status_PwRemoved">Đã xóa mật khẩu. Killendar này không còn được mã hóa</sys:String>
   <sys:String x:Key="Str_Status_PwMismatch">Hai mật khẩu không khớp</sys:String>
   <sys:String x:Key="Str_Status_PwFailed">Không thể đổi mật khẩu: {0}</sys:String>
+  <sys:String x:Key="Str_Status_PwBackupKept">Đã đổi mật khẩu nhưng không thể xóa bản sao trước đó: {0}</sys:String>
+  <sys:String x:Key="Str_Status_PwPlainBackupKept">Killendar này hiện đã được mã hóa nhưng không thể xóa bản sao chưa mã hóa trước đó. Hãy tự xóa: {0}</sys:String>
   <sys:String x:Key="Str_Status_FreshKcal">Đã bắt đầu Killendar mới; Killendar bị khóa được giữ lại với tên {0}</sys:String>
   <!-- Exporting an encrypted Killendar to .ics writes plain text, which quietly undoes the
          encryption for whatever leaves the app. Warned once, then suppressible. -->

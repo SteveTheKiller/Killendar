@@ -210,6 +210,8 @@
     <sys:String x:Key="Str_Status_PwRemoved">密碼已移除 - 此 Killendar 不再加密</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">兩次輸入的密碼不一致</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">無法變更密碼：{0}</sys:String>
+    <sys:String x:Key="Str_Status_PwBackupKept">密碼已變更，但無法移除先前的副本：{0}</sys:String>
+    <sys:String x:Key="Str_Status_PwPlainBackupKept">此 Killendar 現已加密，但無法移除先前未加密的副本。請手動刪除：{0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">已新增 Killendar；已鎖定的那個保留為 {0}</sys:String>
 
 

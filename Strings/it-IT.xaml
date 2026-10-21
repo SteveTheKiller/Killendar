@@ -234,6 +234,8 @@
     <sys:String x:Key="Str_Status_PwRemoved">Password rimossa - questo Killendar non è più cifrato</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">Le due password non coincidono</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">Impossibile cambiare la password: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwBackupKept">Password cambiata, ma non è stato possibile rimuovere la copia precedente: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwPlainBackupKept">Questo Killendar ora è cifrato, ma non è stato possibile rimuovere la copia precedente non cifrata. Eliminala manualmente: {0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">Nuovo Killendar creato; quello bloccato è stato conservato come {0}</sys:String>
 
     <sys:String x:Key="Str_Exp_WarnHead">Esportare da un Killendar cifrato?</sys:String>

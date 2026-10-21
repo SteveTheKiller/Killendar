@@ -210,6 +210,8 @@
     <sys:String x:Key="Str_Status_PwRemoved">パスワードを削除しました - この Killendar は暗号化されていません</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">2 つのパスワードが一致しません</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">パスワードを変更できませんでした: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwBackupKept">パスワードを変更しましたが、以前のコピーを削除できませんでした: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwPlainBackupKept">この Killendar を暗号化しましたが、暗号化されていない以前のコピーを削除できませんでした。手動で削除してください: {0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">新しい Killendar を作成しました。ロックされていたものは {0} として保存されています</sys:String>
 
 

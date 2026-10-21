@@ -210,6 +210,8 @@
     <sys:String x:Key="Str_Status_PwRemoved">পাসওয়ার্ড সরানো হয়েছে - এই Killendar আর এনক্রিপ্ট করা নয়</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">দুটি পাসওয়ার্ড মিলছে না</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">পাসওয়ার্ড বদলানো যায়নি: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwBackupKept">পাসওয়ার্ড বদলানো হয়েছে, কিন্তু আগের কপিটি সরানো যায়নি: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwPlainBackupKept">এই Killendar এখন এনক্রিপ্ট করা, কিন্তু আগের এনক্রিপ্ট না করা কপিটি সরানো যায়নি। নিজে মুছে ফেলুন: {0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">নতুন Killendar শুরু হয়েছে; লক করাটি {0} হিসেবে রাখা হয়েছে</sys:String>
 
 

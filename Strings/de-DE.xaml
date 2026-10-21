@@ -210,6 +210,8 @@
     <sys:String x:Key="Str_Status_PwRemoved">Kennwort entfernt - dieser Killendar ist nicht mehr verschlüsselt</sys:String>
     <sys:String x:Key="Str_Status_PwMismatch">Die beiden Kennwörter stimmen nicht überein</sys:String>
     <sys:String x:Key="Str_Status_PwFailed">Kennwort konnte nicht geändert werden: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwBackupKept">Kennwort geändert, aber die vorherige Kopie konnte nicht entfernt werden: {0}</sys:String>
+    <sys:String x:Key="Str_Status_PwPlainBackupKept">Dieser Killendar ist jetzt verschlüsselt, aber die vorherige unverschlüsselte Kopie konnte nicht entfernt werden. Löschen Sie sie selbst: {0}</sys:String>
     <sys:String x:Key="Str_Status_FreshKcal">Neuer Killendar angelegt; der gesperrte wurde als {0} behalten</sys:String>
 
 
