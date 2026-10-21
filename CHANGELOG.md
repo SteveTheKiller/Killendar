@@ -69,6 +69,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - The Week and Day grid sits flat under the day headers instead of curving at its top corners.
 - The footer copyright sits a few pixels further from the corner grip instead of running into it.
 
+### Added
+- Added Slovenian across the app, installation prompts, website and technical help.
+
 ## [1.3.1] - 2026-10-19
 
 ### Added

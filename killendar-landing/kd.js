@@ -322,10 +322,11 @@
   // The hero-info card carries no data-i18n on purpose - release.ps1 rewrites it by matching
   // the literal English label spans. Values may contain markup; they are our own strings.
 
-  var LANGS = ['en', 'es', 'fr', 'de', 'cs', 'tr', 'vi', 'ja', 'pl', 'bn', 'zh-CN', 'zh-TW', 'hu', 'it', 'ru', 'uk', 'nb', 'pt', 'kk'];
+  var LANGS = ['en', 'es', 'fr', 'de', 'cs', 'tr', 'vi', 'ja', 'pl', 'bn', 'zh-CN', 'zh-TW', 'hu', 'it', 'ru', 'uk', 'nb', 'pt', 'kk', 'sl'];
 
   // Flag SVGs, KillerPDF's kp.js set verbatim; the toggle wears the chosen language's flag.
   var FLAGS = {
+    sl: '<svg viewBox="0 0 24 24"><rect width="24" height="8" fill="#fff"/><rect y="8" width="24" height="8" fill="#005da4"/><rect y="16" width="24" height="8" fill="#ed1c24"/><path d="M4 4h7v6c0 3-3.5 5-3.5 5S4 13 4 10Z" fill="#005da4" stroke="#ed1c24" stroke-width=".5"/><path d="m5 10 1.5-2 1 1 1-1 1.5 2v1H5Z" fill="#fff"/></svg>',
     en: '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#fff"/><g fill="#b22234"><rect width="24" height="1.85"/><rect y="3.7" width="24" height="1.85"/><rect y="7.4" width="24" height="1.85"/><rect y="11.1" width="24" height="1.85"/><rect y="14.8" width="24" height="1.85"/><rect y="18.5" width="24" height="1.85"/><rect y="22.2" width="24" height="1.8"/></g><rect width="11" height="12.95" fill="#3c3b6e"/></svg>',
     es: '<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#c60b1e"/><rect y="6" width="24" height="12" fill="#ffc400"/></svg>',
     de: '<svg viewBox="0 0 24 24"><rect width="24" height="8" fill="#000"/><rect y="8" width="24" height="8" fill="#dd0000"/><rect y="16" width="24" height="8" fill="#ffce00"/></svg>',
@@ -386,6 +387,8 @@
   // those labels carry no data-i18n and are translated here instead.
   var CHROME_EN = { ui_theme: 'Theme', ui_choose_theme: 'Choose theme', ui_accent: 'Accent color', ui_language: 'Language', ui_click: 'click me', ui_expand: 'Expand section', accent_label: 'accent:', mcp_gh: 'KillerMCP on GitHub' };
   CHROME_EN.ui_more = 'More';
+  CHROME_EN.ui_store = 'Get Killendar from the Microsoft Store';
+  CHROME_EN.ui_screenshot_expanded = 'Expanded Killendar screenshot';
   function chromeText(l, key, english) {
     var d = I18N[l] || {};
     return d[key] || CHROME_EN[key] || english;
@@ -399,6 +402,8 @@
     function label(selector, key, attribute) {
       all(selector).forEach(function (el) { el.setAttribute(attribute, chromeText(l, key)); });
     }
+    label('.tb-store', 'ui_store', 'title');
+    label('#lightbox', 'ui_screenshot_expanded', 'aria-label');
     label('.theme-toggle', 'ui_theme', 'title');
     label('.theme-toggle', 'ui_choose_theme', 'aria-label');
     label('.tgrp', 'ui_theme', 'aria-label');

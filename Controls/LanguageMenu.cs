@@ -26,6 +26,7 @@ namespace Killendar.Controls
             (Locale.PlPL, "Polski", "pl-PL"),
             (Locale.PtBR, "Português (Brasil)", "pt-BR"),
             (Locale.RuRU, "Русский", "ru-RU"),
+            (Locale.SlSI, "Slovenščina", "sl-SI"),
             (Locale.TrTR, "Türkçe", "tr-TR"),
             (Locale.UkUA, "Українська", "uk-UA"),
             (Locale.ViVN, "Tiếng Việt", "vi-VN"),
@@ -65,7 +66,7 @@ namespace Killendar.Controls
             _menu.Items.Clear();
             var current = LocaleManager.Current;
 
-            // Keep the 19 languages in two columns so the last row stays visible on short windows.
+            // Keep the 20 languages in two columns so the last row stays visible on short windows.
             // Fill the left column first to preserve reading order and keep English at the top.
             var columns = new StackPanel { Orientation = Orientation.Horizontal,
                                            Margin = new Thickness(10, 10, 10, 10) };
