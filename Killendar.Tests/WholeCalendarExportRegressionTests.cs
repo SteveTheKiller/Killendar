@@ -33,7 +33,7 @@ namespace Killendar.Tests
             var start = new DateTime(2026, 1, 5, 9, 0, 0);
             fixture.Store.Add(new CalendarEvent { Title = "Large", Start = start, End = start.AddHours(1),
                 Repeat = RepeatFreq.Daily, RepeatCount = 50001 });
-            var transfer = new IcsTransfer(null!, fixture.Store, () => { });
+            var transfer = new IcsTransfer(null!, fixture.Store);
 
             var error = Assert.Throws<InvalidOperationException>(() => transfer.WholeCalendarSpan(out _, out _));
 
@@ -48,7 +48,7 @@ namespace Killendar.Tests
             var start = DateTime.Today.AddYears(2).AddHours(9);
             fixture.Store.Add(new CalendarEvent { Title = "Future", Start = start, End = start.AddHours(1),
                 Repeat = RepeatFreq.Daily });
-            var transfer = new IcsTransfer(null!, fixture.Store, () => { });
+            var transfer = new IcsTransfer(null!, fixture.Store);
 
             transfer.WholeCalendarSpan(out var from, out var to);
 
@@ -63,7 +63,7 @@ namespace Killendar.Tests
             var start = new DateTime(2026, 1, 5, 9, 0, 0);
             fixture.Store.Add(new CalendarEvent { Title = "Long", Start = start, End = start.AddHours(1),
                 Repeat = RepeatFreq.Yearly, RepeatCount = 150 });
-            var transfer = new IcsTransfer(null!, fixture.Store, () => { });
+            var transfer = new IcsTransfer(null!, fixture.Store);
 
             transfer.WholeCalendarSpan(out var from, out var to);
 
@@ -78,7 +78,7 @@ namespace Killendar.Tests
             using var fixture = new AppointmentFixture();
             fixture.Store.Add(new CalendarEvent { Title = "Last", Start = new DateTime(9999, 12, 31, 9, 0, 0),
                 End = new DateTime(9999, 12, 31, 10, 0, 0) });
-            var transfer = new IcsTransfer(null!, fixture.Store, () => { });
+            var transfer = new IcsTransfer(null!, fixture.Store);
             DateTime from = default, to = default;
 
             Assert.Null(Record.Exception(() => transfer.WholeCalendarSpan(out from, out to)));

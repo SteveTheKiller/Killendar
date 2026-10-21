@@ -30,7 +30,7 @@ namespace Killendar.Tests
             var outside = fixture.Store.GetOnDay(monday).Single().Clone();
             outside.Title = "Edited outside the selected range";
             fixture.Store.SaveOccurrence(outside);
-            var transfer = new IcsTransfer(null!, fixture.Store, () => { });
+            var transfer = new IcsTransfer(null!, fixture.Store);
             var selected = transfer.SelectForIcs(monday.AddDays(8).Date, monday.AddDays(9).Date);
 
             Assert.Null(Record.Exception(() => IcsService.BuildIcs(selected)));
@@ -50,7 +50,7 @@ namespace Killendar.Tests
             moved.End = moved.End.AddDays(1);
             moved.Title = "Moved Tuesday";
             fixture.Store.SaveOccurrence(moved);
-            var transfer = new IcsTransfer(null!, fixture.Store, () => { });
+            var transfer = new IcsTransfer(null!, fixture.Store);
             var selected = transfer.SelectForIcs(monday.AddDays(8).Date, monday.AddDays(9).Date);
             string artifact = IcsService.BuildIcs(selected);
             string folder = @"C:\Users\steve\scratch\killendar-remediation\ranged-ics";

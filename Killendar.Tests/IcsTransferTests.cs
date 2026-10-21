@@ -31,13 +31,26 @@ namespace Killendar.Tests
                 store.Open(database);
                 var host = new CalendarHostStub();
                 int refreshes = 0;
-                var transfer = new IcsTransfer(host, store, () => refreshes++);
+                store.Changed += () => refreshes++;
+                var transfer = new IcsTransfer(host, store);
 
                 transfer.Import(invite);
 
                 Assert.Equal("Field visit", store.Events.Single().Title);
                 Assert.Equal(1, refreshes);
-                Assert.NotNull(host.Status);
+                Assert.Equal("Imported 1", host.Status);
+
+                transfer.Import(invite);
+                Assert.Single(store.Events);
+                Assert.Equal(1, refreshes);
+                Assert.Equal("Imported 0, skipped 1", host.Status);
+
+                store.Close();
+                store.Open(database);
+                var reopened = Assert.Single(store.Events);
+                Assert.Equal("Field visit", reopened.Title);
+                Assert.Equal(new DateTime(2026, 10, 2, 9, 0, 0), reopened.Start);
+                Assert.Equal(new DateTime(2026, 10, 2, 10, 0, 0), reopened.End);
             }
             finally
             {
@@ -51,7 +64,12 @@ namespace Killendar.Tests
             public string? Status { get; private set; }
             public Window Window => null!;
             public string PeriodLabel { set { } }
-            public string Loc(string key) => key == "Str_Status_Imported" ? "Imported {0}" : key;
+            public string Loc(string key) => key switch
+            {
+                "Str_Status_Imported" => "Imported {0}",
+                "Str_Status_ImportedSkipped" => "Imported {0}, skipped {1}",
+                _ => key,
+            };
             public void SetStatus(string text) => Status = text;
             public void ShowView(object view) { }
             public void HighlightTab(string which) { }

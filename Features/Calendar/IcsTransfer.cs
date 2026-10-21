@@ -27,13 +27,11 @@ namespace Killendar.Features
 
         private readonly ICalendarHost _host;
         private readonly EventStore _store;
-        private readonly Action _afterChange;
 
-        internal IcsTransfer(ICalendarHost host, EventStore store, Action afterChange)
+        internal IcsTransfer(ICalendarHost host, EventStore store)
         {
             _host = host;
             _store = store;
-            _afterChange = afterChange;
         }
 
         internal void Import()
@@ -54,13 +52,12 @@ namespace Killendar.Features
         {
             try
             {
-                var ok = Path.GetExtension(path).ToLowerInvariant() switch
+                _ = Path.GetExtension(path).ToLowerInvariant() switch
                 {
                     ".csv" => ImportCsv(path),
                     ".eml" => ImportEml(path),
                     _ => ImportIcs(IcsService.ParseFile(path)),
                 };
-                if (ok) _afterChange();
             }
             catch (Exception ex)
             {

@@ -30,7 +30,8 @@ namespace Killendar.Tests
                 store.Open(Path.Combine(root, "calendar.kcal"));
                 var host = new Host();
                 int refreshes = 0;
-                new IcsTransfer(host, store, () => refreshes++).Import(path);
+                store.Changed += () => refreshes++;
+                new IcsTransfer(host, store).Import(path);
 
                 Assert.Equal("Valid", Assert.Single(store.Events).Title);
                 Assert.Equal(1, refreshes);

@@ -28,7 +28,7 @@ namespace Killendar.Shell
             _appointments = new AppointmentEditor(this, _store);
             _security     = new SecurityController(this, _store);
             _calendar     = new CalendarController(this, _store, _appointments);
-            _ics          = new IcsTransfer(this, _store, () => _calendar.Refresh());
+            _ics          = new IcsTransfer(this, _store);
 
             _store.Changed += () => _calendar.Refresh();
             // A color picker previewing a category repaints the calendar without writing, so it

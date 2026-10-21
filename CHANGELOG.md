@@ -18,7 +18,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Recurrence exceptions retain their exact times, follow whole-series edits, survive ranged exports and no longer duplicate on reimport.
 - Recurring appointments preserve week-start boundaries, counts and multi-day overlaps, skip nonexistent source-zone times and reject invalid intervals.
 - Whole-calendar exports include future and long finite series and disclose unbounded ranges.
-- Calendar imports retain valid rows when another date is unsupported and report unsupported future-range edits.
+- Calendar imports retain valid rows when another date is unsupported, report unsupported future-range edits and avoid duplicate redraws.
 - Calendar round trips preserve escaped text, email invites honor their character encoding, and CSV imports retain distinct appointment details.
 - Appointment editing preserves dates, times, durations and recurrence end dates during language or date-format changes, including repeated daylight-saving hours.
 - Read-only queries support older calendars without changing their files; failed calendar loads close cleanly without stale appointments.
