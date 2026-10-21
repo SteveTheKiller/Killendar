@@ -44,7 +44,7 @@ namespace Killendar.Tests
         [Fact]
         public void LockedOwnedFileKeepsTheUninstallMarkerAndReportsFailure()
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\uninstall",
+            string root = Path.Combine(TestScratch.Root + @"\uninstall",
                 System.Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             string image = Path.Combine(root, "Killendar.exe");
@@ -66,7 +66,7 @@ namespace Killendar.Tests
         [Fact]
         public void CompletionRemovesOnlyOwnedFilesBeforeFinalizingMetadata()
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\uninstall", System.Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\uninstall", System.Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             try
             {
@@ -89,7 +89,7 @@ namespace Killendar.Tests
         [Fact]
         public void MetadataFailureDoesNotReportCompletion()
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\uninstall", System.Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\uninstall", System.Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             try
             {
@@ -102,7 +102,7 @@ namespace Killendar.Tests
         [Fact]
         public void DeferredLaunchReturnsPendingWithAnObservableReceipt()
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\uninstall", System.Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\uninstall", System.Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             try
             {
@@ -121,7 +121,7 @@ namespace Killendar.Tests
         [Fact]
         public void FailedDeferredLaunchPublishesAFailedReceipt()
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\uninstall", System.Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\uninstall", System.Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             try
             {
@@ -138,7 +138,7 @@ namespace Killendar.Tests
         [Fact]
         public void AlreadyMissingOwnedDirectoryCanFinalizeMetadataAfterVerifiedAbsence()
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\uninstall", System.Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\uninstall", System.Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             try
             {

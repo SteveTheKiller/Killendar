@@ -16,7 +16,7 @@ namespace Killendar.Tests
         [InlineData("*.kcal")]
         public void InvalidManifestIsRejectedBeforeAnyOwnedFileIsRemoved(string invalid)
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation", "cleanup-guard-" + Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root, "cleanup-guard-" + Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             try
             {
@@ -33,7 +33,7 @@ namespace Killendar.Tests
         [Fact]
         public void OwnedFileCleanupPreservesCalendarsAndOtherUserFiles()
         {
-            string scratch = Path.GetFullPath(@"C:\Users\steve\scratch\killendar-remediation");
+            string scratch = Path.GetFullPath(TestScratch.Root);
             string root = Path.GetFullPath(Path.Combine(scratch, "cleanup-" + Guid.NewGuid().ToString("N")));
             Assert.StartsWith(scratch + Path.DirectorySeparatorChar, root, StringComparison.OrdinalIgnoreCase);
             Directory.CreateDirectory(Path.Combine(root, "Data"));
@@ -72,7 +72,7 @@ namespace Killendar.Tests
         [Fact]
         public void DeferredCleanupContainsOnlyOwnedFileDeletesAndEmptyDirectoryRemoval()
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation", "cleanup-script-fixture");
+            string root = Path.Combine(TestScratch.Root, "cleanup-script-fixture");
             string batch = InstalledFileCleanup.RemovalBatch(root, "Killendar.exe");
 
             Assert.DoesNotContain("rmdir /s", batch);

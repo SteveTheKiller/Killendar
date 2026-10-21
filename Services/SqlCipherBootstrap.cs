@@ -40,6 +40,8 @@ namespace Killendar.Services
         /// and preloads it, so the SQLitePCLRaw provider's LoadLibrary("e_sqlcipher") resolves to
         /// this module. Natives live in a per-version cache because they must match the app.
         /// </summary>
+        internal static string NativeDirectory => Path.Combine(AppPaths.LocalData, "Killendar", "native", typeof(SqlCipherBootstrap).Assembly.GetName().Version?.ToString() ?? "0");
+
         public static void EnsureLoaded()
         {
             if (_ready) return;
@@ -48,10 +50,7 @@ namespace Killendar.Services
                 if (_ready) return;
 
                 var asm = typeof(SqlCipherBootstrap).Assembly;
-                string version = asm.GetName().Version?.ToString() ?? "0";
-                string nativeDir = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "Killendar", "native", version);
+                string nativeDir = NativeDirectory;
                 string target = Path.Combine(nativeDir, "e_sqlcipher.dll");
 
                 using var src = asm.GetManifestResourceStream(ResourceName)

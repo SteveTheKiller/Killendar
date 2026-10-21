@@ -111,7 +111,7 @@ namespace Killendar.Tests
 
         private static void WithStore(Action<EventStore, string> action)
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\week-start", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\week-start", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             var store = new EventStore();
             try { action(store, Path.Combine(root, "calendar.kcal")); }

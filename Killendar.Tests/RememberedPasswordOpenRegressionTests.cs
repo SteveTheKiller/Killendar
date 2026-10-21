@@ -47,7 +47,7 @@ namespace Killendar.Tests
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         private static void Exercise()
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation", "remembered-key-" + Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root, "remembered-key-" + Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             var fields = new[] { "Dir", "FilePath", "_cache" }.Select(name =>
                 typeof(Settings).GetField(name, BindingFlags.Static | BindingFlags.NonPublic)!).ToArray();

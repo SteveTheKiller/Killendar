@@ -13,7 +13,7 @@ namespace Killendar.Tests
     {
         internal static void Run(Type publicFixture, string? scenario = null)
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\ui-process",
+            string root = Path.Combine(TestScratch.Root + @"\ui-process",
                 Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             try

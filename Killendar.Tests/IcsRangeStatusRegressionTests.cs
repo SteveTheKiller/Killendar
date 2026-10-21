@@ -19,7 +19,7 @@ namespace Killendar.Tests
         [InlineData(true)]
         public void ImportPathDescribesFutureRangeLossSeparatelyFromTasks(bool includeTask)
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\range-status", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\range-status", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             var store = new EventStore();
             try

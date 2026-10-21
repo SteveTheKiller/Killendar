@@ -127,7 +127,7 @@ namespace Killendar.Tests
 
         private static void InScratch(Action<string, string> exercise)
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation", "install-image-" + Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root, "install-image-" + Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             try
             {

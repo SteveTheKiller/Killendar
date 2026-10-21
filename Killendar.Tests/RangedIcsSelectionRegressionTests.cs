@@ -53,7 +53,7 @@ namespace Killendar.Tests
             var transfer = new IcsTransfer(null!, fixture.Store);
             var selected = transfer.SelectForIcs(monday.AddDays(8).Date, monday.AddDays(9).Date);
             string artifact = IcsService.BuildIcs(selected);
-            string folder = @"C:\Users\steve\scratch\killendar-remediation\ranged-ics";
+            string folder = TestScratch.Root + @"\ranged-ics";
             Directory.CreateDirectory(folder);
             File.WriteAllText(Path.Combine(folder, "moved-tuesday.ics"), artifact);
             using var imported = new AppointmentFixture();

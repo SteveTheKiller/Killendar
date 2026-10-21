@@ -47,7 +47,7 @@ namespace Killendar.Tests
             var app = Application.Current ?? new Application();
             var previousGet = ThemeManager.GetSetting;
             var previousSet = ThemeManager.SetSetting;
-            string directory = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\picker",
+            string directory = Path.Combine(TestScratch.Root + @"\picker",
                 Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(directory);
             Directory.CreateDirectory(Path.Combine(directory, "x.txt"));

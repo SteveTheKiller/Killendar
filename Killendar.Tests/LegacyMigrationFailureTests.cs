@@ -19,7 +19,7 @@ namespace Killendar.Tests
             Assert.False(File.Exists(Path.Combine(Environment.GetFolderPath(
                 Environment.SpecialFolder.LocalApplicationData), "Killendar", "events.json")),
                 "Run this migration fixture in an isolated profile without a legacy source.");
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root, Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             var cache = typeof(Settings).GetField("_cache", BindingFlags.Static | BindingFlags.NonPublic)!;
             object? previous = cache.GetValue(null);

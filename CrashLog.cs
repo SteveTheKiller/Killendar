@@ -30,9 +30,7 @@ namespace Killendar
         /// configurable data folder: a crash log belongs on the machine that crashed, and the data
         /// folder can point at a network share that is unreachable at the moment things are going
         /// wrong.</summary>
-        private static string CrashLogPath => Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            AppName, "crash.log");
+        internal static string CrashLogPath => Path.Combine(AppPaths.LocalData, AppName, "crash.log");
 
         // One file, trimmed when it gets long, rather than a folder that grows forever. The
         // interesting entry is nearly always the last one.

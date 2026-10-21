@@ -33,8 +33,7 @@ namespace Killendar.Services
 
             string? json = new[]
             {
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                             "Killendar", "events.json"),
+                Path.Combine(AppPaths.LocalData, "Killendar", "events.json"),
                 Path.Combine(DataDir, "events.json"),
             }.FirstOrDefault(File.Exists);
             if (json == null) return;

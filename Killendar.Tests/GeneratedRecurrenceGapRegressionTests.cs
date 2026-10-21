@@ -13,7 +13,7 @@ namespace Killendar.Tests
         [InlineData(20)]
         public void GeneratedGapIsSkippedWithoutConsumingCountAcrossRangesAndOverrides(int count)
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\generated-gap", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\generated-gap", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             var store = new EventStore();
             try

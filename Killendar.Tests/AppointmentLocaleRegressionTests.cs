@@ -143,7 +143,7 @@ namespace Killendar.Tests
 
     internal sealed class AppointmentFixture : IDisposable
     {
-        private readonly string _root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation", Guid.NewGuid().ToString("N"));
+        private readonly string _root = Path.Combine(TestScratch.Root, Guid.NewGuid().ToString("N"));
         internal readonly EventStore Store = new EventStore();
         internal readonly AppointmentTestView View = new AppointmentTestView();
         internal readonly AppointmentEditor Editor;

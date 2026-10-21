@@ -21,7 +21,7 @@ namespace Killendar.Tests
                     .Replace("RECURRENCE-ID:20260106T180000Z", "RECURRENCE-ID;VALUE=DATE:20260106")
                     .Replace("DTSTART:20260106T200000Z", "DTSTART;VALUE=DATE:20260106")
                     .Replace("DTEND:20260106T210000Z", "DTEND;VALUE=DATE:20260107");
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\override-identity", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\override-identity", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             var store = new EventStore();
             try

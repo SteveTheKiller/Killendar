@@ -124,7 +124,7 @@ namespace Killendar.Tests
 
         private sealed class ModalProfile : IDisposable
         {
-            private readonly string _root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\modal",
+            private readonly string _root = Path.Combine(TestScratch.Root + @"\modal",
                 Guid.NewGuid().ToString("N"));
             private readonly FieldInfo _dir = typeof(Settings).GetField("Dir", BindingFlags.NonPublic | BindingFlags.Static)!;
             private readonly FieldInfo _path = typeof(Settings).GetField("FilePath", BindingFlags.NonPublic | BindingFlags.Static)!;

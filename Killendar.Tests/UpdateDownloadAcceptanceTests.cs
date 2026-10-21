@@ -15,7 +15,7 @@ namespace Killendar.Tests
         [Fact]
         public async Task MatchingReleaseChecksumDoesNotAcceptUnsignedExecutable()
         {
-            string directory = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation",
+            string directory = Path.Combine(TestScratch.Root,
                 "download-acceptance-" + Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(directory);
             try
@@ -35,7 +35,7 @@ namespace Killendar.Tests
         [Fact]
         public async Task WrongReleaseChecksumIsRejectedBeforeWritingCandidate()
         {
-            string directory = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation",
+            string directory = Path.Combine(TestScratch.Root,
                 "download-acceptance-" + Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(directory);
             try

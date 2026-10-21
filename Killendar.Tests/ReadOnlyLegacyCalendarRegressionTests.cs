@@ -17,7 +17,7 @@ namespace Killendar.Tests
         [InlineData(5)]
         public void AgendaReadsPreviousSchemasWithoutChangingTheFile(int version)
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\readonly-legacy", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\readonly-legacy", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             string path = Path.Combine(root, "calendar.kcal");
             var store = new EventStore();

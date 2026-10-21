@@ -15,9 +15,8 @@ namespace Killendar
     /// </summary>
     internal static class Settings
     {
-        private static readonly string Dir = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Killendar");
-        private static readonly string FilePath = Path.Combine(Dir, "settings.json");
+        private static readonly string Dir = Path.Combine(AppPaths.LocalData, "Killendar");
+        internal static readonly string FilePath = Path.Combine(Dir, "settings.json");
 
         private static Dictionary<string, string>? _cache;
         private static readonly object Gate = new object();

@@ -93,7 +93,7 @@ namespace Killendar.Tests
 
         private sealed class HelperFixture : IDisposable
         {
-            private const string ScratchParent = @"C:\Users\steve\scratch\killendar-remediation\update-helper-signature";
+            private static readonly string ScratchParent = TestScratch.Root + @"\update-helper-signature";
             private Process? _process;
             private bool _exitConfirmed;
             private bool _retainScratch;

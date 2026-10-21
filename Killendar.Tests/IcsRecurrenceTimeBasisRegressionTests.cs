@@ -195,7 +195,7 @@ namespace Killendar.Tests
 
         private static void WithStored(string text, Action<EventStore, CalendarEvent> verify)
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\recurrence-basis", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\recurrence-basis", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             var store = new EventStore();
             try
@@ -218,7 +218,7 @@ namespace Killendar.Tests
         public void UtcDailySeriesKeepsItsUtcHourAfterStoredReopenAcrossDst()
         {
             const string text = "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\nUID:utc-basis-series\r\nRRULE:FREQ=DAILY;COUNT=10\r\nDTSTART:20261025T160000Z\r\nDTEND:20261025T170000Z\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n";
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\recurrence-basis", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\recurrence-basis", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             var store = new EventStore();
             try
@@ -298,7 +298,7 @@ namespace Killendar.Tests
         [Fact]
         public void OldSchemaBackupAndReopenPreserveNativeRowsWithLocalDefaults()
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\recurrence-basis", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\recurrence-basis", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             var store = new EventStore();
             try

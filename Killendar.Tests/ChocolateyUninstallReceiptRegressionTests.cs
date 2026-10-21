@@ -29,7 +29,7 @@ namespace Killendar.Tests
 
         private static void Exercise(string scenario, bool success)
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\uninstall-package", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\uninstall-package", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             try
             {

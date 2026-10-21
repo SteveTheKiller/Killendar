@@ -153,7 +153,7 @@ namespace Killendar.Tests
 
         private static void WithStore(Action<EventStore, string> action)
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\nominal-duration", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\nominal-duration", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             var store = new EventStore();
             try

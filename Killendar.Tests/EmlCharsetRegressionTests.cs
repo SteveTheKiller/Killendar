@@ -49,7 +49,7 @@ namespace Killendar.Tests
                     encoded.Append('=').Append(value.ToString("X2"));
                 payload = Encoding.ASCII.GetBytes(encoded.ToString());
             }
-            string folder = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\eml", Guid.NewGuid().ToString("N"));
+            string folder = Path.Combine(TestScratch.Root + @"\eml", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(folder);
             string path = Path.Combine(folder, "invite.eml");
             try

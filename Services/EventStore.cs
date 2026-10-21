@@ -48,8 +48,7 @@ namespace Killendar.Services
 
         /// <summary>Default per-user folder. Manage Killendars can override it, including with
         /// the executable folder for a self-contained portable copy.</summary>
-        public static string DefaultDataDir => Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Killendar");
+        public static string DefaultDataDir => Path.Combine(AppPaths.RoamingData, "Killendar");
 
         public static string DataDir => Settings.Get("KillendarDataDir") is string configured &&
                                         !string.IsNullOrWhiteSpace(configured)

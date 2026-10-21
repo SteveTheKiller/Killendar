@@ -14,7 +14,7 @@ namespace Killendar.Tests
         [InlineData("INVITE.ICS", false)]
         public void CapturedLaunchPathPreservesCanonicalFileIdentity(string fileName, bool relative)
         {
-            string directory = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\paths",
+            string directory = Path.Combine(TestScratch.Root + @"\paths",
                 Guid.NewGuid().ToString("N"));
             string sender = Path.Combine(directory, "sender");
             string receiver = Path.Combine(directory, "receiver");

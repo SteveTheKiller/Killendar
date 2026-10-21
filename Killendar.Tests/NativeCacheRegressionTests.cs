@@ -12,7 +12,7 @@ namespace Killendar.Tests
         [Fact]
         public void PublicationRepairsSameLengthCorruption()
         {
-            string directory = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\native-cache",
+            string directory = Path.Combine(TestScratch.Root + @"\native-cache",
                 Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(directory);
             string target = Path.Combine(directory, "fixture.bin");
@@ -88,7 +88,7 @@ namespace Killendar.Tests
 
         private static void WithTarget(Action<string> action)
         {
-            string directory = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\native-cache",
+            string directory = Path.Combine(TestScratch.Root + @"\native-cache",
                 Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(directory);
             try

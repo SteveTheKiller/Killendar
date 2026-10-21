@@ -169,7 +169,7 @@ namespace Killendar.Tests
 
         private static void WithStore(Action<EventStore, string> action)
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\exact-recurrence", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\exact-recurrence", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             var store = new EventStore();
             try
@@ -230,7 +230,7 @@ namespace Killendar.Tests
         {
             Assert.Equal("Pacific Standard Time", TimeZoneInfo.Local.Id);
             const string text = "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\nUID:exact-occurrence-series\r\nDTSTART:20261101T073000Z\r\nDURATION:PT1H\r\nRRULE:FREQ=DAILY;COUNT=2\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n";
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\exact-recurrence", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\exact-recurrence", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             var store = new EventStore();
             try

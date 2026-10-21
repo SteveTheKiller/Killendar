@@ -180,7 +180,7 @@ namespace Killendar.Tests
 
         private sealed class CalendarFixture : IDisposable
         {
-            private readonly string _root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\recurrence", Guid.NewGuid().ToString("N"));
+            private readonly string _root = Path.Combine(TestScratch.Root + @"\recurrence", Guid.NewGuid().ToString("N"));
             public string PathName { get; }
             public EventStore Store { get; } = new EventStore();
 

@@ -41,7 +41,7 @@ namespace Killendar.Tests
 
         private sealed class Profile : IDisposable
         {
-            private readonly string _root = System.IO.Path.Combine(@"C:\Users\steve\scratch\killendar-remediation", Guid.NewGuid().ToString("N"));
+            private readonly string _root = System.IO.Path.Combine(TestScratch.Root, Guid.NewGuid().ToString("N"));
             private readonly FieldInfo _dir = typeof(Settings).GetField("Dir", BindingFlags.NonPublic | BindingFlags.Static)!;
             private readonly FieldInfo _path = typeof(Settings).GetField("FilePath", BindingFlags.NonPublic | BindingFlags.Static)!;
             private readonly FieldInfo _cache = typeof(Settings).GetField("_cache", BindingFlags.NonPublic | BindingFlags.Static)!;

@@ -151,7 +151,7 @@ namespace Killendar.Tests
 
         private sealed class Fixture : IDisposable
         {
-            public string Root { get; } = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\uninstall", Guid.NewGuid().ToString("N"), "calendar-é-測試");
+            public string Root { get; } = Path.Combine(TestScratch.Root + @"\uninstall", Guid.NewGuid().ToString("N"), "calendar-é-測試");
             public string OperationId { get; } = Guid.NewGuid().ToString("N");
             public string Installation => Path.Combine(Root, "installed");
             public string Staging => Path.Combine(Root, "operations");
@@ -219,7 +219,7 @@ namespace Killendar.Tests
             public void Dispose()
             {
                 string root = Path.GetFullPath(Root);
-                if (!root.StartsWith(@"C:\Users\steve\scratch\killendar-remediation\uninstall\", StringComparison.OrdinalIgnoreCase))
+                if (!root.StartsWith(TestScratch.Root + @"\uninstall\", StringComparison.OrdinalIgnoreCase))
                     throw new InvalidOperationException("Unexpected fixture cleanup root.");
                 string identity = File.Exists(WorkerId) ? File.ReadAllText(WorkerId) : "no worker identity recorded";
                 using (var worker = OpenWorker())

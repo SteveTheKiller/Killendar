@@ -16,7 +16,7 @@ namespace Killendar.Tests
         [InlineData("categories")]
         public void FailedInitializationLeavesClosedEmptyStoreAndAllowsReopeningPreviousCalendar(string fault)
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root, Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             string good = Path.Combine(root, "good.kcal");
             string bad = Path.Combine(root, "bad.kcal");

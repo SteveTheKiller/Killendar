@@ -54,7 +54,7 @@ namespace Killendar.Tests
         [InlineData(true)]
         public void FailedCategoryRewriteRollsBackDefinitionAndEveryAppointment(bool delete)
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root, Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             string path = Path.Combine(root, "calendar.kcal");
             var store = new EventStore();

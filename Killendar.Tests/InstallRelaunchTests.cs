@@ -116,7 +116,7 @@ namespace Killendar.Tests
         [Fact]
         public void RealHelperWaitsForOwnedParentExitBeforeClaimingItsMutex()
         {
-            string root = Path.Combine(@"C:\Users\steve\scratch\killendar-remediation\install-relaunch", Guid.NewGuid().ToString("N"));
+            string root = Path.Combine(TestScratch.Root + @"\install-relaunch", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             string executable = Path.Combine(root, "OwnedHandoff.exe");
             string marker = Path.Combine(root, "normal.txt");
