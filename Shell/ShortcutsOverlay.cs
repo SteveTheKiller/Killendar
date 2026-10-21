@@ -76,6 +76,7 @@ namespace Killendar.Shell
             new("Ctrl+I",   "Str_KS_Import",   KsCat.File, true,  "I"),
             new("Ctrl+E",   "Str_KS_Export",   KsCat.File, true,  "E"),
             new("F5",       "Str_KS_Reload",   KsCat.File, false, "F5"),
+            new("Ctrl+L",   "Str_KS_Lock",     KsCat.File, true,  "L"),
 
             new("F1",       "Str_KS_ThisList", KsCat.Help, false, "F1"),
             new("F12",      "Str_KS_About",    KsCat.Help, false, "F12"),

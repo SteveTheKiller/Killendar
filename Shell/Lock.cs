@@ -1,0 +1,113 @@
+using System.Linq;
+using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Threading;
+using Microsoft.Win32;
+using Killendar.Features;
+
+// Locking an encrypted Killendar: Ctrl+L or Lock now on the lock button's menu, after a chosen
+// idle time, or when Windows locks. The controller closes the calendar (SecurityController.Lock);
+// this side hides what was on screen and asks for the password once someone can see the window.
+namespace Killendar.Shell
+{
+    public partial class MainWindow
+    {
+        private DispatcherTimer? _idleTimer;
+        private bool _unlockAsking;
+
+        /// <summary>Hidden, not collapsed: the layout holds still and the panel keeps its draft.</summary>
+        void ISecurityHost.ShowLocked(bool locked) =>
+            ScaleHost.Visibility = locked ? Visibility.Hidden : Visibility.Visible;
+
+        private void AttachAutoLock()
+        {
+            _idleTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(15) };
+            _idleTimer.Tick += (_, _) =>
+            {
+                if (_store.HasPassword && !_security.IsLocked &&
+                    AutoLock.IdleDue(AutoLock.IdleTime(), AutoLock.IdleMinutes(Settings.Get(AutoLock.IdleSetting))))
+                    LockAndAsk();
+            };
+            _idleTimer.Start();
+            SystemEvents.SessionSwitch += OnSessionSwitch;
+            // SessionSwitch is static and would keep this window alive after it closes.
+            Closed += (_, _) =>
+            {
+                SystemEvents.SessionSwitch -= OnSessionSwitch;
+                _idleTimer.Stop();
+            };
+            // A window locked while hidden or minimized asks when it comes back.
+            Activated += (_, _) => AskToUnlockWhenSeen();
+        }
+
+        private void OnSessionSwitch(object sender, SessionSwitchEventArgs e)
+        {
+            if (e.Reason == SessionSwitchReason.SessionLock && Settings.Get(AutoLock.WindowsSetting) == "1")
+                Dispatcher.BeginInvoke(new Action(() => { if (_store.HasPassword) LockAndAsk(); }));
+        }
+
+        private void LockAndAsk()
+        {
+            // Overlays and menus could still show text from the calendar.
+            if (ShortcutsOverlay.Visibility == Visibility.Visible) ToggleShortcutsOverlay();
+            if (_deletedMenu != null) _deletedMenu.IsOpen = false;
+            if (!_security.Lock()) return;
+            Dispatcher.BeginInvoke(new Action(AskToUnlockWhenSeen), DispatcherPriority.Background);
+        }
+
+        private void AskToUnlockWhenSeen()
+        {
+            if (!_security.IsLocked || _unlockAsking || !IsVisible || WindowState == WindowState.Minimized) return;
+            _unlockAsking = true;
+            try { _security.Unlock(); }
+            finally { _unlockAsking = false; }
+        }
+
+        private void LockShortcut()
+        {
+            if (!_store.HasPassword) { StatusText.Text = Loc("Str_Status_LockNeedsPassword"); return; }
+            LockAndAsk();
+        }
+
+        /// <summary>With a password, the lock button opens Lock now, the password change and the
+        /// automatic locks; without one it goes straight to setting a password, as before.</summary>
+        private void ShowLockMenu()
+        {
+            var menu = new ContextMenu { PlacementTarget = LockButton, Placement = PlacementMode.Bottom };
+            var lockNow = new MenuItem { Header = Loc("Str_Lock_Now"), InputGestureText = "Ctrl+L" };
+            lockNow.Click += (_, _) => LockAndAsk();
+            var change = new MenuItem { Header = Loc("Str_Lock_Change") };
+            change.Click += (_, _) => _security.ToggleLock();
+
+            var idle = new MenuItem { Header = Loc("Str_Lock_Idle") };
+            int current = AutoLock.IdleMinutes(Settings.Get(AutoLock.IdleSetting));
+            foreach (int minutes in new[] { 0 }.Concat(AutoLock.IdleChoices))
+            {
+                var choice = new MenuItem
+                {
+                    Header = minutes == 0 ? Loc("Str_Lock_IdleNever") : string.Format(Loc("Str_Lock_IdleMinutes"), minutes),
+                    IsCheckable = true,
+                    IsChecked = minutes == current,
+                };
+                choice.Click += (_, _) => Settings.Set(AutoLock.IdleSetting, minutes.ToString());
+                idle.Items.Add(choice);
+            }
+            var withWindows = new MenuItem
+            {
+                Header = Loc("Str_Lock_WithWindows"),
+                IsCheckable = true,
+                IsChecked = Settings.Get(AutoLock.WindowsSetting) == "1",
+            };
+            withWindows.Click += (_, _) => Settings.Set(AutoLock.WindowsSetting, withWindows.IsChecked ? "1" : "0");
+
+            menu.Items.Add(lockNow);
+            menu.Items.Add(change);
+            menu.Items.Add(new Separator());
+            menu.Items.Add(idle);
+            menu.Items.Add(withWindows);
+            menu.IsOpen = true;
+        }
+    }
+}

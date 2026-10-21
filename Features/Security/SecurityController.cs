@@ -33,6 +33,46 @@ namespace Killendar.Features
             _store = store;
         }
 
+        /// <summary>True from Lock until the password is given again.</summary>
+        internal bool IsLocked { get; private set; }
+
+        internal bool RemembersPassword => _password != null;
+
+        internal void RememberPassword(string password) => _password = password;
+
+        /// <summary>Closes the encrypted Killendar and forgets its password, so nothing in it can
+        /// be read, changed or reached through the command pipe until the password is typed again.
+        /// A draft in the panel is hidden with the calendar rather than asked about: an idle or
+        /// Windows lock has nobody to ask. False, with a status, when there is no password.</summary>
+        internal bool Lock()
+        {
+            if (IsLocked) return true;
+            if (!_store.IsOpen) return false;
+            if (!_store.HasPassword)
+            {
+                _host.SetStatus(_host.Loc("Str_Status_LockNeedsPassword"));
+                return false;
+            }
+            _store.Close();
+            _password = null;
+            IsLocked = true;
+            _host.ShowLocked(true);
+            _host.RefreshView();
+            return true;
+        }
+
+        /// <summary>Asks for the password of the locked Killendar. Canceling quits, as it does at
+        /// launch: there is nothing to show without the password.</summary>
+        internal void Unlock()
+        {
+            if (!IsLocked) return;
+            if (!Open(exitOnCancel: true) || !_store.IsOpen) return;
+            IsLocked = false;
+            _host.ShowLocked(false);
+            _host.RefreshView();
+            _host.SetStatus(TakePendingStatus() ?? _host.Loc("Str_Status_Unlocked"));
+        }
+
         /// <summary>Drops the remembered password. Call when switching to a different file, whose
         /// password is not ours to try.</summary>
         internal void ForgetPassword() => _password = null;

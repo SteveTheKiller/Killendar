@@ -98,6 +98,9 @@ namespace Killendar.Tests
                 Assert.Equal(Visibility.Collapsed, shortcuts.Visibility);
                 Assert.Equal("Unsaved appointment", title.Text);
                 Assert.False(window.IsLoaded);
+                // N over a draft asks first (DraftProtectionRegressionTests); with the draft
+                // emptied, N reaches the editor again once the overlays are gone.
+                title.Text = "";
                 Assert.True(Press(window, source, Key.N).Handled);
                 Assert.Equal("", title.Text);
                 Assert.Empty(Directory.GetFiles(profile.Calendars));

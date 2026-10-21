@@ -130,6 +130,7 @@ namespace Killendar.Tests
             public string Loc(string key) => key + " {0}";
             public void SetStatus(string text) { }
             public void ShowLockState(bool encrypted) { }
+            public void ShowLocked(bool locked) { }
             public void ShowActiveKillendar(string name, bool visible) { }
             public void RefreshView() { }
             public bool IsSidebarOpen => false;

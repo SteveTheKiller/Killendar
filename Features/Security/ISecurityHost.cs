@@ -10,6 +10,10 @@ namespace Killendar.Features
         /// <summary>Reflects whether the open Killendar is encrypted.</summary>
         void ShowLockState(bool encrypted);
 
+        /// <summary>Hides the calendar and the appointment panel while locked, and shows them
+        /// again on unlock. Hidden, not cleared: a draft in the panel survives the lock.</summary>
+        void ShowLocked(bool locked);
+
         /// <summary>Shows which Killendar is open, or hides the label when there is nothing worth
         /// saying.</summary>
         void ShowActiveKillendar(string name, bool visible);

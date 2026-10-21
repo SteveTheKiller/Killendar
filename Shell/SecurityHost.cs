@@ -59,7 +59,10 @@ namespace Killendar.Shell
             => _security.ShowKillendars();
 
         private void LockButton_Click(object sender, RoutedEventArgs e)
-            => _security.ToggleLock();
+        {
+            if (_store.HasPassword && !_security.IsLocked) ShowLockMenu();   // Lock.cs
+            else _security.ToggleLock();
+        }
 
         /// <summary>Footer label click - same destination as the title-bar button.</summary>
         private void ActiveKillendarLabel_Click(object sender, MouseButtonEventArgs e)

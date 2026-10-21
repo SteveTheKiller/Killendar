@@ -35,6 +35,7 @@ namespace Killendar.Shell
             InitSidebarResize();
             InitSidebarSide();   // SidebarDock.cs - left or right of the calendar
             InitRailOrder();
+            AttachAutoLock();   // Lock.cs - idle and Windows locks
 
             RestoreWindowPlacement();
             InitAppScale();

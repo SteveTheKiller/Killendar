@@ -17,6 +17,8 @@ namespace Killendar.Tests
         public string Loc(string key) => key + " {0}";
         public void SetStatus(string text) => Statuses.Add(text);
         public void ShowLockState(bool encrypted) => LockState = encrypted;
+        internal bool Locked;
+        public void ShowLocked(bool locked) => Locked = locked;
         public void ShowActiveKillendar(string name, bool visible) { }
         public void RefreshView() { }
         public bool IsSidebarOpen => false;
