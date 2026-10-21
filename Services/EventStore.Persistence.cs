@@ -122,7 +122,16 @@ namespace Killendar.Services
         // the open one. CreateCommand() picks up the connection's current transaction on its own.
         private static void Upsert(SqliteConnection db, CalendarEvent ev)
         {
-            using var cmd = db.CreateCommand();
+            using var cmd = CreateUpsert(db);
+            BindUpsert(cmd, ev);
+            cmd.ExecuteNonQuery();
+        }
+
+        /// <summary>One command for a whole batch: SQLite then prepares the statement once
+        /// instead of per row, which is most of an import's write time.</summary>
+        private static SqliteCommand CreateUpsert(SqliteConnection db)
+        {
+            var cmd = db.CreateCommand();
             cmd.CommandText =
                 "INSERT INTO events(id, title, start_utc, end_utc, all_day, location, " +
                 "description, attendees, categories, created_utc, modified_utc, " +
@@ -138,6 +147,12 @@ namespace Killendar.Services
                 "occurrence_start=$os, repeat_time_basis=$tb, repeat_anchor=$ra, repeat_zone_id=$rz, repeat_week_start=$ws, " +
                 "skip_occurrences=$so, repeat_until_exact=$ue, occurrence_anchor=$oa, occurrence_basis=$ob, occurrence_zone_id=$oz, " +
                 "duration_days=$dd, duration_time_ticks=$dt, external_uid=$xu, kept_properties=$kp";
+            return cmd;
+        }
+
+        private static void BindUpsert(SqliteCommand cmd, CalendarEvent ev)
+        {
+            cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("$id", ev.Id.ToString());
             cmd.Parameters.AddWithValue("$ti", ev.Title ?? "");
             cmd.Parameters.AddWithValue("$st", ToStore(ev.Start, ev.AllDay));
@@ -171,7 +186,6 @@ namespace Killendar.Services
             cmd.Parameters.AddWithValue("$dt", ev.DurationTimeTicks);
             cmd.Parameters.AddWithValue("$xu", ev.ExternalUid ?? "");
             cmd.Parameters.AddWithValue("$kp", string.Join("\n", ev.KeptProperties ?? []));
-            cmd.ExecuteNonQuery();
         }
 
         /// <summary>Writes, then repaints. If persistence fails, reload the database so the

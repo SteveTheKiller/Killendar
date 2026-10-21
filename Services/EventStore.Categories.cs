@@ -213,10 +213,12 @@ namespace Killendar.Services
         private void WriteRows(List<CalendarEvent> rows, CancellationToken cancel, Action? afterRow)
         {
             using var tx = _db!.BeginTransaction();
+            using var upsert = CreateUpsert(_db);
             foreach (var ev in rows)
             {
                 cancel.ThrowIfCancellationRequested();
-                Upsert(ev);
+                BindUpsert(upsert, ev);
+                upsert.ExecuteNonQuery();
                 afterRow?.Invoke();
             }
             cancel.ThrowIfCancellationRequested();
