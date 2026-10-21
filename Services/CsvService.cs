@@ -244,9 +244,9 @@ namespace Killendar.Services
                     else
                     {
                         ev.Start = startDate + st;
-                        ev.End = hasEndDate || hasEndTime
-                            ? (hasEndDate ? ed : startDate) + et
-                            : ev.Start.AddHours(1);
+                        // A blank End Time is the default one-hour length, on the end date when
+                        // one is given.
+                        ev.End = (hasEndDate ? ed : startDate) + (hasEndTime ? et : st + TimeSpan.FromHours(1));
                     }
                 }
                 catch (ArgumentOutOfRangeException)

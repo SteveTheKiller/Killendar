@@ -34,6 +34,7 @@ namespace Killendar.Tests
         [InlineData("Blank times,2026-10-22,,,,FALSE", 0, 1)]
         [InlineData("Blank end,2026-10-22,09:00,,,FALSE", 9, 10)]
         [InlineData("End time only,2026-10-22,09:00,,11:30,FALSE", 9, 11.5)]
+        [InlineData("End date only,2026-10-22,10:00,2026-10-22,,FALSE", 10, 11)]
         public void BlankOptionalValuesKeepTheirDefaults(string row, double startHour, double endHour)
         {
             var culture = CultureInfo.CurrentCulture;
