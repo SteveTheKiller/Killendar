@@ -18,17 +18,7 @@ namespace Killendar.Tests
     {
         [Fact]
         public void InvalidPathsKeepDialogUsableThroughPickerActions()
-        {
-            var domain = AppDomain.CreateDomain("Killendar picker path fixture", null,
-                new AppDomainSetup { ApplicationBase = AppContext.BaseDirectory });
-            try
-            {
-                var fixture = (PickerPathFixture)domain.CreateInstanceAndUnwrap(
-                    typeof(PickerPathFixture).Assembly.FullName, typeof(PickerPathFixture).FullName);
-                fixture.Run();
-            }
-            finally { AppDomain.Unload(domain); }
-        }
+            => ScratchUiProcess.Run(typeof(PickerPathFixture));
     }
 
     public sealed class PickerPathFixture : MarshalByRefObject
@@ -38,7 +28,11 @@ namespace Killendar.Tests
             Exception? failure = null;
             var thread = new Thread(() =>
             {
-                try { ExercisePickerActions(); }
+                try
+                {
+                    System.IO.Packaging.PackUriHelper.Create(new Uri("file:///calendar.html"));
+                    ExercisePickerActions();
+                }
                 catch (Exception ex) { failure = ex; }
             }) { IsBackground = true };
             thread.SetApartmentState(ApartmentState.STA);
@@ -47,6 +41,7 @@ namespace Killendar.Tests
             if (failure != null) throw new InvalidOperationException(failure.ToString());
         }
 
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         private static void ExercisePickerActions()
         {
             var app = Application.Current ?? new Application();
