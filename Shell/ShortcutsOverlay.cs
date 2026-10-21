@@ -264,6 +264,7 @@ namespace Killendar.Shell
                     {
                         Text = shortcutKeys, FontFamily = new FontFamily("Consolas"),
                         FontSize = 11.5, Margin = new Thickness(0, 0, 10, 0),
+                        TextWrapping = TextWrapping.Wrap,
                     };
                     keys.SetResourceReference(TextBlock.ForegroundProperty, "PrimaryBrush");
                     grid.Children.Add(keys);
