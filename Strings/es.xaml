@@ -126,6 +126,9 @@
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">Lo que escribió aún no se ha guardado.</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Descartar</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Seguir editando</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeFormat">formato de hora</sys:String>
+    <sys:String x:Key="Str_Time_12">12 horas</sys:String>
+    <sys:String x:Key="Str_Time_24">24 horas</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Error al importar: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Se exportaron {0} citas</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Error al exportar: {0}</sys:String>

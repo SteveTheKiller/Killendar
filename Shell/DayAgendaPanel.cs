@@ -108,7 +108,8 @@ namespace Killendar.Shell
             // squeezed every chip in the list (2026-07-31). Stacked into two lines it
             // is never wider than an ordinary same-day time.
             string timeText = !ev.AllDay && ev.SpansMultipleDays
-                ? ev.Start.ToString("M/d h:mm tt") + " -\n" + ev.End.ToString("M/d h:mm tt")
+                ? Services.DateFormatManager.MonthDay(ev.Start) + " " + Services.DateFormatManager.Time(ev.Start) + " -\n" +
+                  Services.DateFormatManager.MonthDay(ev.End) + " " + Services.DateFormatManager.Time(ev.End)
                 : ev.TimeLabel;
             var time = Views.CalendarChrome.Text(timeText, "MutedTextBrush", 10.5, null, "Consolas");
             time.Margin = new Thickness(2, 2, 0, 3);

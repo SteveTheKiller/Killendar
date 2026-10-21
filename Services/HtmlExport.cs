@@ -137,7 +137,7 @@ namespace Killendar.Services
                             else if (ev.Start.Date == cell.Date)
                             {
                                 sb.Append("<div class=\"ev\"><span class=\"tm\">")
-                                  .Append(Html(ev.Start.ToString("t", culture)))
+                                  .Append(Html(DateFormatManager.Time(ev.Start, culture)))
                                   .Append("</span> ").Append(Html(TitleOf(ev))).Append("</div>");
                             }
                             else

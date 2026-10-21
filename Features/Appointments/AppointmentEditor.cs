@@ -319,8 +319,36 @@ namespace Killendar.Features
 
         /// <summary>After a date-format change: re-render the dates already typed so the panel does
         /// not show a mix of the old pattern and the new one, and update the hint with them.</summary>
+        /// <summary>The clock changed: show the time boxes in it. Like a date style change, this
+        /// is not an edit, so a panel with nothing unsaved stays that way.</summary>
+        internal void ChangeTimeStyle(TimeStyle style)
+        {
+            bool clean = !HasUnsavedChanges;
+            bool haveStart = TryParseTime(_view.FieldStartTime, out var start);
+            bool haveEnd = TryParseTime(_view.FieldEndTime, out var end);
+            bool loading = _loading;
+            _loading = true;
+            try
+            {
+                DateFormatManager.ApplyTime(style);
+                if (haveStart) _view.FieldStartTime = FormatTime(DateTime.Today + start);
+                if (haveEnd) _view.FieldEndTime = FormatTime(DateTime.Today + end);
+            }
+            finally { _loading = loading; }
+            _followedStart = CurrentStart();
+            Rebaseline(clean);
+        }
+
+        /// <summary>Reformatting rewrites the field text; that only counts as an edit if there was
+        /// one already.</summary>
+        private void Rebaseline(bool clean)
+        {
+            if (clean && _baseline != null) _baseline = Snapshot();
+        }
+
         internal void ChangeDateStyle(DateStyle style)
         {
+            bool clean = !HasUnsavedChanges;
             bool haveStart = TryParseDate(_view.FieldStartDate, out var start);
             bool haveEnd = TryParseDate(_view.FieldEndDate, out var end);
             var until = _view.FieldRepeatUntil;
@@ -336,11 +364,13 @@ namespace Killendar.Features
             }
             finally { _loading = loading; }
             _followedStart = CurrentStart();
+            Rebaseline(clean);
         }
 
         /// <summary>After a language change: re-render the panel's own strings.</summary>
         internal void RefreshLocalizedText()
         {
+            bool clean = !HasUnsavedChanges;
             // The locale has already changed, but the open fields still use the previous
             // culture's date pattern and separators. Capture them before reformatting.
             var culture = CultureInfo.CurrentCulture;
@@ -373,6 +403,7 @@ namespace Killendar.Features
             _followedStart = CurrentStart();
             _view.Heading = _view.Loc(_editing == null ? "Str_Side_New" : "Str_Side_Edit");
             ApplyAllDay();
+            Rebaseline(clean);
         }
 
         /// <summary>
@@ -618,14 +649,14 @@ namespace Killendar.Features
         private static bool MatchesDisplayedInstant(DateTime entered, DateTime original)
             => entered.Ticks == original.Ticks - original.Ticks % TimeSpan.TicksPerMinute;
 
+        /// <summary>The time boxes use the display clock in one of the two forms TryParseTime reads
+        /// back exactly, whatever the culture's own short time looks like.</summary>
         private static string FormatTime(DateTime value)
         {
             var culture = CultureInfo.CurrentCulture;
-            var format = culture.DateTimeFormat;
-            bool distinct = !string.IsNullOrWhiteSpace(format.AMDesignator) &&
-                            !string.IsNullOrWhiteSpace(format.PMDesignator) &&
-                            !string.Equals(format.AMDesignator, format.PMDesignator, StringComparison.OrdinalIgnoreCase);
-            return value.ToString(distinct ? "h:mm tt" : "HH:mm", culture);
+            return DateFormatManager.Uses12Hour(culture)
+                ? value.ToString("h:mm tt", DateFormatManager.ClockFormat(culture))
+                : value.ToString("HH:mm", culture);
         }
 
         /// <summary>
@@ -656,8 +687,12 @@ namespace Killendar.Features
                 "H:mm", "HH:mm", "Hmm", "HHmm", "%H", "HH",
                 "h:mm tt", "hh:mm tt", "h:mmtt", "hh:mmtt", "h tt", "htt"
             ];
+            // The clock format adds AM/PM where the language has none, so a 12-hour time the
+            // editor wrote in such a language reads back.
             if (DateTime.TryParseExact(raw, formats, culture,
                                        DateTimeStyles.None, out var dt) ||
+                DateTime.TryParseExact(raw, formats, DateFormatManager.ClockFormat(culture),
+                                       DateTimeStyles.None, out dt) ||
                 DateTime.TryParse(raw, culture, DateTimeStyles.NoCurrentDateDefault, out dt))
             {
                 time = dt.TimeOfDay;

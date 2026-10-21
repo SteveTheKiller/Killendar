@@ -20,7 +20,7 @@ namespace Killendar.Shell
                 // see the ThemePopup note in MainWindow.xaml).
                 LangMenu, LangButton, RelocalizeDynamicUi);
             _dateSettingsMenu = new Controls.DateSettingsMenu(
-                DateSettingsContextMenu, DateSettingsButton, ReformatOpenEditor, RelocalizeDynamicUi);
+                DateSettingsContextMenu, DateSettingsButton, ReformatOpenEditor, ReformatOpenEditorTimes, RelocalizeDynamicUi);
         }
 
         private void LangButton_Click(object sender, RoutedEventArgs e) => _languageMenu.Open();
@@ -35,6 +35,22 @@ namespace Killendar.Shell
         {
             if (_sidebarOpen) _appointments.ChangeDateStyle(style);
             else DateFormatManager.Apply(style);
+            RefreshDisplayedTimes();
+        }
+
+        private void ReformatOpenEditorTimes(TimeStyle style)
+        {
+            if (_sidebarOpen) _appointments.ChangeTimeStyle(style);
+            else DateFormatManager.ApplyTime(style);
+            RefreshDisplayedTimes();
+        }
+
+        /// <summary>Chips, the time gutter and agenda rows are built with the current date style
+        /// and clock, so they are rebuilt when either changes.</summary>
+        private void RefreshDisplayedTimes()
+        {
+            _calendar.Refresh();
+            if (_agendaDay != null && AgendaScroll.Visibility == Visibility.Visible) BuildDayAgendaRows();
         }
 
         /// <summary>

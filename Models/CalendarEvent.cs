@@ -145,8 +145,9 @@ namespace Killendar.Models
             {
                 if (AllDay) return Services.LocaleManager.Loc("Str_Cal_AllDay");
                 if (SpansMultipleDays)
-                    return $"{Start:M/d h:mm tt} - {End:M/d h:mm tt}";
-                return $"{Start:h:mm tt} - {End:h:mm tt}";
+                    return Services.DateFormatManager.MonthDay(Start) + " " + Services.DateFormatManager.Time(Start) + " - " +
+                           Services.DateFormatManager.MonthDay(End) + " " + Services.DateFormatManager.Time(End);
+                return Services.DateFormatManager.Time(Start) + " - " + Services.DateFormatManager.Time(End);
             }
         }
 

@@ -168,6 +168,9 @@
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">What you typed has not been saved.</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Discard</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Keep editing</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeFormat">time format</sys:String>
+    <sys:String x:Key="Str_Time_12">12-hour</sys:String>
+    <sys:String x:Key="Str_Time_24">24-hour</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import failed: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Exported {0} appointments</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export failed: {0}</sys:String>

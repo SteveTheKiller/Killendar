@@ -168,6 +168,9 @@
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">Det du har skrevet, er ikke lagret ennå.</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Forkast</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Fortsett å redigere</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeFormat">tidsformat</sys:String>
+    <sys:String x:Key="Str_Time_12">12 timer</sys:String>
+    <sys:String x:Key="Str_Time_24">24 timer</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Importen mislyktes: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Eksporterte {0} avtaler</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Eksporten mislyktes: {0}</sys:String>

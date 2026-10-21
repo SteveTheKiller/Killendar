@@ -168,6 +168,9 @@
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">A beírtak még nincsenek mentve.</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Elvetés</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Szerkesztés folytatása</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeFormat">időformátum</sys:String>
+    <sys:String x:Key="Str_Time_12">12 órás</sys:String>
+    <sys:String x:Key="Str_Time_24">24 órás</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Sikertelen importálás: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} találkozó exportálva</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Az exportálás sikertelen: {0}</sys:String>

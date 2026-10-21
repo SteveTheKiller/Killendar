@@ -236,8 +236,8 @@ namespace Killendar.Views
             if (showTime && !ev.AllDay)
             {
                 string time = showEndTime
-                    ? ev.Start.ToString("h:mm") + "-" + ev.End.ToString("h:mm")
-                    : ev.Start.ToString("h:mm");
+                    ? Services.DateFormatManager.CompactTime(ev.Start) + "-" + Services.DateFormatManager.CompactTime(ev.End)
+                    : Services.DateFormatManager.CompactTime(ev.Start);
                 line.Inlines.Add(new Run(time + "  "));
             }
 
@@ -316,7 +316,7 @@ namespace Killendar.Views
             }
         }
 
-        /// <summary>Hour label for the time gutter, e.g. "9 AM".</summary>
-        internal static string HourLabel(int hour) => DateTime.Today.AddHours(hour).ToString("h tt");
+        /// <summary>Hour label for the time gutter, e.g. "9 AM" or "09:00".</summary>
+        internal static string HourLabel(int hour) => Services.DateFormatManager.HourLabel(hour);
     }
 }

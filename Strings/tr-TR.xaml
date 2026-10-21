@@ -126,6 +126,9 @@
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">Yazdıklarınız henüz kaydedilmedi.</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Değişiklikleri at</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Düzenlemeye devam et</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeFormat">saat biçimi</sys:String>
+    <sys:String x:Key="Str_Time_12">12 saat</sys:String>
+    <sys:String x:Key="Str_Time_24">24 saat</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">İçe aktarma başarısız: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} randevu dışa aktarıldı</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Dışa aktarma başarısız: {0}</sys:String>

@@ -17,17 +17,27 @@ namespace Killendar.Controls
             (DateStyle.EU,            "Str_Date_EU"),
         ];
 
+        private static readonly (TimeStyle Style, string Key)[] TimeStyles =
+        [
+            (TimeStyle.FollowWindows,  "Str_Date_FollowWindows"),
+            (TimeStyle.TwelveHour,     "Str_Time_12"),
+            (TimeStyle.TwentyFourHour, "Str_Time_24"),
+        ];
+
         private readonly ContextMenu _menu;
         private readonly UIElement _anchor;
         private readonly Action<DateStyle> _dateStyleChanged;
+        private readonly Action<TimeStyle> _timeStyleChanged;
         private readonly Action _weekStartChanged;
 
         internal DateSettingsMenu(ContextMenu menu, UIElement anchor,
-                                  Action<DateStyle> dateStyleChanged, Action weekStartChanged)
+                                  Action<DateStyle> dateStyleChanged, Action<TimeStyle> timeStyleChanged,
+                                  Action weekStartChanged)
         {
             _menu = menu;
             _anchor = anchor;
             _dateStyleChanged = dateStyleChanged;
+            _timeStyleChanged = timeStyleChanged;
             _weekStartChanged = weekStartChanged;
             if (_anchor is FrameworkElement button)
                 button.ContextMenuOpening += (_, e) => { e.Handled = true; Open(); };
@@ -61,11 +71,24 @@ namespace Killendar.Controls
                 date.Checked += DateStyleItem_Click;
                 panel.Children.Add(date);
             }
-            panel.Children.Add(new Border
+            AddSeparator(panel);
+            panel.Children.Add(new TextBlock
             {
-                Height = 1, Margin = new Thickness(0, 8, 0, 8),
-                Background = Application.Current.TryFindResource("MenuBorderBrush") as Brush
+                Text = LocaleManager.Loc("Str_Lbl_TimeFormat"), FontSize = 10,
+                Margin = new Thickness(0, 0, 0, 6)
             });
+            foreach (var (style, key) in TimeStyles)
+            {
+                var time = new RadioButton
+                {
+                    Content = LocaleManager.Loc(key), Tag = style.ToString(), GroupName = "TimeGroup",
+                    Style = (Style)Application.Current.FindResource("ThemeRadio"),
+                    IsChecked = style == DateFormatManager.CurrentTime,
+                };
+                time.Checked += TimeStyleItem_Click;
+                panel.Children.Add(time);
+            }
+            AddSeparator(panel);
             panel.Children.Add(new TextBlock
             {
                 Text = LocaleManager.Loc("Str_Lbl_WeekStart"), FontSize = 10,
@@ -94,6 +117,21 @@ namespace Killendar.Controls
                 StaysOpenOnClick = true,
                 Style = (Style)Application.Current.FindResource("PanelMenuItem"),
             });
+        }
+
+        private static void AddSeparator(Panel panel) => panel.Children.Add(new Border
+        {
+            Height = 1, Margin = new Thickness(0, 8, 0, 8),
+            Background = Application.Current.TryFindResource("MenuBorderBrush") as Brush
+        });
+
+        private void TimeStyleItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is RadioButton item && item.Tag is string tag &&
+                Enum.TryParse<TimeStyle>(tag, out var style))
+            {
+                _timeStyleChanged(style);
+            }
         }
 
         private void DateStyleItem_Click(object sender, RoutedEventArgs e)

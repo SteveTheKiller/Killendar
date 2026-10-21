@@ -168,6 +168,9 @@
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">Введене ще не збережено.</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Не зберігати</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Продовжити редагування</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeFormat">формат часу</sys:String>
+    <sys:String x:Key="Str_Time_12">12-годинний</sys:String>
+    <sys:String x:Key="Str_Time_24">24-годинний</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Не вдалося імпортувати: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Експортовано зустрічей: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Не вдалося експортувати: {0}</sys:String>

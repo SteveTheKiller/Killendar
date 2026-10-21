@@ -126,6 +126,9 @@
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">您輸入的內容尚未儲存。</sys:String>
     <sys:String x:Key="Str_Btn_Discard">捨棄</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">繼續編輯</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeFormat">時間格式</sys:String>
+    <sys:String x:Key="Str_Time_12">12 小時制</sys:String>
+    <sys:String x:Key="Str_Time_24">24 小時制</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">匯入失敗：{0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">已匯出 {0} 個約會</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">匯出失敗：{0}</sys:String>

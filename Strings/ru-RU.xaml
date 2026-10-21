@@ -169,6 +169,9 @@
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">Введённое ещё не сохранено.</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Не сохранять</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Продолжить правку</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeFormat">формат времени</sys:String>
+    <sys:String x:Key="Str_Time_12">12-часовой</sys:String>
+    <sys:String x:Key="Str_Time_24">24-часовой</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Импорт не удался: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Экспортировано встреч: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Экспорт не удался: {0}</sys:String>

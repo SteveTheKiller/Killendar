@@ -215,6 +215,9 @@
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">To, co wpisano, nie zostało jeszcze zapisane.</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Odrzuć</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Kontynuuj edycję</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeFormat">format godziny</sys:String>
+    <sys:String x:Key="Str_Time_12">12-godzinny</sys:String>
+    <sys:String x:Key="Str_Time_24">24-godzinny</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import nie powiódł się: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Eksport nie powiódł się: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Brak danych do wyeksportowania</sys:String>

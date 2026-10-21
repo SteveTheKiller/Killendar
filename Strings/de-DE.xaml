@@ -126,6 +126,9 @@
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">Ihre Eingaben sind noch nicht gespeichert.</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Verwerfen</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Weiter bearbeiten</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeFormat">zeitformat</sys:String>
+    <sys:String x:Key="Str_Time_12">12 Stunden</sys:String>
+    <sys:String x:Key="Str_Time_24">24 Stunden</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import fehlgeschlagen: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} Termine exportiert</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export fehlgeschlagen: {0}</sys:String>

@@ -126,6 +126,9 @@
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">Ce que vous avez saisi n'est pas encore enregistré.</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Abandonner</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Continuer la modification</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeFormat">format de l'heure</sys:String>
+    <sys:String x:Key="Str_Time_12">12 heures</sys:String>
+    <sys:String x:Key="Str_Time_24">24 heures</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Échec de l'importation : {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} rendez-vous exportés</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Échec de l'exportation : {0}</sys:String>

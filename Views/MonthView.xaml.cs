@@ -591,7 +591,7 @@ namespace Killendar.Views
                     ? Services.LocaleManager.Loc("Str_Cal_NoTitle") : ev.Title;
                 string time = ev.AllDay
                     ? Services.LocaleManager.Loc("Str_Cal_AllDay")
-                    : ev.Start.ToString("h:mm") + "-" + ev.End.ToString("h:mm");
+                    : Services.DateFormatManager.CompactTime(ev.Start) + "-" + Services.DateFormatManager.CompactTime(ev.End);
 
                 var lines = new StackPanel { Margin = new Thickness(0) };
                 lines.Children.Add(new TextBlock

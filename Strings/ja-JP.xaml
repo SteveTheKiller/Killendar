@@ -126,6 +126,9 @@
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">入力した内容はまだ保存されていません。</sys:String>
     <sys:String x:Key="Str_Btn_Discard">破棄</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">編集を続ける</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeFormat">時刻形式</sys:String>
+    <sys:String x:Key="Str_Time_12">12 時間制</sys:String>
+    <sys:String x:Key="Str_Time_24">24 時間制</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">読み込みに失敗しました: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} 件の予定を書き出しました</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">書き出しに失敗しました: {0}</sys:String>
