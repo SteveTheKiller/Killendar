@@ -26,13 +26,22 @@ namespace Killendar.Tests
             using var stalled = new NamedPipeClientStream(".", id + "-" +
                 Process.GetCurrentProcess().SessionId, PipeDirection.Out);
             stalled.Connect(2000);
-            Thread.Sleep(300);
-            using var secondary = new SingleInstanceGuard(id, action => action(), _ => { }, 150);
+            var rejectionDeadline = Stopwatch.StartNew();
+            bool disconnected = false;
+            while (rejectionDeadline.ElapsedMilliseconds < 5000)
+            {
+                try { stalled.WriteByte(1); }
+                catch (IOException) { disconnected = true; break; }
+                Thread.Sleep(10);
+            }
+            Assert.True(disconnected, "The server must disconnect the original client without receiving a newline.");
+            Assert.False(received.IsSet, "An unterminated launch request must not dispatch.");
+            using var secondary = new SingleInstanceGuard(id, action => action(), _ => { });
 
             Assert.False(secondary.Claim("requested.kcal"));
+            Assert.True(secondary.ForwardingSucceeded, "The valid launch must finish forwarding after rejection.");
             Assert.True(received.Wait(1000), "A stalled launch client blocked a later valid launch.");
             Assert.Equal("requested.kcal", delivered);
-            Assert.True(secondary.ForwardingSucceeded);
         }
 
         [Theory]
