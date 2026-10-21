@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Killendar.Models;
 using Killendar.Services;
+using KillerFamily.Accessibility;
 
 namespace Killendar.Views
 {
@@ -14,7 +16,11 @@ namespace Killendar.Views
     {
         private Canvas BuildDayCanvas(DateTime date, double fullHeight)
         {
-            var canvas = new Canvas { Height = fullHeight, Background = Brushes.Transparent, ClipToBounds = true };
+            var canvas = new CalendarKeyboard.SlotCanvas(date, at => SlotSelected?.Invoke(at))
+            {
+                Height = fullHeight, Background = Brushes.Transparent, ClipToBounds = true,
+                Focusable = true, Tag = date.Date
+            };
 
             var border = new Border { BorderThickness = new Thickness(1, 0, 0, 0), Height = fullHeight };
             border.Themed(Border.BorderBrushProperty, "CardBorderBrush");
@@ -125,6 +131,55 @@ namespace Killendar.Views
                 Canvas.SetTop(hover, band * slot);
                 hover.Visibility = Visibility.Visible;
             }
+
+            // Keyboard: the column keeps a current slot, shown with the hover band. Up/Down and the
+            // page keys move it, Left/Right carry it to the neighboring day, and Enter creates
+            // there exactly as a click on that slot would.
+            void ShowKeySlot()
+            {
+                double y = canvas.Current / 60.0 * CalendarChrome.HourHeight;
+                lastBand = -1;
+                MoveHover(y + 1);
+                canvas.BringIntoView(new Rect(0, y, 1, slot));
+                canvas.Announce();
+            }
+            canvas.FocusVisualStyle = AccessibleControls.FocusStyleFor(canvas);
+            canvas.GotKeyboardFocus += (s, e) =>
+            {
+                if (e.OriginalSource != canvas) return;
+                ShowKeySlot();
+            };
+            canvas.LostKeyboardFocus += (s, e) =>
+            {
+                if (e.OriginalSource != canvas || canvas.IsMouseOver) return;
+                lastBand = -1;
+                hover.Visibility = Visibility.Collapsed;
+            };
+            canvas.KeyDown += (s, e) =>
+            {
+                if (e.OriginalSource != canvas) return;
+                if (e.Key == Key.Enter || e.Key == Key.Space)
+                {
+                    e.Handled = true;
+                    canvas.Create();
+                    return;
+                }
+                if (CalendarKeyboard.SlotTarget(canvas.Current, e.Key, CalendarChrome.SnapMinutes) is int moved)
+                {
+                    e.Handled = true;
+                    canvas.Current = moved;
+                    ShowKeySlot();
+                    return;
+                }
+                if (CalendarKeyboard.DayTarget(canvas.Date, e.Key, rows: false) is DateTime day &&
+                    VisualTreeHelper.GetParent(canvas) is Panel columns &&
+                    columns.Children.OfType<CalendarKeyboard.SlotCanvas>().FirstOrDefault(c => c.Date == day) is { } next)
+                {
+                    e.Handled = true;
+                    next.Current = canvas.Current;
+                    next.Focus();
+                }
+            };
 
             canvas.MouseMove += (s, e) => MoveHover(e.GetPosition(canvas).Y);
             canvas.MouseLeave += (s, e) =>

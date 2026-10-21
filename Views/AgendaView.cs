@@ -154,7 +154,16 @@ namespace Killendar.Views
                 dayDate.VerticalAlignment = VerticalAlignment.Center;
                 head.Children.Add(dayName);
                 head.Children.Add(dayDate);
-                group.Children.Add(head);
+                // The heading's click and menu stay on the panel; the border around it is what
+                // the keyboard and a screen reader reach. The margin moves out so the focus ring
+                // hugs the heading.
+                var headBox = new CalendarKeyboard.DayBorder(() => DaySelected?.Invoke(headDate.Date))
+                {
+                    Child = head, Margin = head.Margin, HorizontalAlignment = HorizontalAlignment.Left
+                };
+                head.Margin = new Thickness(0);
+                CalendarKeyboard.MakeDay(headBox, headDate, rows: false);
+                group.Children.Add(headBox);
 
                 var rule = new Border { BorderThickness = new Thickness(0, 0, 0, 1), Margin = new Thickness(0, 0, 0, 4) };
                 rule.Themed(Border.BorderBrushProperty, "CardBorderBrush");

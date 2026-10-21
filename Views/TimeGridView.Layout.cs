@@ -102,7 +102,10 @@ namespace Killendar.Views
 
                 // The header is a quiet axis, matching Month: no selected fill and no outline.
                 // Today is carried by the bold accent date number and by the column below.
-                var head = new Border { Child = sp, Padding = new Thickness(0, 2, 0, 2) };
+                var headDay = date;
+                var head = new CalendarKeyboard.DayBorder(() => DaySelected?.Invoke(headDay.Date))
+                    { Child = sp, Padding = new Thickness(0, 2, 0, 2) };
+                CalendarKeyboard.MakeDay(head, date, rows: false);
 
                 // The header is the "whole day" surface a time grid has, so clicking it opens the
                 // day's agenda in the sidebar - the empty slots below stay the explicit create.

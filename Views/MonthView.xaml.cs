@@ -373,7 +373,7 @@ namespace Killendar.Views
                 .ThenBy(e => e.End)
                 .ToList();
 
-            var cell = new Border
+            var cell = new CalendarKeyboard.DayBorder(() => DaySelected?.Invoke(date.Date))
             {
                 BorderThickness = inMonth || SystemParameters.HighContrast
                     ? new Thickness(0, 0, rightSeparator ? 1 : 0, bottomSeparator ? 1 : 0)
@@ -381,6 +381,7 @@ namespace Killendar.Views
                 Cursor = Cursors.Hand,
                 Tag = date
             };
+            CalendarKeyboard.MakeDay(cell, date, rows: true);
             cell.Themed(Border.BorderBrushProperty, "CardBorderBrush");
 
             // Days outside the current month sit back. The SELECTED day - the one the appointment
