@@ -22,6 +22,11 @@ namespace Killendar.Services
         /// <summary>Rows dropped for having no readable start date.</summary>
         public int Unreadable;
 
+        /// <summary>Rows skipped because a start time, end date or end time was present but could
+        /// not be read, or put the end before the start. A blank optional value is not malformed;
+        /// it gets the documented default.</summary>
+        public int Malformed;
+
         /// <summary>False when the first line is not the Outlook column set. Nothing was read:
         /// guessing at arbitrary columns means guessing what "Date" means and getting it wrong,
         /// so a file this parser does not recognize is refused with a clear message instead.</summary>
@@ -199,27 +204,45 @@ namespace Killendar.Services
                     Categories  = EventStore.NormalizeCategories(cats)
                 };
 
+                // A value that is present has to be readable. Defaults below only stand in for
+                // BLANK optional fields; a supplied value that cannot be read, or an end before the
+                // start, skips the row rather than moving the appointment somewhere it never was.
+                // All-day rows ignore the time columns, which Outlook fills with midnight anyway.
+                bool hasEndDate = endD.Length > 0, hasEndTime = endT.Length > 0;
+                DateTime ed = default;
+                TimeSpan st = TimeSpan.Zero, et = TimeSpan.Zero;
+                if ((hasEndDate && !TryDate(endD, out ed)) ||
+                    (!allDay && startT.Length > 0 && !TryTime(startT, out st)) ||
+                    (!allDay && hasEndTime && !TryTime(endT, out et)))
+                {
+                    result.Malformed++;
+                    continue;
+                }
+
                 try
                 {
                     if (allDay)
                     {
                         ev.Start = startDate;
                         // Inclusive on disk, exclusive in the model - see the export note above.
-                        ev.End = TryDate(endD, out var lastDay) && lastDay >= startDate
-                            ? lastDay.AddDays(1)
-                            : startDate.AddDays(1);
+                        ev.End = (hasEndDate ? ed : startDate).AddDays(1);
                     }
                     else
                     {
-                        ev.Start = startDate + (TryTime(startT, out var st) ? st : TimeSpan.Zero);
-                        var endDate = TryDate(endD, out var ed) ? ed : startDate;
-                        ev.End = endDate + (TryTime(endT, out var et) ? et : TimeSpan.Zero);
-                        if (ev.End <= ev.Start) ev.End = ev.Start.AddHours(1);
+                        ev.Start = startDate + st;
+                        ev.End = hasEndDate || hasEndTime
+                            ? (hasEndDate ? ed : startDate) + et
+                            : ev.Start.AddHours(1);
                     }
                 }
                 catch (ArgumentOutOfRangeException)
                 {
                     result.Unreadable++;
+                    continue;
+                }
+                if (ev.End <= ev.Start)
+                {
+                    result.Malformed++;
                     continue;
                 }
 

@@ -110,6 +110,7 @@
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">。已跳过 {0} 项影响后续重复日程的不受支持的更改</sys:String>
     <sys:String x:Key="Str_Status_ImportCanceled">。已跳过 {0} 个已取消的会议</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">。{0} 个约会中有 Killendar 不保存的详细信息，已略去</sys:String>
+    <sys:String x:Key="Str_Status_ImportMalformed">。{0} 个的日期或时间无法读取，已跳过</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">导入失败：{0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">已导出 {0} 个约会</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">导出失败：{0}</sys:String>

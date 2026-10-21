@@ -110,6 +110,7 @@
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Se omitieron cambios no compatibles que afectan a futuras repeticiones: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportCanceled">. No se añadieron reuniones canceladas: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">. Se omitieron detalles que Killendar no guarda: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportMalformed">. Se omitieron por una fecha u hora ilegible: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Error al importar: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Se exportaron {0} citas</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Error al exportar: {0}</sys:String>

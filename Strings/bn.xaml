@@ -110,6 +110,7 @@
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">। অসমর্থিত হওয়ায় ভবিষ্যতের পুনরাবৃত্তিতে প্রভাব ফেলা পরিবর্তনগুলি বাদ দেওয়া হয়েছে: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportCanceled">। বাতিল হওয়া মিটিং যোগ করা হয়নি: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">। Killendar যে তথ্য সংরক্ষণ করে না, তা বাদ পড়েছে: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportMalformed">। তারিখ বা সময় পড়া যায়নি বলে বাদ দেওয়া হয়েছে: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">ইমপোর্ট ব্যর্থ: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} টি অ্যাপয়েন্টমেন্ট এক্সপোর্ট করা হয়েছে</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">এক্সপোর্ট ব্যর্থ: {0}</sys:String>

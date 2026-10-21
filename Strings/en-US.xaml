@@ -152,6 +152,7 @@
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Unsupported edits affecting future occurrences were skipped: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportCanceled">. {0} were canceled meetings and were not added</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">. Some details Killendar does not store were left out of {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportMalformed">. {0} had a date or time that could not be read and were skipped</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import failed: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Exported {0} appointments</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export failed: {0}</sys:String>

@@ -111,6 +111,7 @@ namespace Killendar.Features
                 ? string.Format(_host.Loc("Str_Status_ImportedSkipped"), added, skipped)
                 : string.Format(_host.Loc("Str_Status_Imported"), added));
             Note(status, parsed.Unreadable, "Str_Status_ImportUnreadable");
+            Note(status, parsed.Malformed, "Str_Status_ImportMalformed");
 
             _host.SetStatus(status.ToString());
             return true;

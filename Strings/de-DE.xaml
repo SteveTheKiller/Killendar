@@ -110,6 +110,7 @@
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Nicht unterstützte Änderungen an zukünftigen Terminen wurden übersprungen: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportCanceled">. Abgesagte Besprechungen wurden nicht hinzugefügt: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">. Details, die Killendar nicht speichert, wurden weggelassen: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportMalformed">. Wegen eines unlesbaren Datums oder einer unlesbaren Uhrzeit übersprungen: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import fehlgeschlagen: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} Termine exportiert</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export fehlgeschlagen: {0}</sys:String>

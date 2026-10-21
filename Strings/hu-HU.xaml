@@ -152,6 +152,7 @@
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. A jövőbeli előfordulásokat érintő, nem támogatott módosítások kihagyva: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportCanceled">. Lemondott értekezletek, nem lettek hozzáadva: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">. A Killendar által nem tárolt részletek kimaradtak: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportMalformed">. Olvashatatlan dátum vagy idő miatt kihagyva: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Sikertelen importálás: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} találkozó exportálva</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Az exportálás sikertelen: {0}</sys:String>

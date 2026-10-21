@@ -110,6 +110,7 @@
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">。今後の繰り返しに影響する未対応の変更を {0} 件スキップしました</sys:String>
     <sys:String x:Key="Str_Status_ImportCanceled">。キャンセルされた会議 {0} 件は追加しませんでした</sys:String>
     <sys:String x:Key="Str_Status_ImportLostDetails">。Killendar が保存しない詳細を {0} 件の予定から除外しました</sys:String>
+    <sys:String x:Key="Str_Status_ImportMalformed">。日付または時刻を読み取れなかった {0} 件をスキップしました</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">読み込みに失敗しました: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} 件の予定を書き出しました</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">書き出しに失敗しました: {0}</sys:String>
