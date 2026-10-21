@@ -5,6 +5,7 @@
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:kl="clr-namespace:KillerFamily.Layout"
+                    xmlns:input="clr-namespace:KillerFamily.Controls"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:a11y="clr-namespace:KillerFamily.Accessibility"
                     xmlns:kui="clr-namespace:Killendar.Controls"
@@ -393,7 +394,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
-                    <Grid>
+                    <Grid x:Name="InputRoot" Tag="{DynamicResource UseDialogCaption}">
                         <Border x:Name="border" Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{DynamicResource ControlCornerRadius}">
@@ -401,7 +402,7 @@
                                  content host fills the box top-down, so in a fixed-height row the text
                                  line is taller than the space left by Padding and scrolls out of sight,
                                  leaving what looks like an empty box. -->
-                            <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}"
+                            <input:InputContentHost x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
                         <Border x:Name="inputDark" IsHitTestVisible="False" BorderBrush="{DynamicResource BevelDarkBrush}"
@@ -414,6 +415,16 @@
                                 BorderBrush="{DynamicResource FrameOuterLightBrush}" BorderThickness="{DynamicResource CheckSunkenLightThickness}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Tag, ElementName=InputRoot}" Value="True"/>
+                                <Condition Binding="{Binding AcceptsReturn, RelativeSource={RelativeSource Self}}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="InputRoot" Property="MinHeight" Value="{DynamicResource CompactInputMinHeight}"/>
+                            <Setter TargetName="PART_ContentHost" Property="Margin" Value="0"/>
+                            <Setter TargetName="PART_ContentHost" Property="CompactPadding" Value="{DynamicResource CompactInputPadding}"/>
+                            <Setter TargetName="PART_ContentHost" Property="VerticalAlignment" Value="Center"/>
+                        </MultiDataTrigger>
                         <Trigger Property="BorderThickness" Value="0">
                             <Setter TargetName="inputDark" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="inputLight" Property="Visibility" Value="Collapsed"/>
@@ -430,6 +441,17 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="DialogPickerTextBox" TargetType="TextBox" BasedOn="{StaticResource DarkTextBox}">
+        <Setter Property="Height" Value="28"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Tag, ElementName=RootBorder}" Value="True">
+                <Setter Property="Height" Value="Auto"/>
+                <Setter Property="MinHeight" Value="{DynamicResource CompactInputMinHeight}"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <!-- Implicit TextBox style, so a box picks up the theme without per-box styling; without it
@@ -815,9 +837,10 @@
     </Style>
 
     <!-- ThemeRadio's square sibling for on/off switches in the theme flyout (Film Grain): the same row, hover and accent, with a box and checkmark in place of the ring and dot. Derived from this file's ThemeRadio, as KillerPDF's ThemeCheck is from its own. -->
-    <Style x:Key="ThemeCheck" TargetType="CheckBox">
+<Style x:Key="ThemeCheck" TargetType="CheckBox">
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/><Setter Property="FontSize" Value="12"/><Setter Property="Margin" Value="0,0,0,8"/><Setter Property="Cursor" Value="Hand"/><Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-        <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="CheckBox"><Border x:Name="bd" Background="Transparent" CornerRadius="{DynamicResource SmallCornerRadius}" Margin="-8,0,2,0" Padding="10,4"><DockPanel><Grid Width="16" Height="16" Margin="0,1,8,-1" DockPanel.Dock="Left"><Border CornerRadius="{DynamicResource ControlCornerRadius}" x:Name="ring" Width="14" Height="14" BorderBrush="{DynamicResource DimTextBrush}" BorderThickness="1"/><TextBlock Text="&#xE73E;" FontFamily="Segoe MDL2 Assets" FontSize="10" x:Name="dot" Foreground="{DynamicResource PrimaryBrush}" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center"/></Grid><ContentPresenter VerticalAlignment="Center"/></DockPanel></Border><ControlTemplate.Triggers><Trigger Property="IsChecked" Value="True"><Setter TargetName="dot" Property="Visibility" Value="Visible"/><Setter TargetName="ring" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/><Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/></Trigger><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="bd" Property="Background" Value="{DynamicResource RowHoverBrush}"/></Trigger><MultiTrigger><MultiTrigger.Conditions><Condition Property="IsChecked" Value="True"/><Condition Property="IsMouseOver" Value="True"/></MultiTrigger.Conditions><Setter TargetName="ring" Property="BorderBrush" Value="{DynamicResource RadioHoverFgBrush}"/><Setter TargetName="dot" Property="Foreground" Value="{DynamicResource RadioHoverFgBrush}"/><Setter Property="Foreground" Value="{DynamicResource RadioHoverFgBrush}"/></MultiTrigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
+        <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="CheckBox"><Border x:Name="bd" Background="Transparent" CornerRadius="{DynamicResource SmallCornerRadius}" Margin="-8,0,2,0" Padding="10,4"><DockPanel><Grid Width="16" Height="16" Margin="0,1,8,-1" DockPanel.Dock="Left"><Border CornerRadius="{DynamicResource ControlCornerRadius}" x:Name="ring" Width="14" Height="14" BorderBrush="{DynamicResource DimTextBrush}" BorderThickness="1"/><Grid Width="14" Height="14" IsHitTestVisible="False"><Border IsHitTestVisible="False" BorderBrush="{DynamicResource PaneBevelDarkBrush}" BorderThickness="{DynamicResource PaneBevelLightThickness}"/><Border IsHitTestVisible="False" BorderBrush="{DynamicResource PaneBevelLightBrush}" BorderThickness="{DynamicResource PaneBevelDarkThickness}"/><Border IsHitTestVisible="False" Margin="{DynamicResource PaneBevelInnerMargin}" BorderBrush="{DynamicResource PaneBevelDark2Brush}" BorderThickness="{DynamicResource PaneBevel2LightThickness}"/><Border IsHitTestVisible="False" Margin="{DynamicResource PaneBevelInnerMargin}" BorderBrush="{DynamicResource PaneBevelLight2Brush}" BorderThickness="{DynamicResource PaneBevel2DarkThickness}"/></Grid>
+<TextBlock Text="&#xE73E;" FontFamily="Segoe MDL2 Assets" FontSize="10" x:Name="dot" Foreground="{DynamicResource PrimaryBrush}" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center"/></Grid><ContentPresenter VerticalAlignment="Center"/></DockPanel></Border><ControlTemplate.Triggers><Trigger Property="IsChecked" Value="True"><Setter TargetName="dot" Property="Visibility" Value="Visible"/><Setter TargetName="ring" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/><Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/></Trigger><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="bd" Property="Background" Value="{DynamicResource RowHoverBrush}"/></Trigger><MultiTrigger><MultiTrigger.Conditions><Condition Property="IsChecked" Value="True"/><Condition Property="IsMouseOver" Value="True"/></MultiTrigger.Conditions><Setter TargetName="ring" Property="BorderBrush" Value="{DynamicResource RadioHoverFgBrush}"/><Setter TargetName="dot" Property="Foreground" Value="{DynamicResource RadioHoverFgBrush}"/><Setter Property="Foreground" Value="{DynamicResource RadioHoverFgBrush}"/></MultiTrigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
     </Style>
     <Style x:Key="ThemeSwatch" TargetType="Button">
         <Setter Property="AutomationProperties.Name" Value="{Binding RelativeSource={RelativeSource Self}, Path=Tag}"/>
@@ -1089,7 +1112,7 @@
     <!-- Themed checkbox: small square, accent check, mono label. The box fill is templated
          (default SurfaceBrush) so a caller can override it where the checkbox sits on a panel of
          the same tier and would otherwise be invisible. -->
-    <Style TargetType="CheckBox">
+<Style TargetType="CheckBox">
         <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}"/>
         <Setter Property="FontFamily" Value="{DynamicResource UiFont}"/>
         <Setter Property="FontSize" Value="11"/>
@@ -1099,11 +1122,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
                     <StackPanel Orientation="Horizontal" Background="Transparent">
-                        <Border x:Name="box" Width="15" Height="15" CornerRadius="{DynamicResource SmallCornerRadius}" VerticalAlignment="Center"
+                        <Grid Width="15" Height="15" VerticalAlignment="Center"><Border x:Name="box" CornerRadius="{DynamicResource SmallCornerRadius}"
                                 Background="{TemplateBinding Background}" BorderBrush="{DynamicResource InputBorderBrush}" BorderThickness="1">
                             <TextBlock x:Name="check" Text="&#xE73E;" FontFamily="Segoe MDL2 Assets" FontSize="10"
                                         Foreground="{DynamicResource CheckMarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
-                        </Border>
+                        </Border><Border IsHitTestVisible="False" BorderBrush="{DynamicResource PaneBevelDarkBrush}" BorderThickness="{DynamicResource PaneBevelLightThickness}"/><Border IsHitTestVisible="False" BorderBrush="{DynamicResource PaneBevelLightBrush}" BorderThickness="{DynamicResource PaneBevelDarkThickness}"/><Border IsHitTestVisible="False" Margin="{DynamicResource PaneBevelInnerMargin}" BorderBrush="{DynamicResource PaneBevelDark2Brush}" BorderThickness="{DynamicResource PaneBevel2LightThickness}"/><Border IsHitTestVisible="False" Margin="{DynamicResource PaneBevelInnerMargin}" BorderBrush="{DynamicResource PaneBevelLight2Brush}" BorderThickness="{DynamicResource PaneBevel2DarkThickness}"/></Grid>
                         <ContentPresenter Margin="7,0,0,0" VerticalAlignment="Center"/>
                     </StackPanel>
                     <ControlTemplate.Triggers>

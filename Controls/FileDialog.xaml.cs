@@ -93,6 +93,8 @@ namespace Killendar.Controls
         {
             _mode = mode;
             InitializeComponent();
+            TitleIcon.Source = System.Windows.Media.Imaging.BitmapDecoder.Create(new Uri("pack://application:,,,/Killendar;component/Resources/kd-icon.ico"),
+                System.Windows.Media.Imaging.BitmapCreateOptions.None, System.Windows.Media.Imaging.BitmapCacheOption.OnLoad).Frames[0];
             Loaded += (_, _) => Anim.FadeIn(RootBorder);
 
             // Size and placement remembered separately from the folder picker: this dialog is a

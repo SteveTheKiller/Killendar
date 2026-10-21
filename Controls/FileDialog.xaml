@@ -51,7 +51,7 @@
             </Border.Effect>
         </Border>
 
-        <kui:PickerBorder x:Name="RootBorder" Opacity="0" BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1"
+        <kui:PickerBorder x:Name="RootBorder" Tag="{DynamicResource UseDialogCaption}" Opacity="0" BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1"
                 Background="{DynamicResource BackgroundBrush}" CornerRadius="{DynamicResource PanelCornerRadius}" Margin="{DynamicResource DialogHaloMargin}">
             <Grid>
             <Grid.RowDefinitions>
@@ -74,8 +74,11 @@
                 <Grid>
                     <Border IsHitTestVisible="False" CornerRadius="{DynamicResource DialogTitleCornerRadius}"
                             Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,0,0">
+                    <kui:AppIcon x:Name="TitleIcon" Width="{DynamicResource TitleIconSize}" Height="{DynamicResource TitleIconSize}"
+                                 Margin="{DynamicResource TitleIconMargin}" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                     <Grid VerticalAlignment="Center" HorizontalAlignment="Left" IsHitTestVisible="False"
-                          Margin="6,-18,0,-22"
+                          Margin="0,-18,0,-22"
                           Visibility="{DynamicResource WordmarkVisibility}">
                         <Grid.RenderTransform><TranslateTransform Y="-5"/></Grid.RenderTransform>
                         <TextBlock FontFamily="{DynamicResource WordmarkFont}" FontSize="{DynamicResource TitleWordmarkSize}" Margin="1,2,0,0" Opacity="{DynamicResource WordmarkShadowOpacity}">
@@ -94,6 +97,7 @@
                                Margin="{DynamicResource DialogTitleTextMargin}"
                                FontFamily="{DynamicResource ChromeFontFamily}" FontSize="11" FontWeight="Bold"
                                Foreground="{DynamicResource ChromeTextBrush}"/>
+                    </StackPanel>
                     <Button Content="&#xE8BB;" Click="Cancel_Click" HorizontalAlignment="Right"
                             VerticalAlignment="Center" Margin="{DynamicResource DialogCaptionCloseMargin}"
                             Style="{StaticResource ChromeCloseButton}" Visibility="{DynamicResource PlainTitleVisibility}"/>
@@ -136,7 +140,7 @@
                      focus border. The chevron overlays the box's right edge (the box pads 28 to
                      clear it) and drops the recent-locations list, like Explorer's address bar. -->
                 <Grid Grid.Column="1">
-                    <TextBox x:Name="PathBox" Height="28" Style="{StaticResource DarkTextBox}"
+                    <TextBox x:Name="PathBox" Style="{StaticResource DialogPickerTextBox}"
                              AutomationProperties.Name="{Binding Text, RelativeSource={RelativeSource Self}}"
                              FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="8,0,28,0"
                              VerticalContentAlignment="Center" KeyDown="PathBox_KeyDown"/>
@@ -464,9 +468,9 @@
                      (WPF's TextBoxView), so at 8 the name started visibly right of the filter
                      combo's text directly below it (combo padding is 7 with no inherent inset).
                      5 + 2 lines the two up. (2026-07-31) -->
-                <TextBox x:Name="FileNameBox" Grid.Row="0" Grid.Column="1" Height="28"
+                <TextBox x:Name="FileNameBox" Grid.Row="0" Grid.Column="1"
                          AutomationProperties.Name="{DynamicResource Str_Dlg_FileName}"
-                         Style="{StaticResource DarkTextBox}"
+                         Style="{StaticResource DialogPickerTextBox}"
                          FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="5,0,8,0"
                          VerticalContentAlignment="Center" KeyDown="FileNameBox_KeyDown"/>
 
