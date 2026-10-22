@@ -4,7 +4,9 @@ All notable changes to Killendar are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.4.0] - Unreleased
+## [1.4.0] - 2026-10-22
+
+Killendar 1.4.0 adds reminders, undo, search, verified backups, time zones, holidays and calendars shown side by side, and makes repeats and calendar files work the way other calendar programs expect.
 
 ### Fixed
 
