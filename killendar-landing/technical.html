@@ -174,6 +174,7 @@ copy. A machine-wide install still defaults to a separate profile folder for eac
 settings, so they travel with the file when you move or share it.</li>
 <li data-i18n="tk_13"><b>meta</b> - schema version and the app version that created the file, for forensics on a
 file that turns up years later.</li>
+<li data-i18n="tk_kd_file_more"><b>deleted</b>, <b>templates</b> and <b>reminder_state</b> - Recently deleted for 30 days, saved templates, and which reminders were dismissed or snoozed. Daily backups go to a <b>Backups</b> folder beside the file.</li>
 </ul>
 </section>
 
@@ -189,6 +190,7 @@ to the previous day for everyone east of UTC.</p>
 <tr><td data-i18n="tk_19">14:00 local, in PDT</td><td>2026-08-03T21:00:00.0000000Z</td></tr>
 <tr><td data-i18n="tk_20">All-day, Sep 7</td><td data-i18n="tk_21">2026-09-07T00:00:00.0000000 - no Z, unconverted</td></tr>
 </table>
+<p data-i18n="tk_kd_zones">An appointment can also keep a time zone of its own, once <b>Show time zones</b> is ticked in the date settings. Its times are typed on that zone's clock and stored with the zone's name, so a 9:00 meeting in Tokyo stays at 9:00 there when either place changes its clocks.</p>
 </section>
 
 <section class="tech-sec" id="encryption">
@@ -232,6 +234,7 @@ were skipped.</p>
 survive a trip through another calendar app. A category you import but have never defined shows
 in neutral gray rather than being dropped or silently created - deleting a category is meant to
 stick, and an import should not quietly undo that.</p>
+<p data-i18n="tk_kd_ics_more">Repeats go out as <b>RRULE</b>, including the first to fourth or last weekday of a month, with extra dates as <b>RDATE</b> and skipped ones as <b>EXDATE</b>. Time zones travel with their <b>VTIMEZONE</b> definitions, and a file's own definition is read when Windows does not know the name. A newer invite for a meeting already here (a higher <b>SEQUENCE</b>) updates it and a cancellation removes it, after the import asks.</p>
 </section>
 
 </div>
