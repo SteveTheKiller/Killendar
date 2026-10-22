@@ -141,6 +141,14 @@
     <sys:String x:Key="Str_Zone_Show">Időzónák megjelenítése</sys:String>
     <sys:String x:Key="Str_Lbl_SecondZone">Második időzóna</sys:String>
     <sys:String x:Key="Str_Zone_None">Nincs</sys:String>
+    <sys:String x:Key="Str_Status_OtherCalendar">Ez a(z) {0} része. A módosításhoz nyissa meg azt a Killendart.</sys:String>
+    <sys:String x:Key="Str_Shown_Head">Megjelenítés mellette</sys:String>
+    <sys:String x:Key="Str_Shown_None">Nincs más Killendar az adatmappában.</sys:String>
+    <sys:String x:Key="Str_Shown_Locked">zárolva</sys:String>
+    <sys:String x:Key="Str_Shown_Unavailable">nem olvasható</sys:String>
+    <sys:String x:Key="Str_Shown_Unlock">Feloldás</sys:String>
+    <sys:String x:Key="Str_Shown_Unlocked">{0} megjelenítve</sys:String>
+    <sys:String x:Key="Str_Shown_Hint">A mellette megjelenített Killendarok csak olvashatók. Az új találkozók és a módosítások a megnyitottba kerülnek.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Ez az időpont és minden későbbi törlődik. A korábbiak megmaradnak.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Mondja ki, mikor ér véget az ismétlés, vagy állítsa be, hogy soha ne érjen véget.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Adjon meg egy nullánál nagyobb egész számot.</sys:String>

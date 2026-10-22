@@ -131,6 +131,14 @@
   <sys:String x:Key="Str_Zone_Show">Hiện múi giờ</sys:String>
   <sys:String x:Key="Str_Lbl_SecondZone">Múi giờ thứ hai</sys:String>
   <sys:String x:Key="Str_Zone_None">Không có</sys:String>
+  <sys:String x:Key="Str_Status_OtherCalendar">Mục này thuộc {0}. Mở Killendar đó để thay đổi.</sys:String>
+  <sys:String x:Key="Str_Shown_Head">Hiện bên cạnh</sys:String>
+  <sys:String x:Key="Str_Shown_None">Không có Killendar nào khác trong thư mục dữ liệu.</sys:String>
+  <sys:String x:Key="Str_Shown_Locked">đã khóa</sys:String>
+  <sys:String x:Key="Str_Shown_Unavailable">không đọc được</sys:String>
+  <sys:String x:Key="Str_Shown_Unlock">Mở khóa</sys:String>
+  <sys:String x:Key="Str_Shown_Unlocked">Đang hiện {0}</sys:String>
+  <sys:String x:Key="Str_Shown_Hint">Các Killendar hiện bên cạnh chỉ để xem. Cuộc hẹn mới và thay đổi vào Killendar đang mở.</sys:String>
   <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Ngày này và mọi ngày sau sẽ bị xóa. Các ngày trước vẫn giữ.</sys:String>
   <sys:String x:Key="Str_Err_RepeatEnd">Hãy chọn thời điểm kết thúc lặp lại hoặc đặt thành không bao giờ kết thúc.</sys:String>
   <sys:String x:Key="Str_Err_RepeatInterval">Hãy nhập một số nguyên lớn hơn không.</sys:String>

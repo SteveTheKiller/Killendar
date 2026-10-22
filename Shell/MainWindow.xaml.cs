@@ -38,6 +38,7 @@ namespace Killendar.Shell
             AttachAutoLock();   // Lock.cs - idle and Windows locks
             InitReminderField();   // ReminderField.cs
             InitZoneField();       // ZoneField.cs
+            InitShownCalendars();  // ShownCalendarsMenu.cs
             InitTemplateMenu();    // Templates.cs
 
             RestoreWindowPlacement();

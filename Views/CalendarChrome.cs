@@ -108,7 +108,8 @@ namespace Killendar.Views
                                     bool compact = true, bool showTime = false, bool wrap = false,
                                     bool showEndTime = false)
         {
-            string? category = Services.CategoryManager.PrimaryOf(ev);
+            bool other = ev.SourceCalendar.Length > 0;
+            string? category = other ? null : Services.CategoryManager.PrimaryOf(ev);
             var chip = new ChipBorder(() => onClick(ev))
             {
                 CornerRadius    = Services.ThemeManager.Current == Services.Theme.SE98
@@ -130,7 +131,20 @@ namespace Killendar.Views
                 : ev.Title + ", " + ev.TimeLabel + ", " + ev.Location);
             chip.FocusVisualStyle = AccessibleControls.FocusStyleFor(chip);
             chip.SizeChanged += (_, _) => chip.FocusVisualStyle = AccessibleControls.FocusStyleFor(chip);
-            if (category != null)
+            if (other)
+            {
+                // Another Killendar's appointment wears that calendar's color and says whose it is.
+                chip.ToolTip = ev.SourceCalendar + "\n" + chip.ToolTip;
+                AutomationProperties.SetName(chip, ev.SourceCalendar + ", " + AutomationProperties.GetName(chip));
+                var color = (Color)ColorConverter.ConvertFromString(ev.SourceColor);
+                var fill = new SolidColorBrush(color);
+                fill.Freeze();
+                chip.Background  = fill;
+                chip.BorderBrush = fill;
+                chip.MouseEnter += (_, _) => chip.Opacity = 0.82;
+                chip.MouseLeave += (_, _) => chip.Opacity = 1.0;
+            }
+            else if (category != null)
             {
                 var fill = Services.CategoryManager.BrushOf(category);
                 chip.Background  = fill;
@@ -206,7 +220,7 @@ namespace Killendar.Views
             open.Click += (_, _) => onClick(ev);
             menu.Items.Add(open);
 
-            if (ev.SeriesId != null)
+            if (ev.SeriesId != null && !other)
             {
                 var edit = new MenuItem
                 {
@@ -227,7 +241,10 @@ namespace Killendar.Views
                 TextWrapping = wrap ? TextWrapping.Wrap : TextWrapping.NoWrap,
                 FontSize     = compact ? 10 : 11.5
             };
-            if (category != null)
+            if (other)
+                line.Foreground = Services.CategoryManager.ForegroundFor(
+                    (Color)ColorConverter.ConvertFromString(ev.SourceColor));
+            else if (category != null)
                 line.Foreground = Services.CategoryManager.ForegroundFor(
                     Services.CategoryManager.ColorOf(category));
             else

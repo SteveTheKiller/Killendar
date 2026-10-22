@@ -99,7 +99,7 @@ namespace Killendar.Views
 
             var from = _anchor.Date;
             var to = from.AddDays(WindowDays);
-            var events = _store.GetInRange(from, to);
+            var events = ShownCalendars.With(_store.GetInRange(from, to), from, to);
 
             if (events.Count == 0)
             {

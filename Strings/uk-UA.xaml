@@ -141,6 +141,14 @@
     <sys:String x:Key="Str_Zone_Show">Показувати часові пояси</sys:String>
     <sys:String x:Key="Str_Lbl_SecondZone">Другий часовий пояс</sys:String>
     <sys:String x:Key="Str_Zone_None">Немає</sys:String>
+    <sys:String x:Key="Str_Status_OtherCalendar">Це в {0}. Щоб змінити, відкрийте цей Killendar.</sys:String>
+    <sys:String x:Key="Str_Shown_Head">Показати поруч</sys:String>
+    <sys:String x:Key="Str_Shown_None">У папці даних немає інших Killendar.</sys:String>
+    <sys:String x:Key="Str_Shown_Locked">заблоковано</sys:String>
+    <sys:String x:Key="Str_Shown_Unavailable">не читається</sys:String>
+    <sys:String x:Key="Str_Shown_Unlock">Розблокувати</sys:String>
+    <sys:String x:Key="Str_Shown_Unlocked">Показано {0}</sys:String>
+    <sys:String x:Key="Str_Shown_Hint">Показані поруч Killendar лише для читання. Нові зустрічі та зміни потрапляють у відкритий.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Цю дату й усі наступні буде видалено. Попередні залишаться.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Вкажіть, коли повтор закінчується, або оберіть «Ніколи».</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Введіть ціле число більше нуля.</sys:String>

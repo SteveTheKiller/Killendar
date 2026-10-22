@@ -141,6 +141,14 @@
     <sys:String x:Key="Str_Zone_Show">Уақыт белдеулерін көрсету</sys:String>
     <sys:String x:Key="Str_Lbl_SecondZone">Екінші уақыт белдеуі</sys:String>
     <sys:String x:Key="Str_Zone_None">Жоқ</sys:String>
+    <sys:String x:Key="Str_Status_OtherCalendar">Бұл {0} ішінде. Өзгерту үшін сол Killendar-ды ашыңыз.</sys:String>
+    <sys:String x:Key="Str_Shown_Head">Қатар көрсету</sys:String>
+    <sys:String x:Key="Str_Shown_None">Деректер қалтасында басқа Killendar жоқ.</sys:String>
+    <sys:String x:Key="Str_Shown_Locked">құлыптаулы</sys:String>
+    <sys:String x:Key="Str_Shown_Unavailable">оқылмайды</sys:String>
+    <sys:String x:Key="Str_Shown_Unlock">Құлыпты ашу</sys:String>
+    <sys:String x:Key="Str_Shown_Unlocked">{0} көрсетілуде</sys:String>
+    <sys:String x:Key="Str_Shown_Hint">Қатар көрсетілген Killendar тек оқуға арналған. Жаңа кездесулер мен өзгерістер ашық Killendar-ға түседі.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Осы күн және одан кейінгі барлық күндер жойылады. Бұрынғылары қалады.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Қайталану қашан аяқталатынын көрсетіңіз немесе оны шексіз етіңіз.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Нөлден үлкен бүтін сан енгізіңіз.</sys:String>

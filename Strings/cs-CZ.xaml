@@ -101,6 +101,14 @@
     <sys:String x:Key="Str_Zone_Show">Zobrazit časová pásma</sys:String>
     <sys:String x:Key="Str_Lbl_SecondZone">Druhé časové pásmo</sys:String>
     <sys:String x:Key="Str_Zone_None">Žádné</sys:String>
+    <sys:String x:Key="Str_Status_OtherCalendar">Toto je v {0}. Chcete-li to změnit, otevřete ten Killendar.</sys:String>
+    <sys:String x:Key="Str_Shown_Head">Zobrazit vedle</sys:String>
+    <sys:String x:Key="Str_Shown_None">V datové složce nejsou žádné další Killendary.</sys:String>
+    <sys:String x:Key="Str_Shown_Locked">zamčeno</sys:String>
+    <sys:String x:Key="Str_Shown_Unavailable">nelze přečíst</sys:String>
+    <sys:String x:Key="Str_Shown_Unlock">Odemknout</sys:String>
+    <sys:String x:Key="Str_Shown_Unlocked">Zobrazuje se {0}</sys:String>
+    <sys:String x:Key="Str_Shown_Hint">Zobrazené Killendary jsou jen pro čtení. Nové schůzky a změny jdou do otevřeného.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Odstraní se tento termín a všechny pozdější. Dřívější zůstanou.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Uveď, kdy opakování končí, nebo že nekončí nikdy.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Zadej celé číslo větší než nula.</sys:String>

@@ -132,7 +132,7 @@ namespace Killendar.Views
             // ---- all-day strip ----
             ApplyColumns(_allDayStrip);
             var allDay = CalendarLayout.PlaceAllDayRange(
-                _store.GetInRange(start, start.AddDays(Days)), start, Days);
+                ShownCalendars.With(_store.GetInRange(start, start.AddDays(Days)), start, start.AddDays(Days)), start, Days);
             if (allDay.Count > 0)
             {
                 _allDayHost.Visibility = Visibility.Visible;

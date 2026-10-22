@@ -117,6 +117,14 @@
     <sys:String x:Key="Str_Zone_Show">Prikaži časovne pasove</sys:String>
     <sys:String x:Key="Str_Lbl_SecondZone">Drugi časovni pas</sys:String>
     <sys:String x:Key="Str_Zone_None">Brez</sys:String>
+    <sys:String x:Key="Str_Status_OtherCalendar">To je v {0}. Za spremembo odprite ta Killendar.</sys:String>
+    <sys:String x:Key="Str_Shown_Head">Prikaži ob strani</sys:String>
+    <sys:String x:Key="Str_Shown_None">V podatkovni mapi ni drugih Killendarjev.</sys:String>
+    <sys:String x:Key="Str_Shown_Locked">zaklenjeno</sys:String>
+    <sys:String x:Key="Str_Shown_Unavailable">ni berljivo</sys:String>
+    <sys:String x:Key="Str_Shown_Unlock">Odkleni</sys:String>
+    <sys:String x:Key="Str_Shown_Unlocked">Prikazan je {0}</sys:String>
+    <sys:String x:Key="Str_Shown_Hint">Prikazani Killendarji so samo za branje. Novi sestanki in spremembe gredo v odprtega.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Ta datum in vsi poznejši bodo odstranjeni. Prejšnji ostanejo.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Določi konec ponavljanja ali izberi ponavljanje brez konca.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Vnesi celo število, večje od nič.</sys:String>

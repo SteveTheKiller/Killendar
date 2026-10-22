@@ -25,6 +25,9 @@ namespace Killendar.Shell
             // TITLE BAR ONLY - there is no footer copy (2026-07-30).
             TitleKillendarLabel.Text = name;
             TitleKillendarLabel.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
+            // The newly open Killendar is the write target; the others shown beside it reopen
+            // around it (it is dropped from them if it was one).
+            ShownCalendars.Reload(EventStore.ActiveFile);
         }
 
         void ISecurityHost.RefreshView() => _calendar.Refresh();

@@ -141,6 +141,14 @@
     <sys:String x:Key="Str_Zone_Show">Vis tidssoner</sys:String>
     <sys:String x:Key="Str_Lbl_SecondZone">Andre tidssone</sys:String>
     <sys:String x:Key="Str_Zone_None">Ingen</sys:String>
+    <sys:String x:Key="Str_Status_OtherCalendar">Dette ligger i {0}. Åpne den Killendaren for å endre det.</sys:String>
+    <sys:String x:Key="Str_Shown_Head">Vis ved siden av</sys:String>
+    <sys:String x:Key="Str_Shown_None">Det finnes ingen andre Killendarer i datamappen.</sys:String>
+    <sys:String x:Key="Str_Shown_Locked">låst</sys:String>
+    <sys:String x:Key="Str_Shown_Unavailable">kan ikke leses</sys:String>
+    <sys:String x:Key="Str_Shown_Unlock">Lås opp</sys:String>
+    <sys:String x:Key="Str_Shown_Unlocked">Viser {0}</sys:String>
+    <sys:String x:Key="Str_Shown_Hint">Killendarer som vises ved siden av er skrivebeskyttet. Nye avtaler og endringer går til den som er åpen.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Denne datoen og alle senere fjernes. Tidligere datoer blir værende.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Angi når gjentakelsen slutter, eller sett den til å aldri slutte.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Skriv inn et heltall større enn null.</sys:String>

@@ -101,6 +101,14 @@
     <sys:String x:Key="Str_Zone_Show">Mostrar zonas horarias</sys:String>
     <sys:String x:Key="Str_Lbl_SecondZone">Segunda zona horaria</sys:String>
     <sys:String x:Key="Str_Zone_None">Ninguna</sys:String>
+    <sys:String x:Key="Str_Status_OtherCalendar">Esto está en {0}. Abra ese Killendar para cambiarlo.</sys:String>
+    <sys:String x:Key="Str_Shown_Head">Mostrar al lado</sys:String>
+    <sys:String x:Key="Str_Shown_None">No hay otros Killendar en la carpeta de datos.</sys:String>
+    <sys:String x:Key="Str_Shown_Locked">bloqueado</sys:String>
+    <sys:String x:Key="Str_Shown_Unavailable">no se puede leer</sys:String>
+    <sys:String x:Key="Str_Shown_Unlock">Desbloquear</sys:String>
+    <sys:String x:Key="Str_Shown_Unlocked">Mostrando {0}</sys:String>
+    <sys:String x:Key="Str_Shown_Hint">Los Killendar mostrados son de solo lectura. Las citas nuevas y los cambios van al que está abierto.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Se quitan esta fecha y todas las posteriores. Las anteriores se mantienen.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Indica cuándo termina la repetición, o que no termine nunca.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Introduce un número entero mayor que cero.</sys:String>

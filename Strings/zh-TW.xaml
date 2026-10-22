@@ -101,6 +101,14 @@
     <sys:String x:Key="Str_Zone_Show">顯示時區</sys:String>
     <sys:String x:Key="Str_Lbl_SecondZone">第二時區</sys:String>
     <sys:String x:Key="Str_Zone_None">無</sys:String>
+    <sys:String x:Key="Str_Status_OtherCalendar">此約會在 {0} 中。要變更，請開啟那個 Killendar。</sys:String>
+    <sys:String x:Key="Str_Shown_Head">並排顯示</sys:String>
+    <sys:String x:Key="Str_Shown_None">資料夾中沒有其他 Killendar。</sys:String>
+    <sys:String x:Key="Str_Shown_Locked">已鎖定</sys:String>
+    <sys:String x:Key="Str_Shown_Unavailable">無法讀取</sys:String>
+    <sys:String x:Key="Str_Shown_Unlock">解鎖</sys:String>
+    <sys:String x:Key="Str_Shown_Unlocked">正在顯示 {0}</sys:String>
+    <sys:String x:Key="Str_Shown_Hint">並排顯示的 Killendar 為唯讀。新約會和變更會進入目前開啟的那個。</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">將刪除此日期及之後的所有日期。之前的日期保留。</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">請說明重複何時結束，或設為永不結束。</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">請輸入大於零的整數。</sys:String>

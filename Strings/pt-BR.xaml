@@ -141,6 +141,14 @@
     <sys:String x:Key="Str_Zone_Show">Mostrar fusos horários</sys:String>
     <sys:String x:Key="Str_Lbl_SecondZone">Segundo fuso horário</sys:String>
     <sys:String x:Key="Str_Zone_None">Nenhum</sys:String>
+    <sys:String x:Key="Str_Status_OtherCalendar">Isto está em {0}. Abra esse Killendar para alterá-lo.</sys:String>
+    <sys:String x:Key="Str_Shown_Head">Mostrar ao lado</sys:String>
+    <sys:String x:Key="Str_Shown_None">Não há outros Killendars na pasta de dados.</sys:String>
+    <sys:String x:Key="Str_Shown_Locked">bloqueado</sys:String>
+    <sys:String x:Key="Str_Shown_Unavailable">não pode ser lido</sys:String>
+    <sys:String x:Key="Str_Shown_Unlock">Desbloquear</sys:String>
+    <sys:String x:Key="Str_Shown_Unlocked">Mostrando {0}</sys:String>
+    <sys:String x:Key="Str_Shown_Hint">Os Killendars mostrados são somente leitura. Novos compromissos e alterações vão para o que está aberto.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Esta data e todas as seguintes são removidas. As anteriores ficam.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Informe quando a repetição termina ou defina para nunca terminar.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Digite um número inteiro maior que zero.</sys:String>

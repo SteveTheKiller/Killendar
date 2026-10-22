@@ -101,6 +101,14 @@
     <sys:String x:Key="Str_Zone_Show">Saat dilimlerini göster</sys:String>
     <sys:String x:Key="Str_Lbl_SecondZone">İkinci saat dilimi</sys:String>
     <sys:String x:Key="Str_Zone_None">Yok</sys:String>
+    <sys:String x:Key="Str_Status_OtherCalendar">Bu {0} içinde. Değiştirmek için o Killendar'ı açın.</sys:String>
+    <sys:String x:Key="Str_Shown_Head">Yanında göster</sys:String>
+    <sys:String x:Key="Str_Shown_None">Veri klasöründe başka Killendar yok.</sys:String>
+    <sys:String x:Key="Str_Shown_Locked">kilitli</sys:String>
+    <sys:String x:Key="Str_Shown_Unavailable">okunamıyor</sys:String>
+    <sys:String x:Key="Str_Shown_Unlock">Kilidi aç</sys:String>
+    <sys:String x:Key="Str_Shown_Unlocked">{0} gösteriliyor</sys:String>
+    <sys:String x:Key="Str_Shown_Hint">Yanında gösterilen Killendar'lar salt okunurdur. Yeni randevular ve değişiklikler açık olana gider.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Bu tarih ve sonraki tüm tarihler kaldırılır. Öncekiler kalır.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Tekrarın ne zaman biteceğini belirt, ya da hiç bitmesin.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Sıfırdan büyük bir tam sayı gir.</sys:String>

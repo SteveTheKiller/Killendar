@@ -127,6 +127,13 @@ namespace Killendar.Models
         public OccurrenceTimeBasis OccurrenceBasis { get; set; }
         public string OccurrenceZoneId { get; set; } = "";
 
+        /// <summary>Set only on a copy drawn from another Killendar shown alongside this one
+        /// (ShownCalendars): that calendar's name. Never saved; such a copy is read only.</summary>
+        public string SourceCalendar { get; set; } = "";
+
+        /// <summary>That calendar's color, "#RRGGBB", with <see cref="SourceCalendar"/>.</summary>
+        public string SourceColor { get; set; } = "";
+
         /// <summary>True on a series master - a row that stands for many dates.</summary>
         public bool IsSeries => Repeat != RepeatFreq.None && SeriesId == null;
 
@@ -205,7 +212,9 @@ namespace Killendar.Models
             OccurrenceStart = OccurrenceStart,
             OccurrenceAnchor = OccurrenceAnchor,
             OccurrenceBasis = OccurrenceBasis,
-            OccurrenceZoneId = OccurrenceZoneId
+            OccurrenceZoneId = OccurrenceZoneId,
+            SourceCalendar  = SourceCalendar,
+            SourceColor     = SourceColor
         };
     }
 }

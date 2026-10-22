@@ -62,7 +62,7 @@ namespace Killendar.Shell
             AgendaListHost.Children.Clear();
             if (_agendaDay == null) return;
 
-            var events = _store.GetOnDay(_agendaDay.Value)
+            var events = Services.ShownCalendars.With(_store.GetOnDay(_agendaDay.Value), _agendaDay.Value.Date, _agendaDay.Value.Date.AddDays(1))
                                .OrderBy(ev => !ev.AllDay)      // all-day first, as the views draw them
                                .ThenBy(ev => ev.Start)
                                .ToList();
@@ -165,7 +165,19 @@ namespace Killendar.Shell
             edit.Click += (_, _) => { _agendaHighlight = ev.Id; _appointments.Load(ev); };
             Grid.SetRow(edit, 1);
             Grid.SetColumn(edit, 1);
-            row.Children.Add(edit);
+            if (ev.SourceCalendar.Length == 0) row.Children.Add(edit);
+            else
+            {
+                // Another Killendar's appointment: read only here, so its calendar's name instead.
+                var from = Views.CalendarChrome.Text(ev.SourceCalendar, "DimTextBrush", 10, null, null);
+                from.Margin = new Thickness(6, 0, 0, 0);
+                from.VerticalAlignment = VerticalAlignment.Center;
+                from.MaxWidth = 90;
+                from.TextTrimming = TextTrimming.CharacterEllipsis;
+                Grid.SetRow(from, 1);
+                Grid.SetColumn(from, 1);
+                row.Children.Add(from);
+            }
 
             // The marked row wears the family SelectionBg fill, on a wrapper so the fill gets
             // corners without restyling the chip.

@@ -101,6 +101,14 @@
     <sys:String x:Key="Str_Zone_Show">Afficher les fuseaux horaires</sys:String>
     <sys:String x:Key="Str_Lbl_SecondZone">Second fuseau horaire</sys:String>
     <sys:String x:Key="Str_Zone_None">Aucun</sys:String>
+    <sys:String x:Key="Str_Status_OtherCalendar">Ceci est dans {0}. Ouvrez ce Killendar pour le modifier.</sys:String>
+    <sys:String x:Key="Str_Shown_Head">Afficher à côté</sys:String>
+    <sys:String x:Key="Str_Shown_None">Il n’y a pas d’autre Killendar dans le dossier de données.</sys:String>
+    <sys:String x:Key="Str_Shown_Locked">verrouillé</sys:String>
+    <sys:String x:Key="Str_Shown_Unavailable">illisible</sys:String>
+    <sys:String x:Key="Str_Shown_Unlock">Déverrouiller</sys:String>
+    <sys:String x:Key="Str_Shown_Unlocked">{0} est affiché</sys:String>
+    <sys:String x:Key="Str_Shown_Hint">Les Killendar affichés sont en lecture seule. Les nouveaux rendez-vous et les modifications vont dans celui qui est ouvert.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Cette date et toutes les suivantes sont supprimées. Les précédentes restent.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Indiquez quand la répétition se termine, ou qu'elle ne se termine jamais.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Saisissez un nombre entier supérieur à zéro.</sys:String>

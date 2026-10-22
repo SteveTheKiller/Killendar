@@ -6,6 +6,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
 using Microsoft.Win32;
 using Killendar.Features;
+using Killendar.Services;
 
 // Locking an encrypted Killendar: Ctrl+L or Lock now on the lock button's menu, after a chosen
 // idle time, or when Windows locks. The controller closes the calendar (SecurityController.Lock);
@@ -20,8 +21,13 @@ namespace Killendar.Shell
         private bool _lockWaiting;
 
         /// <summary>Hidden, not collapsed: the layout holds still and the panel keeps its draft.</summary>
-        void ISecurityHost.ShowLocked(bool locked) =>
+        void ISecurityHost.ShowLocked(bool locked)
+        {
             ScaleHost.Visibility = locked ? Visibility.Hidden : Visibility.Visible;
+            // Other Killendars shown alongside lock with the app; encrypted ones ask again.
+            if (locked) ShownCalendars.CloseAll();
+            else ShownCalendars.Reload(EventStore.ActiveFile);
+        }
 
         private void AttachAutoLock()
         {

@@ -279,7 +279,7 @@ namespace Killendar.Views
                 CalGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
 
             var today = DateTime.Today;
-            var visibleEvents = _store.GetInRange(start, start.AddDays(rows * 7));
+            var visibleEvents = ShownCalendars.With(_store.GetInRange(start, start.AddDays(rows * 7)), start, start.AddDays(rows * 7));
             for (int r = 0; r < rows; r++)
             {
                 var weekStart = start.AddDays(r * 7);
@@ -720,6 +720,7 @@ namespace Killendar.Views
         /// </summary>
         private void WireDrag(Border chip, CalendarEvent ev, UIElement dragLayer)
         {
+            if (ev.SourceCalendar.Length > 0) return;   // another Killendar's: read only
             var move = new TranslateTransform();
             chip.RenderTransform = move;
 

@@ -292,6 +292,7 @@ namespace Killendar.Views
         /// </summary>
         private void WireDrag(Border chip, CalendarEvent ev, double chipTop, Canvas canvas)
         {
+            if (ev.SourceCalendar.Length > 0) return;   // another Killendar's: read only
             var move = new TranslateTransform();
             chip.RenderTransform = move;
 

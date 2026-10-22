@@ -198,8 +198,8 @@ namespace Killendar.Services
         }
 
         /// <summary>Loads an existing calendar for scriptable queries without creating files,
-        /// migrating data, or changing its schema. Encrypted files require a separate unlock path.</summary>
-        public void OpenReadOnly(string path)
+        /// migrating data, or changing its schema. An encrypted file needs its password.</summary>
+        public void OpenReadOnly(string path, string? password = null)
         {
             Close();
             if (!Path.IsPathRooted(path) || !File.Exists(path))
@@ -210,6 +210,7 @@ namespace Killendar.Services
                 Mode = SqliteOpenMode.ReadOnly,
                 Pooling = false,
             };
+            if (!string.IsNullOrEmpty(password)) builder.Password = password;
             var db = new SqliteConnection(builder.ConnectionString);
             try
             {

@@ -142,6 +142,12 @@ namespace Killendar.Features
 
         internal void Load(CalendarEvent ev)
         {
+            // Another Killendar shown alongside is read only; changing it means opening it.
+            if (ev.SourceCalendar.Length > 0)
+            {
+                _view.SetStatus(string.Format(_view.Loc("Str_Status_OtherCalendar"), ev.SourceCalendar));
+                return;
+            }
             if (!ConfirmReplace()) return;
             // Edit a copy: canceling must not leave half-typed changes on the stored object.
             _loading = true;
