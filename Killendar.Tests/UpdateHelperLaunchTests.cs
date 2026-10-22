@@ -53,11 +53,12 @@ namespace Killendar.Tests
         }
 
         [Fact]
-        public void ElevatedHelperStartsPowerShellWithItsScriptInTheCommandLine()
+        public void PublicationHelperCannotRequestAdministratorAccess()
         {
-            var start = UpdateHelperLaunch.StartInfo(UpdateHelperLaunch.WaitFor(1234) + "exit 0", elevate: true);
-            Assert.Equal("runas", start.Verb);
-            Assert.True(start.UseShellExecute);
+            var start = UpdateHelperLaunch.StartInfo(UpdateHelperLaunch.WaitFor(1234) + "exit 0");
+            Assert.True(string.IsNullOrEmpty(start.Verb));
+            Assert.False(start.UseShellExecute);
+            Assert.True(start.CreateNoWindow);
             Assert.EndsWith(@"WindowsPowerShell\v1.0\powershell.exe", start.FileName, StringComparison.OrdinalIgnoreCase);
             Assert.Contains("-EncodedCommand ", start.Arguments);
             Assert.DoesNotContain(".bat", start.Arguments, StringComparison.OrdinalIgnoreCase);
@@ -86,7 +87,7 @@ namespace Killendar.Tests
                 if (acceptSignature) overrides += "\n$ops.VerifySignature = { param($path) $true }";
                 string script = UpdateHelperLaunch.WaitFor(0) + UpdateImagePublication.Script(Download, Target, false,
                     "https://example.invalid/releases", "Killendar " + name + " fixture", overrides: overrides);
-                using var process = Process.Start(UpdateHelperLaunch.StartInfo(script, elevate: false));
+                using var process = Process.Start(UpdateHelperLaunch.StartInfo(script));
                 Assert.NotNull(process);
                 if (!process!.WaitForExit(60000))
                 {

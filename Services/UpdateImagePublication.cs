@@ -10,6 +10,10 @@ namespace Killendar.Services
         private static readonly ConcurrentDictionary<string, string> VerifiedHashes =
             new ConcurrentDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
+        internal static string VerifiedHash(string path) =>
+            VerifiedHashes.TryGetValue(Path.GetFullPath(path), out string? hash) ? hash
+                : throw new InvalidDataException("This update has no retained verification hash. Download retained at: " + path);
+
         internal static void RememberVerified(string path, string sha256)
         {
             if (sha256.Length != 64 || Array.Exists(sha256.ToCharArray(), c => !Uri.IsHexDigit(c)))

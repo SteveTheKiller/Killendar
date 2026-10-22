@@ -85,6 +85,11 @@ namespace Killendar
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            if (Array.Exists(e.Args, a => string.Equals(a, TrustedUpdate.HelperArgument, StringComparison.OrdinalIgnoreCase)))
+            {
+                Shutdown(TrustedUpdate.Apply(e.Args));
+                return;
+            }
             if (DeferredUninstall.IsHelperRequest(e.Args, Process.GetCurrentProcess().MainModule?.FileName ?? "",
                 MachineInstallDir, UninstallStagingRoot(false)))
             {

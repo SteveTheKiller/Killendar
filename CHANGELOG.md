@@ -8,8 +8,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Fixed
 
+- Self-updates request administrator access through Killendar and keep their helper out of writable scripts in the temp folder.
 - Dark theme with the red accent: a hovered button fills a deeper red with white text, so its label is readable.
-- Self-updates no longer run their helper from a script in the temp folder, so another program running under your account cannot change what an approved administrator update does.
 - In 98SE, long paths in the file dialog no longer run under the recent-locations arrow.
 - Uninstall removes shortcuts, the command path and file types before the program, so a failed step leaves an uninstall entry that still works. An all-users uninstall waits for its confirmation however long it stays open, and its leftover helper and empty program folder are removed at the next restart.
 - Screen readers name the color picker's Red, Green, Blue and Hex fields instead of announcing unnamed boxes.
