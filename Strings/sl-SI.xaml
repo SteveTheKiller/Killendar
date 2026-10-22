@@ -243,6 +243,9 @@
     <sys:String x:Key="Str_Sc_Hint">Posamezne tipke delujejo, kadar ne vnašaš besedila v polje.</sys:String>
     <sys:String x:Key="Str_Lbl_DateFormat">oblika datuma</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">prvi dan v tednu</sys:String>
+    <sys:String x:Key="Str_Lbl_WorkDays">delovni dnevi</sys:String>
+    <sys:String x:Key="Str_Lbl_WorkHours">delovni čas</sys:String>
+    <sys:String x:Key="Str_Work_To">do</sys:String>
     <sys:String x:Key="Str_Lbl_AgendaDays">dnevni red prikaže</sys:String>
     <sys:String x:Key="Str_Agenda_Days">{0} dni</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">opomnik za nove dogodke</sys:String>

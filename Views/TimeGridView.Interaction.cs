@@ -48,6 +48,24 @@ namespace Killendar.Views
                 }
             }
 
+            // Time off, shaded like Month's weekend: a whole day off, or the hours either side of
+            // the working day (WorkSchedule).
+            void Shade(double top, double height)
+            {
+                if (height <= 0) return;
+                var off = new Border { Height = height, IsHitTestVisible = false };
+                off.Themed(Border.BackgroundProperty, "CalendarWeekendBrush");
+                off.SetBinding(WidthProperty, new System.Windows.Data.Binding("ActualWidth") { Source = canvas });
+                Canvas.SetTop(off, top);
+                canvas.Children.Insert(0, off);
+            }
+            if (!WorkSchedule.IsWorkday(date.DayOfWeek)) Shade(0, fullHeight);
+            else
+            {
+                Shade(0, WorkSchedule.StartHour * CalendarChrome.HourHeight);
+                Shade(WorkSchedule.EndHour * CalendarChrome.HourHeight, (24 - WorkSchedule.EndHour) * CalendarChrome.HourHeight);
+            }
+
             // Today's column, on exactly the rule Month uses for today's cell: it carries the
             // SelectionBg fill only while NOTHING is selected, and drops to a 1px accent edge as
             // soon as the panel is talking about some other day - so the loudest thing on screen is

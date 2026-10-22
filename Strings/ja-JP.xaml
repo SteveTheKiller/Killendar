@@ -236,6 +236,9 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">日付形式</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">週の開始</sys:String>
+    <sys:String x:Key="Str_Lbl_WorkDays">勤務日</sys:String>
+    <sys:String x:Key="Str_Lbl_WorkHours">勤務時間</sys:String>
+    <sys:String x:Key="Str_Work_To">から</sys:String>
     <sys:String x:Key="Str_Lbl_AgendaDays">アジェンダの表示期間</sys:String>
     <sys:String x:Key="Str_Agenda_Days">{0} 日</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">新しい予定のリマインダー</sys:String>

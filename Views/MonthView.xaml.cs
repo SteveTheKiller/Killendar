@@ -492,7 +492,7 @@ namespace Killendar.Views
 
             string restBrush = !inMonth
                 ? "CalendarOutsideMonthBrush"
-                : date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday
+                : !WorkSchedule.IsWorkday(date.DayOfWeek)
                     ? "CalendarWeekendBrush"
                     : displayColumn % 2 == 0 ? "CalendarEvenColumnBrush" : "CalendarOddColumnBrush";
             _cells[date.Date] = (cell, dayNum, inMonth, isToday, restBrush);

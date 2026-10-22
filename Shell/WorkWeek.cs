@@ -11,6 +11,8 @@ using Killendar.Views;
 //
 // Persisted as "WorkWeek". Month, Day and Agenda ignore it.
 // ============================================================
+using Killendar.Services;
+
 namespace Killendar.Shell
 {
     public partial class MainWindow
@@ -18,6 +20,7 @@ namespace Killendar.Shell
         private void InitWorkWeek()
         {
             CalendarChrome.WorkWeek = Settings.Get("WorkWeek") == "1";
+            WorkSchedule.Load(Settings.Get(WorkSchedule.DaysSetting), Settings.Get(WorkSchedule.HoursSetting));
             // The toggle button lives in WeekView's own header corner (2026-07-31 - it
             // was on the rail first, a whole window away from the columns it drops), so the view
             // invokes this hook rather than the shell owning a button.

@@ -236,6 +236,9 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">তারিখের বিন্যাস</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">সপ্তাহের শুরু</sys:String>
+    <sys:String x:Key="Str_Lbl_WorkDays">কাজের দিন</sys:String>
+    <sys:String x:Key="Str_Lbl_WorkHours">কাজের সময়</sys:String>
+    <sys:String x:Key="Str_Work_To">থেকে</sys:String>
     <sys:String x:Key="Str_Lbl_AgendaDays">এজেন্ডায় দেখায়</sys:String>
     <sys:String x:Key="Str_Agenda_Days">{0} দিন</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">নতুন অ্যাপয়েন্টমেন্টের রিমাইন্ডার</sys:String>

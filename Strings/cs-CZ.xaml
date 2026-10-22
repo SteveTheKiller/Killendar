@@ -236,6 +236,9 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">formát data</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">začátek týdne</sys:String>
+    <sys:String x:Key="Str_Lbl_WorkDays">pracovní dny</sys:String>
+    <sys:String x:Key="Str_Lbl_WorkHours">pracovní doba</sys:String>
+    <sys:String x:Key="Str_Work_To">do</sys:String>
     <sys:String x:Key="Str_Lbl_AgendaDays">agenda zobrazuje</sys:String>
     <sys:String x:Key="Str_Agenda_Days">{0} dní</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">připomenutí nových schůzek</sys:String>

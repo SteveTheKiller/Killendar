@@ -236,6 +236,9 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">日期格式</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">每週開始日</sys:String>
+    <sys:String x:Key="Str_Lbl_WorkDays">工作日</sys:String>
+    <sys:String x:Key="Str_Lbl_WorkHours">工作時間</sys:String>
+    <sys:String x:Key="Str_Work_To">至</sys:String>
     <sys:String x:Key="Str_Lbl_AgendaDays">議程顯示</sys:String>
     <sys:String x:Key="Str_Agenda_Days">{0} 天</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">新約會的提醒</sys:String>

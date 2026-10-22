@@ -55,7 +55,7 @@ namespace Killendar.Controls
         private void Build()
         {
             _menu.Items.Clear();
-            // Three columns side by side - date and clock, agenda length, default reminder - so the
+            // Columns side by side - date and clock, agenda length, work week, default reminder - so the
             // flyout stays about as tall as one group instead of running down the screen.
             var columns = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(10) };
             var panel = new StackPanel { MinWidth = 150 };
@@ -139,6 +139,8 @@ namespace Killendar.Controls
                 panel.Children.Add(agenda);
             }
             panel = NewColumn(columns);
+            BuildWorkWeek(panel);
+            panel = NewColumn(columns);
             panel.Children.Add(new TextBlock
             {
                 Text = LocaleManager.Loc("Str_Lbl_DefaultReminder"), FontSize = 10,
@@ -163,6 +165,80 @@ namespace Killendar.Controls
                 StaysOpenOnClick = true,
                 Style = (Style)Application.Current.FindResource("PanelMenuItem"),
             });
+        }
+
+        /// <summary>Workdays as ticks in week order, then the working hours as two hour lists.</summary>
+        private void BuildWorkWeek(StackPanel panel)
+        {
+            panel.Children.Add(new TextBlock
+            {
+                Text = LocaleManager.Loc("Str_Lbl_WorkDays"), FontSize = 10,
+                Margin = new Thickness(0, 0, 0, 6)
+            });
+            var culture = LocaleManager.CultureFor(LocaleManager.Current);
+            for (int i = 0; i < 7; i++)
+            {
+                var day = (DayOfWeek)(((int)WeekStartManager.FirstDay + i) % 7);
+                var tick = new CheckBox
+                {
+                    Content = culture.DateTimeFormat.GetDayName(day),
+                    IsChecked = WorkSchedule.IsWorkday(day),
+                    Margin = new Thickness(0, 0, 0, 2),
+                };
+                tick.Click += (_, _) =>
+                {
+                    var days = WorkSchedule.Days.ToHashSet();
+                    if (tick.IsChecked == true) days.Add(day); else days.Remove(day);
+                    if (days.Count == 0) { tick.IsChecked = true; return; }   // a week needs a workday
+                    SaveWork(WorkSchedule.FormatDays(days), null);
+                };
+                panel.Children.Add(tick);
+            }
+            AddSeparator(panel);
+            panel.Children.Add(new TextBlock
+            {
+                Text = LocaleManager.Loc("Str_Lbl_WorkHours"), FontSize = 10,
+                Margin = new Thickness(0, 0, 0, 6)
+            });
+            var hours = new StackPanel { Orientation = Orientation.Horizontal };
+            var from = HourList(0, 23, WorkSchedule.StartHour);
+            var to = HourList(1, 24, WorkSchedule.EndHour);
+            void Changed()
+            {
+                if (from.SelectedItem is ComboBoxItem f && to.SelectedItem is ComboBoxItem t &&
+                    (int)f.Tag < (int)t.Tag)
+                    SaveWork(null, WorkSchedule.FormatHours((int)f.Tag, (int)t.Tag));
+            }
+            from.SelectionChanged += (_, _) => Changed();
+            to.SelectionChanged += (_, _) => Changed();
+            hours.Children.Add(from);
+            hours.Children.Add(new TextBlock
+            {
+                Text = LocaleManager.Loc("Str_Work_To"), VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(6, 0, 6, 0)
+            });
+            hours.Children.Add(to);
+            panel.Children.Add(hours);
+        }
+
+        private static ComboBox HourList(int first, int last, int selected)
+        {
+            var list = new ComboBox { MinWidth = 70 };
+            for (int h = first; h <= last; h++)
+            {
+                var item = new ComboBoxItem { Content = DateFormatManager.Time(DateTime.Today.AddHours(h)), Tag = h };
+                list.Items.Add(item);
+                if (h == selected) list.SelectedItem = item;
+            }
+            return list;
+        }
+
+        private void SaveWork(string? days, string? hours)
+        {
+            if (days != null) Settings.Set(WorkSchedule.DaysSetting, days);
+            if (hours != null) Settings.Set(WorkSchedule.HoursSetting, hours);
+            WorkSchedule.Load(Settings.Get(WorkSchedule.DaysSetting), Settings.Get(WorkSchedule.HoursSetting));
+            _weekStartChanged();   // repaints the views with the new shading and work week
         }
 
         /// <summary>A divider, then a fresh column to the right of the ones before it.</summary>

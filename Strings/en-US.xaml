@@ -287,6 +287,9 @@
          so they read the same in every language. -->
     <sys:String x:Key="Str_Lbl_DateFormat">date format</sys:String>
     <sys:String x:Key="Str_Lbl_WeekStart">week starts on</sys:String>
+    <sys:String x:Key="Str_Lbl_WorkDays">work days</sys:String>
+    <sys:String x:Key="Str_Lbl_WorkHours">work hours</sys:String>
+    <sys:String x:Key="Str_Work_To">to</sys:String>
     <sys:String x:Key="Str_Lbl_AgendaDays">agenda shows</sys:String>
     <sys:String x:Key="Str_Agenda_Days">{0} days</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">new appointments remind</sys:String>
