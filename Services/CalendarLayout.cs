@@ -163,5 +163,26 @@ namespace Killendar.Services
 
             return visible;
         }
+
+        /// <summary>
+        /// Appointments sorted into the days of a grid in one pass: each one goes to every day it
+        /// touches (the same rule as CalendarEvent.OccursOn). A day with none has no entry.
+        /// </summary>
+        internal static Dictionary<DateTime, List<CalendarEvent>> ByDay(IEnumerable<CalendarEvent> events, DateTime firstDay, int days)
+        {
+            var buckets = new Dictionary<DateTime, List<CalendarEvent>>();
+            var first = firstDay.Date;
+            var last = (DateTime.MaxValue.Date - first).TotalDays >= days ? first.AddDays(days - 1) : DateTime.MaxValue.Date;
+            foreach (var ev in events)
+            {
+                for (var day = ev.Start.Date < first ? first : ev.Start.Date; day <= last && ev.End > day; day = day.AddDays(1))
+                {
+                    if (!buckets.TryGetValue(day, out var list)) buckets[day] = list = [];
+                    list.Add(ev);
+                    if (day == DateTime.MaxValue.Date) break;
+                }
+            }
+            return buckets;
+        }
     }
 }

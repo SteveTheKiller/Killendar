@@ -35,7 +35,11 @@ namespace Killendar.Services
         ///   - overrides, which stand in for one generated date and are included on their own
         ///     dates - so an occurrence moved to another day appears there, not here.
         /// </summary>
-        public List<CalendarEvent> GetInRange(DateTime start, DateTime end)
+        public List<CalendarEvent> GetInRange(DateTime start, DateTime end) => GetInRange(start, end, null);
+
+        /// <summary>The same, for only the rows <paramref name="which"/> picks, so a series it
+        /// leaves out is never expanded (the holidays read just the all-day ones).</summary>
+        public List<CalendarEvent> GetInRange(DateTime start, DateTime end, Func<CalendarEvent, bool>? which)
         {
             var result = new List<CalendarEvent>();
 
@@ -48,6 +52,7 @@ namespace Killendar.Services
 
             foreach (var e in _events)
             {
+                if (which != null && !which(e)) continue;
                 if (e.IsSeries)
                 {
                     foreach (var occ in Recurrence.Expand(e, start, end))

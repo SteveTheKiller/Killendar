@@ -159,8 +159,11 @@ namespace Killendar.Views
 
             // ---- all-day strip ----
             ApplyColumns(_allDayStrip);
-            var allDay = CalendarLayout.PlaceAllDayRange(
-                ShownCalendars.With(_store.GetInRange(start, start.AddDays(Days)), start, start.AddDays(Days)), start, Days);
+            // Read once for every column (other Killendars shown alongside among them) and sorted
+            // into days below, not asked again per column.
+            var gridEvents = ShownCalendars.With(_store.GetInRange(start, start.AddDays(Days)), start, start.AddDays(Days));
+            _gridDays = CalendarLayout.ByDay(gridEvents, start, Days);
+            var allDay = CalendarLayout.PlaceAllDayRange(gridEvents, start, Days);
             if (allDay.Count > 0)
             {
                 _allDayHost.Visibility = Visibility.Visible;

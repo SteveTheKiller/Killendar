@@ -30,6 +30,7 @@ namespace Killendar.Views
         }
 
         private EventStore? _store;
+        private Dictionary<DateTime, List<CalendarEvent>> _gridDays = [];
         private DateTime _anchor = DateTime.Today;
         private int _visibleWeeks;
         private int _lastRollingWeeks = 4;
@@ -280,6 +281,9 @@ namespace Killendar.Views
 
             var today = DateTime.Today;
             var visibleEvents = ShownCalendars.With(_store.GetInRange(start, start.AddDays(rows * 7)), start, start.AddDays(rows * 7));
+            // Read once for the whole grid and sorted into days below, not asked again per day:
+            // a big calendar took seconds to draw a month at one query per cell.
+            _gridDays = CalendarLayout.ByDay(visibleEvents, start, rows * 7);
             for (int r = 0; r < rows; r++)
             {
                 var weekStart = start.AddDays(r * 7);
@@ -382,8 +386,8 @@ namespace Killendar.Views
                                     bool rightSeparator, bool bottomSeparator,
                                     int multiDayLanes)
         {
-            // Other Killendars shown alongside count here too, read only in their own color.
-            var events = ShownCalendars.With(_store!.GetOnDay(date), date.Date, date.Date.AddDays(1))
+            // The grid's appointments (other Killendars shown alongside among them) on this day.
+            var events = (_gridDays.TryGetValue(date.Date, out var onDay) ? onDay : [])
                 .Where(e => !CalendarLayout.IsMultiDay(e))
                 .OrderBy(e => !e.AllDay)
                 .ThenBy(e => e.Start)

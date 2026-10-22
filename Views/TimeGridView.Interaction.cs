@@ -249,9 +249,8 @@ namespace Killendar.Views
         private void PlaceTimedEvents(Canvas canvas, DateTime date)
         {
             var dayStart = date.Date;
-            // Other Killendars shown alongside draw here too, read only in their own color.
-            var placements = CalendarLayout.PlaceTimedDay(
-                ShownCalendars.With(_store!.GetOnDay(date), date.Date, date.Date.AddDays(1)), date);
+            // The columns' appointments (other Killendars shown alongside among them) on this day.
+            var placements = CalendarLayout.PlaceTimedDay(_gridDays.TryGetValue(date.Date, out var onDay) ? onDay : [], date);
             foreach (var placement in placements)
             {
                 var ev = placement.Event;

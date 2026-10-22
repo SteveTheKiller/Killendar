@@ -111,7 +111,7 @@ namespace Killendar.Services
             if (source != null && year > 1 && year < 9999)
             {
                 var from = new DateTime(year, 1, 1);
-                foreach (var ev in source.GetInRange(from, from.AddYears(1)).Where(e => e.AllDay))
+                foreach (var ev in source.GetInRange(from, from.AddYears(1), e => e.AllDay))
                 {
                     var last = CalendarDateSpan.VisibleAllDayEnd(ev.Start, ev.End).Date;
                     for (var d = ev.Start.Date; d <= last && d.Year <= year; d = d.AddDays(1))

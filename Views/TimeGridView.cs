@@ -289,6 +289,9 @@ namespace Killendar.Views
             return null;
         }
 
+        /// <summary>The appointments in the columns shown, read once per rebuild.</summary>
+        private Dictionary<DateTime, List<CalendarEvent>> _gridDays = [];
+
         private void ApplyColumns(Grid g)
         {
             g.ColumnDefinitions.Clear();
