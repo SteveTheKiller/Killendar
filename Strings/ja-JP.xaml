@@ -473,6 +473,7 @@
     <sys:String x:Key="Str_Meet_NoReply">未回答</sys:String>
     <sys:String x:Key="Str_Meet_Delegated">代理</sys:String>
     <sys:String x:Key="Str_Meet_Join">会議に参加</sys:String>
+    <sys:String x:Key="Str_Meet_JoinOpens">ブラウザーで {0} を開きます</sys:String>
     <sys:String x:Key="Str_Meet_Private">主催者が非公開に設定</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">空き時間として表示</sys:String>
     <sys:String x:Key="Str_Html_Legend">カテゴリ</sys:String>

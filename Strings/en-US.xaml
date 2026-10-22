@@ -556,6 +556,7 @@
     <sys:String x:Key="Str_Meet_NoReply">no reply yet</sys:String>
     <sys:String x:Key="Str_Meet_Delegated">delegated</sys:String>
     <sys:String x:Key="Str_Meet_Join">Join meeting</sys:String>
+    <sys:String x:Key="Str_Meet_JoinOpens">Opens {0} in your browser</sys:String>
     <sys:String x:Key="Str_Meet_Private">Marked private by the organizer</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Show as free</sys:String>
     <sys:String x:Key="Str_Html_Legend">Categories</sys:String>

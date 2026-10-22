@@ -556,6 +556,7 @@
     <sys:String x:Key="Str_Meet_NoReply">әлі жауап жоқ</sys:String>
     <sys:String x:Key="Str_Meet_Delegated">тапсырды</sys:String>
     <sys:String x:Key="Str_Meet_Join">Жиналысқа қосылу</sys:String>
+    <sys:String x:Key="Str_Meet_JoinOpens">{0} мекенжайын браузерде ашады</sys:String>
     <sys:String x:Key="Str_Meet_Private">Ұйымдастырушы жеке деп белгілеген</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Бос деп көрсету</sys:String>
     <sys:String x:Key="Str_Html_Legend">Санаттар</sys:String>

@@ -558,6 +558,7 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Meet_NoReply">még nem válaszolt</sys:String>
     <sys:String x:Key="Str_Meet_Delegated">továbbadta</sys:String>
     <sys:String x:Key="Str_Meet_Join">Csatlakozás</sys:String>
+    <sys:String x:Key="Str_Meet_JoinOpens">Megnyitja a(z) {0} címet a böngészőben</sys:String>
     <sys:String x:Key="Str_Meet_Private">A szervező magánjellegűnek jelölte</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Szabadként jelenjen meg</sys:String>
     <sys:String x:Key="Str_Html_Legend">Kategóriák</sys:String>

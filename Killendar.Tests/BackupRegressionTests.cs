@@ -199,5 +199,30 @@ namespace Killendar.Tests
             Assert.True(File.Exists(path));
             Assert.Equal((null, null), fixture.Store.BackupIfDueWithErrorAsync(new DateTime(2026, 10, 21, 18, 0, 0)).Result);
         }
+
+        // Every table is copied, not just appointments: templates and Recently deleted come along.
+        [Fact]
+        public void TheBackupHoldsEveryTable()
+        {
+            using var fixture = new AppointmentFixture();
+            var gone = Appointment("Deleted");
+            fixture.Store.Add(Appointment("Kept"));
+            fixture.Store.Add(gone);
+            fixture.Store.Delete(gone.Id);
+            fixture.Store.SaveTemplate(Appointment("Template"));
+            foreach (var old in fixture.Store.ListBackups()) File.Delete(old.Path);
+
+            var (path, error) = fixture.Store.BackupIfDueWithErrorAsync(new DateTime(2026, 10, 21, 9, 0, 0)).Result;
+
+            Assert.Null(error);
+            var copy = new EventStore();
+            copy.OpenReadOnly(path!);
+            try
+            {
+                Assert.Equal("Kept", Assert.Single(copy.Events).Title);
+                Assert.Equal("Template", Assert.Single(copy.ListTemplates()).Title);
+            }
+            finally { copy.Close(); }
+        }
     }
 }

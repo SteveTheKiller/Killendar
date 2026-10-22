@@ -557,6 +557,7 @@
     <sys:String x:Key="Str_Meet_NoReply">нет ответа</sys:String>
     <sys:String x:Key="Str_Meet_Delegated">передал(а)</sys:String>
     <sys:String x:Key="Str_Meet_Join">Присоединиться</sys:String>
+    <sys:String x:Key="Str_Meet_JoinOpens">Открывает {0} в браузере</sys:String>
     <sys:String x:Key="Str_Meet_Private">Организатор отметил как личное</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Показывать как свободное время</sys:String>
     <sys:String x:Key="Str_Html_Legend">Категории</sys:String>

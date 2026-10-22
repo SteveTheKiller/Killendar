@@ -484,6 +484,7 @@ Killendar se bo ponovno zagnal z namestitvenega mesta.</sys:String>
     <sys:String x:Key="Str_Meet_NoReply">še brez odgovora</sys:String>
     <sys:String x:Key="Str_Meet_Delegated">dodelil(a)</sys:String>
     <sys:String x:Key="Str_Meet_Join">Pridruži se sestanku</sys:String>
+    <sys:String x:Key="Str_Meet_JoinOpens">Odpre {0} v brskalniku</sys:String>
     <sys:String x:Key="Str_Meet_Private">Organizator ga je označil kot zasebnega</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Prikaži kot prosto</sys:String>
     <sys:String x:Key="Str_Html_Legend">Kategorije</sys:String>

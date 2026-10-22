@@ -473,6 +473,7 @@
     <sys:String x:Key="Str_Meet_NoReply">sin respuesta aún</sys:String>
     <sys:String x:Key="Str_Meet_Delegated">delegó</sys:String>
     <sys:String x:Key="Str_Meet_Join">Unirse a la reunión</sys:String>
+    <sys:String x:Key="Str_Meet_JoinOpens">Abre {0} en el navegador</sys:String>
     <sys:String x:Key="Str_Meet_Private">Marcada como privada por el organizador</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Mostrar como libre</sys:String>
     <sys:String x:Key="Str_Html_Legend">Categorías</sys:String>

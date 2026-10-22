@@ -526,6 +526,7 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Meet_NoReply">chưa trả lời</sys:String>
   <sys:String x:Key="Str_Meet_Delegated">đã ủy quyền</sys:String>
   <sys:String x:Key="Str_Meet_Join">Tham gia cuộc họp</sys:String>
+  <sys:String x:Key="Str_Meet_JoinOpens">Mở {0} trong trình duyệt</sys:String>
   <sys:String x:Key="Str_Meet_Private">Người tổ chức đánh dấu là riêng tư</sys:String>
   <sys:String x:Key="Str_Chk_ShowAsFree">Hiển thị là rảnh</sys:String>
   <sys:String x:Key="Str_Html_Legend">Danh mục</sys:String>

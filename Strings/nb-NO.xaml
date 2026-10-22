@@ -556,6 +556,7 @@
     <sys:String x:Key="Str_Meet_NoReply">ikke svart ennå</sys:String>
     <sys:String x:Key="Str_Meet_Delegated">delegert</sys:String>
     <sys:String x:Key="Str_Meet_Join">Bli med i møtet</sys:String>
+    <sys:String x:Key="Str_Meet_JoinOpens">Åpner {0} i nettleseren</sys:String>
     <sys:String x:Key="Str_Meet_Private">Merket privat av organisatoren</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Vis som ledig</sys:String>
     <sys:String x:Key="Str_Html_Legend">Kategorier</sys:String>

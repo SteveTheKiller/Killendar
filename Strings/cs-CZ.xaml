@@ -473,6 +473,7 @@
     <sys:String x:Key="Str_Meet_NoReply">zatím bez odpovědi</sys:String>
     <sys:String x:Key="Str_Meet_Delegated">delegoval(a)</sys:String>
     <sys:String x:Key="Str_Meet_Join">Připojit se</sys:String>
+    <sys:String x:Key="Str_Meet_JoinOpens">Otevře {0} v prohlížeči</sys:String>
     <sys:String x:Key="Str_Meet_Private">Organizátor označil jako soukromé</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Zobrazit jako volno</sys:String>
     <sys:String x:Key="Str_Html_Legend">Kategorie</sys:String>

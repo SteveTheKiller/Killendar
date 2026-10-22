@@ -473,6 +473,7 @@
     <sys:String x:Key="Str_Meet_NoReply">এখনও উত্তর নেই</sys:String>
     <sys:String x:Key="Str_Meet_Delegated">অন্যকে দিয়েছেন</sys:String>
     <sys:String x:Key="Str_Meet_Join">সভায় যোগ দিন</sys:String>
+    <sys:String x:Key="Str_Meet_JoinOpens">আপনার ব্রাউজারে {0} খোলে</sys:String>
     <sys:String x:Key="Str_Meet_Private">আয়োজক ব্যক্তিগত হিসেবে চিহ্নিত করেছেন</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">ফাঁকা দেখান</sys:String>
     <sys:String x:Key="Str_Html_Legend">বিভাগ</sys:String>

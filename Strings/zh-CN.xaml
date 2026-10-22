@@ -473,6 +473,7 @@
     <sys:String x:Key="Str_Meet_NoReply">尚未答复</sys:String>
     <sys:String x:Key="Str_Meet_Delegated">已委托</sys:String>
     <sys:String x:Key="Str_Meet_Join">加入会议</sys:String>
+    <sys:String x:Key="Str_Meet_JoinOpens">在浏览器中打开 {0}</sys:String>
     <sys:String x:Key="Str_Meet_Private">组织者标记为私人</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">显示为空闲</sys:String>
     <sys:String x:Key="Str_Html_Legend">类别</sys:String>

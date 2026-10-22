@@ -473,6 +473,7 @@
     <sys:String x:Key="Str_Meet_NoReply">henüz yanıt yok</sys:String>
     <sys:String x:Key="Str_Meet_Delegated">devretti</sys:String>
     <sys:String x:Key="Str_Meet_Join">Toplantıya katıl</sys:String>
+    <sys:String x:Key="Str_Meet_JoinOpens">{0} adresini tarayıcıda açar</sys:String>
     <sys:String x:Key="Str_Meet_Private">Düzenleyen özel olarak işaretledi</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Boş olarak göster</sys:String>
     <sys:String x:Key="Str_Html_Legend">Kategoriler</sys:String>

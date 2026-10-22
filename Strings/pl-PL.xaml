@@ -485,6 +485,7 @@
     <sys:String x:Key="Str_Meet_NoReply">brak odpowiedzi</sys:String>
     <sys:String x:Key="Str_Meet_Delegated">przekazał(a)</sys:String>
     <sys:String x:Key="Str_Meet_Join">Dołącz do spotkania</sys:String>
+    <sys:String x:Key="Str_Meet_JoinOpens">Otwiera {0} w przeglądarce</sys:String>
     <sys:String x:Key="Str_Meet_Private">Oznaczone przez organizatora jako prywatne</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Pokaż jako wolny</sys:String>
     <sys:String x:Key="Str_Html_Legend">Kategorie</sys:String>

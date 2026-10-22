@@ -209,19 +209,10 @@ namespace Killendar.Services
         }
 
         /// <summary>Exports source into a new file under key, then reopens that file and checks it
-        /// holds every appointment the source does. Throws, leaving no file, when it does not.</summary>
+        /// holds every row the source does, table by table. Throws, leaving no file, when it does not.</summary>
         private static void ExportVerified(SqliteConnection source, string destination, string? key)
         {
             TryDelete(destination);
-            long CountSource()
-            {
-                using var count = source.CreateCommand();
-                count.CommandText = "SELECT count(*) FROM main.events";
-                return (long)count.ExecuteScalar()!;
-            }
-            // Counted before and after: the daily backup reads beside the app, which may save an
-            // appointment while the export runs, and the copy then matches one side or the other.
-            long before = CountSource(), after = before;
             try
             {
                 using (var attach = source.CreateCommand())
@@ -231,11 +222,26 @@ namespace Killendar.Services
                     attach.Parameters.AddWithValue("$key", key ?? "");
                     attach.ExecuteNonQuery();
                 }
+                Dictionary<string, long> counts;
                 try
                 {
-                    using var export = source.CreateCommand();
-                    export.CommandText = "SELECT sqlcipher_export('backup')";
-                    export.ExecuteNonQuery();
+                    // One read transaction around the counts and the export (ATTACH cannot run
+                    // inside one, so it comes first): the daily backup reads beside the app, and
+                    // every table is copied and counted from the same moment, whatever is saved meanwhile.
+                    using (var begin = source.CreateCommand()) { begin.CommandText = "BEGIN"; begin.ExecuteNonQuery(); }
+                    try
+                    {
+                        counts = CountTables(source, "main");
+                        using var export = source.CreateCommand();
+                        export.CommandText = "SELECT sqlcipher_export('backup')";
+                        export.ExecuteNonQuery();
+                    }
+                    finally
+                    {
+                        using var end = source.CreateCommand();
+                        end.CommandText = "COMMIT";
+                        end.ExecuteNonQuery();
+                    }
                 }
                 finally
                 {
@@ -243,7 +249,6 @@ namespace Killendar.Services
                     detach.CommandText = "DETACH DATABASE backup";
                     detach.ExecuteNonQuery();
                 }
-                after = CountSource();
 
                 var check = new SqliteConnectionStringBuilder
                     { DataSource = destination, Mode = SqliteOpenMode.ReadOnly, Pooling = false };
@@ -254,10 +259,10 @@ namespace Killendar.Services
                 verify.CommandText = "PRAGMA integrity_check";
                 if (!string.Equals(verify.ExecuteScalar() as string, "ok", StringComparison.Ordinal))
                     throw new IOException("The backup failed its integrity check.");
-                verify.CommandText = "SELECT count(*) FROM events";
-                long copied = (long)verify.ExecuteScalar()!;
-                if (copied != before && copied != after)
-                    throw new IOException("The backup is missing appointments.");
+                var copied = CountTables(copy, "main");
+                foreach (var table in counts)
+                    if (!copied.TryGetValue(table.Key, out long rows) || rows != table.Value)
+                        throw new IOException("The backup is missing rows from " + table.Key + ".");
             }
             catch
             {
@@ -303,6 +308,26 @@ namespace Killendar.Services
 
         private static DateTime WeekOf(DateTime taken) =>
             taken.Date.AddDays(-(((int)taken.DayOfWeek + 6) % 7));   // the Monday that starts it
+
+        /// <summary>Rows in every table of a schema, by table name.</summary>
+        private static Dictionary<string, long> CountTables(SqliteConnection db, string schema)
+        {
+            var names = new List<string>();
+            using (var list = db.CreateCommand())
+            {
+                list.CommandText = "SELECT name FROM " + schema + ".sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%'";
+                using var r = list.ExecuteReader();
+                while (r.Read()) names.Add(r.GetString(0));
+            }
+            var counts = new Dictionary<string, long>(StringComparer.OrdinalIgnoreCase);
+            foreach (var name in names)
+            {
+                using var count = db.CreateCommand();
+                count.CommandText = "SELECT count(*) FROM " + schema + ".\"" + name.Replace("\"", "\"\"") + "\"";
+                counts[name] = (long)count.ExecuteScalar()!;
+            }
+            return counts;
+        }
 
         private static void TryDelete(string path)
         {
