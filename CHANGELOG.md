@@ -83,6 +83,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Updated SQLCipher to 4.19.0, SQLite and JSON processing to 10.0.13, and SQLitePCLRaw to 3.0.5.
 - HTML calendars support all themes and accents, accessible selection controls, saved preferences and clearer accent-colored tables.
 - Enlarged date headings and improved calendar-list contrast, grain, embedded fonts and file-picker colors. Dialogs show app icons, with full bevels and compact fields in 98SE. Sidebar fades leave scrollbars clear, and the shortcuts card wraps long labels and shows overflow.
+- Hovered menu and list items show their text in the theme accent, lightened or darkened only as far as needed to stay readable on the hover fill.
 
 ### Changed
 

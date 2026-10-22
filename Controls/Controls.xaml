@@ -761,11 +761,11 @@
                         <!-- Hover uses the menu wash and its contrast text brush. -->
                         <Trigger Property="IsHighlighted" Value="True">
                             <Setter TargetName="bg" Property="Background" Value="{DynamicResource MenuHoverBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource ComboHighlightTextBrush}"/>
-                            <Setter TargetName="Gesture" Property="Foreground" Value="{DynamicResource ComboHighlightTextBrush}"/>
-                            <Setter TargetName="SubArrow" Property="Foreground" Value="{DynamicResource ComboHighlightTextBrush}"/>
-                            <Setter TargetName="IconPresenter" Property="TextElement.Foreground" Value="{DynamicResource ComboHighlightTextBrush}"/>
-                            <Setter TargetName="Check" Property="Foreground" Value="{DynamicResource ComboHighlightTextBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource MenuHoverTextBrush}"/>
+                            <Setter TargetName="Gesture" Property="Foreground" Value="{DynamicResource MenuHoverTextBrush}"/>
+                            <Setter TargetName="SubArrow" Property="Foreground" Value="{DynamicResource MenuHoverTextBrush}"/>
+                            <Setter TargetName="IconPresenter" Property="TextElement.Foreground" Value="{DynamicResource MenuHoverTextBrush}"/>
+                            <Setter TargetName="Check" Property="Foreground" Value="{DynamicResource MenuHoverTextBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -1556,7 +1556,7 @@
                 <ControlTemplate.Triggers>
                     <Trigger Property="IsHighlighted" Value="True">
                         <Setter TargetName="bg" Property="Background" Value="{DynamicResource MenuHoverBrush}"/>
-                        <Setter Property="Foreground" Value="{DynamicResource ComboHighlightTextBrush}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource MenuHoverTextBrush}"/>
                     </Trigger>
                     <Trigger Property="IsSelected" Value="True">
                         <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
@@ -1566,7 +1566,7 @@
                             <Condition Property="IsSelected" Value="True"/>
                             <Condition Property="IsHighlighted" Value="True"/>
                         </MultiTrigger.Conditions>
-                        <Setter Property="Foreground" Value="{DynamicResource ComboHighlightTextBrush}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource MenuHoverTextBrush}"/>
                     </MultiTrigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>

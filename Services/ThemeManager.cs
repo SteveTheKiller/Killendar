@@ -31,6 +31,13 @@ namespace Killendar.Services
     /// </summary>
     public static class ThemeManager
     {
+        private static SolidColorBrush Frozen(Color color)
+        {
+            var brush = new SolidColorBrush(color);
+            brush.Freeze();
+            return brush;
+        }
+
         /// <summary>Killer Sans UI (Killer Sans scaled to Segoe UI proportions) with the Segoe fallback stack.</summary>
         internal static readonly FontFamily KillerSansUiStack = new(new Uri("pack://application:,,,/Killendar;component/"), "./Fonts/#Killer Sans UI, Segoe UI, Microsoft JhengHei UI, Nirmala UI");
         internal static readonly FontFamily LacquerHeadingStack = new(new Uri("pack://application:,,,/"), "./Fonts/#Lacquer, ./Fonts/#Killer Sans UI, Segoe UI, Microsoft JhengHei UI, Nirmala UI");
@@ -233,6 +240,15 @@ namespace Killendar.Services
             if (!themeOwnsCheckMark) newDict["CheckMarkBrush"] = newDict["OnPrimaryBrush"];
             if (!newDict.Contains("ComboHighlightTextBrush"))
                 newDict["ComboHighlightTextBrush"] = newDict["PrimaryBrush"];
+            // A hovered menu or list item takes the accent for its text, nudged lighter or darker
+            // only as far as it takes to read at 4.5:1 on that theme's hover fill. 98SE keeps its
+            // Win98 highlight text.
+            newDict["MenuHoverTextBrush"] =
+                newDict.Contains("UseDialogCaption") && newDict["UseDialogCaption"] is true
+                    || newDict["PrimaryBrush"] is not SolidColorBrush hoverAccent
+                    || newDict["MenuHoverBrush"] is not SolidColorBrush hoverFill
+                ? newDict["ComboHighlightTextBrush"]
+                : Frozen(ColorContrast.ReadableOn(hoverAccent.Color, hoverFill.Color, 4.5));
             if (!newDict.Contains("OutlineHoverTextBrush"))
                 newDict["OutlineHoverTextBrush"] = newDict["OnPrimaryBrush"];
             if (!newDict.Contains("MenuSeparatorBrush") && newDict.Contains("MenuBorderBrush"))
