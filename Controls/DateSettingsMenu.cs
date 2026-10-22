@@ -55,7 +55,11 @@ namespace Killendar.Controls
         private void Build()
         {
             _menu.Items.Clear();
-            var panel = new StackPanel { MinWidth = 160, Margin = new Thickness(10) };
+            // Three columns side by side - date and clock, agenda length, default reminder - so the
+            // flyout stays about as tall as one group instead of running down the screen.
+            var columns = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(10) };
+            var panel = new StackPanel { MinWidth = 150 };
+            columns.Children.Add(panel);
             panel.Children.Add(new TextBlock
             {
                 Text = LocaleManager.Loc("Str_Lbl_DateFormat"), FontSize = 10,
@@ -112,7 +116,7 @@ namespace Killendar.Controls
                 week.Checked += WeekStartItem_Click;
                 panel.Children.Add(week);
             }
-            AddSeparator(panel);
+            panel = NewColumn(columns);
             panel.Children.Add(new TextBlock
             {
                 Text = LocaleManager.Loc("Str_Lbl_AgendaDays"), FontSize = 10,
@@ -134,7 +138,7 @@ namespace Killendar.Controls
                 };
                 panel.Children.Add(agenda);
             }
-            AddSeparator(panel);
+            panel = NewColumn(columns);
             panel.Children.Add(new TextBlock
             {
                 Text = LocaleManager.Loc("Str_Lbl_DefaultReminder"), FontSize = 10,
@@ -155,10 +159,23 @@ namespace Killendar.Controls
             }
             _menu.Items.Add(new MenuItem
             {
-                Header = panel,
+                Header = columns,
                 StaysOpenOnClick = true,
                 Style = (Style)Application.Current.FindResource("PanelMenuItem"),
             });
+        }
+
+        /// <summary>A divider, then a fresh column to the right of the ones before it.</summary>
+        private static StackPanel NewColumn(StackPanel columns)
+        {
+            columns.Children.Add(new Border
+            {
+                Width = 1, Margin = new Thickness(12, 0, 12, 0),
+                Background = Application.Current.TryFindResource("MenuBorderBrush") as Brush
+            });
+            var column = new StackPanel { MinWidth = 120 };
+            columns.Children.Add(column);
+            return column;
         }
 
         private static void AddSeparator(Panel panel) => panel.Children.Add(new Border

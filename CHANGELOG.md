@@ -71,6 +71,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Changed
 
+- Dialogs are edged in the app border color, following theme changes, with panes inside keeping the pane border. The toolbar never cuts off the date: Export, Import, Deleted and Search go to the overflow menu first, then the view buttons drop their words, then the view buttons, Today and New. The date settings flyout lays its groups out in three columns.
 - Wordmarks and headings are raised with a subtle bevel in their own color instead of a dark outline; wordmarks keep their drop shadow. The Dark theme's red accent is the brand red again instead of a pink tint. Dark theme grid lines and pane borders are a little lighter, the day panel heading matches the calendar's date heading, and hovering a day no longer shifts its film grain.
 - Grid density has one button, on the rail. Its right-click menu sets how much of each appointment the day panel shows, replacing the second density button beside the day heading.
 - Theme menu hover rows reach the right edge with the same inset as the left.
