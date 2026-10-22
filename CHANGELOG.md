@@ -11,7 +11,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - In Week view, an appointment dropped near the left edge of a day no longer lands on the day before.
 - Self-updates request administrator access through Killendar and keep their helper out of writable scripts in the temp folder.
 - Dark theme with the red accent: a hovered button fills a deeper red with white text, so its label is readable.
-- In 98SE, long paths in the file dialog no longer run under the recent-locations arrow.
+- In 98SE, long paths in the file dialog no longer run under the recent-locations arrow, and menu highlights follow the selected accent.
 - Uninstall removes shortcuts, the command path and file types before the program, so a failed step leaves an uninstall entry that still works. An all-users uninstall waits for its confirmation however long it stays open, and its leftover helper and empty program folder are removed at the next restart.
 - Screen readers name the color picker's Red, Green, Blue and Hex fields instead of announcing unnamed boxes.
 - Failed exports leave an existing calendar, CSV or HTML file untouched instead of truncating it.

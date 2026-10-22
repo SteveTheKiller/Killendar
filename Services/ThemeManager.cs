@@ -141,6 +141,7 @@ namespace Killendar.Services
             bool themeOwnsRadioHover = newDict.Contains("RadioHoverFgBrush");
             bool themeOwnsCheckFill = newDict.Contains("CheckBoxCheckedBrush");
             bool themeOwnsCheckMark = newDict.Contains("CheckMarkBrush");
+            bool accentOwnsMenuHover = false;
             CompleteKillendarPalette(newDict, theme);
             // Accent overlay: Dark/Light/Black recolor their accent-family keys on top of the base
             // green. Green is the base itself, so it needs no overlay. Overlays live in Accents/<Family>/.
@@ -157,6 +158,7 @@ namespace Killendar.Services
                     {
                         Source = new Uri($"pack://application:,,,/Themes/Accents/{family}/{accent}.xaml")
                     };
+                    accentOwnsMenuHover = accentDict.Contains("MenuHoverBrush");
                     var target = newDict;
                     foreach (object key in accentDict.Keys)
                         target[key] = accentDict[key];
@@ -240,6 +242,9 @@ namespace Killendar.Services
             if (!themeOwnsCheckMark) newDict["CheckMarkBrush"] = newDict["OnPrimaryBrush"];
             if (!newDict.Contains("ComboHighlightTextBrush"))
                 newDict["ComboHighlightTextBrush"] = newDict["PrimaryBrush"];
+            if (theme == Theme.SE98 && !accentOwnsMenuHover)
+                newDict["MenuHoverBrush"] = newDict["PrimaryBrush"];
+
             // A hovered menu or list item takes the accent for its text, nudged lighter or darker
             // only as far as it takes to read at 4.5:1 on that theme's hover fill. 98SE keeps its
             // Win98 highlight text.
