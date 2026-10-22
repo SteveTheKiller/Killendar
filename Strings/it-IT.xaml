@@ -460,6 +460,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Ignora tutti</sys:String>
     <sys:String x:Key="Str_Rem_Open">Apri Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} promemoria in scadenza. Sblocca Killendar per vederli.</sys:String>
+    <sys:String x:Key="Str_Rem_More">e altri {0}</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Ancora nessuna categoria. Aggiungile dalla barra laterale.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categorie</sys:String>
     <sys:String x:Key="Str_TT_Density">Densità della griglia - clic o rotellina</sys:String>

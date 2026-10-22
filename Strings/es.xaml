@@ -425,6 +425,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Descartar todos</sys:String>
     <sys:String x:Key="Str_Rem_Open">Abrir Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">Hay {0} recordatorios pendientes. Desbloquea Killendar para verlos.</sys:String>
+    <sys:String x:Key="Str_Rem_More">y {0} más</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Todavía no hay categorías. Añádelas desde la barra lateral.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categorías</sys:String>
     <sys:String x:Key="Str_TT_Density">Densidad de la cuadrícula - clic o rueda</sys:String>

@@ -425,6 +425,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">全部關閉</sys:String>
     <sys:String x:Key="Str_Rem_Open">開啟 Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">有 {0} 則提醒到期。請解鎖 Killendar 查看。</sys:String>
+    <sys:String x:Key="Str_Rem_More">另有 {0} 則</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">還沒有類別。可從側邊欄新增。</sys:String>
     <sys:String x:Key="Str_TT_Categories">類別</sys:String>
     <sys:String x:Key="Str_TT_Density">格線密度 - 按一下或捲動</sys:String>

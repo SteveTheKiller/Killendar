@@ -504,6 +504,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Dismiss all</sys:String>
     <sys:String x:Key="Str_Rem_Open">Open Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} reminders are due. Unlock Killendar to see them.</sys:String>
+    <sys:String x:Key="Str_Rem_More">and {0} more</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">No categories yet. Add some from the sidebar rail.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categories</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

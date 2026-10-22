@@ -50,6 +50,7 @@ namespace Killendar.Shell
                     _lockedShown = count;
                     ReminderWindow().ShowLockedCount(count);
                     Alert();
+                    _tray.Notify(AppInfo.DisplayName, string.Format(Loc("Str_Rem_Locked"), count));
                 }
                 return;
             }
@@ -67,7 +68,15 @@ namespace Killendar.Shell
             _shownReminders = keys;
             if (_remindersWindow == null && !fresh) return;   // closed by the user; wait for a new one
             ReminderWindow().ShowReminders(due, Describe);
-            if (fresh) Alert();
+            if (fresh)
+            {
+                Alert();
+                // In the tray the reminders window still shows; the balloon says where it came from.
+                var first = due[0];
+                string title = string.IsNullOrWhiteSpace(first.Title) ? Loc("Str_Cal_NoTitle") : first.Title;
+                string text = Describe(first) + (due.Count > 1 ? Environment.NewLine + string.Format(Loc("Str_Rem_More"), due.Count - 1) : "");
+                _tray.Notify(title, text);
+            }
         }
 
         private void RemindWhileLocked(int pending, List<DateTime> coming)

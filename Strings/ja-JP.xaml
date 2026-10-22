@@ -425,6 +425,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">すべて閉じる</sys:String>
     <sys:String x:Key="Str_Rem_Open">Killendar を開く</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} 件のリマインダーがあります。表示するには Killendar のロックを解除してください。</sys:String>
+    <sys:String x:Key="Str_Rem_More">ほか {0} 件</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">カテゴリがまだありません。サイドバーから追加してください。</sys:String>
     <sys:String x:Key="Str_TT_Categories">カテゴリ</sys:String>
     <sys:String x:Key="Str_TT_Density">グリッド密度 - クリックまたはスクロール</sys:String>

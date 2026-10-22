@@ -425,6 +425,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">সব বাতিল করুন</sys:String>
     <sys:String x:Key="Str_Rem_Open">Killendar খুলুন</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0}টি রিমাইন্ডারের সময় হয়েছে। দেখতে Killendar আনলক করুন।</sys:String>
+    <sys:String x:Key="Str_Rem_More">আরও {0}টি</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">এখনও কোনো বিভাগ নেই। সাইডবার থেকে যোগ করুন।</sys:String>
     <sys:String x:Key="Str_TT_Categories">বিভাগ</sys:String>
     <sys:String x:Key="Str_TT_Density">গ্রিড ঘনত্ব - ক্লিক বা স্ক্রল</sys:String>

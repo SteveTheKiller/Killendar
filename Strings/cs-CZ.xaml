@@ -425,6 +425,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Zavřít vše</sys:String>
     <sys:String x:Key="Str_Rem_Open">Otevřít Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">Počet připomenutí: {0}. Odemkněte Killendar a zobrazte je.</sys:String>
+    <sys:String x:Key="Str_Rem_More">a {0} další</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Zatím žádné kategorie. Přidejte je z postranního panelu.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorie</sys:String>
     <sys:String x:Key="Str_TT_Density">Hustota mřížky - klik nebo kolečko</sys:String>

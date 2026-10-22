@@ -504,6 +504,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Барлығын жабу</sys:String>
     <sys:String x:Key="Str_Rem_Open">Killendar ашу</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} ескерткіш уақыты келді. Көру үшін Killendar құлпын ашыңыз.</sys:String>
+    <sys:String x:Key="Str_Rem_More">және тағы {0}</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Әзірге санат жоқ. Оларды бүйір тақтадан қосыңыз.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Санаттар</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

@@ -425,6 +425,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">全部关闭</sys:String>
     <sys:String x:Key="Str_Rem_Open">打开 Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">有 {0} 条提醒到期。请解锁 Killendar 查看。</sys:String>
+    <sys:String x:Key="Str_Rem_More">另有 {0} 条</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">还没有类别。可从侧边栏添加。</sys:String>
     <sys:String x:Key="Str_TT_Categories">类别</sys:String>
     <sys:String x:Key="Str_TT_Density">网格密度 - 单击或滚动</sys:String>

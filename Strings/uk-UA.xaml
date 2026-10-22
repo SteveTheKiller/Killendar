@@ -504,6 +504,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Закрити всі</sys:String>
     <sys:String x:Key="Str_Rem_Open">Відкрити Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">Нагадувань: {0}. Розблокуйте Killendar, щоб їх побачити.</sys:String>
+    <sys:String x:Key="Str_Rem_More">і ще {0}</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Категорій ще немає. Додайте їх на бічній панелі.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Категорії</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

@@ -474,6 +474,7 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Rem_DismissAll">Bỏ qua tất cả</sys:String>
   <sys:String x:Key="Str_Rem_Open">Mở Killendar</sys:String>
   <sys:String x:Key="Str_Rem_Locked">Có {0} lời nhắc đến hạn. Hãy mở khóa Killendar để xem.</sys:String>
+  <sys:String x:Key="Str_Rem_More">và {0} lời nhắc khác</sys:String>
   <sys:String x:Key="Str_Hint_NoCategories">Chưa có danh mục nào. Hãy thêm danh mục từ thanh bên.</sys:String>
   <sys:String x:Key="Str_TT_Categories">Danh mục</sys:String>
   <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

@@ -504,6 +504,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Avvis alle</sys:String>
     <sys:String x:Key="Str_Rem_Open">Åpne Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} påminnelser er forfalt. Lås opp Killendar for å se dem.</sys:String>
+    <sys:String x:Key="Str_Rem_More">og {0} til</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Ingen kategorier ennå. Legg til noen fra sidelinjen.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorier</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

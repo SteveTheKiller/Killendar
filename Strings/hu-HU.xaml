@@ -506,6 +506,7 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Rem_DismissAll">Összes elvetése</sys:String>
     <sys:String x:Key="Str_Rem_Open">Killendar megnyitása</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} emlékeztető esedékes. A megtekintéshez oldja fel a Killendart.</sys:String>
+    <sys:String x:Key="Str_Rem_More">és még {0}</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Még nincsenek kategóriák. Adjon hozzá néhányat az oldalsó sínről.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategóriák</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

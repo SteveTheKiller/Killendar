@@ -505,6 +505,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Закрыть все</sys:String>
     <sys:String x:Key="Str_Rem_Open">Открыть Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">Напоминаний: {0}. Разблокируйте Killendar, чтобы их увидеть.</sys:String>
+    <sys:String x:Key="Str_Rem_More">и ещё {0}</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Категорий пока нет. Добавьте их на боковой панели.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Категории</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

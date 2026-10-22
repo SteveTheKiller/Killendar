@@ -425,6 +425,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Tümünü kapat</sys:String>
     <sys:String x:Key="Str_Rem_Open">Killendar'ı aç</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} hatırlatıcının zamanı geldi. Görmek için Killendar'ın kilidini açın.</sys:String>
+    <sys:String x:Key="Str_Rem_More">ve {0} tane daha</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Henüz kategori yok. Kenar çubuğundan ekleyin.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategoriler</sys:String>
     <sys:String x:Key="Str_TT_Density">Izgara yoğunluğu - tıklayın veya kaydırın</sys:String>

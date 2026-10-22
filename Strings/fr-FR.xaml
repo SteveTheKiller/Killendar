@@ -425,6 +425,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Tout ignorer</sys:String>
     <sys:String x:Key="Str_Rem_Open">Ouvrir Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} rappels sont échus. Déverrouillez Killendar pour les voir.</sys:String>
+    <sys:String x:Key="Str_Rem_More">et {0} autres</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Aucune catégorie pour l'instant. Ajoutez-en depuis la barre latérale.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Catégories</sys:String>
     <sys:String x:Key="Str_TT_Density">Densité de la grille - clic ou molette</sys:String>
