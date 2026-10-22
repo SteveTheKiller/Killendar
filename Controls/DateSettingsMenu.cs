@@ -206,14 +206,25 @@ namespace Killendar.Controls
             var hours = new StackPanel { Orientation = Orientation.Horizontal };
             var from = HourList(0, 23, WorkSchedule.StartHour);
             var to = HourList(1, 24, WorkSchedule.EndHour);
-            void Changed()
+            AutomationProperties.SetName(from, LocaleManager.Loc("Str_Work_StartsA11y"));
+            AutomationProperties.SetName(to, LocaleManager.Loc("Str_Work_EndsA11y"));
+            bool reverting = false;
+            void Changed(ComboBox changed)
             {
-                if (from.SelectedItem is ComboBoxItem f && to.SelectedItem is ComboBoxItem t &&
-                    (int)f.Tag < (int)t.Tag)
+                if (reverting || from.SelectedItem is not ComboBoxItem f || to.SelectedItem is not ComboBoxItem t) return;
+                if ((int)f.Tag < (int)t.Tag)
+                {
                     SaveWork(null, WorkSchedule.FormatHours((int)f.Tag, (int)t.Tag));
+                    return;
+                }
+                // A day that ends before it starts is not saved; the list goes back to what is.
+                reverting = true;
+                int saved = changed == from ? WorkSchedule.StartHour : WorkSchedule.EndHour;
+                changed.SelectedItem = changed.Items.OfType<ComboBoxItem>().FirstOrDefault(i => (int)i.Tag == saved);
+                reverting = false;
             }
-            from.SelectionChanged += (_, _) => Changed();
-            to.SelectionChanged += (_, _) => Changed();
+            from.SelectionChanged += (_, _) => Changed(from);
+            to.SelectionChanged += (_, _) => Changed(to);
             hours.Children.Add(from);
             hours.Children.Add(new TextBlock
             {
@@ -284,7 +295,12 @@ namespace Killendar.Controls
             var list = new ComboBox { MinWidth = 70 };
             for (int h = first; h <= last; h++)
             {
-                var item = new ComboBoxItem { Content = DateFormatManager.Time(DateTime.Today.AddHours(h)), Tag = h };
+                // 24 is the end of the day, not the midnight it starts with.
+                var item = new ComboBoxItem
+                {
+                    Content = h == 24 ? LocaleManager.Loc("Str_Work_EndOfDay") : DateFormatManager.Time(DateTime.Today.AddHours(h)),
+                    Tag = h,
+                };
                 list.Items.Add(item);
                 if (h == selected) list.SelectedItem = item;
             }

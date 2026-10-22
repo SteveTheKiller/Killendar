@@ -257,6 +257,9 @@
     <sys:String x:Key="Str_Lbl_WorkDays">pracovní dny</sys:String>
     <sys:String x:Key="Str_Lbl_WorkHours">pracovní doba</sys:String>
     <sys:String x:Key="Str_Work_To">do</sys:String>
+    <sys:String x:Key="Str_Work_StartsA11y">Začátek práce</sys:String>
+    <sys:String x:Key="Str_Work_EndsA11y">Konec práce</sys:String>
+    <sys:String x:Key="Str_Work_EndOfDay">Konec dne</sys:String>
     <sys:String x:Key="Str_Lbl_AgendaDays">agenda zobrazuje</sys:String>
     <sys:String x:Key="Str_Agenda_Days">{0} dní</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">připomenutí nových schůzek</sys:String>

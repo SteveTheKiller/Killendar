@@ -312,6 +312,9 @@
     <sys:String x:Key="Str_Lbl_WorkDays">dias úteis</sys:String>
     <sys:String x:Key="Str_Lbl_WorkHours">horário de trabalho</sys:String>
     <sys:String x:Key="Str_Work_To">às</sys:String>
+    <sys:String x:Key="Str_Work_StartsA11y">Início do trabalho</sys:String>
+    <sys:String x:Key="Str_Work_EndsA11y">Fim do trabalho</sys:String>
+    <sys:String x:Key="Str_Work_EndOfDay">Fim do dia</sys:String>
     <sys:String x:Key="Str_Lbl_AgendaDays">a agenda mostra</sys:String>
     <sys:String x:Key="Str_Agenda_Days">{0} dias</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">lembrete dos novos compromissos</sys:String>

@@ -112,6 +112,11 @@ namespace Killendar.Services
             AppendLegend(sb, events);
             sb.Append("<main class=\"layout-").Append(options.Layout.ToString().ToLowerInvariant()).Append("\">\n");
 
+            // A range far wider than what is in it (a typed end of 9999-12-31) would print every
+            // empty day, week or month in between: millions of them. Past a year the pages run
+            // from the first appointment to the last instead; the heading keeps the typed range.
+            (from, toExclusive) = PageSpan(events, from, toExclusive);
+
             switch (options.Layout)
             {
                 case HtmlLayout.Week:
@@ -159,12 +164,25 @@ namespace Killendar.Services
             sb.Append("</div>\n");
         }
 
+        internal static (DateTime From, DateTime ToExclusive) PageSpan(List<CalendarEvent> events, DateTime from, DateTime toExclusive)
+        {
+            if (toExclusive != DateTime.MaxValue && (toExclusive - from).TotalDays <= 366) return (from, toExclusive);
+            if (events.Count == 0) return (from, from == DateTime.MaxValue.Date ? DateTime.MaxValue : from.AddDays(1));
+            var first = events.Min(e => e.Start.Date);
+            var last = events.Max(e => e.AllDay ? CalendarDateSpan.VisibleAllDayEnd(e.Start, e.End).Date : e.End.Date);
+            var pageFrom = first > from ? first : from;
+            var pageTo = last >= DateTime.MaxValue.Date ? DateTime.MaxValue : last.AddDays(1);
+            return (pageFrom, pageTo < toExclusive ? pageTo : toExclusive);
+        }
+
         /// <summary>One table per week, seven days across, each day listing its appointments with
         /// times and the chosen details. A week list rather than an hour grid: it fits a page.</summary>
         private static void AppendWeeks(StringBuilder sb, List<CalendarEvent> events, DateTime from, DateTime toExclusive,
                                         CultureInfo culture, DayOfWeek weekStart, HtmlOptions options)
         {
-            var week = from.AddDays(-(((int)from.DayOfWeek - (int)weekStart + 7) % 7));
+            int back = ((int)from.DayOfWeek - (int)weekStart + 7) % 7;
+            // The first week of the calendar's range cannot step back before the year 1.
+            var week = (from - DateTime.MinValue).TotalDays >= back ? from.AddDays(-back) : from;
             while (week < toExclusive)
             {
                 sb.Append("<section class=\"week\">\n<h2>")
@@ -407,7 +425,7 @@ header { display: flex; align-items: flex-start; justify-content: space-between;
 .month, .week { margin-bottom: 30px; }
 .month h2, .week h2, .day h2 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
 .day { margin-bottom: 18px; }
-.layout-week td { height: auto; min-height: 120px; padding-bottom: 10px; }
+.layout-week td { height: 120px; padding-bottom: 10px; }
 .det { color: var(--muted); font-size: 10.5px; line-height: 1.35; }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; margin: -10px 0 18px; font-size: 12px; }
 .legend .cat { display: inline-flex; align-items: center; gap: 6px; }

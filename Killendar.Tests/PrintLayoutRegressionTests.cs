@@ -86,5 +86,32 @@ namespace Killendar.Tests
             for (int i = text.IndexOf(part, StringComparison.Ordinal); i >= 0; i = text.IndexOf(part, i + 1, StringComparison.Ordinal)) n++;
             return n;
         }
+
+        // KD-C review BF-017: a range to 9999-12-31 prints from the first appointment to the last.
+        [Theory]
+        [InlineData(HtmlLayout.Day)]
+        [InlineData(HtmlLayout.Week)]
+        [InlineData(HtmlLayout.Agenda)]
+        [InlineData(HtmlLayout.Month)]
+        public void AnEndlessRangeStaysTheSizeOfItsAppointments(HtmlLayout layout)
+        {
+            string html = HtmlExport.Build(Rows(), From, DateTime.MaxValue, new HtmlOptions { Layout = layout });
+            Assert.Contains("Dentist", html);
+            Assert.True(html.Length < 200_000, html.Length.ToString());
+        }
+
+        // BF-018: a week cannot step back before the year 1.
+        [Fact]
+        public void AWeekFromTheFirstDayOfTheCalendarDoesNotThrow()
+        {
+            var weekStart = WeekStartManager.Current;
+            WeekStartManager.Apply(WeekStartStyle.Sunday);
+            try
+            {
+                string html = HtmlExport.Build([], DateTime.MinValue, DateTime.MinValue.AddDays(3), new HtmlOptions { Layout = HtmlLayout.Week });
+                Assert.Contains("layout-week", html);
+            }
+            finally { WeekStartManager.Apply(weekStart); }
+        }
     }
 }

@@ -268,6 +268,9 @@
     <sys:String x:Key="Str_Lbl_WorkDays">delovni dnevi</sys:String>
     <sys:String x:Key="Str_Lbl_WorkHours">delovni čas</sys:String>
     <sys:String x:Key="Str_Work_To">do</sys:String>
+    <sys:String x:Key="Str_Work_StartsA11y">Začetek dela</sys:String>
+    <sys:String x:Key="Str_Work_EndsA11y">Konec dela</sys:String>
+    <sys:String x:Key="Str_Work_EndOfDay">Konec dneva</sys:String>
     <sys:String x:Key="Str_Lbl_AgendaDays">dnevni red prikaže</sys:String>
     <sys:String x:Key="Str_Agenda_Days">{0} dni</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">opomnik za nove dogodke</sys:String>

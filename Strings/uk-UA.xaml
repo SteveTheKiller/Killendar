@@ -312,6 +312,9 @@
     <sys:String x:Key="Str_Lbl_WorkDays">робочі дні</sys:String>
     <sys:String x:Key="Str_Lbl_WorkHours">робочі години</sys:String>
     <sys:String x:Key="Str_Work_To">до</sys:String>
+    <sys:String x:Key="Str_Work_StartsA11y">Початок роботи</sys:String>
+    <sys:String x:Key="Str_Work_EndsA11y">Кінець роботи</sys:String>
+    <sys:String x:Key="Str_Work_EndOfDay">Кінець дня</sys:String>
     <sys:String x:Key="Str_Lbl_AgendaDays">порядок денний показує</sys:String>
     <sys:String x:Key="Str_Agenda_Days">{0} дн.</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">нагадування для нових зустрічей</sys:String>

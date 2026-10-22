@@ -257,6 +257,9 @@
     <sys:String x:Key="Str_Lbl_WorkDays">工作日</sys:String>
     <sys:String x:Key="Str_Lbl_WorkHours">工作時間</sys:String>
     <sys:String x:Key="Str_Work_To">至</sys:String>
+    <sys:String x:Key="Str_Work_StartsA11y">上班時間</sys:String>
+    <sys:String x:Key="Str_Work_EndsA11y">下班時間</sys:String>
+    <sys:String x:Key="Str_Work_EndOfDay">一天結束</sys:String>
     <sys:String x:Key="Str_Lbl_AgendaDays">議程顯示</sys:String>
     <sys:String x:Key="Str_Agenda_Days">{0} 天</sys:String>
     <sys:String x:Key="Str_Lbl_DefaultReminder">新約會的提醒</sys:String>

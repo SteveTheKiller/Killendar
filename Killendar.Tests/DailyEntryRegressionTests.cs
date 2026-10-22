@@ -122,5 +122,20 @@ namespace Killendar.Tests
             Assert.Equal(new DateTime(2026, 10, 23, 9, 15, 0), made.Start);
             Assert.Equal(new DateTime(2026, 10, 23, 10, 15, 0), made.End);
         }
+
+        // KD-C review BF-019: a template from a three-day all-day appointment makes three days.
+        [Fact]
+        public void AMultiDayAllDayTemplateKeepsItsDays()
+        {
+            using var fixture = new AppointmentFixture();
+            fixture.Editor.NewAt(new DateTime(2026, 10, 20));
+            fixture.View.FieldTitle = "Conference";
+            fixture.Editor.ToggleAllDay();
+            fixture.View.FieldEndDate = DateFormatManager.Format(new DateTime(2026, 10, 22));
+            Assert.True(fixture.Editor.SaveTemplate());
+
+            var template = Assert.Single(fixture.Store.ListTemplates());
+            Assert.Equal(TimeSpan.FromDays(3), template.End - template.Start);
+        }
     }
 }

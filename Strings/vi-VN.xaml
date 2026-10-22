@@ -294,6 +294,9 @@
   <sys:String x:Key="Str_Lbl_WorkDays">ngày làm việc</sys:String>
   <sys:String x:Key="Str_Lbl_WorkHours">giờ làm việc</sys:String>
   <sys:String x:Key="Str_Work_To">đến</sys:String>
+  <sys:String x:Key="Str_Work_StartsA11y">Giờ bắt đầu làm</sys:String>
+  <sys:String x:Key="Str_Work_EndsA11y">Giờ kết thúc làm</sys:String>
+  <sys:String x:Key="Str_Work_EndOfDay">Cuối ngày</sys:String>
   <sys:String x:Key="Str_Lbl_AgendaDays">lịch trình hiển thị</sys:String>
   <sys:String x:Key="Str_Agenda_Days">{0} ngày</sys:String>
   <sys:String x:Key="Str_Lbl_DefaultReminder">nhắc nhở cho cuộc hẹn mới</sys:String>

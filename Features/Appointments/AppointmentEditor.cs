@@ -673,7 +673,10 @@ namespace Killendar.Features
             if (title.Length == 0) { Reject("Str_Tpl_NeedsTitle", AppointmentField.Title); return false; }
             if (CurrentStart() is not DateTime start) { RejectWithHint("Str_Err_StartDate", AppointmentField.StartDate); return false; }
             var end = start.AddHours(1);
-            if (_allDay) end = start.AddDays(1);
+            if (_allDay)
+                // All-day keeps its days: the stored end is the midnight after the last one.
+                end = TryParseDate(_view.FieldEndDate, out var lastDay) && lastDay.Date >= start.Date
+                    ? CalendarDateSpan.ExclusiveAllDayEnd(start, lastDay) : start.AddDays(1);
             else if (TryParseDate(_view.FieldEndDate, out var endDate) && TryParseTime(_view.FieldEndTime, out var endTime) &&
                      endDate.Date + endTime > start)
                 end = endDate.Date + endTime;

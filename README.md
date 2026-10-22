@@ -10,13 +10,13 @@ How importing, repeats, reminders, backups, privacy and the command line work is
 
 - Four views - month, week, day and agenda - with one shared previous / next / today control; Month zooms from one to six visible weeks and draws multi-day appointments as continuous runs
 - Appointments edited in a slide-out sidebar panel, not a dialog: title, start and end, all-day, location, description and attendees
-- Repeating appointments - daily, weekly on the days you tick, monthly on a date or on the first to fourth or last weekday, or yearly, every N of those, ending never, after a count, or on a date - with per-date exceptions; editing or deleting one date offers just that date, this and following, or the whole series
+- Repeating appointments - daily, weekly on the days you tick, monthly on a date or on the first to fourth or last weekday, or yearly, every N of those, ending never, after a count, or on a date - with per-date exceptions; editing or deleting one date offers just that date, this and following (except for a series kept on another time zone's clock), or the whole series
 - Reminders with snooze and dismiss, shown when they come due and caught up after Killendar was closed, with a tray notification while it sits in the tray
 - Search, undo, a Recently deleted list kept for 30 days, and verified daily backups going back about five weeks that restore as a new Killendar
 - Duplicate an appointment, save templates, set your work days and hours, see when appointments overlap, and move them by keyboard
 - Optional time zones per appointment, with a second zone's hours beside your own in Week and Day
 - Drag to move appointments across times and days; overlapping appointments sit side by side instead of hiding one behind the other
-- Color categories you define, painting every view; a 5-day work week toggle and a grid density control down to quarter hours
+- Color categories you define, painting every view; a work week from your own work days, with time off shaded, and a grid density control down to quarter hours
 - Import and export in the formats people actually hand you: iCalendar (.ics, RFC 5545) both ways, CSV in Outlook's column format both ways, saved email invites (.eml) in, and a themed web page out in Month, Week, Day or Agenda layout with a print stylesheet
 - Optional encryption: the lock button puts a password on a Killendar and it is encrypted at rest with SQLCipher (AES-256, per-page HMAC-SHA512); opt-in, so no password means a plain readable SQLite file
 - As many Killendars as you like - work, on-call, family - each its own `.kcal` file with its own password or none; keep them in the default profile folder, another folder you choose, or beside the portable executable; show others beside the open one, each in its own color and read only

@@ -8,6 +8,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Fixed
 
+- In Week view, an appointment dropped near the left edge of a day no longer lands on the day before.
 - Self-updates request administrator access through Killendar and keep their helper out of writable scripts in the temp folder.
 - Dark theme with the red accent: a hovered button fills a deeper red with white text, so its label is readable.
 - In 98SE, long paths in the file dialog no longer run under the recent-locations arrow.
