@@ -68,6 +68,28 @@ namespace Killendar.Tests
             Assert.Contains(">Red<", page);
         }
 
+        [Theory]
+        [InlineData(HtmlLayout.Month)]
+        [InlineData(HtmlLayout.Week)]
+        [InlineData(HtmlLayout.Day)]
+        [InlineData(HtmlLayout.Agenda)]
+        public void AppointmentsCarryTheirKeyedColor(HtmlLayout layout)
+        {
+            // The key is only readable if each appointment wears the color it keys.
+            string page = HtmlExport.Build(Rows(), From, To, new HtmlOptions { Layout = layout });
+            string red = CategoryManager.HexOf("Red");
+            Assert.Contains("<i style=\"background:" + red + "\">", page);
+            Assert.Contains("style=\"--cat:" + red + ";", page);
+            Assert.Equal(1, Count(page, "--cat:"));   // the uncategorized holiday keeps the accent
+        }
+
+        [Fact]
+        public void FillTextIsWhichEverReadsBetter()
+        {
+            Assert.Contains("--cat-text:#111", HtmlExport.CategoryStyle(new CalendarEvent { Categories = "Yellow" }));
+            Assert.Equal("", HtmlExport.CategoryStyle(new CalendarEvent()));
+        }
+
         [Fact]
         public void OptionsRoundTripThroughSettings()
         {

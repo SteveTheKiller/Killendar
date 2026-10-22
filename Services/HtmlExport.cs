@@ -166,6 +166,22 @@ namespace Killendar.Services
             sb.Append("</div>\n");
         }
 
+        /// <summary>The appointment's first category color, for its bar or all-day fill, with
+        /// whichever of white or near-black reads better on that fill. Nothing without one.</summary>
+        internal static string CategoryStyle(CalendarEvent ev)
+        {
+            string? name = EventStore.SplitCategories(ev.Categories).FirstOrDefault();
+            if (name == null) return "";
+            string hex = CategoryManager.HexOf(name);
+            if (!Regex.IsMatch(hex ?? "", "^#[0-9A-Fa-f]{6}$")) return "";
+            static double Channel(int c) { double v = c / 255.0; return v <= 0.03928 ? v / 12.92 : Math.Pow((v + 0.055) / 1.055, 2.4); }
+            int rgb = Convert.ToInt32(hex!.Substring(1), 16);
+            double luma = 0.2126 * Channel(rgb >> 16) + 0.7152 * Channel((rgb >> 8) & 0xFF) + 0.0722 * Channel(rgb & 0xFF);
+            double dark = Channel(0x11);   // #111: equal channels, so its luminance is one channel's
+            string text = 1.05 / (luma + 0.05) >= (luma + 0.05) / (dark + 0.05) ? "#fff" : "#111";
+            return " style=\"--cat:" + hex + ";--cat-text:" + text + "\"";
+        }
+
         internal static (DateTime From, DateTime ToExclusive) PageSpan(List<CalendarEvent> events, DateTime from, DateTime toExclusive)
         {
             if (toExclusive != DateTime.MaxValue && (toExclusive - from).TotalDays <= 366) return (from, toExclusive);
@@ -233,7 +249,7 @@ namespace Killendar.Services
         private static void AppendEntry(StringBuilder sb, CalendarEvent ev, DateTime day, CultureInfo culture, HtmlOptions options)
         {
             string cls = ev.AllDay ? "ev allday" : ev.Start.Date == day.Date ? "ev" : "ev cont";
-            sb.Append("<div class=\"").Append(cls).Append("\">");
+            sb.Append("<div class=\"").Append(cls).Append('"').Append(cls == "ev cont" ? "" : CategoryStyle(ev)).Append('>');
             if (!ev.AllDay && ev.Start.Date == day.Date)
                 sb.Append("<span class=\"tm\">").Append(Html(DateFormatManager.Time(ev.Start, culture))).Append(" - ")
                   .Append(Html(DateFormatManager.Time(ev.End, culture))).Append("</span> ");
@@ -297,14 +313,14 @@ namespace Killendar.Services
 
                             if (ev.AllDay)
                             {
-                                sb.Append("<div class=\"ev allday\">")
+                                sb.Append("<div class=\"ev allday\"").Append(CategoryStyle(ev)).Append('>')
                                   .Append(Html(TitleOf(ev)));
                                 AppendDetails(sb, ev, options);
                                 sb.Append("</div>");
                             }
                             else if (ev.Start.Date == cell.Date)
                             {
-                                sb.Append("<div class=\"ev\"><span class=\"tm\">")
+                                sb.Append("<div class=\"ev\"").Append(CategoryStyle(ev)).Append("><span class=\"tm\">")
                                   .Append(Html(DateFormatManager.Time(ev.Start, culture)))
                                   .Append("</span> ").Append(Html(TitleOf(ev)));
                                 AppendDetails(sb, ev, options);
@@ -441,9 +457,9 @@ td { border: 1px solid var(--border); vertical-align: top; padding: 4px 5px 6px;
 td.out { background: var(--out); }
 td.off .dn { color: var(--border); }
 .dn { font-family: Consolas, monospace; font-size: 12px; color: var(--dim); margin-bottom: 3px; }
-.ev { font-size: 11.5px; line-height: 1.35; margin-bottom: 2px; border-left: 2px solid var(--accent);
+.ev { font-size: 11.5px; line-height: 1.35; margin-bottom: 2px; border-left: 2px solid var(--cat, var(--accent));
       padding-left: 5px; word-wrap: break-word; }
-.ev.allday { background: var(--accent); color: #fff; border-left: none; border-radius: 2px;
+.ev.allday { background: var(--cat, var(--accent)); color: var(--cat-text, #fff); border-left: none; border-radius: 2px;
              padding: 1px 5px; }
 .ev.cont { border-left-color: var(--dim); color: var(--muted); }
 .tm { font-family: Consolas, monospace; color: var(--muted); font-size: 10.5px; }
@@ -455,7 +471,7 @@ footer { color: var(--dim); font-family: Consolas, monospace; font-size: 11px; m
   .dn { color: var(--text); color: color-mix(in srgb, var(--accent) 30%, var(--text)); font-weight: 600; }
   .ev { background: var(--surface); background: color-mix(in srgb, var(--accent) 16%, var(--surface)); }
   .ev.allday { background: var(--surface); background: color-mix(in srgb, var(--accent) 24%, var(--surface));
-               color: var(--text); box-shadow: inset 0 0 0 1px var(--accent); }
+               color: var(--text); box-shadow: inset 0 0 0 1px var(--cat, var(--accent)); }
   .ev.cont, .tm { color: var(--text); }
 }
 @media print {
@@ -476,7 +492,7 @@ footer { color: var(--dim); font-family: Consolas, monospace; font-size: 11px; m
   .month + .month { break-before: page; page-break-before: always; }
   h2 { break-after: avoid; page-break-after: avoid; }
   .det { color: #555; }
-  .legend i { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .legend i, .ev { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 ";
     }

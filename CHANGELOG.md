@@ -57,6 +57,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Window resizing respects small and scaled monitor work areas.
 - Exported calendar files write lengths in the iCalendar form (for example PT1H30M) that stricter calendar programs require. Files from earlier versions still import.
 - Printed pages start on the first sheet and keep weeks and appointments whole instead of splitting them across pages.
+- Printed and exported pages color each appointment with its category, so the color key at the top matches what is on the page.
 - The Light theme's title bar matches the gray around it again.
 - Light's gray hint and footer text, the second time zone's hour labels and the version number read at 4.5:1 contrast or better, and the close X reads at 3:1 on every theme's title bar.
 - With the Dark theme's red accent, button and label text is a slightly brighter red so it reads at 4.5:1. The wordmark keeps its red.
