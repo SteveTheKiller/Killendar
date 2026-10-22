@@ -55,6 +55,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Modal cards block background shortcuts, and closed appointment panels leave no hidden controls enabled.
 - Language changes refresh agenda headings and recurrence controls; the website's More button has a translated accessible name.
 - Window resizing respects small and scaled monitor work areas.
+- Exported calendar files write lengths in the iCalendar form (for example PT1H30M) that stricter calendar programs require. Files from earlier versions still import.
+- Printed pages start on the first sheet and keep weeks and appointments whole instead of splitting them across pages.
+- The Light theme's title bar matches the gray around it again.
+- Light's gray hint and footer text, the second time zone's hour labels and the version number read at 4.5:1 contrast or better, and the close X reads at 3:1 on every theme's title bar.
+- With the Dark theme's red accent, button and label text is a slightly brighter red so it reads at 4.5:1. The wordmark keeps its red.
+- Screen readers name the appointment's Attendees box.
 
 ### Added
 
@@ -86,6 +92,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Changed
 - The lock button's menu opens in the content pane's top-right corner, 8px in from the top and right, mirroring the rail flyouts.
 - Light is shades of gray with nothing white: the background, sidebar and footer are the darkest gray (#cccccc), menus and bars a step lighter, then panes, then fields.
+- Month and Week draw much faster on big calendars, and holidays no longer slow them down.
 
 - Updated SQLCipher to 4.19.0, SQLite and JSON processing to 10.0.13, and SQLitePCLRaw to 3.0.5.
 - HTML calendars support all themes and accents, accessible selection controls, saved preferences and clearer accent-colored tables.
