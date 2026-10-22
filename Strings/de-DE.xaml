@@ -428,6 +428,12 @@
     <sys:String x:Key="Str_Hint_NoCategories">Noch keine Kategorien. Legen Sie welche über die Seitenleiste an.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorien</sys:String>
     <sys:String x:Key="Str_TT_Density">Rasterdichte - klicken oder scrollen</sys:String>
+    <sys:String x:Key="Str_TT_DensityPanel">Rechtsklick für die Details im Tagesbereich</sys:String>
+    <sys:String x:Key="Str_Density_PanelHead">Details im Tagesbereich</sys:String>
+    <sys:String x:Key="Str_Density_Panel0">Eine Zeile pro Termin</sys:String>
+    <sys:String x:Key="Str_Density_Panel1">Vollständige Titel</sys:String>
+    <sys:String x:Key="Str_Density_Panel2">Titel und Orte</sys:String>
+    <sys:String x:Key="Str_Density_Panel3">Alles</sys:String>
     <sys:String x:Key="Str_St_Density">Rasterdichte: {0} Linie(n) pro Stunde</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">5-Tage-Arbeitswoche</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 Tage</sys:String>

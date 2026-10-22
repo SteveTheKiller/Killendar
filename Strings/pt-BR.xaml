@@ -509,6 +509,12 @@
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads
          "Grid density - click or scroll  (2)". {0} in the status line is that same number. -->
     <sys:String x:Key="Str_TT_Density">Densidade da grade - clique ou role</sys:String>
+    <sys:String x:Key="Str_TT_DensityPanel">Clique com o botão direito para o detalhe do painel do dia</sys:String>
+    <sys:String x:Key="Str_Density_PanelHead">Detalhe do painel do dia</sys:String>
+    <sys:String x:Key="Str_Density_Panel0">Uma linha por compromisso</sys:String>
+    <sys:String x:Key="Str_Density_Panel1">Títulos completos</sys:String>
+    <sys:String x:Key="Str_Density_Panel2">Títulos e locais</sys:String>
+    <sys:String x:Key="Str_Density_Panel3">Tudo</sys:String>
     <sys:String x:Key="Str_St_Density">Densidade da grade: {0} linha(s) por hora</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">Semana útil de 5 dias</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 dias</sys:String>

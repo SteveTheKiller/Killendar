@@ -428,6 +428,12 @@
     <sys:String x:Key="Str_Hint_NoCategories">এখনও কোনো বিভাগ নেই। সাইডবার থেকে যোগ করুন।</sys:String>
     <sys:String x:Key="Str_TT_Categories">বিভাগ</sys:String>
     <sys:String x:Key="Str_TT_Density">গ্রিড ঘনত্ব - ক্লিক বা স্ক্রল</sys:String>
+    <sys:String x:Key="Str_TT_DensityPanel">দিনের প্যানেলের বিবরণের জন্য ডান-ক্লিক করুন</sys:String>
+    <sys:String x:Key="Str_Density_PanelHead">দিনের প্যানেলের বিবরণ</sys:String>
+    <sys:String x:Key="Str_Density_Panel0">প্রতি অ্যাপয়েন্টমেন্টে এক লাইন</sys:String>
+    <sys:String x:Key="Str_Density_Panel1">পূর্ণ শিরোনাম</sys:String>
+    <sys:String x:Key="Str_Density_Panel2">শিরোনাম ও স্থান</sys:String>
+    <sys:String x:Key="Str_Density_Panel3">সবকিছু</sys:String>
     <sys:String x:Key="Str_St_Density">গ্রিড ঘনত্ব: প্রতি ঘণ্টায় {0}টি লাইন</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">৫ দিনের কর্মসপ্তাহ</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">৫ দিন</sys:String>

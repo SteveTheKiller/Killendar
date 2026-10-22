@@ -479,6 +479,12 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <!-- Density.cs appends the current lines-per-hour in brackets, so this reads
          "Grid density - click or scroll  (2)". {0} in the status line is that same number. -->
   <sys:String x:Key="Str_TT_Density">Mật độ lưới, bấm hoặc cuộn</sys:String>
+  <sys:String x:Key="Str_TT_DensityPanel">Nhấp chuột phải để chọn mức chi tiết của bảng ngày</sys:String>
+  <sys:String x:Key="Str_Density_PanelHead">Mức chi tiết của bảng ngày</sys:String>
+  <sys:String x:Key="Str_Density_Panel0">Một dòng cho mỗi cuộc hẹn</sys:String>
+  <sys:String x:Key="Str_Density_Panel1">Tiêu đề đầy đủ</sys:String>
+  <sys:String x:Key="Str_Density_Panel2">Tiêu đề và địa điểm</sys:String>
+  <sys:String x:Key="Str_Density_Panel3">Tất cả</sys:String>
   <sys:String x:Key="Str_St_Density">Mật độ lưới: {0} dòng mỗi giờ</sys:String>
   <sys:String x:Key="Str_TT_WorkWeek">Tuần làm việc 5 ngày</sys:String>
   <sys:String x:Key="Str_Btn_WorkWeek">5 ngày</sys:String>

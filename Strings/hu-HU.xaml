@@ -511,6 +511,12 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads
          "Grid density - click or scroll  (2)". {0} in the status line is that same number. -->
     <sys:String x:Key="Str_TT_Density">Rács sűrűsége - kattintson vagy görgessen</sys:String>
+    <sys:String x:Key="Str_TT_DensityPanel">Jobb kattintás a napi panel részleteihez</sys:String>
+    <sys:String x:Key="Str_Density_PanelHead">Napi panel részletei</sys:String>
+    <sys:String x:Key="Str_Density_Panel0">Találkozónként egy sor</sys:String>
+    <sys:String x:Key="Str_Density_Panel1">Teljes címek</sys:String>
+    <sys:String x:Key="Str_Density_Panel2">Címek és helyek</sys:String>
+    <sys:String x:Key="Str_Density_Panel3">Minden</sys:String>
     <sys:String x:Key="Str_St_Density">Rácssűrűség: {0} sor/óra</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">5 napos munkahét</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5-napos</sys:String>

@@ -55,7 +55,6 @@ namespace Killendar.Shell
             EditorScroll.Visibility  = agenda ? Visibility.Collapsed : Visibility.Visible;
             EditorActions.Visibility = agenda ? Visibility.Collapsed : Visibility.Visible;
             AgendaScroll.Visibility  = agenda ? Visibility.Visible : Visibility.Collapsed;
-            SidebarDensityBtn.Visibility = agenda ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void BuildDayAgendaRows()
@@ -89,7 +88,7 @@ namespace Killendar.Shell
 
         private FrameworkElement BuildDayAgendaRow(CalendarEvent ev)
         {
-            // The sidebar has its own density button, independent from calendar grid spacing.
+            // The day panel's detail level, from the rail density button's right-click menu:
             //   0 - one trimmed line, as always
             //   1 - the title wraps instead of trimming
             //   2 - and the location shows under it

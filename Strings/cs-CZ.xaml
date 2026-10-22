@@ -428,6 +428,12 @@
     <sys:String x:Key="Str_Hint_NoCategories">Zatím žádné kategorie. Přidejte je z postranního panelu.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorie</sys:String>
     <sys:String x:Key="Str_TT_Density">Hustota mřížky - klik nebo kolečko</sys:String>
+    <sys:String x:Key="Str_TT_DensityPanel">Pravým kliknutím nastavíte podrobnosti panelu dne</sys:String>
+    <sys:String x:Key="Str_Density_PanelHead">Podrobnosti panelu dne</sys:String>
+    <sys:String x:Key="Str_Density_Panel0">Jeden řádek na schůzku</sys:String>
+    <sys:String x:Key="Str_Density_Panel1">Celé názvy</sys:String>
+    <sys:String x:Key="Str_Density_Panel2">Názvy a místa</sys:String>
+    <sys:String x:Key="Str_Density_Panel3">Vše</sys:String>
     <sys:String x:Key="Str_St_Density">Hustota mřížky: {0} čar za hodinu</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">Pětidenní pracovní týden</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 dní</sys:String>

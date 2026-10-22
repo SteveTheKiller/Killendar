@@ -72,6 +72,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Changed
 
 - Wordmarks and headings are raised with a subtle bevel in their own color instead of a dark outline; wordmarks keep their drop shadow. The Dark theme's red accent is the brand red again instead of a pink tint. Dark theme grid lines and pane borders are a little lighter, the day panel heading matches the calendar's date heading, and hovering a day no longer shifts its film grain.
+- Grid density has one button, on the rail. Its right-click menu sets how much of each appointment the day panel shows, replacing the second density button beside the day heading.
 
 ## [1.3.1] - 2026-10-19
 

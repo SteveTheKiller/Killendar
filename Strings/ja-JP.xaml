@@ -428,6 +428,12 @@
     <sys:String x:Key="Str_Hint_NoCategories">カテゴリがまだありません。サイドバーから追加してください。</sys:String>
     <sys:String x:Key="Str_TT_Categories">カテゴリ</sys:String>
     <sys:String x:Key="Str_TT_Density">グリッド密度 - クリックまたはスクロール</sys:String>
+    <sys:String x:Key="Str_TT_DensityPanel">右クリックで日のパネルの表示内容</sys:String>
+    <sys:String x:Key="Str_Density_PanelHead">日のパネルの表示内容</sys:String>
+    <sys:String x:Key="Str_Density_Panel0">予定ごとに 1 行</sys:String>
+    <sys:String x:Key="Str_Density_Panel1">タイトル全体</sys:String>
+    <sys:String x:Key="Str_Density_Panel2">タイトルと場所</sys:String>
+    <sys:String x:Key="Str_Density_Panel3">すべて</sys:String>
     <sys:String x:Key="Str_St_Density">グリッド密度: 1時間あたり{0}本</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">週5日制</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">週5日</sys:String>

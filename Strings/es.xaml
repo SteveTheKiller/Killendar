@@ -428,6 +428,12 @@
     <sys:String x:Key="Str_Hint_NoCategories">Todavía no hay categorías. Añádelas desde la barra lateral.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categorías</sys:String>
     <sys:String x:Key="Str_TT_Density">Densidad de la cuadrícula - clic o rueda</sys:String>
+    <sys:String x:Key="Str_TT_DensityPanel">Clic derecho para el detalle del panel del día</sys:String>
+    <sys:String x:Key="Str_Density_PanelHead">Detalle del panel del día</sys:String>
+    <sys:String x:Key="Str_Density_Panel0">Una línea por cita</sys:String>
+    <sys:String x:Key="Str_Density_Panel1">Títulos completos</sys:String>
+    <sys:String x:Key="Str_Density_Panel2">Títulos y lugares</sys:String>
+    <sys:String x:Key="Str_Density_Panel3">Todo</sys:String>
     <sys:String x:Key="Str_St_Density">Densidad de la cuadrícula: {0} línea(s) por hora</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">Semana laboral de 5 días</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 días</sys:String>

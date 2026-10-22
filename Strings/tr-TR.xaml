@@ -428,6 +428,12 @@
     <sys:String x:Key="Str_Hint_NoCategories">Henüz kategori yok. Kenar çubuğundan ekleyin.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategoriler</sys:String>
     <sys:String x:Key="Str_TT_Density">Izgara yoğunluğu - tıklayın veya kaydırın</sys:String>
+    <sys:String x:Key="Str_TT_DensityPanel">Gün paneli ayrıntısı için sağ tıklayın</sys:String>
+    <sys:String x:Key="Str_Density_PanelHead">Gün paneli ayrıntısı</sys:String>
+    <sys:String x:Key="Str_Density_Panel0">Randevu başına bir satır</sys:String>
+    <sys:String x:Key="Str_Density_Panel1">Tam başlıklar</sys:String>
+    <sys:String x:Key="Str_Density_Panel2">Başlıklar ve yerler</sys:String>
+    <sys:String x:Key="Str_Density_Panel3">Her şey</sys:String>
     <sys:String x:Key="Str_St_Density">Izgara yoğunluğu: saatte {0} çizgi</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">5 günlük iş haftası</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 gün</sys:String>

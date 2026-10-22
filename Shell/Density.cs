@@ -1,4 +1,5 @@
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Killendar.Views;
 
@@ -20,23 +21,66 @@ using Killendar.Views;
 //     scrolls the day.
 //
 // Persisted as "TimeGridDensity". Month reads the same four steps as event detail: colored stripe,
-// title, start time + title, then full time range + title. The sidebar has its own persisted detail
-// level because calendar spacing and appointment detail are separate choices.
+// title, start time + title, then full time range + title. The day panel's own detail level is on
+// the same button's right-click menu, since calendar spacing and appointment detail are separate choices.
 // ============================================================
 namespace Killendar.Shell
 {
     public partial class MainWindow
     {
+        /// <summary>How much of each appointment the day panel shows. Set from the rail density
+        /// button's right-click menu: one button, not a second copy beside the day heading.</summary>
         private int _sidebarDensity = CalendarChrome.MaxDensity;
+
+        private static readonly string[] PanelDetailKeys =
+            ["Str_Density_Panel0", "Str_Density_Panel1", "Str_Density_Panel2", "Str_Density_Panel3"];
 
         private void InitDensity()
         {
             CalendarChrome.Density =
                 int.TryParse(Settings.Get("TimeGridDensity"), out int d) ? d : 0;   // the property clamps
             if (int.TryParse(Settings.Get("SidebarDensity"), out int sidebar))
-                _sidebarDensity = ClampDensity(sidebar);
+                _sidebarDensity = Math.Max(0, Math.Min(CalendarChrome.MaxDensity, sidebar));
+            // Right-click (or the menu key) offers the day panel's detail levels.
+            // Opened here rather than by the context menu service, which would place it at the
+            // pointer: it hangs off the pane like the other rail flyouts (DateSettingsMenu).
+            DensityBtn.ContextMenu = new ContextMenu();
+            DensityBtn.ContextMenuOpening += (_, e) =>
+            {
+                e.Handled = true;
+                var menu = DensityBtn.ContextMenu;
+                BuildPanelDetailMenu(menu);
+                menu.IsOpen = true;
+                Controls.Anim.FadeIn(menu);
+            };
             RefreshDensityTooltip();
-            RefreshSidebarDensityTooltip();
+        }
+
+        private void BuildPanelDetailMenu(ContextMenu menu)
+        {
+            menu.Items.Clear();
+            menu.Items.Add(new MenuItem { Header = Loc("Str_Density_PanelHead"), IsEnabled = false });
+            for (int level = CalendarChrome.MaxDensity; level >= 0; level--)
+            {
+                int chosen = level;
+                var item = new MenuItem
+                {
+                    Header = Loc(PanelDetailKeys[level]),
+                    IsCheckable = true,
+                    IsChecked = level == _sidebarDensity,
+                };
+                item.Click += (_, _) => ApplySidebarDensity(chosen);
+                menu.Items.Add(item);
+            }
+            Controls.FlyoutPlacement.Attach(menu, DensityBtn);
+        }
+
+        private void ApplySidebarDensity(int level)
+        {
+            if (level == _sidebarDensity) return;
+            _sidebarDensity = level;
+            Settings.Set("SidebarDensity", level.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            if (_agendaDay != null) BuildDayAgendaRows();
         }
 
         /// <summary>Click steps one tighter and wraps from the tightest back to the roomiest, as the
@@ -81,37 +125,10 @@ namespace Killendar.Shell
         private void RefreshDensityTooltip()
         {
             if (DensityBtn == null) return;
-            DensityBtn.ToolTip = ViewHost?.Content is MonthView
+            DensityBtn.ToolTip = (ViewHost?.Content is MonthView
                 ? Loc("Str_TT_Density") + "  (" + (CalendarChrome.Density + 1) + "/4)"
-                : Loc("Str_TT_Density") + "  (" + CalendarChrome.Subdivisions + ")";
+                : Loc("Str_TT_Density") + "  (" + CalendarChrome.Subdivisions + ")")
+                + "\n" + Loc("Str_TT_DensityPanel");
         }
-
-        /// <summary>Same as the grid button: one step tighter (less detail), wrapping to the fullest.</summary>
-        private void SidebarDensityBtn_Click(object sender, RoutedEventArgs e)
-            => ApplySidebarDensity((_sidebarDensity + CalendarChrome.MaxDensity) % (CalendarChrome.MaxDensity + 1));
-
-        private void SidebarDensityBtn_MouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            e.Handled = true;
-            ApplySidebarDensity(_sidebarDensity + (e.Delta > 0 ? 1 : -1));
-        }
-
-        private void ApplySidebarDensity(int level)
-        {
-            int next = ClampDensity(level);
-            if (next == _sidebarDensity) return;
-            _sidebarDensity = next;
-            Settings.Set("SidebarDensity", _sidebarDensity.ToString());
-            RefreshSidebarDensityTooltip();
-            if (_agendaDay != null) BuildDayAgendaRows();
-        }
-
-        private void RefreshSidebarDensityTooltip()
-        {
-            SidebarDensityBtn?.ToolTip = Loc("Str_TT_Density") + "  (" + (_sidebarDensity + 1) + "/4)";
-        }
-
-        private static int ClampDensity(int level)
-            => level < 0 ? 0 : level > CalendarChrome.MaxDensity ? CalendarChrome.MaxDensity : level;
     }
 }

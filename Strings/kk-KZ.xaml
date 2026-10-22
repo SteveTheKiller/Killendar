@@ -509,6 +509,12 @@
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads
          "Grid density - click or scroll  (2)". {0} in the status line is that same number. -->
     <sys:String x:Key="Str_TT_Density">Тор тығыздығы - басыңыз немесе айналдырыңыз</sys:String>
+    <sys:String x:Key="Str_TT_DensityPanel">Күн панелінің егжей-тегжейі үшін оң жақ батырманы басыңыз</sys:String>
+    <sys:String x:Key="Str_Density_PanelHead">Күн панелінің егжей-тегжейі</sys:String>
+    <sys:String x:Key="Str_Density_Panel0">Әр кездесуге бір жол</sys:String>
+    <sys:String x:Key="Str_Density_Panel1">Толық атаулар</sys:String>
+    <sys:String x:Key="Str_Density_Panel2">Атаулар мен орындар</sys:String>
+    <sys:String x:Key="Str_Density_Panel3">Барлығы</sys:String>
     <sys:String x:Key="Str_St_Density">Тор тығыздығы: сағатына {0} сызық</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">5 күндік жұмыс аптасы</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 күн</sys:String>

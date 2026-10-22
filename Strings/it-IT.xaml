@@ -463,6 +463,12 @@
     <sys:String x:Key="Str_Hint_NoCategories">Ancora nessuna categoria. Aggiungile dalla barra laterale.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categorie</sys:String>
     <sys:String x:Key="Str_TT_Density">Densità della griglia - clic o rotellina</sys:String>
+    <sys:String x:Key="Str_TT_DensityPanel">Clic destro per il dettaglio del pannello del giorno</sys:String>
+    <sys:String x:Key="Str_Density_PanelHead">Dettaglio del pannello del giorno</sys:String>
+    <sys:String x:Key="Str_Density_Panel0">Una riga per appuntamento</sys:String>
+    <sys:String x:Key="Str_Density_Panel1">Titoli completi</sys:String>
+    <sys:String x:Key="Str_Density_Panel2">Titoli e luoghi</sys:String>
+    <sys:String x:Key="Str_Density_Panel3">Tutto</sys:String>
     <sys:String x:Key="Str_St_Density">Densità della griglia: {0} riga/e per ora</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">Settimana lavorativa di 5 giorni</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 giorni</sys:String>

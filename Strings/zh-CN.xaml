@@ -428,6 +428,12 @@
     <sys:String x:Key="Str_Hint_NoCategories">还没有类别。可从侧边栏添加。</sys:String>
     <sys:String x:Key="Str_TT_Categories">类别</sys:String>
     <sys:String x:Key="Str_TT_Density">网格密度 - 单击或滚动</sys:String>
+    <sys:String x:Key="Str_TT_DensityPanel">右键单击设置日面板详细程度</sys:String>
+    <sys:String x:Key="Str_Density_PanelHead">日面板详细程度</sys:String>
+    <sys:String x:Key="Str_Density_Panel0">每个约会一行</sys:String>
+    <sys:String x:Key="Str_Density_Panel1">完整标题</sys:String>
+    <sys:String x:Key="Str_Density_Panel2">标题和地点</sys:String>
+    <sys:String x:Key="Str_Density_Panel3">全部</sys:String>
     <sys:String x:Key="Str_St_Density">网格密度：每小时 {0} 条线</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">5 天工作周</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 天</sys:String>

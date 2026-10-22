@@ -436,6 +436,12 @@
     <sys:String x:Key="Str_Hint_NoCategories">Brak kategorii. Dodaj je z paska bocznego.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorie</sys:String>
     <sys:String x:Key="Str_TT_Density">Gęstość siatki - kliknij lub przewiń</sys:String>
+    <sys:String x:Key="Str_TT_DensityPanel">Kliknij prawym przyciskiem, aby ustawić szczegóły panelu dnia</sys:String>
+    <sys:String x:Key="Str_Density_PanelHead">Szczegóły panelu dnia</sys:String>
+    <sys:String x:Key="Str_Density_Panel0">Jeden wiersz na spotkanie</sys:String>
+    <sys:String x:Key="Str_Density_Panel1">Pełne tytuły</sys:String>
+    <sys:String x:Key="Str_Density_Panel2">Tytuły i miejsca</sys:String>
+    <sys:String x:Key="Str_Density_Panel3">Wszystko</sys:String>
     <sys:String x:Key="Str_St_Density">Gęstość siatki: {0} linii na godzinę</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">5-dniowy tydzień roboczy</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 dni</sys:String>
