@@ -490,6 +490,9 @@
     <sys:String x:Key="Str_Rep_OnNth3">Am dritten {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnNth4">Am vierten {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnLast">Am letzten {0}</sys:String>
+    <sys:String x:Key="Str_Rep_AlsoOn">Außerdem am</sys:String>
+    <sys:String x:Key="Str_Rep_AddDate">Dieses Datum hinzufügen</sys:String>
+    <sys:String x:Key="Str_Rep_RemoveDate">{0} entfernen</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Woche ab {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">WEBSEITE UND DRUCK</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Orte einschließen</sys:String>

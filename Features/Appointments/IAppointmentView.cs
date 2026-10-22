@@ -64,6 +64,9 @@ namespace Killendar.Features
         /// <summary>Stop on this date, or null when that is not how it ends.</summary>
         System.DateTime? FieldRepeatUntil { get; set; }
 
+        /// <summary>Dates the series also falls on, outside its pattern.</summary>
+        System.Collections.Generic.List<System.DateTime> FieldRepeatExtraDates { get; set; }
+
         /// <summary>Clears the whole section back to "does not repeat", so one appointment cannot
         /// inherit the pattern of the last one loaded.</summary>
         void ResetRepeat();

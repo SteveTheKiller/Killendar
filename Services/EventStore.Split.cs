@@ -38,6 +38,9 @@ namespace Killendar.Services
             forTail.ExternalUid = "";
             // "Ends after N times" as the series had it means the times left from here on.
             if (forTail.RepeatCount == master.RepeatCount) forTail.RepeatCount = tail.RepeatCount;
+            // The extra dates as the series had them: the later half keeps only its own.
+            if (forTail.ExtraDates.Select(d => d.Date).OrderBy(d => d).SequenceEqual(master.ExtraDates.Select(d => d.Date).OrderBy(d => d)))
+                forTail.ExtraDates = [.. tail.ExtraDates];
             UpdateSeriesRows(forTail);
             if (LoadError != null) Unsplit(split);
         });
@@ -123,6 +126,8 @@ namespace Killendar.Services
                 head.RepeatUntil = nominal.Date.AddDays(-1);
                 head.RepeatUntilExact = null;
             }
+            head.ExtraDates = master.ExtraDates.Where(d => d.Date < nominal.Date).ToList();
+            tail.ExtraDates = master.ExtraDates.Where(d => d.Date >= nominal.Date).ToList();
             head.SkipDates = master.SkipDates.Where(d => d.Date < nominal.Date).ToList();
             tail.SkipDates = master.SkipDates.Where(d => d.Date >= nominal.Date).ToList();
             head.SkipOccurrences = master.SkipOccurrences.Where(d => d < nominal).ToList();

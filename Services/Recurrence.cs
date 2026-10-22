@@ -30,6 +30,71 @@ namespace Killendar.Services
             CalendarEvent master, DateTime from, DateTime to)
         {
             if (master == null || !master.IsSeries) yield break;
+            if (master.ExtraDates.Count == 0)
+            {
+                foreach (var occurrence in ExpandRule(master, from, to)) yield return occurrence;
+                yield break;
+            }
+            // The pattern's dates and the extra ones, merged in order; a date both give is one.
+            var extras = ExtraOccurrences(master, from, to);
+            var seen = new HashSet<long>();
+            int next = 0;
+            foreach (var occurrence in ExpandRule(master, from, to))
+            {
+                for (; next < extras.Count && extras[next].Start < occurrence.Start; next++)
+                    if (seen.Add(extras[next].Start.Ticks)) yield return extras[next];
+                if (seen.Add(occurrence.Start.Ticks)) yield return occurrence;
+            }
+            for (; next < extras.Count; next++)
+                if (seen.Add(extras[next].Start.Ticks)) yield return extras[next];
+        }
+
+        /// <summary>The extra dates (RDATE) in range, at the series' time of day on its own clock.
+        /// They are not counted toward "ends after N times" and run past its end date, as RFC
+        /// 5545 has it; a skipped date skips them too.</summary>
+        private static List<CalendarEvent> ExtraOccurrences(CalendarEvent master, DateTime from, DateTime to)
+        {
+            var list = new List<CalendarEvent>();
+            var clock = SeriesClockStart(master);
+            var duration = UsesTimeBasis(master) ? master.End.ToUniversalTime() - master.Start.ToUniversalTime() : master.End - master.Start;
+            if (duration <= TimeSpan.Zero) duration = master.AllDay ? TimeSpan.FromDays(1) : TimeSpan.FromHours(1);
+            foreach (var day in master.ExtraDates.Select(d => d.Date).Distinct())
+            {
+                DateTime nominal, start, end;
+                try
+                {
+                    nominal = master.AllDay ? day : day + clock.TimeOfDay;
+                    if (UsesTimeBasis(master) && !master.AllDay)
+                    {
+                        var utc = FromTimeBasis(master, nominal);
+                        start = utc.ToLocalTime();
+                        end = NominalDuration.HasValue(master) ? NominalDuration.EndLocal(master, nominal) : (utc + duration).ToLocalTime();
+                    }
+                    else
+                    {
+                        start = nominal;
+                        end = NominalDuration.HasValue(master) ? NominalDuration.EndLocal(master, start) : start + duration;
+                    }
+                }
+                catch (ArgumentOutOfRangeException) { continue; }
+                if (start >= to || end <= from) continue;
+                if (master.SkipDates.Exists(d => d.Date == start.Date)) continue;
+                if (master.SkipOccurrences.Exists(v => v.Ticks == nominal.Ticks)) continue;
+                var occurrence = master.Clone();
+                occurrence.Start = start;
+                occurrence.End = end;
+                occurrence.SeriesId = master.Id;
+                occurrence.OccurrenceStart = start;
+                SetOccurrenceIdentity(occurrence, master, nominal);
+                list.Add(occurrence);
+            }
+            list.Sort((a, b) => a.Start.CompareTo(b.Start));
+            return list;
+        }
+
+        private static IEnumerable<CalendarEvent> ExpandRule(
+            CalendarEvent master, DateTime from, DateTime to)
+        {
             if (UsesTimeBasis(master))
             {
                 foreach (var occurrence in ExpandTimeBasis(master, from, to)) yield return occurrence;
@@ -90,6 +155,15 @@ namespace Killendar.Services
         public static bool GeneratesDate(CalendarEvent master, DateTime candidate)
         {
             if (master == null || !master.IsSeries) return false;
+            if (master.ExtraDates.Count > 0)
+            {
+                var day0 = candidate.Date;
+                var probe = master.Clone();
+                probe.SkipDates = [];
+                probe.SkipOccurrences = [];
+                var end0 = day0 == DateTime.MaxValue.Date ? DateTime.MaxValue : day0.AddDays(1);
+                if (ExtraOccurrences(probe, day0, end0).Exists(o => o.Start.Date == day0)) return true;
+            }
             if (UsesTimeBasis(master))
             {
                 var pattern = master.Clone();

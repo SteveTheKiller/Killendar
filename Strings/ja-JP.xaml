@@ -490,6 +490,9 @@
     <sys:String x:Key="Str_Rep_OnNth3">第 3 {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnNth4">第 4 {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnLast">最終 {0}</sys:String>
+    <sys:String x:Key="Str_Rep_AlsoOn">追加の日</sys:String>
+    <sys:String x:Key="Str_Rep_AddDate">この日を追加</sys:String>
+    <sys:String x:Key="Str_Rep_RemoveDate">{0} を削除</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} からの週</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">ウェブページと印刷</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">場所を含める</sys:String>

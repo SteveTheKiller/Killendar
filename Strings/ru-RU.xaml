@@ -574,6 +574,9 @@
     <sys:String x:Key="Str_Rep_OnNth3">В третий {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnNth4">В четвёртый {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnLast">В последний {0}</sys:String>
+    <sys:String x:Key="Str_Rep_AlsoOn">Также</sys:String>
+    <sys:String x:Key="Str_Rep_AddDate">Добавить эту дату</sys:String>
+    <sys:String x:Key="Str_Rep_RemoveDate">Убрать {0}</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Неделя с {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">ВЕБ-СТРАНИЦА И ПЕЧАТЬ</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Включить места</sys:String>

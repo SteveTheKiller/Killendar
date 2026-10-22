@@ -177,6 +177,7 @@ namespace Killendar.Services
             OccurrenceTimeBasis recurrenceBasis = OccurrenceTimeBasis.Date;
             string recurrenceZone = "";
             var exclusions = new List<(DateTime dt, bool allDay, RecurrenceTimeBasis basis, DateTime? anchor, string zone)>();
+            var extraDates = new List<(DateTime dt, bool allDay, RecurrenceTimeBasis basis, DateTime? anchor, string zone)>();
             (DateTime dt, bool allDay, RecurrenceTimeBasis basis, DateTime? anchor, string zone)? recurrenceIdValue = null;
 
             // A METHOD:CANCEL calendar cancels every event in it; STATUS:CANCELLED cancels one.
@@ -223,6 +224,7 @@ namespace Killendar.Services
                         canceled = false;
                         lostDetails = false;
                         exclusions.Clear();
+                        extraDates.Clear();
                     }
                     else if (current == null &&
                              (comp == "VTODO" || comp == "VJOURNAL" || comp == "VFREEBUSY"))
@@ -313,6 +315,24 @@ namespace Killendar.Services
                                     result.Unreadable++;
                                     current = null;
                                     continue;
+                                }
+                            }
+
+                            // Extra dates: kept as dates at the series' own time. One that names another
+                            // time of day keeps its date at that time, and the change is counted.
+                            if (extraDates.Count > 0 && !recurrenceId.HasValue)
+                            {
+                                if (current.Repeat == RepeatFreq.None)
+                                {
+                                    current.Repeat = RepeatFreq.Daily;   // a start and its extra dates
+                                    current.RepeatCount = 1;
+                                }
+                                var clock = Recurrence.SeriesClockStart(current);
+                                foreach (var extra in extraDates)
+                                {
+                                    var day = extra.allDay || current.AllDay ? extra.dt.Date : CanonicalExclusion(current, extra);
+                                    if (!current.AllDay && !extra.allDay && day.TimeOfDay != clock.TimeOfDay) lostDetails = true;
+                                    if (!current.ExtraDates.Contains(day.Date)) current.ExtraDates.Add(day.Date);
                                 }
                             }
 
@@ -438,8 +458,15 @@ namespace Killendar.Services
                         break;
 
                     // A loose list of extra dates is not a pattern; there is nowhere to put it.
+                    // Extra dates of a series. A PERIOD (a start with its own length) is not
+                    // something Killendar holds; that still imports as a single date, counted.
                     case "RDATE":
-                        repeating = true;
+                        if (param.IndexOf("VALUE=PERIOD", StringComparison.OrdinalIgnoreCase) >= 0) { repeating = true; break; }
+                        foreach (var part in value.Split(','))
+                        {
+                            var extra = ParseDateTime(part, param);
+                            if (extra != null) extraDates.Add(extra.Value);
+                        }
                         break;
 
                     case "EXDATE":
@@ -1183,6 +1210,14 @@ namespace Killendar.Services
                             ev.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone ? OccurrenceTimeBasis.SourceZone : OccurrenceTimeBasis.Floating;
                         foreach (long ticks in skipped)
                             sb.AppendLine(FoldLine(IdentityProperty("EXDATE", new DateTime(ticks), basis, ev.RepeatZoneId)));
+                    }
+                    // Extra dates, at the series' time of day on its own clock.
+                    foreach (var day in ev.ExtraDates.Select(d => d.Date).Distinct())
+                    {
+                        if (ev.AllDay) { sb.AppendLine(IdentityProperty("RDATE", day, OccurrenceTimeBasis.Date, "")); continue; }
+                        var rdateBasis = ev.RepeatTimeBasis == RecurrenceTimeBasis.Utc ? OccurrenceTimeBasis.Utc :
+                            ev.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone ? OccurrenceTimeBasis.SourceZone : OccurrenceTimeBasis.Floating;
+                        sb.AppendLine(FoldLine(IdentityProperty("RDATE", day + Recurrence.SeriesClockStart(ev).TimeOfDay, rdateBasis, ev.RepeatZoneId)));
                     }
                 }
 

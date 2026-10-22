@@ -575,6 +575,9 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Rep_OnNth3">A harmadik {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnNth4">A negyedik {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnLast">Az utolsó {0}</sys:String>
+    <sys:String x:Key="Str_Rep_AlsoOn">Ezen is</sys:String>
+    <sys:String x:Key="Str_Rep_AddDate">Dátum hozzáadása</sys:String>
+    <sys:String x:Key="Str_Rep_RemoveDate">{0} eltávolítása</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} kezdetű hét</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">WEBOLDAL ÉS NYOMTATÁS</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Helyek is</sys:String>

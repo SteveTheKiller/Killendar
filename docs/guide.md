@@ -39,11 +39,11 @@ Killendar draws these repeats:
 - monthly on the same date (a 31st is skipped in shorter months), or on the first, second, third, fourth or last weekday of the month
 - yearly
 
-Each can end never, after a number of times, or on a date. You can skip single dates and change single dates.
+Each can end never, after a number of times, or on a date. You can skip single dates and change single dates, and add extra dates outside the pattern with **Also on**. An extra date keeps the series' time of day, and it is not counted toward "ends after" a number of times.
 
 When you change or delete one date of a series, you choose **just this date**, **this and following** (the series ends the day before and the rest becomes a new series, keeping its single-date edits and skipped dates), or **the whole series**. One undo puts any of these back.
 
-A rule from another calendar that Killendar cannot draw (for example "every weekday except the second Monday") imports as its first date only, and the import says how many did. A series that keeps another time zone's clock offers just this date or the whole series, not this and following.
+Extra dates in calendar files (RDATE) come in and go out as extra dates; one at a different time of day keeps its date at the series' time, and the import says so. A rule from another calendar that Killendar cannot draw (for example "every weekday except the second Monday") imports as its first date only, and the import says how many did. A series that keeps another time zone's clock offers just this date or the whole series, not this and following.
 
 ## Time zones
 

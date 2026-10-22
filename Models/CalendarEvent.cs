@@ -115,6 +115,10 @@ namespace Killendar.Models
         /// <summary>Occurrence start dates the user deleted one at a time. Compared by DATE, so a
         /// "just this one" delete survives the series later being moved to a different time.</summary>
         public List<DateTime> SkipDates { get; set; } = [];
+
+        /// <summary>Dates the series also falls on, outside its pattern (RDATE), at the series'
+        /// own time of day. Dates only: they keep that time when the series is moved.</summary>
+        public List<DateTime> ExtraDates { get; set; } = [];
         public List<DateTime> SkipOccurrences { get; set; } = [];
 
         /// <summary>Set on an override row: the Id of the master whose occurrence this replaces.</summary>
@@ -207,6 +211,7 @@ namespace Killendar.Models
             RepeatAnchor    = RepeatAnchor,
             RepeatZoneId    = RepeatZoneId,
             SkipDates       = [.. SkipDates],
+            ExtraDates      = [.. ExtraDates],
             SkipOccurrences = [.. SkipOccurrences],
             SeriesId        = SeriesId,
             OccurrenceStart = OccurrenceStart,

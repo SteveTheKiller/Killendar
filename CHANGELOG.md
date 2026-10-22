@@ -79,6 +79,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Added a plain-language guide to importing, repeats, time zones, reminders, backups and restore, privacy and the command line.
 - Calendar files that define their own time zone (Outlook's "Customized Time Zone", for one) now import instead of being refused. A zone Windows also has is used under its Windows name; one it does not have still places each appointment at the right moment, and a repeat on it keeps its first date's times and is counted in the import report.
 - Importing a newer invite for a meeting already in the Killendar updates it instead of skipping it, keeping the categories and reminder chosen here; an older or identical one is still skipped. A cancellation removes the meeting (to Recently deleted) or the canceled date of a series. The import asks first whenever it would change or remove something, and one undo puts it all back.
+- Added extra dates to repeating appointments: "Also on" in the repeat section adds dates outside the pattern, at the series' time of day. Calendar files carry them both ways (RDATE), and a file's extra dates no longer import as a single date.
 
 ### Changed
 - The lock button's menu opens in the content pane's top-right corner, 8px in from the top and right, mirroring the rail flyouts.

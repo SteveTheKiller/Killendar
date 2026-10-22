@@ -573,6 +573,9 @@
     <sys:String x:Key="Str_Rep_OnNth3">Tredje {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnNth4">Fjerde {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnLast">Siste {0}</sys:String>
+    <sys:String x:Key="Str_Rep_AlsoOn">Også</sys:String>
+    <sys:String x:Key="Str_Rep_AddDate">Legg til denne datoen</sys:String>
+    <sys:String x:Key="Str_Rep_RemoveDate">Fjern {0}</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Uken fra {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">NETTSIDE OG UTSKRIFT</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Ta med steder</sys:String>

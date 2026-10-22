@@ -490,6 +490,9 @@
     <sys:String x:Key="Str_Rep_OnNth3">第三個{0}</sys:String>
     <sys:String x:Key="Str_Rep_OnNth4">第四個{0}</sys:String>
     <sys:String x:Key="Str_Rep_OnLast">最後一個{0}</sys:String>
+    <sys:String x:Key="Str_Rep_AlsoOn">另外在</sys:String>
+    <sys:String x:Key="Str_Rep_AddDate">新增此日期</sys:String>
+    <sys:String x:Key="Str_Rep_RemoveDate">移除 {0}</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} 起的一週</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">網頁和列印</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">包含地點</sys:String>

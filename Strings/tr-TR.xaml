@@ -490,6 +490,9 @@
     <sys:String x:Key="Str_Rep_OnNth3">Üçüncü {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnNth4">Dördüncü {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnLast">Son {0}</sys:String>
+    <sys:String x:Key="Str_Rep_AlsoOn">Ayrıca</sys:String>
+    <sys:String x:Key="Str_Rep_AddDate">Bu tarihi ekle</sys:String>
+    <sys:String x:Key="Str_Rep_RemoveDate">{0} kaldır</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} haftası</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">WEB SAYFASI VE YAZDIRMA</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Yerleri ekle</sys:String>

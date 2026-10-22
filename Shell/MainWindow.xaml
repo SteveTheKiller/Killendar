@@ -652,6 +652,22 @@
                                         <TextBox x:Name="FieldRepeatEnd" Style="{StaticResource DarkTextBox}" FontSize="12"
                                                  Padding="4,3" Margin="0,0,0,4" Visibility="Collapsed"/>
 
+                                        <!-- Extra dates outside the pattern, each a chip that removes itself. -->
+                                        <TextBlock Text="{DynamicResource Str_Rep_AlsoOn}" Foreground="{DynamicResource DimTextBrush}"
+                                                   FontFamily="{DynamicResource UiFont}" FontSize="10" Margin="0,2,0,0"/>
+                                        <WrapPanel x:Name="RepeatExtraRow" Margin="0,4,0,0"/>
+                                        <Grid Margin="0,2,0,4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox x:Name="FieldRepeatExtra" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="4,3"
+                                                     AutomationProperties.Name="{DynamicResource Str_Rep_AlsoOn}" ToolTip="{DynamicResource Str_Hint_Date}"/>
+                                            <Button x:Name="RepeatExtraAdd" Grid.Column="1" Style="{StaticResource RailButton}" Margin="4,0,0,0"
+                                                    FontFamily="Segoe MDL2 Assets" FontSize="12" Content="&#xE710;"
+                                                    AutomationProperties.Name="{DynamicResource Str_Rep_AddDate}" ToolTip="{DynamicResource Str_Rep_AddDate}"/>
+                                        </Grid>
+
                                         <TextBlock x:Name="RepeatSummary" Visibility="Collapsed"/>
                                     </StackPanel>
 

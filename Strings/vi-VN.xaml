@@ -543,6 +543,9 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Rep_OnNth3">{0} thứ ba</sys:String>
   <sys:String x:Key="Str_Rep_OnNth4">{0} thứ tư</sys:String>
   <sys:String x:Key="Str_Rep_OnLast">{0} cuối cùng</sys:String>
+  <sys:String x:Key="Str_Rep_AlsoOn">Thêm vào</sys:String>
+  <sys:String x:Key="Str_Rep_AddDate">Thêm ngày này</sys:String>
+  <sys:String x:Key="Str_Rep_RemoveDate">Xóa {0}</sys:String>
   <sys:String x:Key="Str_Html_WeekOf">Tuần từ {0}</sys:String>
   <sys:String x:Key="Str_Exp_PageHead">TRANG WEB VÀ IN</sys:String>
   <sys:String x:Key="Str_Exp_IncLocations">Kèm địa điểm</sys:String>

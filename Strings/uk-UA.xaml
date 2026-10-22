@@ -573,6 +573,9 @@
     <sys:String x:Key="Str_Rep_OnNth3">У третій {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnNth4">У четвертий {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnLast">В останній {0}</sys:String>
+    <sys:String x:Key="Str_Rep_AlsoOn">Також</sys:String>
+    <sys:String x:Key="Str_Rep_AddDate">Додати цю дату</sys:String>
+    <sys:String x:Key="Str_Rep_RemoveDate">Вилучити {0}</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Тиждень від {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">ВЕБСТОРІНКА Й ДРУК</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Додати місця</sys:String>

@@ -200,6 +200,7 @@ namespace Killendar.Tests
         public RepeatFreq FieldRepeat { get; set; }
         public int FieldRepeatEveryN { get; set; } = 1;
         public int FieldRepeatMonthWeek { get; set; }
+        public List<DateTime> FieldRepeatExtraDates { get; set; } = [];
         public List<DayOfWeek> FieldRepeatDays { get; set; } = new List<DayOfWeek>();
         public int FieldRepeatCount { get; set; }
         public string RepeatDateText { get; set; } = "";

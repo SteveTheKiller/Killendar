@@ -28,6 +28,7 @@ namespace Killendar.Shell
         private RepeatEndMode _repeatEnd = RepeatEndMode.Never;
         private readonly HashSet<DayOfWeek> _repeatDays = [];
         private int _repeatMonthWeek;
+        private readonly List<DateTime> _extraDates = [];
 
         /// <summary>True when the panel is editing ONE date of a series and the user has chosen to
         /// apply the edit to all of them.</summary>
@@ -51,6 +52,51 @@ namespace Killendar.Shell
         {
             get => int.TryParse(FieldRepeatInterval.Text.Trim(), out int n) && n > 0 ? n : 0;
             set => FieldRepeatInterval.Text = value.ToString(CultureInfo.CurrentCulture);
+        }
+
+        List<DateTime> IAppointmentView.FieldRepeatExtraDates
+        {
+            get => [.. _extraDates];
+            set { _extraDates.Clear(); _extraDates.AddRange((value ?? []).Select(d => d.Date).Distinct().OrderBy(d => d)); BuildExtraChips(); }
+        }
+
+        /// <summary>The extra dates as chips; clicking one takes it off.</summary>
+        private void BuildExtraChips()
+        {
+            if (RepeatExtraRow == null) return;
+            RepeatExtraRow.Children.Clear();
+            foreach (var day in _extraDates)
+            {
+                var chip = Chip(DateFormatManager.Format(day) + "  \u2715", true, () =>
+                {
+                    _extraDates.Remove(day);
+                    BuildExtraChips();
+                });
+                System.Windows.Automation.AutomationProperties.SetName(chip, string.Format(Loc("Str_Rep_RemoveDate"), DateFormatManager.Format(day)));
+                RepeatExtraRow.Children.Add(chip);
+            }
+        }
+
+        private void InitRepeatExtras()
+        {
+            void Add()
+            {
+                if (!AppointmentEditor.TryParseDate(FieldRepeatExtra.Text, out var day))
+                {
+                    FieldRepeatExtra.ToolTip = Loc("Str_Hint_Date");
+                    return;
+                }
+                if (!_extraDates.Contains(day.Date)) { _extraDates.Add(day.Date); _extraDates.Sort(); }
+                FieldRepeatExtra.Text = "";
+                BuildExtraChips();
+            }
+            RepeatExtraAdd.Click += (_, _) => Add();
+            FieldRepeatExtra.KeyDown += (_, e) =>
+            {
+                if (e.Key != System.Windows.Input.Key.Enter) return;
+                e.Handled = true;
+                Add();
+            };
         }
 
         int IAppointmentView.FieldRepeatMonthWeek
@@ -107,6 +153,9 @@ namespace Killendar.Shell
             _repeatEnd  = RepeatEndMode.Never;
             _repeatDays.Clear();
             _repeatMonthWeek = 0;
+            _extraDates.Clear();
+            FieldRepeatExtra.Text = "";
+            BuildExtraChips();
             FieldRepeatInterval.Text = "1";
             FieldRepeatEnd.Text = "";
             _editWholeSeries = false;

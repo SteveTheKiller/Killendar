@@ -83,7 +83,8 @@ namespace Killendar.Features
             _view.FieldTitle, _view.FieldLocation, _view.FieldDescription, _view.FieldAttendees,
             _view.FieldCategories, _view.FieldReminder, _view.FieldShowAsFree, _view.FieldStartDate, _view.FieldStartTime, _view.FieldEndDate,
             _view.FieldEndTime, _allDay, _view.FieldRepeat, _view.FieldRepeatEveryN,
-            string.Join(",", _view.FieldRepeatDays ?? []), _view.FieldRepeatMonthWeek, _view.FieldRepeatCount,
+            string.Join(",", _view.FieldRepeatDays ?? []), _view.FieldRepeatMonthWeek,
+            string.Join(",", (_view.FieldRepeatExtraDates ?? []).Select(d => d.Ticks)), _view.FieldRepeatCount,
             _view.FieldRepeatUntil?.Ticks, _view.EditWholeSeries, _view.EditFollowing, _view.FieldZoneId);
 
         /// <summary>The zone the time boxes are on, or null for this computer's clock.</summary>
@@ -790,6 +791,7 @@ namespace Killendar.Features
                                     ? _view.FieldRepeatDays
                                     : [];
             ev.RepeatMonthWeek = _view.FieldRepeat == RepeatFreq.Monthly ? _view.FieldRepeatMonthWeek : 0;
+            ev.ExtraDates     = _view.FieldRepeat == RepeatFreq.None ? [] : [.. (_view.FieldRepeatExtraDates ?? []).Select(d => d.Date).Distinct()];
             ev.RepeatCount    = _view.FieldRepeatCount;
             ev.RepeatUntil    = _view.FieldRepeatUntil;
 
@@ -813,6 +815,7 @@ namespace Killendar.Features
             _view.FieldRepeatEveryN = ev.RepeatInterval > 0 ? ev.RepeatInterval : 1;
             _view.FieldRepeatDays  = [.. ev.RepeatDays ?? []];
             _view.FieldRepeatMonthWeek = ev.RepeatMonthWeek;
+            _view.FieldRepeatExtraDates = [.. ev.ExtraDates ?? []];
             if (ev.RepeatCount > 0) _view.FieldRepeatCount = ev.RepeatCount;
             else if (ev.RepeatUntil.HasValue) _view.FieldRepeatUntil = ev.RepeatUntil;
         }

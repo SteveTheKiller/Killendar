@@ -573,6 +573,9 @@
     <sys:String x:Key="Str_Rep_OnNth3">Na terceira {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnNth4">Na quarta {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnLast">Na última {0}</sys:String>
+    <sys:String x:Key="Str_Rep_AlsoOn">Também em</sys:String>
+    <sys:String x:Key="Str_Rep_AddDate">Adicionar esta data</sys:String>
+    <sys:String x:Key="Str_Rep_RemoveDate">Remover {0}</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Semana de {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">PÁGINA DA WEB E IMPRESSÃO</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Incluir locais</sys:String>
