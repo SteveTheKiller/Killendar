@@ -64,14 +64,14 @@ namespace Killendar.Controls
             _menu.Items.Clear();
             _accentHost = null;
             _accentDots.Clear();
-            // Measured against the rendered divider/menu edge: trim 3px from the pill's left
-            // inset and 6px from the remaining right edge to leave 8px of visible air per side.
-            // This is the Killendar trial value before the family copy.
-            var panel = new Grid { Margin = new Thickness(12, 10, 3, 10) };
-            panel.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            // Hover rows sit 4px in from both menu edges: 12 left less the row's -8, and 2 right
+            // plus the row's own 2. The theme column fills the menu (*), so when the menu is wider
+            // than the list the hover still reaches across instead of stopping short.
+            var panel = new Grid { Margin = new Thickness(12, 10, 2, 10) };
+            panel.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             panel.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
-            var list = new StackPanel { Width = 120 };
+            var list = new StackPanel { MinWidth = 120 };
             Grid.SetColumn(list, 0);
             panel.Children.Add(list);
 
