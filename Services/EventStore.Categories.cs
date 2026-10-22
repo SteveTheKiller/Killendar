@@ -22,6 +22,10 @@ namespace Killendar.Services
         /// <summary>Rows the organizer canceled, with a canceled series' one-date edits.</summary>
         public List<CalendarEvent> Removed { get; } = [];
 
+        /// <summary>The canceled appointments, each with its own one-date edits, as each goes to
+        /// Recently deleted: one entry per meeting, as deleting it by hand gives.</summary>
+        internal List<List<CalendarEvent>> Trashed { get; } = [];
+
         /// <summary>How many appointments a newer invite changed, and how many the organizer
         /// canceled (whole appointments and single dates).</summary>
         public int NewerInvites { get; internal set; }
@@ -203,7 +207,7 @@ namespace Killendar.Services
         ///     appointment to Recently deleted.
         /// </summary>
         public ImportPlan PlanImport(IEnumerable<CalendarEvent> incoming,
-                                     IEnumerable<Guid>? canceledIds = null,
+                                     IEnumerable<CalendarEvent>? canceled = null,
                                      IEnumerable<CalendarEvent>? canceledOccurrences = null)
         {
             var plan = new ImportPlan();
@@ -211,8 +215,11 @@ namespace Killendar.Services
             foreach (var ev in _events) byId[ev.Id] = ev;
             var seen = new HashSet<Guid>();
             var replaced = new Dictionary<Guid, CalendarEvent>();
+            var incomingList = incoming.ToList();
+            var incomingIds = new HashSet<Guid>(incomingList.Select(e => e.Id));
+            var removed = new HashSet<Guid>();
 
-            foreach (var ev in incoming)
+            foreach (var ev in incomingList)
             {
                 if (!seen.Add(ev.Id)) { plan.AlreadyPresent++; continue; }
                 if (!byId.TryGetValue(ev.Id, out var have)) { plan.Fresh.Add(ev); continue; }
@@ -222,16 +229,21 @@ namespace Killendar.Services
                 update.ReminderMinutes = have.ReminderMinutes;
                 update.Created = have.Created;
                 update.Modified = DateTime.UtcNow;
+                if (have.IsSeries && update.IsSeries) KeepWhatStillFits(have, update, incomingIds, plan, removed);
                 replaced[update.Id] = update;
                 plan.NewerInvites++;
             }
 
-            var removed = new HashSet<Guid>();
-            foreach (var id in canceledIds ?? [])
+            foreach (var cancel in canceled ?? [])
             {
-                if (!byId.ContainsKey(id) || removed.Contains(id)) continue;
+                var id = cancel.Id;
+                if (!byId.TryGetValue(id, out var have) || removed.Contains(id)) continue;
+                // An older cancellation (from before the meeting was put back) does not remove it.
+                if (MeetingInfo.Sequence(cancel) < MeetingInfo.Sequence(replaced.TryGetValue(id, out var newer0) ? newer0 : have)) continue;
+                var group = new List<CalendarEvent>();
                 foreach (var row in _events.Where(e => e.Id == id || e.SeriesId == id))
-                    if (removed.Add(row.Id)) plan.Removed.Add(row);
+                    if (removed.Add(row.Id)) { plan.Removed.Add(row); group.Add(row); }
+                if (group.Count > 0) plan.Trashed.Add(group);
                 replaced.Remove(id);
                 plan.Fresh.RemoveAll(e => e.Id == id || e.SeriesId == id);
                 plan.Cancellations++;
@@ -243,6 +255,7 @@ namespace Killendar.Services
                 var master = replaced.TryGetValue(seriesId, out var newer) ? newer
                            : byId.TryGetValue(seriesId, out var here) && here.IsSeries ? here : null;
                 if (master == null || !master.IsSeries) continue;
+                if (MeetingInfo.Sequence(occ) < MeetingInfo.Sequence(master)) continue;   // older than the series here
                 var nominal = Recurrence.CanonicalOccurrenceStart(master, occ);
                 var updated = replaced.TryGetValue(seriesId, out var pending) ? pending : master.Clone();
                 if (master.AllDay)
@@ -266,6 +279,32 @@ namespace Killendar.Services
 
             plan.Updated.AddRange(replaced.Values);
             return plan;
+        }
+
+        /// <summary>
+        /// A newer invite for a series replaces the organizer's pattern; what was done here to its
+        /// dates is kept where it still fits. A date skipped here stays skipped while the new
+        /// pattern still gives it. When the pattern or its time changed, the one-date edits made
+        /// here no longer name a date of it, so they go (the file's own edits come with it).
+        /// </summary>
+        private void KeepWhatStillFits(CalendarEvent have, CalendarEvent update, HashSet<Guid> incomingIds,
+                                       ImportPlan plan, HashSet<Guid> removed)
+        {
+            bool samePattern = update.Start == have.Start && update.AllDay == have.AllDay && update.Repeat == have.Repeat &&
+                update.RepeatInterval == have.RepeatInterval && update.RepeatMonthWeek == have.RepeatMonthWeek &&
+                (update.RepeatDays ?? []).OrderBy(d => d).SequenceEqual((have.RepeatDays ?? []).OrderBy(d => d));
+            foreach (var day in have.SkipDates)
+                if (!update.SkipDates.Any(d => d.Date == day.Date) && Recurrence.GeneratesDate(update, day)) update.SkipDates.Add(day.Date);
+            if (samePattern)
+            {
+                foreach (var nominal in have.SkipOccurrences)
+                    if (!update.SkipOccurrences.Any(v => v.Ticks == nominal.Ticks)) update.SkipOccurrences.Add(nominal);
+                update.ExtraDates = [.. update.ExtraDates.Union(have.ExtraDates.Select(d => d.Date))];
+                update.RepeatShift = have.RepeatShift;
+                return;
+            }
+            foreach (var edit in _events.Where(e => e.IsOverride && e.SeriesId == have.Id && !incomingIds.Contains(e.Id)))
+                if (removed.Add(edit.Id)) plan.Removed.Add(edit);
         }
 
         /// <summary>Puts a written import into the mirror.</summary>
@@ -318,8 +357,9 @@ namespace Killendar.Services
             }
             if (plan.Removed.Count > 0)
             {
-                // The canceled appointment goes to Recently deleted, as a delete by hand would.
-                Trash(plan.Removed.Where(e => !e.IsOverride || !plan.Removed.Any(m => m.Id == e.SeriesId)).ToList());
+                // Each canceled meeting goes to Recently deleted on its own, as a delete by hand
+                // would. A one-date edit dropped with its date is just removed.
+                foreach (var group in plan.Trashed) Trash(group);
                 foreach (var row in plan.Removed)
                 {
                     using var delete = _db.CreateCommand();

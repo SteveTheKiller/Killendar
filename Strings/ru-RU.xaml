@@ -182,6 +182,7 @@
     <sys:String x:Key="Str_Status_ImportTooLarge">Этот файл слишком большой или сложный для импорта. Killendar импортирует за раз не более {0} МБ и {1} встреч.</sys:String>
     <sys:String x:Key="Str_Imp_Reading">Чтение {0}</sys:String>
     <sys:String x:Key="Str_Imp_Saving">Добавление встреч: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_Applying">Сохранение изменений: {0}</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Пока импорт не завершится, ничего не будет добавлено.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Импортировать встречи ({0})?</sys:String>
     <sys:String x:Key="Str_Imp_PreviewChanges">Импортировать {0} новых, обновить {1}, удалить {2} отменённых?</sys:String>
@@ -584,7 +585,7 @@
     <sys:String x:Key="Str_Rep_EveryWorkday">Каждый рабочий день</sys:String>
     <sys:String x:Key="Str_Lbl_Holidays">Праздники из</sys:String>
     <sys:String x:Key="Str_Hol_Hint">Его встречи на весь день считаются праздниками: они затенены, и повторы могут их обходить.</sys:String>
-    <sys:String x:Key="Str_Hol_Locked">Заблокирован. Выберите его снова, чтобы ввести пароль.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Заблокирован. Разблокируйте его, чтобы использовать праздники.</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">Праздник</sys:String>
     <sys:String x:Key="Str_Hol_DayTip">{0} праздник</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Неделя с {0}</sys:String>

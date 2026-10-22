@@ -154,6 +154,7 @@
     <sys:String x:Key="Str_Status_ImportTooLarge">Ta datoteka je prevelika ali preveč zapletena za uvoz. Killendar naenkrat uvozi največ {0} MB in {1} dogodkov.</sys:String>
     <sys:String x:Key="Str_Imp_Reading">Branje datoteke {0}</sys:String>
     <sys:String x:Key="Str_Imp_Saving">Dodajanje dogodkov: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_Applying">Shranjevanje sprememb: {0}</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Dokler se uvoz ne konča, se nič ne doda.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Uvozim dogodke ({0})?</sys:String>
     <sys:String x:Key="Str_Imp_PreviewChanges">Uvozi {0} novih, posodobi {1}, odstrani {2} preklicanih?</sys:String>
@@ -511,7 +512,7 @@ Killendar se bo ponovno zagnal z namestitvenega mesta.</sys:String>
     <sys:String x:Key="Str_Rep_EveryWorkday">Vsak delovni dan</sys:String>
     <sys:String x:Key="Str_Lbl_Holidays">Prazniki iz</sys:String>
     <sys:String x:Key="Str_Hol_Hint">Njegovi celodnevni sestanki so prazniki: osenčeni, ponavljanja se jim lahko umaknejo.</sys:String>
-    <sys:String x:Key="Str_Hol_Locked">Zaklenjeno. Izberite ga znova, da vnesete geslo.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Zaklenjeno. Odklenite ga za uporabo praznikov.</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">Praznik</sys:String>
     <sys:String x:Key="Str_Hol_DayTip">{0} je praznik</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Teden od {0}</sys:String>

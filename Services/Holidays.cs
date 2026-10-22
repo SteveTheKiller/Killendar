@@ -57,12 +57,11 @@ namespace Killendar.Services
             return Status == State.Ready;
         }
 
-        /// <summary>The open Killendar's appointments changed: holidays in it may have too.</summary>
+        /// <summary>The open Killendar's appointments changed: holidays in it may have too. Only
+        /// forgets them; the repaint that follows the change reads them again.</summary>
         public static void Refresh()
         {
-            if (_active == null) return;
-            _years.Clear();
-            Changed?.Invoke();
+            if (_active != null) _years.Clear();
         }
 
         /// <summary>Forgets the holidays read from another file, as the app locks.</summary>

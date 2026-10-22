@@ -42,19 +42,47 @@ namespace Killendar.Services
             var reach = TimeSpan.FromDays(ShiftReach);
             var wideFrom = from.Ticks > reach.Ticks ? from - reach : DateTime.MinValue;
             var wideTo = DateTime.MaxValue.Ticks - to.Ticks > reach.Ticks ? to + reach : DateTime.MaxValue;
+            // A moved date that lands where the series already falls (a daily repeat's weekend
+            // moving onto its own Monday, or Saturday and Sunday both moving there) is one date.
+            var taken = new HashSet<DateTime>();
             foreach (var occurrence in ExpandUnshifted(master, wideFrom, wideTo))
             {
-                var moved = Shifted(occurrence, master.RepeatShift);
+                var nominalDay = occurrence.Start.Date;
+                var moved = Shifted(occurrence, master);
+                if (moved.Start.Date != nominalDay && (taken.Contains(moved.Start.Date) || FallsOn(master, moved.Start.Date)))
+                    continue;
+                taken.Add(moved.Start.Date);
                 if (moved.Start < to && moved.End > from) yield return moved;
             }
         }
 
+        /// <summary>True when the series, unmoved, has a date on <paramref name="day"/> that stays there.</summary>
+        private static bool FallsOn(CalendarEvent master, DateTime day)
+        {
+            if (WorkSchedule.IsDayOff(day)) return false;
+            var end = day == DateTime.MaxValue.Date ? DateTime.MaxValue : day.AddDays(1);
+            foreach (var occurrence in ExpandUnshifted(master, day, end))
+                if (occurrence.Start.Date == day) return true;
+            return false;
+        }
+
+        /// <summary>Where a date of the series is shown: <paramref name="nominal"/> (the local
+        /// start the pattern gives), moved off a day off when the series says so.</summary>
+        internal static DateTime ShownStart(CalendarEvent master, DateTime nominal)
+        {
+            if (master.RepeatShift == 0) return nominal;
+            var probe = new CalendarEvent { Start = nominal, End = nominal.AddHours(1), AllDay = master.AllDay };
+            return Shifted(probe, master).Start;
+        }
+
         internal const int ShiftReach = 14;
 
-        /// <summary>An occurrence moved off a day off in <paramref name="direction"/>; unchanged
-        /// when two weeks hold no workday.</summary>
-        internal static CalendarEvent Shifted(CalendarEvent occurrence, int direction)
+        /// <summary>An occurrence moved off a day off the way <paramref name="master"/> says; unchanged
+        /// when two weeks hold no workday. A series kept on another zone's clock moves on that
+        /// clock, so it keeps its time of day there across either place's clock change.</summary>
+        internal static CalendarEvent Shifted(CalendarEvent occurrence, CalendarEvent master)
         {
+            int direction = master.RepeatShift;
             var day = occurrence.Start.Date;
             for (int step = 0; step < ShiftReach && WorkSchedule.IsDayOff(day); step++)
             {
@@ -65,8 +93,18 @@ namespace Killendar.Services
             var delta = day - occurrence.Start.Date;
             try
             {
-                occurrence.Start += delta;
-                occurrence.End += delta;
+                if (UsesTimeBasis(master) && !master.AllDay)
+                {
+                    var length = occurrence.End.ToUniversalTime() - occurrence.Start.ToUniversalTime();
+                    var start = FromTimeBasis(master, ToTimeBasis(master, occurrence.Start) + delta).ToLocalTime();
+                    occurrence.Start = start;
+                    occurrence.End = (start.ToUniversalTime() + length).ToLocalTime();
+                }
+                else
+                {
+                    occurrence.Start += delta;
+                    occurrence.End += delta;
+                }
             }
             catch (ArgumentOutOfRangeException) { }
             return occurrence;

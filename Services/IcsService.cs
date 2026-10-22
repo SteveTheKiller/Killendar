@@ -42,9 +42,10 @@ namespace Killendar.Services
         /// that date from the series instead.</summary>
         public int Canceled;
 
-        /// <summary>Appointments the file cancels whole (by the id their UID gives), so one already
-        /// in the Killendar can be removed.</summary>
-        public List<Guid> CanceledIds = [];
+        /// <summary>Appointments the file cancels whole: the canceled VEVENT itself (its id from the
+        /// UID, its SEQUENCE among the kept lines), so one already here can be removed when the
+        /// cancellation is not older than it.</summary>
+        public List<CalendarEvent> CanceledEvents = [];
 
         /// <summary>Single dates of a series the file cancels, shaped like a one-date edit
         /// (SeriesId and the original date), so the series in the Killendar can drop them.</summary>
@@ -143,7 +144,10 @@ namespace Killendar.Services
                     block = null;
                     // Only a name Windows cannot resolve needs the file's rules; a definition
                     // that cannot be read leaves that name refused as before, never the file.
-                    string? id = definition.FirstOrDefault(l => l.StartsWith("TZID:", StringComparison.OrdinalIgnoreCase))?.Substring(5).Trim().Trim('"');
+                    // TZID may carry parameters (TZID;X-...:Name): the name is after the colon.
+                    string? id = definition.Select(l => (Head: l.Split(':')[0].Split(';')[0].Trim(), Line: l))
+                        .Where(x => x.Head.Equals("TZID", StringComparison.OrdinalIgnoreCase) && x.Line.Contains(":"))
+                        .Select(x => x.Line.Substring(x.Line.IndexOf(':') + 1).Trim().Trim('"')).FirstOrDefault();
                     if (id == null || id.Length == 0 || zones.ContainsKey(id) || TZConvert.TryGetTimeZoneInfo(id, out _)) continue;
                     IcsCustomZone? zone;
                     try { zone = IcsCustomZone.Read(definition); }
@@ -169,6 +173,7 @@ namespace Killendar.Services
             bool haveStart = false;   // no DTSTART means no appointment, however much else parsed
             bool repeating = false;
             DayOfWeek? ruleDay = null;   // an ordinal rule's weekday, checked once DTSTART is known
+            bool movedByKillendar = false;
             bool unsupportedRange = false;
             string? duration = null;
             DateTime? recurrenceId = null;   // set when this VEVENT replaces one date of a series
@@ -213,6 +218,7 @@ namespace Killendar.Services
                         haveStart    = false;
                         repeating    = false;
                         ruleDay      = null;
+                        movedByKillendar = false;
                         _usedUnmatchedZone = false;
                         unsupportedRange = false;
                         duration     = null;
@@ -247,6 +253,10 @@ namespace Killendar.Services
                             result.Unsupported++;
                             result.UnsupportedRanges++;
                         }
+                        else if (movedByKillendar && recurrenceIdValue.HasValue)
+                        {
+                            // Regenerated from the series' X-KILLENDAR-WORKDAY; nothing to count.
+                        }
                         else if (canceled || calendarCanceled)
                         {
                             // Never an appointment. A canceled date of a series is noted so the
@@ -260,9 +270,10 @@ namespace Killendar.Services
                                     SeriesId = current.Id, OccurrenceStart = recurrenceId, Start = recurrenceId!.Value,
                                     OccurrenceAnchor = recurrenceAnchor, OccurrenceBasis = recurrenceBasis,
                                     OccurrenceZoneId = recurrenceZone, AllDay = recurrenceAllDay,
+                                    KeptProperties = [.. current.KeptProperties],
                                 });
                             }
-                            else result.CanceledIds.Add(current.Id);
+                            else result.CanceledEvents.Add(current);
                         }
                         else if (!haveStart)
                         {
@@ -571,6 +582,12 @@ namespace Killendar.Services
 
                     // Killendar's own: a repeat that moves off days off. Read here, written from the
                     // appointment on export, so it is never kept twice.
+                    // A date Killendar moved off a day off, written for other calendars. Killendar
+                    // moves it again itself, so it is not read back as a one-date edit.
+                    case "X-KILLENDAR-MOVED":
+                        movedByKillendar = true;
+                        break;
+
                     case "X-KILLENDAR-WORKDAY":
                         current.RepeatShift = value.Trim().ToUpperInvariant() switch { "NEXT" => 1, "PREVIOUS" => -1, _ => 0 };
                         break;
@@ -1113,6 +1130,7 @@ namespace Killendar.Services
                     var moved = occurrence.Clone();
                     moved.Id = Guid.NewGuid();
                     moved.Repeat = RepeatFreq.None;
+                    moved.KeptProperties = [.. moved.KeptProperties.Where(l => !l.StartsWith("X-KILLENDAR-", StringComparison.OrdinalIgnoreCase)), "X-KILLENDAR-MOVED:1"];
                     rows.Add(moved);
                 }
             }

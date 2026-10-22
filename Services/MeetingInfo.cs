@@ -33,8 +33,6 @@ namespace Killendar.Services
             @"https?://[^\s<>""]*(?:teams\.microsoft\.com|teams\.live\.com|zoom\.us|meet\.google\.com|webex\.com|whereby\.com|gotomeeting\.com)[^\s<>""]*",
             RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 
-        /// <summary>The meeting in <paramref name="ev"/>, or null when it has no organizer or
-        /// attendee lines - a plain appointment.</summary>
         /// <summary>The invite's revision number (SEQUENCE), 0 when it carries none. An organizer
         /// raises it each time the meeting changes, so a higher one is the newer invite.</summary>
         public static int Sequence(CalendarEvent ev)
@@ -48,6 +46,8 @@ namespace Killendar.Services
             return 0;
         }
 
+        /// <summary>The meeting in <paramref name="ev"/>, or null when it has no organizer or
+        /// attendee lines - a plain appointment.</summary>
         public static MeetingInfo? From(CalendarEvent ev)
         {
             var info = new MeetingInfo { Free = IsFree(ev) };

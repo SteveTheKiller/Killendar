@@ -237,6 +237,7 @@
     <sys:String x:Key="Str_Status_ImportTooLarge">Ten plik jest zbyt duży lub zbyt złożony do importu. Killendar importuje naraz maksymalnie {0} MB i {1} spotkań.</sys:String>
     <sys:String x:Key="Str_Imp_Reading">Odczytywanie {0}</sys:String>
     <sys:String x:Key="Str_Imp_Saving">Dodawanie spotkań: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_Applying">Zapisywanie zmian: {0}</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Nic nie zostanie dodane, dopóki import się nie zakończy.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Zaimportować spotkania ({0})?</sys:String>
     <sys:String x:Key="Str_Imp_PreviewChanges">Zaimportować {0} nowych, zaktualizować {1}, usunąć {2} odwołanych?</sys:String>
@@ -512,7 +513,7 @@
     <sys:String x:Key="Str_Rep_EveryWorkday">Każdy dzień roboczy</sys:String>
     <sys:String x:Key="Str_Lbl_Holidays">Święta z</sys:String>
     <sys:String x:Key="Str_Hol_Hint">Jego całodniowe spotkania to święta: są zacienione, a cykle mogą się z nich przesunąć.</sys:String>
-    <sys:String x:Key="Str_Hol_Locked">Zablokowany. Wybierz go ponownie, aby wpisać hasło.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Zablokowany. Odblokuj go, aby użyć jego świąt.</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">Święto</sys:String>
     <sys:String x:Key="Str_Hol_DayTip">{0} to święto</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Tydzień od {0}</sys:String>

@@ -22,20 +22,20 @@ namespace Killendar.Services
 
         /// <summary>Every change of offset, by the UTC instant it happens, with the offset after it.</summary>
         private readonly List<(DateTime Utc, TimeSpan Offset)> _changes = [];
+        private DateTime[] _instants = [];
+        private TimeSpan[] _offsets = [];   // every offset the zone uses, largest first
         private TimeSpan _initial;
 
         /// <summary>True when the offset changes at all (summer time).</summary>
-        internal bool ChangesOffset => _changes.Select(c => c.Offset).Distinct().Count() > 1;
+        internal bool ChangesOffset { get; private set; }
 
         internal TimeSpan OffsetAt(DateTime utc)
         {
-            var offset = _initial;
-            foreach (var (when, after) in _changes)
-            {
-                if (when > utc) break;
-                offset = after;
-            }
-            return offset;
+            // The last change at or before utc, found by halving: a rule from 1601 to 2100 is
+            // about a thousand changes, read for every date in the file.
+            int i = Array.BinarySearch(_instants, utc);
+            if (i < 0) i = ~i - 1;
+            return i < 0 ? _initial : _changes[i].Offset;
         }
 
         /// <summary>
@@ -45,9 +45,7 @@ namespace Killendar.Services
         internal DateTime ToUtc(DateTime wall)
         {
             wall = DateTime.SpecifyKind(wall, DateTimeKind.Unspecified);
-            var offsets = _changes.Select(c => c.Offset).Append(_initial).Distinct()
-                .OrderByDescending(o => o).ToList();   // larger offset first: the earlier instant
-            foreach (var offset in offsets)
+            foreach (var offset in _offsets)   // larger offset first: the earlier instant
             {
                 var utc = wall - offset;
                 if (OffsetAt(utc) == offset) return DateTime.SpecifyKind(utc, DateTimeKind.Utc);
@@ -96,7 +94,7 @@ namespace Killendar.Services
                 if (start < earliest) { earliest = start; earliestFrom = from; }
 
                 var walls = new List<DateTime> { start };
-                if (p.TryGetValue("RRULE", out var rule) && !Yearly(rule, start, walls)) return null;
+                if (p.TryGetValue("RRULE", out var rule) && !Yearly(rule, start, from, walls)) return null;
                 if (p.TryGetValue("RDATE", out var rdates))
                     foreach (var d in rdates.Split(','))
                         if (TryLocal(d.Trim(), out var extra)) walls.Add(extra);
@@ -108,12 +106,16 @@ namespace Killendar.Services
             }
             zone._initial = earliestFrom;
             zone._changes.AddRange(changes.OrderBy(c => c.Item1));
+            zone._instants = zone._changes.Select(c => c.Utc).ToArray();
+            zone._offsets = zone._changes.Select(c => c.Offset).Append(earliestFrom).Distinct().OrderByDescending(o => o).ToArray();
+            zone.ChangesOffset = zone._offsets.Length > 1;
             return zone;
         }
 
         /// <summary>A yearly rule as VTIMEZONE writes them: BYMONTH with an ordinal BYDAY ("-1SU")
-        /// or a BYMONTHDAY, ending at UNTIL or COUNT, generated through 2100.</summary>
-        private static bool Yearly(string rule, DateTime start, List<DateTime> walls)
+        /// or a BYMONTHDAY, ending at UNTIL or COUNT, generated through 2100. UNTIL is UTC in these
+        /// rules; it is compared on the wall clock in force before the change.</summary>
+        private static bool Yearly(string rule, DateTime start, TimeSpan from, List<DateTime> walls)
         {
             int month = start.Month, week = 0, monthDay = 0, count = int.MaxValue;
             DayOfWeek? weekday = null;
@@ -130,7 +132,8 @@ namespace Killendar.Services
                     case "BYMONTHDAY": if (!int.TryParse(val, out monthDay)) return false; break;
                     case "COUNT": if (!int.TryParse(val, out count) || count < 1) return false; break;
                     case "UNTIL":
-                        if (TryLocal(val.TrimEnd('Z'), out var u)) until = u; else return false;
+                        if (!TryLocal(val.TrimEnd('Z'), out var u)) return false;
+                        until = val.EndsWith("Z", StringComparison.Ordinal) && u.Year > 1 && u.Year < 9999 ? u + from : u;
                         break;
                     case "BYDAY":
                         if (val.Length < 3) return false;
@@ -195,6 +198,8 @@ namespace Killendar.Services
         /// years calendars mostly hold. The file's location name wins when it matches, then this
         /// computer's own zone, then the first that does. Null when none does.
         /// </summary>
+        private static readonly int[] Probes = [-180, -121, -91, -61, -31, -1, 1, 31, 61, 91, 121, 180];
+
         internal string? MatchSystemZone()
         {
             bool Same(TimeZoneInfo candidate)
@@ -205,11 +210,16 @@ namespace Killendar.Services
                         var utc = new DateTime(year, month, 15, 12, 0, 0, DateTimeKind.Utc);
                         if (candidate.GetUtcOffset(utc) != OffsetAt(utc)) return false;
                     }
+                // Around each change too, close in: a zone that changes on the same day at
+                // another hour would read appointments in that window an hour off.
                 foreach (var (when, _) in _changes)
                 {
                     if (when.Year < 2015 || when.Year > 2035) continue;
-                    foreach (var probe in new[] { when.AddHours(-3), when.AddHours(3) })
+                    foreach (int minutes in Probes)
+                    {
+                        var probe = when.AddMinutes(minutes);
                         if (candidate.GetUtcOffset(probe) != OffsetAt(probe)) return false;
+                    }
                 }
                 return true;
             }

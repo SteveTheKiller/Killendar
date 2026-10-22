@@ -181,6 +181,7 @@
     <sys:String x:Key="Str_Status_ImportTooLarge">Denne filen er for stor eller kompleks til å importeres. Killendar importerer opptil {0} MB og {1} avtaler om gangen.</sys:String>
     <sys:String x:Key="Str_Imp_Reading">Leser {0}</sys:String>
     <sys:String x:Key="Str_Imp_Saving">Legger til {0} avtaler</sys:String>
+    <sys:String x:Key="Str_Imp_Applying">Lagrer {0} endringer</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Ingenting legges til før importen er ferdig.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Importere {0} avtaler?</sys:String>
     <sys:String x:Key="Str_Imp_PreviewChanges">Importere {0} nye, oppdatere {1}, fjerne {2} avlyste?</sys:String>
@@ -583,7 +584,7 @@
     <sys:String x:Key="Str_Rep_EveryWorkday">Hver arbeidsdag</sys:String>
     <sys:String x:Key="Str_Lbl_Holidays">Helligdager fra</sys:String>
     <sys:String x:Key="Str_Hol_Hint">Heldagsavtalene der er helligdager: skyggelagt, og gjentakelser kan flytte seg unna.</sys:String>
-    <sys:String x:Key="Str_Hol_Locked">Låst. Velg den igjen for å skrive passordet.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Låst. Lås den opp for å bruke helligdagene.</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">Helligdag</sys:String>
     <sys:String x:Key="Str_Hol_DayTip">{0} er en helligdag</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Uken fra {0}</sys:String>

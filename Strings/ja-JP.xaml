@@ -135,6 +135,7 @@
     <sys:String x:Key="Str_Status_ImportTooLarge">このファイルは大きすぎるか複雑すぎるため読み込めません。Killendar が一度に読み込めるのは最大 {0} MB、{1} 件の予定です。</sys:String>
     <sys:String x:Key="Str_Imp_Reading">{0} を読み込んでいます</sys:String>
     <sys:String x:Key="Str_Imp_Saving">{0} 件の予定を追加しています</sys:String>
+    <sys:String x:Key="Str_Imp_Applying">{0} 件の変更を保存しています</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">読み込みが終わるまで何も追加されません。</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">{0} 件の予定を読み込みますか?</sys:String>
     <sys:String x:Key="Str_Imp_PreviewChanges">新規 {0} 件をインポート、{1} 件を更新、キャンセルされた {2} 件を削除しますか?</sys:String>
@@ -500,7 +501,7 @@
     <sys:String x:Key="Str_Rep_EveryWorkday">勤務日ごと</sys:String>
     <sys:String x:Key="Str_Lbl_Holidays">祝日の取得元</sys:String>
     <sys:String x:Key="Str_Hol_Hint">終日の予定が祝日になります。網掛けされ、繰り返しを移動できます。</sys:String>
-    <sys:String x:Key="Str_Hol_Locked">ロック中です。もう一度選んでパスワードを入力してください。</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">ロック中です。祝日を使うにはロックを解除してください。</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">祝日</sys:String>
     <sys:String x:Key="Str_Hol_DayTip">{0} は祝日です</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} からの週</sys:String>

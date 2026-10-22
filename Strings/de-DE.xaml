@@ -135,6 +135,7 @@
     <sys:String x:Key="Str_Status_ImportTooLarge">Diese Datei ist zu groß oder zu komplex für den Import. Killendar importiert höchstens {0} MB und {1} Termine auf einmal.</sys:String>
     <sys:String x:Key="Str_Imp_Reading">{0} wird gelesen</sys:String>
     <sys:String x:Key="Str_Imp_Saving">{0} Termine werden hinzugefügt</sys:String>
+    <sys:String x:Key="Str_Imp_Applying">{0} Änderungen werden gespeichert</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Bis der Import abgeschlossen ist, wird nichts hinzugefügt.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">{0} Termine importieren?</sys:String>
     <sys:String x:Key="Str_Imp_PreviewChanges">{0} neue importieren, {1} aktualisieren, {2} abgesagte entfernen?</sys:String>
@@ -500,7 +501,7 @@
     <sys:String x:Key="Str_Rep_EveryWorkday">Jeder Arbeitstag</sys:String>
     <sys:String x:Key="Str_Lbl_Holidays">Feiertage aus</sys:String>
     <sys:String x:Key="Str_Hol_Hint">Seine ganztägigen Termine sind Feiertage: schattiert, und Serien können ihnen ausweichen.</sys:String>
-    <sys:String x:Key="Str_Hol_Locked">Gesperrt. Erneut wählen, um das Kennwort einzugeben.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Gesperrt. Entsperren Sie ihn, um seine Feiertage zu nutzen.</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">Feiertag</sys:String>
     <sys:String x:Key="Str_Hol_DayTip">{0} ist ein Feiertag</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Woche ab {0}</sys:String>

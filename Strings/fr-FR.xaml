@@ -135,6 +135,7 @@
     <sys:String x:Key="Str_Status_ImportTooLarge">Ce fichier est trop volumineux ou trop complexe pour être importé. Killendar importe au plus {0} Mo et {1} rendez-vous à la fois.</sys:String>
     <sys:String x:Key="Str_Imp_Reading">Lecture de {0}</sys:String>
     <sys:String x:Key="Str_Imp_Saving">Ajout de {0} rendez-vous</sys:String>
+    <sys:String x:Key="Str_Imp_Applying">Enregistrement de {0} modifications</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Rien n'est ajouté avant la fin de l'importation.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Importer {0} rendez-vous ?</sys:String>
     <sys:String x:Key="Str_Imp_PreviewChanges">Importer {0} nouveaux, mettre à jour {1}, retirer {2} annulés ?</sys:String>
@@ -500,7 +501,7 @@
     <sys:String x:Key="Str_Rep_EveryWorkday">Chaque jour ouvré</sys:String>
     <sys:String x:Key="Str_Lbl_Holidays">Jours fériés de</sys:String>
     <sys:String x:Key="Str_Hol_Hint">Ses rendez-vous sur la journée sont des jours fériés : grisés, et les séries peuvent les éviter.</sys:String>
-    <sys:String x:Key="Str_Hol_Locked">Verrouillé. Choisissez-le à nouveau pour saisir son mot de passe.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Verrouillé. Déverrouillez-le pour utiliser ses jours fériés.</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">Jour férié</sys:String>
     <sys:String x:Key="Str_Hol_DayTip">{0} est un jour férié</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Semaine du {0}</sys:String>

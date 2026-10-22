@@ -433,6 +433,20 @@ namespace Killendar.Views
             Grid.SetRow(dayNum, 0);
             content.Children.Add(dayNum);
 
+            // A holiday from the holiday calendar is named on its day, left of the number,
+            // trimmed to fit with the whole name on hover.
+            string? holiday = Holidays.NameOf(date);
+            if (holiday != null)
+            {
+                var named = CalendarChrome.Text(holiday, "DimTextBrush", 9.5);
+                named.HorizontalAlignment = HorizontalAlignment.Left;
+                named.TextTrimming = TextTrimming.CharacterEllipsis;
+                named.Margin = new Thickness(1, 2, 22, 3);
+                named.ToolTip = holiday;
+                Grid.SetRow(named, 0);
+                content.Children.Add(named);
+            }
+
             var eventList = new StackPanel();
             foreach (var ev in events)
             {
@@ -450,7 +464,9 @@ namespace Killendar.Views
                 PanningMode = PanningMode.VerticalOnly,
             };
             // Each day's scroll area takes keyboard focus, so it carries the date as its name.
-            AutomationProperties.SetName(eventScroll, date.ToString("D", CultureInfo.CurrentCulture));
+            AutomationProperties.SetName(eventScroll, holiday == null
+                ? date.ToString("D", CultureInfo.CurrentCulture)
+                : date.ToString("D", CultureInfo.CurrentCulture) + ", " + string.Format(LocaleManager.Loc("Str_Hol_DayTip"), holiday));
             Grid.SetRow(eventScroll, 1);
             content.Children.Add(eventScroll);
 
@@ -495,12 +511,6 @@ namespace Killendar.Views
                 : WorkSchedule.IsDayOff(date)
                     ? "CalendarWeekendBrush"
                     : displayColumn % 2 == 0 ? "CalendarEvenColumnBrush" : "CalendarOddColumnBrush";
-            // A holiday from the holiday calendar says which, on its day number.
-            if (Holidays.NameOf(date) is string holiday)
-            {
-                dayNum.ToolTip = string.Format(LocaleManager.Loc("Str_Hol_DayTip"), holiday);
-                AutomationProperties.SetHelpText(dayNum, (string)dayNum.ToolTip);
-            }
             _cells[date.Date] = (cell, dayNum, inMonth, isToday, restBrush);
             string hoverBrush = restBrush == "CalendarWeekendBrush" ? "CalendarWeekendHoverBrush" : "CalendarDayHoverBrush";
 

@@ -135,6 +135,7 @@
     <sys:String x:Key="Str_Status_ImportTooLarge">এই ফাইলটি ইমপোর্ট করার জন্য অনেক বড় বা জটিল। Killendar একবারে সর্বোচ্চ {0} MB এবং {1} টি অ্যাপয়েন্টমেন্ট ইমপোর্ট করে।</sys:String>
     <sys:String x:Key="Str_Imp_Reading">{0} পড়া হচ্ছে</sys:String>
     <sys:String x:Key="Str_Imp_Saving">{0} টি অ্যাপয়েন্টমেন্ট যোগ করা হচ্ছে</sys:String>
+    <sys:String x:Key="Str_Imp_Applying">{0}টি পরিবর্তন সংরক্ষণ হচ্ছে</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">ইমপোর্ট শেষ না হওয়া পর্যন্ত কিছুই যোগ হবে না।</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">{0} টি অ্যাপয়েন্টমেন্ট ইমপোর্ট করবেন?</sys:String>
     <sys:String x:Key="Str_Imp_PreviewChanges">{0}টি নতুন যোগ, {1}টি হালনাগাদ, {2}টি বাতিল সরাবেন?</sys:String>
@@ -500,7 +501,7 @@
     <sys:String x:Key="Str_Rep_EveryWorkday">প্রতি কর্মদিবস</sys:String>
     <sys:String x:Key="Str_Lbl_Holidays">ছুটির দিন যেখান থেকে</sys:String>
     <sys:String x:Key="Str_Hol_Hint">এর সারা দিনের অ্যাপয়েন্টমেন্টগুলো ছুটি: ছায়া করা হয়, পুনরাবৃত্তি সরে যেতে পারে।</sys:String>
-    <sys:String x:Key="Str_Hol_Locked">লক করা। পাসওয়ার্ড দিতে আবার বেছে নিন।</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">লক করা। এর ছুটির দিন ব্যবহার করতে আনলক করুন।</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">ছুটি</sys:String>
     <sys:String x:Key="Str_Hol_DayTip">{0} ছুটির দিন</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} থেকে শুরু সপ্তাহ</sys:String>

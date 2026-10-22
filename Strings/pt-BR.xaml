@@ -181,6 +181,7 @@
     <sys:String x:Key="Str_Status_ImportTooLarge">Este arquivo é grande ou complexo demais para importar. O Killendar importa até {0} MB e {1} compromissos por vez.</sys:String>
     <sys:String x:Key="Str_Imp_Reading">Lendo {0}</sys:String>
     <sys:String x:Key="Str_Imp_Saving">Adicionando {0} compromissos</sys:String>
+    <sys:String x:Key="Str_Imp_Applying">Salvando {0} alterações</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Nada é adicionado até a importação terminar.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Importar {0} compromissos?</sys:String>
     <sys:String x:Key="Str_Imp_PreviewChanges">Importar {0} novos, atualizar {1}, remover {2} cancelados?</sys:String>
@@ -583,7 +584,7 @@
     <sys:String x:Key="Str_Rep_EveryWorkday">Todo dia útil</sys:String>
     <sys:String x:Key="Str_Lbl_Holidays">Feriados de</sys:String>
     <sys:String x:Key="Str_Hol_Hint">Os compromissos de dia inteiro são feriados: sombreados, e as séries podem sair deles.</sys:String>
-    <sys:String x:Key="Str_Hol_Locked">Bloqueado. Escolha de novo para digitar a senha.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Bloqueado. Desbloqueie para usar os feriados.</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">Feriado</sys:String>
     <sys:String x:Key="Str_Hol_DayTip">{0} é feriado</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Semana de {0}</sys:String>

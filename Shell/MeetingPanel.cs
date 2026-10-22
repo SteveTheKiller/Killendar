@@ -25,7 +25,7 @@ namespace Killendar.Shell
             MeetingPanel.Visibility = meeting == null ? Visibility.Collapsed : Visibility.Visible;
             JoinMeetingBtn.Visibility = _meetingLink == null ? Visibility.Collapsed : Visibility.Visible;
             // Where the link goes, before the click: the host, in full, as the tooltip and for screen readers.
-            string? host = _meetingLink != null && System.Uri.TryCreate(_meetingLink, System.UriKind.Absolute, out var uri) ? uri.Host : null;
+            string? host = _meetingLink != null && System.Uri.TryCreate(_meetingLink, System.UriKind.Absolute, out var uri) ? uri.IdnHost : null;   // punycode, so a lookalike host shows as one
             JoinMeetingBtn.ToolTip = host == null ? null : string.Format(Loc("Str_Meet_JoinOpens"), host);
             System.Windows.Automation.AutomationProperties.SetHelpText(JoinMeetingBtn, host == null ? "" : string.Format(Loc("Str_Meet_JoinOpens"), host));
             if (meeting == null) return;

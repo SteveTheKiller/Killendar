@@ -257,18 +257,33 @@ namespace Killendar.Controls
             panel.Children.Add(holidays);
             var state = new TextBlock { FontSize = 10, TextWrapping = TextWrapping.Wrap, MaxWidth = 220, Margin = new Thickness(0, 4, 0, 0) };
             state.SetResourceReference(TextBlock.ForegroundProperty, "DimTextBrush");
+            var unlock = new Button
+            {
+                Content = LocaleManager.Loc("Str_Shown_Unlock"), HorizontalAlignment = HorizontalAlignment.Left,
+                Margin = new Thickness(0, 4, 0, 0), Padding = new Thickness(10, 3, 10, 3),
+                Style = (Style)Application.Current.FindResource("OutlineButton"),
+            };
             void ShowState()
             {
                 state.Text = Holidays.Status switch
                 {
                     Holidays.State.Locked => LocaleManager.Loc("Str_Hol_Locked"),
                     Holidays.State.Unavailable => LocaleManager.Loc("Str_Shown_Unavailable"),
-                    Holidays.State.Ready => LocaleManager.Loc("Str_Hol_Hint"),
                     _ => LocaleManager.Loc("Str_Hol_Hint"),
                 };
+                // Picking the same calendar again changes nothing in the list, so a locked one
+                // gets its own way to ask for the password.
+                unlock.Visibility = Holidays.Status == Holidays.State.Locked ? Visibility.Visible : Visibility.Collapsed;
             }
+            unlock.Click += (_, _) =>
+            {
+                _holidayChosen?.Invoke(Holidays.Name);
+                ShowState();
+                _weekStartChanged();
+            };
             ShowState();
             panel.Children.Add(state);
+            panel.Children.Add(unlock);
             holidays.SelectionChanged += (_, _) =>
             {
                 if (holidays.SelectedItem is not ComboBoxItem item) return;

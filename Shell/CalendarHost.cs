@@ -30,8 +30,10 @@ namespace Killendar.Shell
             _calendar     = new CalendarController(this, _store, _appointments);
             _ics          = new IcsTransfer(this, _store);
 
+            // Holidays kept in the open Killendar change with it: forgotten first, so the one
+            // repaint below reads them fresh.
+            _store.Changed += Holidays.Refresh;
             _store.Changed += () => _calendar.Refresh();
-            _store.Changed += Holidays.Refresh;   // holidays kept in the open Killendar change with it
             // A color picker previewing a category repaints the calendar without writing, so it
             // cannot come through _store.Changed.
             Services.CategoryManager.Previewed += () =>

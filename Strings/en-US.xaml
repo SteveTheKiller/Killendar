@@ -181,6 +181,7 @@
     <sys:String x:Key="Str_Status_ImportTooLarge">This file is too large or too complex to import. Killendar imports up to {0} MB and {1} appointments at once.</sys:String>
     <sys:String x:Key="Str_Imp_Reading">Reading {0}</sys:String>
     <sys:String x:Key="Str_Imp_Saving">Adding {0} appointments</sys:String>
+    <sys:String x:Key="Str_Imp_Applying">Saving {0} changes</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Nothing is added until the import finishes.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Import {0} appointments?</sys:String>
     <sys:String x:Key="Str_Imp_PreviewChanges">Import {0} new, update {1}, remove {2} canceled?</sys:String>
@@ -583,7 +584,7 @@
     <sys:String x:Key="Str_Rep_EveryWorkday">Every workday</sys:String>
     <sys:String x:Key="Str_Lbl_Holidays">Holidays from</sys:String>
     <sys:String x:Key="Str_Hol_Hint">Its all-day appointments are holidays: shaded, and repeats can move off them.</sys:String>
-    <sys:String x:Key="Str_Hol_Locked">Locked. Choose it again to type its password.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Locked. Unlock it to use its holidays.</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">Holiday</sys:String>
     <sys:String x:Key="Str_Hol_DayTip">{0} is a holiday</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Week of {0}</sys:String>

@@ -292,6 +292,18 @@ namespace Killendar.Services
         {
             var master = GetSeriesMaster(edited);
             if (master == null) { UpdateRow(edited); return; }
+            // A date moved off a day off is shown days from where the pattern puts it. The edit is
+            // measured from where it was shown, or the whole series would move by that distance.
+            if (master.RepeatShift != 0 && edited.OccurrenceStart is DateTime nominalStart)
+            {
+                var moved = Recurrence.ShownStart(master, nominalStart) - nominalStart;
+                if (moved != TimeSpan.Zero)
+                {
+                    edited = edited.Clone();
+                    edited.Start -= moved;
+                    edited.End -= moved;
+                }
+            }
 
             Commit(() =>
             {
@@ -433,7 +445,9 @@ namespace Killendar.Services
         /// <summary>
         /// Saves an edit to ONE date of a series, as a row that stands in for that occurrence.
         /// </summary>
-        public void SaveOccurrence(CalendarEvent edited) => Recorded(() =>
+        public void SaveOccurrence(CalendarEvent edited) => Recorded(() => SaveOccurrenceRows(edited));
+
+        private void SaveOccurrenceRows(CalendarEvent edited)
         {
             Commit(() =>
             {
@@ -461,10 +475,12 @@ namespace Killendar.Services
                 if (existing == null) _events.Add(row);
                 else _events[_events.FindIndex(e => e.Id == existing.Id)] = row;
             });
-        });
+        }
 
         /// <summary>Removes ONE date from a series, leaving the rest of it alone.</summary>
-        public void DeleteOccurrence(CalendarEvent occ) => Recorded(() =>
+        public void DeleteOccurrence(CalendarEvent occ) => Recorded(() => DeleteOccurrenceRows(occ));
+
+        private void DeleteOccurrenceRows(CalendarEvent occ)
         {
             var master = GetSeriesMaster(occ);
             if (master == null) return;
@@ -495,7 +511,7 @@ namespace Killendar.Services
                 if (stray != null) _events.RemoveAll(e => e.Id == stray.Id);
                 _events[_events.FindIndex(e => e.Id == master.Id)] = updated;
             });
-        });
+        }
 
         /// <summary>Removes a whole series: the master and every single-date edit belonging to it.</summary>
         public void DeleteSeries(Guid masterId) => Recorded(() => DeleteSeriesRows(masterId));

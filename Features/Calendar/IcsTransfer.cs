@@ -83,7 +83,7 @@ namespace Killendar.Features
                     source.AlreadyPresent = source.Events.Count - importable.Count;
                     source.Events = importable;
                 }
-                var plan = _store.PlanImport(source.Events, source.CanceledIds, source.CanceledOccurrences);
+                var plan = _store.PlanImport(source.Events, source.CanceledEvents, source.CanceledOccurrences);
                 plan.AlreadyPresent += source.AlreadyPresent;
                 // Changing or removing appointments already here always asks first.
                 bool ask = plan.ChangesExisting || (plan.Fresh.Count > 0 && source.Losses(plan));
@@ -99,7 +99,9 @@ namespace Killendar.Features
                 if (plan.HasWork)
                 {
                     var writing = Task.Run(() => _store.WriteImport(plan, cancel.Token), cancel.Token);
-                    if (_host.WaitOrCancel(string.Format(_host.Loc("Str_Imp_Saving"), plan.Fresh.Count + plan.Updated.Count + plan.Removed.Count), writing))
+                    if (_host.WaitOrCancel(plan.ChangesExisting
+                            ? string.Format(_host.Loc("Str_Imp_Applying"), plan.Fresh.Count + plan.NewerInvites + plan.Cancellations)
+                            : string.Format(_host.Loc("Str_Imp_Saving"), plan.Fresh.Count), writing))
                         cancel.Cancel();
                     try { writing.GetAwaiter().GetResult(); }
                     catch (OperationCanceledException) { Stopped(); return; }
@@ -202,7 +204,7 @@ namespace Killendar.Features
             internal string? Refusal;
             internal bool Csv;
             internal int AlreadyPresent, Repeating, Unreadable, Malformed, Unsupported, UnsupportedRanges, Canceled, LostDetails, ZoneApproximated;
-            internal List<Guid> CanceledIds = [];
+            internal List<CalendarEvent> CanceledEvents = [];
             internal List<CalendarEvent> CanceledOccurrences = [];
 
             internal static ImportSource From(IcsParseResult parsed) => new()
@@ -215,7 +217,7 @@ namespace Killendar.Features
                 Canceled = parsed.Canceled,
                 LostDetails = parsed.LostDetails,
                 ZoneApproximated = parsed.ZoneApproximated,
-                CanceledIds = parsed.CanceledIds,
+                CanceledEvents = parsed.CanceledEvents,
                 CanceledOccurrences = parsed.CanceledOccurrences,
             };
 

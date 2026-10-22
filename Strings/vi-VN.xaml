@@ -170,6 +170,7 @@
   <sys:String x:Key="Str_Status_ImportTooLarge">Tệp này quá lớn hoặc quá phức tạp để nhập. Killendar nhập tối đa {0} MB và {1} cuộc hẹn mỗi lần.</sys:String>
   <sys:String x:Key="Str_Imp_Reading">Đang đọc {0}</sys:String>
   <sys:String x:Key="Str_Imp_Saving">Đang thêm {0} cuộc hẹn</sys:String>
+  <sys:String x:Key="Str_Imp_Applying">Đang lưu {0} thay đổi</sys:String>
   <sys:String x:Key="Str_Imp_ProgressHint">Sẽ không thêm gì cho đến khi nhập xong.</sys:String>
   <sys:String x:Key="Str_Imp_PreviewHead">Nhập {0} cuộc hẹn?</sys:String>
   <sys:String x:Key="Str_Imp_PreviewChanges">Nhập {0} mới, cập nhật {1}, xóa {2} đã hủy?</sys:String>
@@ -553,7 +554,7 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Rep_EveryWorkday">Mỗi ngày làm việc</sys:String>
   <sys:String x:Key="Str_Lbl_Holidays">Ngày lễ lấy từ</sys:String>
   <sys:String x:Key="Str_Hol_Hint">Các cuộc hẹn cả ngày trong đó là ngày lễ: được tô bóng, và lịch lặp có thể dời khỏi.</sys:String>
-  <sys:String x:Key="Str_Hol_Locked">Đã khóa. Chọn lại để nhập mật khẩu.</sys:String>
+  <sys:String x:Key="Str_Hol_Locked">Đã khóa. Mở khóa để dùng các ngày lễ.</sys:String>
   <sys:String x:Key="Str_Hol_Holiday">Ngày lễ</sys:String>
   <sys:String x:Key="Str_Hol_DayTip">{0} là ngày lễ</sys:String>
   <sys:String x:Key="Str_Html_WeekOf">Tuần từ {0}</sys:String>

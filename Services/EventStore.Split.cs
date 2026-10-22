@@ -19,7 +19,21 @@ namespace Killendar.Services
         /// <summary>True for one date of a series that can be split there. A series kept on another
         /// time zone's clock (imported with one) only offers "the whole series".</summary>
         public bool CanSplit(CalendarEvent occurrence) =>
-            GetSeriesMaster(occurrence) is CalendarEvent master && !Recurrence.UsesTimeBasis(master);
+            GetSeriesMaster(occurrence) is CalendarEvent master && !Recurrence.UsesTimeBasis(master) &&
+            PatternGives(master, Recurrence.CanonicalOccurrenceStart(master, occurrence));
+
+        /// <summary>True when the pattern itself gives <paramref name="nominal"/>, not an extra date:
+        /// a split there starts the later half on a date the pattern can carry on from.</summary>
+        private static bool PatternGives(CalendarEvent master, DateTime nominal)
+        {
+            var pattern = master.Clone();
+            pattern.ExtraDates = [];
+            pattern.RepeatShift = 0;
+            pattern.SkipDates = [];
+            pattern.SkipOccurrences = [];
+            var end = nominal.Date == DateTime.MaxValue.Date ? DateTime.MaxValue : nominal.Date.AddDays(1);
+            return Recurrence.Expand(pattern, nominal.Date, end).Any(o => o.Start == nominal);
+        }
 
         /// <summary>Applies an edit to the chosen date and every later one.</summary>
         public void UpdateFollowing(CalendarEvent edited) => Recorded(() =>
@@ -27,6 +41,8 @@ namespace Killendar.Services
             var master = GetSeriesMaster(edited);
             if (master == null || Recurrence.UsesTimeBasis(master)) { UpdateSeriesRows(edited); return; }
             var nominal = Recurrence.CanonicalOccurrenceStart(master, edited);
+            // An extra date is not a place the pattern can be cut; that edit is to its one date.
+            if (!PatternGives(master, nominal)) { SaveOccurrenceRows(edited); return; }
             var split = SplitAt(master, nominal);
             if (split == null) { UpdateSeriesRows(edited); return; }   // the first date: the whole series
             if (split.Failed) return;                                   // nothing changed; LoadError says why
@@ -52,6 +68,7 @@ namespace Killendar.Services
             var master = GetSeriesMaster(occurrence);
             if (master == null) return;
             var nominal = Recurrence.CanonicalOccurrenceStart(master, occurrence);
+            if (!PatternGives(master, nominal)) { DeleteOccurrenceRows(occurrence); return; }
             var split = SplitAt(master, nominal);
             if (split == null) { DeleteSeriesRows(master.Id); return; }   // the first date: the whole series
             if (split.Failed) return;                                      // nothing changed; LoadError says why
@@ -101,9 +118,13 @@ namespace Killendar.Services
         /// </summary>
         private Split? SplitAt(CalendarEvent master, DateTime nominal)
         {
+            // Counted on the pattern alone, as "ends after N times" counts: no extra dates, and
+            // each date where the pattern puts it, not where a day off moved it.
             var pattern = master.Clone();
             pattern.SkipDates.Clear();
             pattern.SkipOccurrences.Clear();
+            pattern.ExtraDates = [];
+            pattern.RepeatShift = 0;
             int before = Recurrence.Expand(pattern, master.Start, nominal).Count(o => o.Start < nominal);
             if (before == 0) return null;
 

@@ -181,6 +181,7 @@
     <sys:String x:Key="Str_Status_ImportTooLarge">Ez a fájl túl nagy vagy túl összetett az importáláshoz. A Killendar egyszerre legfeljebb {0} MB-ot és {1} találkozót importál.</sys:String>
     <sys:String x:Key="Str_Imp_Reading">{0} beolvasása</sys:String>
     <sys:String x:Key="Str_Imp_Saving">{0} találkozó hozzáadása</sys:String>
+    <sys:String x:Key="Str_Imp_Applying">{0} módosítás mentése</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Az importálás befejezéséig semmi sem kerül hozzáadásra.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Importál {0} találkozót?</sys:String>
     <sys:String x:Key="Str_Imp_PreviewChanges">Importál {0} újat, frissít {1}, eltávolít {2} lemondottat?</sys:String>
@@ -585,7 +586,7 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Rep_EveryWorkday">Minden munkanap</sys:String>
     <sys:String x:Key="Str_Lbl_Holidays">Ünnepnapok innen</sys:String>
     <sys:String x:Key="Str_Hol_Hint">Az egész napos találkozói ünnepnapok: árnyékoltak, és az ismétlődések elkerülhetik őket.</sys:String>
-    <sys:String x:Key="Str_Hol_Locked">Zárolva. Válassza újra a jelszó megadásához.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Zárolva. Oldja fel az ünnepnapjai használatához.</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">Ünnepnap</sys:String>
     <sys:String x:Key="Str_Hol_DayTip">{0} ünnepnap</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} kezdetű hét</sys:String>

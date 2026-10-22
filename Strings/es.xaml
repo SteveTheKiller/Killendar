@@ -135,6 +135,7 @@
     <sys:String x:Key="Str_Status_ImportTooLarge">Este archivo es demasiado grande o complejo para importarlo. Killendar importa hasta {0} MB y {1} citas a la vez.</sys:String>
     <sys:String x:Key="Str_Imp_Reading">Leyendo {0}</sys:String>
     <sys:String x:Key="Str_Imp_Saving">Añadiendo {0} citas</sys:String>
+    <sys:String x:Key="Str_Imp_Applying">Guardando {0} cambios</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">No se añade nada hasta que termine la importación.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">¿Importar {0} citas?</sys:String>
     <sys:String x:Key="Str_Imp_PreviewChanges">¿Importar {0} nuevas, actualizar {1}, quitar {2} canceladas?</sys:String>
@@ -500,7 +501,7 @@
     <sys:String x:Key="Str_Rep_EveryWorkday">Cada día laborable</sys:String>
     <sys:String x:Key="Str_Lbl_Holidays">Festivos de</sys:String>
     <sys:String x:Key="Str_Hol_Hint">Sus citas de todo el día son festivos: se sombrean y las series pueden moverse fuera de ellos.</sys:String>
-    <sys:String x:Key="Str_Hol_Locked">Bloqueado. Elíjalo de nuevo para escribir su contraseña.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Bloqueado. Desbloquéelo para usar sus festivos.</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">Festivo</sys:String>
     <sys:String x:Key="Str_Hol_DayTip">{0} es festivo</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Semana del {0}</sys:String>

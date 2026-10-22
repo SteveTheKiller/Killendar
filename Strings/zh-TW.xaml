@@ -135,6 +135,7 @@
     <sys:String x:Key="Str_Status_ImportTooLarge">此檔案太大或太複雜，無法匯入。Killendar 一次最多匯入 {0} MB 和 {1} 個約會。</sys:String>
     <sys:String x:Key="Str_Imp_Reading">正在讀取 {0}</sys:String>
     <sys:String x:Key="Str_Imp_Saving">正在新增 {0} 個約會</sys:String>
+    <sys:String x:Key="Str_Imp_Applying">正在儲存 {0} 項變更</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">匯入完成前不會新增任何內容。</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">要匯入 {0} 個約會嗎？</sys:String>
     <sys:String x:Key="Str_Imp_PreviewChanges">匯入 {0} 個新約會、更新 {1} 個、移除 {2} 個已取消的？</sys:String>
@@ -500,7 +501,7 @@
     <sys:String x:Key="Str_Rep_EveryWorkday">每個工作日</sys:String>
     <sys:String x:Key="Str_Lbl_Holidays">假日來源</sys:String>
     <sys:String x:Key="Str_Hol_Hint">其中的全天約會視為假日：會加陰影，重複約會可以避開。</sys:String>
-    <sys:String x:Key="Str_Hol_Locked">已鎖定。再次選擇以輸入密碼。</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">已鎖定。解鎖後才能使用其中的假日。</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">假日</sys:String>
     <sys:String x:Key="Str_Hol_DayTip">{0} 是假日</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} 起的一週</sys:String>

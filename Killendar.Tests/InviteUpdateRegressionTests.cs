@@ -27,7 +27,7 @@ namespace Killendar.Tests
         private static ImportPlan Import(EventStore store, string ics)
         {
             var parsed = IcsService.ParseText(ics);
-            var plan = store.PlanImport(parsed.Events, parsed.CanceledIds, parsed.CanceledOccurrences);
+            var plan = store.PlanImport(parsed.Events, parsed.CanceledEvents, parsed.CanceledOccurrences);
             store.WriteImport(plan, CancellationToken.None);
             store.PublishImport(plan);
             return plan;
