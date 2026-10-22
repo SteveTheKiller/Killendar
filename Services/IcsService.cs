@@ -111,6 +111,7 @@ namespace Killendar.Services
             CalendarEvent? current = null;
             bool haveStart = false;   // no DTSTART means no appointment, however much else parsed
             bool repeating = false;
+            DayOfWeek? ruleDay = null;   // an ordinal rule's weekday, checked once DTSTART is known
             bool unsupportedRange = false;
             string? duration = null;
             DateTime? recurrenceId = null;   // set when this VEVENT replaces one date of a series
@@ -153,6 +154,7 @@ namespace Killendar.Services
                         current      = new CalendarEvent();
                         haveStart    = false;
                         repeating    = false;
+                        ruleDay      = null;
                         unsupportedRange = false;
                         duration     = null;
                         recurrenceId = null;
@@ -280,6 +282,24 @@ namespace Killendar.Services
                                 current.Repeat          = RepeatFreq.None;
                             }
 
+                            // "The second Tuesday": the rule's weekday and week must be the start's
+                            // own, on the series' clock. RFC 5545 lets RRULE come before DTSTART, so
+                            // this waits for the whole event. Otherwise it imports once and is counted.
+                            if (current.Repeat == RepeatFreq.Monthly && current.RepeatMonthWeek != 0)
+                            {
+                                var clock = Recurrence.SeriesClockStart(current);
+                                bool fits = clock.DayOfWeek == ruleDay &&
+                                    (current.RepeatMonthWeek > 0
+                                        ? Recurrence.WeekOfMonth(clock) == current.RepeatMonthWeek
+                                        : Recurrence.IsLastWeekdayOfMonth(clock));
+                                if (!fits)
+                                {
+                                    current.Repeat = RepeatFreq.None;
+                                    current.RepeatMonthWeek = 0;
+                                    repeating = true;
+                                }
+                            }
+
                             current.ReminderMinutes = Reminders.FromAlarms(current.KeptProperties);
                             if (repeating) result.Repeating++;
                             if (lostDetails) result.LostDetails++;
@@ -341,11 +361,11 @@ namespace Killendar.Services
                         break;
 
                     // A repeat rule Killendar can hold is read into the appointment. One it cannot
-                    // - "the third Monday of the month", an hourly repeat - still imports as a
+                    // - "the second and fourth Mondays", an hourly repeat - still imports as a
                     // single date, and the loss is COUNTED so the import can say so rather than
                     // hiding it.
                     case "RRULE":
-                        if (!ParseRRule(value, current)) repeating = true;
+                        if (!ParseRRule(value, current, out ruleDay)) repeating = true;
                         break;
 
                     // A loose list of extra dates is not a pattern; there is nowhere to put it.
@@ -476,13 +496,15 @@ namespace Killendar.Services
         /// Killendar cannot hold, in which case nothing is written and the caller counts the loss.
         ///
         /// Supported: FREQ of DAILY / WEEKLY / MONTHLY / YEARLY, INTERVAL, COUNT, UNTIL, and
-        /// BYDAY as plain weekday names. Deliberately NOT supported: an ordinal BYDAY ("3MO" =
-        /// the third Monday), BYMONTHDAY, BYSETPOS, BYWEEKNO and the rest. Those are real rules
-        /// that Killendar has no way to draw, and half-importing one would put the appointment on
-        /// the wrong days - worse than importing it once and saying so.
+        /// BYDAY as plain weekday names. A monthly rule may also name one ordinal weekday ("2TU",
+        /// "-1FR", or Outlook's BYDAY=TU;BYSETPOS=2) when it is the start's own; that is checked at
+        /// END:VEVENT. Deliberately NOT supported: other ordinal forms, BYMONTHDAY, BYWEEKNO and
+        /// the rest. Those are real rules Killendar has no way to draw, and half-importing one
+        /// would put the appointment on the wrong days - worse than importing it once and saying so.
         /// </summary>
-        private static bool ParseRRule(string value, CalendarEvent ev)
+        private static bool ParseRRule(string value, CalendarEvent ev, out DayOfWeek? ruleDay)
         {
+            ruleDay = null;
             var freq     = RepeatFreq.None;
             int interval = 1;
             int count    = 0;
@@ -565,7 +587,7 @@ namespace Killendar.Services
                         break;
 
                     default:
-                        return false;   // BYMONTHDAY, BYSETPOS, BYMONTH, BYWEEKNO, ...
+                        return false;   // BYMONTHDAY, BYMONTH, BYWEEKNO, ...
                 }
             }
 
@@ -582,13 +604,12 @@ namespace Killendar.Services
             int monthWeek = 0;
             if (ordinalDay != null)
             {
-                // Only "the Nth (1 to 4) or last weekday each month", on the start's own weekday,
-                // is a rule Killendar draws; anything else imports once and is counted.
-                if (freq != RepeatFreq.Monthly || ev.Start.DayOfWeek != ordinalDay ||
-                    !(ordinal is >= 1 and <= 4 || ordinal == -1)) return false;
-                if (ordinal > 0 && Recurrence.WeekOfMonth(ev.Start) != ordinal) return false;
-                if (ordinal < 0 && !Recurrence.IsLastWeekdayOfMonth(ev.Start)) return false;
+                // Only "the Nth (1 to 4) or last weekday each month" is a rule Killendar draws;
+                // anything else imports once and is counted. That it is the start's own weekday
+                // and week is checked at END:VEVENT, once DTSTART has been read.
+                if (freq != RepeatFreq.Monthly || !(ordinal is >= 1 and <= 4 || ordinal == -1)) return false;
                 monthWeek = ordinal;
+                ruleDay = ordinalDay;
             }
 
             // BYDAY on anything but a weekly rule means "the Mondays within each month/year",
@@ -1153,7 +1174,7 @@ namespace Killendar.Services
             }
 
             if (ev.Repeat == RepeatFreq.Monthly && ev.RepeatMonthWeek != 0)
-                sb.Append(";BYDAY=").Append(ev.RepeatMonthWeek).Append(WeekdayCode(ev.Start.DayOfWeek));
+                sb.Append(";BYDAY=").Append(ev.RepeatMonthWeek).Append(WeekdayCode(Recurrence.SeriesClockStart(ev).DayOfWeek));
 
             if (ev.Repeat == RepeatFreq.Weekly)
                 sb.Append(";WKST=").Append(WeekdayCode(ev.RepeatWeekStart));

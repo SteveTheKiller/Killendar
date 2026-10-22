@@ -289,7 +289,7 @@ namespace Killendar.Shell
             if (week <= 4) choices.Add((week, string.Format(Loc("Str_Rep_OnNth" + week), weekday)));
             if (Recurrence.IsLastWeekdayOfMonth(start)) choices.Add((-1, string.Format(Loc("Str_Rep_OnLast"), weekday)));
             // A choice the new date no longer offers (moved out of the last week) falls back.
-            if (!choices.Exists(c => c.Week == _repeatMonthWeek)) _repeatMonthWeek = _repeatMonthWeek == -1 || week > 4 ? 0 : week;
+            if (!choices.Exists(c => c.Week == _repeatMonthWeek)) _repeatMonthWeek = Recurrence.FitMonthWeek(start, _repeatMonthWeek);
             foreach (var (value, caption) in choices)
                 RepeatDaysRow.Children.Add(Chip(caption, _repeatMonthWeek == value,
                     () => { _repeatMonthWeek = value; BuildRepeatChips(); }));

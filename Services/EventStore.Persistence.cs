@@ -231,6 +231,7 @@ namespace Killendar.Services
         public void Add(CalendarEvent ev) => Recorded(() =>
         {
             ev.Created = ev.Modified = DateTime.UtcNow;
+            FitMonthWeek(ev);
             _events.Add(ev);
             Commit(() => Upsert(ev));
         });
@@ -248,6 +249,7 @@ namespace Killendar.Services
             if (!_events[idx].IsSeries && !ev.IsOverride && Recurrence.UsesTimeBasis(ev) &&
                 Recurrence.FromTimeBasis(ev, ev.RepeatAnchor!.Value) != ev.Start.ToUniversalTime())
                 ev.RepeatAnchor = Recurrence.ToTimeBasis(ev, ev.Start);
+            FitMonthWeek(ev);
             ev.Modified = DateTime.UtcNow;
             _events[idx] = ev;
             Commit(() => Upsert(ev));
@@ -334,6 +336,7 @@ namespace Killendar.Services
                 updated.RepeatInterval = edited.RepeatInterval > 0 ? edited.RepeatInterval : 1;
                 updated.RepeatDays     = [.. edited.RepeatDays ?? []];
                 updated.RepeatMonthWeek = edited.RepeatMonthWeek;
+                FitMonthWeek(updated);   // the series may have moved to another week of the month
                 updated.RepeatUntil    = edited.RepeatUntil;
                 updated.RepeatUntilExact = edited.AllDay == master.AllDay &&
                     edited.RepeatUntil?.Date == master.RepeatUntil?.Date ? master.RepeatUntilExact : null;
@@ -515,5 +518,11 @@ namespace Killendar.Services
                 tx.Commit();
             });
         }
+
+        /// <summary>A monthly weekday repeat names the weekday and week of its own start, on the
+        /// series' clock, so a moved start (or a stale panel choice) cannot save a rule that skips it.</summary>
+        private static void FitMonthWeek(CalendarEvent ev) =>
+            ev.RepeatMonthWeek = ev.Repeat == RepeatFreq.Monthly
+                ? Recurrence.FitMonthWeek(Recurrence.SeriesClockStart(ev), ev.RepeatMonthWeek) : 0;
     }
 }

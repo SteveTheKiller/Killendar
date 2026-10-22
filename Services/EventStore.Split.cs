@@ -27,8 +27,10 @@ namespace Killendar.Services
             var master = GetSeriesMaster(edited);
             if (master == null || Recurrence.UsesTimeBasis(master)) { UpdateSeriesRows(edited); return; }
             var nominal = Recurrence.CanonicalOccurrenceStart(master, edited);
-            var tail = SplitAt(master, nominal);
-            if (tail == null) { UpdateSeriesRows(edited); return; }   // the first date: the whole series
+            var split = SplitAt(master, nominal);
+            if (split == null) { UpdateSeriesRows(edited); return; }   // the first date: the whole series
+            if (split.Failed) return;                                   // nothing changed; LoadError says why
+            var tail = split.Tail;
             var forTail = edited.Clone();
             forTail.Id = tail.Id;
             forTail.SeriesId = tail.Id;
@@ -37,6 +39,7 @@ namespace Killendar.Services
             // "Ends after N times" as the series had it means the times left from here on.
             if (forTail.RepeatCount == master.RepeatCount) forTail.RepeatCount = tail.RepeatCount;
             UpdateSeriesRows(forTail);
+            if (LoadError != null) Unsplit(split);
         });
 
         /// <summary>Deletes the chosen date and every later one. Later single-date edits go to
@@ -46,17 +49,54 @@ namespace Killendar.Services
             var master = GetSeriesMaster(occurrence);
             if (master == null) return;
             var nominal = Recurrence.CanonicalOccurrenceStart(master, occurrence);
-            var tail = SplitAt(master, nominal);
-            if (tail == null) { DeleteSeriesRows(master.Id); return; }
-            DeleteSeriesRows(tail.Id);
+            var split = SplitAt(master, nominal);
+            if (split == null) { DeleteSeriesRows(master.Id); return; }   // the first date: the whole series
+            if (split.Failed) return;                                      // nothing changed; LoadError says why
+            DeleteSeriesRows(split.Tail.Id);
+            if (LoadError != null) Unsplit(split);
         });
+
+        /// <summary>A split as written: the rows it replaced, so a failed follow-up can put them back.</summary>
+        private sealed class Split
+        {
+            internal bool Failed;
+            internal CalendarEvent Master = null!;
+            internal CalendarEvent Tail = null!;
+            internal List<CalendarEvent> MovedFrom = [];
+        }
+
+        /// <summary>
+        /// The edit or delete after a split failed, so the split alone was saved. Puts the series
+        /// back as it was, in one write, keeping the first failure's message: the user is told
+        /// the change did not happen, and the calendar matches that.
+        /// </summary>
+        private void Unsplit(Split split)
+        {
+            string? error = LoadError;
+            Commit(() =>
+            {
+                using var tx = _db!.BeginTransaction();
+                Upsert(split.Master);
+                foreach (var row in split.MovedFrom) Upsert(row);
+                using (var cmd = _db.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM events WHERE id = $id";
+                    cmd.Parameters.AddWithValue("$id", split.Tail.Id.ToString());
+                    cmd.ExecuteNonQuery();
+                }
+                tx.Commit();
+            });
+            // Commit reloaded the mirror on the first failure and clears the message on success.
+            if (LoadError == null) LoadIntoMemory();
+            LoadError = error ?? LoadError;
+        }
 
         /// <summary>
         /// Ends <paramref name="master"/> before <paramref name="nominal"/> and starts an identical
         /// series there, moving later edits and skips to it. Null when nominal is the first date,
-        /// where there is nothing to split.
+        /// where there is nothing to split; Failed when the write did not go through.
         /// </summary>
-        private CalendarEvent? SplitAt(CalendarEvent master, DateTime nominal)
+        private Split? SplitAt(CalendarEvent master, DateTime nominal)
         {
             var pattern = master.Clone();
             pattern.SkipDates.Clear();
@@ -89,9 +129,11 @@ namespace Killendar.Services
             tail.SkipOccurrences = master.SkipOccurrences.Where(d => d >= nominal).ToList();
 
             var moved = new List<CalendarEvent>();
+            var movedFrom = new List<CalendarEvent>();
             foreach (var row in _events.Where(e => e.SeriesId == master.Id && e.OccurrenceStart.HasValue))
             {
                 if (Recurrence.CanonicalOccurrenceStart(master, row) < nominal) continue;
+                movedFrom.Add(row);
                 var copy = row.Clone();
                 copy.SeriesId = tail.Id;
                 copy.Modified = DateTime.UtcNow;
@@ -109,7 +151,7 @@ namespace Killendar.Services
                 _events.Add(tail);
                 foreach (var row in moved) _events[_events.FindIndex(e => e.Id == row.Id)] = row;
             });
-            return LoadError == null ? tail : null;
+            return new Split { Failed = LoadError != null, Master = master, Tail = tail, MovedFrom = movedFrom };
         }
     }
 }

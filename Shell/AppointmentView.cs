@@ -117,7 +117,11 @@ namespace Killendar.Shell
         /// point is to see where you are landing WHILE you type.
         /// </summary>
         private void FieldStart_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-            => _appointments?.StartEdited();
+        {
+            _appointments?.StartEdited();
+            // "The second Tuesday" is read from the start, so its choices follow the date as typed.
+            if (_repeatFreq == Models.RepeatFreq.Monthly && !_loadingRepeat) BuildRepeatChips();
+        }
 
         // ---- panel buttons ----
 

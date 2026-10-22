@@ -137,5 +137,48 @@ namespace Killendar.Tests
             var titles = fixture.Store.GetInRange(First.Date, First.Date.AddDays(5)).OrderBy(o => o.Start).Select(o => o.Title).ToList();
             Assert.Equal(["Standup", "Standup", "Retro", "Retro", "Retro"], titles);
         }
+
+        // KD-C review BF-001: a split that could not be written must not fall back to the whole
+        // series, and a delete that fails after the split must put the series back.
+        [Fact]
+        public void AFailedSplitChangesNothing()
+        {
+            using var fixture = new AppointmentFixture();
+            fixture.Store.Add(Daily());
+            string path = fixture.Store.FilePath;
+            fixture.Store.Close();
+            fixture.Store.OpenReadOnly(path);
+            var third = OccurrenceOn(fixture.Store, First.AddDays(2));
+
+            fixture.Store.DeleteFollowing(third);
+
+            Assert.NotNull(fixture.Store.LoadError);
+            Assert.Equal(5, fixture.Store.GetInRange(First.Date, First.Date.AddDays(5)).Count);
+            Assert.False(fixture.Store.CanUndo);
+        }
+
+        [Fact]
+        public void ADeleteThatFailsAfterTheSplitPutsTheSeriesBack()
+        {
+            using var fixture = new AppointmentFixture();
+            fixture.Store.Add(Daily());
+            using (var db = new Microsoft.Data.Sqlite.SqliteConnection("Data Source=" + fixture.Store.FilePath + ";Pooling=False"))
+            {
+                db.Open();
+                using var cmd = db.CreateCommand();
+                cmd.CommandText = "CREATE TRIGGER no_trash BEFORE INSERT ON deleted BEGIN SELECT RAISE(ABORT, 'disk full'); END";
+                cmd.ExecuteNonQuery();
+            }
+            var third = OccurrenceOn(fixture.Store, First.AddDays(2));
+
+            fixture.Store.DeleteFollowing(third);
+
+            Assert.Contains("disk full", fixture.Store.LoadError);
+            var master = Assert.Single(fixture.Store.Events);
+            Assert.Equal(0, master.RepeatCount);
+            Assert.Null(master.RepeatUntil);
+            Assert.Equal(5, fixture.Store.GetInRange(First.Date, First.Date.AddDays(5)).Count);
+            Assert.False(fixture.Store.CanUndo);
+        }
     }
 }

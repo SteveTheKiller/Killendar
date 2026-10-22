@@ -129,6 +129,25 @@ namespace Killendar.Services
             return first.AddDays(((int)day - (int)first.DayOfWeek + 7) % 7 + 7 * (week - 1));
         }
 
+        /// <summary>The start on the series' own clock: the source zone's (or UTC) for a series
+        /// kept on one, else the local start. The weekday rules are read on this clock.</summary>
+        internal static DateTime SeriesClockStart(CalendarEvent ev) =>
+            UsesTimeBasis(ev) ? ev.RepeatAnchor!.Value : ev.Start;
+
+        /// <summary>
+        /// A monthly weekday choice that still fits <paramref name="start"/>. A start moved to
+        /// another week keeps "a weekday of the month" and follows the new week; the last one stays
+        /// last while the start is in the month's last week, and a start in the fifth week is the
+        /// last. 0 (same date each month) is left alone.
+        /// </summary>
+        internal static int FitMonthWeek(DateTime start, int week)
+        {
+            if (week == 0) return 0;
+            if (week == -1 && IsLastWeekdayOfMonth(start)) return -1;
+            int now = WeekOfMonth(start);
+            return now <= 4 ? now : -1;
+        }
+
         /// <summary>Which week of its month a date's weekday falls in: 1 to 5.</summary>
         internal static int WeekOfMonth(DateTime date) => (date.Day - 1) / 7 + 1;
 
