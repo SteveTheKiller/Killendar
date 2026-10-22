@@ -382,7 +382,8 @@ namespace Killendar.Views
                                     bool rightSeparator, bool bottomSeparator,
                                     int multiDayLanes)
         {
-            var events = _store!.GetOnDay(date)
+            // Other Killendars shown alongside count here too, read only in their own color.
+            var events = ShownCalendars.With(_store!.GetOnDay(date), date.Date, date.Date.AddDays(1))
                 .Where(e => !CalendarLayout.IsMultiDay(e))
                 .OrderBy(e => !e.AllDay)
                 .ThenBy(e => e.Start)

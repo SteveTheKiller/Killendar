@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -70,7 +71,22 @@ namespace Killendar.Views
                     CalendarChrome.WorkWeek ? "OutlineButton" : "SurfaceButton");
                 ww.Click += (_, _) => CalendarChrome.WorkWeekToggle?.Invoke();
                 Grid.SetColumn(ww, 0);
+                if (TimeZones.Second != null) ww.HorizontalAlignment = HorizontalAlignment.Right;
                 _headerRow.Children.Add(ww);
+            }
+
+            // The second zone's hours run down the gutter's left half; its offset heads that
+            // half here, where it stays in view however far the hours are scrolled.
+            if (TimeZones.Second is TimeZoneInfo headerZone)
+            {
+                var zoneLabel = CalendarChrome.Text(TimeZones.Offset(headerZone, start.Date.AddHours(12)), "DimTextBrush", 9, null, "Consolas");
+                zoneLabel.HorizontalAlignment = HorizontalAlignment.Left;
+                zoneLabel.VerticalAlignment = VerticalAlignment.Center;
+                zoneLabel.Margin = new Thickness(3, 0, 0, 0);
+                zoneLabel.ToolTip = headerZone.DisplayName;
+                AutomationProperties.SetName(zoneLabel, headerZone.DisplayName);
+                Grid.SetColumn(zoneLabel, 0);
+                _headerRow.Children.Add(zoneLabel);
             }
 
             // ---- day headers ----
@@ -99,6 +115,18 @@ namespace Killendar.Views
                 num.VerticalAlignment = VerticalAlignment.Center;
                 sp.Children.Add(dow);
                 sp.Children.Add(num);
+                // A holiday from the holiday calendar is named beside its date.
+                string? holiday = Holidays.NameOf(date);
+                if (holiday != null)
+                {
+                    var named = CalendarChrome.Text(holiday, "DimTextBrush", 9.5);
+                    named.VerticalAlignment = VerticalAlignment.Center;
+                    named.Margin = new Thickness(6, 0, 0, 0);
+                    named.MaxWidth = 90;
+                    named.TextTrimming = TextTrimming.CharacterEllipsis;
+                    named.ToolTip = holiday;
+                    sp.Children.Add(named);
+                }
 
                 // The header is a quiet axis, matching Month: no selected fill and no outline.
                 // Today is carried by the bold accent date number and by the column below.
@@ -189,6 +217,7 @@ namespace Killendar.Views
                     other.Width = 42;
                     other.TextAlignment = TextAlignment.Left;
                     other.Opacity = 0.75;
+                    other.ToolTip = second.DisplayName;
                     gutter.Children.Add(other);
                 }
             }
