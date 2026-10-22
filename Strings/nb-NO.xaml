@@ -169,6 +169,8 @@
     <!-- Import caveats, appended to the line above. Each carries its OWN leading sentence break,
          because that mark is not "." in every language. -->
     <sys:String x:Key="Str_Status_ImportRepeat">. {0} gjentas, og bare den første datoen ble lagt til</sys:String>
+    <sys:String x:Key="Str_Imp_PvZone">Gjentas i en tidssone filen selv definerer og Windows ikke har, så de beholder tidene fra første dato: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportZone">. {0} gjentas i en tidssone Windows ikke har og beholder tidene fra første dato</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">. {0} hadde ingen lesbar dato og ble hoppet over</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} var oppgaver eller notater, som Killendar ikke lagrer</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Endringer som påvirker framtidige gjentakelser, ble hoppet over fordi de ikke støttes: {0}</sys:String>

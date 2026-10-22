@@ -123,6 +123,8 @@
     <sys:String x:Key="Str_Status_Imported">已匯入 {0} 個約會</sys:String>
     <sys:String x:Key="Str_Status_ImportedSkipped">已匯入 {0} 個約會，略過 {1} 個已存在的</sys:String>
     <sys:String x:Key="Str_Status_ImportRepeat">。其中 {0} 個是重複約會，只加入了第一個日期</sys:String>
+    <sys:String x:Key="Str_Imp_PvZone">依檔案自訂且 Windows 中沒有的時區重複，因此保留第一個日期的時間：{0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportZone">。{0} 個依 Windows 中沒有的時區重複，保留第一個日期的時間</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">。{0} 個的日期無法讀取，已略過</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">。{0} 個是工作或筆記，Killendar 不保存這類內容</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">。已略過 {0} 項影響後續重複約會的不支援變更</sys:String>

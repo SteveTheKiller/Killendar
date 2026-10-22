@@ -158,6 +158,8 @@
   <!-- Import caveats, appended to the line above. Each carries its OWN leading sentence break,
          because that mark is not "." in every language. -->
   <sys:String x:Key="Str_Status_ImportRepeat">. Có {0} cuộc hẹn lặp lại và chỉ ngày đầu tiên được thêm</sys:String>
+  <sys:String x:Key="Str_Imp_PvZone">Lặp lại theo múi giờ do tệp tự định nghĩa mà Windows không có, nên giữ giờ của ngày đầu tiên: {0}</sys:String>
+  <sys:String x:Key="Str_Status_ImportZone">. {0} lặp lại theo múi giờ Windows không có và giữ giờ của ngày đầu tiên</sys:String>
   <sys:String x:Key="Str_Status_ImportUnreadable">. Có {0} mục không có ngày hợp lệ nên đã bị bỏ qua</sys:String>
   <sys:String x:Key="Str_Status_ImportUnsupported">. Có {0} mục là tác vụ hoặc ghi chú mà Killendar không lưu trữ</sys:String>
   <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Đã bỏ qua các thay đổi không được hỗ trợ có ảnh hưởng đến những lần lặp sau: {0}</sys:String>

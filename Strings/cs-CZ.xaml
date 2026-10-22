@@ -123,6 +123,8 @@
     <sys:String x:Key="Str_Status_Imported">Importováno {0} schůzek</sys:String>
     <sys:String x:Key="Str_Status_ImportedSkipped">Importováno {0} schůzek, {1} již existujících přeskočeno</sys:String>
     <sys:String x:Key="Str_Status_ImportRepeat">. {0} se opakuje a přidáno bylo jen první datum</sys:String>
+    <sys:String x:Key="Str_Imp_PvZone">Opakují se v časovém pásmu, které soubor definuje a Windows nezná, takže si ponechají časy prvního termínu: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportZone">. {0} se opakuje v časovém pásmu, které Windows nezná, a ponechá si časy prvního termínu</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">. {0} nemělo čitelné datum a bylo přeskočeno</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} byly úkoly nebo poznámky, které Killendar neukládá</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Byly přeskočeny nepodporované úpravy ovlivňující budoucí výskyty: {0}</sys:String>

@@ -169,6 +169,8 @@
     <!-- Import caveats, appended to the line above. Each carries its OWN leading sentence break,
          because that mark is not "." in every language. -->
     <sys:String x:Key="Str_Status_ImportRepeat">. {0} se repetem, e somente a primeira data foi adicionada</sys:String>
+    <sys:String x:Key="Str_Imp_PvZone">Repetem-se em um fuso horário definido pelo arquivo que o Windows não tem, então mantêm os horários da primeira data: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportZone">. {0} se repetem em um fuso horário que o Windows não tem e mantêm os horários da primeira data</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">. {0} não tinham data legível e foram ignorados</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} eram tarefas ou notas, que o Killendar não armazena</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Alterações não compatíveis que afetam ocorrências futuras foram ignoradas: {0}</sys:String>

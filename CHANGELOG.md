@@ -77,6 +77,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Added showing other Killendars beside the open one: right-click the Killendars button and tick them. Each shows in its own color and is read only, so new appointments and changes go to the open one. An encrypted one stays locked until its own password is typed, one that cannot be read is marked and does not stop the rest, and locking the app locks them too.
 - Added Copy diagnostics in About: a short report for a support request with the version, Windows, settings and counts, and no appointment content, names, addresses, paths or links. Nothing is sent.
 - Added a plain-language guide to importing, repeats, time zones, reminders, backups and restore, privacy and the command line.
+- Calendar files that define their own time zone (Outlook's "Customized Time Zone", for one) now import instead of being refused. A zone Windows also has is used under its Windows name; one it does not have still places each appointment at the right moment, and a repeat on it keeps its first date's times and is counted in the import report.
 
 ### Changed
 - The lock button's menu opens in the content pane's top-right corner, 8px in from the top and right, mirroring the rail flyouts.

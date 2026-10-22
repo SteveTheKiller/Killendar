@@ -169,6 +169,8 @@
     <!-- Import caveats, appended to the line above. Each carries its OWN leading sentence break,
          because that mark is not "." in every language. -->
     <sys:String x:Key="Str_Status_ImportRepeat">. Повторюваних: {0}, додано лише першу дату</sys:String>
+    <sys:String x:Key="Str_Imp_PvZone">Повторюються в часовому поясі, який задано у файлі й якого немає в Windows, тому зберігають час першої дати: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportZone">. {0} повторюються в часовому поясі, якого немає в Windows, і зберігають час першої дати</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">. Пропущено через нечитану дату: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. Завдань або нотаток, які Killendar не зберігає: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Пропущено непідтримувані зміни майбутніх повторень: {0}</sys:String>

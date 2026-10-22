@@ -123,6 +123,8 @@
     <sys:String x:Key="Str_Status_Imported">{0} Termine importiert</sys:String>
     <sys:String x:Key="Str_Status_ImportedSkipped">{0} Termine importiert, {1} bereits vorhandene übersprungen</sys:String>
     <sys:String x:Key="Str_Status_ImportRepeat">. {0} wiederholen sich, und nur der erste Termin wurde übernommen</sys:String>
+    <sys:String x:Key="Str_Imp_PvZone">Wiederholen sich in einer Zeitzone, die die Datei selbst festlegt und Windows nicht kennt, und behalten die Uhrzeit des ersten Termins: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportZone">. {0} wiederholen sich in einer Zeitzone, die Windows nicht kennt, und behalten die Uhrzeit des ersten Termins</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">. {0} hatten kein lesbares Datum und wurden übersprungen</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} waren Aufgaben oder Notizen, die Killendar nicht speichert</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Nicht unterstützte Änderungen an zukünftigen Terminen wurden übersprungen: {0}</sys:String>

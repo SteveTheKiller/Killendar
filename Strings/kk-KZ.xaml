@@ -169,6 +169,8 @@
     <!-- Import caveats, appended to the line above. Each carries its OWN leading sentence break,
          because that mark is not "." in every language. -->
     <sys:String x:Key="Str_Status_ImportRepeat">. {0} қайталанады, тек бірінші күні қосылды</sys:String>
+    <sys:String x:Key="Str_Imp_PvZone">Файл өзі анықтаған, Windows-та жоқ уақыт белдеуінде қайталанады, сондықтан бірінші күннің уақытын сақтайды: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportZone">. {0} Windows-та жоқ уақыт белдеуінде қайталанады және бірінші күннің уақытын сақтайды</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">. {0} оқылатын күні болмағандықтан өткізіп жіберілді</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} тапсырма немесе жазба болды, оларды Killendar сақтамайды</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Болашақ қайталануларға әсер ететін қолдау көрсетілмейтін өзгерістер өткізіп жіберілді: {0}</sys:String>

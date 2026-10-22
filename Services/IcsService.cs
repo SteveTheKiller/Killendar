@@ -42,6 +42,10 @@ namespace Killendar.Services
         /// that date from the series instead.</summary>
         public int Canceled;
 
+        /// <summary>Repeats on a time zone the file defines for itself that matches no Windows
+        /// zone. They keep the times of their first date, on UTC's clock, and are counted.</summary>
+        public int ZoneApproximated;
+
         /// <summary>Appointments that arrived with details Killendar neither stores nor carries
         /// through (attachments, a location's coordinates, nested components other than alarms).
         /// Counted once per appointment so the import can say something was left out.</summary>
@@ -100,7 +104,45 @@ namespace Killendar.Services
             return result;
         }
 
+        /// <summary>The file's own VTIMEZONE definitions for TZIDs Windows does not know, for the
+        /// parse in progress on this thread: the matching Windows zone, or the definition itself.</summary>
+        [ThreadStatic] private static Dictionary<string, (string? SystemId, IcsCustomZone Zone)>? _fileZones;
+
+        /// <summary>Set when a date of the event being read used a file zone no Windows zone matches
+        /// and whose offset changes, which a repeat cannot follow.</summary>
+        [ThreadStatic] private static bool _usedUnmatchedZone;
+
         private static IcsParseResult ParseLines(List<string> lines, CancellationToken cancel)
+        {
+            var previous = _fileZones;
+            _fileZones = ReadFileZones(lines);
+            try { return ParseLinesWithZones(lines, cancel); }
+            finally { _fileZones = previous; }
+        }
+
+        /// <summary>Every VTIMEZONE whose TZID Windows cannot name, matched to a Windows zone where one fits.</summary>
+        private static Dictionary<string, (string? SystemId, IcsCustomZone Zone)> ReadFileZones(List<string> lines)
+        {
+            var zones = new Dictionary<string, (string?, IcsCustomZone)>(StringComparer.Ordinal);
+            List<string>? block = null;
+            foreach (var line in lines)
+            {
+                if (line.StartsWith("BEGIN:VTIMEZONE", StringComparison.OrdinalIgnoreCase)) { block = []; continue; }
+                if (block == null) continue;
+                if (line.StartsWith("END:VTIMEZONE", StringComparison.OrdinalIgnoreCase))
+                {
+                    var zone = IcsCustomZone.Read(block);
+                    block = null;
+                    if (zone == null || zones.ContainsKey(zone.Id) || TZConvert.TryGetTimeZoneInfo(zone.Id, out _)) continue;
+                    zones[zone.Id] = (zone.MatchSystemZone(), zone);
+                    continue;
+                }
+                block.Add(line);
+            }
+            return zones;
+        }
+
+        private static IcsParseResult ParseLinesWithZones(List<string> lines, CancellationToken cancel)
         {
             var result = new IcsParseResult();
 
@@ -155,6 +197,7 @@ namespace Killendar.Services
                         haveStart    = false;
                         repeating    = false;
                         ruleDay      = null;
+                        _usedUnmatchedZone = false;
                         unsupportedRange = false;
                         duration     = null;
                         recurrenceId = null;
@@ -300,6 +343,7 @@ namespace Killendar.Services
                                 }
                             }
 
+                            if (_usedUnmatchedZone && current.Repeat != RepeatFreq.None) result.ZoneApproximated++;
                             current.ReminderMinutes = Reminders.FromAlarms(current.KeptProperties);
                             if (repeating) result.Repeating++;
                             if (lostDetails) result.LostDetails++;
@@ -811,8 +855,19 @@ namespace Killendar.Services
                         var dt   = new DateTime(yr, mo, dy, hr, mn, sc, kind);
                         var anchor = DateTime.SpecifyKind(dt, DateTimeKind.Unspecified);
                         if (utc) dt = dt.ToLocalTime();
+                        // A zone the file defines for itself: the matching Windows zone where
+                        // there is one, else the file's own rules, read onto UTC's clock.
+                        else if (zoneId != null && _fileZones != null && _fileZones.TryGetValue(zoneId, out var defined) &&
+                                 defined.SystemId == null)
+                        {
+                            var instant = defined.Zone.ToUtc(dt);
+                            if (defined.Zone.ChangesOffset) _usedUnmatchedZone = true;
+                            return (instant.ToLocalTime(), false, RecurrenceTimeBasis.Utc,
+                                DateTime.SpecifyKind(instant, DateTimeKind.Unspecified), "");
+                        }
                         else if (zoneId != null)
                         {
+                            if (_fileZones != null && _fileZones.TryGetValue(zoneId, out var matched)) zoneId = matched.SystemId!;
                             TimeZoneInfo zone;
                             try { zone = TZConvert.GetTimeZoneInfo(zoneId); }
                             catch (TimeZoneNotFoundException ex)

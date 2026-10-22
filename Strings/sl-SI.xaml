@@ -142,6 +142,8 @@
     <sys:String x:Key="Str_Status_Imported">Uvoženi dogodki: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportedSkipped">Uvoženi dogodki: {0}; preskočeni obstoječi dogodki: {1}</sys:String>
     <sys:String x:Key="Str_Status_ImportRepeat">. Ponavljajoči se dogodki, pri katerih je bil dodan samo prvi datum: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvZone">Ponavljajo se v časovnem pasu, ki ga določa datoteka in ga Windows nima, zato ohranijo čase prvega datuma: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportZone">. {0} se ponavlja v časovnem pasu, ki ga Windows nima, in ohrani čase prvega datuma</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">. Preskočeni dogodki brez berljivega datuma: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. Opravila ali zapiski, ki jih Killendar ne shranjuje: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Preskočene nepodprte spremembe prihodnjih ponovitev: {0}</sys:String>

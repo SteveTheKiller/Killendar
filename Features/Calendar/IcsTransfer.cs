@@ -161,6 +161,7 @@ namespace Killendar.Features
             Line(source.Canceled, "Str_Imp_PvCanceled");
             Line(source.LostDetails, "Str_Imp_PvLost");
             Line(source.Repeating, "Str_Imp_PvRepeat");
+            Line(source.ZoneApproximated, "Str_Imp_PvZone");
             Line(source.Unreadable + source.Malformed + source.Unsupported, "Str_Imp_PvSkipped");
             return string.Join("\n", lines);
         }
@@ -177,6 +178,7 @@ namespace Killendar.Features
             // date, and the user has no way of discovering that except by missing the second
             // occurrence.
             Note(status, source.Repeating,   "Str_Status_ImportRepeat");
+            Note(status, source.ZoneApproximated, "Str_Status_ImportZone");
             Note(status, source.Unreadable,  "Str_Status_ImportUnreadable");
             Note(status, source.Malformed,   "Str_Status_ImportMalformed");
             Note(status, source.Unsupported - source.UnsupportedRanges, "Str_Status_ImportUnsupported");
@@ -191,7 +193,7 @@ namespace Killendar.Features
             internal List<CalendarEvent> Events = [];
             internal string? Refusal;
             internal bool Csv;
-            internal int AlreadyPresent, Repeating, Unreadable, Malformed, Unsupported, UnsupportedRanges, Canceled, LostDetails;
+            internal int AlreadyPresent, Repeating, Unreadable, Malformed, Unsupported, UnsupportedRanges, Canceled, LostDetails, ZoneApproximated;
 
             internal static ImportSource From(IcsParseResult parsed) => new()
             {
@@ -202,11 +204,12 @@ namespace Killendar.Features
                 UnsupportedRanges = parsed.UnsupportedRanges,
                 Canceled = parsed.Canceled,
                 LostDetails = parsed.LostDetails,
+                ZoneApproximated = parsed.ZoneApproximated,
             };
 
             /// <summary>Anything the user would not get back by importing this file.</summary>
             internal bool Losses(ImportPlan plan) => plan.AlreadyPresent + Repeating + Unreadable + Malformed +
-                                                     Unsupported + Canceled + LostDetails > 0;
+                                                     Unsupported + Canceled + LostDetails + ZoneApproximated > 0;
         }
 
         // ── Export: scope flyout, then the picker, then the format the extension names ──

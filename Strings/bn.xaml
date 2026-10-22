@@ -123,6 +123,8 @@
     <sys:String x:Key="Str_Status_Imported">{0} টি অ্যাপয়েন্টমেন্ট ইমপোর্ট করা হয়েছে</sys:String>
     <sys:String x:Key="Str_Status_ImportedSkipped">{0} টি অ্যাপয়েন্টমেন্ট ইমপোর্ট, আগে থেকেই থাকা {1} টি বাদ</sys:String>
     <sys:String x:Key="Str_Status_ImportRepeat">। {0} টি পুনরাবৃত্ত, শুধু প্রথম তারিখটি যোগ হয়েছে</sys:String>
+    <sys:String x:Key="Str_Imp_PvZone">ফাইলের নিজস্ব এমন সময় অঞ্চলে পুনরাবৃত্ত যা Windows-এ নেই, তাই প্রথম তারিখের সময় রাখে: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportZone">। {0}টি এমন সময় অঞ্চলে পুনরাবৃত্ত যা Windows-এ নেই, প্রথম তারিখের সময় রাখে</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">। {0} টির তারিখ পড়া যায়নি, বাদ দেওয়া হয়েছে</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">। {0} টি কাজ বা নোট, যা Killendar রাখে না</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">। অসমর্থিত হওয়ায় ভবিষ্যতের পুনরাবৃত্তিতে প্রভাব ফেলা পরিবর্তনগুলি বাদ দেওয়া হয়েছে: {0}</sys:String>

@@ -123,6 +123,8 @@
     <sys:String x:Key="Str_Status_Imported">{0} 件の予定を読み込みました</sys:String>
     <sys:String x:Key="Str_Status_ImportedSkipped">{0} 件の予定を読み込み、既存の {1} 件をスキップしました</sys:String>
     <sys:String x:Key="Str_Status_ImportRepeat">。{0} 件は繰り返しの予定で、最初の日付のみ追加されました</sys:String>
+    <sys:String x:Key="Str_Imp_PvZone">ファイル独自で Windows にないタイム ゾーンで繰り返すため、最初の日の時刻のままになります: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportZone">。{0} 件は Windows にないタイム ゾーンで繰り返すため、最初の日の時刻のままです</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">。{0} 件は日付を読み取れずスキップしました</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">。{0} 件はタスクやメモで、Killendar では保存できません</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">。今後の繰り返しに影響する未対応の変更を {0} 件スキップしました</sys:String>

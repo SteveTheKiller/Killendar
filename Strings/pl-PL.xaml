@@ -225,6 +225,8 @@
     <sys:String x:Key="Str_Dlg_DeleteSeriesDetail">Usunięte zostaną wszystkie daty z tej serii. Tej operacji nie można cofnąć.</sys:String>
     <sys:String x:Key="Str_Status_ImportedSkipped">Zaimportowano {0} spotkań; pominięto {1}, które już istniały</sys:String>
     <sys:String x:Key="Str_Status_ImportRepeat">. {0} było cyklicznych; dodano tylko pierwszą datę</sys:String>
+    <sys:String x:Key="Str_Imp_PvZone">Powtarzają się w strefie czasowej zdefiniowanej przez plik, której Windows nie ma, więc zachowują godziny pierwszego terminu: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportZone">. {0} powtarza się w strefie czasowej, której Windows nie ma, i zachowuje godziny pierwszego terminu</sys:String>
     <sys:String x:Key="Str_Status_ImportUnreadable">. {0} nie miało czytelnej daty i zostało pominiętych</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupported">. {0} było zadaniami lub notatkami, których Killendar nie przechowuje</sys:String>
     <sys:String x:Key="Str_Status_ImportUnsupportedRanges">. Pominięto nieobsługiwane zmiany dotyczące przyszłych wystąpień: {0}</sys:String>
