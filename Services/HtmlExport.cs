@@ -75,6 +75,8 @@ namespace Killendar.Services
         public static string Build(List<CalendarEvent> events, DateTime from, DateTime toExclusive, HtmlOptions? options = null)
         {
             options ??= new HtmlOptions();
+            // All-day first, then by start, as the views show a day; every layout reads this order.
+            events = [.. events.OrderBy(e => e.AllDay ? 0 : 1).ThenBy(e => e.Start)];
             var culture = CultureInfo.CurrentCulture;
             from        = from.Date;
             toExclusive = toExclusive == DateTime.MaxValue ? DateTime.MaxValue : toExclusive.Date;
@@ -466,7 +468,13 @@ footer { color: var(--dim); font-family: Consolas, monospace; font-size: 11px; m
   .ev.cont { color: #666; border-left-color: #999; }
   .tm { color: #555; }
   .range, footer { color: #777; }
-  .month, .week, .day { page-break-inside: avoid; }
+  /* A whole month or week rarely fits one page; asked not to split, the browser moved it to
+     the next page and split it there, leaving the first page empty. Rows, days and single
+     appointments stay whole instead, each month starts a page, and headings repeat. */
+  tr, .day, .ev { break-inside: avoid; page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  .month + .month { break-before: page; page-break-before: always; }
+  h2 { break-after: avoid; page-break-after: avoid; }
   .det { color: #555; }
   .legend i { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
