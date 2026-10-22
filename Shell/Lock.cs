@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
 using Microsoft.Win32;
+using Killendar.Controls;
 using Killendar.Features;
 using Killendar.Services;
 
@@ -94,7 +95,8 @@ namespace Killendar.Shell
         /// automatic locks; without one it goes straight to setting a password, as before.</summary>
         private void ShowLockMenu()
         {
-            var menu = new ContextMenu { PlacementTarget = LockButton, Placement = PlacementMode.Bottom };
+            var menu = new ContextMenu();
+            FlyoutPlacement.AttachTopRight(menu);   // the pane's top-right corner, 8px in
             var lockNow = new MenuItem { Header = Loc("Str_Lock_Now"), InputGestureText = "Ctrl+L" };
             lockNow.Click += (_, _) => LockAndAsk();
             var change = new MenuItem { Header = Loc("Str_Lock_Change") };

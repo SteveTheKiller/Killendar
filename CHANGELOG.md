@@ -78,6 +78,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Added a plain-language guide to importing, repeats, time zones, reminders, backups and restore, privacy and the command line.
 
 ### Changed
+- The lock button's menu opens in the content pane's top-right corner, 8px in from the top and right, mirroring the rail flyouts.
 - Light is shades of gray with nothing white: the background, sidebar and footer are the darkest gray (#cccccc), menus and bars a step lighter, then panes, then fields.
 
 - Updated SQLCipher to 4.19.0, SQLite and JSON processing to 10.0.13, and SQLitePCLRaw to 3.0.5.
