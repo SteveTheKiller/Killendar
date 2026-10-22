@@ -249,7 +249,9 @@ namespace Killendar.Views
         private void PlaceTimedEvents(Canvas canvas, DateTime date)
         {
             var dayStart = date.Date;
-            var placements = CalendarLayout.PlaceTimedDay(_store!.GetOnDay(date), date);
+            // Other Killendars shown alongside draw here too, read only in their own color.
+            var placements = CalendarLayout.PlaceTimedDay(
+                ShownCalendars.With(_store!.GetOnDay(date), date.Date, date.Date.AddDays(1)), date);
             foreach (var placement in placements)
             {
                 var ev = placement.Event;
@@ -360,8 +362,10 @@ namespace Killendar.Views
 
                 // Column from the pointer, time from where the chip's TOP landed - so the grab
                 // point inside the chip does not shift the drop by however far down you grabbed.
-                double dayW = Math.Max(1, (_bodyGrid.ActualWidth - 56) / Days);
-                int col = (int)Math.Max(0, Math.Min(Days - 1, (p.X - 56) / dayW));
+                // The gutter as laid out: wider when a second time zone's hours sit in it.
+                double gutter = _bodyGrid.ColumnDefinitions.Count > 0 ? _bodyGrid.ColumnDefinitions[0].ActualWidth : 46;
+                double dayW = Math.Max(1, (_bodyGrid.ActualWidth - gutter) / Days);
+                int col = (int)Math.Max(0, Math.Min(Days - 1, (p.X - gutter) / dayW));
 
                 // Drag snaps at least as fine as the HALF hour, even when the grid is at its
                 // loosest. A click follows the visible lines because it creates where a line

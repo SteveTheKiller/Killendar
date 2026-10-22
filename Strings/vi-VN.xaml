@@ -143,6 +143,7 @@
   <sys:String x:Key="Str_Shown_Unlock">Mở khóa</sys:String>
   <sys:String x:Key="Str_Shown_Unlocked">Đang hiện {0}</sys:String>
   <sys:String x:Key="Str_Shown_Hint">Các Killendar hiện bên cạnh chỉ để xem. Cuộc hẹn mới và thay đổi vào Killendar đang mở.</sys:String>
+  <sys:String x:Key="Str_Shown_LockedAgain">Các Killendar mã hóa hiện bên cạnh đã được khóa lại.</sys:String>
   <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Ngày này và mọi ngày sau sẽ bị xóa. Các ngày trước vẫn giữ.</sys:String>
   <sys:String x:Key="Str_Err_RepeatEnd">Hãy chọn thời điểm kết thúc lặp lại hoặc đặt thành không bao giờ kết thúc.</sys:String>
   <sys:String x:Key="Str_Err_RepeatInterval">Hãy nhập một số nguyên lớn hơn không.</sys:String>

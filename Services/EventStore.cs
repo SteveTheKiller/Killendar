@@ -235,6 +235,17 @@ namespace Killendar.Services
             }
         }
 
+        /// <summary>
+        /// Lets go of the file and keeps the appointments already read. For a calendar that is
+        /// only shown (ShownCalendars): every query is answered from memory, and a held file
+        /// could not be renamed or deleted from Manage Killendars while it is shown.
+        /// </summary>
+        internal void ReleaseFile()
+        {
+            _db?.Dispose();
+            _db = null;
+        }
+
         public void Close()
         {
             WaitForBackgroundBackup();
@@ -278,7 +289,8 @@ namespace Killendar.Services
             if (!File.Exists(path)) return false;
             try
             {
-                using var probe = new SqliteConnection($"Data Source={path};Mode=ReadOnly");
+                // The builder quotes the path: a file name may hold a ';'.
+                using var probe = new SqliteConnection(new SqliteConnectionStringBuilder { DataSource = path, Mode = SqliteOpenMode.ReadOnly }.ConnectionString);
                 probe.Open();
                 using var cmd = probe.CreateCommand();
                 cmd.CommandText = "SELECT count(*) FROM sqlite_master";

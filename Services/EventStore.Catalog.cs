@@ -60,6 +60,7 @@ namespace Killendar.Services
             File.Move(Path.Combine(DataDir, oldName), Path.Combine(DataDir, newName));
             RenameBackups(Path.Combine(DataDir, oldName), Path.Combine(DataDir, newName));
             LastRename = (oldName, newName);
+            ShownCalendars.Renamed(oldName, newName);
             if (string.Equals(oldName, ActiveFile, StringComparison.OrdinalIgnoreCase))
                 SetActive(newName);
         }
@@ -69,6 +70,7 @@ namespace Killendar.Services
             SqliteConnection.ClearAllPools();
             File.Delete(Path.Combine(DataDir, name));
             DeleteBackups(Path.Combine(DataDir, name));
+            ShownCalendars.Forget(name);
         }
 
         /// <summary>Uses an existing .kcal in the data folder or copies an external one into it.

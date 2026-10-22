@@ -109,6 +109,7 @@
     <sys:String x:Key="Str_Shown_Unlock">Kilidi aç</sys:String>
     <sys:String x:Key="Str_Shown_Unlocked">{0} gösteriliyor</sys:String>
     <sys:String x:Key="Str_Shown_Hint">Yanında gösterilen Killendar'lar salt okunurdur. Yeni randevular ve değişiklikler açık olana gider.</sys:String>
+    <sys:String x:Key="Str_Shown_LockedAgain">Yanında gösterilen şifreli Killendar'lar yeniden kilitlendi.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Bu tarih ve sonraki tüm tarihler kaldırılır. Öncekiler kalır.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Tekrarın ne zaman biteceğini belirt, ya da hiç bitmesin.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Sıfırdan büyük bir tam sayı gir.</sys:String>

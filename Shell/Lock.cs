@@ -36,9 +36,10 @@ namespace Killendar.Shell
             _idleTimer.Tick += (_, _) =>
             {
                 if (_lockWaiting && !_store.IsImporting) { LockAndAsk(); return; }
-                if (_store.HasPassword && !_security.IsLocked &&
-                    AutoLock.IdleDue(AutoLock.IdleTime(), AutoLock.IdleMinutes(Settings.Get(AutoLock.IdleSetting))))
-                    LockAndAsk();
+                bool idle = AutoLock.IdleDue(AutoLock.IdleTime(), AutoLock.IdleMinutes(Settings.Get(AutoLock.IdleSetting)));
+                if (_store.HasPassword && !_security.IsLocked && idle) LockAndAsk();
+                // No password on the open one, but an encrypted Killendar is shown beside it.
+                else if (!_store.HasPassword && idle && ShownCalendars.AnyUnlockedEncrypted) ShownCalendars.LockEncrypted();
             };
             _idleTimer.Start();
             SystemEvents.SessionSwitch += OnSessionSwitch;
@@ -57,7 +58,11 @@ namespace Killendar.Shell
         private void OnSessionSwitch(object sender, SessionSwitchEventArgs e)
         {
             if (e.Reason == SessionSwitchReason.SessionLock && Settings.Get(AutoLock.WindowsSetting) == "1")
-                Dispatcher.BeginInvoke(new Action(() => { if (_store.HasPassword) LockAndAsk(); }));
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    if (_store.HasPassword) LockAndAsk();
+                    else ShownCalendars.LockEncrypted();
+                }));
         }
 
         private void LockAndAsk()
@@ -87,7 +92,17 @@ namespace Killendar.Shell
 
         private void LockShortcut()
         {
-            if (!_store.HasPassword) { StatusText.Text = Loc("Str_Status_LockNeedsPassword"); return; }
+            if (!_store.HasPassword)
+            {
+                // Nothing of its own to lock, but an encrypted Killendar shown beside it locks.
+                if (ShownCalendars.AnyUnlockedEncrypted)
+                {
+                    ShownCalendars.LockEncrypted();
+                    StatusText.Text = Loc("Str_Shown_LockedAgain");
+                }
+                else StatusText.Text = Loc("Str_Status_LockNeedsPassword");
+                return;
+            }
             LockAndAsk();
         }
 

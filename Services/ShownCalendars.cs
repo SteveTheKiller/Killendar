@@ -14,7 +14,8 @@ namespace Killendar.Services
     /// own password is typed (never saved), a missing or unreadable one is listed as unavailable,
     /// and neither stops the others from showing. Locking the app closes them all.
     ///
-    /// Remembered as "ShownCalendars": file name|#RRGGBB entries separated by ';'.
+    /// Remembered as "ShownCalendars": file name|#RRGGBB entries separated by '*'. Neither
+    /// character can be in a Windows file name, so no name can break the list.
     /// </summary>
     public static class ShownCalendars
     {
@@ -28,6 +29,9 @@ namespace Killendar.Services
             public string Color { get; internal set; } = "";
             public State State { get; internal set; }
             public string? Error { get; internal set; }
+            /// <summary>Opened with a password: closes again on any lock, even while the open
+            /// Killendar has none of its own.</summary>
+            public bool Encrypted { get; internal set; }
             internal EventStore? Store;
         }
 
@@ -47,7 +51,7 @@ namespace Killendar.Services
         internal static List<(string Name, string Color)> Parse(string? setting)
         {
             var result = new List<(string, string)>();
-            foreach (var entry in (setting ?? "").Split(';'))
+            foreach (var entry in (setting ?? "").Split('*'))
             {
                 var parts = entry.Split('|');
                 string name = parts[0].Trim();
@@ -60,7 +64,7 @@ namespace Killendar.Services
         }
 
         internal static string Format(IEnumerable<(string Name, string Color)> entries) =>
-            string.Join(";", entries.Select(e => e.Name + "|" + e.Color));
+            string.Join("*", entries.Select(e => e.Name + "|" + e.Color));
 
         private static bool IsColor(string s) =>
             s.Length == 7 && s[0] == '#' && int.TryParse(s.Substring(1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out _);
@@ -118,14 +122,52 @@ namespace Killendar.Services
         /// <summary>Closes every shown calendar, as the app locks. Reload reopens the unencrypted ones.</summary>
         public static void CloseAll()
         {
-            foreach (var item in _items)
+            foreach (var item in _items) item.Store?.Close();
+            _items.Clear();
+            Changed?.Invoke();
+        }
+
+        /// <summary>True while an encrypted calendar is open beside this one.</summary>
+        public static bool AnyUnlockedEncrypted => _items.Any(i => i.Encrypted && i.State == State.Shown);
+
+        /// <summary>
+        /// Locks the encrypted shown calendars and leaves the rest. Used by Ctrl+L, idle and Windows
+        /// lock while the open Killendar has no password, so there is no app lock to do it.
+        /// </summary>
+        public static void LockEncrypted()
+        {
+            foreach (var item in _items.Where(i => i.Encrypted && i.State == State.Shown))
             {
                 item.Store?.Close();
                 item.Store = null;
-                if (item.State == State.Shown) item.State = State.Locked;
+                item.State = State.Locked;
+                item.Encrypted = false;
             }
-            _items.Clear();
             Changed?.Invoke();
+        }
+
+        /// <summary>Follows a Killendar renamed in Manage Killendars, keeping its color.</summary>
+        internal static void Renamed(string oldName, string newName)
+        {
+            var entries = Parse(Settings.Get(Setting));
+            int i = entries.FindIndex(e => SameFile(e.Name, oldName));
+            if (i < 0) return;
+            entries[i] = (Path.GetFileName(newName), entries[i].Color);
+            Settings.Set(Setting, Format(entries));
+            foreach (var item in _items.Where(it => SameFile(it.Name, oldName))) item.Name = Path.GetFileName(newName);
+        }
+
+        /// <summary>Drops a deleted Killendar from the list.</summary>
+        internal static void Forget(string name)
+        {
+            var entries = Parse(Settings.Get(Setting));
+            if (entries.RemoveAll(e => SameFile(e.Name, name)) == 0) return;
+            Settings.Set(Setting, Format(entries));
+            foreach (var item in _items.Where(it => SameFile(it.Name, name)).ToList())
+            {
+                item.Store?.Close();
+                _items.Remove(item);
+            }
         }
 
         /// <summary>
@@ -168,7 +210,8 @@ namespace Killendar.Services
             item.Store?.Close();
             item.Store = null;
             item.Error = null;
-            string path = Path.IsPathRooted(item.Name) ? item.Name : Path.Combine(EventStore.DataDir, item.Name);
+            item.Encrypted = false;
+            string path = Path.Combine(EventStore.DataDir, item.Name);
             if (!File.Exists(path))
             {
                 item.State = State.Unavailable;
@@ -183,8 +226,10 @@ namespace Killendar.Services
             try
             {
                 store.OpenReadOnly(path, password);
+                store.ReleaseFile();   // everything is read; the file stays free to rename or delete
                 item.Store = store;
                 item.State = State.Shown;
+                item.Encrypted = password != null;
             }
             catch (Exception ex)
             {

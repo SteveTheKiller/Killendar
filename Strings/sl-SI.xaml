@@ -129,6 +129,7 @@
     <sys:String x:Key="Str_Shown_Unlock">Odkleni</sys:String>
     <sys:String x:Key="Str_Shown_Unlocked">Prikazan je {0}</sys:String>
     <sys:String x:Key="Str_Shown_Hint">Prikazani Killendarji so samo za branje. Novi sestanki in spremembe gredo v odprtega.</sys:String>
+    <sys:String x:Key="Str_Shown_LockedAgain">Šifrirani Killendarji, prikazani ob strani, so spet zaklenjeni.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Ta datum in vsi poznejši bodo odstranjeni. Prejšnji ostanejo.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Določi konec ponavljanja ali izberi ponavljanje brez konca.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Vnesi celo število, večje od nič.</sys:String>

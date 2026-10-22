@@ -153,6 +153,7 @@
     <sys:String x:Key="Str_Shown_Unlock">Құлыпты ашу</sys:String>
     <sys:String x:Key="Str_Shown_Unlocked">{0} көрсетілуде</sys:String>
     <sys:String x:Key="Str_Shown_Hint">Қатар көрсетілген Killendar тек оқуға арналған. Жаңа кездесулер мен өзгерістер ашық Killendar-ға түседі.</sys:String>
+    <sys:String x:Key="Str_Shown_LockedAgain">Қатар көрсетілген шифрланған Killendar қайта құлыпталды.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Осы күн және одан кейінгі барлық күндер жойылады. Бұрынғылары қалады.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Қайталану қашан аяқталатынын көрсетіңіз немесе оны шексіз етіңіз.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Нөлден үлкен бүтін сан енгізіңіз.</sys:String>

@@ -109,6 +109,7 @@
     <sys:String x:Key="Str_Shown_Unlock">ロック解除</sys:String>
     <sys:String x:Key="Str_Shown_Unlocked">{0} を表示中</sys:String>
     <sys:String x:Key="Str_Shown_Hint">並べて表示した Killendar は読み取り専用です。新しい予定と変更は開いている Killendar に入ります。</sys:String>
+    <sys:String x:Key="Str_Shown_LockedAgain">並べて表示している暗号化された Killendar を再びロックしました。</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">この日とそれ以降の日がすべて削除されます。それより前の日は残ります。</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">繰り返しの終わりを指定するか、終わらない設定にしてください。</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">0 より大きい整数を入力してください。</sys:String>

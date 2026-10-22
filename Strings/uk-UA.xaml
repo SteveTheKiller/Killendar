@@ -153,6 +153,7 @@
     <sys:String x:Key="Str_Shown_Unlock">Розблокувати</sys:String>
     <sys:String x:Key="Str_Shown_Unlocked">Показано {0}</sys:String>
     <sys:String x:Key="Str_Shown_Hint">Показані поруч Killendar лише для читання. Нові зустрічі та зміни потрапляють у відкритий.</sys:String>
+    <sys:String x:Key="Str_Shown_LockedAgain">Зашифровані Killendar, показані поруч, знову заблоковано.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Цю дату й усі наступні буде видалено. Попередні залишаться.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Вкажіть, коли повтор закінчується, або оберіть «Ніколи».</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Введіть ціле число більше нуля.</sys:String>

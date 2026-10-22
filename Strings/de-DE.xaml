@@ -109,6 +109,7 @@
     <sys:String x:Key="Str_Shown_Unlock">Entsperren</sys:String>
     <sys:String x:Key="Str_Shown_Unlocked">{0} wird angezeigt</sys:String>
     <sys:String x:Key="Str_Shown_Hint">Angezeigte Killendars sind schreibgeschützt. Neue Termine und Änderungen gehen in den geöffneten.</sys:String>
+    <sys:String x:Key="Str_Shown_LockedAgain">Daneben angezeigte verschlüsselte Killendars sind wieder gesperrt.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Dieser Termin und alle späteren werden entfernt. Frühere bleiben.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Gib an, wann die Wiederholung endet, oder dass sie nie endet.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Gib eine ganze Zahl größer als null ein.</sys:String>

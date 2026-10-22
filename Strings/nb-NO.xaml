@@ -153,6 +153,7 @@
     <sys:String x:Key="Str_Shown_Unlock">Lås opp</sys:String>
     <sys:String x:Key="Str_Shown_Unlocked">Viser {0}</sys:String>
     <sys:String x:Key="Str_Shown_Hint">Killendarer som vises ved siden av er skrivebeskyttet. Nye avtaler og endringer går til den som er åpen.</sys:String>
+    <sys:String x:Key="Str_Shown_LockedAgain">Krypterte Killendarer som vises ved siden av er låst igjen.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Denne datoen og alle senere fjernes. Tidligere datoer blir værende.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Angi når gjentakelsen slutter, eller sett den til å aldri slutte.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Skriv inn et heltall større enn null.</sys:String>

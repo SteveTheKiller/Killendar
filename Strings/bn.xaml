@@ -109,6 +109,7 @@
     <sys:String x:Key="Str_Shown_Unlock">আনলক</sys:String>
     <sys:String x:Key="Str_Shown_Unlocked">{0} দেখানো হচ্ছে</sys:String>
     <sys:String x:Key="Str_Shown_Hint">পাশে দেখানো Killendar শুধু পড়ার জন্য। নতুন অ্যাপয়েন্টমেন্ট ও পরিবর্তন খোলা Killendar-এ যায়।</sys:String>
+    <sys:String x:Key="Str_Shown_LockedAgain">পাশে দেখানো এনক্রিপ্ট করা Killendar আবার লক করা হয়েছে।</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">এই তারিখ ও পরের সব তারিখ সরানো হবে। আগের তারিখগুলো থাকবে।</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">পুনরাবৃত্তি কবে শেষ হবে বলুন, অথবা কখনও শেষ না হতে দিন।</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">শূন্যের চেয়ে বড় একটি পূর্ণসংখ্যা লিখুন।</sys:String>

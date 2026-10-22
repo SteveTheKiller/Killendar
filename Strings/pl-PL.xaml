@@ -214,6 +214,7 @@
     <sys:String x:Key="Str_Shown_Unlock">Odblokuj</sys:String>
     <sys:String x:Key="Str_Shown_Unlocked">Pokazano {0}</sys:String>
     <sys:String x:Key="Str_Shown_Hint">Pokazane obok Killendary są tylko do odczytu. Nowe spotkania i zmiany trafiają do otwartego.</sys:String>
+    <sys:String x:Key="Str_Shown_LockedAgain">Zaszyfrowane Killendary pokazane obok są znowu zablokowane.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Ten termin i wszystkie późniejsze zostaną usunięte. Wcześniejsze zostają.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Określ koniec powtarzania lub ustaw brak końca.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Wpisz liczbę całkowitą większą od zera.</sys:String>

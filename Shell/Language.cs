@@ -63,6 +63,10 @@ namespace Killendar.Shell
             // The views are rebuilt wholesale, which re-reads every string they use.
             _calendar.Refresh();
 
+            // The time zone list names "this computer" in the language; rebuilt on next use.
+            FieldZone.Items.Clear();
+            if (ZoneRow.Visibility == Visibility.Visible) BuildZoneChoices();
+
             // Tooltips that carry a shortcut, including the panel button's, which tracks its state.
             ApplyShortcutTooltips();
 

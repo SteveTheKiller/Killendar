@@ -153,6 +153,7 @@
     <sys:String x:Key="Str_Shown_Unlock">Feloldás</sys:String>
     <sys:String x:Key="Str_Shown_Unlocked">{0} megjelenítve</sys:String>
     <sys:String x:Key="Str_Shown_Hint">A mellette megjelenített Killendarok csak olvashatók. Az új találkozók és a módosítások a megnyitottba kerülnek.</sys:String>
+    <sys:String x:Key="Str_Shown_LockedAgain">A mellette megjelenített titkosított Killendarok újra zárolva vannak.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Ez az időpont és minden későbbi törlődik. A korábbiak megmaradnak.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Mondja ki, mikor ér véget az ismétlés, vagy állítsa be, hogy soha ne érjen véget.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Adjon meg egy nullánál nagyobb egész számot.</sys:String>

@@ -6,7 +6,7 @@ A plain guide to what Killendar does with your calendar: what it can import, how
 
 Each Killendar is one `.kcal` file. It is an ordinary SQLite database until you give it a password; then it is encrypted with SQLCipher (AES-256). You can keep as many as you like (work, family, on call), each with its own password or none. The Killendars button in the title bar lists them, opens one, renames, deletes, and restores backups.
 
-Right-click the Killendars button to show other Killendars beside the open one. Each one shows in its own color and is read only: new appointments, changes, drags and imports always go to the open one. An encrypted one stays locked until you type its own password, which is never saved. One that is missing or cannot be read is marked as such and does not stop the others. Locking the app locks them too.
+Right-click the Killendars button to show other Killendars beside the open one. Each one shows in its own color and is read only: new appointments, changes, drags and imports always go to the open one. An encrypted one stays locked until you type its own password, which is never saved. One that is missing or cannot be read is marked as such and does not stop the others. Locking the app locks the encrypted ones again; when the open Killendar has no password of its own, Ctrl+L, the idle lock and the Windows lock still lock them. A shown Killendar can be renamed or deleted in the Killendars window while it is shown.
 
 ## Importing and exporting
 

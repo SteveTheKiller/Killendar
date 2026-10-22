@@ -109,6 +109,7 @@
     <sys:String x:Key="Str_Shown_Unlock">Desbloquear</sys:String>
     <sys:String x:Key="Str_Shown_Unlocked">Mostrando {0}</sys:String>
     <sys:String x:Key="Str_Shown_Hint">Los Killendar mostrados son de solo lectura. Las citas nuevas y los cambios van al que está abierto.</sys:String>
+    <sys:String x:Key="Str_Shown_LockedAgain">Los Killendar cifrados mostrados al lado vuelven a estar bloqueados.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Se quitan esta fecha y todas las posteriores. Las anteriores se mantienen.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Indica cuándo termina la repetición, o que no termine nunca.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Introduce un número entero mayor que cero.</sys:String>

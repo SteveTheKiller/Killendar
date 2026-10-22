@@ -109,6 +109,7 @@
     <sys:String x:Key="Str_Shown_Unlock">Déverrouiller</sys:String>
     <sys:String x:Key="Str_Shown_Unlocked">{0} est affiché</sys:String>
     <sys:String x:Key="Str_Shown_Hint">Les Killendar affichés sont en lecture seule. Les nouveaux rendez-vous et les modifications vont dans celui qui est ouvert.</sys:String>
+    <sys:String x:Key="Str_Shown_LockedAgain">Les Killendar chiffrés affichés à côté sont de nouveau verrouillés.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Cette date et toutes les suivantes sont supprimées. Les précédentes restent.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Indiquez quand la répétition se termine, ou qu'elle ne se termine jamais.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Saisissez un nombre entier supérieur à zéro.</sys:String>

@@ -70,7 +70,7 @@ namespace Killendar.Tests
         {
             Calendar("Work.kcal", "Standup");
             Calendar("Private.kcal", "Doctor", password: "secret");
-            Settings.Set(ShownCalendars.Setting, "Work.kcal|#8E6CC9;Private.kcal|#D08A2E;Gone.kcal|#2E9C94");
+            Settings.Set(ShownCalendars.Setting, "Work.kcal|#8E6CC9*Private.kcal|#D08A2E*Gone.kcal|#2E9C94");
 
             ShownCalendars.Reload("Home.kcal");
 
@@ -121,14 +121,60 @@ namespace Killendar.Tests
         }
 
         [Theory]
-        [InlineData("A.kcal|#112233;a.kcal|#445566", 1)]
-        [InlineData("A.kcal|red;B.kcal", 2)]
-        [InlineData(";;", 0)]
+        [InlineData("A.kcal|#112233*a.kcal|#445566", 1)]
+        [InlineData("A.kcal|red*B.kcal", 2)]
+        [InlineData("**", 0)]
         public void TheRememberedListIsReadSafely(string setting, int count)
         {
             var parsed = ShownCalendars.Parse(setting);
             Assert.Equal(count, parsed.Count);
             Assert.All(parsed, p => Assert.Matches("^#[0-9A-Fa-f]{6}$", p.Color));
+        }
+
+        // KD-C review BF-023: a name with ';' in it is a legal Windows file name.
+        [Fact]
+        public void ANameWithASemicolonSurvivesTheList()
+        {
+            Calendar("a;b.kcal", "Standup");
+            ShownCalendars.Toggle("a;b.kcal", true, "Home.kcal");
+
+            Assert.Equal("a;b.kcal", Assert.Single(ShownCalendars.Parse(Settings.Get(ShownCalendars.Setting))).Name);
+            Assert.Equal("Standup", Assert.Single(ShownCalendars.With([], Day, Day.AddDays(1))).Title);
+        }
+
+        // BF-010: a shown Killendar can be renamed and deleted while it is shown.
+        [Fact]
+        public void AShownCalendarCanBeRenamedAndDeleted()
+        {
+            Calendar("Work.kcal", "Standup");
+            ShownCalendars.Toggle("Work.kcal", true, "Home.kcal");
+
+            EventStore.RenameKillendar("Work.kcal", "Office.kcal");
+            Assert.Equal("Office.kcal", Assert.Single(ShownCalendars.Parse(Settings.Get(ShownCalendars.Setting))).Name);
+            ShownCalendars.Reload("Home.kcal");
+            Assert.Equal(ShownCalendars.State.Shown, Assert.Single(ShownCalendars.Items).State);
+
+            EventStore.DeleteKillendar("Office.kcal");
+            Assert.Empty(ShownCalendars.Parse(Settings.Get(ShownCalendars.Setting)));
+            Assert.Empty(ShownCalendars.Items);
+        }
+
+        // BF-007: with no password on the open Killendar, its locks still lock an encrypted one.
+        [Fact]
+        public void LockingEncryptedOnesLeavesTheRestShown()
+        {
+            Calendar("Work.kcal", "Standup");
+            Calendar("Private.kcal", "Doctor", password: "secret");
+            Settings.Set(ShownCalendars.Setting, "Work.kcal|#8E6CC9*Private.kcal|#D08A2E");
+            ShownCalendars.Reload("Home.kcal");
+            Assert.True(ShownCalendars.Unlock(ShownCalendars.Items.Single(i => i.Name == "Private.kcal"), "secret"));
+            Assert.True(ShownCalendars.AnyUnlockedEncrypted);
+
+            ShownCalendars.LockEncrypted();
+
+            Assert.False(ShownCalendars.AnyUnlockedEncrypted);
+            Assert.Equal(ShownCalendars.State.Locked, ShownCalendars.Items.Single(i => i.Name == "Private.kcal").State);
+            Assert.Equal("Standup", Assert.Single(ShownCalendars.With([], Day, Day.AddDays(1))).Title);
         }
     }
 }

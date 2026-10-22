@@ -109,6 +109,7 @@
     <sys:String x:Key="Str_Shown_Unlock">解锁</sys:String>
     <sys:String x:Key="Str_Shown_Unlocked">正在显示 {0}</sys:String>
     <sys:String x:Key="Str_Shown_Hint">并排显示的 Killendar 为只读。新约会和更改会进入当前打开的那个。</sys:String>
+    <sys:String x:Key="Str_Shown_LockedAgain">并排显示的加密 Killendar 已重新锁定。</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">将删除此日期及之后的所有日期。之前的日期保留。</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">请说明重复何时结束，或设为永不结束。</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">请输入大于零的整数。</sys:String>
