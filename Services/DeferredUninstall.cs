@@ -87,9 +87,13 @@ namespace Killendar.Services
             }
         }
 
+        /// <summary>Marks a file or an empty folder for deletion at the next restart. Replaced in tests.</summary>
+        internal static Func<string, bool> ScheduleRemoval = path => MoveFileEx(path, null, MoveFileDelayUntilReboot);
+
         public int RunWorker(string currentImage, string stagingRoot, string targetDirectory,
             string[] ownedFiles, bool machine, string operationId, Action removeMetadata,
-            int parentWaitMilliseconds = 30000, int attempts = 30, int retryMilliseconds = 1000)
+            int parentWaitMilliseconds = 30000, int attempts = 30, int retryMilliseconds = 1000,
+            Action? removeIntegration = null)
         {
             string directory = OperationDirectory(stagingRoot, operationId);
             string path = Path.Combine(directory, ReceiptName);
@@ -117,13 +121,14 @@ namespace Killendar.Services
                 {
                     removeMetadata();
                     receipt.MetadataRemoved = true;
-                }, attempts, retryMilliseconds, error => receipt.Error = error.Message);
+                }, attempts, retryMilliseconds, error => receipt.Error = error.Message, removeIntegration);
                 receipt.RemainingFiles = ownedFiles.Select(file => Path.Combine(targetDirectory, file))
                     .Where(file => !UninstallWorkflow.Absent(file)).ToArray();
                 receipt.State = result == 0 ? "Completed" : "Failed";
                 receipt.ExitCode = result;
                 if (result != 0 && receipt.Error.Length == 0) receipt.Error = "Uninstall cleanup did not complete. Retained files are listed in this receipt.";
                 UninstallWorkflow.WriteReceipt(path, receipt);
+                if (result == 0 && machine) ScheduleMachineCleanup(directory, targetDirectory, ScheduleRemoval);
                 return result;
             }
             catch (Exception error)
@@ -137,6 +142,30 @@ namespace Killendar.Services
                 return result;
             }
         }
+
+        /// <summary>A machine-wide uninstall runs from a copy staged inside the install folder, which
+        /// cannot delete itself. Once it succeeds, the copy, its folder and the install folder (empty
+        /// by then) are left for Windows to remove at the next restart.</summary>
+        internal static void ScheduleMachineCleanup(string operationDirectory, string targetDirectory, Func<string, bool> schedule)
+        {
+            try
+            {
+                foreach (string name in new[] { WorkerName, WorkerName + ".config", ReceiptName })
+                {
+                    string file = Path.Combine(operationDirectory, name);
+                    if (File.Exists(file)) schedule(file);
+                }
+                schedule(operationDirectory);
+                schedule(Path.GetFullPath(targetDirectory));
+            }
+            catch { /* Best effort: the uninstall itself already succeeded. */ }
+        }
+
+        private const int MoveFileDelayUntilReboot = 0x4;
+
+        [DllImport("kernel32.dll", EntryPoint = "MoveFileExW", CharSet = CharSet.Unicode, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool MoveFileEx(string existing, string? replacement, int flags);
 
         private static void ValidateOwned(string directory, string[] ownedFiles)
         {

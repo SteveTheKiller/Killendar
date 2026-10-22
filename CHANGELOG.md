@@ -8,6 +8,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Fixed
 
+- Uninstall removes shortcuts, the command path and file types before the program, so a failed step leaves an uninstall entry that still works. An all-users uninstall waits for its confirmation however long it stays open, and its leftover helper and empty program folder are removed at the next restart.
 - Screen readers name the color picker's Red, Green, Blue and Hex fields instead of announcing unnamed boxes.
 - Failed exports leave an existing calendar, CSV or HTML file untouched instead of truncating it.
 - Empty days, Week and Day column headers, agenda day headings and empty time slots work from the keyboard and screen readers. Tab reaches them, arrow keys move between days and slots, and Enter opens a day or creates at a slot.

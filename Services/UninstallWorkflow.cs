@@ -71,8 +71,10 @@ namespace Killendar.Services
             finally { if (File.Exists(temporary)) File.Delete(temporary); }
         }
 
+        /// <summary>Runs a machine-wide uninstall elevated. The elevated copy shows its own
+        /// confirmation, so it is waited for as long as that stays open.</summary>
         public static int? RequestElevation(bool machine, Func<bool> elevated,
-            Func<Process?> launch, Action<Exception> report, int waitMilliseconds = 30000)
+            Func<Process?> launch, Action<Exception> report, int waitMilliseconds = Timeout.Infinite)
         {
             if (!machine) return null;
             try
@@ -94,8 +96,13 @@ namespace Killendar.Services
             }
         }
 
+        /// <summary>Removes the installed files. <paramref name="removeIntegration"/> (shortcuts, PATH,
+        /// startup, file types) runs first, while the program is still in place, so if it fails the
+        /// uninstall entry still runs a real program and can be tried again. <paramref name="removeMetadata"/>
+        /// (the install and uninstall registration) runs last, once the files are gone.</summary>
         public static int CompleteDeferred(string directory, string[] ownedFiles, Action removeMetadata,
-            int attempts = 30, int retryMilliseconds = 1000, Action<Exception>? report = null)
+            int attempts = 30, int retryMilliseconds = 1000, Action<Exception>? report = null,
+            Action? removeIntegration = null)
         {
             try
             {
@@ -103,6 +110,7 @@ namespace Killendar.Services
                 string[] paths = KillerFamily.Deployment.InstalledFileCleanup.OwnedPaths(directory, ownedFiles);
                 if (paths.Length != ownedFiles.Length)
                     return KillerFamily.Deployment.InstallerExitCodes.SecurityRejected;
+                removeIntegration?.Invoke();
                 for (int attempt = 0; attempt < attempts; attempt++)
                 {
                     try

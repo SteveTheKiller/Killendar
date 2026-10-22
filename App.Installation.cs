@@ -355,7 +355,8 @@ namespace Killendar
                 return KillerFamily.Deployment.InstallerExitCodes.AccessDenied;
             return new DeferredUninstall().RunWorker(Process.GetCurrentProcess().MainModule!.FileName,
                 UninstallStagingRoot(machine), machine ? MachineInstallDir : InstallDir, InstalledFiles,
-                machine, args[2], () => RemoveUninstallMetadata(machine));
+                machine, args[2], () => RemoveUninstallMetadata(machine),
+                removeIntegration: () => RemoveUninstallIntegration(machine));
         }
 
         private static int Uninstall(bool silent, string? requestedOperationId)
@@ -392,7 +393,9 @@ namespace Killendar
             return result;
         }
 
-        private static void RemoveUninstallMetadata(bool machine)
+        /// <summary>Shortcuts, PATH, startup and file types: removed while the program is still in
+        /// place, so a failure here leaves an uninstall entry that still works.</summary>
+        private static void RemoveUninstallIntegration(bool machine)
         {
             string startMenuDir = machine
                 ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms), AppName)
@@ -420,8 +423,6 @@ namespace Killendar
                 if (startup?.GetValue(Services.AppInfo.DisplayName) != null)
                     throw new IOException("The startup registration remains.");
 
-            var hive = machine ? Registry.LocalMachine : Registry.CurrentUser;
-
             // Drop the association from the same scope that installed it. Also remove an HKCU
             // shadow left by older machine installs for the account performing this uninstall.
             if (machine)
@@ -436,6 +437,11 @@ namespace Killendar
                 FileAssociations.Unregister(Registry.CurrentUser);
                 VerifyUninstallAssociations(Registry.CurrentUser);
             }
+        }
+
+        private static void RemoveUninstallMetadata(bool machine)
+        {
+            var hive = machine ? Registry.LocalMachine : Registry.CurrentUser;
 
             hive.DeleteSubKeyTree(RegKey, throwOnMissingSubKey: false);
             using (var remaining = hive.OpenSubKey(RegKey))
