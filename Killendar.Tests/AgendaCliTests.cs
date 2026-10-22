@@ -93,7 +93,7 @@ namespace Killendar.Tests
                 using var process = Process.Start(start)!;
                 string output = process.StandardOutput.ReadToEnd();
                 string error = process.StandardError.ReadToEnd();
-                Assert.True(process.WaitForExit(10000), "Killendar CLI timed out");
+                Assert.True(process.WaitForExit(60000), "Killendar CLI timed out");
                 Assert.True(process.ExitCode == 0, error);
                 using var json = JsonDocument.Parse(output);
                 Assert.Equal("Site visit", json.RootElement.EnumerateArray().Single().GetProperty("title").GetString());

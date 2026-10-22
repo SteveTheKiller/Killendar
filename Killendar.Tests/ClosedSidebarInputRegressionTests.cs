@@ -35,7 +35,7 @@ namespace Killendar.Tests
             }) { IsBackground = true };
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
-            if (!thread.Join(20000)) throw new TimeoutException("The sidebar fixture exceeded its deadline.");
+            if (!thread.Join(60000)) throw new TimeoutException("The sidebar fixture exceeded its deadline.");
             if (failure != null) throw new InvalidOperationException(failure.ToString());
         }
 

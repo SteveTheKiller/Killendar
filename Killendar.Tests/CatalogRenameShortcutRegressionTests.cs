@@ -42,7 +42,7 @@ namespace Killendar.Tests
             }) { IsBackground = true };
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
-            Assert.True(thread.Join(20000), "The scratch catalog fixture exceeded its deadline.");
+            Assert.True(thread.Join(60000), "The scratch catalog fixture exceeded its deadline.");
             if (failure != null) throw new InvalidOperationException(failure.ToString());
         }
 

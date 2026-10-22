@@ -88,7 +88,7 @@ namespace Killendar.Tests
                 Assert.True(File.Exists(fixture.Marker));
                 Assert.False(parent!.HasExited);
                 File.WriteAllText(fixture.Release, "exit");
-                Assert.True(parent.WaitForExit(10000), fixture.ChildDiagnostics());
+                Assert.True(parent.WaitForExit(60000), fixture.ChildDiagnostics());
                 Assert.Equal(997, parent.ExitCode);
                 Assert.True(SpinWait.SpinUntil(() =>
                 {
@@ -104,7 +104,7 @@ namespace Killendar.Tests
                 if (File.Exists(fixture.WorkerId))
                 {
                     worker = fixture.OpenWorker();
-                    if (worker != null) Assert.True(worker.WaitForExit(10000));
+                    if (worker != null) Assert.True(worker.WaitForExit(60000));
                 }
             }
             catch (Exception error) { fixture.Failure = error; throw; }

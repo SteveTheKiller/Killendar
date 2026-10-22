@@ -54,7 +54,9 @@ namespace Killendar.Tests
                 using var process = Process.Start(start)!;
                 var output = process.StandardOutput.ReadToEndAsync();
                 var error = process.StandardError.ReadToEndAsync();
-                if (!process.WaitForExit(30000))
+                // A deadline, not a wait: a fixture exits as soon as it is done. A full Release run
+                // keeps the machine busy, so it is generous.
+                if (!process.WaitForExit(120000))
                 {
                     process.Kill();
                     process.WaitForExit();

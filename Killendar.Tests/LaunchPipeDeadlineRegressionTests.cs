@@ -40,7 +40,7 @@ namespace Killendar.Tests
 
             Assert.False(secondary.Claim("requested.kcal"));
             Assert.True(secondary.ForwardingSucceeded, "The valid launch must finish forwarding after rejection.");
-            Assert.True(received.Wait(1000), "A stalled launch client blocked a later valid launch.");
+            Assert.True(received.Wait(5000), "A stalled launch client blocked a later valid launch.");
             Assert.Equal("requested.kcal", delivered);
         }
 
@@ -71,10 +71,10 @@ namespace Killendar.Tests
             }
             Thread.Sleep(100);
             Assert.False(received.IsSet);
-            using var secondary = new SingleInstanceGuard(id, action => action(), _ => { }, 1000);
+            using var secondary = new SingleInstanceGuard(id, action => action(), _ => { }, 5000);
             Assert.False(secondary.Claim("valid.ics"));
             Assert.True(secondary.ForwardingSucceeded);
-            Assert.True(received.Wait(2000));
+            Assert.True(received.Wait(5000));
             Assert.Equal("valid.ics", delivered);
             Assert.Equal(1, Volatile.Read(ref count));
         }

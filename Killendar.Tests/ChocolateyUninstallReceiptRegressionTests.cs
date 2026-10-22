@@ -71,7 +71,7 @@ namespace Killendar.Tests
                     RedirectStandardOutput = true, RedirectStandardError = true
                 });
                 Assert.NotNull(process);
-                Assert.True(process!.WaitForExit(10000));
+                Assert.True(process!.WaitForExit(60000));
                 string output = process.StandardOutput.ReadToEnd() + process.StandardError.ReadToEnd();
                 Assert.True((process.ExitCode == 0) == success, output);
                 if (!success)

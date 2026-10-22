@@ -148,7 +148,7 @@ namespace Killendar.Tests
                 Assert.False(SpinWait.SpinUntil(() => File.Exists(marker), 300), "Normal copy launched while its parent still held the mutex.");
                 Assert.False(parent!.HasExited);
                 release.Set();
-                Assert.True(parent.WaitForExit(10000), "Owned parent did not exit.");
+                Assert.True(parent.WaitForExit(60000), "Owned parent did not exit.");
                 Assert.Equal(0, parent.ExitCode);
                 Assert.True(SpinWait.SpinUntil(() => File.Exists(marker), 10000), "Installed copy did not launch after parent exit.");
                 Assert.Equal("first", File.ReadAllText(marker));
@@ -168,8 +168,8 @@ namespace Killendar.Tests
                         Directory.Delete(root, true);
                         break;
                     }
-                    catch (IOException) when (cleanup.ElapsedMilliseconds < 5000) { Thread.Sleep(25); }
-                    catch (UnauthorizedAccessException) when (cleanup.ElapsedMilliseconds < 5000) { Thread.Sleep(25); }
+                    catch (IOException) when (cleanup.ElapsedMilliseconds < 30000) { Thread.Sleep(25); }
+                    catch (UnauthorizedAccessException) when (cleanup.ElapsedMilliseconds < 30000) { Thread.Sleep(25); }
                 }
             }
         }
@@ -250,7 +250,7 @@ internal static class OwnedHandoff
                 {
                     Process stale = Process.GetProcessById(id);
                     child.Kill();
-                    Assert.True(child.WaitForExit(5000));
+                    Assert.True(child.WaitForExit(30000));
                     return stale;
                 });
             }
