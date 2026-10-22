@@ -61,6 +61,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Light's gray hint and footer text, the second time zone's hour labels and the version number read at 4.5:1 contrast or better, and the close X reads at 3:1 on every theme's title bar.
 - With the Dark theme's red accent, button and label text is a slightly brighter red so it reads at 4.5:1. The wordmark keeps its red.
 - Screen readers name the appointment's Attendees box.
+- The website's film grain is lighter, matching KillerTools, and the theme menu can turn it off (Alt+Shift+G). The top bar no longer leaves extra space above the page on narrower windows, and the release details box lifts with an accent border on hover.
 
 ### Added
 
