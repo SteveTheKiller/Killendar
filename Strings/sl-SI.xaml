@@ -110,6 +110,13 @@
     <sys:String x:Key="Str_Btn_ThisDate">Samo ta datum</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Celoten niz</sys:String>
     <sys:String x:Key="Str_Btn_ThisAndFollowing">Ta in naslednji</sys:String>
+    <sys:String x:Key="Str_Fld_TimeZone">Časovni pas</sys:String>
+    <sys:String x:Key="Str_TT_ZoneOfSeries">Ponavljajoči se sestanek ohrani časovni pas, v katerem je bil ustvarjen.</sys:String>
+    <sys:String x:Key="Str_Zone_ThisComputer">Ta računalnik ({0})</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeZones">Časovni pasovi</sys:String>
+    <sys:String x:Key="Str_Zone_Show">Prikaži časovne pasove</sys:String>
+    <sys:String x:Key="Str_Lbl_SecondZone">Drugi časovni pas</sys:String>
+    <sys:String x:Key="Str_Zone_None">Brez</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Ta datum in vsi poznejši bodo odstranjeni. Prejšnji ostanejo.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Določi konec ponavljanja ali izberi ponavljanje brez konca.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Vnesi celo število, večje od nič.</sys:String>

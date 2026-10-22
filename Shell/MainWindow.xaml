@@ -599,6 +599,13 @@
                                         <TextBox x:Name="FieldEndTime" Grid.Column="3" Style="{StaticResource DarkTextBox}" AutomationProperties.Name="{DynamicResource Str_A11y_EndTime}" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,3" ToolTip="{DynamicResource Str_Hint_Time}"/>
                                     </Grid>
 
+                                    <!-- Shown once "Show time zones" is ticked (ZoneField.cs). The times above are on this zone's clock. -->
+                                    <StackPanel x:Name="ZoneRow" Visibility="Collapsed">
+                                        <TextBlock Text="{DynamicResource Str_Fld_TimeZone}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
+                                        <ComboBox x:Name="FieldZone" HorizontalAlignment="Left" MinWidth="180" MaxWidth="260" Margin="0,2,0,10"
+                                                  AutomationProperties.Name="{DynamicResource Str_Fld_TimeZone}"/>
+                                    </StackPanel>
+
                                     <!-- REPEATS. The chips and weekday buttons are built in code
                                          (RepeatPanel.cs) rather than declared here: the weekday
                                          letters and their ORDER come from the culture, so a locale

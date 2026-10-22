@@ -134,6 +134,13 @@
     <sys:String x:Key="Str_Btn_ThisDate">Bare denne datoen</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Hele serien</sys:String>
     <sys:String x:Key="Str_Btn_ThisAndFollowing">Denne og følgende</sys:String>
+    <sys:String x:Key="Str_Fld_TimeZone">Tidssone</sys:String>
+    <sys:String x:Key="Str_TT_ZoneOfSeries">En gjentakende avtale beholder tidssonen den ble laget i.</sys:String>
+    <sys:String x:Key="Str_Zone_ThisComputer">Denne datamaskinen ({0})</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeZones">Tidssoner</sys:String>
+    <sys:String x:Key="Str_Zone_Show">Vis tidssoner</sys:String>
+    <sys:String x:Key="Str_Lbl_SecondZone">Andre tidssone</sys:String>
+    <sys:String x:Key="Str_Zone_None">Ingen</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Denne datoen og alle senere fjernes. Tidligere datoer blir værende.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Angi når gjentakelsen slutter, eller sett den til å aldri slutte.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Skriv inn et heltall større enn null.</sys:String>

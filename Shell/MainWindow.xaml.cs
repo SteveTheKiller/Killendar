@@ -37,6 +37,7 @@ namespace Killendar.Shell
             InitRailOrder();
             AttachAutoLock();   // Lock.cs - idle and Windows locks
             InitReminderField();   // ReminderField.cs
+            InitZoneField();       // ZoneField.cs
             InitTemplateMenu();    // Templates.cs
 
             RestoreWindowPlacement();

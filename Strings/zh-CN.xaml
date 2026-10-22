@@ -94,6 +94,13 @@
     <sys:String x:Key="Str_Btn_ThisDate">仅这一天</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">整个系列</sys:String>
     <sys:String x:Key="Str_Btn_ThisAndFollowing">此项及以后</sys:String>
+    <sys:String x:Key="Str_Fld_TimeZone">时区</sys:String>
+    <sys:String x:Key="Str_TT_ZoneOfSeries">重复的约会保留创建时的时区。</sys:String>
+    <sys:String x:Key="Str_Zone_ThisComputer">这台电脑 ({0})</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeZones">时区</sys:String>
+    <sys:String x:Key="Str_Zone_Show">显示时区</sys:String>
+    <sys:String x:Key="Str_Lbl_SecondZone">第二时区</sys:String>
+    <sys:String x:Key="Str_Zone_None">无</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">将删除此日期及之后的所有日期。之前的日期保留。</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">请说明重复何时结束，或设为永不结束。</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">请输入大于零的整数。</sys:String>

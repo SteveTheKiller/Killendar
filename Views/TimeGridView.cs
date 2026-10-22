@@ -292,7 +292,8 @@ namespace Killendar.Views
         private void ApplyColumns(Grid g)
         {
             g.ColumnDefinitions.Clear();
-            g.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(46) });   // time gutter
+            // The time gutter, twice as wide when a second zone's hours sit beside this computer's.
+            g.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(TimeZones.Second != null ? 92 : 46) });
             for (int i = 0; i < Days; i++)
                 g.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         }

@@ -134,6 +134,13 @@
     <sys:String x:Key="Str_Btn_ThisDate">Csak ezt a dátumot</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Az egész sorozat</sys:String>
     <sys:String x:Key="Str_Btn_ThisAndFollowing">Ez és a későbbiek</sys:String>
+    <sys:String x:Key="Str_Fld_TimeZone">Időzóna</sys:String>
+    <sys:String x:Key="Str_TT_ZoneOfSeries">Az ismétlődő találkozó megtartja azt az időzónát, amelyben létrehozták.</sys:String>
+    <sys:String x:Key="Str_Zone_ThisComputer">Ez a számítógép ({0})</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeZones">Időzónák</sys:String>
+    <sys:String x:Key="Str_Zone_Show">Időzónák megjelenítése</sys:String>
+    <sys:String x:Key="Str_Lbl_SecondZone">Második időzóna</sys:String>
+    <sys:String x:Key="Str_Zone_None">Nincs</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Ez az időpont és minden későbbi törlődik. A korábbiak megmaradnak.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Mondja ki, mikor ér véget az ismétlés, vagy állítsa be, hogy soha ne érjen véget.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Adjon meg egy nullánál nagyobb egész számot.</sys:String>

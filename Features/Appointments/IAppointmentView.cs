@@ -32,6 +32,13 @@ namespace Killendar.Features
 
         /// <summary>The read-only meeting details of an imported invitation, or null to hide them.</summary>
         void ShowMeeting(Services.MeetingInfo? meeting);
+
+        /// <summary>The time zone the times are typed in: a zone id, or "" for this computer's.</summary>
+        string FieldZoneId { get; set; }
+
+        /// <summary>Whether the time zone choice is shown, and whether it can be changed (a
+        /// series keeps the zone it was made in).</summary>
+        void ShowZone(bool visible, bool editable);
         string FieldStartDate   { get; set; }
         string FieldStartTime   { get; set; }
         string FieldEndDate     { get; set; }

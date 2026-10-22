@@ -134,6 +134,13 @@
     <sys:String x:Key="Str_Btn_ThisDate">Лише цю дату</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Усю серію</sys:String>
     <sys:String x:Key="Str_Btn_ThisAndFollowing">Це й наступні</sys:String>
+    <sys:String x:Key="Str_Fld_TimeZone">Часовий пояс</sys:String>
+    <sys:String x:Key="Str_TT_ZoneOfSeries">Повторювана зустріч зберігає часовий пояс, у якому її створено.</sys:String>
+    <sys:String x:Key="Str_Zone_ThisComputer">Цей комп'ютер ({0})</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeZones">Часові пояси</sys:String>
+    <sys:String x:Key="Str_Zone_Show">Показувати часові пояси</sys:String>
+    <sys:String x:Key="Str_Lbl_SecondZone">Другий часовий пояс</sys:String>
+    <sys:String x:Key="Str_Zone_None">Немає</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Цю дату й усі наступні буде видалено. Попередні залишаться.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Вкажіть, коли повтор закінчується, або оберіть «Ніколи».</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Введіть ціле число більше нуля.</sys:String>

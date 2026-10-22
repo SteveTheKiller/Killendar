@@ -169,6 +169,29 @@ namespace Killendar.Views
                 lbl.TextAlignment = TextAlignment.Right;
                 if (h > 0) gutter.Children.Add(lbl);
             }
+            // A second zone's hours run down the left half, on that zone's clock for the first day
+            // shown, under a heading naming its offset.
+            if (TimeZones.Second is TimeZoneInfo second)
+            {
+                var heading = CalendarChrome.Text(TimeZones.Offset(second, start.Date.AddHours(12)), "DimTextBrush", 9, null, "Consolas");
+                heading.Width = 42;
+                heading.TextAlignment = TextAlignment.Left;
+                heading.ToolTip = second.DisplayName;
+                Canvas.SetTop(heading, 2);
+                Canvas.SetLeft(heading, 3);
+                gutter.Children.Add(heading);
+                for (int h = 1; h < 24; h++)
+                {
+                    var other = CalendarChrome.Text(TimeZones.HourLabel(TimeZones.ToZone(start.Date.AddHours(h), second)),
+                        "DimTextBrush", 10, null, "Consolas");
+                    Canvas.SetTop(other, h * CalendarChrome.HourHeight - 6);
+                    Canvas.SetLeft(other, 3);
+                    other.Width = 42;
+                    other.TextAlignment = TextAlignment.Left;
+                    other.Opacity = 0.75;
+                    gutter.Children.Add(other);
+                }
+            }
             Grid.SetColumn(gutter, 0);
             Grid.SetRow(gutter, 0);
             _bodyGrid.Children.Add(gutter);

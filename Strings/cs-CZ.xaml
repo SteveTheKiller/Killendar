@@ -94,6 +94,13 @@
     <sys:String x:Key="Str_Btn_ThisDate">Jen toto datum</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Celou sérii</sys:String>
     <sys:String x:Key="Str_Btn_ThisAndFollowing">Tento a následující</sys:String>
+    <sys:String x:Key="Str_Fld_TimeZone">Časové pásmo</sys:String>
+    <sys:String x:Key="Str_TT_ZoneOfSeries">Opakovaná schůzka si ponechá časové pásmo, ve kterém byla vytvořena.</sys:String>
+    <sys:String x:Key="Str_Zone_ThisComputer">Tento počítač ({0})</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeZones">Časová pásma</sys:String>
+    <sys:String x:Key="Str_Zone_Show">Zobrazit časová pásma</sys:String>
+    <sys:String x:Key="Str_Lbl_SecondZone">Druhé časové pásmo</sys:String>
+    <sys:String x:Key="Str_Zone_None">Žádné</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Odstraní se tento termín a všechny pozdější. Dřívější zůstanou.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Uveď, kdy opakování končí, nebo že nekončí nikdy.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Zadej celé číslo větší než nula.</sys:String>

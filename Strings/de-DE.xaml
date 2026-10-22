@@ -94,6 +94,13 @@
     <sys:String x:Key="Str_Btn_ThisDate">Nur dieser Termin</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Die ganze Serie</sys:String>
     <sys:String x:Key="Str_Btn_ThisAndFollowing">Dieser und folgende</sys:String>
+    <sys:String x:Key="Str_Fld_TimeZone">Zeitzone</sys:String>
+    <sys:String x:Key="Str_TT_ZoneOfSeries">Ein Serientermin behält die Zeitzone, in der er angelegt wurde.</sys:String>
+    <sys:String x:Key="Str_Zone_ThisComputer">Dieser Computer ({0})</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeZones">Zeitzonen</sys:String>
+    <sys:String x:Key="Str_Zone_Show">Zeitzonen anzeigen</sys:String>
+    <sys:String x:Key="Str_Lbl_SecondZone">Zweite Zeitzone</sys:String>
+    <sys:String x:Key="Str_Zone_None">Keine</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Dieser Termin und alle späteren werden entfernt. Frühere bleiben.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Gib an, wann die Wiederholung endet, oder dass sie nie endet.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Gib eine ganze Zahl größer als null ein.</sys:String>

@@ -135,6 +135,13 @@
     <sys:String x:Key="Str_Btn_ThisDate">Только эту дату</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Всю серию</sys:String>
     <sys:String x:Key="Str_Btn_ThisAndFollowing">Это и последующие</sys:String>
+    <sys:String x:Key="Str_Fld_TimeZone">Часовой пояс</sys:String>
+    <sys:String x:Key="Str_TT_ZoneOfSeries">Повторяющаяся встреча сохраняет часовой пояс, в котором была создана.</sys:String>
+    <sys:String x:Key="Str_Zone_ThisComputer">Этот компьютер ({0})</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeZones">Часовые пояса</sys:String>
+    <sys:String x:Key="Str_Zone_Show">Показывать часовые пояса</sys:String>
+    <sys:String x:Key="Str_Lbl_SecondZone">Второй часовой пояс</sys:String>
+    <sys:String x:Key="Str_Zone_None">Нет</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Эта дата и все последующие будут удалены. Более ранние останутся.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Укажите, когда повтор заканчивается, или сделайте его бесконечным.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Введите целое число больше нуля.</sys:String>

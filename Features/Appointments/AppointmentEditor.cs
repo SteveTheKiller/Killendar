@@ -84,7 +84,13 @@ namespace Killendar.Features
             _view.FieldCategories, _view.FieldReminder, _view.FieldShowAsFree, _view.FieldStartDate, _view.FieldStartTime, _view.FieldEndDate,
             _view.FieldEndTime, _allDay, _view.FieldRepeat, _view.FieldRepeatEveryN,
             string.Join(",", _view.FieldRepeatDays ?? []), _view.FieldRepeatMonthWeek, _view.FieldRepeatCount,
-            _view.FieldRepeatUntil?.Ticks, _view.EditWholeSeries, _view.EditFollowing);
+            _view.FieldRepeatUntil?.Ticks, _view.EditWholeSeries, _view.EditFollowing, _view.FieldZoneId);
+
+        /// <summary>The zone the time boxes are on, or null for this computer's clock.</summary>
+        private TimeZoneInfo? FieldZone => _allDay || !TimeZones.Show ? null : TimeZones.Find(_view.FieldZoneId);
+
+        /// <summary>The zone the appointment had when it was opened ("" for a new one).</summary>
+        private string _loadedZone = "";
 
         /// <summary>Opens the panel on a new appointment at <paramref name="when"/>. False when the
         /// user chose to keep editing a draft instead.</summary>
@@ -121,6 +127,9 @@ namespace Killendar.Features
             _view.SeriesScopeVisible = false;
 
             var end = when.AddHours(1);
+            _loadedZone = "";
+            _view.FieldZoneId = "";
+            _view.ShowZone(TimeZones.Show, true);
             _view.FieldStartDate = DateFormatManager.Format(when);
             _view.FieldStartTime = FormatTime(when);
             _view.FieldEndDate = DateFormatManager.Format(end);
@@ -171,16 +180,23 @@ namespace Killendar.Features
 
             LoadRepeatFrom(master ?? ev);
 
-            _view.FieldStartDate = DateFormatManager.Format(ev.Start);
-            _view.FieldStartTime = FormatTime(ev.Start);
+            _loadedZone = TimeZones.ZoneOf(master ?? ev);
+            _view.FieldZoneId = _loadedZone;
+            _view.ShowZone(TimeZones.Show, !oneDateOfASeries && !ev.IsSeries);
+            var zone = TimeZones.Show && !ev.AllDay ? TimeZones.Find(_loadedZone) : null;
+            var shownStart = zone == null ? ev.Start : TimeZones.ToZone(ev.Start, zone);
+            var shownEnd = zone == null ? ev.End : TimeZones.ToZone(ev.End, zone);
+
+            _view.FieldStartDate = DateFormatManager.Format(shownStart);
+            _view.FieldStartTime = FormatTime(shownStart);
             // The model keeps all-day ranges half-open (the stored end is the midnight after the
             // last covered day), while the editor asks for the last day the user can see. Showing
             // the stored boundary here made every edit-save cycle extend the event by one day.
             var displayedEnd = ev.AllDay
                 ? CalendarDateSpan.VisibleAllDayEnd(ev.Start, ev.End)
-                : ev.End;
+                : shownEnd;
             _view.FieldEndDate = DateFormatManager.Format(displayedEnd);
-            _view.FieldEndTime = FormatTime(ev.End);
+            _view.FieldEndTime = FormatTime(shownEnd);
 
             Show();
             _view.Focus(AppointmentField.Title, selectAll: true);
@@ -212,6 +228,12 @@ namespace Killendar.Features
             DateTime? day = TryParseDate(_view.FieldStartDate, out var d) ? d : (DateTime?)null;
             TimeSpan? time = null;
             if (!_allDay && TryParseTime(_view.FieldStartTime, out var t)) time = t;
+            if (day.HasValue && time.HasValue && FieldZone is TimeZoneInfo zone)
+            {
+                var local = TimeZones.FromZone(day.Value.Date + time.Value, zone);
+                day = local.Date;
+                time = local.TimeOfDay;
+            }
             _view.HighlightSelection(day, time);
         }
 
@@ -480,12 +502,24 @@ namespace Killendar.Features
                 }
                 start = startDate.Date + startTime;
                 end = endDate.Date + endTime;
-                preserveNominalDuration = _editing != null && !_editing.AllDay &&
-                    _nominalEnd.HasValue && MatchesDisplayedInstant(end, _nominalEnd.Value);
-                if (_editing != null && !_editing.AllDay)
+                if (FieldZone is TimeZoneInfo zone)
                 {
-                    start = PreserveDisplayedInstant(start, _editing.Start);
-                    end = preserveNominalDuration ? _nominalEnd!.Value : PreserveDisplayedInstant(end, _editing.End);
+                    // Typed on that zone's clock. Its own rules settle a doubled or skipped time.
+                    start = TimeZones.FromZone(start, zone);
+                    end = TimeZones.FromZone(end, zone);
+                    preserveNominalDuration = _editing != null && !_editing.AllDay && _nominalEnd.HasValue &&
+                        end.ToUniversalTime() == _editing.End.ToUniversalTime();
+                    if (preserveNominalDuration) end = _nominalEnd!.Value;
+                }
+                else
+                {
+                    preserveNominalDuration = _editing != null && !_editing.AllDay &&
+                        _nominalEnd.HasValue && MatchesDisplayedInstant(end, _nominalEnd.Value);
+                    if (_editing != null && !_editing.AllDay)
+                    {
+                        start = PreserveDisplayedInstant(start, _editing.Start);
+                        end = preserveNominalDuration ? _nominalEnd!.Value : PreserveDisplayedInstant(end, _editing.End);
+                    }
                 }
 
                 if (end.ToUniversalTime() <= start.ToUniversalTime())
@@ -531,6 +565,7 @@ namespace Killendar.Features
                 };
                 MeetingInfo.SetFree(ev, _view.FieldShowAsFree);
                 ApplyRepeatFromPanel(ev);
+                if (TimeZones.Show) TimeZones.Apply(ev, _view.FieldZoneId);
                 _store.Add(ev);
                 if (_store.LoadError != null) { _view.ShowError(_store.LoadError); return; }
                 _view.SetStatus(WithOverlaps(string.Format(_view.Loc("Str_Status_Added"), ev.Title), ev));
@@ -565,6 +600,7 @@ namespace Killendar.Features
                     // A plain appointment given a pattern BECOMES a series here, and a series
                     // whose pattern is set back to Never becomes a plain appointment again.
                     ApplyRepeatFromPanel(_editing);
+                    if (TimeZones.Show && _view.FieldZoneId != _loadedZone) TimeZones.Apply(_editing, _view.FieldZoneId);
                     _store.Update(_editing);
                 }
                 else if (_view.EditWholeSeries)
@@ -616,6 +652,7 @@ namespace Killendar.Features
             _view.CanDelete = false;
             _view.SeriesScopeVisible = false;
             _view.RepeatSectionVisible = true;
+            _view.ShowZone(TimeZones.Show, true);
             _view.ShowMeeting(null);   // the copy is not the organizer's meeting
             _baseline = "";   // a copy nobody has saved yet is unsaved input
             _view.SetStatus(_view.Loc("Str_Status_Duplicated"));

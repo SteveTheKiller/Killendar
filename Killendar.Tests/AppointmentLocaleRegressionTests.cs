@@ -181,6 +181,8 @@ namespace Killendar.Tests
         public int? FieldReminder { get; set; }
         public bool FieldShowAsFree { get; set; }
         public void ShowMeeting(MeetingInfo? meeting) { }
+        public string FieldZoneId { get; set; } = "";
+        public void ShowZone(bool visible, bool editable) { }
         private string _startDate = "", _startTime = "";
         internal Action? StartChanged;
         public string FieldStartDate

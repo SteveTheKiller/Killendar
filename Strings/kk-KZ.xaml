@@ -134,6 +134,13 @@
     <sys:String x:Key="Str_Btn_ThisDate">Тек осы күн</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Бүкіл сериясы</sys:String>
     <sys:String x:Key="Str_Btn_ThisAndFollowing">Осы және кейінгілер</sys:String>
+    <sys:String x:Key="Str_Fld_TimeZone">Уақыт белдеуі</sys:String>
+    <sys:String x:Key="Str_TT_ZoneOfSeries">Қайталанатын кездесу өзі жасалған уақыт белдеуін сақтайды.</sys:String>
+    <sys:String x:Key="Str_Zone_ThisComputer">Осы компьютер ({0})</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeZones">Уақыт белдеулері</sys:String>
+    <sys:String x:Key="Str_Zone_Show">Уақыт белдеулерін көрсету</sys:String>
+    <sys:String x:Key="Str_Lbl_SecondZone">Екінші уақыт белдеуі</sys:String>
+    <sys:String x:Key="Str_Zone_None">Жоқ</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Осы күн және одан кейінгі барлық күндер жойылады. Бұрынғылары қалады.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Қайталану қашан аяқталатынын көрсетіңіз немесе оны шексіз етіңіз.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Нөлден үлкен бүтін сан енгізіңіз.</sys:String>

@@ -94,6 +94,13 @@
     <sys:String x:Key="Str_Btn_ThisDate">Yalnızca bu tarih</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Tüm seri</sys:String>
     <sys:String x:Key="Str_Btn_ThisAndFollowing">Bu ve sonrakiler</sys:String>
+    <sys:String x:Key="Str_Fld_TimeZone">Saat dilimi</sys:String>
+    <sys:String x:Key="Str_TT_ZoneOfSeries">Yinelenen bir randevu oluşturulduğu saat dilimini korur.</sys:String>
+    <sys:String x:Key="Str_Zone_ThisComputer">Bu bilgisayar ({0})</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeZones">Saat dilimleri</sys:String>
+    <sys:String x:Key="Str_Zone_Show">Saat dilimlerini göster</sys:String>
+    <sys:String x:Key="Str_Lbl_SecondZone">İkinci saat dilimi</sys:String>
+    <sys:String x:Key="Str_Zone_None">Yok</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Bu tarih ve sonraki tüm tarihler kaldırılır. Öncekiler kalır.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Tekrarın ne zaman biteceğini belirt, ya da hiç bitmesin.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Sıfırdan büyük bir tam sayı gir.</sys:String>

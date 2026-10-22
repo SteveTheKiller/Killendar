@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Killendar.Services;
@@ -55,7 +56,7 @@ namespace Killendar.Controls
         private void Build()
         {
             _menu.Items.Clear();
-            // Columns side by side - date and clock, agenda length, work week, default reminder - so the
+            // Columns side by side - date and clock, agenda length, work week, time zones, default reminder - so the
             // flyout stays about as tall as one group instead of running down the screen.
             var columns = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(10) };
             var panel = new StackPanel { MinWidth = 150 };
@@ -141,6 +142,8 @@ namespace Killendar.Controls
             panel = NewColumn(columns);
             BuildWorkWeek(panel);
             panel = NewColumn(columns);
+            BuildTimeZones(panel);
+            panel = NewColumn(columns);
             panel.Children.Add(new TextBlock
             {
                 Text = LocaleManager.Loc("Str_Lbl_DefaultReminder"), FontSize = 10,
@@ -219,6 +222,61 @@ namespace Killendar.Controls
             });
             hours.Children.Add(to);
             panel.Children.Add(hours);
+        }
+
+        /// <summary>"Show time zones" (off until ticked), then the second zone Week and Day show.</summary>
+        private void BuildTimeZones(StackPanel panel)
+        {
+            panel.Children.Add(new TextBlock
+            {
+                Text = LocaleManager.Loc("Str_Lbl_TimeZones"), FontSize = 10,
+                Margin = new Thickness(0, 0, 0, 6)
+            });
+            var show = new CheckBox
+            {
+                Content = LocaleManager.Loc("Str_Zone_Show"), IsChecked = TimeZones.Show,
+                Margin = new Thickness(0, 0, 0, 2),
+            };
+            panel.Children.Add(show);
+            AddSeparator(panel);
+            panel.Children.Add(new TextBlock
+            {
+                Text = LocaleManager.Loc("Str_Lbl_SecondZone"), FontSize = 10,
+                Margin = new Thickness(0, 0, 0, 6)
+            });
+            var second = new ComboBox { MinWidth = 160, MaxWidth = 240, IsEnabled = TimeZones.Show };
+            AutomationProperties.SetName(second, LocaleManager.Loc("Str_Lbl_SecondZone"));
+            string current = Settings.Get(TimeZones.SecondSetting) ?? "";
+            var none = new ComboBoxItem { Content = LocaleManager.Loc("Str_Zone_None"), Tag = "" };
+            second.Items.Add(none);
+            second.SelectedItem = none;
+            var chosen = TimeZones.Find(current);
+            foreach (var zone in TimeZones.Choices(current))
+            {
+                var item = new ComboBoxItem { Content = zone.DisplayName, Tag = zone.Id };
+                second.Items.Add(item);
+                if (chosen != null && zone.Id == chosen.Id) second.SelectedItem = item;
+            }
+            panel.Children.Add(second);
+
+            show.Click += (_, _) =>
+            {
+                Settings.Set(TimeZones.ShowSetting, show.IsChecked == true ? "1" : "0");
+                second.IsEnabled = show.IsChecked == true;
+                SaveZones();
+            };
+            second.SelectionChanged += (_, _) =>
+            {
+                if (second.SelectedItem is not ComboBoxItem item) return;
+                Settings.Set(TimeZones.SecondSetting, item.Tag as string ?? "");
+                SaveZones();
+            };
+        }
+
+        private void SaveZones()
+        {
+            TimeZones.Load(Settings.Get(TimeZones.ShowSetting), Settings.Get(TimeZones.SecondSetting));
+            _weekStartChanged();   // repaints Week and Day with or without the second column
         }
 
         private static ComboBox HourList(int first, int last, int selected)

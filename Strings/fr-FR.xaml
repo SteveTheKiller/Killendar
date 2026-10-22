@@ -94,6 +94,13 @@
     <sys:String x:Key="Str_Btn_ThisDate">Cette date seulement</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Toute la série</sys:String>
     <sys:String x:Key="Str_Btn_ThisAndFollowing">Celle-ci et les suivantes</sys:String>
+    <sys:String x:Key="Str_Fld_TimeZone">Fuseau horaire</sys:String>
+    <sys:String x:Key="Str_TT_ZoneOfSeries">Un rendez-vous périodique garde le fuseau horaire dans lequel il a été créé.</sys:String>
+    <sys:String x:Key="Str_Zone_ThisComputer">Cet ordinateur ({0})</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeZones">Fuseaux horaires</sys:String>
+    <sys:String x:Key="Str_Zone_Show">Afficher les fuseaux horaires</sys:String>
+    <sys:String x:Key="Str_Lbl_SecondZone">Second fuseau horaire</sys:String>
+    <sys:String x:Key="Str_Zone_None">Aucun</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Cette date et toutes les suivantes sont supprimées. Les précédentes restent.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Indiquez quand la répétition se termine, ou qu'elle ne se termine jamais.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Saisissez un nombre entier supérieur à zéro.</sys:String>

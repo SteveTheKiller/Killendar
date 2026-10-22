@@ -94,6 +94,13 @@
     <sys:String x:Key="Str_Btn_ThisDate">この日だけ</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">すべての予定</sys:String>
     <sys:String x:Key="Str_Btn_ThisAndFollowing">これ以降すべて</sys:String>
+    <sys:String x:Key="Str_Fld_TimeZone">タイム ゾーン</sys:String>
+    <sys:String x:Key="Str_TT_ZoneOfSeries">定期的な予定は作成したときのタイム ゾーンのままです。</sys:String>
+    <sys:String x:Key="Str_Zone_ThisComputer">このコンピューター ({0})</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeZones">タイム ゾーン</sys:String>
+    <sys:String x:Key="Str_Zone_Show">タイム ゾーンを表示</sys:String>
+    <sys:String x:Key="Str_Lbl_SecondZone">2 つ目のタイム ゾーン</sys:String>
+    <sys:String x:Key="Str_Zone_None">なし</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">この日とそれ以降の日がすべて削除されます。それより前の日は残ります。</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">繰り返しの終わりを指定するか、終わらない設定にしてください。</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">0 より大きい整数を入力してください。</sys:String>

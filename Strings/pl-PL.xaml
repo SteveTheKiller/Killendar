@@ -195,6 +195,13 @@
     <sys:String x:Key="Str_Btn_ThisDate">Tylko ta data</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Cała seria</sys:String>
     <sys:String x:Key="Str_Btn_ThisAndFollowing">Ten i następne</sys:String>
+    <sys:String x:Key="Str_Fld_TimeZone">Strefa czasowa</sys:String>
+    <sys:String x:Key="Str_TT_ZoneOfSeries">Spotkanie cykliczne zachowuje strefę czasową, w której zostało utworzone.</sys:String>
+    <sys:String x:Key="Str_Zone_ThisComputer">Ten komputer ({0})</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeZones">Strefy czasowe</sys:String>
+    <sys:String x:Key="Str_Zone_Show">Pokaż strefy czasowe</sys:String>
+    <sys:String x:Key="Str_Lbl_SecondZone">Druga strefa czasowa</sys:String>
+    <sys:String x:Key="Str_Zone_None">Brak</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Ten termin i wszystkie późniejsze zostaną usunięte. Wcześniejsze zostają.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Określ koniec powtarzania lub ustaw brak końca.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Wpisz liczbę całkowitą większą od zera.</sys:String>

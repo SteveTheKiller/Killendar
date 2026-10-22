@@ -94,6 +94,13 @@
     <sys:String x:Key="Str_Btn_ThisDate">শুধু এই তারিখ</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">পুরো সিরিজ</sys:String>
     <sys:String x:Key="Str_Btn_ThisAndFollowing">এটি ও পরবর্তীগুলো</sys:String>
+    <sys:String x:Key="Str_Fld_TimeZone">সময় অঞ্চল</sys:String>
+    <sys:String x:Key="Str_TT_ZoneOfSeries">পুনরাবৃত্ত অ্যাপয়েন্টমেন্ট যে সময় অঞ্চলে তৈরি হয়েছিল সেটিই রাখে।</sys:String>
+    <sys:String x:Key="Str_Zone_ThisComputer">এই কম্পিউটার ({0})</sys:String>
+    <sys:String x:Key="Str_Lbl_TimeZones">সময় অঞ্চল</sys:String>
+    <sys:String x:Key="Str_Zone_Show">সময় অঞ্চল দেখান</sys:String>
+    <sys:String x:Key="Str_Lbl_SecondZone">দ্বিতীয় সময় অঞ্চল</sys:String>
+    <sys:String x:Key="Str_Zone_None">কোনোটি নয়</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">এই তারিখ ও পরের সব তারিখ সরানো হবে। আগের তারিখগুলো থাকবে।</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">পুনরাবৃত্তি কবে শেষ হবে বলুন, অথবা কখনও শেষ না হতে দিন।</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">শূন্যের চেয়ে বড় একটি পূর্ণসংখ্যা লিখুন।</sys:String>
