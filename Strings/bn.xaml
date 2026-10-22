@@ -137,6 +137,11 @@
     <sys:String x:Key="Str_Imp_Saving">{0} টি অ্যাপয়েন্টমেন্ট যোগ করা হচ্ছে</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">ইমপোর্ট শেষ না হওয়া পর্যন্ত কিছুই যোগ হবে না।</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">{0} টি অ্যাপয়েন্টমেন্ট ইমপোর্ট করবেন?</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewChanges">{0}টি নতুন যোগ, {1}টি হালনাগাদ, {2}টি বাতিল সরাবেন?</sys:String>
+    <sys:String x:Key="Str_Imp_PvNewer">নতুন আমন্ত্রণ, এখানকার অ্যাপয়েন্টমেন্ট হালনাগাদ হবে: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCancelsHere">আয়োজক বাতিল করেছেন, এখান থেকে সরানো হবে: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportNewer">। নতুন আমন্ত্রণ থেকে {0}টি হালনাগাদ</sys:String>
+    <sys:String x:Key="Str_Status_ImportCancelsHere">। আয়োজকের বাতিল করা {0}টি সরানো হয়েছে</sys:String>
     <sys:String x:Key="Str_Imp_PvDuplicates">এই Killendar-এ আগে থেকেই আছে, বাদ দেওয়া হবে: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCanceled">বাতিল হওয়া মিটিং, যোগ করা হবে না: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvLost">Killendar সংরক্ষণ করে না এমন তথ্য আছে: {0}</sys:String>

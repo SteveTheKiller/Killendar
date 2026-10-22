@@ -137,6 +137,11 @@
     <sys:String x:Key="Str_Imp_Saving">{0} randevu ekleniyor</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">İçe aktarma bitene kadar hiçbir şey eklenmez.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">{0} randevu içe aktarılsın mı?</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewChanges">{0} yeni içe aktarılsın, {1} güncellensin, {2} iptal kaldırılsın mı?</sys:String>
+    <sys:String x:Key="Str_Imp_PvNewer">Daha yeni davetler, buradaki randevuyu güncelleyecek: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCancelsHere">Düzenleyen iptal etti, buradan kaldırılacak: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportNewer">. Daha yeni davetlerden {0} güncellendi</sys:String>
+    <sys:String x:Key="Str_Status_ImportCancelsHere">. Düzenleyenin iptal ettiği {0} kaldırıldı</sys:String>
     <sys:String x:Key="Str_Imp_PvDuplicates">Bu Killendar'da zaten var, atlanacak: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCanceled">İptal edilen toplantılar, eklenmeyecek: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvLost">Killendar'ın saklamadığı ayrıntılar içeriyor: {0}</sys:String>

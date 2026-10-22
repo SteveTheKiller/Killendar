@@ -183,6 +183,11 @@
     <sys:String x:Key="Str_Imp_Saving">Adding {0} appointments</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Nothing is added until the import finishes.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Import {0} appointments?</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewChanges">Import {0} new, update {1}, remove {2} canceled?</sys:String>
+    <sys:String x:Key="Str_Imp_PvNewer">Newer invites, will update the appointment here: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCancelsHere">Canceled by the organizer, will be removed here: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportNewer">. Updated {0} from newer invites</sys:String>
+    <sys:String x:Key="Str_Status_ImportCancelsHere">. Removed {0} the organizer canceled</sys:String>
     <sys:String x:Key="Str_Imp_PvDuplicates">Already in this Killendar, will be skipped: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCanceled">Canceled meetings, will not be added: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvLost">Have details Killendar does not store: {0}</sys:String>

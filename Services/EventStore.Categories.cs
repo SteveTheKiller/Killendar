@@ -14,6 +14,24 @@ namespace Killendar.Services
     {
         public List<CalendarEvent> Fresh { get; } = [];
         public int AlreadyPresent { get; internal set; }
+
+        /// <summary>Replacement rows for appointments already here: a newer invite's version, or a
+        /// series with a date the organizer canceled.</summary>
+        public List<CalendarEvent> Updated { get; } = [];
+
+        /// <summary>Rows the organizer canceled, with a canceled series' one-date edits.</summary>
+        public List<CalendarEvent> Removed { get; } = [];
+
+        /// <summary>How many appointments a newer invite changed, and how many the organizer
+        /// canceled (whole appointments and single dates).</summary>
+        public int NewerInvites { get; internal set; }
+        public int Cancellations { get; internal set; }
+
+        /// <summary>True when the import changes or removes something already in the Killendar.</summary>
+        public bool ChangesExisting => Updated.Count + Removed.Count > 0;
+
+        /// <summary>True when there is anything at all to write.</summary>
+        public bool HasWork => Fresh.Count > 0 || ChangesExisting;
     }
 
     public partial class EventStore
@@ -167,25 +185,100 @@ namespace Killendar.Services
         public int ImportEvents(IEnumerable<CalendarEvent> incoming) => Recorded(() =>
         {
             var plan = PlanImport(incoming);
-            if (plan.Fresh.Count == 0) return 0;
+            if (!plan.HasWork) return 0;
 
             BackupNow(DateTime.Now);
-            _events.AddRange(plan.Fresh);
-            bool saved = Commit(() => WriteRows(plan.Fresh, CancellationToken.None, null));
+            bool saved = Commit(() => WriteRows(plan, CancellationToken.None, null));
+            if (saved) Show(plan);
             return saved ? plan.Fresh.Count : 0;
         });
 
-        /// <summary>Which incoming appointments are new. Reads only the in-memory mirror.</summary>
-        public ImportPlan PlanImport(IEnumerable<CalendarEvent> incoming)
+        /// <summary>
+        /// What an import does to the Killendar. Reads only the in-memory mirror.
+        ///   - an appointment not here yet is added;
+        ///   - one already here comes in again: a newer invite (a higher SEQUENCE, which organizers
+        ///     raise when they change a meeting) replaces the organizer's details, keeping the
+        ///     categories and reminder chosen here; the same or an older one is skipped;
+        ///   - a canceled appointment or a canceled date of a series here is removed, the
+        ///     appointment to Recently deleted.
+        /// </summary>
+        public ImportPlan PlanImport(IEnumerable<CalendarEvent> incoming,
+                                     IEnumerable<Guid>? canceledIds = null,
+                                     IEnumerable<CalendarEvent>? canceledOccurrences = null)
         {
             var plan = new ImportPlan();
-            var have = new HashSet<Guid>(_events.Select(e => e.Id));
+            var byId = new Dictionary<Guid, CalendarEvent>();
+            foreach (var ev in _events) byId[ev.Id] = ev;
+            var seen = new HashSet<Guid>();
+            var replaced = new Dictionary<Guid, CalendarEvent>();
+
             foreach (var ev in incoming)
             {
-                if (have.Add(ev.Id)) plan.Fresh.Add(ev);
-                else plan.AlreadyPresent++;
+                if (!seen.Add(ev.Id)) { plan.AlreadyPresent++; continue; }
+                if (!byId.TryGetValue(ev.Id, out var have)) { plan.Fresh.Add(ev); continue; }
+                if (MeetingInfo.Sequence(ev) <= MeetingInfo.Sequence(have)) { plan.AlreadyPresent++; continue; }
+                var update = ev.Clone();
+                update.Categories = have.Categories;          // chosen here, not the organizer's
+                update.ReminderMinutes = have.ReminderMinutes;
+                update.Created = have.Created;
+                update.Modified = DateTime.UtcNow;
+                replaced[update.Id] = update;
+                plan.NewerInvites++;
             }
+
+            var removed = new HashSet<Guid>();
+            foreach (var id in canceledIds ?? [])
+            {
+                if (!byId.ContainsKey(id) || removed.Contains(id)) continue;
+                foreach (var row in _events.Where(e => e.Id == id || e.SeriesId == id))
+                    if (removed.Add(row.Id)) plan.Removed.Add(row);
+                replaced.Remove(id);
+                plan.Fresh.RemoveAll(e => e.Id == id || e.SeriesId == id);
+                plan.Cancellations++;
+            }
+
+            foreach (var occ in canceledOccurrences ?? [])
+            {
+                if (occ.SeriesId is not Guid seriesId || removed.Contains(seriesId)) continue;
+                var master = replaced.TryGetValue(seriesId, out var newer) ? newer
+                           : byId.TryGetValue(seriesId, out var here) && here.IsSeries ? here : null;
+                if (master == null || !master.IsSeries) continue;
+                var nominal = Recurrence.CanonicalOccurrenceStart(master, occ);
+                var updated = replaced.TryGetValue(seriesId, out var pending) ? pending : master.Clone();
+                if (master.AllDay)
+                {
+                    if (updated.SkipDates.Any(d => d.Date == nominal.Date)) continue;
+                    updated.SkipDates.Add(nominal.Date);
+                }
+                else
+                {
+                    if (updated.SkipOccurrences.Any(v => v.Ticks == nominal.Ticks)) continue;
+                    updated.SkipOccurrences.Add(nominal);
+                }
+                updated.Modified = DateTime.UtcNow;
+                replaced[seriesId] = updated;
+                long identity = Recurrence.OccurrenceKey(master, occ);
+                foreach (var edit in _events.Where(e => e.IsOverride && e.SeriesId == seriesId && e.OccurrenceStart.HasValue &&
+                                                        Recurrence.OccurrenceKey(master, e) == identity))
+                    if (removed.Add(edit.Id)) plan.Removed.Add(edit);
+                plan.Cancellations++;
+            }
+
+            plan.Updated.AddRange(replaced.Values);
             return plan;
+        }
+
+        /// <summary>Puts a written import into the mirror.</summary>
+        private void Show(ImportPlan plan)
+        {
+            var gone = new HashSet<Guid>(plan.Removed.Select(e => e.Id));
+            _events.RemoveAll(e => gone.Contains(e.Id));
+            foreach (var row in plan.Updated)
+            {
+                int i = _events.FindIndex(e => e.Id == row.Id);
+                if (i >= 0) _events[i] = row; else _events.Add(row);
+            }
+            _events.AddRange(plan.Fresh);
         }
 
         /// <summary>True while WriteImport runs. Anything else that would use the database on
@@ -207,21 +300,33 @@ namespace Killendar.Services
             {
                 _importing = true;
                 BackupNow(DateTime.Now);
-                try { WriteRows(plan.Fresh, cancel, afterRow); }
+                try { WriteRows(plan, cancel, afterRow); }
                 finally { _importing = false; }
             }
         }
 
-        private void WriteRows(List<CalendarEvent> rows, CancellationToken cancel, Action? afterRow)
+        private void WriteRows(ImportPlan plan, CancellationToken cancel, Action? afterRow)
         {
             using var tx = _db!.BeginTransaction();
             using var upsert = CreateUpsert(_db);
-            foreach (var ev in rows)
+            foreach (var ev in plan.Fresh.Concat(plan.Updated))
             {
                 cancel.ThrowIfCancellationRequested();
                 BindUpsert(upsert, ev);
                 upsert.ExecuteNonQuery();
                 afterRow?.Invoke();
+            }
+            if (plan.Removed.Count > 0)
+            {
+                // The canceled appointment goes to Recently deleted, as a delete by hand would.
+                Trash(plan.Removed.Where(e => !e.IsOverride || !plan.Removed.Any(m => m.Id == e.SeriesId)).ToList());
+                foreach (var row in plan.Removed)
+                {
+                    using var delete = _db.CreateCommand();
+                    delete.CommandText = "DELETE FROM events WHERE id = $id";
+                    delete.Parameters.AddWithValue("$id", row.Id.ToString());
+                    delete.ExecuteNonQuery();
+                }
             }
             cancel.ThrowIfCancellationRequested();
             tx.Commit();
@@ -230,7 +335,7 @@ namespace Killendar.Services
         /// <summary>Shows a written import: adds it to the mirror and repaints once.</summary>
         public int PublishImport(ImportPlan plan) => Recorded(() =>
         {
-            _events.AddRange(plan.Fresh);
+            Show(plan);
             LoadError = null;
             Changed?.Invoke();
             return plan.Fresh.Count;

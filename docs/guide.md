@@ -15,7 +15,7 @@ Right-click the Killendars button to show other Killendars beside the open one. 
 - title, start and end, all-day, location, description, attendees and categories
 - the organizer and each attendee's reply, and whether the appointment shows as busy or free
 - reminders: the first pop-up or sound alarm set some time before the start (an email alarm, or one at a fixed clock time, is kept in the file but not used as the reminder)
-- time zones (TZID), including the ones Outlook writes; a zone Killendar cannot identify stops the import with a message rather than guessing a time
+- time zones (TZID), including the ones Outlook writes and ones a file defines for itself. A file's own zone that Windows also has is used under its Windows name; one Windows does not have still places each appointment at the right moment, and a repeat on it keeps its first date's times (the import says how many). A zone name with no definition anywhere stops the import with a message rather than guessing a time.
 - repeats Killendar can draw (see below), with skipped dates and single-date edits
 
 Properties Killendar does not edit (conference details, for example) are kept as they came and written back out on export, unless an edit made them stale.
@@ -25,6 +25,8 @@ Properties Killendar does not edit (conference details, for example) are kept as
 **Saved email invites (.eml)** can be imported.
 
 **Web page out.** Export a month, week, day or agenda page with a key to the category colors. You choose whether locations, descriptions and attendees go on the page; descriptions and attendees are left off unless you ask for them. The page prints cleanly.
+
+**Updated and canceled invites.** Importing a meeting that is already here again: a newer invite (one the organizer changed, which raises its revision number) updates it, keeping the categories and reminder you chose; the same or an older one is skipped. A cancellation removes the meeting to Recently deleted, or just the canceled date of a series. Killendar asks before it changes or removes anything, and one undo puts it all back.
 
 **Limits.** A file over 50 MB or with more than 100,000 appointments is refused before anything is added. Appointments already in the Killendar are skipped, not duplicated; the import preview says how many.
 

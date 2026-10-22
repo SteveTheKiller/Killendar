@@ -183,6 +183,11 @@
     <sys:String x:Key="Str_Imp_Saving">Додавання зустрічей: {0}</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Поки імпорт не завершиться, нічого не буде додано.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Імпортувати зустрічі ({0})?</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewChanges">Імпортувати {0} нових, оновити {1}, вилучити {2} скасованих?</sys:String>
+    <sys:String x:Key="Str_Imp_PvNewer">Новіші запрошення, оновлять зустріч тут: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCancelsHere">Скасовано організатором, буде вилучено тут: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportNewer">. Оновлено з новіших запрошень: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportCancelsHere">. Вилучено скасованих організатором: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvDuplicates">Уже є в цьому Killendar, буде пропущено: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCanceled">Скасовані зустрічі, не буде додано: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvLost">Містять відомості, які Killendar не зберігає: {0}</sys:String>

@@ -183,6 +183,11 @@
     <sys:String x:Key="Str_Imp_Saving">{0} кездесу қосылуда</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Импорт аяқталмайынша ештеңе қосылмайды.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">{0} кездесуді импорттау керек пе?</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewChanges">{0} жаңасын импорттау, {1} жаңарту, {2} бас тартылғанын жою керек пе?</sys:String>
+    <sys:String x:Key="Str_Imp_PvNewer">Жаңарақ шақырулар, мұндағы кездесуді жаңартады: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCancelsHere">Ұйымдастырушы бас тартты, мұнда жойылады: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportNewer">. Жаңарақ шақырулардан {0} жаңартылды</sys:String>
+    <sys:String x:Key="Str_Status_ImportCancelsHere">. Ұйымдастырушы бас тартқан {0} жойылды</sys:String>
     <sys:String x:Key="Str_Imp_PvDuplicates">Бұл Killendar-да бар, өткізіп жіберіледі: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCanceled">Күші жойылған кездесулер, қосылмайды: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvLost">Killendar сақтамайтын мәліметтері бар: {0}</sys:String>

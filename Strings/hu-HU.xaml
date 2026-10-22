@@ -183,6 +183,11 @@
     <sys:String x:Key="Str_Imp_Saving">{0} találkozó hozzáadása</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Az importálás befejezéséig semmi sem kerül hozzáadásra.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Importál {0} találkozót?</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewChanges">Importál {0} újat, frissít {1}, eltávolít {2} lemondottat?</sys:String>
+    <sys:String x:Key="Str_Imp_PvNewer">Újabb meghívók, frissítik az itteni találkozót: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCancelsHere">A szervező lemondta, itt eltávolításra kerül: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportNewer">. {0} frissítve újabb meghívókból</sys:String>
+    <sys:String x:Key="Str_Status_ImportCancelsHere">. {0} szervező által lemondott eltávolítva</sys:String>
     <sys:String x:Key="Str_Imp_PvDuplicates">Már szerepelnek ebben a Killendarban, kimaradnak: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCanceled">Lemondott értekezletek, nem kerülnek hozzáadásra: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvLost">A Killendar által nem tárolt részleteket tartalmaznak: {0}</sys:String>

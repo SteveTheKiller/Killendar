@@ -83,19 +83,23 @@ namespace Killendar.Features
                     source.AlreadyPresent = source.Events.Count - importable.Count;
                     source.Events = importable;
                 }
-                var plan = _store.PlanImport(source.Events);
+                var plan = _store.PlanImport(source.Events, source.CanceledIds, source.CanceledOccurrences);
                 plan.AlreadyPresent += source.AlreadyPresent;
-                if (plan.Fresh.Count > 0 && source.Losses(plan) &&
-                    !_host.ConfirmImport(string.Format(_host.Loc("Str_Imp_PreviewHead"), plan.Fresh.Count), Preview(source, plan)))
+                // Changing or removing appointments already here always asks first.
+                bool ask = plan.ChangesExisting || (plan.Fresh.Count > 0 && source.Losses(plan));
+                string head = plan.ChangesExisting
+                    ? string.Format(_host.Loc("Str_Imp_PreviewChanges"), plan.Fresh.Count, plan.NewerInvites, plan.Cancellations)
+                    : string.Format(_host.Loc("Str_Imp_PreviewHead"), plan.Fresh.Count);
+                if (ask && !_host.ConfirmImport(head, Preview(source, plan)))
                 {
                     Stopped();
                     return;
                 }
 
-                if (plan.Fresh.Count > 0)
+                if (plan.HasWork)
                 {
                     var writing = Task.Run(() => _store.WriteImport(plan, cancel.Token), cancel.Token);
-                    if (_host.WaitOrCancel(string.Format(_host.Loc("Str_Imp_Saving"), plan.Fresh.Count), writing))
+                    if (_host.WaitOrCancel(string.Format(_host.Loc("Str_Imp_Saving"), plan.Fresh.Count + plan.Updated.Count + plan.Removed.Count), writing))
                         cancel.Cancel();
                     try { writing.GetAwaiter().GetResult(); }
                     catch (OperationCanceledException) { Stopped(); return; }
@@ -157,8 +161,10 @@ namespace Killendar.Features
             {
                 if (count > 0) lines.Add(string.Format(_host.Loc(key), count));
             }
+            Line(plan.NewerInvites, "Str_Imp_PvNewer");
+            Line(plan.Cancellations, "Str_Imp_PvCancelsHere");
             Line(plan.AlreadyPresent, "Str_Imp_PvDuplicates");
-            Line(source.Canceled, "Str_Imp_PvCanceled");
+            Line(source.Canceled - plan.Cancellations, "Str_Imp_PvCanceled");
             Line(source.LostDetails, "Str_Imp_PvLost");
             Line(source.Repeating, "Str_Imp_PvRepeat");
             Line(source.ZoneApproximated, "Str_Imp_PvZone");
@@ -177,13 +183,15 @@ namespace Killendar.Features
             // swallowed. A repeat rule too exotic to draw in particular imports as a single
             // date, and the user has no way of discovering that except by missing the second
             // occurrence.
+            Note(status, plan.NewerInvites, "Str_Status_ImportNewer");
+            Note(status, plan.Cancellations, "Str_Status_ImportCancelsHere");
             Note(status, source.Repeating,   "Str_Status_ImportRepeat");
             Note(status, source.ZoneApproximated, "Str_Status_ImportZone");
             Note(status, source.Unreadable,  "Str_Status_ImportUnreadable");
             Note(status, source.Malformed,   "Str_Status_ImportMalformed");
             Note(status, source.Unsupported - source.UnsupportedRanges, "Str_Status_ImportUnsupported");
             Note(status, source.UnsupportedRanges, "Str_Status_ImportUnsupportedRanges");
-            Note(status, source.Canceled, "Str_Status_ImportCanceled");
+            Note(status, source.Canceled - plan.Cancellations, "Str_Status_ImportCanceled");
             Note(status, source.LostDetails, "Str_Status_ImportLostDetails");
             return status.ToString();
         }
@@ -194,6 +202,8 @@ namespace Killendar.Features
             internal string? Refusal;
             internal bool Csv;
             internal int AlreadyPresent, Repeating, Unreadable, Malformed, Unsupported, UnsupportedRanges, Canceled, LostDetails, ZoneApproximated;
+            internal List<Guid> CanceledIds = [];
+            internal List<CalendarEvent> CanceledOccurrences = [];
 
             internal static ImportSource From(IcsParseResult parsed) => new()
             {
@@ -205,6 +215,8 @@ namespace Killendar.Features
                 Canceled = parsed.Canceled,
                 LostDetails = parsed.LostDetails,
                 ZoneApproximated = parsed.ZoneApproximated,
+                CanceledIds = parsed.CanceledIds,
+                CanceledOccurrences = parsed.CanceledOccurrences,
             };
 
             /// <summary>Anything the user would not get back by importing this file.</summary>

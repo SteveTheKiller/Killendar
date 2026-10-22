@@ -137,6 +137,11 @@
     <sys:String x:Key="Str_Imp_Saving">Añadiendo {0} citas</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">No se añade nada hasta que termine la importación.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">¿Importar {0} citas?</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewChanges">¿Importar {0} nuevas, actualizar {1}, quitar {2} canceladas?</sys:String>
+    <sys:String x:Key="Str_Imp_PvNewer">Invitaciones más recientes, actualizarán la cita aquí: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCancelsHere">Canceladas por el organizador, se quitarán aquí: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportNewer">. {0} actualizadas con invitaciones más recientes</sys:String>
+    <sys:String x:Key="Str_Status_ImportCancelsHere">. {0} canceladas por el organizador se quitaron</sys:String>
     <sys:String x:Key="Str_Imp_PvDuplicates">Ya están en este Killendar, se omitirán: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCanceled">Reuniones canceladas, no se añadirán: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvLost">Tienen detalles que Killendar no guarda: {0}</sys:String>

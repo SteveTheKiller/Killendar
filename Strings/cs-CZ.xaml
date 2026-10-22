@@ -137,6 +137,11 @@
     <sys:String x:Key="Str_Imp_Saving">Přidávání schůzek: {0}</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Dokud import neskončí, nic se nepřidá.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Importovat schůzky ({0})?</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewChanges">Importovat {0} nových, aktualizovat {1}, odstranit {2} zrušených?</sys:String>
+    <sys:String x:Key="Str_Imp_PvNewer">Novější pozvánky, aktualizují schůzku zde: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCancelsHere">Zrušeno organizátorem, odstraní se zde: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportNewer">. Aktualizováno z novějších pozvánek: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportCancelsHere">. Odstraněno zrušených organizátorem: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvDuplicates">Již jsou v tomto Killendaru, budou přeskočeny: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCanceled">Zrušené schůzky, nebudou přidány: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvLost">Obsahují podrobnosti, které Killendar neukládá: {0}</sys:String>

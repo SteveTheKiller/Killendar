@@ -172,6 +172,11 @@
   <sys:String x:Key="Str_Imp_Saving">Đang thêm {0} cuộc hẹn</sys:String>
   <sys:String x:Key="Str_Imp_ProgressHint">Sẽ không thêm gì cho đến khi nhập xong.</sys:String>
   <sys:String x:Key="Str_Imp_PreviewHead">Nhập {0} cuộc hẹn?</sys:String>
+  <sys:String x:Key="Str_Imp_PreviewChanges">Nhập {0} mới, cập nhật {1}, xóa {2} đã hủy?</sys:String>
+  <sys:String x:Key="Str_Imp_PvNewer">Lời mời mới hơn, sẽ cập nhật cuộc hẹn ở đây: {0}</sys:String>
+  <sys:String x:Key="Str_Imp_PvCancelsHere">Người tổ chức đã hủy, sẽ bị xóa ở đây: {0}</sys:String>
+  <sys:String x:Key="Str_Status_ImportNewer">. Đã cập nhật {0} từ lời mời mới hơn</sys:String>
+  <sys:String x:Key="Str_Status_ImportCancelsHere">. Đã xóa {0} do người tổ chức hủy</sys:String>
   <sys:String x:Key="Str_Imp_PvDuplicates">Đã có trong Killendar này, sẽ bỏ qua: {0}</sys:String>
   <sys:String x:Key="Str_Imp_PvCanceled">Cuộc họp đã hủy, sẽ không thêm: {0}</sys:String>
   <sys:String x:Key="Str_Imp_PvLost">Có chi tiết Killendar không lưu: {0}</sys:String>

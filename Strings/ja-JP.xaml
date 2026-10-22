@@ -137,6 +137,11 @@
     <sys:String x:Key="Str_Imp_Saving">{0} 件の予定を追加しています</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">読み込みが終わるまで何も追加されません。</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">{0} 件の予定を読み込みますか?</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewChanges">新規 {0} 件をインポート、{1} 件を更新、キャンセルされた {2} 件を削除しますか?</sys:String>
+    <sys:String x:Key="Str_Imp_PvNewer">新しい招待で、ここの予定が更新されます: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCancelsHere">主催者がキャンセルしたため、ここから削除されます: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportNewer">。新しい招待から {0} 件を更新</sys:String>
+    <sys:String x:Key="Str_Status_ImportCancelsHere">。主催者がキャンセルした {0} 件を削除</sys:String>
     <sys:String x:Key="Str_Imp_PvDuplicates">この Killendar に既にあるためスキップ: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCanceled">キャンセルされた会議のため追加しない: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvLost">Killendar が保存しない詳細を含む: {0}</sys:String>

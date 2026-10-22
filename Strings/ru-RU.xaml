@@ -184,6 +184,11 @@
     <sys:String x:Key="Str_Imp_Saving">Добавление встреч: {0}</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Пока импорт не завершится, ничего не будет добавлено.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Импортировать встречи ({0})?</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewChanges">Импортировать {0} новых, обновить {1}, удалить {2} отменённых?</sys:String>
+    <sys:String x:Key="Str_Imp_PvNewer">Более новые приглашения, обновят встречу здесь: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCancelsHere">Отменены организатором, будут удалены здесь: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportNewer">. Обновлено по новым приглашениям: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportCancelsHere">. Удалено отменённых организатором: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvDuplicates">Уже есть в этом Killendar, будут пропущены: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCanceled">Отменённые встречи, не будут добавлены: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvLost">Содержат сведения, которые Killendar не хранит: {0}</sys:String>

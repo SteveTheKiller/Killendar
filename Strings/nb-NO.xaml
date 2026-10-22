@@ -183,6 +183,11 @@
     <sys:String x:Key="Str_Imp_Saving">Legger til {0} avtaler</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Ingenting legges til før importen er ferdig.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Importere {0} avtaler?</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewChanges">Importere {0} nye, oppdatere {1}, fjerne {2} avlyste?</sys:String>
+    <sys:String x:Key="Str_Imp_PvNewer">Nyere invitasjoner, oppdaterer avtalen her: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCancelsHere">Avlyst av arrangøren, fjernes her: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportNewer">. Oppdaterte {0} fra nyere invitasjoner</sys:String>
+    <sys:String x:Key="Str_Status_ImportCancelsHere">. Fjernet {0} som arrangøren avlyste</sys:String>
     <sys:String x:Key="Str_Imp_PvDuplicates">Finnes allerede i denne Killendar-filen, hoppes over: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCanceled">Avlyste møter, legges ikke til: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvLost">Har detaljer som Killendar ikke lagrer: {0}</sys:String>

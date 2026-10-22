@@ -137,6 +137,11 @@
     <sys:String x:Key="Str_Imp_Saving">{0} Termine werden hinzugefügt</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Bis der Import abgeschlossen ist, wird nichts hinzugefügt.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">{0} Termine importieren?</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewChanges">{0} neue importieren, {1} aktualisieren, {2} abgesagte entfernen?</sys:String>
+    <sys:String x:Key="Str_Imp_PvNewer">Neuere Einladungen, aktualisieren den Termin hier: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCancelsHere">Vom Organisator abgesagt, werden hier entfernt: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportNewer">. {0} aus neueren Einladungen aktualisiert</sys:String>
+    <sys:String x:Key="Str_Status_ImportCancelsHere">. {0} vom Organisator abgesagte entfernt</sys:String>
     <sys:String x:Key="Str_Imp_PvDuplicates">Bereits in diesem Killendar, werden übersprungen: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCanceled">Abgesagte Besprechungen, werden nicht hinzugefügt: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvLost">Enthalten Details, die Killendar nicht speichert: {0}</sys:String>

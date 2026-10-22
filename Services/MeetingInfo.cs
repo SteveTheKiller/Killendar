@@ -35,6 +35,19 @@ namespace Killendar.Services
 
         /// <summary>The meeting in <paramref name="ev"/>, or null when it has no organizer or
         /// attendee lines - a plain appointment.</summary>
+        /// <summary>The invite's revision number (SEQUENCE), 0 when it carries none. An organizer
+        /// raises it each time the meeting changes, so a higher one is the newer invite.</summary>
+        public static int Sequence(CalendarEvent ev)
+        {
+            foreach (var line in ev.KeptProperties)
+            {
+                var (name, _, value) = Split(line);
+                if (name == "SEQUENCE" && int.TryParse(value.Trim(), System.Globalization.NumberStyles.None,
+                        System.Globalization.CultureInfo.InvariantCulture, out int sequence)) return sequence;
+            }
+            return 0;
+        }
+
         public static MeetingInfo? From(CalendarEvent ev)
         {
             var info = new MeetingInfo { Free = IsFree(ev) };

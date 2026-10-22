@@ -156,6 +156,11 @@
     <sys:String x:Key="Str_Imp_Saving">Dodajanje dogodkov: {0}</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Dokler se uvoz ne konča, se nič ne doda.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Uvozim dogodke ({0})?</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewChanges">Uvozi {0} novih, posodobi {1}, odstrani {2} preklicanih?</sys:String>
+    <sys:String x:Key="Str_Imp_PvNewer">Novejša vabila, posodobijo sestanek tukaj: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCancelsHere">Organizator jih je preklical, tukaj bodo odstranjeni: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportNewer">. Posodobljeno iz novejših vabil: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportCancelsHere">. Odstranjeno preklicanih s strani organizatorja: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvDuplicates">So že v tem Killendarju, bodo preskočeni: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCanceled">Preklicani sestanki, ne bodo dodani: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvLost">Vsebujejo podrobnosti, ki jih Killendar ne shranjuje: {0}</sys:String>

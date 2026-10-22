@@ -42,6 +42,14 @@ namespace Killendar.Services
         /// that date from the series instead.</summary>
         public int Canceled;
 
+        /// <summary>Appointments the file cancels whole (by the id their UID gives), so one already
+        /// in the Killendar can be removed.</summary>
+        public List<Guid> CanceledIds = [];
+
+        /// <summary>Single dates of a series the file cancels, shaped like a one-date edit
+        /// (SeriesId and the original date), so the series in the Killendar can drop them.</summary>
+        public List<CalendarEvent> CanceledOccurrences = [];
+
         /// <summary>Repeats on a time zone the file defines for itself that matches no Windows
         /// zone. They keep the times of their first date, on UTC's clock, and are counted.</summary>
         public int ZoneApproximated;
@@ -242,7 +250,17 @@ namespace Killendar.Services
                             // Never an appointment. A canceled date of a series is noted so the
                             // series in this file can drop it once everything has been read.
                             result.Canceled++;
-                            if (recurrenceIdValue.HasValue) canceledDates.Add((current.Id, recurrenceIdValue.Value));
+                            if (recurrenceIdValue.HasValue)
+                            {
+                                canceledDates.Add((current.Id, recurrenceIdValue.Value));
+                                result.CanceledOccurrences.Add(new CalendarEvent
+                                {
+                                    SeriesId = current.Id, OccurrenceStart = recurrenceId, Start = recurrenceId!.Value,
+                                    OccurrenceAnchor = recurrenceAnchor, OccurrenceBasis = recurrenceBasis,
+                                    OccurrenceZoneId = recurrenceZone, AllDay = recurrenceAllDay,
+                                });
+                            }
+                            else result.CanceledIds.Add(current.Id);
                         }
                         else if (!haveStart)
                         {

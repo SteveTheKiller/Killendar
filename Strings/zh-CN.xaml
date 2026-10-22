@@ -137,6 +137,11 @@
     <sys:String x:Key="Str_Imp_Saving">正在添加 {0} 个约会</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">导入完成前不会添加任何内容。</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">导入 {0} 个约会？</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewChanges">导入 {0} 个新约会、更新 {1} 个、移除 {2} 个已取消的？</sys:String>
+    <sys:String x:Key="Str_Imp_PvNewer">较新的邀请，将更新此处的约会：{0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvCancelsHere">组织者已取消，将从此处移除：{0}</sys:String>
+    <sys:String x:Key="Str_Status_ImportNewer">。已根据较新的邀请更新 {0} 个</sys:String>
+    <sys:String x:Key="Str_Status_ImportCancelsHere">。已移除组织者取消的 {0} 个</sys:String>
     <sys:String x:Key="Str_Imp_PvDuplicates">已在此 Killendar 中，将跳过：{0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCanceled">已取消的会议，不会添加：{0}</sys:String>
     <sys:String x:Key="Str_Imp_PvLost">包含 Killendar 不保存的详细信息：{0}</sys:String>
