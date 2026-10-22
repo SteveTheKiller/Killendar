@@ -100,7 +100,11 @@ namespace Killendar.Services
                 if (p.TryGetValue("RDATE", out var rdates))
                     foreach (var d in rdates.Split(','))
                         if (TryLocal(d.Trim(), out var extra)) walls.Add(extra);
-                foreach (var wall in walls) changes.Add((DateTime.SpecifyKind(wall - from, DateTimeKind.Utc), to));
+                foreach (var wall in walls)
+                {
+                    if (wall.Year < 2 || wall.Year > 9998) continue;   // the year 1 placeholder some writers use
+                    changes.Add((DateTime.SpecifyKind(wall - from, DateTimeKind.Utc), to));
+                }
             }
             zone._initial = earliestFrom;
             zone._changes.AddRange(changes.OrderBy(c => c.Item1));

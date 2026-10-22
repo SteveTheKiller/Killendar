@@ -89,5 +89,16 @@ namespace Killendar.Tests
             Assert.True(zone.ChangesOffset);
             Assert.Null(zone.MatchSystemZone());
         }
+
+        // Some writers start a zone's rules in the year 1. That must not stop the import.
+        [Fact]
+        public void AZoneStartingInTheYearOneStillReads()
+        {
+            string zone = Eastern.Replace("DTSTART:16011104T020000", "DTSTART:00011104T020000")
+                                 .Replace("DTSTART:16010311T020000", "DTSTART:00010311T020000");
+            var ev = Assert.Single(IcsService.ParseText(Calendar(zone,
+                "DTSTART;TZID=\"Customized Time Zone\":20260715T090000", "DTEND;TZID=\"Customized Time Zone\":20260715T100000")).Events);
+            Assert.Equal(new DateTime(2026, 7, 15, 13, 0, 0, DateTimeKind.Utc), ev.Start.ToUniversalTime());
+        }
     }
 }

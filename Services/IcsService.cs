@@ -131,9 +131,16 @@ namespace Killendar.Services
                 if (block == null) continue;
                 if (line.StartsWith("END:VTIMEZONE", StringComparison.OrdinalIgnoreCase))
                 {
-                    var zone = IcsCustomZone.Read(block);
+                    var definition = block;
                     block = null;
-                    if (zone == null || zones.ContainsKey(zone.Id) || TZConvert.TryGetTimeZoneInfo(zone.Id, out _)) continue;
+                    // Only a name Windows cannot resolve needs the file's rules; a definition
+                    // that cannot be read leaves that name refused as before, never the file.
+                    string? id = definition.FirstOrDefault(l => l.StartsWith("TZID:", StringComparison.OrdinalIgnoreCase))?.Substring(5).Trim().Trim('"');
+                    if (id == null || id.Length == 0 || zones.ContainsKey(id) || TZConvert.TryGetTimeZoneInfo(id, out _)) continue;
+                    IcsCustomZone? zone;
+                    try { zone = IcsCustomZone.Read(definition); }
+                    catch (ArgumentException) { zone = null; }
+                    if (zone == null) continue;
                     zones[zone.Id] = (zone.MatchSystemZone(), zone);
                     continue;
                 }
