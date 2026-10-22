@@ -57,7 +57,7 @@ Times that happen twice when the clocks go back are read as the first one. Times
 
 Give an appointment a reminder in the editor, or set a default for new ones in the date settings. All-day appointments are reminded at 9:00 the day before.
 
-When a reminder is due, Killendar shows it with **Snooze** (5, 10, 15 or 60 minutes) and **Dismiss**. If Killendar is closed to the tray, a notification says so; click it to open the window. Reminders that came due while Killendar was not running are shown when it next opens, until a day after the appointment ends. A locked Killendar says how many reminders are waiting without showing what they are.
+When a reminder is due, Killendar shows it with **Snooze** (5, 10, 15 or 60 minutes) and **Dismiss**. If Killendar is closed to the tray, a notification says so; click it to open the window. For an encrypted Killendar the notification says only how many are due, because Windows keeps notifications outside the encrypted file. Reminders that came due while Killendar was not running are shown when it next opens, until a day after the appointment ends. A locked Killendar says how many reminders are waiting without showing what they are.
 
 Killendar does not send reminders to your phone or email, and it cannot remind you while it is not running.
 

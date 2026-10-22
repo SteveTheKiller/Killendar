@@ -446,6 +446,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Descartar todos</sys:String>
     <sys:String x:Key="Str_Rem_Open">Abrir Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">Hay {0} recordatorios pendientes. Desbloquea Killendar para verlos.</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">Hay {0} recordatorios pendientes. Abra Killendar para verlos.</sys:String>
     <sys:String x:Key="Str_Rem_More">y {0} más</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">Duplicar (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">Esto es una copia. Cambia lo que necesites y guarda.</sys:String>

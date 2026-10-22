@@ -529,6 +529,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Dismiss all</sys:String>
     <sys:String x:Key="Str_Rem_Open">Open Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} reminders are due. Unlock Killendar to see them.</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">{0} reminders are due. Open Killendar to see them.</sys:String>
     <sys:String x:Key="Str_Rem_More">and {0} more</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">Duplicate (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">This is a copy. Change what you need and save.</sys:String>

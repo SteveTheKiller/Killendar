@@ -485,6 +485,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Ignora tutti</sys:String>
     <sys:String x:Key="Str_Rem_Open">Apri Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} promemoria in scadenza. Sblocca Killendar per vederli.</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">{0} promemoria in scadenza. Apri Killendar per vederli.</sys:String>
     <sys:String x:Key="Str_Rem_More">e altri {0}</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">Duplica (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">Questa è una copia. Modifica ciò che serve e salva.</sys:String>

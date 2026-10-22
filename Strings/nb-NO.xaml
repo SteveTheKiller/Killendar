@@ -529,6 +529,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Avvis alle</sys:String>
     <sys:String x:Key="Str_Rem_Open">Åpne Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} påminnelser er forfalt. Lås opp Killendar for å se dem.</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">{0} påminnelser er forfalt. Åpne Killendar for å se dem.</sys:String>
     <sys:String x:Key="Str_Rem_More">og {0} til</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">Dupliser (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">Dette er en kopi. Endre det du trenger, og lagre.</sys:String>

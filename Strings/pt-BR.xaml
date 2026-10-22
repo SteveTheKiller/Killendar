@@ -529,6 +529,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Dispensar todos</sys:String>
     <sys:String x:Key="Str_Rem_Open">Abrir o Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} lembretes pendentes. Desbloqueie o Killendar para vê-los.</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">{0} lembretes vencidos. Abra o Killendar para vê-los.</sys:String>
     <sys:String x:Key="Str_Rem_More">e mais {0}</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">Duplicar (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">Esta é uma cópia. Altere o que precisar e salve.</sys:String>

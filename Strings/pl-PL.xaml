@@ -458,6 +458,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Odrzuć wszystkie</sys:String>
     <sys:String x:Key="Str_Rem_Open">Otwórz Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">Liczba przypomnień: {0}. Odblokuj Killendar, aby je zobaczyć.</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">Przypomnienia do obejrzenia: {0}. Otwórz Killendar, aby je zobaczyć.</sys:String>
     <sys:String x:Key="Str_Rem_More">i {0} więcej</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">Duplikuj (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">To jest kopia. Zmień, co trzeba, i zapisz.</sys:String>

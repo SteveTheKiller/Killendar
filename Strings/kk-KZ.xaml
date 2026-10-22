@@ -529,6 +529,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Барлығын жабу</sys:String>
     <sys:String x:Key="Str_Rem_Open">Killendar ашу</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} ескерткіш уақыты келді. Көру үшін Killendar құлпын ашыңыз.</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">{0} еске салғыштың уақыты келді. Көру үшін Killendar-ды ашыңыз.</sys:String>
     <sys:String x:Key="Str_Rem_More">және тағы {0}</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">Көшірме (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">Бұл көшірме. Қажетін өзгертіп, сақтаңыз.</sys:String>

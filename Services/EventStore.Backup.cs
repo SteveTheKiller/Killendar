@@ -24,7 +24,7 @@ namespace Killendar.Services
 
         /// <summary>The daily backup still reading the file, if any. Close waits for it, so a
         /// rename, password change or switch never finds the file held open.</summary>
-        private Task<string?>? _backgroundBackup;
+        private Task? _backgroundBackup;
 
         /// <summary>Waits for a running daily backup to let go of the file.</summary>
         private void WaitForBackgroundBackup()
@@ -35,7 +35,11 @@ namespace Killendar.Services
         }
 
         /// <summary>Why the last backup failed; null after one that verified.</summary>
-        public string? LastBackupError { get; private set; }
+        private volatile string? _lastBackupError;
+
+        /// <summary>Why the most recent backup failed, or null. Written by the background backup
+        /// too, so a caller that needs ITS backup's outcome reads BackupIfDueWithErrorAsync.</summary>
+        public string? LastBackupError { get => _lastBackupError; private set => _lastBackupError = value; }
 
         private string BackupDir => BackupDirFor(_file);
 
@@ -76,17 +80,21 @@ namespace Killendar.Services
         /// Completes with the backup's path, or null when none was due or it failed (then
         /// LastBackupError says why).
         /// </summary>
-        public Task<string?> BackupIfDueAsync(DateTime now)
+        public Task<string?> BackupIfDueAsync(DateTime now) =>
+            BackupIfDueWithErrorAsync(now).ContinueWith(t => t.Result.Path, TaskScheduler.Default);
+
+        /// <summary>The daily backup with its own outcome: the path written, or the error.</summary>
+        public Task<(string? Path, string? Error)> BackupIfDueWithErrorAsync(DateTime now)
         {
-            if (_db == null || ListBackups().Any(b => b.Taken.Date == now.Date)) return Task.FromResult<string?>(null);
+            if (_db == null || ListBackups().Any(b => b.Taken.Date == now.Date)) return Task.FromResult<(string?, string?)>((null, null));
             if (LoadError != null)
             {
                 LastBackupError = LoadError;
-                return Task.FromResult<string?>(null);
+                return Task.FromResult<(string?, string?)>((null, LoadError));
             }
             string file = _file;
             string? password = _password;
-            return _backgroundBackup = Task.Run(() =>
+            var work = Task.Run<(string?, string?)>(() =>
             {
                 try
                 {
@@ -98,14 +106,16 @@ namespace Killendar.Services
                     source.Open();
                     string written = WriteBackup(source, file, password, now);
                     LastBackupError = null;
-                    return (string?)written;
+                    return (written, null);
                 }
                 catch (Exception ex)
                 {
                     LastBackupError = ex.Message;
-                    return null;
+                    return (null, ex.Message);
                 }
             });
+            _backgroundBackup = work;
+            return work;
         }
 
         /// <summary>Takes a verified backup and prunes the old ones. Returns its path, or null with

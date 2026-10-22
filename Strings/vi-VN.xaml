@@ -499,6 +499,7 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Rem_DismissAll">Bỏ qua tất cả</sys:String>
   <sys:String x:Key="Str_Rem_Open">Mở Killendar</sys:String>
   <sys:String x:Key="Str_Rem_Locked">Có {0} lời nhắc đến hạn. Hãy mở khóa Killendar để xem.</sys:String>
+  <sys:String x:Key="Str_Rem_DueCount">Có {0} lời nhắc đến hạn. Mở Killendar để xem.</sys:String>
   <sys:String x:Key="Str_Rem_More">và {0} lời nhắc khác</sys:String>
   <sys:String x:Key="Str_TT_Duplicate">Nhân bản (Ctrl+D)</sys:String>
   <sys:String x:Key="Str_Status_Duplicated">Đây là bản sao. Sửa những gì cần rồi lưu.</sys:String>

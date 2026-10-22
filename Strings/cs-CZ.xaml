@@ -446,6 +446,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Zavřít vše</sys:String>
     <sys:String x:Key="Str_Rem_Open">Otevřít Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">Počet připomenutí: {0}. Odemkněte Killendar a zobrazte je.</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">Připomenutí k vyřízení: {0}. Otevřete Killendar a zobrazte je.</sys:String>
     <sys:String x:Key="Str_Rem_More">a {0} další</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">Duplikovat (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">Toto je kopie. Upravte, co potřebujete, a uložte.</sys:String>

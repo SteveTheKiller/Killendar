@@ -446,6 +446,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">すべて閉じる</sys:String>
     <sys:String x:Key="Str_Rem_Open">Killendar を開く</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} 件のリマインダーがあります。表示するには Killendar のロックを解除してください。</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">{0} 件のリマインダーがあります。Killendar を開いて確認してください。</sys:String>
     <sys:String x:Key="Str_Rem_More">ほか {0} 件</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">複製 (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">これはコピーです。必要な箇所を変えて保存してください。</sys:String>

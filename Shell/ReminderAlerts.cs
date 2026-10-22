@@ -72,10 +72,18 @@ namespace Killendar.Shell
             {
                 Alert();
                 // In the tray the reminders window still shows; the balloon says where it came from.
-                var first = due[0];
-                string title = string.IsNullOrWhiteSpace(first.Title) ? Loc("Str_Cal_NoTitle") : first.Title;
-                string text = Describe(first) + (due.Count > 1 ? Environment.NewLine + string.Format(Loc("Str_Rem_More"), due.Count - 1) : "");
-                _tray.Notify(title, text);
+                // Windows keeps notifications in Action Center and its own database, outside the
+                // encrypted file, so an encrypted Killendar's balloon gives the count and no details,
+                // as it does while locked.
+                if (_store.HasPassword)
+                    _tray.Notify(AppInfo.DisplayName, string.Format(Loc("Str_Rem_DueCount"), due.Count));
+                else
+                {
+                    var first = due[0];
+                    string title = string.IsNullOrWhiteSpace(first.Title) ? Loc("Str_Cal_NoTitle") : first.Title;
+                    string text = Describe(first) + (due.Count > 1 ? Environment.NewLine + string.Format(Loc("Str_Rem_More"), due.Count - 1) : "");
+                    _tray.Notify(title, text);
+                }
             }
         }
 

@@ -530,6 +530,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Закрыть все</sys:String>
     <sys:String x:Key="Str_Rem_Open">Открыть Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">Напоминаний: {0}. Разблокируйте Killendar, чтобы их увидеть.</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">Напоминаний к показу: {0}. Откройте Killendar, чтобы их увидеть.</sys:String>
     <sys:String x:Key="Str_Rem_More">и ещё {0}</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">Дублировать (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">Это копия. Измените нужное и сохраните.</sys:String>

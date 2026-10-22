@@ -446,6 +446,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Tümünü kapat</sys:String>
     <sys:String x:Key="Str_Rem_Open">Killendar'ı aç</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} hatırlatıcının zamanı geldi. Görmek için Killendar'ın kilidini açın.</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">{0} anımsatıcının zamanı geldi. Görmek için Killendar'ı açın.</sys:String>
     <sys:String x:Key="Str_Rem_More">ve {0} tane daha</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">Çoğalt (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">Bu bir kopya. Gerekeni değiştirip kaydedin.</sys:String>

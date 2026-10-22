@@ -446,6 +446,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Alle schließen</sys:String>
     <sys:String x:Key="Str_Rem_Open">Killendar öffnen</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} Erinnerungen sind fällig. Entsperren Sie Killendar, um sie zu sehen.</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">{0} Erinnerungen sind fällig. Öffnen Sie Killendar, um sie zu sehen.</sys:String>
     <sys:String x:Key="Str_Rem_More">und {0} weitere</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">Duplizieren (Strg+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">Das ist eine Kopie. Ändern Sie, was nötig ist, und speichern Sie.</sys:String>

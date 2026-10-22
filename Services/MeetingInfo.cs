@@ -39,9 +39,15 @@ namespace Killendar.Services
         {
             var info = new MeetingInfo { Free = IsFree(ev) };
             bool meeting = false;
+            bool inAlarm = false;
             foreach (var line in ev.KeptProperties)
             {
                 var (name, parameters, value) = Split(line);
+                // A reminder's lines are kept with the meeting's; an EMAIL alarm's ATTENDEE is
+                // the address it writes to, not someone invited.
+                if (name == "BEGIN" && value.Trim().Equals("VALARM", StringComparison.OrdinalIgnoreCase)) { inAlarm = true; continue; }
+                if (name == "END" && value.Trim().Equals("VALARM", StringComparison.OrdinalIgnoreCase)) { inAlarm = false; continue; }
+                if (inAlarm) continue;
                 switch (name)
                 {
                     case "ORGANIZER":

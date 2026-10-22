@@ -123,14 +123,17 @@ namespace Killendar.Features
             }
 
             // The daily backup runs beside the app (BackupIfDueAsync); only a failure is reported.
-            var context = System.Threading.SynchronizationContext.Current;
-            _store.BackupIfDueAsync(DateTime.Now).ContinueWith(task =>
+            // The continuation runs where this call did (the UI thread), so the localized text is
+            // read there, and the error is this backup's own rather than whatever ran last.
+            var scheduler = System.Threading.SynchronizationContext.Current != null
+                ? System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext()
+                : System.Threading.Tasks.TaskScheduler.Default;
+            _store.BackupIfDueWithErrorAsync(DateTime.Now).ContinueWith(task =>
             {
-                if (task.Result != null || _store.LastBackupError == null) return;
-                string message = string.Format(_host.Loc("Str_Status_BackupFailed"), _store.LastBackupError);
-                if (context != null) context.Post(_ => _host.SetStatus(message), null);
-                else _host.SetStatus(message);
-            }, System.Threading.Tasks.TaskScheduler.Default);
+                var (path, error) = task.Result;
+                if (path != null || error == null) return;
+                _host.SetStatus(string.Format(_host.Loc("Str_Status_BackupFailed"), error));
+            }, scheduler);
             RefreshLockState();
             RefreshActiveLabel();
             return true;

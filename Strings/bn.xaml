@@ -446,6 +446,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">সব বাতিল করুন</sys:String>
     <sys:String x:Key="Str_Rem_Open">Killendar খুলুন</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0}টি রিমাইন্ডারের সময় হয়েছে। দেখতে Killendar আনলক করুন।</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">{0}টি রিমাইন্ডার বাকি। দেখতে Killendar খুলুন।</sys:String>
     <sys:String x:Key="Str_Rem_More">আরও {0}টি</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">অনুলিপি (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">এটি একটি অনুলিপি। যা দরকার বদলে সংরক্ষণ করুন।</sys:String>

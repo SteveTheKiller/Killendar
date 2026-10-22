@@ -83,5 +83,17 @@ namespace Killendar.Tests
 
             Assert.True(MeetingInfo.IsFree(Assert.Single(fixture.Store.Events)));
         }
+
+        // KD-C review BF-011: an EMAIL reminder's ATTENDEE is who it writes to, not a guest.
+        [Fact]
+        public void AnEmailAlarmDoesNotMakeAMeeting()
+        {
+            var plain = Imported("BEGIN:VALARM", "ACTION:EMAIL", "TRIGGER:-PT15M", "ATTENDEE:mailto:me@example.com", "END:VALARM");
+            Assert.Null(MeetingInfo.From(plain));
+
+            var meeting = MeetingInfo.From(Imported("ORGANIZER:mailto:boss@example.com", "ATTENDEE:mailto:pat@example.com",
+                "BEGIN:VALARM", "ACTION:EMAIL", "ATTENDEE:mailto:me@example.com", "END:VALARM"));
+            Assert.Equal("pat@example.com", Assert.Single(meeting!.Attendees).Address);
+        }
     }
 }

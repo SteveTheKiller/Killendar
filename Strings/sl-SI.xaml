@@ -457,6 +457,7 @@ Killendar se bo ponovno zagnal z namestitvenega mesta.</sys:String>
     <sys:String x:Key="Str_Rem_DismissAll">Opusti vse</sys:String>
     <sys:String x:Key="Str_Rem_Open">Odpri Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">Število opomnikov: {0}. Odklenite Killendar, da jih vidite.</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">Zapadlih opomnikov: {0}. Odprite Killendar, da jih vidite.</sys:String>
     <sys:String x:Key="Str_Rem_More">in še {0}</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">Podvoji (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">To je kopija. Spremenite, kar potrebujete, in shranite.</sys:String>

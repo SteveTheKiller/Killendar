@@ -184,5 +184,20 @@ namespace Killendar.Tests
                 Directory.Delete(root, true);
             }
         }
+
+        // KD-C review BF-014: the backup's own outcome comes back with its task.
+        [Fact]
+        public void TheBackgroundBackupReportsItsOwnOutcome()
+        {
+            using var fixture = new AppointmentFixture();
+            fixture.Store.Add(Appointment("Before"));
+            foreach (var old in fixture.Store.ListBackups()) File.Delete(old.Path);
+
+            var (path, error) = fixture.Store.BackupIfDueWithErrorAsync(new DateTime(2026, 10, 21, 9, 0, 0)).Result;
+
+            Assert.Null(error);
+            Assert.True(File.Exists(path));
+            Assert.Equal((null, null), fixture.Store.BackupIfDueWithErrorAsync(new DateTime(2026, 10, 21, 18, 0, 0)).Result);
+        }
     }
 }
