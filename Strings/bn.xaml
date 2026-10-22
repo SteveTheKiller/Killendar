@@ -469,7 +469,7 @@
     <sys:String x:Key="Str_Status_TplSaved">টেমপ্লেট {0} সংরক্ষিত হয়েছে</sys:String>
     <sys:String x:Key="Str_Status_TplDeleted">টেমপ্লেট {0} মুছে ফেলা হয়েছে</sys:String>
     <sys:String x:Key="Str_Tpl_NeedsTitle">টেমপ্লেটের নাম দিতে অ্যাপয়েন্টমেন্টের একটি শিরোনাম দিন।</sys:String>
-    <sys:String x:Key="Str_Status_Overlaps">এটি {0}-এর সাথে মিলে যায়।</sys:String>
+    <sys:String x:Key="Str_Status_Overlaps">এটির সময় {0}-এর সাথে ওভারল্যাপ করে।</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">এটি {0} ও আরও {1}টির সাথে মিলে যায়।</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">সম্পাদনাধীন অ্যাপয়েন্টমেন্টের অনুলিপি করুন</sys:String>
     <sys:String x:Key="Str_KS_Nudge">সম্পাদনাধীন অ্যাপয়েন্টমেন্ট ১৫ মিনিট বা এক দিন সরান</sys:String>
@@ -499,7 +499,7 @@
     <sys:String x:Key="Str_Rep_ShiftNext">পরের কর্মদিবস</sys:String>
     <sys:String x:Key="Str_Rep_ShiftBefore">আগের কর্মদিবস</sys:String>
     <sys:String x:Key="Str_Rep_EveryWorkday">প্রতি কর্মদিবস</sys:String>
-    <sys:String x:Key="Str_Lbl_Holidays">ছুটির দিন যেখান থেকে</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">ছুটির দিনের উৎস</sys:String>
     <sys:String x:Key="Str_Hol_Hint">এর সারা দিনের অ্যাপয়েন্টমেন্টগুলো ছুটি: ছায়া করা হয়, পুনরাবৃত্তি সরে যেতে পারে।</sys:String>
     <sys:String x:Key="Str_Hol_Locked">লক করা। এর ছুটির দিন ব্যবহার করতে আনলক করুন।</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">ছুটি</sys:String>

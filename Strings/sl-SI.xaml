@@ -61,7 +61,7 @@
     <sys:String x:Key="Str_About_PhotonLookup">Predlogi naslovov</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">Uporabi storitev Photon/Komoot</sys:String>
     <sys:String x:Key="Str_About_CopyDiagnostics">Kopiraj diagnostiko</sys:String>
-    <sys:String x:Key="Str_About_DiagnosticsHint">Kopira različico, Windows, nastavitve in števila za zahtevo za podporo. Brez besedila sestankov, imen, naslovov, poti in povezav, in nič se ne pošlje.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">Kopira različico, Windows, nastavitve in števila za zahtevo za podporo. Brez besedila dogodkov, imen, naslovov, poti in povezav, in nič se ne pošlje.</sys:String>
     <sys:String x:Key="Str_About_DiagnosticsCopied">Diagnostika je v odložišču. Prilepite jo v sporočilo; nič ni bilo poslano.</sys:String>
     <sys:String x:Key="Str_About_DiagnosticsFailed">Odložišče je zasedeno. Poskusite znova.</sys:String>
     <sys:String x:Key="Str_Location_NoResults">Ni predlogov naslovov</sys:String>
@@ -115,7 +115,7 @@
     <sys:String x:Key="Str_Btn_WholeSeries">Celoten niz</sys:String>
     <sys:String x:Key="Str_Btn_ThisAndFollowing">Ta in naslednji</sys:String>
     <sys:String x:Key="Str_Fld_TimeZone">ČASOVNI PAS</sys:String>
-    <sys:String x:Key="Str_TT_ZoneOfSeries">Ponavljajoči se sestanek ohrani časovni pas, v katerem je bil ustvarjen.</sys:String>
+    <sys:String x:Key="Str_TT_ZoneOfSeries">Ponavljajoč se dogodek ohrani časovni pas, v katerem je bil ustvarjen.</sys:String>
     <sys:String x:Key="Str_Zone_ThisComputer">Ta računalnik ({0})</sys:String>
     <sys:String x:Key="Str_Lbl_TimeZones">časovni pasovi</sys:String>
     <sys:String x:Key="Str_Zone_Show">Prikaži časovne pasove</sys:String>
@@ -128,7 +128,7 @@
     <sys:String x:Key="Str_Shown_Unavailable">ni berljivo</sys:String>
     <sys:String x:Key="Str_Shown_Unlock">Odkleni</sys:String>
     <sys:String x:Key="Str_Shown_Unlocked">Prikazan je {0}</sys:String>
-    <sys:String x:Key="Str_Shown_Hint">Prikazani Killendarji so samo za branje. Novi sestanki in spremembe gredo v odprtega.</sys:String>
+    <sys:String x:Key="Str_Shown_Hint">Prikazani Killendarji so samo za branje. Novi dogodki in spremembe gredo v odprtega.</sys:String>
     <sys:String x:Key="Str_Shown_LockedAgain">Šifrirani Killendarji, prikazani ob strani, so spet zaklenjeni.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Ta datum in vsi poznejši bodo odstranjeni. Prejšnji ostanejo.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Določi konec ponavljanja ali izberi ponavljanje brez konca.</sys:String>
@@ -158,7 +158,7 @@
     <sys:String x:Key="Str_Imp_ProgressHint">Dokler se uvoz ne konča, se nič ne doda.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Uvozim dogodke ({0})?</sys:String>
     <sys:String x:Key="Str_Imp_PreviewChanges">Uvozi {0} novih, posodobi {1}, odstrani {2} preklicanih?</sys:String>
-    <sys:String x:Key="Str_Imp_PvNewer">Novejša vabila, posodobijo sestanek tukaj: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_PvNewer">Novejša vabila, posodobijo dogodek tukaj: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCancelsHere">Organizator jih je preklical, tukaj bodo odstranjeni: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportNewer">. Posodobljeno iz novejših vabil: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportCancelsHere">. Odstranjeno preklicanih s strani organizatorja: {0}</sys:String>
@@ -497,11 +497,11 @@ Killendar se bo ponovno zagnal z namestitvenega mesta.</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Prikaži kot prosto</sys:String>
     <sys:String x:Key="Str_Html_Legend">Kategorije</sys:String>
     <sys:String x:Key="Str_Rep_OnDay">Na dan {0}.</sys:String>
-    <sys:String x:Key="Str_Rep_OnNth1">Prvi {0}</sys:String>
-    <sys:String x:Key="Str_Rep_OnNth2">Drugi {0}</sys:String>
-    <sys:String x:Key="Str_Rep_OnNth3">Tretji {0}</sys:String>
-    <sys:String x:Key="Str_Rep_OnNth4">Četrti {0}</sys:String>
-    <sys:String x:Key="Str_Rep_OnLast">Zadnji {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth1">{0} v prvem tednu meseca</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth2">{0} v drugem tednu meseca</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth3">{0} v tretjem tednu meseca</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth4">{0} v četrtem tednu meseca</sys:String>
+    <sys:String x:Key="Str_Rep_OnLast">{0} v zadnjem tednu meseca</sys:String>
     <sys:String x:Key="Str_Rep_AlsoOn">TUDI</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Dodaj ta datum</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">Odstrani {0}</sys:String>
@@ -511,7 +511,7 @@ Killendar se bo ponovno zagnal z namestitvenega mesta.</sys:String>
     <sys:String x:Key="Str_Rep_ShiftBefore">Prejšnji delovni dan</sys:String>
     <sys:String x:Key="Str_Rep_EveryWorkday">Vsak delovni dan</sys:String>
     <sys:String x:Key="Str_Lbl_Holidays">prazniki iz</sys:String>
-    <sys:String x:Key="Str_Hol_Hint">Njegovi celodnevni sestanki so prazniki: osenčeni, ponavljanja se jim lahko umaknejo.</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">Njegovi celodnevni dogodki so prazniki: osenčeni, ponavljanja se jim lahko umaknejo.</sys:String>
     <sys:String x:Key="Str_Hol_Locked">Zaklenjeno. Odklenite ga za uporabo praznikov.</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">Praznik</sys:String>
     <sys:String x:Key="Str_Hol_DayTip">{0} je praznik</sys:String>

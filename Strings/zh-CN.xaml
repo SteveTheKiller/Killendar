@@ -457,7 +457,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">全部关闭</sys:String>
     <sys:String x:Key="Str_Rem_Open">打开 Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">有 {0} 条提醒到期。请解锁 Killendar 查看。</sys:String>
-    <sys:String x:Key="Str_Rem_DueCount">有 {0} 个提醒到期。打开 Killendar 查看。</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">有 {0} 条提醒到期。打开 Killendar 查看。</sys:String>
     <sys:String x:Key="Str_Rem_More">另有 {0} 条</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">复制 (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">这是副本。修改需要的内容后保存。</sys:String>

@@ -138,7 +138,7 @@
     <sys:String x:Key="Str_Imp_Applying">{0} değişiklik kaydediliyor</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">İçe aktarma bitene kadar hiçbir şey eklenmez.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">{0} randevu içe aktarılsın mı?</sys:String>
-    <sys:String x:Key="Str_Imp_PreviewChanges">{0} yeni içe aktarılsın, {1} güncellensin, {2} iptal kaldırılsın mı?</sys:String>
+    <sys:String x:Key="Str_Imp_PreviewChanges">{0} yeni içe aktarılsın, {1} güncellensin, iptal edilen {2} kaldırılsın mı?</sys:String>
     <sys:String x:Key="Str_Imp_PvNewer">Daha yeni davetler, buradaki randevuyu güncelleyecek: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCancelsHere">Düzenleyen iptal etti, buradan kaldırılacak: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportNewer">. Daha yeni davetlerden {0} güncellendi</sys:String>
@@ -457,7 +457,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Tümünü kapat</sys:String>
     <sys:String x:Key="Str_Rem_Open">Killendar'ı aç</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} hatırlatıcının zamanı geldi. Görmek için Killendar'ın kilidini açın.</sys:String>
-    <sys:String x:Key="Str_Rem_DueCount">{0} anımsatıcının zamanı geldi. Görmek için Killendar'ı açın.</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">{0} hatırlatıcının zamanı geldi. Görmek için Killendar'ı açın.</sys:String>
     <sys:String x:Key="Str_Rem_More">ve {0} tane daha</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">Çoğalt (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">Bu bir kopya. Gerekeni değiştirip kaydedin.</sys:String>
@@ -493,13 +493,13 @@
     <sys:String x:Key="Str_Rep_OnLast">Son {0}</sys:String>
     <sys:String x:Key="Str_Rep_AlsoOn">AYRICA</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Bu tarihi ekle</sys:String>
-    <sys:String x:Key="Str_Rep_RemoveDate">{0} kaldır</sys:String>
+    <sys:String x:Key="Str_Rep_RemoveDate">{0} tarihini kaldır</sys:String>
     <sys:String x:Key="Str_Rep_OnDayOff">İZİN GÜNÜNDE</sys:String>
     <sys:String x:Key="Str_Rep_ShiftKeep">Tarihi koru</sys:String>
     <sys:String x:Key="Str_Rep_ShiftNext">Sonraki iş günü</sys:String>
     <sys:String x:Key="Str_Rep_ShiftBefore">Önceki iş günü</sys:String>
     <sys:String x:Key="Str_Rep_EveryWorkday">Her iş günü</sys:String>
-    <sys:String x:Key="Str_Lbl_Holidays">tatiller nereden</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">tatil kaynağı</sys:String>
     <sys:String x:Key="Str_Hol_Hint">Tüm gün randevuları tatildir: gölgelenir ve yinelemeler onlardan kayabilir.</sys:String>
     <sys:String x:Key="Str_Hol_Locked">Kilitli. Tatillerini kullanmak için kilidini açın.</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">Tatil</sys:String>

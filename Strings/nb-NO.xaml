@@ -557,7 +557,7 @@
     <sys:String x:Key="Str_KS_Duplicate">Dupliser avtalen som redigeres</sys:String>
     <sys:String x:Key="Str_KS_Nudge">Flytt avtalen som redigeres 15 minutter eller en dag</sys:String>
     <sys:String x:Key="Str_Fld_Meeting">MØTE</sys:String>
-    <sys:String x:Key="Str_Meet_Organizer">Organisator: {0}</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">Arrangør: {0}</sys:String>
     <sys:String x:Key="Str_Meet_Accepted">godtatt</sys:String>
     <sys:String x:Key="Str_Meet_Declined">avslått</sys:String>
     <sys:String x:Key="Str_Meet_Tentative">kanskje</sys:String>
@@ -565,7 +565,7 @@
     <sys:String x:Key="Str_Meet_Delegated">delegert</sys:String>
     <sys:String x:Key="Str_Meet_Join">Bli med i møtet</sys:String>
     <sys:String x:Key="Str_Meet_JoinOpens">Åpner {0} i nettleseren</sys:String>
-    <sys:String x:Key="Str_Meet_Private">Merket privat av organisatoren</sys:String>
+    <sys:String x:Key="Str_Meet_Private">Merket privat av arrangøren</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Vis som ledig</sys:String>
     <sys:String x:Key="Str_Html_Legend">Kategorier</sys:String>
     <sys:String x:Key="Str_Rep_OnDay">Den {0}.</sys:String>

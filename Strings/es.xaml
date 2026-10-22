@@ -101,7 +101,7 @@
     <sys:String x:Key="Str_Zone_Show">Mostrar zonas horarias</sys:String>
     <sys:String x:Key="Str_Lbl_SecondZone">segunda zona horaria</sys:String>
     <sys:String x:Key="Str_Zone_None">Ninguna</sys:String>
-    <sys:String x:Key="Str_Status_OtherCalendar">Esto está en {0}. Abra ese Killendar para cambiarlo.</sys:String>
+    <sys:String x:Key="Str_Status_OtherCalendar">Esto está en {0}. Abre ese Killendar para cambiarlo.</sys:String>
     <sys:String x:Key="Str_Shown_Head">Mostrar al lado</sys:String>
     <sys:String x:Key="Str_Shown_None">No hay otros Killendar en la carpeta de datos.</sys:String>
     <sys:String x:Key="Str_Shown_Locked">bloqueado</sys:String>
@@ -457,7 +457,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Descartar todos</sys:String>
     <sys:String x:Key="Str_Rem_Open">Abrir Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">Hay {0} recordatorios pendientes. Desbloquea Killendar para verlos.</sys:String>
-    <sys:String x:Key="Str_Rem_DueCount">Hay {0} recordatorios pendientes. Abra Killendar para verlos.</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">Hay {0} recordatorios pendientes. Abre Killendar para verlos.</sys:String>
     <sys:String x:Key="Str_Rem_More">y {0} más</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">Duplicar (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">Esto es una copia. Cambia lo que necesites y guarda.</sys:String>
@@ -501,7 +501,7 @@
     <sys:String x:Key="Str_Rep_EveryWorkday">Cada día laborable</sys:String>
     <sys:String x:Key="Str_Lbl_Holidays">festivos de</sys:String>
     <sys:String x:Key="Str_Hol_Hint">Sus citas de todo el día son festivos: se sombrean y las series pueden moverse fuera de ellos.</sys:String>
-    <sys:String x:Key="Str_Hol_Locked">Bloqueado. Desbloquéelo para usar sus festivos.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Bloqueado. Desbloquéalo para usar sus festivos.</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">Festivo</sys:String>
     <sys:String x:Key="Str_Hol_DayTip">{0} es festivo</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Semana del {0}</sys:String>
@@ -574,8 +574,8 @@
     <sys:String x:Key="Str_About_PhotonPrivacy">Usar el servicio Photon/Komoot</sys:String>
     <sys:String x:Key="Str_About_CopyDiagnostics">Copiar diagnóstico</sys:String>
     <sys:String x:Key="Str_About_DiagnosticsHint">Copia la versión, Windows, la configuración y los recuentos para una solicitud de soporte. Sin texto de citas, nombres, direcciones, rutas ni enlaces, y no se envía nada.</sys:String>
-    <sys:String x:Key="Str_About_DiagnosticsCopied">El diagnóstico está en el portapapeles. Péguelo en su mensaje; no se envió nada.</sys:String>
-    <sys:String x:Key="Str_About_DiagnosticsFailed">El portapapeles está ocupado. Inténtelo de nuevo.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">El diagnóstico está en el portapapeles. Pégalo en tu mensaje; no se envió nada.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">El portapapeles está ocupado. Inténtalo de nuevo.</sys:String>
     <sys:String x:Key="Str_Location_NoResults">No hay sugerencias de direcciones</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">Elegir una fecha</sys:String>
     <sys:String x:Key="Str_A11y_StartDate">Fecha de inicio</sys:String>

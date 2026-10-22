@@ -540,7 +540,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Dispensar todos</sys:String>
     <sys:String x:Key="Str_Rem_Open">Abrir o Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} lembretes pendentes. Desbloqueie o Killendar para vê-los.</sys:String>
-    <sys:String x:Key="Str_Rem_DueCount">{0} lembretes vencidos. Abra o Killendar para vê-los.</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">{0} lembretes pendentes. Abra o Killendar para vê-los.</sys:String>
     <sys:String x:Key="Str_Rem_More">e mais {0}</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">Duplicar (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">Esta é uma cópia. Altere o que precisar e salve.</sys:String>
@@ -569,11 +569,11 @@
     <sys:String x:Key="Str_Chk_ShowAsFree">Mostrar como livre</sys:String>
     <sys:String x:Key="Str_Html_Legend">Categorias</sys:String>
     <sys:String x:Key="Str_Rep_OnDay">No dia {0}</sys:String>
-    <sys:String x:Key="Str_Rep_OnNth1">Na primeira {0}</sys:String>
-    <sys:String x:Key="Str_Rep_OnNth2">Na segunda {0}</sys:String>
-    <sys:String x:Key="Str_Rep_OnNth3">Na terceira {0}</sys:String>
-    <sys:String x:Key="Str_Rep_OnNth4">Na quarta {0}</sys:String>
-    <sys:String x:Key="Str_Rep_OnLast">Na última {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth1">{0} da primeira semana do mês</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth2">{0} da segunda semana do mês</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth3">{0} da terceira semana do mês</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth4">{0} da quarta semana do mês</sys:String>
+    <sys:String x:Key="Str_Rep_OnLast">{0} da última semana do mês</sys:String>
     <sys:String x:Key="Str_Rep_AlsoOn">TAMBÉM EM</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Adicionar esta data</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">Remover {0}</sys:String>

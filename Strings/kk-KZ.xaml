@@ -319,7 +319,7 @@
     <sys:String x:Key="Str_Lbl_WeekStart">аптаның басталуы</sys:String>
     <sys:String x:Key="Str_Lbl_WorkDays">жұмыс күндері</sys:String>
     <sys:String x:Key="Str_Lbl_WorkHours">жұмыс уақыты</sys:String>
-    <sys:String x:Key="Str_Work_To">дейін</sys:String>
+    <sys:String x:Key="Str_Work_To">-</sys:String>
     <sys:String x:Key="Str_Work_StartsA11y">Жұмыс басталуы</sys:String>
     <sys:String x:Key="Str_Work_EndsA11y">Жұмыс аяқталуы</sys:String>
     <sys:String x:Key="Str_Work_EndOfDay">Күн соңы</sys:String>
@@ -540,7 +540,7 @@
     <sys:String x:Key="Str_Rem_DismissAll">Барлығын жабу</sys:String>
     <sys:String x:Key="Str_Rem_Open">Killendar ашу</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} ескерткіш уақыты келді. Көру үшін Killendar құлпын ашыңыз.</sys:String>
-    <sys:String x:Key="Str_Rem_DueCount">{0} еске салғыштың уақыты келді. Көру үшін Killendar-ды ашыңыз.</sys:String>
+    <sys:String x:Key="Str_Rem_DueCount">{0} ескерткіш уақыты келді. Көру үшін Killendar-ды ашыңыз.</sys:String>
     <sys:String x:Key="Str_Rem_More">және тағы {0}</sys:String>
     <sys:String x:Key="Str_TT_Duplicate">Көшірме (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">Бұл көшірме. Қажетін өзгертіп, сақтаңыз.</sys:String>
@@ -583,7 +583,7 @@
     <sys:String x:Key="Str_Rep_ShiftBefore">Алдыңғы жұмыс күні</sys:String>
     <sys:String x:Key="Str_Rep_EveryWorkday">Әр жұмыс күні</sys:String>
     <sys:String x:Key="Str_Lbl_Holidays">мерекелер көзі</sys:String>
-    <sys:String x:Key="Str_Hol_Hint">Оның күні бойғы кездесулері мереке: көлеңкеленеді, қайталанулар одан ауыса алады.</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">Оның күні бойғы кездесулері мереке: көлеңкеленеді, қайталанулар олардан ауыса алады.</sys:String>
     <sys:String x:Key="Str_Hol_Locked">Құлыпталған. Мерекелерін қолдану үшін құлпын ашыңыз.</sys:String>
     <sys:String x:Key="Str_Hol_Holiday">Мереке</sys:String>
     <sys:String x:Key="Str_Hol_DayTip">{0} мереке күні</sys:String>

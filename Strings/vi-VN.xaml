@@ -544,7 +544,7 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Rep_OnNth3">{0} thứ ba</sys:String>
   <sys:String x:Key="Str_Rep_OnNth4">{0} thứ tư</sys:String>
   <sys:String x:Key="Str_Rep_OnLast">{0} cuối cùng</sys:String>
-  <sys:String x:Key="Str_Rep_AlsoOn">THÊM VÀO</sys:String>
+  <sys:String x:Key="Str_Rep_AlsoOn">CŨNG VÀO</sys:String>
   <sys:String x:Key="Str_Rep_AddDate">Thêm ngày này</sys:String>
   <sys:String x:Key="Str_Rep_RemoveDate">Xóa {0}</sys:String>
   <sys:String x:Key="Str_Rep_OnDayOff">VÀO NGÀY NGHỈ</sys:String>
@@ -553,7 +553,7 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Rep_ShiftBefore">Ngày làm việc trước</sys:String>
   <sys:String x:Key="Str_Rep_EveryWorkday">Mỗi ngày làm việc</sys:String>
   <sys:String x:Key="Str_Lbl_Holidays">ngày lễ lấy từ</sys:String>
-  <sys:String x:Key="Str_Hol_Hint">Các cuộc hẹn cả ngày trong đó là ngày lễ: được tô bóng, và lịch lặp có thể dời khỏi.</sys:String>
+  <sys:String x:Key="Str_Hol_Hint">Các cuộc hẹn cả ngày trong đó là ngày lễ: được tô bóng, và lịch lặp có thể dời khỏi những ngày này.</sys:String>
   <sys:String x:Key="Str_Hol_Locked">Đã khóa. Mở khóa để dùng các ngày lễ.</sys:String>
   <sys:String x:Key="Str_Hol_Holiday">Ngày lễ</sys:String>
   <sys:String x:Key="Str_Hol_DayTip">{0} là ngày lễ</sys:String>

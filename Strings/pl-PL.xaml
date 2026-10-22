@@ -201,7 +201,7 @@
     <sys:String x:Key="Str_Rep_Scope">TO SPOTKANIE JEST CYKLICZNE</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Tylko ta data</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Cała seria</sys:String>
-    <sys:String x:Key="Str_Btn_ThisAndFollowing">Ten i następne</sys:String>
+    <sys:String x:Key="Str_Btn_ThisAndFollowing">Ta i następne</sys:String>
     <sys:String x:Key="Str_Fld_TimeZone">STREFA CZASOWA</sys:String>
     <sys:String x:Key="Str_TT_ZoneOfSeries">Spotkanie cykliczne zachowuje strefę czasową, w której zostało utworzone.</sys:String>
     <sys:String x:Key="Str_Zone_ThisComputer">Ten komputer ({0})</sys:String>
@@ -498,11 +498,11 @@
     <sys:String x:Key="Str_Chk_ShowAsFree">Pokaż jako wolny</sys:String>
     <sys:String x:Key="Str_Html_Legend">Kategorie</sys:String>
     <sys:String x:Key="Str_Rep_OnDay">Dnia {0}</sys:String>
-    <sys:String x:Key="Str_Rep_OnNth1">W pierwszy {0}</sys:String>
-    <sys:String x:Key="Str_Rep_OnNth2">W drugi {0}</sys:String>
-    <sys:String x:Key="Str_Rep_OnNth3">W trzeci {0}</sys:String>
-    <sys:String x:Key="Str_Rep_OnNth4">W czwarty {0}</sys:String>
-    <sys:String x:Key="Str_Rep_OnLast">W ostatni {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth1">{0} w pierwszym tygodniu miesiąca</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth2">{0} w drugim tygodniu miesiąca</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth3">{0} w trzecim tygodniu miesiąca</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth4">{0} w czwartym tygodniu miesiąca</sys:String>
+    <sys:String x:Key="Str_Rep_OnLast">{0} w ostatnim tygodniu miesiąca</sys:String>
     <sys:String x:Key="Str_Rep_AlsoOn">TAKŻE</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Dodaj tę datę</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">Usuń {0}</sys:String>

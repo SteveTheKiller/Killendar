@@ -93,7 +93,7 @@
     <sys:String x:Key="Str_Rep_Scope">TATO SCHŮZKA SE OPAKUJE</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Jen toto datum</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Celou sérii</sys:String>
-    <sys:String x:Key="Str_Btn_ThisAndFollowing">Tento a následující</sys:String>
+    <sys:String x:Key="Str_Btn_ThisAndFollowing">Toto a následující</sys:String>
     <sys:String x:Key="Str_Fld_TimeZone">ČASOVÉ PÁSMO</sys:String>
     <sys:String x:Key="Str_TT_ZoneOfSeries">Opakovaná schůzka si ponechá časové pásmo, ve kterém byla vytvořena.</sys:String>
     <sys:String x:Key="Str_Zone_ThisComputer">Tento počítač ({0})</sys:String>
@@ -135,7 +135,7 @@
     <sys:String x:Key="Str_Status_ImportTooLarge">Tento soubor je příliš velký nebo složitý pro import. Killendar najednou importuje nejvýše {0} MB a {1} schůzek.</sys:String>
     <sys:String x:Key="Str_Imp_Reading">Načítání souboru {0}</sys:String>
     <sys:String x:Key="Str_Imp_Saving">Přidávání schůzek: {0}</sys:String>
-    <sys:String x:Key="Str_Imp_Applying">Ukládá se změn: {0}</sys:String>
+    <sys:String x:Key="Str_Imp_Applying">Ukládání změn: {0}</sys:String>
     <sys:String x:Key="Str_Imp_ProgressHint">Dokud import neskončí, nic se nepřidá.</sys:String>
     <sys:String x:Key="Str_Imp_PreviewHead">Importovat schůzky ({0})?</sys:String>
     <sys:String x:Key="Str_Imp_PreviewChanges">Importovat {0} nových, aktualizovat {1}, odstranit {2} zrušených?</sys:String>
@@ -487,9 +487,9 @@
     <sys:String x:Key="Str_Html_Legend">Kategorie</sys:String>
     <sys:String x:Key="Str_Rep_OnDay">Dne {0}.</sys:String>
     <sys:String x:Key="Str_Rep_OnNth1">První {0}</sys:String>
-    <sys:String x:Key="Str_Rep_OnNth2">Druhý {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth2">2. {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnNth3">Třetí {0}</sys:String>
-    <sys:String x:Key="Str_Rep_OnNth4">Čtvrtý {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth4">4. {0}</sys:String>
     <sys:String x:Key="Str_Rep_OnLast">Poslední {0}</sys:String>
     <sys:String x:Key="Str_Rep_AlsoOn">TAKÉ</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Přidat toto datum</sys:String>

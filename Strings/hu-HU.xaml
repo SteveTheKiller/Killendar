@@ -188,7 +188,7 @@
     <sys:String x:Key="Str_Imp_PvNewer">Újabb meghívók, frissítik az itteni találkozót: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCancelsHere">A szervező lemondta, itt eltávolításra kerül: {0}</sys:String>
     <sys:String x:Key="Str_Status_ImportNewer">. {0} frissítve újabb meghívókból</sys:String>
-    <sys:String x:Key="Str_Status_ImportCancelsHere">. {0} szervező által lemondott eltávolítva</sys:String>
+    <sys:String x:Key="Str_Status_ImportCancelsHere">. {0} a szervező által lemondott eltávolítva</sys:String>
     <sys:String x:Key="Str_Imp_PvDuplicates">Már szerepelnek ebben a Killendarban, kimaradnak: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvCanceled">Lemondott értekezletek, nem kerülnek hozzáadásra: {0}</sys:String>
     <sys:String x:Key="Str_Imp_PvLost">A Killendar által nem tárolt részleteket tartalmaznak: {0}</sys:String>
@@ -544,7 +544,7 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} emlékeztető esedékes. A megtekintéshez oldja fel a Killendart.</sys:String>
     <sys:String x:Key="Str_Rem_DueCount">{0} emlékeztető esedékes. Nyissa meg a Killendart a megtekintéshez.</sys:String>
     <sys:String x:Key="Str_Rem_More">és még {0}</sys:String>
-    <sys:String x:Key="Str_TT_Duplicate">Másolat (Ctrl+D)</sys:String>
+    <sys:String x:Key="Str_TT_Duplicate">Másolat készítése (Ctrl+D)</sys:String>
     <sys:String x:Key="Str_Status_Duplicated">Ez egy másolat. Módosítsa, amit kell, és mentse.</sys:String>
     <sys:String x:Key="Str_TT_Templates">Sablonok</sys:String>
     <sys:String x:Key="Str_Tpl_Save">Mentés sablonként</sys:String>
