@@ -37,7 +37,7 @@ namespace Killendar.Services
         /// <summary>A zone by Windows or IANA id; null for "", unknown ids and this computer's own zone.</summary>
         public static TimeZoneInfo? Find(string? id)
         {
-            if (string.IsNullOrWhiteSpace(id) || !TZConvert.TryGetTimeZoneInfo(id, out var zone)) return null;
+            if (id is null || string.IsNullOrWhiteSpace(id) || !TZConvert.TryGetTimeZoneInfo(id, out var zone)) return null;
             return zone;
         }
 

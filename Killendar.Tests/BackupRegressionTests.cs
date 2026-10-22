@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Killendar.Models;
 using Killendar.Services;
 using Microsoft.Data.Sqlite;
@@ -94,7 +95,7 @@ namespace Killendar.Tests
         }
 
         [Fact]
-        public void DailyBackupRunsBesideTheAppWithItsOwnConnection()
+        public async Task DailyBackupRunsBesideTheAppWithItsOwnConnection()
         {
             using var fixture = new AppointmentFixture();
             fixture.Store.Add(Appointment("Before"));
@@ -103,13 +104,13 @@ namespace Killendar.Tests
 
             var backup = fixture.Store.BackupIfDueAsync(new DateTime(2026, 10, 21, 9, 0, 0));
             fixture.Store.Add(Appointment("While it runs"));
-            string? path = backup.Result;
+            string? path = await backup;
 
             Assert.True(fixture.Store.LastBackupError == null, fixture.Store.LastBackupError);
             Assert.NotNull(path);
             Assert.True(EventStore.IsEncryptedFile(path!));
             Assert.Equal(2, fixture.Store.Events.Count);
-            Assert.Null(fixture.Store.BackupIfDueAsync(new DateTime(2026, 10, 21, 18, 0, 0)).Result);
+            Assert.Null(await fixture.Store.BackupIfDueAsync(new DateTime(2026, 10, 21, 18, 0, 0)));
         }
 
         [Fact]
@@ -187,22 +188,22 @@ namespace Killendar.Tests
 
         // KD-C review BF-014: the backup's own outcome comes back with its task.
         [Fact]
-        public void TheBackgroundBackupReportsItsOwnOutcome()
+        public async Task TheBackgroundBackupReportsItsOwnOutcome()
         {
             using var fixture = new AppointmentFixture();
             fixture.Store.Add(Appointment("Before"));
             foreach (var old in fixture.Store.ListBackups()) File.Delete(old.Path);
 
-            var (path, error) = fixture.Store.BackupIfDueWithErrorAsync(new DateTime(2026, 10, 21, 9, 0, 0)).Result;
+            var (path, error) = await fixture.Store.BackupIfDueWithErrorAsync(new DateTime(2026, 10, 21, 9, 0, 0));
 
             Assert.Null(error);
             Assert.True(File.Exists(path));
-            Assert.Equal((null, null), fixture.Store.BackupIfDueWithErrorAsync(new DateTime(2026, 10, 21, 18, 0, 0)).Result);
+            Assert.Equal((null, null), await fixture.Store.BackupIfDueWithErrorAsync(new DateTime(2026, 10, 21, 18, 0, 0)));
         }
 
         // Every table is copied, not just appointments: templates and Recently deleted come along.
         [Fact]
-        public void TheBackupHoldsEveryTable()
+        public async Task TheBackupHoldsEveryTable()
         {
             using var fixture = new AppointmentFixture();
             var gone = Appointment("Deleted");
@@ -212,7 +213,7 @@ namespace Killendar.Tests
             fixture.Store.SaveTemplate(Appointment("Template"));
             foreach (var old in fixture.Store.ListBackups()) File.Delete(old.Path);
 
-            var (path, error) = fixture.Store.BackupIfDueWithErrorAsync(new DateTime(2026, 10, 21, 9, 0, 0)).Result;
+            var (path, error) = await fixture.Store.BackupIfDueWithErrorAsync(new DateTime(2026, 10, 21, 9, 0, 0));
 
             Assert.Null(error);
             var copy = new EventStore();
