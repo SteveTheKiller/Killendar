@@ -28,8 +28,16 @@ namespace Killendar.Tests
             string? folder = Environment.GetEnvironmentVariable("KILLENDAR_SNAPSHOTS");
             if (string.IsNullOrWhiteSpace(folder)) return;
             Directory.CreateDirectory(folder);
-            foreach (var theme in new[] { "Dark", "Light" })
-                ScratchUiProcess.Run(typeof(RenderedSnapshotFixture), theme + "|" + folder);
+            // KILLENDAR_SNAPSHOT_SET picks what to draw: "themes" (every theme, English),
+            // "languages" (Dark, in the longer languages), or by default Dark and Light.
+            string set = Environment.GetEnvironmentVariable("KILLENDAR_SNAPSHOT_SET") ?? "";
+            var runs = set == "themes"
+                ? Enum.GetNames(typeof(Theme)).Select(t => (t, "EnUS"))
+                : set == "languages"
+                    ? new[] { "De", "RuRU", "KkKZ", "HuHU", "UkUA", "PlPL", "PtBR", "Fr" }.Select(l => ("Dark", l))
+                    : new[] { ("Dark", "EnUS"), ("Light", "EnUS") };
+            foreach (var (theme, locale) in runs)
+                ScratchUiProcess.Run(typeof(RenderedSnapshotFixture), theme + "|" + locale + "|" + folder);
         }
     }
 
@@ -44,7 +52,7 @@ namespace Killendar.Tests
                 {
                     System.IO.Packaging.PackUriHelper.Create(new Uri("file:///calendar.html"));
                     var parts = scenario.Split('|');
-                    Exercise(parts[0], parts[1]);
+                    Exercise(parts[0], parts[1], parts[2]);
                 }
                 catch (Exception ex) { failure = ex; }
             }) { IsBackground = true };
@@ -57,12 +65,13 @@ namespace Killendar.Tests
         private const double Width = 1400, Height = 900;
 
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
-        private static void Exercise(string theme, string folder)
+        private static void Exercise(string theme, string locale, string folder)
         {
             using var profile = new SnapshotProfile(theme);
             Seed(profile.Calendars);
             var app = new Application { ShutdownMode = ShutdownMode.OnExplicitShutdown };
-            foreach (string resource in new[] { "Themes/" + theme + ".xaml", "Controls/Controls.xaml", "Strings/en-US.xaml" })
+            // The palette slot is filled by ThemeManager.Apply below; Dark only holds its place.
+            foreach (string resource in new[] { "Themes/Dark.xaml", "Controls/Controls.xaml", "Strings/en-US.xaml" })
                 app.Resources.MergedDictionaries.Add(new ResourceDictionary
                 {
                     Source = new Uri("/Killendar;component/" + resource, UriKind.Relative)
@@ -72,6 +81,8 @@ namespace Killendar.Tests
             // The theme as the app builds it: the accent, the derived brushes (dropdowns among
             // them) and the title sizes come from here, not from the theme file alone.
             ThemeManager.Apply((Theme)Enum.Parse(typeof(Theme), theme));
+            var language = (Locale)Enum.Parse(typeof(Locale), locale);
+            if (language != Locale.EnUS) LocaleManager.Apply(language);
             WorkSchedule.Load(null, null);
             TimeZones.Load("1", "Tokyo Standard Time");
             var window = new MainWindow();
@@ -92,25 +103,32 @@ namespace Killendar.Tests
                 window.Top = -30000;
                 for (int i = 0; i < 5; i++) Pump();
                 var calendar = Field<CalendarController>(window, "_calendar");
-                string prefix = Path.Combine(folder, theme.ToLowerInvariant() + "-");
+                string tag = theme.ToLowerInvariant() + (language == Locale.EnUS ? "" : "-" + locale.ToLowerInvariant());
+                string prefix = Path.Combine(folder, tag + "-");
+                string report = Path.Combine(folder, "audit.txt");
+                void Check(string where) => Audit((DependencyObject)window.Content, window.Background ?? Brushes.Black, tag + " " + where, report);
 
                 calendar.GoTo(new DateTime(2026, 12, 15));
                 calendar.SelectView("Month");
                 Save(window, prefix + "1-month-holidays-and-shown-calendar.png");
+                Check("month");
 
                 calendar.SelectView("Week");
                 calendar.GoTo(new DateTime(2026, 12, 21));
                 Save(window, prefix + "2-week-second-time-zone.png");
+                Check("week");
 
                 var store = Field<EventStore>(window, "_store");
                 var series = store.Events.Single(e => e.Title == "Market stall");
                 var editor = Field<AppointmentEditor>(window, "_appointments");
                 editor.Load(series);
                 Save(window, prefix + "3-editor-repeat-section.png");
+                Check("editor-repeat");
 
                 var zoned = store.Events.Single(e => e.Title == "Call with Tokyo");
                 editor.Load(zoned);
                 Save(window, prefix + "4-editor-time-zone.png");
+                Check("editor-zone");
 
                 var menu = Field<Killendar.Controls.DateSettingsMenu>(window, "_dateSettingsMenu");
                 SavePanel(window, menu, "_menu", prefix + "5-date-settings.png");
@@ -200,6 +218,7 @@ namespace Killendar.Tests
             surface.UpdateLayout();
             Pump();
             Write(surface, Brushes.Transparent, Math.Ceiling(size.Width), Math.Ceiling(size.Height), path);
+            Audit(surface, surface.Background, Path.GetFileNameWithoutExtension(path), Path.Combine(Path.GetDirectoryName(path)!, "audit.txt"));
         }
 
         private static Brush TextElement_Foreground() =>
@@ -218,6 +237,123 @@ namespace Killendar.Tests
             encoder.Frames.Add(BitmapFrame.Create(bitmap));
             using var file = File.Create(path);
             encoder.Save(file);
+        }
+
+        // ---- Audit: what a screen reader cannot name, and text that is hard to read ----
+
+        /// <summary>Every enabled, focusable control a screen reader would announce with no name,
+        /// and every visible piece of text below 4.5:1 (3:1 when large) against what is drawn
+        /// behind it, written to a report beside the pictures.</summary>
+        private static void Audit(DependencyObject root, Brush windowBackground, string where, string reportPath)
+        {
+            var lines = new List<string>();
+            foreach (var element in Descendants(root).OfType<FrameworkElement>())
+            {
+                if (!element.IsVisible || element.ActualWidth < 1 || element.ActualHeight < 1) continue;
+                if (element is Control control && control.Focusable && control.IsEnabled &&
+                    !(element is ScrollViewer || element is System.Windows.Controls.Primitives.ScrollBar ||
+                      element is System.Windows.Controls.Primitives.Thumb || element is System.Windows.Controls.Primitives.RepeatButton ||
+                      element is ContextMenu || element is ToolTip || element is UserControl || element is Window))
+                {
+                    var peer = System.Windows.Automation.Peers.UIElementAutomationPeer.CreatePeerForElement(element);
+                    if (peer != null && peer.IsControlElement() && string.IsNullOrWhiteSpace(peer.GetName()))
+                        lines.Add($"NAME  unnamed {element.GetType().Name} {PathOf(element)}");
+                }
+                if (element is TextBlock text && !string.IsNullOrWhiteSpace(text.Text) && text.IsEnabled &&
+                    text.Foreground is SolidColorBrush fore)
+                {
+                    var back = BackgroundOf(text, windowBackground);
+                    double opacity = 1;
+                    for (DependencyObject? d = text; d != null; d = VisualTreeHelper.GetParent(d))
+                        if (d is UIElement u) opacity *= u.Opacity;
+                    var fg = Blend(fore.Color, back, opacity * fore.Opacity);
+                    double ratio = Contrast(fg, back);
+                    bool large = text.FontSize >= 24 || (text.FontSize >= 18.66 && text.FontWeight.ToOpenTypeWeight() >= 700);
+                    // An icon (a Segoe MDL2 glyph) is a graphic: 3:1, as WCAG 1.4.11 has it.
+                    bool icon = text.FontFamily?.Source?.IndexOf("MDL2", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                text.FontFamily?.Source?.IndexOf("Fluent", StringComparison.OrdinalIgnoreCase) >= 0;
+                    double need = large || icon ? 3.0 : 4.5;
+                    if (ratio < need)
+                    {
+                        string sample = text.Text.Length > 40 ? text.Text.Substring(0, 40) : text.Text;
+                        lines.Add($"CONTRAST {ratio:0.00} (needs {need}) fg {Hex(fg)} bg {Hex(back)} {text.FontSize:0.#}px \"{sample.Replace('\n', ' ')}\" {PathOf(text)}");
+                    }
+                }
+            }
+            File.AppendAllLines(reportPath, lines.Distinct().Select(l => where + "  " + l));
+        }
+
+        private static IEnumerable<DependencyObject> Descendants(DependencyObject root)
+        {
+            var stack = new Stack<DependencyObject>();
+            stack.Push(root);
+            while (stack.Count > 0)
+            {
+                var node = stack.Pop();
+                yield return node;
+                int count = node is Visual || node is System.Windows.Media.Media3D.Visual3D ? VisualTreeHelper.GetChildrenCount(node) : 0;
+                for (int i = count - 1; i >= 0; i--) stack.Push(VisualTreeHelper.GetChild(node, i));
+            }
+        }
+
+        /// <summary>The nearest solid (or gradient, averaged) fill behind an element.</summary>
+        private static Color BackgroundOf(DependencyObject element, Brush windowBackground)
+        {
+            for (DependencyObject? d = VisualTreeHelper.GetParent(element) ?? element; d != null; d = VisualTreeHelper.GetParent(d))
+            {
+                Brush? brush = d switch
+                {
+                    // Only what paints: a control's Background shows only where its template uses it.
+                    Panel p => p.Background,
+                    Border b => b.Background,
+                    TextBlock t => t.Background,
+                    _ => null,
+                };
+                var color = Solid(brush);
+                if (color.HasValue) return color.Value;
+            }
+            return Solid(windowBackground) ?? Colors.Black;
+        }
+
+        private static Color? Solid(Brush? brush)
+        {
+            switch (brush)
+            {
+                case SolidColorBrush s when s.Color.A >= 200 && s.Opacity >= 0.8:
+                    return s.Color;
+                case GradientBrush g when g.GradientStops.Count > 0 && g.Opacity >= 0.8:
+                    var stops = g.GradientStops;
+                    if (stops.Any(x => x.Color.A < 200)) return null;
+                    return Color.FromRgb((byte)stops.Average(x => x.Color.R), (byte)stops.Average(x => x.Color.G), (byte)stops.Average(x => x.Color.B));
+                default:
+                    return null;
+            }
+        }
+
+        private static Color Blend(Color fg, Color bg, double alpha)
+        {
+            alpha *= fg.A / 255.0;
+            byte Mix(byte f, byte b) => (byte)Math.Round(f * alpha + b * (1 - alpha));
+            return Color.FromRgb(Mix(fg.R, bg.R), Mix(fg.G, bg.G), Mix(fg.B, bg.B));
+        }
+
+        private static double Contrast(Color a, Color b)
+        {
+            static double Channel(byte c) { double v = c / 255.0; return v <= 0.03928 ? v / 12.92 : Math.Pow((v + 0.055) / 1.055, 2.4); }
+            static double Luma(Color c) => 0.2126 * Channel(c.R) + 0.7152 * Channel(c.G) + 0.0722 * Channel(c.B);
+            double la = Luma(a), lb = Luma(b);
+            return (Math.Max(la, lb) + 0.05) / (Math.Min(la, lb) + 0.05);
+        }
+
+        private static string Hex(Color c) => $"#{c.R:X2}{c.G:X2}{c.B:X2}";
+
+        /// <summary>Where an element is: the x:Names of it and its named ancestors.</summary>
+        private static string PathOf(DependencyObject element)
+        {
+            var names = new List<string>();
+            for (DependencyObject? d = element; d != null && names.Count < 4; d = VisualTreeHelper.GetParent(d))
+                if (d is FrameworkElement f && !string.IsNullOrEmpty(f.Name)) names.Add(f.Name);
+            return names.Count == 0 ? "(unnamed)" : string.Join(" < ", names);
         }
 
         private static T Field<T>(object owner, string name) =>

@@ -219,7 +219,6 @@ namespace Killendar.Views
                     Canvas.SetLeft(other, 3);
                     other.Width = 42;
                     other.TextAlignment = TextAlignment.Left;
-                    other.Opacity = 0.75;
                     other.ToolTip = second.DisplayName;
                     gutter.Children.Add(other);
                 }

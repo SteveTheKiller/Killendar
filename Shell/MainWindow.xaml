@@ -722,7 +722,7 @@
                                              VerticalScrollBarVisibility="Auto"/>
 
                                     <TextBlock Text="{DynamicResource Str_Fld_Attendees}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
-                                    <TextBox x:Name="FieldAttendees" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="4,3" Margin="0,2,0,2"
+                                    <TextBox x:Name="FieldAttendees" AutomationProperties.Name="{DynamicResource Str_Fld_Attendees}" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="4,3" Margin="0,2,0,2"
                                              ToolTip="{DynamicResource Str_Hint_AttendeesTip}"/>
                                     <TextBlock Text="{DynamicResource Str_Hint_Attendees}" Foreground="{DynamicResource DimTextBrush}"
                                                FontFamily="{DynamicResource UiFont}" FontSize="9.5" Margin="0,0,0,10"/>
@@ -914,7 +914,7 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
                             Margin="{DynamicResource FooterCellPadding}">
                     <!-- FontSize 14.5 in the wordmark face (Killer Sans draws small for its em). The status line on the left stays 11.5. -->
-                    <TextBlock x:Name="VersionLabel" Opacity="0.75" Text="v1.0.0"
+                    <TextBlock x:Name="VersionLabel" Text="v1.0.0"
                                Foreground="{DynamicResource TextFooter}" FontFamily="{DynamicResource BrandSansFont}"
                                FontSize="16" TextOptions.TextFormattingMode="Ideal" VerticalAlignment="Center" Margin="0,0,12,0"
                                Cursor="Hand" ToolTip="{DynamicResource Str_TT_About}"
