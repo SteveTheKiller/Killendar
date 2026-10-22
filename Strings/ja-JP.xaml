@@ -454,6 +454,12 @@
     <sys:String x:Key="Str_Meet_Private">主催者が非公開に設定</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">空き時間として表示</sys:String>
     <sys:String x:Key="Str_Html_Legend">カテゴリ</sys:String>
+    <sys:String x:Key="Str_Rep_OnDay">{0} 日</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth1">第 1 {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth2">第 2 {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth3">第 3 {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth4">第 4 {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnLast">最終 {0}</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} からの週</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">ウェブページと印刷</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">場所を含める</sys:String>

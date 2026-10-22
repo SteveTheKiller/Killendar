@@ -461,6 +461,12 @@ Killendar se bo ponovno zagnal z namestitvenega mesta.</sys:String>
     <sys:String x:Key="Str_Meet_Private">Organizator ga je označil kot zasebnega</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Prikaži kot prosto</sys:String>
     <sys:String x:Key="Str_Html_Legend">Kategorije</sys:String>
+    <sys:String x:Key="Str_Rep_OnDay">Na dan {0}.</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth1">Prvi {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth2">Drugi {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth3">Tretji {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth4">Četrti {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnLast">Zadnji {0}</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Teden od {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">SPLETNA STRAN IN TISK</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Vključi kraje</sys:String>

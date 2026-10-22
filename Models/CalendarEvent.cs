@@ -101,6 +101,10 @@ namespace Killendar.Models
         public int RepeatCount { get; set; }
         public DayOfWeek RepeatWeekStart { get; set; } = DayOfWeek.Sunday;
 
+        /// <summary>Monthly only: 0 repeats on the same date each month; 1 to 4 on that week's
+        /// weekday of the start ("the second Tuesday"); -1 on the last one.</summary>
+        public int RepeatMonthWeek { get; set; }
+
         /// <summary>Local is the default for native and pre-migration series. Imported timed
         /// rules retain their source clock independently of display-local Start and End.</summary>
         public RecurrenceTimeBasis RepeatTimeBasis { get; set; }
@@ -191,6 +195,7 @@ namespace Killendar.Models
             RepeatUntilExact = RepeatUntilExact,
             RepeatCount     = RepeatCount,
             RepeatWeekStart = RepeatWeekStart,
+            RepeatMonthWeek = RepeatMonthWeek,
             RepeatTimeBasis = RepeatTimeBasis,
             RepeatAnchor    = RepeatAnchor,
             RepeatZoneId    = RepeatZoneId,

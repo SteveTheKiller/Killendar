@@ -454,6 +454,12 @@
     <sys:String x:Key="Str_Meet_Private">আয়োজক ব্যক্তিগত হিসেবে চিহ্নিত করেছেন</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">ফাঁকা দেখান</sys:String>
     <sys:String x:Key="Str_Html_Legend">বিভাগ</sys:String>
+    <sys:String x:Key="Str_Rep_OnDay">{0} তারিখে</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth1">প্রথম {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth2">দ্বিতীয় {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth3">তৃতীয় {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth4">চতুর্থ {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnLast">শেষ {0}</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} থেকে শুরু সপ্তাহ</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">ওয়েব পৃষ্ঠা ও মুদ্রণ</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">স্থান রাখুন</sys:String>

@@ -454,6 +454,12 @@
     <sys:String x:Key="Str_Meet_Private">Organizátor označil jako soukromé</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Zobrazit jako volno</sys:String>
     <sys:String x:Key="Str_Html_Legend">Kategorie</sys:String>
+    <sys:String x:Key="Str_Rep_OnDay">Dne {0}.</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth1">První {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth2">Druhý {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth3">Třetí {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth4">Čtvrtý {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnLast">Poslední {0}</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Týden od {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">WEBOVÁ STRÁNKA A TISK</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Zahrnout místa</sys:String>

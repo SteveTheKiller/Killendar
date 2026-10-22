@@ -462,6 +462,12 @@
     <sys:String x:Key="Str_Meet_Private">Oznaczone przez organizatora jako prywatne</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Pokaż jako wolny</sys:String>
     <sys:String x:Key="Str_Html_Legend">Kategorie</sys:String>
+    <sys:String x:Key="Str_Rep_OnDay">Dnia {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth1">W pierwszy {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth2">W drugi {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth3">W trzeci {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth4">W czwarty {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnLast">W ostatni {0}</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Tydzień od {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">STRONA INTERNETOWA I DRUK</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Uwzględnij miejsca</sys:String>

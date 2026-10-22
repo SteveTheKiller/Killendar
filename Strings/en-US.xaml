@@ -533,6 +533,12 @@
     <sys:String x:Key="Str_Meet_Private">Marked private by the organizer</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Show as free</sys:String>
     <sys:String x:Key="Str_Html_Legend">Categories</sys:String>
+    <sys:String x:Key="Str_Rep_OnDay">On day {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth1">On the first {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth2">On the second {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth3">On the third {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth4">On the fourth {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnLast">On the last {0}</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Week of {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">WEB PAGE AND PRINT</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Include locations</sys:String>

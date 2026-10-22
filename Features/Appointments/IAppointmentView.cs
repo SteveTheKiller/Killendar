@@ -45,6 +45,9 @@ namespace Killendar.Features
         /// <summary>The "every N" number, or zero while the interval input is invalid.</summary>
         int FieldRepeatEveryN { get; set; }
 
+        /// <summary>Monthly only: 0 for the same date, 1 to 4 or -1 for that week's weekday.</summary>
+        int FieldRepeatMonthWeek { get; set; }
+
         /// <summary>Weekly only: which weekdays are ticked. Empty means the day it starts on.</summary>
         System.Collections.Generic.List<System.DayOfWeek> FieldRepeatDays { get; set; }
 

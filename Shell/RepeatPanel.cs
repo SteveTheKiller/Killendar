@@ -27,6 +27,7 @@ namespace Killendar.Shell
         private RepeatFreq   _repeatFreq = RepeatFreq.None;
         private RepeatEndMode _repeatEnd = RepeatEndMode.Never;
         private readonly HashSet<DayOfWeek> _repeatDays = [];
+        private int _repeatMonthWeek;
 
         /// <summary>True when the panel is editing ONE date of a series and the user has chosen to
         /// apply the edit to all of them.</summary>
@@ -48,6 +49,12 @@ namespace Killendar.Shell
         {
             get => int.TryParse(FieldRepeatInterval.Text.Trim(), out int n) && n > 0 ? n : 0;
             set => FieldRepeatInterval.Text = value.ToString(CultureInfo.CurrentCulture);
+        }
+
+        int IAppointmentView.FieldRepeatMonthWeek
+        {
+            get => _repeatMonthWeek;
+            set { _repeatMonthWeek = value; BuildRepeatChips(); }
         }
 
         List<DayOfWeek> IAppointmentView.FieldRepeatDays
@@ -97,6 +104,7 @@ namespace Killendar.Shell
             _repeatFreq = RepeatFreq.None;
             _repeatEnd  = RepeatEndMode.Never;
             _repeatDays.Clear();
+            _repeatMonthWeek = 0;
             FieldRepeatInterval.Text = "1";
             FieldRepeatEnd.Text = "";
             _editWholeSeries = false;
@@ -206,8 +214,9 @@ namespace Killendar.Shell
 
                 // Weekdays belong to a weekly pattern only. "Every 2 months on a Tuesday" is an
                 // ordinal rule, which Killendar does not draw and the .ics importer refuses.
-                RepeatDaysRow.Visibility = _repeatFreq == RepeatFreq.Weekly
+                RepeatDaysRow.Visibility = _repeatFreq is RepeatFreq.Weekly or RepeatFreq.Monthly
                     ? Visibility.Visible : Visibility.Collapsed;
+                if (_repeatFreq == RepeatFreq.Monthly) BuildMonthlyChoice();
 
                 if (_repeatFreq == RepeatFreq.Weekly)
                 {
@@ -249,6 +258,27 @@ namespace Killendar.Shell
                 UpdateRepeatSummary();
             }
             finally { _loadingRepeat = wasLoading; }
+        }
+
+        /// <summary>
+        /// Monthly: on the same date, or on that week's weekday of the start ("the third
+        /// Wednesday"), or the last such weekday when the start is in the month's last week.
+        /// Read from the start box, so the captions follow the date being typed.
+        /// </summary>
+        private void BuildMonthlyChoice()
+        {
+            RepeatDaysRow.Children.Clear();
+            if (!AppointmentEditor.TryParseDate(FieldStartDate.Text, out var start)) return;
+            int week = Recurrence.WeekOfMonth(start);
+            string weekday = CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(start.DayOfWeek);
+            var choices = new List<(int Week, string Caption)> { (0, string.Format(Loc("Str_Rep_OnDay"), start.Day)) };
+            if (week <= 4) choices.Add((week, string.Format(Loc("Str_Rep_OnNth" + week), weekday)));
+            if (Recurrence.IsLastWeekdayOfMonth(start)) choices.Add((-1, string.Format(Loc("Str_Rep_OnLast"), weekday)));
+            // A choice the new date no longer offers (moved out of the last week) falls back.
+            if (!choices.Exists(c => c.Week == _repeatMonthWeek)) _repeatMonthWeek = _repeatMonthWeek == -1 || week > 4 ? 0 : week;
+            foreach (var (value, caption) in choices)
+                RepeatDaysRow.Children.Add(Chip(caption, _repeatMonthWeek == value,
+                    () => { _repeatMonthWeek = value; BuildRepeatChips(); }));
         }
 
         private void BuildScopeChips()
@@ -323,6 +353,7 @@ namespace Killendar.Shell
                 Repeat         = _repeatFreq,
                 RepeatInterval = view.FieldRepeatEveryN,
                 RepeatDays     = view.FieldRepeatDays,
+                RepeatMonthWeek = _repeatFreq == RepeatFreq.Monthly ? _repeatMonthWeek : 0,
                 RepeatCount    = view.FieldRepeatCount,
                 RepeatUntil    = view.FieldRepeatUntil
             };

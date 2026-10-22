@@ -117,6 +117,24 @@ namespace Killendar.Services
             return false;
         }
 
+        /// <summary>The <paramref name="week"/>th (1 to 4) or last (-1) <paramref name="day"/> of a month.</summary>
+        internal static DateTime NthWeekday(int year, int month, DayOfWeek day, int week)
+        {
+            if (week < 0)
+            {
+                var last = new DateTime(year, month, DateTime.DaysInMonth(year, month));
+                return last.AddDays(-(((int)last.DayOfWeek - (int)day + 7) % 7));
+            }
+            var first = new DateTime(year, month, 1);
+            return first.AddDays(((int)day - (int)first.DayOfWeek + 7) % 7 + 7 * (week - 1));
+        }
+
+        /// <summary>Which week of its month a date's weekday falls in: 1 to 5.</summary>
+        internal static int WeekOfMonth(DateTime date) => (date.Day - 1) / 7 + 1;
+
+        /// <summary>True when <paramref name="date"/> is the last of its weekday in its month.</summary>
+        internal static bool IsLastWeekdayOfMonth(DateTime date) => date.Day + 7 > DateTime.DaysInMonth(date.Year, date.Month);
+
         internal static bool UsesTimeBasis(CalendarEvent master) => !master.AllDay &&
             master.RepeatAnchor.HasValue && (master.RepeatTimeBasis == RecurrenceTimeBasis.Utc ||
             master.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone);
@@ -350,6 +368,24 @@ namespace Killendar.Services
                             if (d < first) continue;   // days earlier in the series' opening week
                             yield return (d, ++number);
                         }
+                    }
+                    yield break;
+                }
+
+                case RepeatFreq.Monthly when master.RepeatMonthWeek != 0:
+                {
+                    // The Nth (or last) weekday of each month. Every month has a first to fourth
+                    // and a last of each weekday, so every month counts.
+                    var time = first.TimeOfDay;
+                    int months = ((jumpTo.Year - first.Year) * 12) + jumpTo.Month - first.Month;
+                    int start  = months > 0 ? (months / interval) * interval : 0;
+                    int lastMonth = (9999 - first.Year) * 12 + 12 - first.Month;
+                    for (long i = start; i <= lastMonth; i += interval)
+                    {
+                        var anchor = new DateTime(first.Year, first.Month, 1).AddMonths((int)i);
+                        var day = NthWeekday(anchor.Year, anchor.Month, first.DayOfWeek, master.RepeatMonthWeek);
+                        if (day + time < first) continue;
+                        yield return (day + time, i / interval + 1);
                     }
                     yield break;
                 }

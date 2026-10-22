@@ -533,6 +533,12 @@
     <sys:String x:Key="Str_Meet_Private">Ұйымдастырушы жеке деп белгілеген</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Бос деп көрсету</sys:String>
     <sys:String x:Key="Str_Html_Legend">Санаттар</sys:String>
+    <sys:String x:Key="Str_Rep_OnDay">{0}-күні</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth1">Бірінші {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth2">Екінші {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth3">Үшінші {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth4">Төртінші {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnLast">Соңғы {0}</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} басталатын апта</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">ВЕБ-БЕТ ЖӘНЕ БАСЫП ШЫҒАРУ</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Орындарды қосу</sys:String>

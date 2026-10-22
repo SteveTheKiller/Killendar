@@ -535,6 +535,12 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Meet_Private">A szervező magánjellegűnek jelölte</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Szabadként jelenjen meg</sys:String>
     <sys:String x:Key="Str_Html_Legend">Kategóriák</sys:String>
+    <sys:String x:Key="Str_Rep_OnDay">{0}. napján</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth1">Az első {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth2">A második {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth3">A harmadik {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth4">A negyedik {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnLast">Az utolsó {0}</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} kezdetű hét</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">WEBOLDAL ÉS NYOMTATÁS</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Helyek is</sys:String>

@@ -503,6 +503,12 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Meet_Private">Người tổ chức đánh dấu là riêng tư</sys:String>
   <sys:String x:Key="Str_Chk_ShowAsFree">Hiển thị là rảnh</sys:String>
   <sys:String x:Key="Str_Html_Legend">Danh mục</sys:String>
+  <sys:String x:Key="Str_Rep_OnDay">Vào ngày {0}</sys:String>
+  <sys:String x:Key="Str_Rep_OnNth1">{0} đầu tiên</sys:String>
+  <sys:String x:Key="Str_Rep_OnNth2">{0} thứ hai</sys:String>
+  <sys:String x:Key="Str_Rep_OnNth3">{0} thứ ba</sys:String>
+  <sys:String x:Key="Str_Rep_OnNth4">{0} thứ tư</sys:String>
+  <sys:String x:Key="Str_Rep_OnLast">{0} cuối cùng</sys:String>
   <sys:String x:Key="Str_Html_WeekOf">Tuần từ {0}</sys:String>
   <sys:String x:Key="Str_Exp_PageHead">TRANG WEB VÀ IN</sys:String>
   <sys:String x:Key="Str_Exp_IncLocations">Kèm địa điểm</sys:String>

@@ -490,6 +490,9 @@ namespace Killendar.Services
             DateTime? until = null;
             DateTime? untilExact = null;
             var days = new List<DayOfWeek>();
+            int ordinal = 0;
+            DayOfWeek? ordinalDay = null;
+            int? setPos = null;
 
             foreach (var part in value.Split(';'))
             {
@@ -536,9 +539,23 @@ namespace Killendar.Services
                         foreach (var d in val.Split(','))
                         {
                             var day = ParseWeekday(d.Trim());
-                            if (day == null) return false;   // ordinal form, e.g. "3MO" or "-1FR"
+                            if (day == null)
+                            {
+                                // An ordinal weekday, "2TU" or "-1FR": one, in a monthly rule, is the
+                                // Nth-weekday repeat Killendar holds (checked below).
+                                var m = System.Text.RegularExpressions.Regex.Match(d.Trim(), "^([+-]?[1-5])([A-Za-z]{2})$");
+                                if (!m.Success || ordinalDay != null || (day = ParseWeekday(m.Groups[2].Value)) == null) return false;
+                                ordinal = int.Parse(m.Groups[1].Value, System.Globalization.CultureInfo.InvariantCulture);
+                                ordinalDay = day;
+                                continue;
+                            }
                             if (!days.Contains(day.Value)) days.Add(day.Value);
                         }
+                        break;
+
+                    case "BYSETPOS":
+                        if (!int.TryParse(val, out int pos)) return false;
+                        setPos = pos;
                         break;
 
                     case "WKST":
@@ -554,6 +571,26 @@ namespace Killendar.Services
 
             if (freq == RepeatFreq.None) return false;
 
+            // Outlook writes "the second Tuesday" as BYDAY=TU;BYSETPOS=2.
+            if (setPos.HasValue)
+            {
+                if (ordinalDay != null || days.Count != 1) return false;
+                ordinal = setPos.Value;
+                ordinalDay = days[0];
+                days.Clear();
+            }
+            int monthWeek = 0;
+            if (ordinalDay != null)
+            {
+                // Only "the Nth (1 to 4) or last weekday each month", on the start's own weekday,
+                // is a rule Killendar draws; anything else imports once and is counted.
+                if (freq != RepeatFreq.Monthly || ev.Start.DayOfWeek != ordinalDay ||
+                    !(ordinal is >= 1 and <= 4 || ordinal == -1)) return false;
+                if (ordinal > 0 && Recurrence.WeekOfMonth(ev.Start) != ordinal) return false;
+                if (ordinal < 0 && !Recurrence.IsLastWeekdayOfMonth(ev.Start)) return false;
+                monthWeek = ordinal;
+            }
+
             // BYDAY on anything but a weekly rule means "the Mondays within each month/year",
             // which is an ordinal rule in disguise.
             if (days.Count > 0 && freq != RepeatFreq.Weekly) return false;
@@ -565,6 +602,7 @@ namespace Killendar.Services
             ev.RepeatUntil    = until;
             ev.RepeatUntilExact = untilExact;
             ev.RepeatDays     = days;
+            ev.RepeatMonthWeek = monthWeek;
             return true;
         }
 
@@ -1113,6 +1151,9 @@ namespace Killendar.Services
                 foreach (var d in ev.RepeatDays) codes.Add(WeekdayCode(d));
                 sb.Append(";BYDAY=").Append(string.Join(",", codes));
             }
+
+            if (ev.Repeat == RepeatFreq.Monthly && ev.RepeatMonthWeek != 0)
+                sb.Append(";BYDAY=").Append(ev.RepeatMonthWeek).Append(WeekdayCode(ev.Start.DayOfWeek));
 
             if (ev.Repeat == RepeatFreq.Weekly)
                 sb.Append(";WKST=").Append(WeekdayCode(ev.RepeatWeekStart));

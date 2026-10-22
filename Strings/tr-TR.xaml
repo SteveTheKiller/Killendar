@@ -454,6 +454,12 @@
     <sys:String x:Key="Str_Meet_Private">Düzenleyen özel olarak işaretledi</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Boş olarak göster</sys:String>
     <sys:String x:Key="Str_Html_Legend">Kategoriler</sys:String>
+    <sys:String x:Key="Str_Rep_OnDay">Ayın {0}. günü</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth1">İlk {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth2">İkinci {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth3">Üçüncü {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth4">Dördüncü {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnLast">Son {0}</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} haftası</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">WEB SAYFASI VE YAZDIRMA</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Yerleri ekle</sys:String>

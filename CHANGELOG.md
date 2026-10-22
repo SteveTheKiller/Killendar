@@ -8,6 +8,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Fixed
 
+- In 98SE, long paths in the file dialog no longer run under the recent-locations arrow.
 - Uninstall removes shortcuts, the command path and file types before the program, so a failed step leaves an uninstall entry that still works. An all-users uninstall waits for its confirmation however long it stays open, and its leftover helper and empty program folder are removed at the next restart.
 - Screen readers name the color picker's Red, Green, Blue and Hex fields instead of announcing unnamed boxes.
 - Failed exports leave an existing calendar, CSV or HTML file untouched instead of truncating it.
@@ -67,6 +68,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Added Duplicate (Ctrl+D) to the appointment panel: the copy is a new appointment, without the original's imported identity or organizer details. Added templates: save an appointment's details (not its attendees or date) under its title from the panel's Templates button, and start one from that button or the New button's right-click. Alt+arrow keys move the appointment being edited by 15 minutes or a day. Saving an appointment that overlaps a busy one says so without stopping the save.
 - Added meeting details to the appointment panel for imported invitations: the organizer, each attendee's reply, whether the organizer marked it private, and a Join meeting button for its web link (only http and https links, and only when clicked). Any appointment can be shown as free instead of busy, which other calendars read from the exported file.
 - The web page export prints Month, Week, Day or Agenda layouts with a key to the category colors. The export menu chooses the layout and whether locations, descriptions and attendees go on the page; descriptions and attendees stay off unless chosen.
+- Added monthly repeats on a weekday: the first to fourth, or the last, Tuesday (or whichever day the appointment starts on) of each month. Calendar files with these rules, including Outlook's form, import as repeats instead of single appointments, and export the same way.
 
 ### Changed
 - Light is shades of gray with nothing white: the background, sidebar and footer are the darkest gray (#cccccc), menus and bars a step lighter, then panes, then fields.

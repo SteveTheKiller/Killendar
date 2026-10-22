@@ -112,6 +112,7 @@ namespace Killendar.Tests
             public string FieldEndTime { get; set; } = "";
             public RepeatFreq FieldRepeat { get; set; }
             public int FieldRepeatEveryN { get; set; } = 1;
+            public int FieldRepeatMonthWeek { get; set; }
             public List<DayOfWeek> FieldRepeatDays { get; set; } = [];
             public int FieldRepeatCount { get; set; }
             public DateTime? FieldRepeatUntil { get; set; }

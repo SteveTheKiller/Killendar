@@ -83,7 +83,7 @@ namespace Killendar.Features
             _view.FieldTitle, _view.FieldLocation, _view.FieldDescription, _view.FieldAttendees,
             _view.FieldCategories, _view.FieldReminder, _view.FieldShowAsFree, _view.FieldStartDate, _view.FieldStartTime, _view.FieldEndDate,
             _view.FieldEndTime, _allDay, _view.FieldRepeat, _view.FieldRepeatEveryN,
-            string.Join(",", _view.FieldRepeatDays ?? []), _view.FieldRepeatCount,
+            string.Join(",", _view.FieldRepeatDays ?? []), _view.FieldRepeatMonthWeek, _view.FieldRepeatCount,
             _view.FieldRepeatUntil?.Ticks, _view.EditWholeSeries);
 
         /// <summary>Opens the panel on a new appointment at <paramref name="when"/>. False when the
@@ -735,6 +735,7 @@ namespace Killendar.Features
             ev.RepeatDays     = _view.FieldRepeat == RepeatFreq.Weekly
                                     ? _view.FieldRepeatDays
                                     : [];
+            ev.RepeatMonthWeek = _view.FieldRepeat == RepeatFreq.Monthly ? _view.FieldRepeatMonthWeek : 0;
             ev.RepeatCount    = _view.FieldRepeatCount;
             ev.RepeatUntil    = _view.FieldRepeatUntil;
 
@@ -757,6 +758,7 @@ namespace Killendar.Features
             _view.FieldRepeat      = ev.Repeat;
             _view.FieldRepeatEveryN = ev.RepeatInterval > 0 ? ev.RepeatInterval : 1;
             _view.FieldRepeatDays  = [.. ev.RepeatDays ?? []];
+            _view.FieldRepeatMonthWeek = ev.RepeatMonthWeek;
             if (ev.RepeatCount > 0) _view.FieldRepeatCount = ev.RepeatCount;
             else if (ev.RepeatUntil.HasValue) _view.FieldRepeatUntil = ev.RepeatUntil;
         }

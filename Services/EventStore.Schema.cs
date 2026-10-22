@@ -51,7 +51,8 @@ CREATE TABLE IF NOT EXISTS events (
     duration_time_ticks INTEGER NOT NULL DEFAULT 0,
     external_uid TEXT NOT NULL DEFAULT '',
     kept_properties TEXT NOT NULL DEFAULT '',
-    reminder_minutes INTEGER NOT NULL DEFAULT -1
+    reminder_minutes INTEGER NOT NULL DEFAULT -1,
+    repeat_month_week INTEGER NOT NULL DEFAULT 0
 );
 CREATE INDEX IF NOT EXISTS events_range ON events (start_utc, end_utc);
 CREATE TABLE IF NOT EXISTS categories (
@@ -130,7 +131,7 @@ CREATE TABLE IF NOT EXISTS reminder_state (
             foreach (var (name, color) in DefaultCategories) AddCategory(db, name, color);
         }
 
-        /// <summary>Additive columns from v2 through v9. ALTER-on-open is needed because CREATE TABLE
+        /// <summary>Additive columns from v2 through v10. ALTER-on-open is needed because CREATE TABLE
         /// IF NOT EXISTS never touches an existing table, so a Killendar written by 1.0.0 keeps its
         /// original events table; PRAGMA-checking first keeps this idempotent and cheap.
         ///
@@ -175,6 +176,7 @@ CREATE TABLE IF NOT EXISTS reminder_state (
             AddColumn("external_uid", "TEXT NOT NULL DEFAULT ''");
             AddColumn("kept_properties", "TEXT NOT NULL DEFAULT ''");
             AddColumn("reminder_minutes", "INTEGER NOT NULL DEFAULT -1");
+            AddColumn("repeat_month_week", "INTEGER NOT NULL DEFAULT 0");
         }
 
         private string? GetMeta(string key)

@@ -454,6 +454,12 @@
     <sys:String x:Key="Str_Meet_Private">召集人標示為私人</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">顯示為空閒</sys:String>
     <sys:String x:Key="Str_Html_Legend">類別</sys:String>
+    <sys:String x:Key="Str_Rep_OnDay">每月 {0} 日</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth1">第一個{0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth2">第二個{0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth3">第三個{0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth4">第四個{0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnLast">最後一個{0}</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} 起的一週</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">網頁和列印</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">包含地點</sys:String>

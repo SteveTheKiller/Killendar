@@ -534,6 +534,12 @@
     <sys:String x:Key="Str_Meet_Private">Организатор отметил как личное</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Показывать как свободное время</sys:String>
     <sys:String x:Key="Str_Html_Legend">Категории</sys:String>
+    <sys:String x:Key="Str_Rep_OnDay">{0}-го числа</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth1">В первый {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth2">Во второй {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth3">В третий {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnNth4">В четвёртый {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnLast">В последний {0}</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Неделя с {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">ВЕБ-СТРАНИЦА И ПЕЧАТЬ</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Включить места</sys:String>
