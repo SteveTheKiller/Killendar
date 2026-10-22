@@ -236,6 +236,7 @@ namespace Killendar.Services
 
         public void Close()
         {
+            WaitForBackgroundBackup();
             _db?.Dispose();
             _db = null;
             _password = null;

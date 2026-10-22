@@ -122,8 +122,15 @@ namespace Killendar.Features
                 return false;
             }
 
-            if (_store.BackupIfDue(DateTime.Now) == null && _store.LastBackupError != null)
-                _pendingStatus ??= string.Format(_host.Loc("Str_Status_BackupFailed"), _store.LastBackupError);
+            // The daily backup runs beside the app (BackupIfDueAsync); only a failure is reported.
+            var context = System.Threading.SynchronizationContext.Current;
+            _store.BackupIfDueAsync(DateTime.Now).ContinueWith(task =>
+            {
+                if (task.Result != null || _store.LastBackupError == null) return;
+                string message = string.Format(_host.Loc("Str_Status_BackupFailed"), _store.LastBackupError);
+                if (context != null) context.Post(_ => _host.SetStatus(message), null);
+                else _host.SetStatus(message);
+            }, System.Threading.Tasks.TaskScheduler.Default);
             RefreshLockState();
             RefreshActiveLabel();
             return true;

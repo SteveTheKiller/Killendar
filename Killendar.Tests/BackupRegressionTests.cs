@@ -94,6 +94,25 @@ namespace Killendar.Tests
         }
 
         [Fact]
+        public void DailyBackupRunsBesideTheAppWithItsOwnConnection()
+        {
+            using var fixture = new AppointmentFixture();
+            fixture.Store.Add(Appointment("Before"));
+            fixture.Store.SetPassword("pw");
+            foreach (var old in fixture.Store.ListBackups()) File.Delete(old.Path);
+
+            var backup = fixture.Store.BackupIfDueAsync(new DateTime(2026, 10, 21, 9, 0, 0));
+            fixture.Store.Add(Appointment("While it runs"));
+            string? path = backup.Result;
+
+            Assert.True(fixture.Store.LastBackupError == null, fixture.Store.LastBackupError);
+            Assert.NotNull(path);
+            Assert.True(EventStore.IsEncryptedFile(path!));
+            Assert.Equal(2, fixture.Store.Events.Count);
+            Assert.Null(fixture.Store.BackupIfDueAsync(new DateTime(2026, 10, 21, 18, 0, 0)).Result);
+        }
+
+        [Fact]
         public void DailyBackupRunsOncePerDay()
         {
             using var fixture = new AppointmentFixture();
