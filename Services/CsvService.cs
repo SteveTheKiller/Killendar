@@ -64,7 +64,8 @@ namespace Killendar.Services
         public static string BuildCsv(IEnumerable<CalendarEvent> rows)
         {
             var sb = new StringBuilder();
-            sb.Append("Subject,Start Date,Start Time,End Date,End Time,All day event,Description,Location,Categories\r\n");
+            sb.Append("Subject,Start Date,Start Time,End Date,End Time,All day event,Description,Location,Categories," +
+                      "Reminder on/off,Reminder Date,Reminder Time\r\n");
 
             foreach (var ev in rows)
             {
@@ -100,7 +101,13 @@ namespace Killendar.Services
                   .Append(ev.AllDay ? "TRUE" : "FALSE").Append(',')
                   .Append(SpreadsheetField(ev.Description)).Append(',')
                   .Append(SpreadsheetField(ev.Location)).Append(',')
-                  .Append(SpreadsheetField(ev.Categories)).Append("\r\n");
+                  .Append(SpreadsheetField(ev.Categories)).Append(',');
+                // Outlook's reminder columns: the switch, then the moment it fires.
+                if (Reminders.FireTime(ev) is DateTime fire)
+                    sb.Append("TRUE,").Append(fire.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)).Append(',')
+                      .Append(fire.ToString("HH:mm:ss", CultureInfo.InvariantCulture)).Append("\r\n");
+                else
+                    sb.Append("FALSE,,\r\n");
             }
 
             return sb.ToString();
@@ -202,6 +209,9 @@ namespace Killendar.Services
                 string desc     = Field(row, col, "Description");
                 string location = Field(row, col, "Location");
                 string cats     = Field(row, col, "Categories");
+                string remindOn = Field(row, col, "Reminder on/off");
+                string remindD  = Field(row, col, "Reminder Date");
+                string remindT  = Field(row, col, "Reminder Time");
 
                 // No readable start date is a counted failure, never a guess - the .ics parser
                 // learned that lesson when a malformed file dropped appointments onto "today".
@@ -265,11 +275,25 @@ namespace Killendar.Services
                 // carries no UID of its own to dedupe on. Two genuinely identical rows in one
                 // file collapse to one appointment, which is the right reading of a duplicate.
                 ev.Id = StableId(ev);
+                ev.ReminderMinutes = ReminderFrom(ev, remindOn, remindD, remindT);
 
                 result.Events.Add(ev);
             }
 
             return result;
+        }
+
+        /// <summary>Outlook's reminder: on, at a date and time before the start. On with no
+        /// time is Outlook's default 15 minutes; a time after the start sets none.</summary>
+        private static int? ReminderFrom(CalendarEvent ev, string on, string date, string time)
+        {
+            if (!IsTrue(on)) return null;
+            if (date.Length == 0 || !TryDate(date, out var day)) return ev.AllDay ? 1440 : 15;
+            var t = TimeSpan.Zero;
+            if (time.Length > 0 && !TryTime(time, out t)) return ev.AllDay ? 1440 : 15;
+            double minutes = (ev.Start - (day + t)).TotalMinutes;
+            if (minutes < 0 || minutes > Reminders.MaxMinutes) return null;
+            return (int)Math.Round(minutes);
         }
 
         private static string Field(List<string> row, Dictionary<string, int> col, string name)
