@@ -30,8 +30,9 @@ How importing, repeats, reminders, backups, privacy and the command line work is
 
 | | |
 | --- | --- |
-| ![Killendar month view, a full October of color-coded appointments](docs/month-view.png)<br>**Month view** - A full October of appointments, with all-day runs banded across the top of each day, on the Delirium theme. | ![Killendar week view showing a five-day work week](docs/week-view.png)<br>**Week view** - A five-day work week with a compact toolbar of small icons and labels beside them, on the Decay theme. |
-| ![Killendar day view editing an appointment in the sidebar](docs/day-view-editor.png)<br>**Day view** - Editing an appointment in the sidebar beside the hour grid, on the 98SE theme. | ![Killendar keyboard shortcuts overlay showing every binding on a drawn keyboard](docs/shortcuts-map.png)<br>**Shortcuts map** - The F1 overlay's keyboard view, every bound key lit and labeled, on the Black theme with the teal accent. |
+| ![Killendar month view with holidays named and a second calendar shown beside the open one](docs/month-view.png)<br>**Month view** - Holidays named on their day, and a Family calendar shown beside the open one in its own color, on the Dark theme with the red accent. | ![Killendar week view with Tokyo hours beside local hours](docs/week-view.png)<br>**Week view** - A second time zone's hours beside your own, and Thanksgiving named in the day header, on the Decay theme. |
+| ![Killendar day view editing a monthly repeat](docs/day-view-editor.png)<br>**Repeats** - A monthly repeat on the second Tuesday that moves to the next workday, plus one extra date, on the 98SE theme. | ![Killendar reminders card with snooze and dismiss](docs/reminders.png)<br>**Reminders** - Snooze or dismiss each one as it comes due, on the Mourning theme. |
+| ![Killendar list of calendar files with the last automatic backup](docs/killendars-backups.png)<br>**Killendars** - Every calendar file in the folder, with its last automatic backup, on the Sepulchre theme. | ![A printed Killendar month with category colors and a color key](docs/printed-month.png)<br>**Printing** - A printed month, appointments in their category colors with the color key at the top. |
 
 ## Requirements
 

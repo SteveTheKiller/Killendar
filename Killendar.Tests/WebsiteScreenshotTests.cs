@@ -23,6 +23,8 @@ namespace Killendar.Tests
     // nothing on the desktop changes. Menus and dialogs are their own windows, so they are drawn
     // separately and placed on the picture where the app puts them. Runs only when
     // KILLENDAR_SITE_SHOTS names a folder; KILLENDAR_SITE_SHOT picks one shot by number.
+    // Shot 12 is the printed Month page: print the print-month.html written beside shot 01 to
+    // PDF and use its first page.
     [Collection("Calendar settings")]
     public sealed class WebsiteScreenshotTests
     {
@@ -99,19 +101,13 @@ namespace Killendar.Tests
                 s.Calendar.SelectView("Agenda");
                 s.Calendar.GoTo(Today);
             }, Labels: "Under", Grain: false),
-            new("05", "rolling-weeks-ectoplasm", Theme.Ectoplasm, null, 1440, 900, s =>
-            {
-                s.Calendar.SelectView("Month");
-                s.Calendar.SetMonthRollingMode(true);
-                s.Calendar.GoTo(Today);
-            }, Scale: 1.1),
-            new("06", "light-day-panel-right", Theme.Light, Accent.Red, 1440, 900, s =>
+            new("05", "light-day-panel-right", Theme.Light, Accent.Red, 1440, 900, s =>
             {
                 s.Calendar.SelectView("Month");
                 s.Calendar.GoTo(Today);
                 Call(s.Window, "ShowDayAgenda", Today, (Guid?)null);
             }, SidebarRight: true),
-            new("07", "reminders-mourning", Theme.Mourning, null, 1440, 900, s =>
+            new("06", "reminders-mourning", Theme.Mourning, null, 1440, 900, s =>
             {
                 s.Calendar.SelectView("Week");
                 s.Calendar.GoTo(Today);
@@ -124,7 +120,7 @@ namespace Killendar.Tests
                 reminders.ShowReminders(due, describe);
                 s.Overlays.Add((ShowAside(reminders), size => new Point(s.Width - size.Width - 8, s.Height - size.Height - 8)));
             }),
-            new("08", "search-cyanotic", Theme.Cyanotic, null, 1366, 860, s =>
+            new("07", "search-cyanotic", Theme.Cyanotic, null, 1366, 860, s =>
             {
                 s.Calendar.SelectView("Month");
                 s.Calendar.GoTo(Today);
@@ -132,14 +128,14 @@ namespace Killendar.Tests
                 ((TextBox)search.FindName("QueryBox")).Text = "Northgate";
                 s.Overlays.Add((ShowAside(search), size => Centered(s, size)));
             }),
-            new("09", "recently-deleted-greed", Theme.Greed, null, 1366, 860, s =>
+            new("08", "recently-deleted-greed", Theme.Greed, null, 1366, 860, s =>
             {
                 s.Calendar.SelectView("Week");
                 s.Calendar.GoTo(Today);
                 Call(s.Window, "DeletedBtn_Click", s.Window, new RoutedEventArgs());
                 AddMenu(s, Field<ContextMenu>(s.Window, "_deletedMenu"));
             }),
-            new("10", "killendars-backups-sepulchre", Theme.Sepulchre, null, 1366, 860, s =>
+            new("09", "killendars-backups-sepulchre", Theme.Sepulchre, null, 1366, 860, s =>
             {
                 s.Calendar.SelectView("Month");
                 s.Calendar.GoTo(Today);
@@ -153,7 +149,7 @@ namespace Killendar.Tests
                 status.Text = status.Text.Replace(EventStore.DataDir, @"C:\Users\Pat\Documents\Killendar");
                 s.Overlays.Add((content, size => Centered(s, size)));
             }),
-            new("11", "date-settings-malaise", Theme.Malaise, null, 1440, 900, s =>
+            new("10", "date-settings-malaise", Theme.Malaise, null, 1440, 900, s =>
             {
                 s.Calendar.SelectView("Week");
                 s.Calendar.GoTo(Today);
@@ -161,31 +157,13 @@ namespace Killendar.Tests
                 menu.Open();
                 AddMenu(s, Field<ContextMenu>(menu, "_menu"));
             }, Scale: 0.9, TimeZones: true),
-            new("12", "theme-picker-black-teal", Theme.Black, Accent.Teal, 1366, 860, s =>
+            new("11", "theme-picker-black-teal", Theme.Black, Accent.Teal, 1366, 860, s =>
             {
                 s.Calendar.SelectView("Month");
                 s.Calendar.GoTo(Today);
                 Call(Field<object>(s.Window, "_themePicker"), "Toggle");
                 AddMenu(s, (ContextMenu)s.Window.FindName("ThemeMenu"));
             }, Labels: "None"),
-            new("13", "narrow-week-delirium", Theme.Delirium, null, 980, 760, s =>
-            {
-                s.Calendar.SelectView("Week");
-                s.Calendar.GoTo(Today);
-            }, WorkWeek: true),
-            new("14", "shortcuts-light-blue", Theme.Light, Accent.Blue, 1366, 860, s =>
-            {
-                s.Calendar.SelectView("Week");
-                s.Calendar.GoTo(Today);
-                Call(s.Window, "ToggleShortcutsOverlay");
-            }),
-            new("15", "editor-time-zone-dark-purple", Theme.Dark, Accent.Purple, 1366, 800, s =>
-            {
-                s.Calendar.SelectView("Week");
-                var call = s.Store.Events.First(e => e.Title == TokyoCall);
-                s.Calendar.GoTo(call.Start.Date);
-                Field<AppointmentEditor>(s.Window, "_appointments").Load(call);
-            }, Scale: 1.2, Labels: "Only", TimeZones: true),
         ];
 
         private const string BoardReview = "Board review";

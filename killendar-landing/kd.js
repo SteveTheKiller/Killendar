@@ -180,22 +180,18 @@
     if (placeholder) placeholder.remove();
     // One line per screenshot, describing what it actually shows - the tooltip on hover.
     var SHOTS = [
-      { src: 'screenshots/01.png', desc: 'Month view, Dark theme with the red accent - holidays named on their day and a Family calendar shown beside the open one in purple' },
+      { src: 'screenshots/01.png', desc: 'Month view, Dark theme with the red accent - holidays named on their day, and a Family calendar shown beside the open one' },
       { src: 'screenshots/02.png', desc: 'Week view, Decay theme - Tokyo hours beside your own, and Thanksgiving named in the day header' },
-      { src: 'screenshots/03.png', desc: 'Day view, 98SE theme - a monthly repeat on the second Tuesday that moves to the next workday, with one extra date' },
-      { src: 'screenshots/04.png', desc: 'Agenda view, Blood theme - the days ahead as a list, toolbar labels under the icons, Film Grain off' },
-      { src: 'screenshots/05.png', desc: 'Rolling weeks, Ectoplasm theme - four weeks from the current one at 110% app zoom' },
-      { src: 'screenshots/06.png', desc: 'Month view, Light theme with the red accent - the day panel docked on the right' },
-      { src: 'screenshots/07.png', desc: 'Reminders, Mourning theme - snooze or dismiss each one as it comes due' },
-      { src: 'screenshots/08.png', desc: 'Search, Cyanotic theme - every appointment matching a word, past and upcoming' },
-      { src: 'screenshots/09.png', desc: 'Recently deleted, Greed theme - anything deleted in the last 30 days, one click to put it back' },
-      { src: 'screenshots/10.png', desc: 'Killendars, Sepulchre theme - every calendar file in the folder, with its last automatic backup' },
-      { src: 'screenshots/11.png', desc: 'Date settings, Malaise theme - work days and hours, the holiday calendar and a second time zone, at 90% app zoom' },
-      { src: 'screenshots/12.png', desc: 'Themes, Black theme with the teal accent - thirteen themes, accents and Film Grain, toolbar icons only' },
-      { src: 'screenshots/13.png', desc: 'Work week in a small window, Delirium theme - Monday to Friday at 980 by 760' },
-      { src: 'screenshots/14.png', desc: 'Keyboard shortcuts, Light theme with the blue accent - the F1 list of every binding' },
-      { src: 'screenshots/15.png', desc: 'A time zone per appointment, Dark theme with the purple accent - a call set in Tokyo time, at 120% app zoom' },
-      { src: 'screenshots/16.png', desc: 'Printed Month page - appointments in their category colors with the color key at the top' }
+      { src: 'screenshots/03.png', desc: 'Day view, 98SE theme - a monthly repeat on the second Tuesday that moves to the next workday, plus one extra date' },
+      { src: 'screenshots/04.png', desc: 'Agenda view, Blood theme - the days ahead as a list, labels under the toolbar icons' },
+      { src: 'screenshots/05.png', desc: 'Month view, Light theme - the day panel docked on the right' },
+      { src: 'screenshots/06.png', desc: 'Reminders, Mourning theme - snooze or dismiss each one as it comes due' },
+      { src: 'screenshots/07.png', desc: 'Search, Cyanotic theme - every appointment that matches a word, past and upcoming' },
+      { src: 'screenshots/08.png', desc: 'Recently deleted, Greed theme - anything deleted in the last 30 days, one click to restore it' },
+      { src: 'screenshots/09.png', desc: 'Killendars, Sepulchre theme - every calendar file in the folder, with its last automatic backup' },
+      { src: 'screenshots/10.png', desc: 'Date settings, Malaise theme - work days and hours, the holiday calendar and a second time zone' },
+      { src: 'screenshots/11.png', desc: 'Themes, Black theme with the teal accent - thirteen themes, accents and Film Grain' },
+      { src: 'screenshots/12.png', desc: 'A printed month - appointments in their category colors, with the color key at the top' }
     ];
     SHOTS.forEach(function (shot, idx) {
       var b = document.createElement('button');
