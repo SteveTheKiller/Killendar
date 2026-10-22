@@ -533,6 +533,12 @@
     <sys:String x:Key="Str_Meet_Join">Присоединиться</sys:String>
     <sys:String x:Key="Str_Meet_Private">Организатор отметил как личное</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Показывать как свободное время</sys:String>
+    <sys:String x:Key="Str_Html_Legend">Категории</sys:String>
+    <sys:String x:Key="Str_Html_WeekOf">Неделя с {0}</sys:String>
+    <sys:String x:Key="Str_Exp_PageHead">ВЕБ-СТРАНИЦА И ПЕЧАТЬ</sys:String>
+    <sys:String x:Key="Str_Exp_IncLocations">Включить места</sys:String>
+    <sys:String x:Key="Str_Exp_IncDescriptions">Включить описания</sys:String>
+    <sys:String x:Key="Str_Exp_IncAttendees">Включить участников</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Категорий пока нет. Добавьте их на боковой панели.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Категории</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

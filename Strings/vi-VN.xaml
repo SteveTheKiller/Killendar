@@ -502,6 +502,12 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Meet_Join">Tham gia cuộc họp</sys:String>
   <sys:String x:Key="Str_Meet_Private">Người tổ chức đánh dấu là riêng tư</sys:String>
   <sys:String x:Key="Str_Chk_ShowAsFree">Hiển thị là rảnh</sys:String>
+  <sys:String x:Key="Str_Html_Legend">Danh mục</sys:String>
+  <sys:String x:Key="Str_Html_WeekOf">Tuần từ {0}</sys:String>
+  <sys:String x:Key="Str_Exp_PageHead">TRANG WEB VÀ IN</sys:String>
+  <sys:String x:Key="Str_Exp_IncLocations">Kèm địa điểm</sys:String>
+  <sys:String x:Key="Str_Exp_IncDescriptions">Kèm mô tả</sys:String>
+  <sys:String x:Key="Str_Exp_IncAttendees">Kèm người tham dự</sys:String>
   <sys:String x:Key="Str_Hint_NoCategories">Chưa có danh mục nào. Hãy thêm danh mục từ thanh bên.</sys:String>
   <sys:String x:Key="Str_TT_Categories">Danh mục</sys:String>
   <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

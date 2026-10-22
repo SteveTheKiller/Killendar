@@ -532,6 +532,12 @@
     <sys:String x:Key="Str_Meet_Join">Entrar na reunião</sys:String>
     <sys:String x:Key="Str_Meet_Private">Marcada como particular pelo organizador</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Mostrar como livre</sys:String>
+    <sys:String x:Key="Str_Html_Legend">Categorias</sys:String>
+    <sys:String x:Key="Str_Html_WeekOf">Semana de {0}</sys:String>
+    <sys:String x:Key="Str_Exp_PageHead">PÁGINA DA WEB E IMPRESSÃO</sys:String>
+    <sys:String x:Key="Str_Exp_IncLocations">Incluir locais</sys:String>
+    <sys:String x:Key="Str_Exp_IncDescriptions">Incluir descrições</sys:String>
+    <sys:String x:Key="Str_Exp_IncAttendees">Incluir participantes</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Nenhuma categoria ainda. Adicione algumas na barra lateral.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categorias</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

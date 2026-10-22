@@ -3,11 +3,50 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Killendar.Models;
 
 namespace Killendar.Services
 {
+    /// <summary>How the web page lays the range out.</summary>
+    public enum HtmlLayout { Month, Week, Day, Agenda }
+
+    /// <summary>
+    /// The web page's layout and which private details it carries. Locations are on by default,
+    /// descriptions and attendees off: a printed page leaves the desk, and notes and other
+    /// people's addresses should only go with it when someone chose that. Remembered as one
+    /// setting ("HtmlExport").
+    /// </summary>
+    public sealed class HtmlOptions
+    {
+        public const string Setting = "HtmlExport";
+        public HtmlLayout Layout { get; set; } = HtmlLayout.Month;
+        public bool Locations { get; set; } = true;
+        public bool Descriptions { get; set; }
+        public bool Attendees { get; set; }
+
+        public string ToSetting() =>
+            Layout + ";" + (Locations ? "L" : "") + (Descriptions ? "D" : "") + (Attendees ? "A" : "");
+
+        public static HtmlOptions Parse(string? setting)
+        {
+            var options = new HtmlOptions();
+            if (string.IsNullOrEmpty(setting)) return options;
+            var parts = setting!.Split(';');
+            if (Enum.TryParse<HtmlLayout>(parts[0], out var layout) && Enum.IsDefined(typeof(HtmlLayout), layout))
+                options.Layout = layout;
+            if (parts.Length > 1)
+            {
+                options.Locations = parts[1].Contains('L');
+                options.Descriptions = parts[1].Contains('D');
+                options.Attendees = parts[1].Contains('A');
+            }
+            return options;
+        }
+    }
+
     /// <summary>
     /// Writes the calendar as a styled, self-contained web page: one month grid per month in the
     /// range. This is the export that covers "I want to print my calendar" - the page carries a
@@ -26,14 +65,16 @@ namespace Killendar.Services
     /// </summary>
     public static class HtmlExport
     {
-        public static void ExportToFile(List<CalendarEvent> events, DateTime from, DateTime toExclusive, string path)
+        public static void ExportToFile(List<CalendarEvent> events, DateTime from, DateTime toExclusive, string path,
+                                        HtmlOptions? options = null)
         {
-            FilePublication.WriteText(path, Build(events, from, toExclusive),
+            FilePublication.WriteText(path, Build(events, from, toExclusive, options),
                                       new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
         }
 
-        public static string Build(List<CalendarEvent> events, DateTime from, DateTime toExclusive)
+        public static string Build(List<CalendarEvent> events, DateTime from, DateTime toExclusive, HtmlOptions? options = null)
         {
+            options ??= new HtmlOptions();
             var culture = CultureInfo.CurrentCulture;
             from        = from.Date;
             toExclusive = toExclusive == DateTime.MaxValue ? DateTime.MaxValue : toExclusive.Date;
@@ -67,14 +108,28 @@ namespace Killendar.Services
               .Append("<div class=\"swrow\"><span class=\"swlabel\" id=\"themelabel\">Theme</span><div class=\"sw\" id=\"themesw\" role=\"group\" aria-labelledby=\"themelabel\"></div></div>")
               .Append("<div class=\"swrow\"><span class=\"swlabel\" id=\"accentlabel\">Accent</span><div class=\"sw\" id=\"accentsw\" role=\"group\" aria-labelledby=\"accentlabel\"></div></div>")
               .Append("<div class=\"range\">").Append(Html(rangeLabel)).Append("</div>")
-              .Append("</div></header>\n<main>\n");
+              .Append("</div></header>\n");
+            AppendLegend(sb, events);
+            sb.Append("<main class=\"layout-").Append(options.Layout.ToString().ToLowerInvariant()).Append("\">\n");
 
-            var monthStart = new DateTime(from.Year, from.Month, 1);
-            while (monthStart < toExclusive)
+            switch (options.Layout)
             {
-                AppendMonth(sb, events, monthStart, from, toExclusive, culture, weekStart);
-                if (monthStart.Year == 9999 && monthStart.Month == 12) break;
-                monthStart = monthStart.AddMonths(1);
+                case HtmlLayout.Week:
+                    AppendWeeks(sb, events, from, toExclusive, culture, weekStart, options);
+                    break;
+                case HtmlLayout.Day:
+                case HtmlLayout.Agenda:
+                    AppendDays(sb, events, from, toExclusive, culture, options);
+                    break;
+                default:
+                    var monthStart = new DateTime(from.Year, from.Month, 1);
+                    while (monthStart < toExclusive)
+                    {
+                        AppendMonth(sb, events, monthStart, from, toExclusive, culture, weekStart, options);
+                        if (monthStart.Year == 9999 && monthStart.Month == 12) break;
+                        monthStart = monthStart.AddMonths(1);
+                    }
+                    break;
             }
 
             sb.Append("</main>\n<footer>")
@@ -86,9 +141,100 @@ namespace Killendar.Services
             return sb.ToString();
         }
 
+        /// <summary>The colors of the categories the page uses, so a printed chip can be read.</summary>
+        private static void AppendLegend(StringBuilder sb, List<CalendarEvent> events)
+        {
+            var names = events.SelectMany(e => EventStore.SplitCategories(e.Categories))
+                              .Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+            if (names.Count == 0) return;
+            sb.Append("<div class=\"legend\"><span class=\"swlabel\">")
+              .Append(Html(LocaleManager.Loc("Str_Html_Legend"))).Append("</span>");
+            foreach (var name in names)
+            {
+                string hex = CategoryManager.HexOf(name);
+                if (!Regex.IsMatch(hex ?? "", "^#[0-9A-Fa-f]{6}$")) hex = "#888888";
+                sb.Append("<span class=\"cat\"><i style=\"background:").Append(hex).Append("\"></i>")
+                  .Append(Html(name)).Append("</span>");
+            }
+            sb.Append("</div>\n");
+        }
+
+        /// <summary>One table per week, seven days across, each day listing its appointments with
+        /// times and the chosen details. A week list rather than an hour grid: it fits a page.</summary>
+        private static void AppendWeeks(StringBuilder sb, List<CalendarEvent> events, DateTime from, DateTime toExclusive,
+                                        CultureInfo culture, DayOfWeek weekStart, HtmlOptions options)
+        {
+            var week = from.AddDays(-(((int)from.DayOfWeek - (int)weekStart + 7) % 7));
+            while (week < toExclusive)
+            {
+                sb.Append("<section class=\"week\">\n<h2>")
+                  .Append(Html(string.Format(LocaleManager.Loc("Str_Html_WeekOf"), DateFormatManager.Format(week))))
+                  .Append("</h2>\n<table>\n<thead><tr>");
+                for (int i = 0; i < 7; i++)
+                {
+                    var d = week.AddDays(i);
+                    sb.Append("<th>").Append(Html(culture.DateTimeFormat.AbbreviatedDayNames[(int)d.DayOfWeek]))
+                      .Append(' ').Append(d.Day).Append("</th>");
+                }
+                sb.Append("</tr></thead>\n<tbody><tr>");
+                for (int i = 0; i < 7; i++)
+                {
+                    var d = week.AddDays(i);
+                    bool inRange = d >= from && d < toExclusive;
+                    sb.Append(inRange ? "<td>" : "<td class=\"off\">");
+                    if (inRange) foreach (var ev in events.Where(e => e.OccursOn(d))) AppendEntry(sb, ev, d, culture, options);
+                    sb.Append("</td>");
+                }
+                sb.Append("</tr></tbody>\n</table>\n</section>\n");
+                if (week > DateTime.MaxValue.AddDays(-8)) break;
+                week = week.AddDays(7);
+            }
+        }
+
+        /// <summary>Day: every day of the range, empty ones saying so. Agenda: only the days that
+        /// have something.</summary>
+        private static void AppendDays(StringBuilder sb, List<CalendarEvent> events, DateTime from, DateTime toExclusive,
+                                       CultureInfo culture, HtmlOptions options)
+        {
+            for (var d = from; d < toExclusive; d = d.AddDays(1))
+            {
+                var onDay = events.Where(e => e.OccursOn(d)).OrderBy(e => e.AllDay ? 0 : 1).ThenBy(e => e.Start).ToList();
+                if (onDay.Count == 0 && options.Layout == HtmlLayout.Agenda) { if (d.Date == DateTime.MaxValue.Date) break; continue; }
+                sb.Append("<section class=\"day\">\n<h2>").Append(Html(d.ToString("D", culture))).Append("</h2>\n");
+                if (onDay.Count == 0)
+                    sb.Append("<div class=\"det\">").Append(Html(LocaleManager.Loc("Str_Side_NoAppointments"))).Append("</div>");
+                foreach (var ev in onDay) AppendEntry(sb, ev, d, culture, options);
+                sb.Append("</section>\n");
+                if (d.Date == DateTime.MaxValue.Date) break;
+            }
+        }
+
+        /// <summary>One appointment with its time, title and the details the options allow.</summary>
+        private static void AppendEntry(StringBuilder sb, CalendarEvent ev, DateTime day, CultureInfo culture, HtmlOptions options)
+        {
+            string cls = ev.AllDay ? "ev allday" : ev.Start.Date == day.Date ? "ev" : "ev cont";
+            sb.Append("<div class=\"").Append(cls).Append("\">");
+            if (!ev.AllDay && ev.Start.Date == day.Date)
+                sb.Append("<span class=\"tm\">").Append(Html(DateFormatManager.Time(ev.Start, culture))).Append(" - ")
+                  .Append(Html(DateFormatManager.Time(ev.End, culture))).Append("</span> ");
+            sb.Append(Html(TitleOf(ev)));
+            AppendDetails(sb, ev, options);
+            sb.Append("</div>");
+        }
+
+        private static void AppendDetails(StringBuilder sb, CalendarEvent ev, HtmlOptions options)
+        {
+            if (options.Locations && !string.IsNullOrWhiteSpace(ev.Location))
+                sb.Append("<div class=\"det\">").Append(Html(ev.Location)).Append("</div>");
+            if (options.Descriptions && !string.IsNullOrWhiteSpace(ev.Description))
+                sb.Append("<div class=\"det\">").Append(Html(ev.Description).Replace("\n", "<br>")).Append("</div>");
+            if (options.Attendees && ev.Attendees.Count > 0)
+                sb.Append("<div class=\"det\">").Append(Html(string.Join(", ", ev.Attendees))).Append("</div>");
+        }
+
         private static void AppendMonth(StringBuilder sb, List<CalendarEvent> events,
                                         DateTime monthStart, DateTime from, DateTime toExclusive,
-                                        CultureInfo culture, DayOfWeek weekStart)
+                                        CultureInfo culture, DayOfWeek weekStart, HtmlOptions options)
         {
             sb.Append("<section class=\"month\">\n<h2>")
               .Append(Html(monthStart.ToString("MMMM yyyy", culture)))
@@ -132,13 +278,17 @@ namespace Killendar.Services
                             if (ev.AllDay)
                             {
                                 sb.Append("<div class=\"ev allday\">")
-                                  .Append(Html(TitleOf(ev))).Append("</div>");
+                                  .Append(Html(TitleOf(ev)));
+                                AppendDetails(sb, ev, options);
+                                sb.Append("</div>");
                             }
                             else if (ev.Start.Date == cell.Date)
                             {
                                 sb.Append("<div class=\"ev\"><span class=\"tm\">")
                                   .Append(Html(DateFormatManager.Time(ev.Start, culture)))
-                                  .Append("</span> ").Append(Html(TitleOf(ev))).Append("</div>");
+                                  .Append("</span> ").Append(Html(TitleOf(ev)));
+                                AppendDetails(sb, ev, options);
+                                sb.Append("</div>");
                             }
                             else
                             {
@@ -254,8 +404,14 @@ header { display: flex; align-items: flex-start; justify-content: space-between;
 .sw button:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
 .sw button.active { border-color: var(--text); }
 .range { color: var(--muted); font-family: Consolas, monospace; font-size: 13px; }
-.month { margin-bottom: 30px; }
-.month h2 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+.month, .week { margin-bottom: 30px; }
+.month h2, .week h2, .day h2 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+.day { margin-bottom: 18px; }
+.layout-week td { height: auto; min-height: 120px; padding-bottom: 10px; }
+.det { color: var(--muted); font-size: 10.5px; line-height: 1.35; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; margin: -10px 0 18px; font-size: 12px; }
+.legend .cat { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { display: inline-block; width: 11px; height: 11px; border-radius: 2px; }
 table { width: 100%; border-collapse: collapse; table-layout: fixed; }
 th { background: var(--surface); color: var(--muted); font-family: Consolas, monospace; font-size: 11px;
      font-weight: normal; text-transform: uppercase; padding: 5px 6px; text-align: left;
@@ -292,7 +448,9 @@ footer { color: var(--dim); font-family: Consolas, monospace; font-size: 11px; m
   .ev.cont { color: #666; border-left-color: #999; }
   .tm { color: #555; }
   .range, footer { color: #777; }
-  .month { page-break-inside: avoid; }
+  .month, .week, .day { page-break-inside: avoid; }
+  .det { color: #555; }
+  .legend i { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 ";
     }

@@ -453,6 +453,12 @@
     <sys:String x:Key="Str_Meet_Join">会議に参加</sys:String>
     <sys:String x:Key="Str_Meet_Private">主催者が非公開に設定</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">空き時間として表示</sys:String>
+    <sys:String x:Key="Str_Html_Legend">カテゴリ</sys:String>
+    <sys:String x:Key="Str_Html_WeekOf">{0} からの週</sys:String>
+    <sys:String x:Key="Str_Exp_PageHead">ウェブページと印刷</sys:String>
+    <sys:String x:Key="Str_Exp_IncLocations">場所を含める</sys:String>
+    <sys:String x:Key="Str_Exp_IncDescriptions">説明を含める</sys:String>
+    <sys:String x:Key="Str_Exp_IncAttendees">参加者を含める</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">カテゴリがまだありません。サイドバーから追加してください。</sys:String>
     <sys:String x:Key="Str_TT_Categories">カテゴリ</sys:String>
     <sys:String x:Key="Str_TT_Density">グリッド密度 - クリックまたはスクロール</sys:String>

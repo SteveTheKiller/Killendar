@@ -532,6 +532,12 @@
     <sys:String x:Key="Str_Meet_Join">Join meeting</sys:String>
     <sys:String x:Key="Str_Meet_Private">Marked private by the organizer</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Show as free</sys:String>
+    <sys:String x:Key="Str_Html_Legend">Categories</sys:String>
+    <sys:String x:Key="Str_Html_WeekOf">Week of {0}</sys:String>
+    <sys:String x:Key="Str_Exp_PageHead">WEB PAGE AND PRINT</sys:String>
+    <sys:String x:Key="Str_Exp_IncLocations">Include locations</sys:String>
+    <sys:String x:Key="Str_Exp_IncDescriptions">Include descriptions</sys:String>
+    <sys:String x:Key="Str_Exp_IncAttendees">Include attendees</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">No categories yet. Add some from the sidebar rail.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categories</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

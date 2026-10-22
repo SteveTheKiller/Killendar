@@ -461,6 +461,12 @@
     <sys:String x:Key="Str_Meet_Join">Dołącz do spotkania</sys:String>
     <sys:String x:Key="Str_Meet_Private">Oznaczone przez organizatora jako prywatne</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Pokaż jako wolny</sys:String>
+    <sys:String x:Key="Str_Html_Legend">Kategorie</sys:String>
+    <sys:String x:Key="Str_Html_WeekOf">Tydzień od {0}</sys:String>
+    <sys:String x:Key="Str_Exp_PageHead">STRONA INTERNETOWA I DRUK</sys:String>
+    <sys:String x:Key="Str_Exp_IncLocations">Uwzględnij miejsca</sys:String>
+    <sys:String x:Key="Str_Exp_IncDescriptions">Uwzględnij opisy</sys:String>
+    <sys:String x:Key="Str_Exp_IncAttendees">Uwzględnij uczestników</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Brak kategorii. Dodaj je z paska bocznego.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorie</sys:String>
     <sys:String x:Key="Str_TT_Density">Gęstość siatki - kliknij lub przewiń</sys:String>

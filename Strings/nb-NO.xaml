@@ -532,6 +532,12 @@
     <sys:String x:Key="Str_Meet_Join">Bli med i møtet</sys:String>
     <sys:String x:Key="Str_Meet_Private">Merket privat av organisatoren</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Vis som ledig</sys:String>
+    <sys:String x:Key="Str_Html_Legend">Kategorier</sys:String>
+    <sys:String x:Key="Str_Html_WeekOf">Uken fra {0}</sys:String>
+    <sys:String x:Key="Str_Exp_PageHead">NETTSIDE OG UTSKRIFT</sys:String>
+    <sys:String x:Key="Str_Exp_IncLocations">Ta med steder</sys:String>
+    <sys:String x:Key="Str_Exp_IncDescriptions">Ta med beskrivelser</sys:String>
+    <sys:String x:Key="Str_Exp_IncAttendees">Ta med deltakere</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Ingen kategorier ennå. Legg til noen fra sidelinjen.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorier</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

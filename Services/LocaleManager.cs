@@ -29,9 +29,10 @@ namespace Killendar.Services
         public static Locale Current => _current;
 
         /// <summary>Localized string for a Str_ key. Falls back to the key name when the key is
-        /// missing, so a translation gap shows up as itself instead of as blank UI.</summary>
+        /// missing, so a translation gap shows up as itself instead of as blank UI - and when no
+        /// WPF application is running (the command line, tests).</summary>
         public static string Loc(string key) =>
-            Application.Current.TryFindResource(key) as string ?? key;
+            Application.Current?.TryFindResource(key) as string ?? key;
 
         /// <summary>Call once at startup (after ThemeManager.Initialize) to restore the saved locale.</summary>
         public static void Initialize()

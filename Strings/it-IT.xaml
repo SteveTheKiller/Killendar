@@ -488,6 +488,12 @@
     <sys:String x:Key="Str_Meet_Join">Partecipa alla riunione</sys:String>
     <sys:String x:Key="Str_Meet_Private">Segnata come privata dall’organizzatore</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Mostra come libero</sys:String>
+    <sys:String x:Key="Str_Html_Legend">Categorie</sys:String>
+    <sys:String x:Key="Str_Html_WeekOf">Settimana dal {0}</sys:String>
+    <sys:String x:Key="Str_Exp_PageHead">PAGINA WEB E STAMPA</sys:String>
+    <sys:String x:Key="Str_Exp_IncLocations">Includi i luoghi</sys:String>
+    <sys:String x:Key="Str_Exp_IncDescriptions">Includi le descrizioni</sys:String>
+    <sys:String x:Key="Str_Exp_IncAttendees">Includi i partecipanti</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Ancora nessuna categoria. Aggiungile dalla barra laterale.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categorie</sys:String>
     <sys:String x:Key="Str_TT_Density">Densità della griglia - clic o rotellina</sys:String>

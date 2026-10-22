@@ -460,6 +460,12 @@ Killendar se bo ponovno zagnal z namestitvenega mesta.</sys:String>
     <sys:String x:Key="Str_Meet_Join">Pridruži se sestanku</sys:String>
     <sys:String x:Key="Str_Meet_Private">Organizator ga je označil kot zasebnega</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Prikaži kot prosto</sys:String>
+    <sys:String x:Key="Str_Html_Legend">Kategorije</sys:String>
+    <sys:String x:Key="Str_Html_WeekOf">Teden od {0}</sys:String>
+    <sys:String x:Key="Str_Exp_PageHead">SPLETNA STRAN IN TISK</sys:String>
+    <sys:String x:Key="Str_Exp_IncLocations">Vključi kraje</sys:String>
+    <sys:String x:Key="Str_Exp_IncDescriptions">Vključi opise</sys:String>
+    <sys:String x:Key="Str_Exp_IncAttendees">Vključi udeležence</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Kategorij še ni. Dodaj jih prek stranske vrstice.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorije</sys:String>
     <sys:String x:Key="Str_TT_Density">Gostota mreže. Klikni ali zavrti kolešček</sys:String>

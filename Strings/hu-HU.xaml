@@ -534,6 +534,12 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Meet_Join">Csatlakozás</sys:String>
     <sys:String x:Key="Str_Meet_Private">A szervező magánjellegűnek jelölte</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Szabadként jelenjen meg</sys:String>
+    <sys:String x:Key="Str_Html_Legend">Kategóriák</sys:String>
+    <sys:String x:Key="Str_Html_WeekOf">{0} kezdetű hét</sys:String>
+    <sys:String x:Key="Str_Exp_PageHead">WEBOLDAL ÉS NYOMTATÁS</sys:String>
+    <sys:String x:Key="Str_Exp_IncLocations">Helyek is</sys:String>
+    <sys:String x:Key="Str_Exp_IncDescriptions">Leírások is</sys:String>
+    <sys:String x:Key="Str_Exp_IncAttendees">Résztvevők is</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Még nincsenek kategóriák. Adjon hozzá néhányat az oldalsó sínről.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategóriák</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

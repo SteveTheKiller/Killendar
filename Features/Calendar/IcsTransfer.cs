@@ -311,6 +311,9 @@ namespace Killendar.Features
             _rangeHint.SetResourceReference(TextBlock.TextProperty, "Str_Exp_BadRange");
 
             var panel = new StackPanel { Margin = new Thickness(14, 12, 14, 12) };
+            // First, because Whole calendar exports on the click: the web page's layout and what
+            // private details it carries are chosen before (HtmlOptions, remembered).
+            panel.Children.Add(PageOptions());
             panel.Children.Add(chips);
             panel.Children.Add(_rangeRow);
             panel.Children.Add(_rangeHint);
@@ -363,6 +366,42 @@ namespace Killendar.Features
             };
             box.SetResourceReference(FrameworkElement.StyleProperty, "DarkTextBox");
             return box;
+        }
+
+        /// <summary>Layout and private details for an .html export, saved as they change.</summary>
+        private StackPanel PageOptions()
+        {
+            var options = HtmlOptions.Parse(Settings.Get(HtmlOptions.Setting));
+            var section = new StackPanel { Margin = new Thickness(0, 0, 0, 10) };
+            var head = FieldLabel("Str_Exp_PageHead");
+            head.Margin = new Thickness(0, 0, 0, 4);
+            section.Children.Add(head);
+
+            var layouts = new WrapPanel();
+            foreach (var (layout, key) in new[] { (HtmlLayout.Month, "Str_View_Month"), (HtmlLayout.Week, "Str_View_Week"),
+                                                  (HtmlLayout.Day, "Str_View_Day"), (HtmlLayout.Agenda, "Str_View_Agenda") })
+            {
+                var choice = new RadioButton { GroupName = "HtmlLayout", IsChecked = options.Layout == layout, Margin = new Thickness(0, 0, 12, 2) };
+                choice.SetResourceReference(ContentControl.ContentProperty, key);
+                choice.SetResourceReference(FrameworkElement.StyleProperty, "ThemeRadio");
+                choice.Checked += (_, _) => { options.Layout = layout; Settings.Set(HtmlOptions.Setting, options.ToSetting()); };
+                layouts.Children.Add(choice);
+            }
+            section.Children.Add(layouts);
+
+            foreach (var (key, get, set) in new (string, Func<bool>, Action<bool>)[]
+            {
+                ("Str_Exp_IncLocations", () => options.Locations, v => options.Locations = v),
+                ("Str_Exp_IncDescriptions", () => options.Descriptions, v => options.Descriptions = v),
+                ("Str_Exp_IncAttendees", () => options.Attendees, v => options.Attendees = v),
+            })
+            {
+                var tick = new CheckBox { IsChecked = get(), Margin = new Thickness(0, 2, 0, 0) };
+                tick.SetResourceReference(ContentControl.ContentProperty, key);
+                tick.Click += (_, _) => { set(tick.IsChecked == true); Settings.Set(HtmlOptions.Setting, options.ToSetting()); };
+                section.Children.Add(tick);
+            }
+            return section;
         }
 
         private static TextBlock FieldLabel(string key)
@@ -462,7 +501,7 @@ namespace Killendar.Features
                     case ".html":
                     {
                         var rows = _store.GetInRange(from, toEx);
-                        HtmlExport.ExportToFile(rows, from, toEx, dlg.FileName);
+                        HtmlExport.ExportToFile(rows, from, toEx, dlg.FileName, HtmlOptions.Parse(Settings.Get(HtmlOptions.Setting)));
                         count = rows.Count;
                         break;
                     }

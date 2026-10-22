@@ -453,6 +453,12 @@
     <sys:String x:Key="Str_Meet_Join">Toplantıya katıl</sys:String>
     <sys:String x:Key="Str_Meet_Private">Düzenleyen özel olarak işaretledi</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Boş olarak göster</sys:String>
+    <sys:String x:Key="Str_Html_Legend">Kategoriler</sys:String>
+    <sys:String x:Key="Str_Html_WeekOf">{0} haftası</sys:String>
+    <sys:String x:Key="Str_Exp_PageHead">WEB SAYFASI VE YAZDIRMA</sys:String>
+    <sys:String x:Key="Str_Exp_IncLocations">Yerleri ekle</sys:String>
+    <sys:String x:Key="Str_Exp_IncDescriptions">Açıklamaları ekle</sys:String>
+    <sys:String x:Key="Str_Exp_IncAttendees">Katılımcıları ekle</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Henüz kategori yok. Kenar çubuğundan ekleyin.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategoriler</sys:String>
     <sys:String x:Key="Str_TT_Density">Izgara yoğunluğu - tıklayın veya kaydırın</sys:String>

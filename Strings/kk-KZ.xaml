@@ -532,6 +532,12 @@
     <sys:String x:Key="Str_Meet_Join">Жиналысқа қосылу</sys:String>
     <sys:String x:Key="Str_Meet_Private">Ұйымдастырушы жеке деп белгілеген</sys:String>
     <sys:String x:Key="Str_Chk_ShowAsFree">Бос деп көрсету</sys:String>
+    <sys:String x:Key="Str_Html_Legend">Санаттар</sys:String>
+    <sys:String x:Key="Str_Html_WeekOf">{0} басталатын апта</sys:String>
+    <sys:String x:Key="Str_Exp_PageHead">ВЕБ-БЕТ ЖӘНЕ БАСЫП ШЫҒАРУ</sys:String>
+    <sys:String x:Key="Str_Exp_IncLocations">Орындарды қосу</sys:String>
+    <sys:String x:Key="Str_Exp_IncDescriptions">Сипаттамаларды қосу</sys:String>
+    <sys:String x:Key="Str_Exp_IncAttendees">Қатысушыларды қосу</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Әзірге санат жоқ. Оларды бүйір тақтадан қосыңыз.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Санаттар</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads
