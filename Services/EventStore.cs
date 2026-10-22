@@ -33,6 +33,14 @@ namespace Killendar.Services
         {
             SqlCipherBootstrap.EnsureLoaded();
             SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_e_sqlcipher());
+            // SQLCipher writes every failed decryption (a wrong password, a file that is not a
+            // calendar) to the console as "ERROR CORE". Killendar reports those itself, so the
+            // log is off for the whole process: the command line and test runs stay clean.
+            using var quiet = new SqliteConnection("Data Source=:memory:");
+            quiet.Open();
+            using var command = quiet.CreateCommand();
+            command.CommandText = "PRAGMA cipher_log_level = NONE";
+            command.ExecuteNonQuery();
         }
 
         public const string Extension = ".kcal";
