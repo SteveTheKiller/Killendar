@@ -71,6 +71,13 @@ namespace Killendar.Features
         /// <summary>Which of those chips is lit. True means the edit applies to every date.</summary>
         bool EditWholeSeries { get; set; }
 
+        /// <summary>The third chip: the edit applies to this date and every later one. Never lit
+        /// together with <see cref="EditWholeSeries"/>.</summary>
+        bool EditFollowing { get; set; }
+
+        /// <summary>Whether the "this and following" chip is offered (the series can be split).</summary>
+        bool FollowingOffered { set; }
+
         /// <summary>True when the series is set to end but the box saying when is empty or
         /// unreadable, so Save can refuse instead of silently repeating forever.</summary>
         bool RepeatEndIncomplete { get; }

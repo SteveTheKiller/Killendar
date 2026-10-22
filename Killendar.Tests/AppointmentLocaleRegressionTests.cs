@@ -210,6 +210,8 @@ namespace Killendar.Tests
         public bool RepeatSectionVisible { private get; set; }
         public bool SeriesScopeVisible { private get; set; }
         public bool EditWholeSeries { get; set; }
+        public bool EditFollowing { get; set; }
+        public bool FollowingOffered { set { } }
         public bool RepeatEndIncomplete => false;
         public string Heading { private get; set; } = "";
         public bool CanDelete { private get; set; }

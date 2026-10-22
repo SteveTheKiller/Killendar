@@ -93,6 +93,8 @@
     <sys:String x:Key="Str_Rep_Scope">これは繰り返しの予定です</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">この日だけ</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">すべての予定</sys:String>
+    <sys:String x:Key="Str_Btn_ThisAndFollowing">これ以降すべて</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">この日とそれ以降の日がすべて削除されます。それより前の日は残ります。</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">繰り返しの終わりを指定するか、終わらない設定にしてください。</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">0 より大きい整数を入力してください。</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">この日だけ削除されます。ほかの予定はそのままです。</sys:String>

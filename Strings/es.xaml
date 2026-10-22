@@ -93,6 +93,8 @@
     <sys:String x:Key="Str_Rep_Scope">ESTA CITA SE REPITE</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Solo esta fecha</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Toda la serie</sys:String>
+    <sys:String x:Key="Str_Btn_ThisAndFollowing">Esta y las siguientes</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Se quitan esta fecha y todas las posteriores. Las anteriores se mantienen.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Indica cuándo termina la repetición, o que no termine nunca.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Introduce un número entero mayor que cero.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Solo se quita esta fecha. El resto de la serie se mantiene.</sys:String>

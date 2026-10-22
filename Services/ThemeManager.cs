@@ -246,7 +246,7 @@ namespace Killendar.Services
             // 98SE keeps its classic light-gray hover face instead of filling with the accent.
             newDict["OutlineHoverFillBrush"] = theme == Theme.SE98 && newDict.Contains("OutlineHoverBrush")
                 ? newDict["OutlineHoverBrush"]
-                : ButtonFill(newDict["OutlineBtnBrush"], theme == Theme.SE98);
+                : ButtonFill(newDict.Contains("OutlineHoverFillBaseBrush") ? newDict["OutlineHoverFillBaseBrush"] : newDict["OutlineBtnBrush"], theme == Theme.SE98);
             Publish(newDict);
         }
 

@@ -133,6 +133,8 @@
     <sys:String x:Key="Str_Rep_Scope">ЦЕ ПОВТОРЮВАНА ЗУСТРІЧ</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Лише цю дату</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Усю серію</sys:String>
+    <sys:String x:Key="Str_Btn_ThisAndFollowing">Це й наступні</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Цю дату й усі наступні буде видалено. Попередні залишаться.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Вкажіть, коли повтор закінчується, або оберіть «Ніколи».</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Введіть ціле число більше нуля.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Буде видалено лише цю дату. Решта серії залишиться.</sys:String>

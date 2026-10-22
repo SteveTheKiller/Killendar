@@ -489,7 +489,9 @@ namespace Killendar.Services
         });
 
         /// <summary>Removes a whole series: the master and every single-date edit belonging to it.</summary>
-        public void DeleteSeries(Guid masterId) => Recorded(() =>
+        public void DeleteSeries(Guid masterId) => Recorded(() => DeleteSeriesRows(masterId));
+
+        private void DeleteSeriesRows(Guid masterId)
         {
             var ids = _events.Where(e => e.Id == masterId || e.SeriesId == masterId)
                              .Select(e => e.Id).ToList();
@@ -512,6 +514,6 @@ namespace Killendar.Services
                 }
                 tx.Commit();
             });
-        });
+        }
     }
 }

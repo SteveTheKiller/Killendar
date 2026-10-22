@@ -8,6 +8,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Fixed
 
+- Dark theme with the red accent: a hovered button fills a deeper red with white text, so its label is readable.
 - Self-updates no longer run their helper from a script in the temp folder, so another program running under your account cannot change what an approved administrator update does.
 - In 98SE, long paths in the file dialog no longer run under the recent-locations arrow.
 - Uninstall removes shortcuts, the command path and file types before the program, so a failed step leaves an uninstall entry that still works. An all-users uninstall waits for its confirmation however long it stays open, and its leftover helper and empty program folder are removed at the next restart.
@@ -70,6 +71,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Added meeting details to the appointment panel for imported invitations: the organizer, each attendee's reply, whether the organizer marked it private, and a Join meeting button for its web link (only http and https links, and only when clicked). Any appointment can be shown as free instead of busy, which other calendars read from the exported file.
 - The web page export prints Month, Week, Day or Agenda layouts with a key to the category colors. The export menu chooses the layout and whether locations, descriptions and attendees go on the page; descriptions and attendees stay off unless chosen.
 - Added monthly repeats on a weekday: the first to fourth, or the last, Tuesday (or whichever day the appointment starts on) of each month. Calendar files with these rules, including Outlook's form, import as repeats instead of single appointments, and export the same way.
+- Added "This and following" when changing or deleting one date of a repeating appointment. The series ends the day before, and the change goes to that date and every later one as a new series that keeps their single-date edits and skipped dates. One undo puts it back.
 
 ### Changed
 - Light is shades of gray with nothing white: the background, sidebar and footer are the darkest gray (#cccccc), menus and bars a step lighter, then panes, then fields.

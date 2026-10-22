@@ -133,6 +133,8 @@
     <sys:String x:Key="Str_Rep_Scope">ESTE É UM COMPROMISSO RECORRENTE</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Somente esta data</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">A série inteira</sys:String>
+    <sys:String x:Key="Str_Btn_ThisAndFollowing">Esta e as seguintes</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Esta data e todas as seguintes são removidas. As anteriores ficam.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Informe quando a repetição termina ou defina para nunca terminar.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Digite um número inteiro maior que zero.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Somente esta data é removida. O restante da série permanece.</sys:String>

@@ -84,7 +84,7 @@ namespace Killendar.Features
             _view.FieldCategories, _view.FieldReminder, _view.FieldShowAsFree, _view.FieldStartDate, _view.FieldStartTime, _view.FieldEndDate,
             _view.FieldEndTime, _allDay, _view.FieldRepeat, _view.FieldRepeatEveryN,
             string.Join(",", _view.FieldRepeatDays ?? []), _view.FieldRepeatMonthWeek, _view.FieldRepeatCount,
-            _view.FieldRepeatUntil?.Ticks, _view.EditWholeSeries);
+            _view.FieldRepeatUntil?.Ticks, _view.EditWholeSeries, _view.EditFollowing);
 
         /// <summary>Opens the panel on a new appointment at <paramref name="when"/>. False when the
         /// user chose to keep editing a draft instead.</summary>
@@ -164,7 +164,9 @@ namespace Killendar.Features
             bool oneDateOfASeries = master != null;
 
             _view.SeriesScopeVisible = oneDateOfASeries;
+            _view.FollowingOffered = oneDateOfASeries && _store.CanSplit(ev);
             _view.EditWholeSeries = false;
+            _view.EditFollowing = false;
             _view.RepeatSectionVisible = !oneDateOfASeries;
 
             LoadRepeatFrom(master ?? ev);
@@ -501,7 +503,7 @@ namespace Killendar.Features
 
             // "Ends after N times" or "ends on a date" with nothing readable in the box would fall
             // through as "repeats forever", which is the one surprise this must never spring.
-            bool appliesPattern = _editing == null || !_editing.IsOccurrence || _view.EditWholeSeries;
+            bool appliesPattern = _editing == null || !_editing.IsOccurrence || _view.EditWholeSeries || _view.EditFollowing;
             if (appliesPattern && _view.FieldRepeat != RepeatFreq.None && _view.FieldRepeatEveryN < 1)
             {
                 Reject("Str_Err_RepeatInterval", AppointmentField.RepeatInterval);
@@ -569,6 +571,11 @@ namespace Killendar.Features
                 {
                     ApplyRepeatFromPanel(_editing);
                     _store.UpdateSeries(_editing);
+                }
+                else if (_view.EditFollowing)
+                {
+                    ApplyRepeatFromPanel(_editing);
+                    _store.UpdateFollowing(_editing);
                 }
                 else
                 {
@@ -702,8 +709,8 @@ namespace Killendar.Features
             // only has to state plainly what is about to go - it does not ask the question again.
             string detail = _view.Loc("Str_Dlg_DeleteDetail");
             if (oneDateOfASeries)
-                detail = _view.Loc(_view.EditWholeSeries
-                    ? "Str_Dlg_DeleteSeriesDetail"
+                detail = _view.Loc(_view.EditWholeSeries ? "Str_Dlg_DeleteSeriesDetail"
+                    : _view.EditFollowing ? "Str_Dlg_DeleteFollowingDetail"
                     : "Str_Dlg_DeleteOneDateDetail");
 
             // Themed confirm, not a stock MessageBox.
@@ -717,6 +724,7 @@ namespace Killendar.Features
             var title = _editing.Title;
 
             if (oneDateOfASeries && _view.EditWholeSeries) _store.DeleteSeries(master!.Id);
+            else if (oneDateOfASeries && _view.EditFollowing) _store.DeleteFollowing(_editing);
             else if (oneDateOfASeries)                     _store.DeleteOccurrence(_editing);
             else if (_editing.IsSeries)                    _store.DeleteSeries(_editing.Id);
             else                                           _store.Delete(_editing.Id);

@@ -13,6 +13,9 @@ namespace Killendar.Tests
     {
         private static readonly DateTime From = new(2026, 10, 19), To = new(2026, 10, 26);
 
+        // Register WPF's pack URI scheme without creating an Application, as the other export tests do.
+        public PrintLayoutRegressionTests() => System.IO.Packaging.PackUriHelper.Create(new Uri("file:///calendar.html"));
+
         private static List<CalendarEvent> Rows() =>
         [
             new() { Title = "Dentist", Start = new DateTime(2026, 10, 20, 9, 0, 0), End = new DateTime(2026, 10, 20, 10, 0, 0),

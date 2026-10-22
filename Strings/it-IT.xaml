@@ -119,6 +119,8 @@
     <sys:String x:Key="Str_Rep_Scope">QUESTO È UN APPUNTAMENTO RIPETUTO</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Solo questa data</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Tutta la serie</sys:String>
+    <sys:String x:Key="Str_Btn_ThisAndFollowing">Questa e le successive</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Questa data e tutte le successive vengono rimosse. Le precedenti restano.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Indica quando finisce la ripetizione, o imposta che non finisca mai.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Inserisci un numero intero maggiore di zero.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Viene rimossa solo questa data. Il resto della serie rimane.</sys:String>

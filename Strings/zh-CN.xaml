@@ -93,6 +93,8 @@
     <sys:String x:Key="Str_Rep_Scope">这是一个重复约会</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">仅这一天</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">整个系列</sys:String>
+    <sys:String x:Key="Str_Btn_ThisAndFollowing">此项及以后</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">将删除此日期及之后的所有日期。之前的日期保留。</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">请说明重复何时结束，或设为永不结束。</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">请输入大于零的整数。</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">只删除这一天，系列中的其余日期保留。</sys:String>

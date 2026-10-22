@@ -93,6 +93,8 @@
     <sys:String x:Key="Str_Rep_Scope">DIESER TERMIN WIEDERHOLT SICH</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Nur dieser Termin</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Die ganze Serie</sys:String>
+    <sys:String x:Key="Str_Btn_ThisAndFollowing">Dieser und folgende</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Dieser Termin und alle späteren werden entfernt. Frühere bleiben.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Gib an, wann die Wiederholung endet, oder dass sie nie endet.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Gib eine ganze Zahl größer als null ein.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Nur dieser Termin wird entfernt. Der Rest der Serie bleibt.</sys:String>

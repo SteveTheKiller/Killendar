@@ -32,6 +32,8 @@ namespace Killendar.Shell
         /// <summary>True when the panel is editing ONE date of a series and the user has chosen to
         /// apply the edit to all of them.</summary>
         private bool _editWholeSeries;
+        private bool _editFollowing;
+        private bool _followingOffered;
 
         /// <summary>Suppresses the chip handlers while the panel is being populated, so loading an
         /// appointment does not read back as the user having clicked things.</summary>
@@ -108,6 +110,7 @@ namespace Killendar.Shell
             FieldRepeatInterval.Text = "1";
             FieldRepeatEnd.Text = "";
             _editWholeSeries = false;
+            _editFollowing = false;
             _loadingRepeat = false;
             BuildRepeatChips();
         }
@@ -140,7 +143,18 @@ namespace Killendar.Shell
         bool IAppointmentView.EditWholeSeries
         {
             get => _editWholeSeries;
-            set { _editWholeSeries = value; BuildScopeChips(); }
+            set { _editWholeSeries = value; if (value) _editFollowing = false; BuildScopeChips(); }
+        }
+
+        bool IAppointmentView.EditFollowing
+        {
+            get => _editFollowing && _followingOffered;
+            set { _editFollowing = value; if (value) _editWholeSeries = false; BuildScopeChips(); }
+        }
+
+        bool IAppointmentView.FollowingOffered
+        {
+            set { _followingOffered = value; BuildScopeChips(); }
         }
 
         // ── Chip construction ─────────────────────────────────────────────────────────────
@@ -290,18 +304,23 @@ namespace Killendar.Shell
             try
             {
                 SeriesScopeChips.Children.Clear();
-                SeriesScopeChips.Children.Add(Chip(Loc("Str_Btn_ThisDate"), !_editWholeSeries,
-                    () => { _editWholeSeries = false; BuildScopeChips(); }));
+                bool following = _editFollowing && _followingOffered;
+                SeriesScopeChips.Children.Add(Chip(Loc("Str_Btn_ThisDate"), !_editWholeSeries && !following,
+                    () => { _editWholeSeries = false; _editFollowing = false; BuildScopeChips(); }));
+                if (_followingOffered)
+                    SeriesScopeChips.Children.Add(Chip(Loc("Str_Btn_ThisAndFollowing"), following,
+                        () => { _editWholeSeries = false; _editFollowing = true; BuildScopeChips(); }));
                 SeriesScopeChips.Children.Add(Chip(Loc("Str_Btn_WholeSeries"), _editWholeSeries,
-                    () => { _editWholeSeries = true; BuildScopeChips(); }));
+                    () => { _editWholeSeries = true; _editFollowing = false; BuildScopeChips(); }));
 
                 // The PATTERN belongs to the series, so it is only editable once the edit is
                 // aimed at the series. Offering it while "just this date" is lit would let you
                 // set a pattern on a single occurrence, which is not a thing.
                 if (SeriesScopeRow.Visibility == Visibility.Visible)
                 {
-                    RepeatFreqButton.Visibility = _editWholeSeries ? Visibility.Visible : Visibility.Collapsed;
-                    RepeatDetail.Visibility  = _editWholeSeries && _repeatFreq != RepeatFreq.None
+                    bool pattern = _editWholeSeries || following;
+                    RepeatFreqButton.Visibility = pattern ? Visibility.Visible : Visibility.Collapsed;
+                    RepeatDetail.Visibility  = pattern && _repeatFreq != RepeatFreq.None
                                                ? Visibility.Visible : Visibility.Collapsed;
                     RepeatIntervalRow.Visibility = RepeatDetail.Visibility;
                 }

@@ -93,6 +93,8 @@
     <sys:String x:Key="Str_Rep_Scope">এই অ্যাপয়েন্টমেন্টটি পুনরাবৃত্ত</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">শুধু এই তারিখ</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">পুরো সিরিজ</sys:String>
+    <sys:String x:Key="Str_Btn_ThisAndFollowing">এটি ও পরবর্তীগুলো</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">এই তারিখ ও পরের সব তারিখ সরানো হবে। আগের তারিখগুলো থাকবে।</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">পুনরাবৃত্তি কবে শেষ হবে বলুন, অথবা কখনও শেষ না হতে দিন।</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">শূন্যের চেয়ে বড় একটি পূর্ণসংখ্যা লিখুন।</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">শুধু এই তারিখটি সরানো হবে। সিরিজের বাকিটা থাকবে।</sys:String>

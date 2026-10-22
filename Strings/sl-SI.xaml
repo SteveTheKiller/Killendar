@@ -109,6 +109,8 @@
     <sys:String x:Key="Str_Rep_Scope">TO JE PONAVLJAJOČ SE DOGODEK</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Samo ta datum</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Celoten niz</sys:String>
+    <sys:String x:Key="Str_Btn_ThisAndFollowing">Ta in naslednji</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Ta datum in vsi poznejši bodo odstranjeni. Prejšnji ostanejo.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Določi konec ponavljanja ali izberi ponavljanje brez konca.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Vnesi celo število, večje od nič.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Odstranjen bo samo ta datum. Preostali niz bo ohranjen.</sys:String>

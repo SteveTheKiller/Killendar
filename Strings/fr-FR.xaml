@@ -93,6 +93,8 @@
     <sys:String x:Key="Str_Rep_Scope">CE RENDEZ-VOUS SE RÉPÈTE</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Cette date seulement</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Toute la série</sys:String>
+    <sys:String x:Key="Str_Btn_ThisAndFollowing">Celle-ci et les suivantes</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Cette date et toutes les suivantes sont supprimées. Les précédentes restent.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Indiquez quand la répétition se termine, ou qu'elle ne se termine jamais.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Saisissez un nombre entier supérieur à zéro.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Seule cette date est supprimée. Le reste de la série est conservé.</sys:String>

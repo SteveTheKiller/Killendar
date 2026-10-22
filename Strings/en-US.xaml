@@ -133,6 +133,8 @@
     <sys:String x:Key="Str_Rep_Scope">THIS IS A REPEATING APPOINTMENT</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Just this date</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">The whole series</sys:String>
+    <sys:String x:Key="Str_Btn_ThisAndFollowing">This and following</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">This date and every later one are removed. Earlier dates stay.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Say when the repeat ends, or set it to never end.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Enter a whole number greater than zero.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Only this date is removed. The rest of the series stays.</sys:String>

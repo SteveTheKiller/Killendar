@@ -123,6 +123,8 @@
   <sys:String x:Key="Str_Rep_Scope">ĐÂY LÀ CUỘC HẸN LẶP LẠI</sys:String>
   <sys:String x:Key="Str_Btn_ThisDate">Chỉ ngày này</sys:String>
   <sys:String x:Key="Str_Btn_WholeSeries">Toàn bộ chuỗi</sys:String>
+  <sys:String x:Key="Str_Btn_ThisAndFollowing">Ngày này và các ngày sau</sys:String>
+  <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Ngày này và mọi ngày sau sẽ bị xóa. Các ngày trước vẫn giữ.</sys:String>
   <sys:String x:Key="Str_Err_RepeatEnd">Hãy chọn thời điểm kết thúc lặp lại hoặc đặt thành không bao giờ kết thúc.</sys:String>
   <sys:String x:Key="Str_Err_RepeatInterval">Hãy nhập một số nguyên lớn hơn không.</sys:String>
   <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Chỉ ngày này bị xóa. Các ngày còn lại trong chuỗi vẫn được giữ nguyên.</sys:String>

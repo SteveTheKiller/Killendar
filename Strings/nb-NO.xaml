@@ -133,6 +133,8 @@
     <sys:String x:Key="Str_Rep_Scope">DETTE ER EN GJENTAKENDE AVTALE</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Bare denne datoen</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Hele serien</sys:String>
+    <sys:String x:Key="Str_Btn_ThisAndFollowing">Denne og følgende</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Denne datoen og alle senere fjernes. Tidligere datoer blir værende.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Angi når gjentakelsen slutter, eller sett den til å aldri slutte.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Skriv inn et heltall større enn null.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Bare denne datoen fjernes. Resten av serien beholdes.</sys:String>

@@ -194,6 +194,8 @@
     <sys:String x:Key="Str_Rep_Scope">TO SPOTKANIE JEST CYKLICZNE</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Tylko ta data</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Cała seria</sys:String>
+    <sys:String x:Key="Str_Btn_ThisAndFollowing">Ten i następne</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Ten termin i wszystkie późniejsze zostaną usunięte. Wcześniejsze zostają.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Określ koniec powtarzania lub ustaw brak końca.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Wpisz liczbę całkowitą większą od zera.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Usunięta zostanie tylko ta data. Reszta serii pozostanie bez zmian.</sys:String>

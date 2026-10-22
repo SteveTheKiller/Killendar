@@ -133,6 +133,8 @@
     <sys:String x:Key="Str_Rep_Scope">БҰЛ ҚАЙТАЛАНАТЫН КЕЗДЕСУ</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Тек осы күн</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Бүкіл сериясы</sys:String>
+    <sys:String x:Key="Str_Btn_ThisAndFollowing">Осы және кейінгілер</sys:String>
+    <sys:String x:Key="Str_Dlg_DeleteFollowingDetail">Осы күн және одан кейінгі барлық күндер жойылады. Бұрынғылары қалады.</sys:String>
     <sys:String x:Key="Str_Err_RepeatEnd">Қайталану қашан аяқталатынын көрсетіңіз немесе оны шексіз етіңіз.</sys:String>
     <sys:String x:Key="Str_Err_RepeatInterval">Нөлден үлкен бүтін сан енгізіңіз.</sys:String>
     <sys:String x:Key="Str_Dlg_DeleteOneDateDetail">Тек осы күн жойылады. Серияның қалғаны сақталады.</sys:String>
