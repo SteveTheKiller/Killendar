@@ -6,109 +6,70 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ## [1.4.0] - 2026-10-22
 
-Killendar 1.4.0 adds reminders, undo, search, verified backups, time zones, holidays and calendars shown side by side, and makes repeats and calendar files work the way other calendar programs expect.
+Killendar 1.4.0 adds reminders, undo, search, verified backups, holidays and time zones, and makes repeats and calendar files match other calendar programs.
 
 ### Fixed
 
-- In Week view, an appointment dropped near the left edge of a day no longer lands on the day before.
-- Self-updates request administrator access through Killendar and keep their helper out of writable scripts in the temp folder.
-- Dark theme with the red accent: a hovered button fills a deeper red with white text, so its label is readable.
-- In 98SE, long paths in the file dialog no longer run under the recent-locations arrow, and menu highlights follow the selected accent.
-- Uninstall removes shortcuts, the command path and file types before the program, so a failed step leaves an uninstall entry that still works. An all-users uninstall waits for its confirmation however long it stays open, and its leftover helper and empty program folder are removed at the next restart.
-- Screen readers name the color picker's Red, Green, Blue and Hex fields instead of announcing unnamed boxes.
+- Failed password changes and removals keep the original calendar and its recovery copies, can be retried, and say what was left behind. A password change that worked no longer reports failure when the old copy cannot be deleted.
 - Failed exports leave an existing calendar, CSV or HTML file untouched instead of truncating it.
-- Empty days, Week and Day column headers, agenda day headings and empty time slots work from the keyboard and screen readers. Tab reaches them, arrow keys move between days and slots, and Enter opens a day or creates at a slot.
-- The website's screenshot viewer keeps keyboard focus inside it while open, and the website no longer claims import and export have no external dependencies.
-- Screen readers announce the repeat interval box as the repeat interval with its current unit instead of an unnamed number.
-- Times in the calendar, agenda, day panel, editor and HTML export follow the chosen date format and the language's clock instead of always showing US month/day and 12-hour times.
-- Unsaved appointment input is no longer replaced silently. Starting a new appointment, opening another one or a day, switching or reloading the Killendar, or quitting asks first; Cancel, Esc and closing the panel still discard on purpose.
-- Command-line requests over the size limit are refused as they arrive instead of being read into memory first, and the next request still works.
-- Large imports no longer freeze the window. Reading and saving run in the background with a Cancel card for anything slower than half a second, and a canceled import adds nothing. Saving an import is about twice as fast.
-- Imports that would skip, lose or duplicate something show what and ask before adding anything. Files over 50 MB or 100,000 appointments, and emails nested more than 10 levels deep, are refused with a clear message.
-- CSV rows with an unreadable time or end date, or an end before the start, are skipped and counted instead of being imported at a guessed time.
-- Imported meetings keep their organizer, attendee answers, reminders, free/busy setting, privacy, meeting link and revision when exported, instead of resetting every attendee to "needs action". Details Killendar cannot keep are counted in the import message.
-- Canceled meetings in calendar files and email invites are no longer imported as ordinary appointments. The import message counts them, and a canceled date of a series removes that date.
-- An imported appointment that is moved and made to repeat in the same edit repeats from its new time, not the original one.
-- Exported appointments keep the UID they were imported with, so other calendars recognize them instead of adding duplicates.
-- Imported attendee addresses and time zones stay intact when a quoted name or parameter contains a colon, comma or semicolon.
-- Password changes that succeed no longer report failure when the old copy cannot be deleted; the app names the leftover copy instead. Failed password removals delete their partial unencrypted copy or say where it is.
-- Self-updates reject unsigned or invalid images. Failed installations and updates retain complete executable recovery copies.
-- Installation cleanup and uninstall preserve calendars and other files stored beside the app.
-- Failed password changes preserve the original calendar and recovery copies, support retries and report cleanup errors.
-- CSV exports protect formula-like text and explain that calendar imports may retain the protective apostrophe.
-- Switching Killendars no longer reports "Opened" when the chosen calendar and the fallback both fail to open, and a failed choice stays visible when the previous calendar reopens.
-- Failed category additions and color changes show an error, keep the typed name and restore the saved color instead of escaping as an unhandled error.
-- Failed deletion of edited recurring occurrences and failed category renames or deletions preserve existing edits and assignments.
-- Failed calendar migrations preserve the source; interrupted settings saves recover the selected calendar location.
-- Recurring calendar imports and exports preserve time zones, wall-clock schedules, elapsed durations and calendar-day durations across clock changes.
-- Recurrence exceptions retain their exact times, follow whole-series edits, survive ranged exports and no longer duplicate on reimport.
-- Recurring appointments preserve week-start boundaries, counts and multi-day overlaps, skip nonexistent source-zone times and reject invalid intervals.
-- Whole-calendar exports include future and long finite series and disclose unbounded ranges.
-- Calendar imports retain valid rows when another date is unsupported, report unsupported future-range edits and avoid duplicate redraws.
-- Calendar round trips preserve escaped text, email invites honor their character encoding, and CSV imports retain distinct appointment details.
-- Appointment editing preserves dates, times, durations and recurrence end dates during language or date-format changes, including repeated daylight-saving hours.
-- Read-only queries support older calendars without changing their files; failed calendar loads close cleanly without stale appointments.
-- Calendar editing, recurrence queries and file pickers handle date limits and malformed paths without crashing.
-- Native database cache repairs are verified across concurrent launches, and load failures are reported.
-- Stalled command clients and launch requests no longer block later commands. Forwarded file launches preserve the requested path and report failures.
-- Installation waits for the previous app to exit and reports running-app conflicts with retryable exit 1618.
-- Uninstall and Chocolatey report canceled, failed or pending removal; Chocolatey package publishing reports validation failures.
-- Date pickers, calendar names and address suggestions support keyboard operation; closing the editor cancels pending lookups.
-- Modal cards block background shortcuts, and closed appointment panels leave no hidden controls enabled.
-- Language changes refresh agenda headings and recurrence controls; the website's More button has a translated accessible name.
-- Window resizing respects small and scaled monitor work areas.
+- Failed calendar migrations, category changes and deletions of edited repeats keep what was there: the source calendar, the typed name and saved color, and existing edits and assignments. An interrupted settings save recovers the selected calendar location.
+- Unsaved appointment input is no longer replaced silently. Starting a new appointment, opening another one or a day, switching or reloading the Killendar, hiding to the tray or quitting asks first and offers Save; Cancel, Esc and closing the panel still discard on purpose.
+- Large imports no longer freeze the window. They run in the background with a Cancel card for anything slower than half a second, save about twice as fast, and add nothing when canceled. An import that would skip, lose or duplicate something shows what and asks first, and files over 50 MB or 100,000 appointments, or emails nested more than 10 levels deep, are refused with a clear message.
+- Imported meetings keep their UID, organizer, attendee answers, reminders, free/busy setting, privacy, meeting link and revision when exported, so other calendars recognize them instead of adding duplicates or resetting every attendee to "needs action". Details Killendar cannot keep are counted in the import message. Canceled meetings are no longer imported as ordinary appointments, and a canceled date of a series removes that date.
+- Repeating appointments keep their meaning through calendar files: time zones, wall-clock times, lengths across clock changes, week starts, counts, multi-day overlaps and exact exceptions all survive import and export. Exceptions no longer duplicate on reimport, whole-calendar exports include future and long series, and nonexistent times and invalid intervals are skipped or refused.
+- Calendar file and CSV imports keep valid rows when another row is unsupported, and keep escaped text, the invite's character encoding, distinct CSV rows, and attendee addresses and time zones whose quoted names contain a colon, comma or semicolon. CSV rows with an unreadable time or an end before the start are skipped and counted instead of being guessed, and a blank end takes the default length.
 - Exported calendar files write lengths in the iCalendar form (for example PT1H30M) that stricter calendar programs require. Files from earlier versions still import.
+- An imported appointment that is moved and made to repeat in the same edit repeats from its new time, not the original one.
+- Times in the calendar, agenda, day panel, editor and HTML export follow the chosen date format and the language's clock instead of always showing US month/day and 12-hour times, and changing the language or date format no longer shifts an appointment's dates, times, length or repeat end.
+- Self-updates reject unsigned or invalid images, ask for administrator access through the signed Killendar, run their helper without a script in the temp folder, and keep complete recovery copies when an install or update fails.
+- Installing waits for the previous Killendar to exit, and a silent install exits with 1618 so deployment tools retry. Installation cleanup and uninstall keep calendars and other files stored beside the app. Uninstall removes shortcuts, the command path and file types before the program, so a failed step leaves a working uninstall entry; an all-users uninstall waits for its confirmation and finishes cleaning up at the next restart. Uninstall and Chocolatey report canceled, failed or pending removal.
+- Older calendars open without changing their files, a failed open leaves no stale appointments, and switching Killendars no longer reports "Opened" when nothing opened.
+- Date limits and malformed paths no longer crash the editor, repeats or file pickers. Stalled or oversized command-line requests are refused without blocking the next one, forwarded file launches keep the requested path, and the native database cache is repaired safely when several copies start at once.
+- In Week view, an appointment dropped near the left edge of a day no longer lands on the day before.
+- Empty days, Week and Day column headers, agenda day headings and empty time slots work from the keyboard and screen readers. Tab reaches them, arrow keys move between days and slots, and Enter opens a day or creates at a slot.
+- Screen readers name the color picker's Red, Green, Blue and Hex fields, the repeat interval with its unit, and the Attendees box. Date pickers, calendar names and address suggestions work from the keyboard, modal cards block background shortcuts, a closed appointment panel leaves no hidden controls enabled, and changing the language refreshes agenda headings and the repeat controls.
+- Gray hint and footer text in Light, the version number, the close X on every title bar, and the Dark theme's red accent text and hovered buttons meet the contrast guidelines.
+- In 98SE, long paths in the file dialog no longer run under the recent-locations arrow, and menu highlights follow the selected accent.
 - Printed pages start on the first sheet and keep weeks and appointments whole instead of splitting them across pages.
-- Printed and exported pages color each appointment with its category, so the color key at the top matches what is on the page.
-- The Light theme's title bar matches the gray around it again.
-- Light's gray hint and footer text, the second time zone's hour labels and the version number read at 4.5:1 contrast or better, and the close X reads at 3:1 on every theme's title bar.
-- With the Dark theme's red accent, button and label text is a slightly brighter red so it reads at 4.5:1. The wordmark keeps its red.
-- Screen readers name the appointment's Attendees box.
-- The website's film grain is lighter, matching KillerTools, and the theme menu can turn it off (Alt+Shift+G). The top bar no longer leaves extra space above the page on narrower windows, and the release details box lifts with an accent border on hover.
+- Window resizing respects small and scaled monitor work areas.
+
+### Changed
+
+- Month and Week draw much faster on big calendars, and holidays no longer slow them down.
+- Light is shades of gray with nothing white: the background, sidebar, footer and title bar are the darkest gray (#cccccc), menus and bars a step lighter, then panes, then fields.
+- Updated SQLCipher to 4.19.0, SQLite and JSON processing to 10.0.13, and SQLitePCLRaw to 3.0.5.
+- The toolbar never cuts off the date: Export, Import, Deleted and Search go to the overflow menu first, then the view buttons drop their words, then the view buttons, Today and New. Dialogs are edged in the app border color, and the date settings flyout lays its groups out in three columns.
+- Hovered menu and list items show their text in the theme accent, lightened or darkened only as far as needed to stay readable on the hover fill, and theme menu hover rows reach the right edge.
+- Wordmarks and headings are raised with a subtle bevel in their own color instead of a dark outline. The Dark theme's red accent is the brand red again instead of a pink tint, Dark grid lines and pane borders are a little lighter, pane borders are softer in Blood, Greed and Cyanotic and stronger in Black, and hovering a day no longer shifts its film grain.
+- Date headings are larger, and calendar-list contrast, grain, embedded fonts and file-picker colors are improved. Dialogs show app icons, with full bevels and compact fields in 98SE. Sidebar fades leave scrollbars clear, and the shortcuts card wraps long labels and shows overflow.
+- HTML calendars support all themes and accents, accessible selection controls, saved preferences and clearer accent-colored tables.
+- Grid density has one button, on the rail. Its right-click menu sets how much of each appointment the day panel shows, replacing the second density button beside the day heading.
+- The lock button's menu opens in the content pane's top-right corner, mirroring the rail flyouts.
+- The website shows twelve new screenshots with captions in every language, explains per-appointment time zones and what calendar files carry, and lists the new shortcuts. Its film grain is lighter, matching KillerTools, with a switch in the theme menu (Alt+Shift+G). The screenshot viewer keeps keyboard focus while open, the More button is named in every language, the top bar no longer leaves a gap on narrower windows, and the page no longer claims import and export have no external dependencies.
 
 ### Added
 
-- Added Slovenian across the app, installation prompts, website and technical help.
-- Added a time format choice (Follow Windows, 12-hour or 24-hour) to the date settings.
+- Added reminders: none, at the start, 5, 10, 15 or 30 minutes, 1 hour or 1 day before, and 9:00 the day before for all-day appointments. A reminders window in the corner of the screen offers Snooze (5, 10, 15 or 60 minutes) and Dismiss, reminders missed while Killendar was closed show at the next launch, and a locked calendar shows only how many are due. With Killendar in the tray, the tray icon also shows a notification, which for an encrypted Killendar gives only the count. New appointments use the default reminder from the date settings menu (none until chosen). Calendar files and CSV files carry reminders both ways.
 - Added undo and redo (Ctrl+Z, Ctrl+Y) for adding, editing, moving and deleting appointments and for imports, up to the last 50 changes.
 - Added Recently deleted: a toolbar list of appointments and series deleted in the last 30 days, kept inside the calendar file (encrypted with it) and restored with a click.
-- Added verified backups: each calendar is copied to a Backups folder beside it on the first open of each day and before imports and password changes, reopened and checked, encrypted with the calendar's own password, and kept for 7 days and 4 weeks. Manage Killendars shows the last backup and restores one as a separate calendar. Deleting a calendar deletes its backups. The daily backup runs beside the app, so a large calendar opens without waiting for it.
+- Added verified backups: each calendar is copied to a Backups folder beside it on the first open of each day and before imports and password changes, reopened and checked table by table, encrypted with the calendar's own password, and kept for 7 days and 4 weeks. Manage Killendars shows the last backup and restores one as a separate calendar. Deleting a calendar deletes its backups. The daily backup runs beside the app, so a large calendar opens without waiting for it.
 - Added locking for encrypted Killendars: Ctrl+L or Lock now on the lock button's menu hides the calendar and asks for the password again, keeping any unsaved appointment input. A locked calendar keeps nothing readable in memory, and open search results close with it. The same menu can lock after 5, 15 or 30 idle minutes or when Windows locks; both are off by default. KillerMCP requests are refused while locked.
-- Added reminders: none, at the start, 5, 10, 15 or 30 minutes, 1 hour or 1 day before, and 9:00 the day before for all-day appointments. A reminders window in the corner of the screen offers Snooze (5, 10, 15 or 60 minutes) and Dismiss, reminders missed while Killendar was closed show at the next launch, and a locked calendar shows only how many are due. With Killendar in the tray, the tray icon also shows a notification; clicking it opens Killendar. New appointments use the default reminder from the date settings menu (none until chosen). Calendar files keep their alarms: an imported alarm sets the reminder, and one set here is exported as an alarm. CSV files carry reminders in Outlook's Reminder on/off, Reminder Date and Reminder Time columns.
 - Added search (Ctrl+F or the toolbar's Search button) across titles, locations, descriptions, attendees and categories, ignoring case and accents, with Any time, Upcoming and Past filters. It reads the open calendar in memory and writes no index. Typing a date in the same box, or pressing Ctrl+G, goes to that date.
-- Added a choice of agenda length (7, 14, 30, 60, 90, 180 or 365 days) to the date settings menu.
-- Added work days and hours to the date settings menu. The work week runs from the first workday to the last, so Sunday to Thursday works too, and days off and hours outside the working day are shaded in Week and Day; Month shades days off instead of always Saturday and Sunday.
-- Added Duplicate (Ctrl+D) to the appointment panel: the copy is a new appointment, without the original's imported identity or organizer details. Added templates: save an appointment's details (not its attendees or date) under its title from the panel's Templates button, and start one from that button or the New button's right-click. Alt+arrow keys move the appointment being edited by 15 minutes or a day. Saving an appointment that overlaps a busy one says so without stopping the save.
-- Added meeting details to the appointment panel for imported invitations: the organizer, each attendee's reply, whether the organizer marked it private, and a Join meeting button for its web link (only http and https links, and only when clicked). Any appointment can be shown as free instead of busy, which other calendars read from the exported file.
-- The web page export prints Month, Week, Day or Agenda layouts with a key to the category colors. The export menu chooses the layout and whether locations, descriptions and attendees go on the page; descriptions and attendees stay off unless chosen.
 - Added monthly repeats on a weekday: the first to fourth, or the last, Tuesday (or whichever day the appointment starts on) of each month. Calendar files with these rules, including Outlook's form, import as repeats instead of single appointments, and export the same way.
-- Added "This and following" when changing or deleting one date of a repeating appointment. The series ends the day before, and the change goes to that date and every later one as a new series that keeps their single-date edits and skipped dates. One undo puts it back.
-- Added time zones, off until "Show time zones" is ticked in the date settings. An appointment can then be given a time zone, its times are typed on that clock and it keeps that clock when either place changes its clocks, and Week and Day can show a second zone's hours beside this computer's.
-- Added showing other Killendars beside the open one: right-click the Killendars button and tick them. Each shows in its own color and is read only, so new appointments and changes go to the open one. An encrypted one stays locked until its own password is typed, one that cannot be read is marked and does not stop the rest, and locking the app locks them too.
+- Added "This and following" when changing or deleting one date of a repeating appointment. The series ends the day before, and the change goes to that date and every later one as a new series that keeps their single-date edits and skipped dates. One undo puts it back, and a split that fails changes nothing.
+- Added extra dates to repeating appointments: "Also on" in the repeat section adds dates outside the pattern, at the series' time of day. Calendar files carry them both ways (RDATE), and a file's extra dates no longer import as a single date.
+- Added a holiday calendar: in the date settings, choose a Killendar (one imported from a holiday .ics file, say) and its all-day appointments become holidays, shaded like days off and named on their day in Month and Week. Nothing is built in or downloaded. Repeats can move off days off: "On a day off" in the repeat section keeps the date, or moves it to the next workday or the workday before, past weekends you do not work and holidays. Weekly repeats also get an "Every workday" shortcut. Exported calendar files show each moved date where Killendar does, two years ahead.
+- Added time zones, off until "Show time zones" is ticked in the date settings. An appointment can then be given a time zone, its times are typed on that clock and it keeps that clock when either place changes its clocks, and Week and Day can show a second zone's hours beside this computer's. Calendar files that define their own time zone (Outlook's "Customized Time Zone", for one) import instead of being refused, placing each appointment at the right moment and counting any repeat that keeps its first date's times.
+- Importing a newer invite for a meeting already in the Killendar updates it instead of skipping it, keeping the categories and reminder chosen here; an older or identical one is still skipped. A cancellation removes the meeting (to Recently deleted) or the canceled date of a series. The import asks first whenever it would change or remove something, and one undo puts it all back.
+- Added showing other Killendars beside the open one: right-click the Killendars button and tick them. Each shows in its own color in Month, Week and Day and is read only, so new appointments and changes go to the open one. An encrypted one stays locked until its own password is typed, one that cannot be read is marked and does not stop the rest, and locking the app locks them too.
+- Added work days and hours to the date settings menu. The work week runs from the first workday to the last, so Sunday to Thursday works too, and days off and hours outside the working day are shaded in Week and Day; Month shades days off instead of always Saturday and Sunday.
+- Added meeting details to the appointment panel for imported invitations: the organizer, each attendee's reply, whether the organizer marked it private, and a Join meeting button for its web link that shows where it goes and opens only http and https links, only when clicked. Any appointment can be shown as free instead of busy, which other calendars read from the exported file.
+- Added Duplicate (Ctrl+D) to the appointment panel: the copy is a new appointment, without the original's imported identity or organizer details. Added templates: save an appointment's details (not its attendees or date) under its title from the panel's Templates button, and start one from that button or the New button's right-click. Alt+arrow keys move the appointment being edited by 15 minutes or a day. Saving an appointment that overlaps a busy one says so without stopping the save.
+- The web page export prints Month, Week, Day or Agenda layouts, each appointment in its category color with a key at the top. The export menu chooses the layout and whether locations, descriptions and attendees go on the page; descriptions and attendees stay off unless chosen.
+- Added a time format choice (Follow Windows, 12-hour or 24-hour) and an agenda length (7, 14, 30, 60, 90, 180 or 365 days) to the date settings menu.
+- Added Slovenian across the app, installation prompts, website and technical help.
 - Added Copy diagnostics in About: a short report for a support request with the version, Windows, settings and counts, and no appointment content, names, addresses, paths or links. Nothing is sent.
 - Added a plain-language guide to importing, repeats, time zones, reminders, backups and restore, privacy and the command line.
-- Calendar files that define their own time zone (Outlook's "Customized Time Zone", for one) now import instead of being refused. A zone Windows also has is used under its Windows name; one it does not have still places each appointment at the right moment, and a repeat on it keeps its first date's times and is counted in the import report.
-- Importing a newer invite for a meeting already in the Killendar updates it instead of skipping it, keeping the categories and reminder chosen here; an older or identical one is still skipped. A cancellation removes the meeting (to Recently deleted) or the canceled date of a series. The import asks first whenever it would change or remove something, and one undo puts it all back.
-- Added extra dates to repeating appointments: "Also on" in the repeat section adds dates outside the pattern, at the series' time of day. Calendar files carry them both ways (RDATE), and a file's extra dates no longer import as a single date.
-- Added a holiday calendar: in the date settings, choose a Killendar (one imported from a holiday .ics file, say) and its all-day appointments become holidays, shaded like days off and named on their day in Month. Nothing is built in or downloaded.
-- Repeats can move off days off: "On a day off" in the repeat section keeps the date, or moves it to the next workday or the workday before, past weekends you do not work and holidays. Weekly repeats also get an "Every workday" shortcut. Exported calendar files show each moved date where Killendar does, two years ahead, with the holiday calendar unlocked.
-
-### Changed
-- The lock button's menu opens in the content pane's top-right corner, 8px in from the top and right, mirroring the rail flyouts.
-- Light is shades of gray with nothing white: the background, sidebar and footer are the darkest gray (#cccccc), menus and bars a step lighter, then panes, then fields.
-- Month and Week draw much faster on big calendars, and holidays no longer slow them down.
-
-- Updated SQLCipher to 4.19.0, SQLite and JSON processing to 10.0.13, and SQLitePCLRaw to 3.0.5.
-- HTML calendars support all themes and accents, accessible selection controls, saved preferences and clearer accent-colored tables.
-- Enlarged date headings and improved calendar-list contrast, grain, embedded fonts and file-picker colors. Dialogs show app icons, with full bevels and compact fields in 98SE. Sidebar fades leave scrollbars clear, and the shortcuts card wraps long labels and shows overflow.
-- Hovered menu and list items show their text in the theme accent, lightened or darkened only as far as needed to stay readable on the hover fill.
-
-### Changed
-
-- Dialogs are edged in the app border color, following theme changes, with panes inside keeping the pane border. The toolbar never cuts off the date: Export, Import, Deleted and Search go to the overflow menu first, then the view buttons drop their words, then the view buttons, Today and New. The date settings flyout lays its groups out in three columns.
-- Wordmarks and headings are raised with a subtle bevel in their own color instead of a dark outline; wordmarks keep their drop shadow. The Dark theme's red accent is the brand red again instead of a pink tint. Dark theme grid lines and pane borders are a little lighter, the day panel heading matches the calendar's date heading, and hovering a day no longer shifts its film grain.
-- Grid density has one button, on the rail. Its right-click menu sets how much of each appointment the day panel shows, replacing the second density button beside the day heading.
-- Theme menu hover rows reach the right edge with the same inset as the left.
 
 ## [1.3.1] - 2026-10-19
 
