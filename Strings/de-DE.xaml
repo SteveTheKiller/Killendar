@@ -443,6 +443,16 @@
     <sys:String x:Key="Str_Status_OverlapsMore">Überschneidet sich mit {0} und {1} weiteren.</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">Den bearbeiteten Termin duplizieren</sys:String>
     <sys:String x:Key="Str_KS_Nudge">Den bearbeiteten Termin um 15 Minuten oder einen Tag verschieben</sys:String>
+    <sys:String x:Key="Str_Fld_Meeting">BESPRECHUNG</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">Organisator: {0}</sys:String>
+    <sys:String x:Key="Str_Meet_Accepted">zugesagt</sys:String>
+    <sys:String x:Key="Str_Meet_Declined">abgesagt</sys:String>
+    <sys:String x:Key="Str_Meet_Tentative">vielleicht</sys:String>
+    <sys:String x:Key="Str_Meet_NoReply">noch keine Antwort</sys:String>
+    <sys:String x:Key="Str_Meet_Delegated">delegiert</sys:String>
+    <sys:String x:Key="Str_Meet_Join">Teilnehmen</sys:String>
+    <sys:String x:Key="Str_Meet_Private">Vom Organisator als privat markiert</sys:String>
+    <sys:String x:Key="Str_Chk_ShowAsFree">Als frei anzeigen</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Noch keine Kategorien. Legen Sie welche über die Seitenleiste an.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorien</sys:String>
     <sys:String x:Key="Str_TT_Density">Rasterdichte - klicken oder scrollen</sys:String>

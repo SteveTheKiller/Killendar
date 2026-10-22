@@ -81,7 +81,7 @@ namespace Killendar.Features
         /// <summary>Every value the panel would save, as one comparable string.</summary>
         private string Snapshot() => string.Join("\u0001",
             _view.FieldTitle, _view.FieldLocation, _view.FieldDescription, _view.FieldAttendees,
-            _view.FieldCategories, _view.FieldReminder, _view.FieldStartDate, _view.FieldStartTime, _view.FieldEndDate,
+            _view.FieldCategories, _view.FieldReminder, _view.FieldShowAsFree, _view.FieldStartDate, _view.FieldStartTime, _view.FieldEndDate,
             _view.FieldEndTime, _allDay, _view.FieldRepeat, _view.FieldRepeatEveryN,
             string.Join(",", _view.FieldRepeatDays ?? []), _view.FieldRepeatCount,
             _view.FieldRepeatUntil?.Ticks, _view.EditWholeSeries);
@@ -113,6 +113,8 @@ namespace Killendar.Features
             _view.FieldAttendees = "";
             _view.FieldCategories = "";
             _view.FieldReminder = Reminders.ParseDefault(Settings.Get(Reminders.DefaultSetting));
+            _view.FieldShowAsFree = false;
+            _view.ShowMeeting(null);
 
             _view.ResetRepeat();
             _view.RepeatSectionVisible = true;
@@ -148,6 +150,8 @@ namespace Killendar.Features
             _view.FieldAttendees = string.Join(", ", ev.Attendees);
             _view.FieldCategories = ev.Categories;
             _view.FieldReminder = ev.ReminderMinutes;
+            _view.FieldShowAsFree = MeetingInfo.IsFree(ev);
+            _view.ShowMeeting(MeetingInfo.From(ev));
 
             // Which of the three kinds of appointment this is decides what the panel offers.
             //   - a plain one: the pattern controls, no scope question;
@@ -523,6 +527,7 @@ namespace Killendar.Features
                     Categories  = EventStore.NormalizeCategories(_view.FieldCategories),
                     ReminderMinutes = _view.FieldReminder,
                 };
+                MeetingInfo.SetFree(ev, _view.FieldShowAsFree);
                 ApplyRepeatFromPanel(ev);
                 _store.Add(ev);
                 if (_store.LoadError != null) { _view.ShowError(_store.LoadError); return; }
@@ -547,6 +552,7 @@ namespace Killendar.Features
                 _editing.Categories  = EventStore.NormalizeCategories(_view.FieldCategories);
                 int? previousReminder = _editing.ReminderMinutes;
                 _editing.ReminderMinutes = _view.FieldReminder;
+                MeetingInfo.SetFree(_editing, _view.FieldShowAsFree);
                 IcsService.DropStaleKeptProperties(_editing, previousDescription, previousAllDay);
                 IcsService.DropStaleAlarms(_editing, previousReminder);
 
@@ -603,6 +609,7 @@ namespace Killendar.Features
             _view.CanDelete = false;
             _view.SeriesScopeVisible = false;
             _view.RepeatSectionVisible = true;
+            _view.ShowMeeting(null);   // the copy is not the organizer's meeting
             _baseline = "";   // a copy nobody has saved yet is unsaved input
             _view.SetStatus(_view.Loc("Str_Status_Duplicated"));
             _view.Focus(AppointmentField.Title);

@@ -524,6 +524,16 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">Átfedésben van ezzel: {0} és még {1}.</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">A szerkesztett találkozó másolása</sys:String>
     <sys:String x:Key="Str_KS_Nudge">A szerkesztett találkozó áthelyezése 15 perccel vagy egy nappal</sys:String>
+    <sys:String x:Key="Str_Fld_Meeting">ÉRTEKEZLET</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">Szervező: {0}</sys:String>
+    <sys:String x:Key="Str_Meet_Accepted">elfogadta</sys:String>
+    <sys:String x:Key="Str_Meet_Declined">elutasította</sys:String>
+    <sys:String x:Key="Str_Meet_Tentative">talán</sys:String>
+    <sys:String x:Key="Str_Meet_NoReply">még nem válaszolt</sys:String>
+    <sys:String x:Key="Str_Meet_Delegated">továbbadta</sys:String>
+    <sys:String x:Key="Str_Meet_Join">Csatlakozás</sys:String>
+    <sys:String x:Key="Str_Meet_Private">A szervező magánjellegűnek jelölte</sys:String>
+    <sys:String x:Key="Str_Chk_ShowAsFree">Szabadként jelenjen meg</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Még nincsenek kategóriák. Adjon hozzá néhányat az oldalsó sínről.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategóriák</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

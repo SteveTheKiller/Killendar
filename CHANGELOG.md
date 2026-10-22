@@ -64,6 +64,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Added a choice of agenda length (7, 14, 30, 60, 90, 180 or 365 days) to the date settings menu.
 - Added work days and hours to the date settings menu. The work week runs from the first workday to the last, so Sunday to Thursday works too, and days off and hours outside the working day are shaded in Week and Day; Month shades days off instead of always Saturday and Sunday.
 - Added Duplicate (Ctrl+D) to the appointment panel: the copy is a new appointment, without the original's imported identity or organizer details. Added templates: save an appointment's details (not its attendees or date) under its title from the panel's Templates button, and start one from that button or the New button's right-click. Alt+arrow keys move the appointment being edited by 15 minutes or a day. Saving an appointment that overlaps a busy one says so without stopping the save.
+- Added meeting details to the appointment panel for imported invitations: the organizer, each attendee's reply, whether the organizer marked it private, and a Join meeting button for its web link (only http and https links, and only when clicked). Any appointment can be shown as free instead of busy, which other calendars read from the exported file.
 
 ### Changed
 - Light is shades of gray with nothing white: the background, sidebar and footer are the darkest gray (#cccccc), menus and bars a step lighter, then panes, then fields.

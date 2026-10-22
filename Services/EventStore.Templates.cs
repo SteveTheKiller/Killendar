@@ -78,7 +78,6 @@ namespace Killendar.Services
                 o.Start < ev.End && o.End > ev.Start)];
         }
 
-        private static bool IsFree(CalendarEvent ev) =>
-            ev.KeptProperties.Any(line => line.Replace(" ", "").Equals("TRANSP:TRANSPARENT", StringComparison.OrdinalIgnoreCase));
+        private static bool IsFree(CalendarEvent ev) => MeetingInfo.IsFree(ev);
     }
 }

@@ -522,6 +522,16 @@
     <sys:String x:Key="Str_Status_OverlapsMore">Den overlapper {0} og {1} til.</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">Dupliser avtalen som redigeres</sys:String>
     <sys:String x:Key="Str_KS_Nudge">Flytt avtalen som redigeres 15 minutter eller en dag</sys:String>
+    <sys:String x:Key="Str_Fld_Meeting">MØTE</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">Organisator: {0}</sys:String>
+    <sys:String x:Key="Str_Meet_Accepted">godtatt</sys:String>
+    <sys:String x:Key="Str_Meet_Declined">avslått</sys:String>
+    <sys:String x:Key="Str_Meet_Tentative">kanskje</sys:String>
+    <sys:String x:Key="Str_Meet_NoReply">ikke svart ennå</sys:String>
+    <sys:String x:Key="Str_Meet_Delegated">delegert</sys:String>
+    <sys:String x:Key="Str_Meet_Join">Bli med i møtet</sys:String>
+    <sys:String x:Key="Str_Meet_Private">Merket privat av organisatoren</sys:String>
+    <sys:String x:Key="Str_Chk_ShowAsFree">Vis som ledig</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Ingen kategorier ennå. Legg til noen fra sidelinjen.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorier</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

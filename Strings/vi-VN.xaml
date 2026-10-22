@@ -492,6 +492,16 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Status_OverlapsMore">Trùng giờ với {0} và {1} cuộc hẹn khác.</sys:String>
   <sys:String x:Key="Str_KS_Duplicate">Nhân bản cuộc hẹn đang sửa</sys:String>
   <sys:String x:Key="Str_KS_Nudge">Dời cuộc hẹn đang sửa 15 phút hoặc một ngày</sys:String>
+  <sys:String x:Key="Str_Fld_Meeting">CUỘC HỌP</sys:String>
+  <sys:String x:Key="Str_Meet_Organizer">Người tổ chức: {0}</sys:String>
+  <sys:String x:Key="Str_Meet_Accepted">đã nhận lời</sys:String>
+  <sys:String x:Key="Str_Meet_Declined">đã từ chối</sys:String>
+  <sys:String x:Key="Str_Meet_Tentative">có thể</sys:String>
+  <sys:String x:Key="Str_Meet_NoReply">chưa trả lời</sys:String>
+  <sys:String x:Key="Str_Meet_Delegated">đã ủy quyền</sys:String>
+  <sys:String x:Key="Str_Meet_Join">Tham gia cuộc họp</sys:String>
+  <sys:String x:Key="Str_Meet_Private">Người tổ chức đánh dấu là riêng tư</sys:String>
+  <sys:String x:Key="Str_Chk_ShowAsFree">Hiển thị là rảnh</sys:String>
   <sys:String x:Key="Str_Hint_NoCategories">Chưa có danh mục nào. Hãy thêm danh mục từ thanh bên.</sys:String>
   <sys:String x:Key="Str_TT_Categories">Danh mục</sys:String>
   <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

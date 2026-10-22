@@ -443,6 +443,16 @@
     <sys:String x:Key="Str_Status_OverlapsMore">এটি {0} ও আরও {1}টির সাথে মিলে যায়।</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">সম্পাদনাধীন অ্যাপয়েন্টমেন্টের অনুলিপি করুন</sys:String>
     <sys:String x:Key="Str_KS_Nudge">সম্পাদনাধীন অ্যাপয়েন্টমেন্ট ১৫ মিনিট বা এক দিন সরান</sys:String>
+    <sys:String x:Key="Str_Fld_Meeting">সভা</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">আয়োজক: {0}</sys:String>
+    <sys:String x:Key="Str_Meet_Accepted">গ্রহণ করেছেন</sys:String>
+    <sys:String x:Key="Str_Meet_Declined">প্রত্যাখ্যান করেছেন</sys:String>
+    <sys:String x:Key="Str_Meet_Tentative">হয়তো</sys:String>
+    <sys:String x:Key="Str_Meet_NoReply">এখনও উত্তর নেই</sys:String>
+    <sys:String x:Key="Str_Meet_Delegated">অন্যকে দিয়েছেন</sys:String>
+    <sys:String x:Key="Str_Meet_Join">সভায় যোগ দিন</sys:String>
+    <sys:String x:Key="Str_Meet_Private">আয়োজক ব্যক্তিগত হিসেবে চিহ্নিত করেছেন</sys:String>
+    <sys:String x:Key="Str_Chk_ShowAsFree">ফাঁকা দেখান</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">এখনও কোনো বিভাগ নেই। সাইডবার থেকে যোগ করুন।</sys:String>
     <sys:String x:Key="Str_TT_Categories">বিভাগ</sys:String>
     <sys:String x:Key="Str_TT_Density">গ্রিড ঘনত্ব - ক্লিক বা স্ক্রল</sys:String>

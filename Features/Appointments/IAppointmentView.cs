@@ -26,6 +26,12 @@ namespace Killendar.Features
 
         /// <summary>Minutes before the start to remind, or null for none.</summary>
         int? FieldReminder { get; set; }
+
+        /// <summary>Show as free (TRANSP:TRANSPARENT) rather than busy.</summary>
+        bool FieldShowAsFree { get; set; }
+
+        /// <summary>The read-only meeting details of an imported invitation, or null to hide them.</summary>
+        void ShowMeeting(Services.MeetingInfo? meeting);
         string FieldStartDate   { get; set; }
         string FieldStartTime   { get; set; }
         string FieldEndDate     { get; set; }

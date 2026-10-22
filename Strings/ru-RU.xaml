@@ -523,6 +523,16 @@
     <sys:String x:Key="Str_Status_OverlapsMore">Пересекается с «{0}» и ещё {1}.</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">Дублировать редактируемую встречу</sys:String>
     <sys:String x:Key="Str_KS_Nudge">Сдвинуть редактируемую встречу на 15 минут или день</sys:String>
+    <sys:String x:Key="Str_Fld_Meeting">СОБРАНИЕ</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">Организатор: {0}</sys:String>
+    <sys:String x:Key="Str_Meet_Accepted">принял(а)</sys:String>
+    <sys:String x:Key="Str_Meet_Declined">отклонил(а)</sys:String>
+    <sys:String x:Key="Str_Meet_Tentative">под вопросом</sys:String>
+    <sys:String x:Key="Str_Meet_NoReply">нет ответа</sys:String>
+    <sys:String x:Key="Str_Meet_Delegated">передал(а)</sys:String>
+    <sys:String x:Key="Str_Meet_Join">Присоединиться</sys:String>
+    <sys:String x:Key="Str_Meet_Private">Организатор отметил как личное</sys:String>
+    <sys:String x:Key="Str_Chk_ShowAsFree">Показывать как свободное время</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Категорий пока нет. Добавьте их на боковой панели.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Категории</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

@@ -443,6 +443,16 @@
     <sys:String x:Key="Str_Status_OverlapsMore">與 {0} 及另外 {1} 個約會時間重疊。</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">複製正在編輯的約會</sys:String>
     <sys:String x:Key="Str_KS_Nudge">將正在編輯的約會移動 15 分鐘或一天</sys:String>
+    <sys:String x:Key="Str_Fld_Meeting">會議</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">召集人：{0}</sys:String>
+    <sys:String x:Key="Str_Meet_Accepted">已接受</sys:String>
+    <sys:String x:Key="Str_Meet_Declined">已拒絕</sys:String>
+    <sys:String x:Key="Str_Meet_Tentative">暫定</sys:String>
+    <sys:String x:Key="Str_Meet_NoReply">尚未回覆</sys:String>
+    <sys:String x:Key="Str_Meet_Delegated">已委派</sys:String>
+    <sys:String x:Key="Str_Meet_Join">加入會議</sys:String>
+    <sys:String x:Key="Str_Meet_Private">召集人標示為私人</sys:String>
+    <sys:String x:Key="Str_Chk_ShowAsFree">顯示為空閒</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">還沒有類別。可從側邊欄新增。</sys:String>
     <sys:String x:Key="Str_TT_Categories">類別</sys:String>
     <sys:String x:Key="Str_TT_Density">格線密度 - 按一下或捲動</sys:String>

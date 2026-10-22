@@ -443,6 +443,16 @@
     <sys:String x:Key="Str_Status_OverlapsMore">Se superpone con {0} y {1} más.</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">Duplicar la cita que se edita</sys:String>
     <sys:String x:Key="Str_KS_Nudge">Mover la cita que se edita 15 minutos o un día</sys:String>
+    <sys:String x:Key="Str_Fld_Meeting">REUNIÓN</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">Organizador: {0}</sys:String>
+    <sys:String x:Key="Str_Meet_Accepted">aceptó</sys:String>
+    <sys:String x:Key="Str_Meet_Declined">rechazó</sys:String>
+    <sys:String x:Key="Str_Meet_Tentative">quizá</sys:String>
+    <sys:String x:Key="Str_Meet_NoReply">sin respuesta aún</sys:String>
+    <sys:String x:Key="Str_Meet_Delegated">delegó</sys:String>
+    <sys:String x:Key="Str_Meet_Join">Unirse a la reunión</sys:String>
+    <sys:String x:Key="Str_Meet_Private">Marcada como privada por el organizador</sys:String>
+    <sys:String x:Key="Str_Chk_ShowAsFree">Mostrar como libre</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Todavía no hay categorías. Añádelas desde la barra lateral.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categorías</sys:String>
     <sys:String x:Key="Str_TT_Density">Densidad de la cuadrícula - clic o rueda</sys:String>

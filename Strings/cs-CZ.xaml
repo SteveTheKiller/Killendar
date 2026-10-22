@@ -443,6 +443,16 @@
     <sys:String x:Key="Str_Status_OverlapsMore">Překrývá se se schůzkou {0} a {1} dalšími.</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">Duplikovat upravovanou schůzku</sys:String>
     <sys:String x:Key="Str_KS_Nudge">Posunout upravovanou schůzku o 15 minut nebo o den</sys:String>
+    <sys:String x:Key="Str_Fld_Meeting">SCHŮZKA</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">Organizátor: {0}</sys:String>
+    <sys:String x:Key="Str_Meet_Accepted">přijal(a)</sys:String>
+    <sys:String x:Key="Str_Meet_Declined">odmítl(a)</sys:String>
+    <sys:String x:Key="Str_Meet_Tentative">možná</sys:String>
+    <sys:String x:Key="Str_Meet_NoReply">zatím bez odpovědi</sys:String>
+    <sys:String x:Key="Str_Meet_Delegated">delegoval(a)</sys:String>
+    <sys:String x:Key="Str_Meet_Join">Připojit se</sys:String>
+    <sys:String x:Key="Str_Meet_Private">Organizátor označil jako soukromé</sys:String>
+    <sys:String x:Key="Str_Chk_ShowAsFree">Zobrazit jako volno</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Zatím žádné kategorie. Přidejte je z postranního panelu.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorie</sys:String>
     <sys:String x:Key="Str_TT_Density">Hustota mřížky - klik nebo kolečko</sys:String>

@@ -522,6 +522,16 @@
     <sys:String x:Key="Str_Status_OverlapsMore">Ele se sobrepõe a {0} e a mais {1}.</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">Duplicar o compromisso em edição</sys:String>
     <sys:String x:Key="Str_KS_Nudge">Mover o compromisso em edição 15 minutos ou um dia</sys:String>
+    <sys:String x:Key="Str_Fld_Meeting">REUNIÃO</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">Organizador: {0}</sys:String>
+    <sys:String x:Key="Str_Meet_Accepted">aceitou</sys:String>
+    <sys:String x:Key="Str_Meet_Declined">recusou</sys:String>
+    <sys:String x:Key="Str_Meet_Tentative">talvez</sys:String>
+    <sys:String x:Key="Str_Meet_NoReply">sem resposta ainda</sys:String>
+    <sys:String x:Key="Str_Meet_Delegated">delegou</sys:String>
+    <sys:String x:Key="Str_Meet_Join">Entrar na reunião</sys:String>
+    <sys:String x:Key="Str_Meet_Private">Marcada como particular pelo organizador</sys:String>
+    <sys:String x:Key="Str_Chk_ShowAsFree">Mostrar como livre</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Nenhuma categoria ainda. Adicione algumas na barra lateral.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categorias</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

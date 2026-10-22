@@ -522,6 +522,16 @@
     <sys:String x:Key="Str_Status_OverlapsMore">Ол {0} және тағы {1} кездесумен қабаттасады.</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">Өңделіп жатқан кездесудің көшірмесін жасау</sys:String>
     <sys:String x:Key="Str_KS_Nudge">Өңделіп жатқан кездесуді 15 минутқа немесе бір күнге жылжыту</sys:String>
+    <sys:String x:Key="Str_Fld_Meeting">ЖИНАЛЫС</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">Ұйымдастырушы: {0}</sys:String>
+    <sys:String x:Key="Str_Meet_Accepted">қабылдады</sys:String>
+    <sys:String x:Key="Str_Meet_Declined">бас тартты</sys:String>
+    <sys:String x:Key="Str_Meet_Tentative">мүмкін</sys:String>
+    <sys:String x:Key="Str_Meet_NoReply">әлі жауап жоқ</sys:String>
+    <sys:String x:Key="Str_Meet_Delegated">тапсырды</sys:String>
+    <sys:String x:Key="Str_Meet_Join">Жиналысқа қосылу</sys:String>
+    <sys:String x:Key="Str_Meet_Private">Ұйымдастырушы жеке деп белгілеген</sys:String>
+    <sys:String x:Key="Str_Chk_ShowAsFree">Бос деп көрсету</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Әзірге санат жоқ. Оларды бүйір тақтадан қосыңыз.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Санаттар</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

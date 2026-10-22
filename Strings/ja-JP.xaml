@@ -443,6 +443,16 @@
     <sys:String x:Key="Str_Status_OverlapsMore">{0} ほか {1} 件と重なっています。</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">編集中の予定を複製</sys:String>
     <sys:String x:Key="Str_KS_Nudge">編集中の予定を 15 分または 1 日移動</sys:String>
+    <sys:String x:Key="Str_Fld_Meeting">会議</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">主催者: {0}</sys:String>
+    <sys:String x:Key="Str_Meet_Accepted">承諾</sys:String>
+    <sys:String x:Key="Str_Meet_Declined">辞退</sys:String>
+    <sys:String x:Key="Str_Meet_Tentative">仮承諾</sys:String>
+    <sys:String x:Key="Str_Meet_NoReply">未回答</sys:String>
+    <sys:String x:Key="Str_Meet_Delegated">代理</sys:String>
+    <sys:String x:Key="Str_Meet_Join">会議に参加</sys:String>
+    <sys:String x:Key="Str_Meet_Private">主催者が非公開に設定</sys:String>
+    <sys:String x:Key="Str_Chk_ShowAsFree">空き時間として表示</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">カテゴリがまだありません。サイドバーから追加してください。</sys:String>
     <sys:String x:Key="Str_TT_Categories">カテゴリ</sys:String>
     <sys:String x:Key="Str_TT_Density">グリッド密度 - クリックまたはスクロール</sys:String>

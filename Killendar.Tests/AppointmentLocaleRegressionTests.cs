@@ -179,6 +179,8 @@ namespace Killendar.Tests
         public string FieldAttendees { get; set; } = "";
         public string FieldCategories { get; set; } = "";
         public int? FieldReminder { get; set; }
+        public bool FieldShowAsFree { get; set; }
+        public void ShowMeeting(MeetingInfo? meeting) { }
         private string _startDate = "", _startTime = "";
         internal Action? StartChanged;
         public string FieldStartDate

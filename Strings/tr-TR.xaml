@@ -443,6 +443,16 @@
     <sys:String x:Key="Str_Status_OverlapsMore">{0} ve {1} randevu daha ile çakışıyor.</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">Düzenlenen randevuyu çoğalt</sys:String>
     <sys:String x:Key="Str_KS_Nudge">Düzenlenen randevuyu 15 dakika veya bir gün taşı</sys:String>
+    <sys:String x:Key="Str_Fld_Meeting">TOPLANTI</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">Düzenleyen: {0}</sys:String>
+    <sys:String x:Key="Str_Meet_Accepted">kabul etti</sys:String>
+    <sys:String x:Key="Str_Meet_Declined">reddetti</sys:String>
+    <sys:String x:Key="Str_Meet_Tentative">belki</sys:String>
+    <sys:String x:Key="Str_Meet_NoReply">henüz yanıt yok</sys:String>
+    <sys:String x:Key="Str_Meet_Delegated">devretti</sys:String>
+    <sys:String x:Key="Str_Meet_Join">Toplantıya katıl</sys:String>
+    <sys:String x:Key="Str_Meet_Private">Düzenleyen özel olarak işaretledi</sys:String>
+    <sys:String x:Key="Str_Chk_ShowAsFree">Boş olarak göster</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Henüz kategori yok. Kenar çubuğundan ekleyin.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategoriler</sys:String>
     <sys:String x:Key="Str_TT_Density">Izgara yoğunluğu - tıklayın veya kaydırın</sys:String>

@@ -522,6 +522,16 @@
     <sys:String x:Key="Str_Status_OverlapsMore">It overlaps {0} and {1} more.</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">Duplicate the appointment being edited</sys:String>
     <sys:String x:Key="Str_KS_Nudge">Move the appointment being edited by 15 minutes or a day</sys:String>
+    <sys:String x:Key="Str_Fld_Meeting">MEETING</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">Organizer: {0}</sys:String>
+    <sys:String x:Key="Str_Meet_Accepted">accepted</sys:String>
+    <sys:String x:Key="Str_Meet_Declined">declined</sys:String>
+    <sys:String x:Key="Str_Meet_Tentative">maybe</sys:String>
+    <sys:String x:Key="Str_Meet_NoReply">no reply yet</sys:String>
+    <sys:String x:Key="Str_Meet_Delegated">delegated</sys:String>
+    <sys:String x:Key="Str_Meet_Join">Join meeting</sys:String>
+    <sys:String x:Key="Str_Meet_Private">Marked private by the organizer</sys:String>
+    <sys:String x:Key="Str_Chk_ShowAsFree">Show as free</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">No categories yet. Add some from the sidebar rail.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categories</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads

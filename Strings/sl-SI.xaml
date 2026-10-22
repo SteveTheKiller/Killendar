@@ -450,6 +450,16 @@ Killendar se bo ponovno zagnal z namestitvenega mesta.</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">Prekriva se z dogodkom {0} in še {1}.</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">Podvoji urejani dogodek</sys:String>
     <sys:String x:Key="Str_KS_Nudge">Premakni urejani dogodek za 15 minut ali dan</sys:String>
+    <sys:String x:Key="Str_Fld_Meeting">SESTANEK</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">Organizator: {0}</sys:String>
+    <sys:String x:Key="Str_Meet_Accepted">sprejel(a)</sys:String>
+    <sys:String x:Key="Str_Meet_Declined">zavrnil(a)</sys:String>
+    <sys:String x:Key="Str_Meet_Tentative">morda</sys:String>
+    <sys:String x:Key="Str_Meet_NoReply">še brez odgovora</sys:String>
+    <sys:String x:Key="Str_Meet_Delegated">dodelil(a)</sys:String>
+    <sys:String x:Key="Str_Meet_Join">Pridruži se sestanku</sys:String>
+    <sys:String x:Key="Str_Meet_Private">Organizator ga je označil kot zasebnega</sys:String>
+    <sys:String x:Key="Str_Chk_ShowAsFree">Prikaži kot prosto</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Kategorij še ni. Dodaj jih prek stranske vrstice.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorije</sys:String>
     <sys:String x:Key="Str_TT_Density">Gostota mreže. Klikni ali zavrti kolešček</sys:String>

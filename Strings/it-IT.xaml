@@ -478,6 +478,16 @@
     <sys:String x:Key="Str_Status_OverlapsMore">Si sovrappone a {0} e ad altri {1}.</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">Duplica l’appuntamento in modifica</sys:String>
     <sys:String x:Key="Str_KS_Nudge">Sposta l’appuntamento in modifica di 15 minuti o di un giorno</sys:String>
+    <sys:String x:Key="Str_Fld_Meeting">RIUNIONE</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">Organizzatore: {0}</sys:String>
+    <sys:String x:Key="Str_Meet_Accepted">ha accettato</sys:String>
+    <sys:String x:Key="Str_Meet_Declined">ha rifiutato</sys:String>
+    <sys:String x:Key="Str_Meet_Tentative">forse</sys:String>
+    <sys:String x:Key="Str_Meet_NoReply">nessuna risposta</sys:String>
+    <sys:String x:Key="Str_Meet_Delegated">ha delegato</sys:String>
+    <sys:String x:Key="Str_Meet_Join">Partecipa alla riunione</sys:String>
+    <sys:String x:Key="Str_Meet_Private">Segnata come privata dall’organizzatore</sys:String>
+    <sys:String x:Key="Str_Chk_ShowAsFree">Mostra come libero</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Ancora nessuna categoria. Aggiungile dalla barra laterale.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categorie</sys:String>
     <sys:String x:Key="Str_TT_Density">Densità della griglia - clic o rotellina</sys:String>

@@ -443,6 +443,16 @@
     <sys:String x:Key="Str_Status_OverlapsMore">Il chevauche {0} et {1} autres.</sys:String>
     <sys:String x:Key="Str_KS_Duplicate">Dupliquer le rendez-vous en cours de modification</sys:String>
     <sys:String x:Key="Str_KS_Nudge">Déplacer le rendez-vous en cours de 15 minutes ou d’un jour</sys:String>
+    <sys:String x:Key="Str_Fld_Meeting">RÉUNION</sys:String>
+    <sys:String x:Key="Str_Meet_Organizer">Organisateur : {0}</sys:String>
+    <sys:String x:Key="Str_Meet_Accepted">a accepté</sys:String>
+    <sys:String x:Key="Str_Meet_Declined">a refusé</sys:String>
+    <sys:String x:Key="Str_Meet_Tentative">peut-être</sys:String>
+    <sys:String x:Key="Str_Meet_NoReply">pas encore de réponse</sys:String>
+    <sys:String x:Key="Str_Meet_Delegated">a délégué</sys:String>
+    <sys:String x:Key="Str_Meet_Join">Rejoindre la réunion</sys:String>
+    <sys:String x:Key="Str_Meet_Private">Marquée comme privée par l’organisateur</sys:String>
+    <sys:String x:Key="Str_Chk_ShowAsFree">Afficher comme disponible</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Aucune catégorie pour l'instant. Ajoutez-en depuis la barre latérale.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Catégories</sys:String>
     <sys:String x:Key="Str_TT_Density">Densité de la grille - clic ou molette</sys:String>
