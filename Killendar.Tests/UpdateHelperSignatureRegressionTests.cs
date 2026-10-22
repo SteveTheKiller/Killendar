@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Killendar.Services;
 using Xunit;
@@ -115,10 +113,10 @@ namespace Killendar.Tests
             internal HelperResult Run(string mode = "reject-download")
             {
                 UpdateImagePublication.RememberVerified(Download, Hash(CandidateBytes));
-                string command = UpdateImagePublication.Command(Download, Target, false,
+                string script = UpdateImagePublication.Script(Download, Target, false,
                     "https://example.invalid/releases", "Killendar component fixture");
                 string artifact = Path.Combine(Root, "generated.ps1");
-                File.WriteAllText(artifact, DecodeArtifact(command), Encoding.UTF8);
+                File.WriteAllText(artifact, script, Encoding.UTF8);
                 string runner = Path.Combine(Root, "fixture.ps1");
                 File.WriteAllText(runner, Runner, Encoding.UTF8);
 
@@ -206,16 +204,6 @@ namespace Killendar.Tests
                     Console.Error.WriteLine("Fixture cleanup did not finish. Scratch retained: " + Root
                         + Environment.NewLine + exception);
                 }
-            }
-
-            private static string DecodeArtifact(string command)
-            {
-                var match = Regex.Match(command, @"FromBase64String\('([A-Za-z0-9+/=]+)'\)");
-                Assert.True(match.Success, "The emitted helper command did not contain its compressed artifact.");
-                using var bytes = new MemoryStream(Convert.FromBase64String(match.Groups[1].Value));
-                using var gzip = new GZipStream(bytes, CompressionMode.Decompress);
-                using var reader = new StreamReader(gzip, Encoding.UTF8);
-                return reader.ReadToEnd();
             }
 
             private static string Hash(byte[] bytes)
