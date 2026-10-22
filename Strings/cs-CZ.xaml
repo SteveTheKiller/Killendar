@@ -429,6 +429,20 @@
     <sys:String x:Key="Str_Rem_Open">Otevřít Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">Počet připomenutí: {0}. Odemkněte Killendar a zobrazte je.</sys:String>
     <sys:String x:Key="Str_Rem_More">a {0} další</sys:String>
+    <sys:String x:Key="Str_TT_Duplicate">Duplikovat (Ctrl+D)</sys:String>
+    <sys:String x:Key="Str_Status_Duplicated">Toto je kopie. Upravte, co potřebujete, a uložte.</sys:String>
+    <sys:String x:Key="Str_TT_Templates">Šablony</sys:String>
+    <sys:String x:Key="Str_Tpl_Save">Uložit jako šablonu</sys:String>
+    <sys:String x:Key="Str_Tpl_None">Zatím žádné šablony</sys:String>
+    <sys:String x:Key="Str_Tpl_Delete">Smazat šablonu</sys:String>
+    <sys:String x:Key="Str_Tpl_NewFrom">Nová ze šablony</sys:String>
+    <sys:String x:Key="Str_Status_TplSaved">Šablona {0} uložena</sys:String>
+    <sys:String x:Key="Str_Status_TplDeleted">Šablona {0} smazána</sys:String>
+    <sys:String x:Key="Str_Tpl_NeedsTitle">Pro pojmenování šablony zadejte název schůzky.</sys:String>
+    <sys:String x:Key="Str_Status_Overlaps">Překrývá se se schůzkou {0}.</sys:String>
+    <sys:String x:Key="Str_Status_OverlapsMore">Překrývá se se schůzkou {0} a {1} dalšími.</sys:String>
+    <sys:String x:Key="Str_KS_Duplicate">Duplikovat upravovanou schůzku</sys:String>
+    <sys:String x:Key="Str_KS_Nudge">Posunout upravovanou schůzku o 15 minut nebo o den</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Zatím žádné kategorie. Přidejte je z postranního panelu.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorie</sys:String>
     <sys:String x:Key="Str_TT_Density">Hustota mřížky - klik nebo kolečko</sys:String>
@@ -532,4 +546,8 @@
     <sys:String x:Key="Str_Dlg_InvalidPath">Zadejte platný název souboru nebo cestu.</sys:String>
     <sys:String x:Key="Str_Exp_ForeverRange">Nekonečné řady se exportují pouze v tomto rozsahu: {0} až {1}.</sys:String>
     <sys:String x:Key="Str_Exp_RangeRequired">Export celého kalendáře podporuje až {0} opakovaných událostí. Vyberte rozsah dat.</sys:String>
+    <sys:String x:Key="Str_Color_Red">Červená</sys:String>
+    <sys:String x:Key="Str_Color_Green">Zelená</sys:String>
+    <sys:String x:Key="Str_Color_Blue">Modrá</sys:String>
+    <sys:String x:Key="Str_Color_Hex">Barva v šestnáctkovém zápisu</sys:String>
 </ResourceDictionary>

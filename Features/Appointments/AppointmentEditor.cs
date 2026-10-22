@@ -86,15 +86,17 @@ namespace Killendar.Features
             string.Join(",", _view.FieldRepeatDays ?? []), _view.FieldRepeatCount,
             _view.FieldRepeatUntil?.Ticks, _view.EditWholeSeries);
 
-        internal void NewAt(DateTime when)
+        /// <summary>Opens the panel on a new appointment at <paramref name="when"/>. False when the
+        /// user chose to keep editing a draft instead.</summary>
+        internal bool NewAt(DateTime when)
         {
-            if (!ConfirmReplace()) return;
+            if (!ConfirmReplace()) return false;
             if (when.Ticks > DateTime.MaxValue.Ticks - TimeSpan.TicksPerHour)
             {
                 var message = _view.Loc("Str_Err_DateRange");
                 _view.ShowError(message);
                 _view.SetStatus(message);
-                return;
+                return false;
             }
             _loading = true;
             _timeCulture = CultureInfo.CurrentCulture;
@@ -124,6 +126,7 @@ namespace Killendar.Features
 
             Show();
             _view.Focus(AppointmentField.Title);
+            return true;
         }
 
         internal void Load(CalendarEvent ev)
@@ -523,7 +526,7 @@ namespace Killendar.Features
                 ApplyRepeatFromPanel(ev);
                 _store.Add(ev);
                 if (_store.LoadError != null) { _view.ShowError(_store.LoadError); return; }
-                _view.SetStatus(string.Format(_view.Loc("Str_Status_Added"), ev.Title));
+                _view.SetStatus(WithOverlaps(string.Format(_view.Loc("Str_Status_Added"), ev.Title), ev));
             }
             else
             {
@@ -567,11 +570,118 @@ namespace Killendar.Features
                 }
 
                 if (_store.LoadError != null) { _view.ShowError(_store.LoadError); return; }
-                _view.SetStatus(string.Format(_view.Loc("Str_Status_Saved"), _editing.Title));
+                _view.SetStatus(WithOverlaps(string.Format(_view.Loc("Str_Status_Saved"), _editing.Title), _editing));
             }
 
             _baseline = null;   // saved: nothing left to lose
             _view.ClosePanel();
+        }
+
+        /// <summary>A saved appointment that shares busy time with others says so, and is saved
+        /// anyway: overlapping on purpose is normal.</summary>
+        private string WithOverlaps(string status, CalendarEvent saved)
+        {
+            var overlaps = _store.Overlapping(saved);
+            if (overlaps.Count == 0) return status;
+            string first = string.IsNullOrWhiteSpace(overlaps[0].Title) ? _view.Loc("Str_Cal_NoTitle") : overlaps[0].Title;
+            return status + " " + (overlaps.Count == 1
+                ? string.Format(_view.Loc("Str_Status_Overlaps"), first)
+                : string.Format(_view.Loc("Str_Status_OverlapsMore"), first, overlaps.Count - 1));
+        }
+
+        /// <summary>
+        /// Turns the appointment being edited into a new one with the same details, ready to
+        /// change and save. The copy is new: no imported UID, no organizer's meeting lines, so
+        /// other calendars do not take it for the original.
+        /// </summary>
+        internal void Duplicate()
+        {
+            if (_editing == null) return;
+            _editing = null;
+            _nominalEnd = null;
+            _view.Heading = _view.Loc("Str_Side_New");
+            _view.CanDelete = false;
+            _view.SeriesScopeVisible = false;
+            _view.RepeatSectionVisible = true;
+            _baseline = "";   // a copy nobody has saved yet is unsaved input
+            _view.SetStatus(_view.Loc("Str_Status_Duplicated"));
+            _view.Focus(AppointmentField.Title);
+        }
+
+        /// <summary>Saves the panel's details as a template named by the title. False, with the
+        /// reason shown, when the title or times cannot be read.</summary>
+        internal bool SaveTemplate()
+        {
+            string title = _view.FieldTitle.Trim();
+            if (title.Length == 0) { Reject("Str_Tpl_NeedsTitle", AppointmentField.Title); return false; }
+            if (CurrentStart() is not DateTime start) { RejectWithHint("Str_Err_StartDate", AppointmentField.StartDate); return false; }
+            var end = start.AddHours(1);
+            if (_allDay) end = start.AddDays(1);
+            else if (TryParseDate(_view.FieldEndDate, out var endDate) && TryParseTime(_view.FieldEndTime, out var endTime) &&
+                     endDate.Date + endTime > start)
+                end = endDate.Date + endTime;
+            _store.SaveTemplate(new CalendarEvent
+            {
+                Title = title, Location = _view.FieldLocation.Trim(), Description = _view.FieldDescription.Trim(),
+                Categories = EventStore.NormalizeCategories(_view.FieldCategories), ReminderMinutes = _view.FieldReminder,
+                AllDay = _allDay, Start = start, End = end,
+            });
+            _view.SetStatus(string.Format(_view.Loc("Str_Status_TplSaved"), title));
+            return true;
+        }
+
+        /// <summary>A new appointment on <paramref name="day"/> from a template: its details, its
+        /// time of day and its length.</summary>
+        internal void NewFromTemplate(CalendarEvent template, DateTime day)
+        {
+            var start = template.AllDay ? day.Date : day.Date + template.Start.TimeOfDay;
+            if (!NewAt(start)) return;   // the draft question was answered Keep editing
+            _loading = true;
+            try
+            {
+                _view.FieldTitle = template.Title;
+                _view.FieldLocation = template.Location;
+                _view.FieldDescription = template.Description;
+                _view.FieldCategories = template.Categories;
+                _view.FieldReminder = template.ReminderMinutes;
+                if (template.AllDay != _allDay) ToggleAllDay();
+                var end = start + (template.End > template.Start ? template.End - template.Start : TimeSpan.FromHours(1));
+                if (template.AllDay) end = start.AddDays(Math.Max(1, (template.End.Date - template.Start.Date).Days)).AddDays(-1);
+                _view.FieldEndDate = DateFormatManager.Format(end);
+                if (!template.AllDay) _view.FieldEndTime = FormatTime(end);
+            }
+            finally { _loading = false; }
+            _followedStart = CurrentStart();
+        }
+
+        /// <summary>
+        /// Moves the appointment being edited by <paramref name="by"/> - start and end together -
+        /// from the keyboard, the alternative to dragging it. Nothing happens while either time
+        /// is half-typed.
+        /// </summary>
+        internal void Nudge(TimeSpan by)
+        {
+            if (CurrentStart() is not DateTime start) return;
+            if (!TryParseDate(_view.FieldEndDate, out var endDate)) return;
+            DateTime end;
+            if (_allDay) end = endDate.Date;
+            else if (TryParseTime(_view.FieldEndTime, out var endTime)) end = endDate.Date + endTime;
+            else return;
+            if (_allDay && by.TotalDays < 1) return;   // an all-day appointment moves by whole days
+            _loading = true;
+            try
+            {
+                _view.FieldStartDate = DateFormatManager.Format(start + by);
+                _view.FieldEndDate = DateFormatManager.Format(end + by);
+                if (!_allDay)
+                {
+                    _view.FieldStartTime = FormatTime(start + by);
+                    _view.FieldEndTime = FormatTime(end + by);
+                }
+            }
+            finally { _loading = false; }
+            _followedStart = CurrentStart();
+            SyncHighlightedSelection();
         }
 
         internal void Delete()

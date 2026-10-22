@@ -510,6 +510,20 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Rem_Open">Killendar megnyitása</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} emlékeztető esedékes. A megtekintéshez oldja fel a Killendart.</sys:String>
     <sys:String x:Key="Str_Rem_More">és még {0}</sys:String>
+    <sys:String x:Key="Str_TT_Duplicate">Másolat (Ctrl+D)</sys:String>
+    <sys:String x:Key="Str_Status_Duplicated">Ez egy másolat. Módosítsa, amit kell, és mentse.</sys:String>
+    <sys:String x:Key="Str_TT_Templates">Sablonok</sys:String>
+    <sys:String x:Key="Str_Tpl_Save">Mentés sablonként</sys:String>
+    <sys:String x:Key="Str_Tpl_None">Még nincs sablon</sys:String>
+    <sys:String x:Key="Str_Tpl_Delete">Sablon törlése</sys:String>
+    <sys:String x:Key="Str_Tpl_NewFrom">Új sablonból</sys:String>
+    <sys:String x:Key="Str_Status_TplSaved">A(z) {0} sablon mentve</sys:String>
+    <sys:String x:Key="Str_Status_TplDeleted">A(z) {0} sablon törölve</sys:String>
+    <sys:String x:Key="Str_Tpl_NeedsTitle">Adjon címet a találkozónak a sablon elnevezéséhez.</sys:String>
+    <sys:String x:Key="Str_Status_Overlaps">Átfedésben van ezzel: {0}.</sys:String>
+    <sys:String x:Key="Str_Status_OverlapsMore">Átfedésben van ezzel: {0} és még {1}.</sys:String>
+    <sys:String x:Key="Str_KS_Duplicate">A szerkesztett találkozó másolása</sys:String>
+    <sys:String x:Key="Str_KS_Nudge">A szerkesztett találkozó áthelyezése 15 perccel vagy egy nappal</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Még nincsenek kategóriák. Adjon hozzá néhányat az oldalsó sínről.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategóriák</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads
@@ -560,4 +574,8 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Dlg_InvalidPath">Adjon meg érvényes fájlnevet vagy elérési utat.</sys:String>
     <sys:String x:Key="Str_Exp_ForeverRange">A végtelen sorozatok csak ebben az időszakban lesznek exportálva: {0} és {1} között.</sys:String>
     <sys:String x:Key="Str_Exp_RangeRequired">A teljes naptár exportálása legfeljebb {0} ismétlődő eseményt támogat. Válasszon dátumtartományt.</sys:String>
+    <sys:String x:Key="Str_Color_Red">Piros</sys:String>
+    <sys:String x:Key="Str_Color_Green">Zöld</sys:String>
+    <sys:String x:Key="Str_Color_Blue">Kék</sys:String>
+    <sys:String x:Key="Str_Color_Hex">Hexadecimális szín</sys:String>
 </ResourceDictionary>

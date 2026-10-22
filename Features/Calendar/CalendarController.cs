@@ -64,7 +64,7 @@ namespace Killendar.Features
                 // Only SlotSelected, the explicit create gesture, still goes straight to the form.
                 v.EventSelected += ev => _host.ShowDayAgenda(ev.Start.Date, ev);
                 v.DaySelected += d => _host.ShowDayAgenda(d, null);
-                v.SlotSelected += _editor.NewAt;
+                v.SlotSelected += at => _editor.NewAt(at);
                 // Ctrl+wheel over a time grid. The shell owns the setting because it is persisted
                 // and shared by Week and Day; Month and Agenda never raise it.
                 v.DensityStepped += _host.StepDensity;

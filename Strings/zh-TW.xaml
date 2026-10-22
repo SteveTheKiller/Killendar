@@ -429,6 +429,20 @@
     <sys:String x:Key="Str_Rem_Open">開啟 Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">有 {0} 則提醒到期。請解鎖 Killendar 查看。</sys:String>
     <sys:String x:Key="Str_Rem_More">另有 {0} 則</sys:String>
+    <sys:String x:Key="Str_TT_Duplicate">複製 (Ctrl+D)</sys:String>
+    <sys:String x:Key="Str_Status_Duplicated">這是副本。修改需要的內容後儲存。</sys:String>
+    <sys:String x:Key="Str_TT_Templates">範本</sys:String>
+    <sys:String x:Key="Str_Tpl_Save">另存為範本</sys:String>
+    <sys:String x:Key="Str_Tpl_None">尚無範本</sys:String>
+    <sys:String x:Key="Str_Tpl_Delete">刪除範本</sys:String>
+    <sys:String x:Key="Str_Tpl_NewFrom">從範本新增</sys:String>
+    <sys:String x:Key="Str_Status_TplSaved">已儲存範本 {0}</sys:String>
+    <sys:String x:Key="Str_Status_TplDeleted">已刪除範本 {0}</sys:String>
+    <sys:String x:Key="Str_Tpl_NeedsTitle">請替約會加上標題作為範本名稱。</sys:String>
+    <sys:String x:Key="Str_Status_Overlaps">與 {0} 時間重疊。</sys:String>
+    <sys:String x:Key="Str_Status_OverlapsMore">與 {0} 及另外 {1} 個約會時間重疊。</sys:String>
+    <sys:String x:Key="Str_KS_Duplicate">複製正在編輯的約會</sys:String>
+    <sys:String x:Key="Str_KS_Nudge">將正在編輯的約會移動 15 分鐘或一天</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">還沒有類別。可從側邊欄新增。</sys:String>
     <sys:String x:Key="Str_TT_Categories">類別</sys:String>
     <sys:String x:Key="Str_TT_Density">格線密度 - 按一下或捲動</sys:String>
@@ -532,4 +546,8 @@
     <sys:String x:Key="Str_Dlg_InvalidPath">請輸入有效的檔案名稱或路徑。</sys:String>
     <sys:String x:Key="Str_Exp_ForeverRange">無限重複的系列僅匯出此範圍內的行程：{0} 至 {1}。</sys:String>
     <sys:String x:Key="Str_Exp_RangeRequired">整個行事曆匯出最多支援 {0} 個重複行程。請選擇日期範圍。</sys:String>
+    <sys:String x:Key="Str_Color_Red">紅色</sys:String>
+    <sys:String x:Key="Str_Color_Green">綠色</sys:String>
+    <sys:String x:Key="Str_Color_Blue">藍色</sys:String>
+    <sys:String x:Key="Str_Color_Hex">十六進位色彩</sys:String>
 </ResourceDictionary>

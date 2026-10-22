@@ -429,6 +429,20 @@
     <sys:String x:Key="Str_Rem_Open">Killendar'ı aç</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} hatırlatıcının zamanı geldi. Görmek için Killendar'ın kilidini açın.</sys:String>
     <sys:String x:Key="Str_Rem_More">ve {0} tane daha</sys:String>
+    <sys:String x:Key="Str_TT_Duplicate">Çoğalt (Ctrl+D)</sys:String>
+    <sys:String x:Key="Str_Status_Duplicated">Bu bir kopya. Gerekeni değiştirip kaydedin.</sys:String>
+    <sys:String x:Key="Str_TT_Templates">Şablonlar</sys:String>
+    <sys:String x:Key="Str_Tpl_Save">Şablon olarak kaydet</sys:String>
+    <sys:String x:Key="Str_Tpl_None">Henüz şablon yok</sys:String>
+    <sys:String x:Key="Str_Tpl_Delete">Şablonu sil</sys:String>
+    <sys:String x:Key="Str_Tpl_NewFrom">Şablondan yeni</sys:String>
+    <sys:String x:Key="Str_Status_TplSaved">{0} şablonu kaydedildi</sys:String>
+    <sys:String x:Key="Str_Status_TplDeleted">{0} şablonu silindi</sys:String>
+    <sys:String x:Key="Str_Tpl_NeedsTitle">Şablona ad vermek için randevuya bir başlık verin.</sys:String>
+    <sys:String x:Key="Str_Status_Overlaps">{0} ile çakışıyor.</sys:String>
+    <sys:String x:Key="Str_Status_OverlapsMore">{0} ve {1} randevu daha ile çakışıyor.</sys:String>
+    <sys:String x:Key="Str_KS_Duplicate">Düzenlenen randevuyu çoğalt</sys:String>
+    <sys:String x:Key="Str_KS_Nudge">Düzenlenen randevuyu 15 dakika veya bir gün taşı</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Henüz kategori yok. Kenar çubuğundan ekleyin.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategoriler</sys:String>
     <sys:String x:Key="Str_TT_Density">Izgara yoğunluğu - tıklayın veya kaydırın</sys:String>
@@ -532,4 +546,8 @@
     <sys:String x:Key="Str_Dlg_InvalidPath">Geçerli bir dosya adı veya yol girin.</sys:String>
     <sys:String x:Key="Str_Exp_ForeverRange">Bitiş tarihi olmayan seriler yalnızca şu aralıkta dışa aktarılır: {0} ile {1}.</sys:String>
     <sys:String x:Key="Str_Exp_RangeRequired">Tüm takvim dışa aktarımı en fazla {0} yinelenen randevuyu destekler. Bir tarih aralığı seçin.</sys:String>
+    <sys:String x:Key="Str_Color_Red">Kırmızı</sys:String>
+    <sys:String x:Key="Str_Color_Green">Yeşil</sys:String>
+    <sys:String x:Key="Str_Color_Blue">Mavi</sys:String>
+    <sys:String x:Key="Str_Color_Hex">Onaltılık renk</sys:String>
 </ResourceDictionary>

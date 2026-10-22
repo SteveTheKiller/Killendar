@@ -429,6 +429,20 @@
     <sys:String x:Key="Str_Rem_Open">Killendar öffnen</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} Erinnerungen sind fällig. Entsperren Sie Killendar, um sie zu sehen.</sys:String>
     <sys:String x:Key="Str_Rem_More">und {0} weitere</sys:String>
+    <sys:String x:Key="Str_TT_Duplicate">Duplizieren (Strg+D)</sys:String>
+    <sys:String x:Key="Str_Status_Duplicated">Das ist eine Kopie. Ändern Sie, was nötig ist, und speichern Sie.</sys:String>
+    <sys:String x:Key="Str_TT_Templates">Vorlagen</sys:String>
+    <sys:String x:Key="Str_Tpl_Save">Als Vorlage speichern</sys:String>
+    <sys:String x:Key="Str_Tpl_None">Noch keine Vorlagen</sys:String>
+    <sys:String x:Key="Str_Tpl_Delete">Vorlage löschen</sys:String>
+    <sys:String x:Key="Str_Tpl_NewFrom">Neu aus Vorlage</sys:String>
+    <sys:String x:Key="Str_Status_TplSaved">Vorlage {0} gespeichert</sys:String>
+    <sys:String x:Key="Str_Status_TplDeleted">Vorlage {0} gelöscht</sys:String>
+    <sys:String x:Key="Str_Tpl_NeedsTitle">Geben Sie dem Termin einen Titel, um die Vorlage zu benennen.</sys:String>
+    <sys:String x:Key="Str_Status_Overlaps">Überschneidet sich mit {0}.</sys:String>
+    <sys:String x:Key="Str_Status_OverlapsMore">Überschneidet sich mit {0} und {1} weiteren.</sys:String>
+    <sys:String x:Key="Str_KS_Duplicate">Den bearbeiteten Termin duplizieren</sys:String>
+    <sys:String x:Key="Str_KS_Nudge">Den bearbeiteten Termin um 15 Minuten oder einen Tag verschieben</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Noch keine Kategorien. Legen Sie welche über die Seitenleiste an.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorien</sys:String>
     <sys:String x:Key="Str_TT_Density">Rasterdichte - klicken oder scrollen</sys:String>
@@ -532,4 +546,8 @@
     <sys:String x:Key="Str_Dlg_InvalidPath">Geben Sie einen gültigen Dateinamen oder Pfad ein.</sys:String>
     <sys:String x:Key="Str_Exp_ForeverRange">Endlose Serien werden nur in diesem Zeitraum exportiert: {0} bis {1}.</sys:String>
     <sys:String x:Key="Str_Exp_RangeRequired">Der Export des gesamten Kalenders unterstützt bis zu {0} wiederkehrende Termine. Wählen Sie einen Datumsbereich.</sys:String>
+    <sys:String x:Key="Str_Color_Red">Rot</sys:String>
+    <sys:String x:Key="Str_Color_Green">Grün</sys:String>
+    <sys:String x:Key="Str_Color_Blue">Blau</sys:String>
+    <sys:String x:Key="Str_Color_Hex">Hex-Farbe</sys:String>
 </ResourceDictionary>

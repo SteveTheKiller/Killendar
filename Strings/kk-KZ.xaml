@@ -508,6 +508,20 @@
     <sys:String x:Key="Str_Rem_Open">Killendar ашу</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} ескерткіш уақыты келді. Көру үшін Killendar құлпын ашыңыз.</sys:String>
     <sys:String x:Key="Str_Rem_More">және тағы {0}</sys:String>
+    <sys:String x:Key="Str_TT_Duplicate">Көшірме (Ctrl+D)</sys:String>
+    <sys:String x:Key="Str_Status_Duplicated">Бұл көшірме. Қажетін өзгертіп, сақтаңыз.</sys:String>
+    <sys:String x:Key="Str_TT_Templates">Үлгілер</sys:String>
+    <sys:String x:Key="Str_Tpl_Save">Үлгі ретінде сақтау</sys:String>
+    <sys:String x:Key="Str_Tpl_None">Әзірге үлгі жоқ</sys:String>
+    <sys:String x:Key="Str_Tpl_Delete">Үлгіні жою</sys:String>
+    <sys:String x:Key="Str_Tpl_NewFrom">Үлгіден жаңа</sys:String>
+    <sys:String x:Key="Str_Status_TplSaved">{0} үлгісі сақталды</sys:String>
+    <sys:String x:Key="Str_Status_TplDeleted">{0} үлгісі жойылды</sys:String>
+    <sys:String x:Key="Str_Tpl_NeedsTitle">Үлгіге ат беру үшін кездесуге тақырып беріңіз.</sys:String>
+    <sys:String x:Key="Str_Status_Overlaps">Ол {0} кездесуімен қабаттасады.</sys:String>
+    <sys:String x:Key="Str_Status_OverlapsMore">Ол {0} және тағы {1} кездесумен қабаттасады.</sys:String>
+    <sys:String x:Key="Str_KS_Duplicate">Өңделіп жатқан кездесудің көшірмесін жасау</sys:String>
+    <sys:String x:Key="Str_KS_Nudge">Өңделіп жатқан кездесуді 15 минутқа немесе бір күнге жылжыту</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Әзірге санат жоқ. Оларды бүйір тақтадан қосыңыз.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Санаттар</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads
@@ -558,4 +572,8 @@
     <sys:String x:Key="Str_Dlg_InvalidPath">Жарамды файл атауын немесе жолын енгізіңіз.</sys:String>
     <sys:String x:Key="Str_Exp_ForeverRange">Аяқталмайтын қайталану қатарлары тек осы аралықта экспортталады: {0} және {1}.</sys:String>
     <sys:String x:Key="Str_Exp_RangeRequired">Бүкіл күнтізбені экспорттау {0} қайталанатын кездесуге дейін қолдайды. Күндер аралығын таңдаңыз.</sys:String>
+    <sys:String x:Key="Str_Color_Red">Қызыл</sys:String>
+    <sys:String x:Key="Str_Color_Green">Жасыл</sys:String>
+    <sys:String x:Key="Str_Color_Blue">Көк</sys:String>
+    <sys:String x:Key="Str_Color_Hex">Он алтылық түс</sys:String>
 </ResourceDictionary>

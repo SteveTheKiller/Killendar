@@ -436,6 +436,20 @@ Killendar se bo ponovno zagnal z namestitvenega mesta.</sys:String>
     <sys:String x:Key="Str_Rem_Open">Odpri Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">Število opomnikov: {0}. Odklenite Killendar, da jih vidite.</sys:String>
     <sys:String x:Key="Str_Rem_More">in še {0}</sys:String>
+    <sys:String x:Key="Str_TT_Duplicate">Podvoji (Ctrl+D)</sys:String>
+    <sys:String x:Key="Str_Status_Duplicated">To je kopija. Spremenite, kar potrebujete, in shranite.</sys:String>
+    <sys:String x:Key="Str_TT_Templates">Predloge</sys:String>
+    <sys:String x:Key="Str_Tpl_Save">Shrani kot predlogo</sys:String>
+    <sys:String x:Key="Str_Tpl_None">Še ni predlog</sys:String>
+    <sys:String x:Key="Str_Tpl_Delete">Izbriši predlogo</sys:String>
+    <sys:String x:Key="Str_Tpl_NewFrom">Nov iz predloge</sys:String>
+    <sys:String x:Key="Str_Status_TplSaved">Predloga {0} je shranjena</sys:String>
+    <sys:String x:Key="Str_Status_TplDeleted">Predloga {0} je izbrisana</sys:String>
+    <sys:String x:Key="Str_Tpl_NeedsTitle">Dogodku dajte naslov, da poimenujete predlogo.</sys:String>
+    <sys:String x:Key="Str_Status_Overlaps">Prekriva se z dogodkom {0}.</sys:String>
+    <sys:String x:Key="Str_Status_OverlapsMore">Prekriva se z dogodkom {0} in še {1}.</sys:String>
+    <sys:String x:Key="Str_KS_Duplicate">Podvoji urejani dogodek</sys:String>
+    <sys:String x:Key="Str_KS_Nudge">Premakni urejani dogodek za 15 minut ali dan</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Kategorij še ni. Dodaj jih prek stranske vrstice.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Kategorije</sys:String>
     <sys:String x:Key="Str_TT_Density">Gostota mreže. Klikni ali zavrti kolešček</sys:String>
@@ -481,4 +495,8 @@ Killendar se bo ponovno zagnal z namestitvenega mesta.</sys:String>
     <sys:String x:Key="Str_Dlg_InvalidPath">Vnesi veljavno ime datoteke ali pot.</sys:String>
     <sys:String x:Key="Str_Exp_ForeverRange">Nizi brez konca se izvozijo samo v tem obsegu: od {0} do {1}.</sys:String>
     <sys:String x:Key="Str_Exp_RangeRequired">Izvoz celotnega koledarja podpira največ {0} ponavljajočih se dogodkov. Izberi datumski obseg.</sys:String>
+    <sys:String x:Key="Str_Color_Red">Rdeča</sys:String>
+    <sys:String x:Key="Str_Color_Green">Zelena</sys:String>
+    <sys:String x:Key="Str_Color_Blue">Modra</sys:String>
+    <sys:String x:Key="Str_Color_Hex">Šestnajstiška barva</sys:String>
 </ResourceDictionary>

@@ -26,7 +26,11 @@ namespace Killendar.Shell
 
         bool IAppointmentView.CanDelete
         {
-            set => DeleteAppointmentBtn.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+            set
+            {
+                DeleteAppointmentBtn.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+                DuplicateAppointmentBtn.Visibility = DeleteAppointmentBtn.Visibility;   // both need a saved appointment
+            }
         }
 
         string IAppointmentView.DateHint

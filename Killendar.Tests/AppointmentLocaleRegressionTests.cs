@@ -163,7 +163,8 @@ namespace Killendar.Tests
         public string? Error { get; private set; }
         public bool Closed { get; private set; }
         public string Loc(string key) => key;
-        public void SetStatus(string text) { }
+        internal string LastStatus = "";
+        public void SetStatus(string text) => LastStatus = text;
         internal bool DiscardAnswer = true;
         internal DraftChoice? DraftAnswer;
         internal int DiscardQuestions;

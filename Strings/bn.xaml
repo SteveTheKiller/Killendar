@@ -429,6 +429,20 @@
     <sys:String x:Key="Str_Rem_Open">Killendar খুলুন</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0}টি রিমাইন্ডারের সময় হয়েছে। দেখতে Killendar আনলক করুন।</sys:String>
     <sys:String x:Key="Str_Rem_More">আরও {0}টি</sys:String>
+    <sys:String x:Key="Str_TT_Duplicate">অনুলিপি (Ctrl+D)</sys:String>
+    <sys:String x:Key="Str_Status_Duplicated">এটি একটি অনুলিপি। যা দরকার বদলে সংরক্ষণ করুন।</sys:String>
+    <sys:String x:Key="Str_TT_Templates">টেমপ্লেট</sys:String>
+    <sys:String x:Key="Str_Tpl_Save">টেমপ্লেট হিসেবে সংরক্ষণ</sys:String>
+    <sys:String x:Key="Str_Tpl_None">এখনও কোনো টেমপ্লেট নেই</sys:String>
+    <sys:String x:Key="Str_Tpl_Delete">টেমপ্লেট মুছুন</sys:String>
+    <sys:String x:Key="Str_Tpl_NewFrom">টেমপ্লেট থেকে নতুন</sys:String>
+    <sys:String x:Key="Str_Status_TplSaved">টেমপ্লেট {0} সংরক্ষিত হয়েছে</sys:String>
+    <sys:String x:Key="Str_Status_TplDeleted">টেমপ্লেট {0} মুছে ফেলা হয়েছে</sys:String>
+    <sys:String x:Key="Str_Tpl_NeedsTitle">টেমপ্লেটের নাম দিতে অ্যাপয়েন্টমেন্টের একটি শিরোনাম দিন।</sys:String>
+    <sys:String x:Key="Str_Status_Overlaps">এটি {0}-এর সাথে মিলে যায়।</sys:String>
+    <sys:String x:Key="Str_Status_OverlapsMore">এটি {0} ও আরও {1}টির সাথে মিলে যায়।</sys:String>
+    <sys:String x:Key="Str_KS_Duplicate">সম্পাদনাধীন অ্যাপয়েন্টমেন্টের অনুলিপি করুন</sys:String>
+    <sys:String x:Key="Str_KS_Nudge">সম্পাদনাধীন অ্যাপয়েন্টমেন্ট ১৫ মিনিট বা এক দিন সরান</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">এখনও কোনো বিভাগ নেই। সাইডবার থেকে যোগ করুন।</sys:String>
     <sys:String x:Key="Str_TT_Categories">বিভাগ</sys:String>
     <sys:String x:Key="Str_TT_Density">গ্রিড ঘনত্ব - ক্লিক বা স্ক্রল</sys:String>
@@ -532,4 +546,8 @@
     <sys:String x:Key="Str_Dlg_InvalidPath">একটি বৈধ ফাইলের নাম বা পথ লিখুন।</sys:String>
     <sys:String x:Key="Str_Exp_ForeverRange">অন্তহীন পুনরাবৃত্তির ধারাগুলি শুধু এই সীমার মধ্যে রপ্তানি করা হবে: {0} থেকে {1}।</sys:String>
     <sys:String x:Key="Str_Exp_RangeRequired">সম্পূর্ণ ক্যালেন্ডার রপ্তানিতে সর্বোচ্চ {0}টি পুনরাবৃত্ত সাক্ষাৎ সমর্থিত। একটি তারিখের সীমা বেছে নিন।</sys:String>
+    <sys:String x:Key="Str_Color_Red">লাল</sys:String>
+    <sys:String x:Key="Str_Color_Green">সবুজ</sys:String>
+    <sys:String x:Key="Str_Color_Blue">নীল</sys:String>
+    <sys:String x:Key="Str_Color_Hex">হেক্স রং</sys:String>
 </ResourceDictionary>

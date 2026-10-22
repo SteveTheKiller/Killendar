@@ -66,6 +66,11 @@ CREATE TABLE IF NOT EXISTS deleted (
     start_utc   TEXT NOT NULL DEFAULT '',
     rows        TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS templates (
+    name        TEXT PRIMARY KEY,
+    json        TEXT NOT NULL,
+    updated_utc TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS reminder_state (
     event_id     TEXT NOT NULL,
     occurrence   TEXT NOT NULL,

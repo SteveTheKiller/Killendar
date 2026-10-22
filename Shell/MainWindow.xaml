@@ -720,11 +720,23 @@
                                          E74D, the trash can - NOT E711, which is the Cancel X and
                                          read as "close" here. E74D is the delete glyph Killendar's
                                          CategoriesDialog and KillerNotes' menus already ship. -->
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                                     <Button x:Name="DeleteAppointmentBtn" Content="&#xE74D;" Click="DeleteAppointment_Click"
                                             Style="{StaticResource RailButton}" FontFamily="Segoe MDL2 Assets" FontSize="14"
                                             ToolTip="{DynamicResource Str_Btn_Delete}"
-                                            HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"
+                                            VerticalAlignment="Center" Visibility="Collapsed"
                                             Foreground="{DynamicResource DangerRed}"/>
+                                    <!-- E8C8 Copy, E8A5 Document. Duplicate shows only for a saved appointment
+                                         (IAppointmentView.CanDelete); templates are always offered. -->
+                                    <Button x:Name="DuplicateAppointmentBtn" Content="&#xE8C8;" Click="DuplicateAppointment_Click"
+                                            Style="{StaticResource RailButton}" FontFamily="Segoe MDL2 Assets" FontSize="14"
+                                            ToolTip="{DynamicResource Str_TT_Duplicate}" Margin="6,0,0,0"
+                                            VerticalAlignment="Center" Visibility="Collapsed"/>
+                                    <Button x:Name="TemplatesBtn" Content="&#xE8A5;" Click="TemplatesBtn_Click"
+                                            Style="{StaticResource RailButton}" FontFamily="Segoe MDL2 Assets" FontSize="14"
+                                            ToolTip="{DynamicResource Str_TT_Templates}" Margin="6,0,0,0"
+                                            VerticalAlignment="Center"/>
+                                    </StackPanel>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Button Content="{DynamicResource Str_Btn_Cancel}" Click="SidebarClose_Click"
                                                 Style="{StaticResource SurfaceButton}" Padding="12,5" Margin="0,0,6,0"/>

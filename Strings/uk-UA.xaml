@@ -508,6 +508,20 @@
     <sys:String x:Key="Str_Rem_Open">Відкрити Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">Нагадувань: {0}. Розблокуйте Killendar, щоб їх побачити.</sys:String>
     <sys:String x:Key="Str_Rem_More">і ще {0}</sys:String>
+    <sys:String x:Key="Str_TT_Duplicate">Дублювати (Ctrl+D)</sys:String>
+    <sys:String x:Key="Str_Status_Duplicated">Це копія. Змініть потрібне й збережіть.</sys:String>
+    <sys:String x:Key="Str_TT_Templates">Шаблони</sys:String>
+    <sys:String x:Key="Str_Tpl_Save">Зберегти як шаблон</sys:String>
+    <sys:String x:Key="Str_Tpl_None">Шаблонів ще немає</sys:String>
+    <sys:String x:Key="Str_Tpl_Delete">Видалити шаблон</sys:String>
+    <sys:String x:Key="Str_Tpl_NewFrom">Створити з шаблону</sys:String>
+    <sys:String x:Key="Str_Status_TplSaved">Шаблон {0} збережено</sys:String>
+    <sys:String x:Key="Str_Status_TplDeleted">Шаблон {0} видалено</sys:String>
+    <sys:String x:Key="Str_Tpl_NeedsTitle">Дайте зустрічі назву, щоб назвати шаблон.</sys:String>
+    <sys:String x:Key="Str_Status_Overlaps">Перетинається з «{0}».</sys:String>
+    <sys:String x:Key="Str_Status_OverlapsMore">Перетинається з «{0}» та ще {1}.</sys:String>
+    <sys:String x:Key="Str_KS_Duplicate">Дублювати зустріч, що редагується</sys:String>
+    <sys:String x:Key="Str_KS_Nudge">Зсунути зустріч, що редагується, на 15 хвилин або день</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Категорій ще немає. Додайте їх на бічній панелі.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Категорії</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads
@@ -558,4 +572,8 @@
     <sys:String x:Key="Str_Dlg_InvalidPath">Введіть припустиме ім’я файлу або шлях.</sys:String>
     <sys:String x:Key="Str_Exp_ForeverRange">Нескінченні серії експортуються лише за цей період: від {0} до {1}.</sys:String>
     <sys:String x:Key="Str_Exp_RangeRequired">Експорт усього календаря підтримує до {0} повторюваних зустрічей. Виберіть діапазон дат.</sys:String>
+    <sys:String x:Key="Str_Color_Red">Червоний</sys:String>
+    <sys:String x:Key="Str_Color_Green">Зелений</sys:String>
+    <sys:String x:Key="Str_Color_Blue">Синій</sys:String>
+    <sys:String x:Key="Str_Color_Hex">Шістнадцятковий колір</sys:String>
 </ResourceDictionary>

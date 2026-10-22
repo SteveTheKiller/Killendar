@@ -464,6 +464,20 @@
     <sys:String x:Key="Str_Rem_Open">Apri Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} promemoria in scadenza. Sblocca Killendar per vederli.</sys:String>
     <sys:String x:Key="Str_Rem_More">e altri {0}</sys:String>
+    <sys:String x:Key="Str_TT_Duplicate">Duplica (Ctrl+D)</sys:String>
+    <sys:String x:Key="Str_Status_Duplicated">Questa è una copia. Modifica ciò che serve e salva.</sys:String>
+    <sys:String x:Key="Str_TT_Templates">Modelli</sys:String>
+    <sys:String x:Key="Str_Tpl_Save">Salva come modello</sys:String>
+    <sys:String x:Key="Str_Tpl_None">Ancora nessun modello</sys:String>
+    <sys:String x:Key="Str_Tpl_Delete">Elimina modello</sys:String>
+    <sys:String x:Key="Str_Tpl_NewFrom">Nuovo da modello</sys:String>
+    <sys:String x:Key="Str_Status_TplSaved">Modello {0} salvato</sys:String>
+    <sys:String x:Key="Str_Status_TplDeleted">Modello {0} eliminato</sys:String>
+    <sys:String x:Key="Str_Tpl_NeedsTitle">Dai un titolo all’appuntamento per nominare il modello.</sys:String>
+    <sys:String x:Key="Str_Status_Overlaps">Si sovrappone a {0}.</sys:String>
+    <sys:String x:Key="Str_Status_OverlapsMore">Si sovrappone a {0} e ad altri {1}.</sys:String>
+    <sys:String x:Key="Str_KS_Duplicate">Duplica l’appuntamento in modifica</sys:String>
+    <sys:String x:Key="Str_KS_Nudge">Sposta l’appuntamento in modifica di 15 minuti o di un giorno</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Ancora nessuna categoria. Aggiungile dalla barra laterale.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categorie</sys:String>
     <sys:String x:Key="Str_TT_Density">Densità della griglia - clic o rotellina</sys:String>
@@ -511,4 +525,8 @@
     <sys:String x:Key="Str_Dlg_InvalidPath">Inserisci un nome file o un percorso valido.</sys:String>
     <sys:String x:Key="Str_Exp_ForeverRange">Le serie senza fine vengono esportate solo in questo intervallo: dal {0} al {1}.</sys:String>
     <sys:String x:Key="Str_Exp_RangeRequired">L'esportazione dell'intero calendario supporta fino a {0} appuntamenti ricorrenti. Scegli un intervallo di date.</sys:String>
+    <sys:String x:Key="Str_Color_Red">Rosso</sys:String>
+    <sys:String x:Key="Str_Color_Green">Verde</sys:String>
+    <sys:String x:Key="Str_Color_Blue">Blu</sys:String>
+    <sys:String x:Key="Str_Color_Hex">Colore esadecimale</sys:String>
 </ResourceDictionary>

@@ -86,6 +86,27 @@ namespace Killendar.Shell
                 e.Handled = true;
                 return;
             }
+            if (editingAppointment && ctrlShortcut && !shift && e.Key == Key.D && DuplicateAppointmentBtn.Visibility == Visibility.Visible)
+            {
+                _appointments.Duplicate();
+                e.Handled = true;
+                return;
+            }
+            // Alt+arrows move the appointment being edited: 15 minutes up or down, a day left or
+            // right - the keyboard's way to do what dragging does.
+            if (editingAppointment && alt && !shift && !ctrl &&
+                e.SystemKey is Key.Up or Key.Down or Key.Left or Key.Right)
+            {
+                _appointments.Nudge(e.SystemKey switch
+                {
+                    Key.Up => TimeSpan.FromMinutes(-15),
+                    Key.Down => TimeSpan.FromMinutes(15),
+                    Key.Left => TimeSpan.FromDays(-1),
+                    _ => TimeSpan.FromDays(1),
+                });
+                e.Handled = true;
+                return;
+            }
             if (editingAppointment && alt && e.SystemKey == Key.A)
             {
                 AllDayToggle.IsChecked = !AllDayToggle.IsChecked;

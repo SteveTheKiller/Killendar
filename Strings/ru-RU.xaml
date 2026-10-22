@@ -509,6 +509,20 @@
     <sys:String x:Key="Str_Rem_Open">Открыть Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">Напоминаний: {0}. Разблокируйте Killendar, чтобы их увидеть.</sys:String>
     <sys:String x:Key="Str_Rem_More">и ещё {0}</sys:String>
+    <sys:String x:Key="Str_TT_Duplicate">Дублировать (Ctrl+D)</sys:String>
+    <sys:String x:Key="Str_Status_Duplicated">Это копия. Измените нужное и сохраните.</sys:String>
+    <sys:String x:Key="Str_TT_Templates">Шаблоны</sys:String>
+    <sys:String x:Key="Str_Tpl_Save">Сохранить как шаблон</sys:String>
+    <sys:String x:Key="Str_Tpl_None">Шаблонов пока нет</sys:String>
+    <sys:String x:Key="Str_Tpl_Delete">Удалить шаблон</sys:String>
+    <sys:String x:Key="Str_Tpl_NewFrom">Создать из шаблона</sys:String>
+    <sys:String x:Key="Str_Status_TplSaved">Шаблон {0} сохранён</sys:String>
+    <sys:String x:Key="Str_Status_TplDeleted">Шаблон {0} удалён</sys:String>
+    <sys:String x:Key="Str_Tpl_NeedsTitle">Задайте встрече название, чтобы назвать шаблон.</sys:String>
+    <sys:String x:Key="Str_Status_Overlaps">Пересекается с «{0}».</sys:String>
+    <sys:String x:Key="Str_Status_OverlapsMore">Пересекается с «{0}» и ещё {1}.</sys:String>
+    <sys:String x:Key="Str_KS_Duplicate">Дублировать редактируемую встречу</sys:String>
+    <sys:String x:Key="Str_KS_Nudge">Сдвинуть редактируемую встречу на 15 минут или день</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Категорий пока нет. Добавьте их на боковой панели.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Категории</sys:String>
     <!-- Density.cs appends the current lines-per-hour in brackets, so this reads
@@ -559,4 +573,8 @@
     <sys:String x:Key="Str_Dlg_InvalidPath">Введите допустимое имя файла или путь.</sys:String>
     <sys:String x:Key="Str_Exp_ForeverRange">Бесконечные серии экспортируются только за этот период: с {0} по {1}.</sys:String>
     <sys:String x:Key="Str_Exp_RangeRequired">Экспорт всего календаря поддерживает до {0} повторяющихся встреч. Выберите диапазон дат.</sys:String>
+    <sys:String x:Key="Str_Color_Red">Красный</sys:String>
+    <sys:String x:Key="Str_Color_Green">Зелёный</sys:String>
+    <sys:String x:Key="Str_Color_Blue">Синий</sys:String>
+    <sys:String x:Key="Str_Color_Hex">Шестнадцатеричный цвет</sys:String>
 </ResourceDictionary>

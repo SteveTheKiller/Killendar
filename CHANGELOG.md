@@ -8,6 +8,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Fixed
 
+- Screen readers name the color picker's Red, Green, Blue and Hex fields instead of announcing unnamed boxes.
 - Failed exports leave an existing calendar, CSV or HTML file untouched instead of truncating it.
 - Empty days, Week and Day column headers, agenda day headings and empty time slots work from the keyboard and screen readers. Tab reaches them, arrow keys move between days and slots, and Enter opens a day or creates at a slot.
 - The website's screenshot viewer keeps keyboard focus inside it while open, and the website no longer claims import and export have no external dependencies.
@@ -62,6 +63,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Added search (Ctrl+F or the toolbar's Search button) across titles, locations, descriptions, attendees and categories, ignoring case and accents, with Any time, Upcoming and Past filters. It reads the open calendar in memory and writes no index. Typing a date in the same box, or pressing Ctrl+G, goes to that date.
 - Added a choice of agenda length (7, 14, 30, 60, 90, 180 or 365 days) to the date settings menu.
 - Added work days and hours to the date settings menu. The work week runs from the first workday to the last, so Sunday to Thursday works too, and days off and hours outside the working day are shaded in Week and Day; Month shades days off instead of always Saturday and Sunday.
+- Added Duplicate (Ctrl+D) to the appointment panel: the copy is a new appointment, without the original's imported identity or organizer details. Added templates: save an appointment's details (not its attendees or date) under its title from the panel's Templates button, and start one from that button or the New button's right-click. Alt+arrow keys move the appointment being edited by 15 minutes or a day. Saving an appointment that overlaps a busy one says so without stopping the save.
 
 ### Changed
 - Light is shades of gray with nothing white: the background, sidebar and footer are the darkest gray (#cccccc), menus and bars a step lighter, then panes, then fields.

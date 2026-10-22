@@ -429,6 +429,20 @@
     <sys:String x:Key="Str_Rem_Open">Ouvrir Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} rappels sont échus. Déverrouillez Killendar pour les voir.</sys:String>
     <sys:String x:Key="Str_Rem_More">et {0} autres</sys:String>
+    <sys:String x:Key="Str_TT_Duplicate">Dupliquer (Ctrl+D)</sys:String>
+    <sys:String x:Key="Str_Status_Duplicated">Ceci est une copie. Modifiez ce qu’il faut et enregistrez.</sys:String>
+    <sys:String x:Key="Str_TT_Templates">Modèles</sys:String>
+    <sys:String x:Key="Str_Tpl_Save">Enregistrer comme modèle</sys:String>
+    <sys:String x:Key="Str_Tpl_None">Aucun modèle pour l’instant</sys:String>
+    <sys:String x:Key="Str_Tpl_Delete">Supprimer le modèle</sys:String>
+    <sys:String x:Key="Str_Tpl_NewFrom">Nouveau à partir d’un modèle</sys:String>
+    <sys:String x:Key="Str_Status_TplSaved">Modèle {0} enregistré</sys:String>
+    <sys:String x:Key="Str_Status_TplDeleted">Modèle {0} supprimé</sys:String>
+    <sys:String x:Key="Str_Tpl_NeedsTitle">Donnez un titre au rendez-vous pour nommer le modèle.</sys:String>
+    <sys:String x:Key="Str_Status_Overlaps">Il chevauche {0}.</sys:String>
+    <sys:String x:Key="Str_Status_OverlapsMore">Il chevauche {0} et {1} autres.</sys:String>
+    <sys:String x:Key="Str_KS_Duplicate">Dupliquer le rendez-vous en cours de modification</sys:String>
+    <sys:String x:Key="Str_KS_Nudge">Déplacer le rendez-vous en cours de 15 minutes ou d’un jour</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Aucune catégorie pour l'instant. Ajoutez-en depuis la barre latérale.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Catégories</sys:String>
     <sys:String x:Key="Str_TT_Density">Densité de la grille - clic ou molette</sys:String>
@@ -532,4 +546,8 @@
     <sys:String x:Key="Str_Dlg_InvalidPath">Saisissez un nom de fichier ou un chemin valide.</sys:String>
     <sys:String x:Key="Str_Exp_ForeverRange">Les séries sans fin sont exportées uniquement sur cette période : du {0} au {1}.</sys:String>
     <sys:String x:Key="Str_Exp_RangeRequired">L’exportation du calendrier entier prend en charge jusqu’à {0} rendez-vous récurrents. Choisissez une période.</sys:String>
+    <sys:String x:Key="Str_Color_Red">Rouge</sys:String>
+    <sys:String x:Key="Str_Color_Green">Vert</sys:String>
+    <sys:String x:Key="Str_Color_Blue">Bleu</sys:String>
+    <sys:String x:Key="Str_Color_Hex">Couleur hexadécimale</sys:String>
 </ResourceDictionary>

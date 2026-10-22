@@ -72,6 +72,8 @@ namespace Killendar.Shell
             new("Alt+A",    "Str_KS_AllDay",   KsCat.Appt, false, "A"),
             new("Alt+R",    "Str_KS_Repeats",  KsCat.Appt, false, "R"),
             new("Ctrl+Shift+M", "Str_KS_ShrinkAppt", KsCat.Appt, true, "M"),
+            new("Ctrl+D",   "Str_KS_Duplicate", KsCat.Appt, true, "D"),
+            new("Alt+Arrows", "Str_KS_Nudge",  KsCat.Appt, false, "Up", "Down"),
             new("Ctrl+Z",   "Str_KS_Undo",     KsCat.Appt, true,  "Z"),
             new("Ctrl+Y",   "Str_KS_Redo",     KsCat.Appt, true,  "Y"),
 

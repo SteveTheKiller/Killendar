@@ -478,6 +478,20 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Rem_Open">Mở Killendar</sys:String>
   <sys:String x:Key="Str_Rem_Locked">Có {0} lời nhắc đến hạn. Hãy mở khóa Killendar để xem.</sys:String>
   <sys:String x:Key="Str_Rem_More">và {0} lời nhắc khác</sys:String>
+  <sys:String x:Key="Str_TT_Duplicate">Nhân bản (Ctrl+D)</sys:String>
+  <sys:String x:Key="Str_Status_Duplicated">Đây là bản sao. Sửa những gì cần rồi lưu.</sys:String>
+  <sys:String x:Key="Str_TT_Templates">Mẫu</sys:String>
+  <sys:String x:Key="Str_Tpl_Save">Lưu làm mẫu</sys:String>
+  <sys:String x:Key="Str_Tpl_None">Chưa có mẫu nào</sys:String>
+  <sys:String x:Key="Str_Tpl_Delete">Xóa mẫu</sys:String>
+  <sys:String x:Key="Str_Tpl_NewFrom">Mới từ mẫu</sys:String>
+  <sys:String x:Key="Str_Status_TplSaved">Đã lưu mẫu {0}</sys:String>
+  <sys:String x:Key="Str_Status_TplDeleted">Đã xóa mẫu {0}</sys:String>
+  <sys:String x:Key="Str_Tpl_NeedsTitle">Hãy đặt tiêu đề cho cuộc hẹn để đặt tên mẫu.</sys:String>
+  <sys:String x:Key="Str_Status_Overlaps">Trùng giờ với {0}.</sys:String>
+  <sys:String x:Key="Str_Status_OverlapsMore">Trùng giờ với {0} và {1} cuộc hẹn khác.</sys:String>
+  <sys:String x:Key="Str_KS_Duplicate">Nhân bản cuộc hẹn đang sửa</sys:String>
+  <sys:String x:Key="Str_KS_Nudge">Dời cuộc hẹn đang sửa 15 phút hoặc một ngày</sys:String>
   <sys:String x:Key="Str_Hint_NoCategories">Chưa có danh mục nào. Hãy thêm danh mục từ thanh bên.</sys:String>
   <sys:String x:Key="Str_TT_Categories">Danh mục</sys:String>
   <!-- Density.cs appends the current lines-per-hour in brackets, so this reads
@@ -526,4 +540,8 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
     <sys:String x:Key="Str_Dlg_InvalidPath">Nhập tên tệp hoặc đường dẫn hợp lệ.</sys:String>
     <sys:String x:Key="Str_Exp_ForeverRange">Chuỗi lặp vô hạn chỉ được xuất trong khoảng này: từ {0} đến {1}.</sys:String>
     <sys:String x:Key="Str_Exp_RangeRequired">Xuất toàn bộ lịch hỗ trợ tối đa {0} cuộc hẹn lặp lại. Hãy chọn một khoảng ngày.</sys:String>
+    <sys:String x:Key="Str_Color_Red">Đỏ</sys:String>
+    <sys:String x:Key="Str_Color_Green">Xanh lá</sys:String>
+    <sys:String x:Key="Str_Color_Blue">Xanh dương</sys:String>
+    <sys:String x:Key="Str_Color_Hex">Màu hex</sys:String>
 </ResourceDictionary>

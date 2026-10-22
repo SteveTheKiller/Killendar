@@ -429,6 +429,20 @@
     <sys:String x:Key="Str_Rem_Open">Killendar を開く</sys:String>
     <sys:String x:Key="Str_Rem_Locked">{0} 件のリマインダーがあります。表示するには Killendar のロックを解除してください。</sys:String>
     <sys:String x:Key="Str_Rem_More">ほか {0} 件</sys:String>
+    <sys:String x:Key="Str_TT_Duplicate">複製 (Ctrl+D)</sys:String>
+    <sys:String x:Key="Str_Status_Duplicated">これはコピーです。必要な箇所を変えて保存してください。</sys:String>
+    <sys:String x:Key="Str_TT_Templates">テンプレート</sys:String>
+    <sys:String x:Key="Str_Tpl_Save">テンプレートとして保存</sys:String>
+    <sys:String x:Key="Str_Tpl_None">テンプレートはまだありません</sys:String>
+    <sys:String x:Key="Str_Tpl_Delete">テンプレートを削除</sys:String>
+    <sys:String x:Key="Str_Tpl_NewFrom">テンプレートから新規</sys:String>
+    <sys:String x:Key="Str_Status_TplSaved">テンプレート {0} を保存しました</sys:String>
+    <sys:String x:Key="Str_Status_TplDeleted">テンプレート {0} を削除しました</sys:String>
+    <sys:String x:Key="Str_Tpl_NeedsTitle">テンプレート名にするため予定にタイトルを付けてください。</sys:String>
+    <sys:String x:Key="Str_Status_Overlaps">{0} と重なっています。</sys:String>
+    <sys:String x:Key="Str_Status_OverlapsMore">{0} ほか {1} 件と重なっています。</sys:String>
+    <sys:String x:Key="Str_KS_Duplicate">編集中の予定を複製</sys:String>
+    <sys:String x:Key="Str_KS_Nudge">編集中の予定を 15 分または 1 日移動</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">カテゴリがまだありません。サイドバーから追加してください。</sys:String>
     <sys:String x:Key="Str_TT_Categories">カテゴリ</sys:String>
     <sys:String x:Key="Str_TT_Density">グリッド密度 - クリックまたはスクロール</sys:String>
@@ -532,4 +546,8 @@
     <sys:String x:Key="Str_Dlg_InvalidPath">有効なファイル名またはパスを入力してください。</sys:String>
     <sys:String x:Key="Str_Exp_ForeverRange">無期限の繰り返し予定は、{0}から{1}までの範囲のみエクスポートされます。</sys:String>
     <sys:String x:Key="Str_Exp_RangeRequired">カレンダー全体のエクスポートでは、最大{0}件の繰り返し予定を扱えます。日付範囲を選択してください。</sys:String>
+    <sys:String x:Key="Str_Color_Red">赤</sys:String>
+    <sys:String x:Key="Str_Color_Green">緑</sys:String>
+    <sys:String x:Key="Str_Color_Blue">青</sys:String>
+    <sys:String x:Key="Str_Color_Hex">16 進カラー</sys:String>
 </ResourceDictionary>

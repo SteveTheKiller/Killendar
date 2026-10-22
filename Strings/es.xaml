@@ -429,6 +429,20 @@
     <sys:String x:Key="Str_Rem_Open">Abrir Killendar</sys:String>
     <sys:String x:Key="Str_Rem_Locked">Hay {0} recordatorios pendientes. Desbloquea Killendar para verlos.</sys:String>
     <sys:String x:Key="Str_Rem_More">y {0} más</sys:String>
+    <sys:String x:Key="Str_TT_Duplicate">Duplicar (Ctrl+D)</sys:String>
+    <sys:String x:Key="Str_Status_Duplicated">Esto es una copia. Cambia lo que necesites y guarda.</sys:String>
+    <sys:String x:Key="Str_TT_Templates">Plantillas</sys:String>
+    <sys:String x:Key="Str_Tpl_Save">Guardar como plantilla</sys:String>
+    <sys:String x:Key="Str_Tpl_None">Aún no hay plantillas</sys:String>
+    <sys:String x:Key="Str_Tpl_Delete">Eliminar plantilla</sys:String>
+    <sys:String x:Key="Str_Tpl_NewFrom">Nueva desde plantilla</sys:String>
+    <sys:String x:Key="Str_Status_TplSaved">Plantilla {0} guardada</sys:String>
+    <sys:String x:Key="Str_Status_TplDeleted">Plantilla {0} eliminada</sys:String>
+    <sys:String x:Key="Str_Tpl_NeedsTitle">Ponle un título a la cita para nombrar la plantilla.</sys:String>
+    <sys:String x:Key="Str_Status_Overlaps">Se superpone con {0}.</sys:String>
+    <sys:String x:Key="Str_Status_OverlapsMore">Se superpone con {0} y {1} más.</sys:String>
+    <sys:String x:Key="Str_KS_Duplicate">Duplicar la cita que se edita</sys:String>
+    <sys:String x:Key="Str_KS_Nudge">Mover la cita que se edita 15 minutos o un día</sys:String>
     <sys:String x:Key="Str_Hint_NoCategories">Todavía no hay categorías. Añádelas desde la barra lateral.</sys:String>
     <sys:String x:Key="Str_TT_Categories">Categorías</sys:String>
     <sys:String x:Key="Str_TT_Density">Densidad de la cuadrícula - clic o rueda</sys:String>
@@ -532,4 +546,8 @@
     <sys:String x:Key="Str_Dlg_InvalidPath">Escriba un nombre de archivo o una ruta válidos.</sys:String>
     <sys:String x:Key="Str_Exp_ForeverRange">Las series sin fin solo se exportan en este intervalo: del {0} al {1}.</sys:String>
     <sys:String x:Key="Str_Exp_RangeRequired">La exportación del calendario completo admite hasta {0} citas recurrentes. Elija un intervalo de fechas.</sys:String>
+    <sys:String x:Key="Str_Color_Red">Rojo</sys:String>
+    <sys:String x:Key="Str_Color_Green">Verde</sys:String>
+    <sys:String x:Key="Str_Color_Blue">Azul</sys:String>
+    <sys:String x:Key="Str_Color_Hex">Color hexadecimal</sys:String>
 </ResourceDictionary>
