@@ -21,6 +21,7 @@ namespace Killendar.Shell
                 LangMenu, LangButton, RelocalizeDynamicUi);
             _dateSettingsMenu = new Controls.DateSettingsMenu(
                 DateSettingsContextMenu, DateSettingsButton, ReformatOpenEditor, ReformatOpenEditorTimes, RelocalizeDynamicUi);
+            InitHolidayCalendar();   // HolidayCalendar.cs
         }
 
         private void LangButton_Click(object sender, RoutedEventArgs e) => _languageMenu.Open();

@@ -504,6 +504,16 @@ Killendar se bo ponovno zagnal z namestitvenega mesta.</sys:String>
     <sys:String x:Key="Str_Rep_AlsoOn">Tudi</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Dodaj ta datum</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">Odstrani {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">Na prost dan</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">Ohrani datum</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">Naslednji delovni dan</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">Prejšnji delovni dan</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">Vsak delovni dan</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">Prazniki iz</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">Njegovi celodnevni sestanki so prazniki: osenčeni, ponavljanja se jim lahko umaknejo.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Zaklenjeno. Izberite ga znova, da vnesete geslo.</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">Praznik</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} je praznik</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Teden od {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">SPLETNA STRAN IN TISK</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Vključi kraje</sys:String>

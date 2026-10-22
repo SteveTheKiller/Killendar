@@ -546,6 +546,16 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Rep_AlsoOn">Thêm vào</sys:String>
   <sys:String x:Key="Str_Rep_AddDate">Thêm ngày này</sys:String>
   <sys:String x:Key="Str_Rep_RemoveDate">Xóa {0}</sys:String>
+  <sys:String x:Key="Str_Rep_OnDayOff">Vào ngày nghỉ</sys:String>
+  <sys:String x:Key="Str_Rep_ShiftKeep">Giữ ngày</sys:String>
+  <sys:String x:Key="Str_Rep_ShiftNext">Ngày làm việc kế tiếp</sys:String>
+  <sys:String x:Key="Str_Rep_ShiftBefore">Ngày làm việc trước</sys:String>
+  <sys:String x:Key="Str_Rep_EveryWorkday">Mỗi ngày làm việc</sys:String>
+  <sys:String x:Key="Str_Lbl_Holidays">Ngày lễ lấy từ</sys:String>
+  <sys:String x:Key="Str_Hol_Hint">Các cuộc hẹn cả ngày trong đó là ngày lễ: được tô bóng, và lịch lặp có thể dời khỏi.</sys:String>
+  <sys:String x:Key="Str_Hol_Locked">Đã khóa. Chọn lại để nhập mật khẩu.</sys:String>
+  <sys:String x:Key="Str_Hol_Holiday">Ngày lễ</sys:String>
+  <sys:String x:Key="Str_Hol_DayTip">{0} là ngày lễ</sys:String>
   <sys:String x:Key="Str_Html_WeekOf">Tuần từ {0}</sys:String>
   <sys:String x:Key="Str_Exp_PageHead">TRANG WEB VÀ IN</sys:String>
   <sys:String x:Key="Str_Exp_IncLocations">Kèm địa điểm</sys:String>

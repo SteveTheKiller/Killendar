@@ -493,6 +493,16 @@
     <sys:String x:Key="Str_Rep_AlsoOn">另外在</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">新增此日期</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">移除 {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">遇到休息日</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">保留日期</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">下一個工作日</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">前一個工作日</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">每個工作日</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">假日來源</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">其中的全天約會視為假日：會加陰影，重複約會可以避開。</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">已鎖定。再次選擇以輸入密碼。</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">假日</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} 是假日</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} 起的一週</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">網頁和列印</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">包含地點</sys:String>

@@ -493,6 +493,16 @@
     <sys:String x:Key="Str_Rep_AlsoOn">Také</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Přidat toto datum</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">Odebrat {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">V den volna</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">Ponechat datum</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">Další pracovní den</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">Předchozí pracovní den</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">Každý pracovní den</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">Svátky z</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">Jeho celodenní schůzky jsou svátky: jsou zastíněné a opakování se jim může vyhnout.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Zamčeno. Vyberte jej znovu a zadejte heslo.</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">Svátek</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} je svátek</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Týden od {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">WEBOVÁ STRÁNKA A TISK</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Zahrnout místa</sys:String>

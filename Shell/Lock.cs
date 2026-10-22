@@ -26,8 +26,8 @@ namespace Killendar.Shell
         {
             ScaleHost.Visibility = locked ? Visibility.Hidden : Visibility.Visible;
             // Other Killendars shown alongside lock with the app; encrypted ones ask again.
-            if (locked) ShownCalendars.CloseAll();
-            else ShownCalendars.Reload(EventStore.ActiveFile);
+            if (locked) { ShownCalendars.CloseAll(); Holidays.Close(); }
+            else { ShownCalendars.Reload(EventStore.ActiveFile); Holidays.Load(_store, EventStore.ActiveFile); }
         }
 
         private void AttachAutoLock()

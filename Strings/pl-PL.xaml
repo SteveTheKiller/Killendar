@@ -505,6 +505,16 @@
     <sys:String x:Key="Str_Rep_AlsoOn">Także</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Dodaj tę datę</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">Usuń {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">W dzień wolny</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">Zachowaj datę</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">Następny dzień roboczy</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">Poprzedni dzień roboczy</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">Każdy dzień roboczy</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">Święta z</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">Jego całodniowe spotkania to święta: są zacienione, a cykle mogą się z nich przesunąć.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Zablokowany. Wybierz go ponownie, aby wpisać hasło.</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">Święto</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} to święto</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Tydzień od {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">STRONA INTERNETOWA I DRUK</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Uwzględnij miejsca</sys:String>

@@ -493,6 +493,16 @@
     <sys:String x:Key="Str_Rep_AlsoOn">Ayrıca</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Bu tarihi ekle</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">{0} kaldır</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">İzin gününde</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">Tarihi koru</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">Sonraki iş günü</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">Önceki iş günü</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">Her iş günü</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">Tatiller nereden</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">Tüm gün randevuları tatildir: gölgelenir ve yinelemeler onlardan kayabilir.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Kilitli. Parolasını yazmak için yeniden seçin.</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">Tatil</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} tatil günü</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} haftası</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">WEB SAYFASI VE YAZDIRMA</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Yerleri ekle</sys:String>

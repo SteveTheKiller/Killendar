@@ -116,6 +116,10 @@ namespace Killendar.Models
         /// "just this one" delete survives the series later being moved to a different time.</summary>
         public List<DateTime> SkipDates { get; set; } = [];
 
+        /// <summary>What a date of the series that lands on a day off (a weekday not worked, or a
+        /// holiday) does: 0 stays, 1 moves to the next workday, -1 to the workday before.</summary>
+        public int RepeatShift { get; set; }
+
         /// <summary>Dates the series also falls on, outside its pattern (RDATE), at the series'
         /// own time of day. Dates only: they keep that time when the series is moved.</summary>
         public List<DateTime> ExtraDates { get; set; } = [];
@@ -212,6 +216,7 @@ namespace Killendar.Models
             RepeatZoneId    = RepeatZoneId,
             SkipDates       = [.. SkipDates],
             ExtraDates      = [.. ExtraDates],
+            RepeatShift     = RepeatShift,
             SkipOccurrences = [.. SkipOccurrences],
             SeriesId        = SeriesId,
             OccurrenceStart = OccurrenceStart,

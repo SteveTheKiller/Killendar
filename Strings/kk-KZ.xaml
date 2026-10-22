@@ -576,6 +576,16 @@
     <sys:String x:Key="Str_Rep_AlsoOn">Сондай-ақ</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Осы күнді қосу</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">{0} жою</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">Демалыс күні</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">Күнді қалдыру</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">Келесі жұмыс күні</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">Алдыңғы жұмыс күні</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">Әр жұмыс күні</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">Мерекелер көзі</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">Оның күні бойғы кездесулері мереке: көлеңкеленеді, қайталанулар одан ауыса алады.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Құлыпталған. Құпия сөзді енгізу үшін қайта таңдаңыз.</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">Мереке</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} мереке күні</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} басталатын апта</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">ВЕБ-БЕТ ЖӘНЕ БАСЫП ШЫҒАРУ</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Орындарды қосу</sys:String>

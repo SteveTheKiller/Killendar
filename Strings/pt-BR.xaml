@@ -576,6 +576,16 @@
     <sys:String x:Key="Str_Rep_AlsoOn">Também em</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Adicionar esta data</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">Remover {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">Em um dia de folga</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">Manter a data</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">Próximo dia útil</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">Dia útil anterior</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">Todo dia útil</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">Feriados de</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">Os compromissos de dia inteiro são feriados: sombreados, e as séries podem sair deles.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Bloqueado. Escolha de novo para digitar a senha.</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">Feriado</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} é feriado</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Semana de {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">PÁGINA DA WEB E IMPRESSÃO</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Incluir locais</sys:String>

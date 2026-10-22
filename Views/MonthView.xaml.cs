@@ -492,9 +492,15 @@ namespace Killendar.Views
 
             string restBrush = !inMonth
                 ? "CalendarOutsideMonthBrush"
-                : !WorkSchedule.IsWorkday(date.DayOfWeek)
+                : WorkSchedule.IsDayOff(date)
                     ? "CalendarWeekendBrush"
                     : displayColumn % 2 == 0 ? "CalendarEvenColumnBrush" : "CalendarOddColumnBrush";
+            // A holiday from the holiday calendar says which, on its day number.
+            if (Holidays.NameOf(date) is string holiday)
+            {
+                dayNum.ToolTip = string.Format(LocaleManager.Loc("Str_Hol_DayTip"), holiday);
+                AutomationProperties.SetHelpText(dayNum, (string)dayNum.ToolTip);
+            }
             _cells[date.Date] = (cell, dayNum, inMonth, isToday, restBrush);
             string hoverBrush = restBrush == "CalendarWeekendBrush" ? "CalendarWeekendHoverBrush" : "CalendarDayHoverBrush";
 

@@ -576,6 +576,16 @@
     <sys:String x:Key="Str_Rep_AlsoOn">Also on</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Add this date</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">Remove {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">On a day off</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">Keep the date</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">Next workday</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">Workday before</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">Every workday</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">Holidays from</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">Its all-day appointments are holidays: shaded, and repeats can move off them.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Locked. Choose it again to type its password.</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">Holiday</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} is a holiday</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Week of {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">WEB PAGE AND PRINT</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Include locations</sys:String>

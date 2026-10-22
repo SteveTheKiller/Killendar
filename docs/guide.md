@@ -41,6 +41,10 @@ Killendar draws these repeats:
 
 Each can end never, after a number of times, or on a date. You can skip single dates and change single dates, and add extra dates outside the pattern with **Also on**. An extra date keeps the series' time of day, and it is not counted toward "ends after" a number of times.
 
+**Days off and holidays.** Your work days and hours are in the date settings (the calendar button on the rail). To add holidays, import a holiday calendar (your government or employer usually publishes one as an .ics file) into a Killendar of its own, then choose it under **Holidays from**. Its all-day appointments are holidays: they are shaded like days off, and Month names them on their day. An encrypted one asks for its password when you choose it, for that session only.
+
+Each repeat has **On a day off**: keep the date, move to the next workday, or move to the workday before. A moved date keeps its place in the series, so skipping or changing it works as usual. Weekly repeats also have **Every workday**, which ticks your work days. Other calendars do not know your days off, so an exported file lists each moved date, two years ahead, as that one date changed.
+
 When you change or delete one date of a series, you choose **just this date**, **this and following** (the series ends the day before and the rest becomes a new series, keeping its single-date edits and skipped dates), or **the whole series**. One undo puts any of these back.
 
 Extra dates in calendar files (RDATE) come in and go out as extra dates; one at a different time of day keeps its date at the series' time, and the import says so. A rule from another calendar that Killendar cannot draw (for example "every weekday except the second Monday") imports as its first date only, and the import says how many did. A series that keeps another time zone's clock offers just this date or the whole series, not this and following.

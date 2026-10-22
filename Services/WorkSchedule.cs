@@ -52,6 +52,9 @@ namespace Killendar.Services
 
         public static bool IsWorkday(DayOfWeek day) => Days.Contains(day);
 
+        /// <summary>Not a workday, or a holiday from the holiday calendar.</summary>
+        public static bool IsDayOff(DateTime day) => !IsWorkday(day.DayOfWeek) || Holidays.IsHoliday(day);
+
         public static bool IsWorkingHour(int hour) => hour >= StartHour && hour < EndHour;
 
         /// <summary>The work week holding <paramref name="anchor"/>: its first workday and how many

@@ -569,6 +569,12 @@ namespace Killendar.Services
                         current.KeptProperties.Add(raw);
                         break;
 
+                    // Killendar's own: a repeat that moves off days off. Read here, written from the
+                    // appointment on export, so it is never kept twice.
+                    case "X-KILLENDAR-WORKDAY":
+                        current.RepeatShift = value.Trim().ToUpperInvariant() switch { "NEXT" => 1, "PREVIOUS" => -1, _ => 0 };
+                        break;
+
                     default:
                         if (upper.StartsWith("X-", StringComparison.Ordinal)) current.KeptProperties.Add(raw);
                         else lostDetails = true;
@@ -1090,6 +1096,26 @@ namespace Killendar.Services
                 Recurrence.SetOccurrenceIdentity(row, master, Recurrence.CanonicalOccurrenceStart(master, row));
                 rows[i] = row;
             }
+            // A repeat that moves off days off follows this computer's work days and holidays,
+            // which other calendars do not have. Each date it moves is written as that one date
+            // changed, two years ahead, so they show it where Killendar does.
+            foreach (var master in masters.Values.Where(m => m.RepeatShift != 0).ToList())
+            {
+                var edited = new HashSet<long>(rows.Where(r => r.IsOverride && r.SeriesId == master.Id && r.OccurrenceStart.HasValue)
+                                                   .Select(r => Recurrence.OccurrenceKey(master, r)));
+                var until = DateTime.Today.AddYears(2);
+                if (master.Start.Date >= until) continue;
+                foreach (var occurrence in Recurrence.Expand(master, master.Start.Date, until))
+                {
+                    if (!occurrence.OccurrenceStart.HasValue || occurrence.Start == occurrence.OccurrenceStart.Value) continue;
+                    if (master.AllDay && occurrence.Start.Date == occurrence.OccurrenceStart.Value.Date) continue;
+                    if (!edited.Add(Recurrence.OccurrenceKey(master, occurrence))) continue;
+                    var moved = occurrence.Clone();
+                    moved.Id = Guid.NewGuid();
+                    moved.Repeat = RepeatFreq.None;
+                    rows.Add(moved);
+                }
+            }
             var sb = new StringBuilder();
             sb.AppendLine("BEGIN:VCALENDAR");
             sb.AppendLine("VERSION:2.0");
@@ -1186,6 +1212,7 @@ namespace Killendar.Services
                 if (ev.IsSeries)
                 {
                     sb.AppendLine(FoldLine(BuildRRule(ev)));
+                    if (ev.RepeatShift != 0) sb.AppendLine("X-KILLENDAR-WORKDAY:" + (ev.RepeatShift > 0 ? "NEXT" : "PREVIOUS"));
 
                     if (ev.AllDay)
                     {

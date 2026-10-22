@@ -20,7 +20,7 @@ namespace Killendar.Services
             "repeat_until, repeat_count, skip_dates, series_id, occurrence_start, " +
             "repeat_time_basis, repeat_anchor, repeat_zone_id, repeat_week_start, " +
             "skip_occurrences, repeat_until_exact, occurrence_anchor, occurrence_basis, occurrence_zone_id, " +
-            "duration_days, duration_time_ticks, external_uid, kept_properties, reminder_minutes, repeat_month_week, extra_dates FROM events";
+            "duration_days, duration_time_ticks, external_uid, kept_properties, reminder_minutes, repeat_month_week, extra_dates, repeat_shift FROM events";
 
         private void LoadIntoMemory()
         {
@@ -96,6 +96,7 @@ namespace Killendar.Services
                             ? null : (int)r.GetInt64(32),
                         RepeatMonthWeek = r.IsDBNull(33) || r.GetInt64(33) < -1 || r.GetInt64(33) > 4 ? 0 : (int)r.GetInt64(33),
                         ExtraDates      = SplitDates(r.IsDBNull(34) ? "" : r.GetString(34)),
+                        RepeatShift     = r.IsDBNull(35) ? 0 : Math.Sign(r.GetInt64(35)),
                     });
                 }
             }
@@ -142,16 +143,16 @@ namespace Killendar.Services
                 "description, attendees, categories, created_utc, modified_utc, " +
                 "repeat_freq, repeat_interval, repeat_days, repeat_until, repeat_count, " +
                 "skip_dates, series_id, occurrence_start, repeat_time_basis, repeat_anchor, repeat_zone_id, repeat_week_start, " +
-                "skip_occurrences, repeat_until_exact, occurrence_anchor, occurrence_basis, occurrence_zone_id, duration_days, duration_time_ticks, external_uid, kept_properties, reminder_minutes, repeat_month_week, extra_dates) " +
+                "skip_occurrences, repeat_until_exact, occurrence_anchor, occurrence_basis, occurrence_zone_id, duration_days, duration_time_ticks, external_uid, kept_properties, reminder_minutes, repeat_month_week, extra_dates, repeat_shift) " +
                 "VALUES($id, $ti, $st, $en, $ad, $lo, $de, $at, $ca, $cr, $mo, " +
-                "$rf, $ri, $rd, $ru, $rc, $sk, $si, $os, $tb, $ra, $rz, $ws, $so, $ue, $oa, $ob, $oz, $dd, $dt, $xu, $kp, $rm, $mw, $xd) " +
+                "$rf, $ri, $rd, $ru, $rc, $sk, $si, $os, $tb, $ra, $rz, $ws, $so, $ue, $oa, $ob, $oz, $dd, $dt, $xu, $kp, $rm, $mw, $xd, $sh) " +
                 "ON CONFLICT(id) DO UPDATE SET title=$ti, start_utc=$st, end_utc=$en, " +
                 "all_day=$ad, location=$lo, description=$de, attendees=$at, categories=$ca, " +
                 "modified_utc=$mo, repeat_freq=$rf, repeat_interval=$ri, repeat_days=$rd, " +
                 "repeat_until=$ru, repeat_count=$rc, skip_dates=$sk, series_id=$si, " +
                 "occurrence_start=$os, repeat_time_basis=$tb, repeat_anchor=$ra, repeat_zone_id=$rz, repeat_week_start=$ws, " +
                 "skip_occurrences=$so, repeat_until_exact=$ue, occurrence_anchor=$oa, occurrence_basis=$ob, occurrence_zone_id=$oz, " +
-                "duration_days=$dd, duration_time_ticks=$dt, external_uid=$xu, kept_properties=$kp, reminder_minutes=$rm, repeat_month_week=$mw, extra_dates=$xd";
+                "duration_days=$dd, duration_time_ticks=$dt, external_uid=$xu, kept_properties=$kp, reminder_minutes=$rm, repeat_month_week=$mw, extra_dates=$xd, repeat_shift=$sh";
             return cmd;
         }
 
@@ -194,6 +195,7 @@ namespace Killendar.Services
             cmd.Parameters.AddWithValue("$rm", ev.ReminderMinutes ?? -1);
             cmd.Parameters.AddWithValue("$mw", ev.Repeat == RepeatFreq.Monthly ? ev.RepeatMonthWeek : 0);
             cmd.Parameters.AddWithValue("$xd", ev.IsSeries ? JoinDates(ev.ExtraDates ?? []) : "");
+            cmd.Parameters.AddWithValue("$sh", ev.IsSeries ? Math.Sign(ev.RepeatShift) : 0);
         }
 
         /// <summary>Writes, then repaints. If persistence fails, reload the database so the
@@ -339,6 +341,7 @@ namespace Killendar.Services
                 updated.RepeatDays     = [.. edited.RepeatDays ?? []];
                 updated.RepeatMonthWeek = edited.RepeatMonthWeek;
                 updated.ExtraDates      = [.. (edited.ExtraDates ?? []).Select(d => d.Date).Distinct()];
+                updated.RepeatShift     = Math.Sign(edited.RepeatShift);
                 FitMonthWeek(updated);   // the series may have moved to another week of the month
                 updated.RepeatUntil    = edited.RepeatUntil;
                 updated.RepeatUntilExact = edited.AllDay == master.AllDay &&

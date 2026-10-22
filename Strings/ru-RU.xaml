@@ -577,6 +577,16 @@
     <sys:String x:Key="Str_Rep_AlsoOn">Также</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Добавить эту дату</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">Убрать {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">В выходной</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">Оставить дату</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">Следующий рабочий день</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">Предыдущий рабочий день</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">Каждый рабочий день</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">Праздники из</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">Его встречи на весь день считаются праздниками: они затенены, и повторы могут их обходить.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Заблокирован. Выберите его снова, чтобы ввести пароль.</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">Праздник</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} праздник</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Неделя с {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">ВЕБ-СТРАНИЦА И ПЕЧАТЬ</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Включить места</sys:String>

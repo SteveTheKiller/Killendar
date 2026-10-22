@@ -493,6 +493,16 @@
     <sys:String x:Key="Str_Rep_AlsoOn">Aussi le</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Ajouter cette date</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">Retirer {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">Un jour de repos</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">Garder la date</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">Jour ouvré suivant</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">Jour ouvré précédent</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">Chaque jour ouvré</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">Jours fériés de</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">Ses rendez-vous sur la journée sont des jours fériés : grisés, et les séries peuvent les éviter.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Verrouillé. Choisissez-le à nouveau pour saisir son mot de passe.</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">Jour férié</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} est un jour férié</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Semaine du {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">PAGE WEB ET IMPRESSION</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Inclure les lieux</sys:String>

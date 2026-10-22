@@ -532,6 +532,16 @@
     <sys:String x:Key="Str_Rep_AlsoOn">Anche il</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Aggiungi questa data</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">Rimuovi {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">In un giorno libero</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">Mantieni la data</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">Giorno lavorativo successivo</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">Giorno lavorativo precedente</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">Ogni giorno lavorativo</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">Festività da</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">I suoi appuntamenti di tutto il giorno sono festività: ombreggiate, e le serie possono spostarsi.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Bloccato. Sceglilo di nuovo per inserire la password.</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">Festività</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} è festivo</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Settimana dal {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">PAGINA WEB E STAMPA</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Includi i luoghi</sys:String>

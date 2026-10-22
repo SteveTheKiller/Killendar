@@ -32,6 +32,9 @@ namespace Killendar.Controls
         private readonly Action<TimeStyle> _timeStyleChanged;
         private readonly Action _weekStartChanged;
 
+        /// <summary>Set by the window: chooses the holiday calendar and asks for its password when it has one.</summary>
+        internal Action<string>? _holidayChosen;
+
         internal DateSettingsMenu(ContextMenu menu, UIElement anchor,
                                   Action<DateStyle> dateStyleChanged, Action<TimeStyle> timeStyleChanged,
                                   Action weekStartChanged)
@@ -233,6 +236,46 @@ namespace Killendar.Controls
             });
             hours.Children.Add(to);
             panel.Children.Add(hours);
+
+            AddSeparator(panel);
+            panel.Children.Add(new TextBlock
+            {
+                Text = LocaleManager.Loc("Str_Lbl_Holidays"), FontSize = 10,
+                Margin = new Thickness(0, 0, 0, 6)
+            });
+            var holidays = new ComboBox { MinWidth = 150, MaxWidth = 220 };
+            AutomationProperties.SetName(holidays, LocaleManager.Loc("Str_Lbl_Holidays"));
+            var none = new ComboBoxItem { Content = LocaleManager.Loc("Str_Zone_None"), Tag = "" };
+            holidays.Items.Add(none);
+            holidays.SelectedItem = none;
+            foreach (var name in EventStore.ListKillendars())
+            {
+                var item = new ComboBoxItem { Content = ShownCalendars.DisplayName(name), Tag = name };
+                holidays.Items.Add(item);
+                if (string.Equals(name, Holidays.Name, StringComparison.OrdinalIgnoreCase)) holidays.SelectedItem = item;
+            }
+            panel.Children.Add(holidays);
+            var state = new TextBlock { FontSize = 10, TextWrapping = TextWrapping.Wrap, MaxWidth = 220, Margin = new Thickness(0, 4, 0, 0) };
+            state.SetResourceReference(TextBlock.ForegroundProperty, "DimTextBrush");
+            void ShowState()
+            {
+                state.Text = Holidays.Status switch
+                {
+                    Holidays.State.Locked => LocaleManager.Loc("Str_Hol_Locked"),
+                    Holidays.State.Unavailable => LocaleManager.Loc("Str_Shown_Unavailable"),
+                    Holidays.State.Ready => LocaleManager.Loc("Str_Hol_Hint"),
+                    _ => LocaleManager.Loc("Str_Hol_Hint"),
+                };
+            }
+            ShowState();
+            panel.Children.Add(state);
+            holidays.SelectionChanged += (_, _) =>
+            {
+                if (holidays.SelectedItem is not ComboBoxItem item) return;
+                _holidayChosen?.Invoke(item.Tag as string ?? "");
+                ShowState();
+                _weekStartChanged();
+            };
         }
 
         /// <summary>"Show time zones" (off until ticked), then the second zone Week and Day show.</summary>

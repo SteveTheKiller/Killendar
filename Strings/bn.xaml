@@ -493,6 +493,16 @@
     <sys:String x:Key="Str_Rep_AlsoOn">এছাড়াও</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">এই তারিখ যোগ করুন</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">{0} সরান</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">ছুটির দিনে</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">তারিখ রাখুন</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">পরের কর্মদিবস</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">আগের কর্মদিবস</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">প্রতি কর্মদিবস</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">ছুটির দিন যেখান থেকে</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">এর সারা দিনের অ্যাপয়েন্টমেন্টগুলো ছুটি: ছায়া করা হয়, পুনরাবৃত্তি সরে যেতে পারে।</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">লক করা। পাসওয়ার্ড দিতে আবার বেছে নিন।</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">ছুটি</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} ছুটির দিন</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} থেকে শুরু সপ্তাহ</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">ওয়েব পৃষ্ঠা ও মুদ্রণ</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">স্থান রাখুন</sys:String>

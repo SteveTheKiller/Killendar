@@ -493,6 +493,16 @@
     <sys:String x:Key="Str_Rep_AlsoOn">追加の日</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">この日を追加</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">{0} を削除</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">休みの日には</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">日付のまま</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">次の勤務日</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">前の勤務日</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">勤務日ごと</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">祝日の取得元</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">終日の予定が祝日になります。網掛けされ、繰り返しを移動できます。</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">ロック中です。もう一度選んでパスワードを入力してください。</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">祝日</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} は祝日です</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} からの週</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">ウェブページと印刷</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">場所を含める</sys:String>

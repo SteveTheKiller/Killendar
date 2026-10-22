@@ -493,6 +493,16 @@
     <sys:String x:Key="Str_Rep_AlsoOn">Außerdem am</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Dieses Datum hinzufügen</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">{0} entfernen</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">An einem freien Tag</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">Datum behalten</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">Nächster Arbeitstag</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">Arbeitstag davor</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">Jeder Arbeitstag</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">Feiertage aus</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">Seine ganztägigen Termine sind Feiertage: schattiert, und Serien können ihnen ausweichen.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Gesperrt. Erneut wählen, um das Kennwort einzugeben.</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">Feiertag</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} ist ein Feiertag</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Woche ab {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">WEBSEITE UND DRUCK</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Orte einschließen</sys:String>

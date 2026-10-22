@@ -64,6 +64,9 @@ namespace Killendar.Features
         /// <summary>Stop on this date, or null when that is not how it ends.</summary>
         System.DateTime? FieldRepeatUntil { get; set; }
 
+        /// <summary>A date on a day off: 0 stays, 1 moves to the next workday, -1 to the one before.</summary>
+        int FieldRepeatShift { get; set; }
+
         /// <summary>Dates the series also falls on, outside its pattern.</summary>
         System.Collections.Generic.List<System.DateTime> FieldRepeatExtraDates { get; set; }
 

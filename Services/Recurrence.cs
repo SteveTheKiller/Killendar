@@ -30,6 +30,51 @@ namespace Killendar.Services
             CalendarEvent master, DateTime from, DateTime to)
         {
             if (master == null || !master.IsSeries) yield break;
+            if (master.RepeatShift == 0)
+            {
+                foreach (var occurrence in ExpandUnshifted(master, from, to)) yield return occurrence;
+                yield break;
+            }
+            // A date on a day off moves to the next workday or the one before, up to two weeks.
+            // The dates are read two weeks wider so one moving into the range is found. A moved
+            // date keeps its original identity (OccurrenceStart), so editing or skipping it
+            // still names the date the pattern gave.
+            var reach = TimeSpan.FromDays(ShiftReach);
+            var wideFrom = from.Ticks > reach.Ticks ? from - reach : DateTime.MinValue;
+            var wideTo = DateTime.MaxValue.Ticks - to.Ticks > reach.Ticks ? to + reach : DateTime.MaxValue;
+            foreach (var occurrence in ExpandUnshifted(master, wideFrom, wideTo))
+            {
+                var moved = Shifted(occurrence, master.RepeatShift);
+                if (moved.Start < to && moved.End > from) yield return moved;
+            }
+        }
+
+        internal const int ShiftReach = 14;
+
+        /// <summary>An occurrence moved off a day off in <paramref name="direction"/>; unchanged
+        /// when two weeks hold no workday.</summary>
+        internal static CalendarEvent Shifted(CalendarEvent occurrence, int direction)
+        {
+            var day = occurrence.Start.Date;
+            for (int step = 0; step < ShiftReach && WorkSchedule.IsDayOff(day); step++)
+            {
+                if ((direction > 0 && day >= DateTime.MaxValue.Date) || (direction < 0 && day <= DateTime.MinValue.Date)) return occurrence;
+                day = day.AddDays(Math.Sign(direction));
+            }
+            if (WorkSchedule.IsDayOff(day) || day == occurrence.Start.Date) return occurrence;
+            var delta = day - occurrence.Start.Date;
+            try
+            {
+                occurrence.Start += delta;
+                occurrence.End += delta;
+            }
+            catch (ArgumentOutOfRangeException) { }
+            return occurrence;
+        }
+
+        private static IEnumerable<CalendarEvent> ExpandUnshifted(
+            CalendarEvent master, DateTime from, DateTime to)
+        {
             if (master.ExtraDates.Count == 0)
             {
                 foreach (var occurrence in ExpandRule(master, from, to)) yield return occurrence;

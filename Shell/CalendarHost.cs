@@ -31,6 +31,7 @@ namespace Killendar.Shell
             _ics          = new IcsTransfer(this, _store);
 
             _store.Changed += () => _calendar.Refresh();
+            _store.Changed += Holidays.Refresh;   // holidays kept in the open Killendar change with it
             // A color picker previewing a category repaints the calendar without writing, so it
             // cannot come through _store.Changed.
             Services.CategoryManager.Previewed += () =>

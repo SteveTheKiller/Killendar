@@ -640,6 +640,12 @@
 
                                     <StackPanel x:Name="RepeatDetail" Visibility="Collapsed" Margin="0,4,0,0">
                                         <WrapPanel x:Name="RepeatDaysRow" Visibility="Collapsed" Margin="0,0,0,4"/>
+                                        <!-- Weekly: one click for the work days set in the date settings. -->
+                                        <WrapPanel x:Name="RepeatWorkdaysRow" Visibility="Collapsed" Margin="0,0,0,4"/>
+
+                                        <TextBlock Text="{DynamicResource Str_Rep_OnDayOff}" Foreground="{DynamicResource DimTextBrush}"
+                                                   FontFamily="{DynamicResource UiFont}" FontSize="10" Margin="0,2,0,0"/>
+                                        <WrapPanel x:Name="RepeatShiftRow" Margin="0,4,0,4"/>
 
                                         <TextBlock Text="{DynamicResource Str_Rep_Ends}" Foreground="{DynamicResource DimTextBrush}"
                                                    FontFamily="{DynamicResource UiFont}" FontSize="10" Margin="0,2,0,0"/>

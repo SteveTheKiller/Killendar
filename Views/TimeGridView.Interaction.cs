@@ -59,7 +59,7 @@ namespace Killendar.Views
                 Canvas.SetTop(off, top);
                 canvas.Children.Insert(0, off);
             }
-            if (!WorkSchedule.IsWorkday(date.DayOfWeek)) Shade(0, fullHeight);
+            if (WorkSchedule.IsDayOff(date)) Shade(0, fullHeight);
             else
             {
                 Shade(0, WorkSchedule.StartHour * CalendarChrome.HourHeight);

@@ -578,6 +578,16 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Rep_AlsoOn">Ezen is</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Dátum hozzáadása</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">{0} eltávolítása</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">Szabadnapon</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">Dátum megtartása</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">Következő munkanap</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">Előző munkanap</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">Minden munkanap</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">Ünnepnapok innen</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">Az egész napos találkozói ünnepnapok: árnyékoltak, és az ismétlődések elkerülhetik őket.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Zárolva. Válassza újra a jelszó megadásához.</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">Ünnepnap</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} ünnepnap</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">{0} kezdetű hét</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">WEBOLDAL ÉS NYOMTATÁS</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Helyek is</sys:String>

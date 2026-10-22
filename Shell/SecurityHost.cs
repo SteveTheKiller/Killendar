@@ -28,6 +28,7 @@ namespace Killendar.Shell
             // The newly open Killendar is the write target; the others shown beside it reopen
             // around it (it is dropped from them if it was one).
             ShownCalendars.Reload(EventStore.ActiveFile);
+            Holidays.Load(_store, EventStore.ActiveFile);
         }
 
         void ISecurityHost.RefreshView() => _calendar.Refresh();

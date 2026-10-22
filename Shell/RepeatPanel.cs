@@ -29,6 +29,14 @@ namespace Killendar.Shell
         private readonly HashSet<DayOfWeek> _repeatDays = [];
         private int _repeatMonthWeek;
         private readonly List<DateTime> _extraDates = [];
+        private int _repeatShift;
+
+        private static readonly (int Shift, string Key)[] ShiftOptions =
+        [
+            (0, "Str_Rep_ShiftKeep"),
+            (1, "Str_Rep_ShiftNext"),
+            (-1, "Str_Rep_ShiftBefore"),
+        ];
 
         /// <summary>True when the panel is editing ONE date of a series and the user has chosen to
         /// apply the edit to all of them.</summary>
@@ -52,6 +60,12 @@ namespace Killendar.Shell
         {
             get => int.TryParse(FieldRepeatInterval.Text.Trim(), out int n) && n > 0 ? n : 0;
             set => FieldRepeatInterval.Text = value.ToString(CultureInfo.CurrentCulture);
+        }
+
+        int IAppointmentView.FieldRepeatShift
+        {
+            get => _repeatShift;
+            set { _repeatShift = Math.Sign(value); BuildRepeatChips(); }
         }
 
         List<DateTime> IAppointmentView.FieldRepeatExtraDates
@@ -153,6 +167,7 @@ namespace Killendar.Shell
             _repeatEnd  = RepeatEndMode.Never;
             _repeatDays.Clear();
             _repeatMonthWeek = 0;
+            _repeatShift = 0;
             _extraDates.Clear();
             FieldRepeatExtra.Text = "";
             BuildExtraChips();
@@ -298,6 +313,26 @@ namespace Killendar.Shell
                             },
                             minWidth: 30));
                     }
+                }
+
+                RepeatWorkdaysRow.Visibility = _repeatFreq == RepeatFreq.Weekly ? Visibility.Visible : Visibility.Collapsed;
+                RepeatWorkdaysRow.Children.Clear();
+                if (_repeatFreq == RepeatFreq.Weekly)
+                {
+                    bool onWorkdays = _repeatDays.SetEquals(WorkSchedule.Days);
+                    RepeatWorkdaysRow.Children.Add(Chip(Loc("Str_Rep_EveryWorkday"), onWorkdays, () =>
+                    {
+                        _repeatDays.Clear();
+                        foreach (var day in WorkSchedule.Days) _repeatDays.Add(day);
+                        BuildRepeatChips();
+                    }));
+                }
+
+                RepeatShiftRow.Children.Clear();
+                foreach (var (shift, key) in ShiftOptions)
+                {
+                    int value = shift;
+                    RepeatShiftRow.Children.Add(Chip(Loc(key), _repeatShift == value, () => { _repeatShift = value; BuildRepeatChips(); }));
                 }
 
                 RepeatEndRow.Children.Clear();

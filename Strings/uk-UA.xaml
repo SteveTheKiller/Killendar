@@ -576,6 +576,16 @@
     <sys:String x:Key="Str_Rep_AlsoOn">Також</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Додати цю дату</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">Вилучити {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">У вихідний</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">Залишити дату</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">Наступний робочий день</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">Попередній робочий день</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">Щоробочого дня</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">Свята з</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">Його зустрічі на весь день є святами: затінені, і повтори можуть їх оминати.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Заблоковано. Виберіть його знову, щоб ввести пароль.</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">Свято</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} свято</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Тиждень від {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">ВЕБСТОРІНКА Й ДРУК</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Додати місця</sys:String>

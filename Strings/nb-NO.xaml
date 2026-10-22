@@ -576,6 +576,16 @@
     <sys:String x:Key="Str_Rep_AlsoOn">Også</sys:String>
     <sys:String x:Key="Str_Rep_AddDate">Legg til denne datoen</sys:String>
     <sys:String x:Key="Str_Rep_RemoveDate">Fjern {0}</sys:String>
+    <sys:String x:Key="Str_Rep_OnDayOff">På en fridag</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftKeep">Behold datoen</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftNext">Neste arbeidsdag</sys:String>
+    <sys:String x:Key="Str_Rep_ShiftBefore">Arbeidsdagen før</sys:String>
+    <sys:String x:Key="Str_Rep_EveryWorkday">Hver arbeidsdag</sys:String>
+    <sys:String x:Key="Str_Lbl_Holidays">Helligdager fra</sys:String>
+    <sys:String x:Key="Str_Hol_Hint">Heldagsavtalene der er helligdager: skyggelagt, og gjentakelser kan flytte seg unna.</sys:String>
+    <sys:String x:Key="Str_Hol_Locked">Låst. Velg den igjen for å skrive passordet.</sys:String>
+    <sys:String x:Key="Str_Hol_Holiday">Helligdag</sys:String>
+    <sys:String x:Key="Str_Hol_DayTip">{0} er en helligdag</sys:String>
     <sys:String x:Key="Str_Html_WeekOf">Uken fra {0}</sys:String>
     <sys:String x:Key="Str_Exp_PageHead">NETTSIDE OG UTSKRIFT</sys:String>
     <sys:String x:Key="Str_Exp_IncLocations">Ta med steder</sys:String>
