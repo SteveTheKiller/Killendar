@@ -177,5 +177,25 @@ namespace Killendar.Tests
             // After 27 October 1996 03:00 (+03:00) the zone is on +02:00.
             Assert.Equal(TimeSpan.FromHours(2), parsed.OffsetAt(new DateTime(1996, 11, 1, 12, 0, 0, DateTimeKind.Utc)));
         }
+
+        // Calendar file check: lengths in the RFC 5545 grammar, and files written the old way still read.
+        [Theory]
+        [InlineData(60, "PT1H")]
+        [InlineData(90, "PT1H30M")]
+        [InlineData(45, "PT45M")]
+        [InlineData(1440, "PT24H")]
+        public void LengthsAreWrittenInTheStandardsGrammar(int minutes, string expected)
+            => Assert.Equal(expected, IcsService.TimeDuration(TimeSpan.FromMinutes(minutes)));
+
+        [Fact]
+        public void SecondsAfterHoursStillRead()
+        {
+            Assert.Equal("PT1H0M30S", IcsService.TimeDuration(TimeSpan.FromSeconds(3630)));
+            string ics = string.Join("\r\n", "BEGIN:VCALENDAR", "VERSION:2.0", "BEGIN:VEVENT", "UID:old@example.com",
+                "DTSTART;TZID=Tokyo Standard Time:20261020T090000", "DURATION:PT1H0S", "RRULE:FREQ=WEEKLY;COUNT=2",
+                "SUMMARY:Old export", "END:VEVENT", "END:VCALENDAR", "");
+            var ev = Assert.Single(IcsService.ParseText(ics).Events);
+            Assert.Equal(TimeSpan.FromHours(1), ev.End.ToUniversalTime() - ev.Start.ToUniversalTime());
+        }
     }
 }

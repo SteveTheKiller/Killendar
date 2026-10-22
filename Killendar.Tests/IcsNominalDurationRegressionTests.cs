@@ -95,7 +95,7 @@ namespace Killendar.Tests
                 Assert.Equal(TimeSpan.FromHours(hours), row.End.ToUniversalTime() - row.Start.ToUniversalTime());
                 string output = IcsService.BuildIcs(store.Events);
                 Assert.Contains("BEGIN:VTIMEZONE", output);
-                Assert.Contains("DURATION:" + (duration == "PT24H" ? "PT24H0S" : duration == "P1DT2H" ? "P1DT2H0S" : "P1DT0H0S"), output);
+                Assert.Contains("DURATION:" + (duration == "PT24H" ? "PT24H" : duration == "P1DT2H" ? "P1DT2H" : "P1D"), output);
                 var imported = Assert.Single(IcsService.ParseText(output).Events);
                 Assert.Equal(row.DurationDays, imported.DurationDays);
                 Assert.Equal(row.DurationTimeTicks, imported.DurationTimeTicks);

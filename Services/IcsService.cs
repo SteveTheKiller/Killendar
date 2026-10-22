@@ -1198,10 +1198,7 @@ namespace Killendar.Services
                         {
                             if (duration.Ticks % TimeSpan.TicksPerSecond != 0)
                                 throw new NotSupportedException("A calendar recurrence duration with fractional seconds cannot be exported.");
-                            long hours = duration.Ticks / TimeSpan.TicksPerHour;
-                            long seconds = duration.Ticks % TimeSpan.TicksPerHour / TimeSpan.TicksPerSecond;
-                            sb.AppendLine("DURATION:PT" + hours.ToString(System.Globalization.CultureInfo.InvariantCulture) + "H" +
-                                seconds.ToString(System.Globalization.CultureInfo.InvariantCulture) + "S");
+                            sb.AppendLine("DURATION:" + TimeDuration(duration));
                         }
                     }
                     else
@@ -1354,6 +1351,23 @@ namespace Killendar.Services
                 }
             }
 
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// A length as RFC 5545 writes it: hours, then minutes, then seconds, each only when it or a
+        /// smaller part is not zero ("PT1H", "PT1H30M", "PT45M", "PT1H0M30S"). Seconds may not follow
+        /// hours directly, so "PT1H0S" is not valid and some calendars refuse it.
+        /// </summary>
+        internal static string TimeDuration(TimeSpan duration)
+        {
+            var inv = System.Globalization.CultureInfo.InvariantCulture;
+            long total = duration.Ticks / TimeSpan.TicksPerSecond;
+            long hours = total / 3600, minutes = total % 3600 / 60, seconds = total % 60;
+            var sb = new StringBuilder("PT");
+            if (hours > 0) sb.Append(hours.ToString(inv)).Append('H');
+            if (minutes > 0 || (hours > 0 && seconds > 0)) sb.Append(minutes.ToString(inv)).Append('M');
+            if (seconds > 0 || total == 0) sb.Append(seconds.ToString(inv)).Append('S');
             return sb.ToString();
         }
 

@@ -41,10 +41,10 @@ namespace Killendar.Services
         {
             if (ev.DurationTimeTicks < 0 || ev.DurationTimeTicks % TimeSpan.TicksPerSecond != 0)
                 throw new NotSupportedException("A calendar duration with fractional or negative subday time cannot be exported.");
-            long hours = ev.DurationTimeTicks / TimeSpan.TicksPerHour;
-            long seconds = ev.DurationTimeTicks % TimeSpan.TicksPerHour / TimeSpan.TicksPerSecond;
-            return "P" + ev.DurationDays.ToString(CultureInfo.InvariantCulture) + "DT" +
-                hours.ToString(CultureInfo.InvariantCulture) + "H" + seconds.ToString(CultureInfo.InvariantCulture) + "S";
+            // "P1D", "P1DT2H": the time part only when there is one, in the RFC 5545 grammar.
+            string days = "P" + ev.DurationDays.ToString(CultureInfo.InvariantCulture) + "D";
+            return ev.DurationTimeTicks == 0 ? days
+                : days + IcsService.TimeDuration(TimeSpan.FromTicks(ev.DurationTimeTicks)).Substring(1);
         }
     }
 }
