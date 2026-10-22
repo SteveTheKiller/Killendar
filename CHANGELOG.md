@@ -69,6 +69,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - HTML calendars support all themes and accents, accessible selection controls, saved preferences and clearer accent-colored tables.
 - Enlarged date headings and improved calendar-list contrast, grain, embedded fonts and file-picker colors. Dialogs show app icons, with full bevels and compact fields in 98SE. Sidebar fades leave scrollbars clear, and the shortcuts card wraps long labels and shows overflow.
 
+### Changed
+
+- Wordmarks and headings are raised with a subtle bevel in their own color instead of a dark outline; wordmarks keep their drop shadow. The Dark theme's red accent is the brand red again instead of a pink tint. Dark theme grid lines and pane borders are a little lighter, the day panel heading matches the calendar's date heading, and hovering a day no longer shifts its film grain.
+
 ## [1.3.1] - 2026-10-19
 
 ### Added

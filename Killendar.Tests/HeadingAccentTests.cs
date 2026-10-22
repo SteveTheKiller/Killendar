@@ -35,7 +35,8 @@ namespace Killendar.Tests
                     root.Arrange(new Rect(0, 0, 400, 100));
                     Assert.Equal(Color.FromRgb(221, 80, 75), ((SolidColorBrush)heading.Foreground).Color);
                     Assert.Equal(Color.FromRgb(255, 124, 119), ((SolidColorBrush)ordinary.Foreground).Color);
-                    Assert.NotNull(heading.Effect);
+                    // Raised in its own color, not outlined in black.
+                    Assert.IsType<KillerFamily.Theming.Bevel.BevelEffect>(heading.Effect);
                     Assert.Null(ordinary.Effect);
                     var originalSize = heading.DesiredSize;
 

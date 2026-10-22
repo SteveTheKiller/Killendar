@@ -13,6 +13,22 @@ namespace Killendar.Views
 {
     public partial class MonthView : UserControl, ICalendarView
     {
+        /// <summary>The grain tile shifted so it continues the month's own grain instead of
+        /// restarting at the hovered cell's corner, which made the texture jump on hover.</summary>
+        private Brush? AlignedGrain(FrameworkElement target)
+        {
+            if (TryFindResource("GrainTileBrush") is not TileBrush tile) return null;
+            var aligned = tile.CloneCurrentValue();
+            var origin = target.TranslatePoint(new Point(0, 0), MonthSilhouetteGrain);
+            double w = tile.Viewport.Width > 0 ? tile.Viewport.Width : 256, h = tile.Viewport.Height > 0 ? tile.Viewport.Height : 256;
+            // Whole device pixels: a fractional shift resamples the tile and softens the grain.
+            double scale = VisualTreeHelper.GetDpi(target).DpiScaleX;
+            double dx = Math.Round((origin.X % w) * scale) / scale, dy = Math.Round((origin.Y % h) * scale) / scale;
+            aligned.Transform = new TranslateTransform(-dx, -dy);
+            aligned.Freeze();
+            return aligned;
+        }
+
         private EventStore? _store;
         private DateTime _anchor = DateTime.Today;
         private int _visibleWeeks;
@@ -469,7 +485,6 @@ namespace Killendar.Views
                 IsHitTestVisible = false,
                 Visibility = Visibility.Collapsed,
             };
-            hoverGrain.SetResourceReference(Border.BackgroundProperty, "GrainTileBrush");
             hoverGrain.SetResourceReference(OpacityProperty, "GrainOpacity");
             layers.Children.Add(hoverGrain);
             layers.Children.Add(ring);
@@ -488,6 +503,7 @@ namespace Killendar.Views
             cell.MouseEnter += (_, _) =>
             {
                 ApplyPointerState(cell, dayNum, inMonth, hoverBrush);
+                hoverGrain.Background = AlignedGrain(hoverGrain);
                 hoverGrain.Visibility = Visibility.Visible;
             };
             cell.MouseLeave += (_, _) =>
