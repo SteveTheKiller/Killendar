@@ -545,6 +545,10 @@
     <sys:String x:Key="Str_Fld_Through">পর্যন্ত</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">ঠিকানার পরামর্শ</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">Photon/Komoot পরিষেবা ব্যবহার করুন</sys:String>
+    <sys:String x:Key="Str_About_CopyDiagnostics">ডায়াগনস্টিক কপি করুন</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">সহায়তার অনুরোধের জন্য সংস্করণ, Windows, সেটিংস ও সংখ্যা কপি করে। কোনো অ্যাপয়েন্টমেন্টের লেখা, নাম, ঠিকানা, পাথ বা লিংক নয়, আর কিছুই পাঠানো হয় না।</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">ডায়াগনস্টিক ক্লিপবোর্ডে আছে। বার্তায় পেস্ট করুন; কিছুই পাঠানো হয়নি।</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">ক্লিপবোর্ড ব্যস্ত। আবার চেষ্টা করুন।</sys:String>
     <sys:String x:Key="Str_Location_NoResults">কোনো ঠিকানার পরামর্শ নেই</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">একটি তারিখ নির্বাচন করুন</sys:String>
     <sys:String x:Key="Str_A11y_StartDate">শুরুর তারিখ</sys:String>

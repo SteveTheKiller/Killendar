@@ -76,6 +76,10 @@
     <sys:String x:Key="Str_TT_OpenInMaps">Nyissa meg ezt a helyet a térképen</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">Címjavaslatok</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">Használja a Photon/Komoot szolgáltatást</sys:String>
+    <sys:String x:Key="Str_About_CopyDiagnostics">Diagnosztika másolása</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">Kimásolja a verziót, a Windowst, a beállításokat és a darabszámokat egy támogatási kéréshez. Nincs benne találkozószöveg, név, cím, elérési út vagy hivatkozás, és semmi sem lesz elküldve.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">A diagnosztika a vágólapon van. Illessze be az üzenetébe; semmi sem lett elküldve.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">A vágólap foglalt. Próbálja újra.</sys:String>
     <sys:String x:Key="Str_Location_NoResults">Nincsenek címjavaslatok</sys:String>
     <sys:String x:Key="Str_Fld_Description">LEÍRÁS</sys:String>
     <sys:String x:Key="Str_Fld_Attendees">RÉSZTVEVŐK</sys:String>

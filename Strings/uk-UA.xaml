@@ -76,6 +76,10 @@
     <sys:String x:Key="Str_TT_OpenInMaps">Відкрити це місце на карті</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">Підказки адрес</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">Використовувати сервіс Photon/Komoot</sys:String>
+    <sys:String x:Key="Str_About_CopyDiagnostics">Копіювати діагностику</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">Копіює версію, Windows, налаштування й кількості для звернення до підтримки. Без тексту зустрічей, імен, адрес, шляхів і посилань, і нічого не надсилається.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">Діагностика в буфері обміну. Вставте її в повідомлення; нічого не надіслано.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">Буфер обміну зайнятий. Спробуйте ще раз.</sys:String>
     <sys:String x:Key="Str_Location_NoResults">Немає підказок адрес</sys:String>
     <sys:String x:Key="Str_Fld_Description">ОПИС</sys:String>
     <sys:String x:Key="Str_Fld_Attendees">УЧАСНИКИ</sys:String>

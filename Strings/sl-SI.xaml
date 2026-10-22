@@ -60,6 +60,10 @@
     <sys:String x:Key="Str_TT_OpenInMaps">Odpri to lokacijo na zemljevidu</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">Predlogi naslovov</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">Uporabi storitev Photon/Komoot</sys:String>
+    <sys:String x:Key="Str_About_CopyDiagnostics">Kopiraj diagnostiko</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">Kopira različico, Windows, nastavitve in števila za zahtevo za podporo. Brez besedila sestankov, imen, naslovov, poti in povezav, in nič se ne pošlje.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">Diagnostika je v odložišču. Prilepite jo v sporočilo; nič ni bilo poslano.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">Odložišče je zasedeno. Poskusite znova.</sys:String>
     <sys:String x:Key="Str_Location_NoResults">Ni predlogov naslovov</sys:String>
     <sys:String x:Key="Str_Fld_Description">OPIS</sys:String>
     <sys:String x:Key="Str_Fld_Attendees">UDELEŽENCI</sys:String>

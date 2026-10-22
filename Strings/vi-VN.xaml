@@ -69,6 +69,10 @@
   <sys:String x:Key="Str_TT_OpenInMaps">Mở địa điểm này trong bản đồ</sys:String>
   <sys:String x:Key="Str_About_PhotonLookup">Gợi ý địa chỉ</sys:String>
   <sys:String x:Key="Str_About_PhotonPrivacy">Sử dụng dịch vụ Photon/Komoot</sys:String>
+  <sys:String x:Key="Str_About_CopyDiagnostics">Sao chép chẩn đoán</sys:String>
+  <sys:String x:Key="Str_About_DiagnosticsHint">Sao chép phiên bản, Windows, cài đặt và số lượng cho yêu cầu hỗ trợ. Không có nội dung cuộc hẹn, tên, địa chỉ, đường dẫn hay liên kết, và không gửi gì cả.</sys:String>
+  <sys:String x:Key="Str_About_DiagnosticsCopied">Thông tin chẩn đoán đã ở bộ nhớ tạm. Dán vào tin nhắn của bạn; không có gì được gửi.</sys:String>
+  <sys:String x:Key="Str_About_DiagnosticsFailed">Bộ nhớ tạm đang bận. Hãy thử lại.</sys:String>
   <sys:String x:Key="Str_Location_NoResults">Không có gợi ý địa chỉ</sys:String>
   <sys:String x:Key="Str_Fld_Description">MÔ TẢ</sys:String>
   <sys:String x:Key="Str_Fld_Attendees">NGƯỜI THAM DỰ</sys:String>

@@ -160,6 +160,10 @@
     <sys:String x:Key="Str_TT_OpenInMaps">Otwórz tę lokalizację na mapie</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">Podpowiedzi adresów</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">Używaj usługi Photon/Komoot</sys:String>
+    <sys:String x:Key="Str_About_CopyDiagnostics">Kopiuj diagnostykę</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">Kopiuje wersję, Windows, ustawienia i liczby do zgłoszenia pomocy. Bez treści spotkań, nazw, adresów, ścieżek i linków, i nic nie jest wysyłane.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">Diagnostyka jest w schowku. Wklej ją do wiadomości; nic nie zostało wysłane.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">Schowek jest zajęty. Spróbuj ponownie.</sys:String>
     <sys:String x:Key="Str_Location_NoResults">Brak podpowiedzi adresów</sys:String>
     <sys:String x:Key="Str_Hint_Attendees">oddziel przecinkami</sys:String>
     <sys:String x:Key="Str_Hint_Date">rrrr-mm-dd</sys:String>

@@ -545,6 +545,10 @@
     <sys:String x:Key="Str_Fld_Through">HASTA</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">Sugerencias de direcciones</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">Usar el servicio Photon/Komoot</sys:String>
+    <sys:String x:Key="Str_About_CopyDiagnostics">Copiar diagnóstico</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">Copia la versión, Windows, la configuración y los recuentos para una solicitud de soporte. Sin texto de citas, nombres, direcciones, rutas ni enlaces, y no se envía nada.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">El diagnóstico está en el portapapeles. Péguelo en su mensaje; no se envió nada.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">El portapapeles está ocupado. Inténtelo de nuevo.</sys:String>
     <sys:String x:Key="Str_Location_NoResults">No hay sugerencias de direcciones</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">Elegir una fecha</sys:String>
     <sys:String x:Key="Str_A11y_StartDate">Fecha de inicio</sys:String>

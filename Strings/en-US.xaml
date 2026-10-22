@@ -76,6 +76,10 @@
     <sys:String x:Key="Str_TT_OpenInMaps">Open this location in maps</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">Address suggestions</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">Use Photon/Komoot service</sys:String>
+    <sys:String x:Key="Str_About_CopyDiagnostics">Copy diagnostics</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">Copies the version, Windows, settings and counts for a support request. No appointment text, names, addresses, paths or links, and nothing is sent.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">Diagnostics are on the clipboard. Paste them into your message; nothing was sent.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">The clipboard is busy. Try again.</sys:String>
     <sys:String x:Key="Str_Location_NoResults">No address suggestions</sys:String>
     <sys:String x:Key="Str_Fld_Description">DESCRIPTION</sys:String>
     <sys:String x:Key="Str_Fld_Attendees">ATTENDEES</sys:String>

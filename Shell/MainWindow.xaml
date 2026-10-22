@@ -1235,6 +1235,12 @@
                                 <TextBlock Text="{DynamicResource Str_About_PhotonPrivacy}"
                                            Foreground="{DynamicResource DimTextBrush}"
                                            FontSize="10" Margin="22,2,0,0"/>
+                                <!-- Diagnostics.cs: copied only on this click, never sent; no appointment text, names, paths or links. -->
+                                <Button x:Name="AboutDiagnosticsButton" Style="{StaticResource OutlineButton}"
+                                        Content="{DynamicResource Str_About_CopyDiagnostics}"
+                                        ToolTip="{DynamicResource Str_About_DiagnosticsHint}"
+                                        HorizontalAlignment="Left" FontSize="11" Padding="10,4" Margin="0,12,0,0"
+                                        Click="AboutDiagnostics_Click"/>
                             </StackPanel>
 
                             <Button x:Name="AboutUpdateButton" Visibility="Collapsed" Margin="0,14,0,0"

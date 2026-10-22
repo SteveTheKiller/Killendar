@@ -76,6 +76,10 @@
     <sys:String x:Key="Str_TT_OpenInMaps">Abrir este local no mapa</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">Sugestões de endereço</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">Usar o serviço Photon/Komoot</sys:String>
+    <sys:String x:Key="Str_About_CopyDiagnostics">Copiar diagnóstico</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">Copia a versão, o Windows, as configurações e contagens para um pedido de suporte. Sem texto de compromissos, nomes, endereços, caminhos ou links, e nada é enviado.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">O diagnóstico está na área de transferência. Cole na sua mensagem; nada foi enviado.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">A área de transferência está ocupada. Tente novamente.</sys:String>
     <sys:String x:Key="Str_Location_NoResults">Nenhuma sugestão de endereço</sys:String>
     <sys:String x:Key="Str_Fld_Description">DESCRIÇÃO</sys:String>
     <sys:String x:Key="Str_Fld_Attendees">PARTICIPANTES</sys:String>

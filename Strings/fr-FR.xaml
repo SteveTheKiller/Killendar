@@ -545,6 +545,10 @@
     <sys:String x:Key="Str_Fld_Through">JUSQU’À</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">Suggestions d’adresses</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">Utiliser le service Photon/Komoot</sys:String>
+    <sys:String x:Key="Str_About_CopyDiagnostics">Copier le diagnostic</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">Copie la version, Windows, les réglages et des comptes pour une demande d’assistance. Aucun texte de rendez-vous, nom, adresse, chemin ni lien, et rien n’est envoyé.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">Le diagnostic est dans le presse-papiers. Collez-le dans votre message ; rien n’a été envoyé.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">Le presse-papiers est occupé. Réessayez.</sys:String>
     <sys:String x:Key="Str_Location_NoResults">Aucune suggestion d’adresse</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">Choisir une date</sys:String>
     <sys:String x:Key="Str_A11y_StartDate">Date de début</sys:String>

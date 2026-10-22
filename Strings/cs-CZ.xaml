@@ -545,6 +545,10 @@
     <sys:String x:Key="Str_Fld_Through">DO</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">Návrhy adres</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">Používat službu Photon/Komoot</sys:String>
+    <sys:String x:Key="Str_About_CopyDiagnostics">Kopírovat diagnostiku</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">Zkopíruje verzi, Windows, nastavení a počty pro žádost o podporu. Žádný text schůzek, jména, adresy, cesty ani odkazy a nic se neodesílá.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">Diagnostika je ve schránce. Vložte ji do zprávy; nic nebylo odesláno.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">Schránka je zaneprázdněná. Zkuste to znovu.</sys:String>
     <sys:String x:Key="Str_Location_NoResults">Žádné návrhy adres</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">Vybrat datum</sys:String>
     <sys:String x:Key="Str_A11y_StartDate">Datum začátku</sys:String>

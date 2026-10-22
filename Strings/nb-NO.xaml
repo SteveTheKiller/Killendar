@@ -76,6 +76,10 @@
     <sys:String x:Key="Str_TT_OpenInMaps">Åpne dette stedet i kart</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">Adresseforslag</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">Bruk Photon/Komoot-tjenesten</sys:String>
+    <sys:String x:Key="Str_About_CopyDiagnostics">Kopier diagnostikk</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">Kopierer versjon, Windows, innstillinger og antall til en brukerstøtteforespørsel. Ingen avtaletekst, navn, adresser, stier eller lenker, og ingenting sendes.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">Diagnostikken ligger på utklippstavlen. Lim den inn i meldingen; ingenting ble sendt.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">Utklippstavlen er opptatt. Prøv igjen.</sys:String>
     <sys:String x:Key="Str_Location_NoResults">Ingen adresseforslag</sys:String>
     <sys:String x:Key="Str_Fld_Description">BESKRIVELSE</sys:String>
     <sys:String x:Key="Str_Fld_Attendees">DELTAKERE</sys:String>

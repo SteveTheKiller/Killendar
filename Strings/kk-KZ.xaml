@@ -76,6 +76,10 @@
     <sys:String x:Key="Str_TT_OpenInMaps">Бұл орынды картадан ашу</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">Мекенжай ұсыныстары</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">Photon/Komoot қызметін пайдалану</sys:String>
+    <sys:String x:Key="Str_About_CopyDiagnostics">Диагностиканы көшіру</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">Қолдау сұрауы үшін нұсқаны, Windows-ты, баптауларды және сандарды көшіреді. Кездесу мәтіні, атаулар, мекенжайлар, жолдар не сілтемелер жоқ, ештеңе жіберілмейді.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">Диагностика алмасу буферінде. Хатыңызға қойыңыз; ештеңе жіберілген жоқ.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">Алмасу буфері бос емес. Қайталап көріңіз.</sys:String>
     <sys:String x:Key="Str_Location_NoResults">Мекенжай ұсыныстары жоқ</sys:String>
     <sys:String x:Key="Str_Fld_Description">СИПАТТАМАСЫ</sys:String>
     <sys:String x:Key="Str_Fld_Attendees">ҚАТЫСУШЫЛАР</sys:String>

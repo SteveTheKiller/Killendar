@@ -74,6 +74,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Added "This and following" when changing or deleting one date of a repeating appointment. The series ends the day before, and the change goes to that date and every later one as a new series that keeps their single-date edits and skipped dates. One undo puts it back.
 - Added time zones, off until "Show time zones" is ticked in the date settings. An appointment can then be given a time zone, its times are typed on that clock and it keeps that clock when either place changes its clocks, and Week and Day can show a second zone's hours beside this computer's.
 - Added showing other Killendars beside the open one: right-click the Killendars button and tick them. Each shows in its own color and is read only, so new appointments and changes go to the open one. An encrypted one stays locked until its own password is typed, one that cannot be read is marked and does not stop the rest, and locking the app locks them too.
+- Added Copy diagnostics in About: a short report for a support request with the version, Windows, settings and counts, and no appointment content, names, addresses, paths or links. Nothing is sent.
+- Added a plain-language guide to importing, repeats, time zones, reminders, backups and restore, privacy and the command line.
 
 ### Changed
 - Light is shades of gray with nothing white: the background, sidebar and footer are the darkest gray (#cccccc), menus and bars a step lighter, then panes, then fields.

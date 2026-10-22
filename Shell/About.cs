@@ -80,6 +80,19 @@ namespace Killendar.Shell
 
         private void AboutUpdateButton_Click(object sender, RoutedEventArgs e) => _about.Update();
 
+        private void AboutDiagnostics_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Clipboard.SetText(Services.Diagnostics.Build(_store));
+                StatusText.Text = Loc("Str_About_DiagnosticsCopied");
+            }
+            catch (System.Runtime.InteropServices.ExternalException)
+            {
+                StatusText.Text = Loc("Str_About_DiagnosticsFailed");   // another program is holding the clipboard
+            }
+        }
+
         private void AboutStartupUpdateCheck_Click(object sender, RoutedEventArgs e)
             => _about.SetStartupCheck(AboutStartupUpdateCheck.IsChecked == true);
 

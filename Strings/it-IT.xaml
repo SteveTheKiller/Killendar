@@ -67,6 +67,10 @@
     <sys:String x:Key="Str_TT_OpenInMaps">Apri questo luogo nelle mappe</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">Suggerimenti di indirizzi</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">Usa il servizio Photon/Komoot</sys:String>
+    <sys:String x:Key="Str_About_CopyDiagnostics">Copia diagnostica</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">Copia versione, Windows, impostazioni e conteggi per una richiesta di assistenza. Nessun testo degli appuntamenti, nome, indirizzo, percorso o link, e non viene inviato nulla.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">La diagnostica è negli appunti. Incollala nel messaggio; non è stato inviato nulla.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">Gli appunti sono occupati. Riprova.</sys:String>
     <sys:String x:Key="Str_Location_NoResults">Nessun suggerimento di indirizzo</sys:String>
     <sys:String x:Key="Str_Fld_Description">DESCRIZIONE</sys:String>
     <sys:String x:Key="Str_Fld_Attendees">PARTECIPANTI</sys:String>

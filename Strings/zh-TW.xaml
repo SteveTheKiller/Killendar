@@ -545,6 +545,10 @@
     <sys:String x:Key="Str_Fld_Through">至</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">地址建議</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">使用 Photon/Komoot 服務</sys:String>
+    <sys:String x:Key="Str_About_CopyDiagnostics">複製診斷資訊</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">複製版本、Windows、設定和數量，用於支援請求。不含約會內容、名稱、地址、路徑或連結，也不會傳送任何內容。</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">診斷資訊已複製到剪貼簿。請貼到你的訊息中；未傳送任何內容。</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">剪貼簿正忙。請再試一次。</sys:String>
     <sys:String x:Key="Str_Location_NoResults">沒有地址建議</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">選擇日期</sys:String>
     <sys:String x:Key="Str_A11y_StartDate">開始日期</sys:String>

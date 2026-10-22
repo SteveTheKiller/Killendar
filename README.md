@@ -4,23 +4,27 @@
 
 Free and open-source calendar for Windows with no account, no sync, and no telemetry. Month, week, day and agenda views, repeating appointments, color categories, iCalendar import and export, and optional AES-256 encryption at rest. Your appointments live in a single `.kcal` file on your own machine - an ordinary SQLite database until you put a password on it. Install or run portable. Single Windows EXE, ~5 MB, no runtime install required.
 
-Internals, formats, storage details, and limits live on the [technical page](https://killendar.net/technical.html).
+How importing, repeats, reminders, backups, privacy and the command line work is in the [guide](docs/guide.md). Internals, formats, storage details, and limits live on the [technical page](https://killendar.net/technical.html).
 
 ## Features
 
 - Four views - month, week, day and agenda - with one shared previous / next / today control; Month zooms from one to six visible weeks and draws multi-day appointments as continuous runs
 - Appointments edited in a slide-out sidebar panel, not a dialog: title, start and end, all-day, location, description and attendees
-- Repeating appointments - daily, weekly on the days you tick, monthly or yearly, every N of those, ending never, after a count, or on a date - with per-date exceptions; editing or deleting one date asks whether you mean just that date or the whole series
+- Repeating appointments - daily, weekly on the days you tick, monthly on a date or on the first to fourth or last weekday, or yearly, every N of those, ending never, after a count, or on a date - with per-date exceptions; editing or deleting one date offers just that date, this and following, or the whole series
+- Reminders with snooze and dismiss, shown when they come due and caught up after Killendar was closed, with a tray notification while it sits in the tray
+- Search, undo, a Recently deleted list kept for 30 days, and verified daily backups going back about five weeks that restore as a new Killendar
+- Duplicate an appointment, save templates, set your work days and hours, see when appointments overlap, and move them by keyboard
+- Optional time zones per appointment, with a second zone's hours beside your own in Week and Day
 - Drag to move appointments across times and days; overlapping appointments sit side by side instead of hiding one behind the other
 - Color categories you define, painting every view; a 5-day work week toggle and a grid density control down to quarter hours
-- Import and export in the formats people actually hand you: iCalendar (.ics, RFC 5545) both ways, CSV in Outlook's column format both ways, saved email invites (.eml) in, and a themed month-by-month web page out with a print stylesheet
+- Import and export in the formats people actually hand you: iCalendar (.ics, RFC 5545) both ways, CSV in Outlook's column format both ways, saved email invites (.eml) in, and a themed web page out in Month, Week, Day or Agenda layout with a print stylesheet
 - Optional encryption: the lock button puts a password on a Killendar and it is encrypted at rest with SQLCipher (AES-256, per-page HMAC-SHA512); opt-in, so no password means a plain readable SQLite file
-- As many Killendars as you like - work, on-call, family - each its own `.kcal` file with its own password or none; keep them in the default profile folder, another folder you choose, or beside the portable executable
+- As many Killendars as you like - work, on-call, family - each its own `.kcal` file with its own password or none; keep them in the default profile folder, another folder you choose, or beside the portable executable; show others beside the open one, each in its own color and read only
 - Thirteen themes - Dark, Light, Black, 98SE, Blood, Greed, Cyanotic, Ectoplasm, Decay, Mourning, Sepulchre, Delirium and Malaise - four of them (Dark, Light, Black and 98SE) take eight accent hues each, so 41 looks in all; twenty languages switchable without a restart (contribute via `TRANSLATING.md`)
 - Keyboard driven with single-key shortcuts; full keyboard shortcut overlay on F1 with list and visual keyboard views
 - Runs portable, or self-installs per-user (no UAC) or machine-wide (`/silent` for scripted deployment); uninstalls cleanly and never deletes your appointments
 - Verified code signing shown in the About card, checked with WinVerifyTrust rather than just read off the file
-- Local-only: no account and no telemetry. The only connection it makes on its own is a check for updates at startup, which you can turn off in About
+- Local-only: no account and no telemetry. The only connection it makes on its own is a check for updates at startup, which you can turn off in About. Copy diagnostics in About gives a support report with no appointment content, names, addresses or paths, and sends nothing
 
 ## Screenshots
 

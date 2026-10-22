@@ -545,6 +545,10 @@
     <sys:String x:Key="Str_Fld_Through">BİTİŞ</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">Adres önerileri</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">Photon/Komoot hizmetini kullan</sys:String>
+    <sys:String x:Key="Str_About_CopyDiagnostics">Tanılamayı kopyala</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">Destek isteği için sürümü, Windows sürümünü, ayarları ve sayıları kopyalar. Randevu metni, ad, adres, yol veya bağlantı yoktur ve hiçbir şey gönderilmez.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">Tanılama panoda. İletinize yapıştırın; hiçbir şey gönderilmedi.</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">Pano meşgul. Yeniden deneyin.</sys:String>
     <sys:String x:Key="Str_Location_NoResults">Adres önerisi yok</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">Bir tarih seç</sys:String>
     <sys:String x:Key="Str_A11y_StartDate">Başlangıç tarihi</sys:String>

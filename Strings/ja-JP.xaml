@@ -545,6 +545,10 @@
     <sys:String x:Key="Str_Fld_Through">終了</sys:String>
     <sys:String x:Key="Str_About_PhotonLookup">住所候補</sys:String>
     <sys:String x:Key="Str_About_PhotonPrivacy">Photon/Komoot サービスを使用</sys:String>
+    <sys:String x:Key="Str_About_CopyDiagnostics">診断情報をコピー</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsHint">サポート依頼用に、バージョン、Windows、設定、件数をコピーします。予定の内容、名前、アドレス、パス、リンクは含まれず、何も送信されません。</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsCopied">診断情報をクリップボードにコピーしました。メッセージに貼り付けてください。何も送信されていません。</sys:String>
+    <sys:String x:Key="Str_About_DiagnosticsFailed">クリップボードが使用中です。もう一度お試しください。</sys:String>
     <sys:String x:Key="Str_Location_NoResults">住所候補がありません</sys:String>
     <sys:String x:Key="Str_TT_ChooseDate">日付を選択</sys:String>
     <sys:String x:Key="Str_A11y_StartDate">開始日</sys:String>
