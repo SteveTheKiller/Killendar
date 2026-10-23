@@ -15,54 +15,7 @@ namespace Killendar.Controls
     {
         // ── Navigation ───────────────────────────────────────────────────────────
 
-        private void NavigateTo(string dir)
-        {
-            if (string.IsNullOrWhiteSpace(dir) || !Directory.Exists(dir)) return;
-
-            _navigating = true;
-            _currentDir  = dir;
-            PathBox.Text = dir;
-            _raw.Clear();
-
-            try
-            {
-                // The toggle gates two things together: attribute Hidden/System AND leading-dot
-                // names - the Unix convention is all over a Windows home folder (.gradle, .ssh)
-                // and those carry no Hidden attribute. Same gate in the folder tree (FolderTree.cs).
-                foreach (var sub in Directory.EnumerateDirectories(dir))
-                {
-                    DirectoryInfo info;
-                    try { info = new DirectoryInfo(sub); } catch { continue; }
-                    if (!_showHidden)
-                    {
-                        if ((info.Attributes & (FileAttributes.Hidden | FileAttributes.System)) != 0) continue;
-                        if (info.Name.StartsWith(".", StringComparison.Ordinal)) continue;
-                    }
-                    _raw.Add(new PickerEntry(info.Name, sub, true, 0, SafeTime(() => info.LastWriteTime)));
-                }
-                foreach (var file in Directory.EnumerateFiles(dir))
-                {
-                    FileInfo fi;
-                    try { fi = new FileInfo(file); } catch { continue; }
-                    if (!_showHidden)
-                    {
-                        if ((fi.Attributes & (FileAttributes.Hidden | FileAttributes.System)) != 0) continue;
-                        if (fi.Name.StartsWith(".", StringComparison.Ordinal)) continue;
-                    }
-                    _raw.Add(new PickerEntry(fi.Name, file, false, SafeLen(fi), SafeTime(() => fi.LastWriteTime)));
-                }
-            }
-            catch { /* unauthorized / unreadable - show what we have */ }
-
-            ApplySort();
-            UpButton.IsEnabled = Directory.GetParent(dir) != null;
-            UpdateInfoSummary();
-            SyncPlacesSelection();
-            _navigating = false;
-
-            RecordRecent(dir);
-            _ = RevealInTree(dir);
-        }
+        private void NavigateTo(string dir) => DirectoryListingTask = NavigateDirectoryAsync(dir);
 
         private static DateTime SafeTime(Func<DateTime> get)
         {

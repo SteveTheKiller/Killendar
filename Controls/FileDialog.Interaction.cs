@@ -24,6 +24,7 @@ namespace Killendar.Controls
         /// </summary>
         private void Accept()
         {
+            if (IsDirectoryListingBusy || !IsDirectoryListingAvailable) return;
             if (_mode == FileDialogMode.Folder)
             {
                 if (!Directory.Exists(_currentDir)) return;

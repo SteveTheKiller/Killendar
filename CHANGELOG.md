@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.4.1] - Unreleased
 
 ### Fixed
+- File dialogs stay responsive on slow or crowded folders, cancel stale loads and identify incomplete listings.
 - Black table headers match the content surface, and softer grain keeps dark surfaces from looking gray.
 
 ### Added
