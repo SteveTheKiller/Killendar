@@ -60,4 +60,3 @@ Be prepared to revise an approved contribution after review. Contributions must 
 ## Project-specific guidance
 
 Preserve calendar files, recurrence rules, time-zone behavior, and imported data. Include a small example for changes to date calculations or interchange formats.
-
