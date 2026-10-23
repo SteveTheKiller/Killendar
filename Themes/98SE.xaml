@@ -177,7 +177,7 @@
     <sys:Double x:Key="AboutCloseHeight" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">16</sys:Double>
     <Thickness x:Key="AboutCloseMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,4,4,0</Thickness>
     <Thickness x:Key="AboutCaptionCloseMargin">0,1,1,2</Thickness>
-    <Thickness x:Key="AboutBodyMargin">18,18,18,18</Thickness>
+    <Thickness x:Key="AboutBodyMargin">8,18,8,18</Thickness>
     <sys:String x:Key="AboutCloseGlyph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">&#xE8BB;</sys:String>
     <FontFamily x:Key="AboutCloseFont" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Segoe MDL2 Assets</FontFamily>
     <SolidColorBrush x:Key="AboutCloseFg" Color="#000000" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />

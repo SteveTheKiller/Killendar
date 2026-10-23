@@ -367,7 +367,7 @@ namespace Killendar.Services
             d["DialogTitleTextMargin"] = square ? new Thickness(4, 0, 0, 0) : new Thickness(14, 0, 0, 0);
             d["DialogCaptionCloseMargin"] = square ? new Thickness(0, 2, 3, 2) : new Thickness(0);
             if (!d.Contains("AboutCaptionCloseMargin")) d["AboutCaptionCloseMargin"] = new Thickness(0);
-            if (!d.Contains("AboutBodyMargin")) d["AboutBodyMargin"] = new Thickness(18, 10, 18, 18);
+            if (!d.Contains("AboutBodyMargin")) d["AboutBodyMargin"] = new Thickness(8, 10, 8, 18);
 
             // These keys are structural 98SE chrome. Themes are merged into one live dictionary,
             // so modern palettes must actively reset them or a switch away from 98SE leaves the
