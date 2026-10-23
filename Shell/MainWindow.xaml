@@ -1236,40 +1236,53 @@
 
                             <!-- About options belong below the raised identity pane, matching the
                                  shared KillerPDF/Killer Tools About hierarchy. -->
-                            <StackPanel Margin="0,12,0,0" HorizontalAlignment="Left">
+                            <Grid Margin="0,12,0,0" Width="{Binding ActualWidth, ElementName=AboutInfoGrid}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
                                 <CheckBox x:Name="AboutStartupUpdateCheck"
-                                          Content="{DynamicResource Str_About_StartupUpdateCheck}"
                                           FontSize="11" Margin="0,0,0,6"
-                                          Click="AboutStartupUpdateCheck_Click"/>
+                                          Click="AboutStartupUpdateCheck_Click">
+                                    <TextBlock Text="{DynamicResource Str_About_StartupUpdateCheck}" TextWrapping="Wrap"/>
+                                </CheckBox>
                                 <CheckBox x:Name="AboutStartWithWindows"
-                                          Content="{DynamicResource Str_About_StartWithWindows}"
                                           FontSize="11" Margin="0,0,0,6"
-                                          Click="AboutStartWithWindows_Click"/>
+                                          Click="AboutStartWithWindows_Click">
+                                    <TextBlock Text="{DynamicResource Str_About_StartWithWindows}" TextWrapping="Wrap"/>
+                                </CheckBox>
                                 <CheckBox x:Name="AboutCloseToTray"
-                                          Content="{DynamicResource Str_About_CloseToTray}"
                                           ToolTip="{DynamicResource Str_About_CloseToTrayHint}"
                                           FontSize="11" Margin="0,0,0,6"
-                                          Click="AboutCloseToTray_Click"/>
+                                          Click="AboutCloseToTray_Click">
+                                    <TextBlock Text="{DynamicResource Str_About_CloseToTray}" TextWrapping="Wrap"/>
+                                </CheckBox>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
                                 <CheckBox x:Name="AboutShowShortcutsInMenus" FontSize="11" Margin="0,0,0,6"
-                                          MaxWidth="{Binding ActualWidth, ElementName=AboutInfoGrid}"
                                           IsChecked="{Binding Source={x:Static kl:ShortcutHints.Current}, Path=Enabled, Mode=TwoWay}">
                                     <TextBlock Text="{DynamicResource Str_About_ShowShortcutsInMenus}" TextWrapping="Wrap"/>
                                 </CheckBox>
                                 <CheckBox x:Name="PhotonLookupToggle"
-                                          Content="{DynamicResource Str_About_PhotonLookup}"
                                           FontSize="11"
                                           Checked="PhotonLookupToggle_Changed"
-                                          Unchecked="PhotonLookupToggle_Changed"/>
+                                          Unchecked="PhotonLookupToggle_Changed">
+                                    <TextBlock Text="{DynamicResource Str_About_PhotonLookup}" TextWrapping="Wrap"/>
+                                </CheckBox>
                                 <TextBlock Text="{DynamicResource Str_About_PhotonPrivacy}"
                                            Foreground="{DynamicResource DimTextBrush}"
-                                           FontSize="10" Margin="22,2,0,0"/>
+                                           FontSize="10" Margin="22,2,0,0" TextWrapping="Wrap"/>
                                 <!-- Diagnostics.cs: copied only on this click, never sent; no appointment text, names, paths or links. -->
                                 <Button x:Name="AboutDiagnosticsButton" Style="{StaticResource OutlineButton}"
-                                        Content="{DynamicResource Str_About_CopyDiagnostics}"
                                         ToolTip="{DynamicResource Str_About_DiagnosticsHint}"
                                         HorizontalAlignment="Left" FontSize="11" Padding="10,4" Margin="0,12,0,0"
-                                        Click="AboutDiagnostics_Click"/>
-                            </StackPanel>
+                                        Click="AboutDiagnostics_Click">
+                                    <TextBlock Text="{DynamicResource Str_About_CopyDiagnostics}" TextWrapping="Wrap"/>
+                                </Button>
+                                </StackPanel>
+                            </Grid>
 
                             <Button x:Name="AboutUpdateButton" Visibility="Collapsed" Margin="0,14,0,0"
                                     HorizontalAlignment="Left" Cursor="Hand" Click="AboutUpdateButton_Click">
