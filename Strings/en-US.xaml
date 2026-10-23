@@ -278,6 +278,7 @@
     <sys:String x:Key="Str_About_UpdateAvailable">Update available: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">Downloading...</sys:String>
     <sys:String x:Key="Str_About_StartupUpdateCheck">Check for updates on startup</sys:String>
+    <sys:String x:Key="Str_About_ShowShortcutsInMenus">Show Shortcuts in Menus</sys:String>
     <sys:String x:Key="Str_About_StartWithWindows">Start with Windows</sys:String>
     <sys:String x:Key="Str_About_CloseToTray">Close to system tray</sys:String>
     <sys:String x:Key="Str_About_CloseToTrayHint">When this is on, closing the window keeps the app running in the notification area.</sys:String>

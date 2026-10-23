@@ -242,6 +242,7 @@
     <sys:String x:Key="Str_About_UpdateAvailable">Na voljo je posodobitev: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">Prenašanje...</sys:String>
     <sys:String x:Key="Str_About_StartupUpdateCheck">Ob zagonu preveri posodobitve</sys:String>
+    <sys:String x:Key="Str_About_ShowShortcutsInMenus">Prikaži bližnjice v menijih</sys:String>
     <sys:String x:Key="Str_About_StartWithWindows">Zaženi ob prijavi v Windows</sys:String>
     <sys:String x:Key="Str_About_CloseToTray">Ob zapiranju skrij v območje za obvestila</sys:String>
     <sys:String x:Key="Str_About_CloseToTrayHint">Ko je ta možnost vklopljena, program po zaprtju okna ostane v območju za obvestila.</sys:String>

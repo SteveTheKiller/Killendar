@@ -278,6 +278,7 @@
     <sys:String x:Key="Str_About_UpdateAvailable">Доступне оновлення: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">Завантаження...</sys:String>
     <sys:String x:Key="Str_About_StartupUpdateCheck">Перевіряти оновлення під час запуску</sys:String>
+    <sys:String x:Key="Str_About_ShowShortcutsInMenus">Показувати сполучення клавіш у меню</sys:String>
     <sys:String x:Key="Str_About_StartWithWindows">Запускати разом із Windows</sys:String>
     <sys:String x:Key="Str_About_CloseToTray">Згортати в системний трей під час закриття</sys:String>
     <sys:String x:Key="Str_About_CloseToTrayHint">Якщо ввімкнено, після закриття вікна застосунок продовжує працювати в області сповіщень.</sys:String>

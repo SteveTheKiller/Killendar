@@ -257,6 +257,7 @@
     <sys:String x:Key="Str_About_UpdateAvailable">Aggiornamento disponibile: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">Download in corso...</sys:String>
     <sys:String x:Key="Str_About_StartupUpdateCheck">All'avvio cerca aggiornamenti</sys:String>
+    <sys:String x:Key="Str_About_ShowShortcutsInMenus">Mostra le scorciatoie nei menu</sys:String>
     <sys:String x:Key="Str_About_StartWithWindows">Avvia all'avvio di Windows</sys:String>
     <sys:String x:Key="Str_About_CloseToTray">Chiudi nell'area di notifica</sys:String>
     <sys:String x:Key="Str_About_CloseToTrayHint">Se attivo, chiudendo la finestra l'app resta in esecuzione nell'area di notifica.</sys:String>

@@ -226,6 +226,7 @@
     <sys:String x:Key="Str_About_UpdateAvailable">K dispozici je aktualizace: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">Stahuje se...</sys:String>
     <sys:String x:Key="Str_About_StartupUpdateCheck">Kontrolovat aktualizace při spuštění</sys:String>
+    <sys:String x:Key="Str_About_ShowShortcutsInMenus">Zobrazovat zkratky v nabídkách</sys:String>
     <sys:String x:Key="Str_About_StartWithWindows">Spouštět se systémem Windows</sys:String>
     <sys:String x:Key="Str_About_CloseToTray">Zavírat do oznamovací oblasti</sys:String>
     <sys:String x:Key="Str_About_CloseToTrayHint">Když je tato volba zapnutá, zavření okna nechá aplikaci běžet v oznamovací oblasti.</sys:String>

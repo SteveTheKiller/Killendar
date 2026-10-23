@@ -226,6 +226,7 @@
     <sys:String x:Key="Str_About_UpdateAvailable">更新があります: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">ダウンロード中...</sys:String>
     <sys:String x:Key="Str_About_StartupUpdateCheck">起動時に更新を確認する</sys:String>
+    <sys:String x:Key="Str_About_ShowShortcutsInMenus">メニューにショートカットを表示</sys:String>
     <sys:String x:Key="Str_About_StartWithWindows">Windows の起動時に起動する</sys:String>
     <sys:String x:Key="Str_About_CloseToTray">閉じるときにシステム トレイに格納</sys:String>
     <sys:String x:Key="Str_About_CloseToTrayHint">オンにすると、ウィンドウを閉じてもアプリは通知領域で実行し続けます。</sys:String>

@@ -278,6 +278,7 @@
     <sys:String x:Key="Str_About_UpdateAvailable">Жаңарту қолжетімді: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">Жүктелуде...</sys:String>
     <sys:String x:Key="Str_About_StartupUpdateCheck">Іске қосылғанда жаңартуларды тексеру</sys:String>
+    <sys:String x:Key="Str_About_ShowShortcutsInMenus">Мәзірлерде пернелер тіркесімін көрсету</sys:String>
     <sys:String x:Key="Str_About_StartWithWindows">Windows-пен бірге іске қосу</sys:String>
     <sys:String x:Key="Str_About_CloseToTray">Жүйелік науаға жабу</sys:String>
     <sys:String x:Key="Str_About_CloseToTrayHint">Қосулы болса, терезені жапқанда қолданба хабарландыру аймағында жұмысын жалғастырады.</sys:String>

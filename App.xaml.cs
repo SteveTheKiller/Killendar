@@ -194,6 +194,7 @@ namespace Killendar
             // uses the same pair for size, position and maximized state.
             Services.ThemeManager.GetSetting = Settings.Get;
             Services.ThemeManager.SetSetting = Settings.Set;
+            KillerFamily.Layout.ShortcutHints.Initialize(Settings.Get, Settings.Set);
 
             // Restores the saved theme before the window is built, so there is no flash of the
             // default palette. With nothing saved this lands on Dark + Red.

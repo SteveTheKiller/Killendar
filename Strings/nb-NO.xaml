@@ -278,6 +278,7 @@
     <sys:String x:Key="Str_About_UpdateAvailable">Oppdatering tilgjengelig: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">Laster ned...</sys:String>
     <sys:String x:Key="Str_About_StartupUpdateCheck">Se etter oppdateringer ved oppstart</sys:String>
+    <sys:String x:Key="Str_About_ShowShortcutsInMenus">Vis hurtigtaster i menyer</sys:String>
     <sys:String x:Key="Str_About_StartWithWindows">Start når Windows starter</sys:String>
     <sys:String x:Key="Str_About_CloseToTray">Lukk til systemstatusfeltet</sys:String>
     <sys:String x:Key="Str_About_CloseToTrayHint">Når dette er på, fortsetter appen å kjøre i systemstatusfeltet når du lukker vinduet.</sys:String>

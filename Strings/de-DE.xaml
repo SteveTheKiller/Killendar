@@ -226,6 +226,7 @@
     <sys:String x:Key="Str_About_UpdateAvailable">Update verfügbar: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">Wird heruntergeladen...</sys:String>
     <sys:String x:Key="Str_About_StartupUpdateCheck">Beim Start nach Updates suchen</sys:String>
+    <sys:String x:Key="Str_About_ShowShortcutsInMenus">Tastenkürzel in Menüs anzeigen</sys:String>
     <sys:String x:Key="Str_About_StartWithWindows">Mit Windows starten</sys:String>
     <sys:String x:Key="Str_About_CloseToTray">In den Infobereich schließen</sys:String>
     <sys:String x:Key="Str_About_CloseToTrayHint">Ist dies an, läuft die App nach dem Schließen des Fensters im Infobereich weiter.</sys:String>

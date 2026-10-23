@@ -226,6 +226,7 @@
     <sys:String x:Key="Str_About_UpdateAvailable">আপডেট পাওয়া গেছে: {0}</sys:String>
     <sys:String x:Key="Str_About_Downloading">ডাউনলোড হচ্ছে...</sys:String>
     <sys:String x:Key="Str_About_StartupUpdateCheck">অ্যাপ চালু হলে আপডেট পরীক্ষা করুন</sys:String>
+    <sys:String x:Key="Str_About_ShowShortcutsInMenus">মেনুতে শর্টকাট দেখান</sys:String>
     <sys:String x:Key="Str_About_StartWithWindows">Windows চালু হলে চালু করুন</sys:String>
     <sys:String x:Key="Str_About_CloseToTray">সিস্টেম ট্রেতে বন্ধ করুন</sys:String>
     <sys:String x:Key="Str_About_CloseToTrayHint">এটি চালু থাকলে, উইন্ডো বন্ধ করলেও অ্যাপটি নোটিফিকেশন এরিয়াতে চলতে থাকে।</sys:String>
