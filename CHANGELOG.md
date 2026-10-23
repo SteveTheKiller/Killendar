@@ -6,6 +6,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ## [1.4.1] - Unreleased
 
+### Fixed
+- Black table headers match the content surface.
+
 ### Added
 - About can hide shortcut hints in menus and tooltips without disabling keyboard shortcuts.
 

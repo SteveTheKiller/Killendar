@@ -66,6 +66,7 @@
     <DropShadowEffect x:Key="TextStroke"     Color="Black" BlurRadius="3" ShadowDepth="0.8" Direction="270" Opacity="0.7"/>
 
     <SolidColorBrush x:Key="AccentLogo" Color="#e0d49a"/>
+    <SolidColorBrush x:Key="TabActiveRingBrush" Color="#e0d49a"/>
     <CornerRadius x:Key="AccentSwatchCornerRadius">9</CornerRadius>
     <SolidColorBrush x:Key="RadioAccent"    Color="#e0d49a" po:Freeze="True"/>
     <CornerRadius x:Key="FlyoutCornerRadius">4</CornerRadius>

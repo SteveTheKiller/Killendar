@@ -21,7 +21,7 @@
     <SolidColorBrush x:Key="BackgroundBrush"     Color="#000000" po:Freeze="True"/>
     <SolidColorBrush x:Key="SurfaceBrush"        Color="#000000" po:Freeze="True"/>
     <SolidColorBrush x:Key="PaneBrush"           Color="#0a0a0a" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TableHeaderBrush"    Color="#000000" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TableHeaderBrush"    Color="#0a0a0a" po:Freeze="True"/>
     <SolidColorBrush x:Key="CardBorderBrush"     Color="#2a2a2a" po:Freeze="True"/>
     <SolidColorBrush x:Key="PaneBorderBrush"     Color="#2a2a2a" po:Freeze="True"/>
     <!-- DWM window frame: pane borders are intentionally near-black here, so the
