@@ -79,7 +79,9 @@ namespace Killendar.Shell
 
             bool maximized = WindowState == WindowState.Maximized;
             // Windows grays out what does not apply: you cannot Restore a normal window, cannot
-            // Maximize an already-maximized one, and cannot Move or Size while maximized.
+            // Maximize an already-maximized one, and cannot Move or Size while maximized. It also
+            // bolds the default item: Restore when maximized, Close otherwise.
+            int defaultCommand = maximized ? SC_RESTORE : SC_CLOSE;
             foreach (object o in _sysMenu.Items)
             {
                 if (o is not MenuItem mi || mi.Tag is not int cmd) continue;
@@ -90,6 +92,7 @@ namespace Killendar.Shell
                     SC_MOVE or SC_SIZE => !maximized,
                     _ => true,
                 };
+                mi.FontWeight = cmd == defaultCommand ? FontWeights.Bold : FontWeights.Normal;
             }
 
             _sysMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Absolute;
