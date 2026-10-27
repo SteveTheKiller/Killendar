@@ -26,17 +26,19 @@ namespace Killendar.Controls
         private const int DWMWCP_ROUND = 2;
 
         /// <summary>Rounds or squares a window's corners. Square when maximized, so it sits flush
-        /// to the screen edges.</summary>
-        internal static void SetRoundedCorners(Window w, bool rounded)
+        /// to the screen edges. Returns true when DWM accepted the preference, so a caller can tell
+        /// whether the system draws the edge (Windows 11) or the window must draw its own; callers
+        /// that do not care ignore the result.</summary>
+        internal static bool SetRoundedCorners(Window w, bool rounded)
         {
             try
             {
                 var hwnd = new WindowInteropHelper(w).Handle;
-                if (hwnd == IntPtr.Zero) return;
+                if (hwnd == IntPtr.Zero) return false;
                 int pref = rounded ? DWMWCP_ROUND : DWMWCP_DONOTROUND;
-                DwmSetWindowAttribute(hwnd, DWMWA_WINDOW_CORNER_PREFERENCE, ref pref, sizeof(int));
+                return DwmSetWindowAttribute(hwnd, DWMWA_WINDOW_CORNER_PREFERENCE, ref pref, sizeof(int)) == 0;
             }
-            catch { /* pre-Win11: attribute unsupported */ }
+            catch { return false; /* pre-Win11: attribute unsupported */ }
         }
 
         /// <summary>
@@ -56,7 +58,7 @@ namespace Killendar.Controls
                 {
                     // COLORREF is 0x00BBGGRR, not RGB.
                     int colorref = b.Color.R | (b.Color.G << 8) | (b.Color.B << 16);
-                    DwmSetWindowAttribute(hwnd, DWMWA_BORDER_COLOR, ref colorref, sizeof(int));
+                    _ = DwmSetWindowAttribute(hwnd, DWMWA_BORDER_COLOR, ref colorref, sizeof(int));
                 }
             }
             catch { /* pre-Win11: attribute unsupported */ }

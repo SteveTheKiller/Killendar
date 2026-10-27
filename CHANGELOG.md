@@ -13,6 +13,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Changed
 - Themes, palettes and control styles now come from the shared KillerUI template, so buttons, caption buttons, menus and the 98SE frame look the same as in the other Killer apps.
 - Accent buttons such as Save and OK rest with an accent outline, as in the other Killer apps, and the About card, the window menu and the signature check share the KillerUI template code.
+- Confirm prompts use the family dialog frame shared with the other Killer apps, and their Cancel button follows the chosen language. The window chrome, toolbar, app size, tray, folder tree and update notices now run on the KillerUI template code with Killendar's own behavior kept.
 
 ### Added
 - About groups settings in two columns and can hide shortcut hints in menus and tooltips without disabling keyboard shortcuts.

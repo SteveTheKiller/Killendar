@@ -100,10 +100,10 @@ namespace Killendar.Shell
         {
             var dlg = new Controls.ConfirmDialog(Loc("Str_Dlg_UnsavedDraftHead"), Loc("Str_Dlg_DiscardDraftBody"),
                 Loc("Str_Btn_Save"), Loc("Str_Btn_KeepEditing")) { Owner = this };
-            dlg.ShowAlternative(Loc("Str_Btn_Discard"));
+            dlg.AddChoice("discard", Loc("Str_Btn_Discard"));
             dlg.ShowDialog();
             if (dlg.Confirmed) return DraftChoice.Save;
-            if (dlg.AltChosen) return DraftChoice.Discard;
+            if (dlg.Choice == "discard") return DraftChoice.Discard;
             FieldTitle.Focus();
             return DraftChoice.KeepEditing;
         }

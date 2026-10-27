@@ -16,6 +16,8 @@ using Killendar.Controls;
 //   Controls/DwmChrome        - rounded corners and the themed frame border
 //   Controls/WindowPlacement  - size/position persistence
 //   Controls/GrainTexture     - the shared film-grain tile
+//   Controls/SnapLayouts      - Windows 11 snap layouts on the maximize button
+//   Controls/WorkAreaFit      - keeps the opening window inside its monitor's work area
 //
 // MainWindow.xaml is expected to name: RootGrid (Opacity="0" so FadeInContent can reveal it),
 // MinimizeBtn / MaximizeBtn / CloseBtn, ResizeGrip, and any *GrainBrush layers.
@@ -23,22 +25,12 @@ namespace Killendar.Shell
 {
     public partial class MainWindow
     {
-        // The first close request is held while the whole window fades. The helper sets this
-        // before issuing its own deferred Close(), so Alt+F4, the caption button, the system
-        // menu and Application.Shutdown all share the same exit animation without recursion.
-        private bool _closeFaded;
-        private WindowState _stateBeforeMinimize = WindowState.Normal;
-        private bool _restoringFromMinimize;
-
         // Grain brush layers in MainWindow.xaml. All optional - Apply skips the ones absent.
-        // FlyoutGrainBrush is gone: flyouts share the GrainTileBrush resource through the
-        // FlyoutGrain style (Controls.xaml), so they no longer need a private brush wired up here.
         private static readonly string[] GrainBrushNames =
-            ["GrainBrush", "TitleGrainBrush", "ToolbarGrainBrush", "StatusGrainBrush"];
+            { "GrainBrush", "TitleGrainBrush", "ToolbarGrainBrush", "StatusGrainBrush", "FlyoutGrainBrush" };
 
         private void MainWindow_SourceInitialized(object? sender, EventArgs e)
         {
-            if (WindowState != WindowState.Minimized) _stateBeforeMinimize = WindowState;
             var hwnd = new WindowInteropHelper(this).Handle;
             HwndSource.FromHwnd(hwnd)?.AddHook(WndProc);
             // Windows 11 snap layouts flyout on the maximize button. Added after WindowChrome's
@@ -47,8 +39,7 @@ namespace Killendar.Shell
             // After RestoreWindowPlacement (constructor) and before the first show: a default or
             // saved size larger than this monitor's work area is shrunk and moved onto it.
             WorkAreaFit.Fit(this);
-            DwmChrome.SetRoundedCorners(this, rounded: Services.ThemeManager.Current != Services.Theme.SE98
-                                                       && WindowState == WindowState.Normal);
+            DwmChrome.SetRoundedCorners(this, rounded: RoundedCornersWanted());
             DwmChrome.SetThemeBorder(this);
         }
 
@@ -66,58 +57,31 @@ namespace Killendar.Shell
             base.OnClosed(e);
         }
 
-        // The same WPF shutdown flag CloseToTray reads; that family file stays a verbatim copy.
-        private static readonly System.Reflection.PropertyInfo? s_isShuttingDown = typeof(Application)
-            .GetProperty("IsShuttingDown", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-
-        private static bool ShutdownStarted() => s_isShuttingDown?.GetValue(null) is true;
-
-        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
-        {
-            // Unsaved appointment input is asked about BEFORE the tray can hide the window. Once
-            // hidden, the only way out is the tray's Exit, a shutdown, which ignores a cancel and
-            // so cannot ask; asking here means a hidden window never holds unsaved input. The
-            // fade's second pass through here finds nothing left to ask.
-            if (!_closeFaded && !ShutdownStarted() && !_appointments.ConfirmReplace())
-            {
-                e.Cancel = true;
-                return;
-            }
-            // Close to system tray: hide before the fade, so the window comes back as it was.
-            if (_tray.HideInstead(e)) return;
-            if (Anim.FadeOutAndClose(this, ref _closeFaded))
-            {
-                e.Cancel = true;
-                return;
-            }
-            base.OnClosing(e);
-        }
-
         protected override void OnStateChanged(EventArgs e)
         {
             base.OnStateChanged(e);
-            if (WindowState == WindowState.Minimized)
-            {
-                _restoringFromMinimize = true;
-            }
-            else
-            {
-                if (_restoringFromMinimize && WindowState == WindowState.Normal &&
-                    _stateBeforeMinimize == WindowState.Maximized)
-                {
-                    _restoringFromMinimize = false;
-                    WindowState = WindowState.Maximized;
-                    return;
-                }
-                _restoringFromMinimize = false;
-                _stateBeforeMinimize = WindowState;
-            }
             // Square the corners when maximized (flush to the screen edges), round when floating.
-            DwmChrome.SetRoundedCorners(this, rounded: Services.ThemeManager.Current != Services.Theme.SE98
-                                                       && WindowState == WindowState.Normal);
+            DwmChrome.SetRoundedCorners(this, rounded: RoundedCornersWanted());
             // Maximize glyph (Segoe MDL2) toggles to a restore glyph when maximized.
-            MaximizeBtn?.Content = WindowState == WindowState.Maximized ? "\uE923" : "\uE922";
+            if (MaximizeBtn != null)
+                MaximizeBtn.Content = WindowState == WindowState.Maximized ? "\uE923" : "\uE922";
+            AfterWindowStateChanged();
         }
+
+        private bool RoundedCornersWanted()
+        {
+            bool rounded = WindowState == WindowState.Normal;
+            AdjustRoundedCorners(ref rounded);
+            return rounded;
+        }
+
+        /// <summary>App hook: change whether the window asks DWM for rounded corners (square on a
+        /// flat-caption theme such as 98SE).</summary>
+        partial void AdjustRoundedCorners(ref bool rounded);
+
+        /// <summary>App hook: runs after the kit's own state-change work, for example to restore
+        /// to maximized after a minimize.</summary>
+        partial void AfterWindowStateChanged();
 
         // ---- window messages ----
 
@@ -130,13 +94,6 @@ namespace Killendar.Shell
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            // First: swallow the two messages that raise Windows' stock white system menu and
-            // show the themed one instead. (SystemMenu.cs)
-            if (TryHandleSystemMenu(msg, wParam, lParam))
-            {
-                handled = true;
-                return IntPtr.Zero;
-            }
             if (msg == WM_ERASEBKGND)
             {
                 // WPF paints the whole client area itself, so nothing should erase the background to
@@ -172,17 +129,16 @@ namespace Killendar.Shell
             mmi.ptMaxTrackSize.x = mmi.ptMaxSize.x;
             mmi.ptMaxTrackSize.y = mmi.ptMaxSize.y;
 
-            // ptMinTrackSize MUST be filled in here too. This handler sets handled = true, which
-            // takes WM_GETMINMAXINFO away from WPF - and WM_GETMINMAXINFO is exactly how WPF
-            // enforces MinWidth/MinHeight during a drag-resize. Leaving these two fields at the OS
-            // default let the window be dragged far below MinWidth 820 / MinHeight 560, at which
-            // point the fixed chrome (36px title + 42px toolbar + 24px footer, and the 330px
-            // appointment panel) no longer fits and the calendar card is clipped rather than
-            // resized. That is the "resizing cuts off the content" bug. (2026-07-30)
+            // ptMinTrackSize MUST be set here too. This handler marks the message handled, which
+            // takes WM_GETMINMAXINFO away from WPF - and that message is exactly how WPF enforces
+            // MinWidth/MinHeight during a drag-resize. Leave these at the OS default and the window
+            // can be dragged far below its minimum, at which point fixed chrome no longer fits and
+            // the content is CLIPPED rather than resized. (2026-07-30) KillerShell always had
+            // this; the kit did not, so KillerNotes, KillerScan, KillerPDF and Killendar all
+            // inherited the bug.
             //
-            // MINMAXINFO is in DEVICE pixels and MinWidth/MinHeight are in DIPs, so this has to go
-            // through the window's own transform or the limit is wrong on any display that is not
-            // at 100%.
+            // MINMAXINFO is in DEVICE pixels and MinWidth/MinHeight are DIPs, so go through the
+            // window's own transform or the limit is wrong on any display not at 100%.
             var src = PresentationSource.FromVisual(this);
             double sx = src?.CompositionTarget?.TransformToDevice.M11 ?? 1.0;
             double sy = src?.CompositionTarget?.TransformToDevice.M22 ?? 1.0;

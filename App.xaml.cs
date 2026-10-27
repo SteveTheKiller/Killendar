@@ -213,11 +213,7 @@ namespace Killendar
             // Locale after the theme, and still before the window: the string dictionary has to be
             // in place before any {DynamicResource Str_*} in MainWindow.xaml is first resolved.
             // The family LocaleManager reads and writes "Locale" through the ThemeManager hooks wired
-            // above. Killendar saved Czech and Italian as "Cs" and "It" before it took the family
-            // names; the kit maps the old "Ja" itself.
-            string? savedLocale = Settings.Get("Locale");
-            if (savedLocale == "Cs") Settings.Set("Locale", "CsCZ");
-            else if (savedLocale == "It") Settings.Set("Locale", "ItIT");
+            // above. The kit maps Killendar's older "Cs" and "It" names itself.
             Services.LocaleManager.Initialize();
 
             Services.DateFormatManager.GetSetting = Settings.Get;

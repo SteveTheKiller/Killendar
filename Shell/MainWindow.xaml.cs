@@ -45,7 +45,9 @@ namespace Killendar.Shell
 
             RestoreWindowPlacement();
             InitAppScale();
+            InitAppScaleExtras();   // AppScale.Extras.cs
             SourceInitialized += MainWindow_SourceInitialized;
+            InitChromeExtras();   // Chrome.Extras.cs
             ApplyGrainTexture();
             Loaded += (_, _) =>
             {
