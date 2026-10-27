@@ -378,6 +378,7 @@
     <sys:String x:Key="Str_Dlg_AllFiles">所有文件</sys:String>
     <sys:String x:Key="Str_Dlg_NoMatchingFiles">此处没有与当前文件类型匹配的项。</sys:String>
     <sys:String x:Key="Str_Dlg_NoSuchFolder">该文件夹不存在。</sys:String>
+    <sys:String x:Key="Str_Dlg_Preview">预览</sys:String>
     <sys:String x:Key="Str_Dlg_NoSuchFile">该文件不存在。</sys:String>
     <sys:String x:Key="Str_Dlg_OverwriteMsg">要替换 {0} 吗？</sys:String>
     <sys:String x:Key="Str_Sum_Counts">{0} 个文件夹，{1} 个文件</sys:String>

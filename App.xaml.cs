@@ -88,6 +88,8 @@ namespace Killendar
             // First, so every path below (helpers, setup prompts, the CLI) builds the family
             // theme engine with Killendar's defaults and tokens (Services/AppTheme.cs).
             Services.AppTheme.Configure();
+            // Killendar's file picker keeps plain shell icons for pictures in the icon grid.
+            Controls.PickerEntry.ShowThumbnails = false;
             if (Array.Exists(e.Args, a => string.Equals(a, TrustedUpdate.HelperArgument, StringComparison.OrdinalIgnoreCase)))
             {
                 Shutdown(TrustedUpdate.Apply(e.Args));

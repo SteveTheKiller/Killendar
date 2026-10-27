@@ -443,6 +443,7 @@
     <sys:String x:Key="Str_Dlg_AllFiles">Усі файли</sys:String>
     <sys:String x:Key="Str_Dlg_NoMatchingFiles">Тут немає нічого, що відповідає поточному типу файлу.</sys:String>
     <sys:String x:Key="Str_Dlg_NoSuchFolder">Такої папки не існує.</sys:String>
+    <sys:String x:Key="Str_Dlg_Preview">Попередній перегляд</sys:String>
     <sys:String x:Key="Str_Dlg_NoSuchFile">Такого файлу не існує.</sys:String>
     <sys:String x:Key="Str_Dlg_OverwriteMsg">Замінити {0}?</sys:String>
     <sys:String x:Key="Str_Sum_Counts">Папок: {0}, файлів: {1}</sys:String>

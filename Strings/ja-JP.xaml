@@ -378,6 +378,7 @@
     <sys:String x:Key="Str_Dlg_AllFiles">すべてのファイル</sys:String>
     <sys:String x:Key="Str_Dlg_NoMatchingFiles">現在のファイルの種類に一致するものはありません。</sys:String>
     <sys:String x:Key="Str_Dlg_NoSuchFolder">そのフォルダーは存在しません。</sys:String>
+    <sys:String x:Key="Str_Dlg_Preview">プレビュー</sys:String>
     <sys:String x:Key="Str_Dlg_NoSuchFile">そのファイルは存在しません。</sys:String>
     <sys:String x:Key="Str_Dlg_OverwriteMsg">{0} を置き換えますか?</sys:String>
     <sys:String x:Key="Str_Sum_Counts">フォルダー {0}、ファイル {1}</sys:String>

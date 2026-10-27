@@ -378,6 +378,7 @@
     <sys:String x:Key="Str_Dlg_AllFiles">Todos los archivos</sys:String>
     <sys:String x:Key="Str_Dlg_NoMatchingFiles">Aquí no hay nada que coincida con el tipo de archivo actual.</sys:String>
     <sys:String x:Key="Str_Dlg_NoSuchFolder">Esa carpeta no existe.</sys:String>
+    <sys:String x:Key="Str_Dlg_Preview">Vista previa</sys:String>
     <sys:String x:Key="Str_Dlg_NoSuchFile">Ese archivo no existe.</sys:String>
     <sys:String x:Key="Str_Dlg_OverwriteMsg">¿Reemplazar {0}?</sys:String>
     <sys:String x:Key="Str_Sum_Counts">{0} carpeta(s), {1} archivo(s)</sys:String>
