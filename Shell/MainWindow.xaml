@@ -263,21 +263,8 @@
                                    FontFamily="{DynamicResource HeadingFont}" FontSize="26"
                                    theme:HeadingAccent.Enabled="True"/>
                     </Grid>
-
-                    <!-- Overflow. Shown INSTEAD of the four view buttons when the toolbar runs out
-                         of room, which happens as soon as the appointment sidebar opens on a
-                         narrow window. Its menu carries the same four views. (ToolbarOverflow.cs) -->
-                    <Button x:Name="ViewOverflowBtn" Grid.Column="2" Content="&#xE712;"
-                            FontFamily="Segoe MDL2 Assets" FontSize="12"
-                            Style="{StaticResource ToolbarButton}" Padding="9,5"
-                            VerticalAlignment="Center" Visibility="Collapsed"
-                            Click="ViewOverflowBtn_Click">
-                        <Button.ContextMenu>
-                            <ContextMenu x:Name="ViewOverflowMenu"/>
-                        </Button.ContextMenu>
-                    </Button>
-
-                    <StackPanel x:Name="ViewTabs" Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <StackPanel x:Name="ViewTabs" Orientation="Horizontal" VerticalAlignment="Center">
                         <Button x:Name="TabMonth"  Content="{DynamicResource Str_View_Month}"  Style="{StaticResource ViewTabButton}"
                                 Padding="12,4" Margin="0" Click="ViewTab_Click" Tag="Month"
                                 ContextMenuOpening="TabMonth_ContextMenuOpening">
@@ -314,6 +301,20 @@
                                 Padding="12,4" Margin="0,0,4,0" Click="ViewTab_Click" Tag="Day"/>
                         <Button x:Name="TabAgenda" Content="{DynamicResource Str_View_Agenda}" Style="{StaticResource ViewTabButton}"
                                 Padding="12,4" Click="ViewTab_Click" Tag="Agenda"/>
+                    </StackPanel>
+
+                    <!-- Overflow. Shown as soon as anything sheds, in a row after the view buttons so
+                         it never hides under them, and alone once the views shed too (the appointment
+                         sidebar on a narrow window). Its menu carries the shed items. (ToolbarOverflow.cs) -->
+                    <Button x:Name="ViewOverflowBtn" Content="&#xE712;"
+                            FontFamily="Segoe MDL2 Assets" FontSize="12"
+                            Style="{StaticResource ToolbarButton}" Padding="9,5"
+                            VerticalAlignment="Center" Visibility="Collapsed"
+                            Click="ViewOverflowBtn_Click">
+                        <Button.ContextMenu>
+                            <ContextMenu x:Name="ViewOverflowMenu"/>
+                        </Button.ContextMenu>
+                    </Button>
                     </StackPanel>
                 </Grid>
 
