@@ -9,6 +9,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Fixed
 - File dialogs stay responsive on slow or crowded folders, cancel stale loads and identify incomplete listings.
 - Black table headers match the content surface, and softer grain keeps dark surfaces from looking gray.
+- The file picker's Accept button can no longer fire twice: it stays off while a folder is loading or an accept is already running. A mistyped folder path now returns to the last folder that worked instead of leaving an empty list.
 
 ### Changed
 - Themes, palettes and control styles now come from the shared KillerUI template, so buttons, caption buttons, menus and the 98SE frame look the same as in the other Killer apps.
