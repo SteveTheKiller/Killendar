@@ -262,6 +262,7 @@ namespace Killendar.Shell
                 SizeToolbarButton(btn, _iconSize, mode);
             }
             MonthModeBtn.Height = TabMonth.Height;
+            MonthModeBtn.MinHeight = TabMonth.MinHeight;
         }
 
         /// <summary>
@@ -364,7 +365,7 @@ namespace Killendar.Shell
         private TextBlock? GlyphFor(Button btn)
         {
             foreach (var (b, glyph, _) in ToolbarItems())
-                if (ReferenceEquals(b, btn)) return Views.CalendarChrome.MenuGlyph(glyph);
+                if (ReferenceEquals(b, btn)) return Views.CalendarChrome.MenuGlyph(glyph[0]);
             return null;
         }
 

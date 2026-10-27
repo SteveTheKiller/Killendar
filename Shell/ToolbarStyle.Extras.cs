@@ -29,26 +29,26 @@ namespace Killendar.Shell
         /// and export but render as two nearly identical pages, so the pair read as one button
         /// drawn twice. That is the lesson, not the glyphs.
         /// </summary>
-        private IEnumerable<(Button Btn, int Glyph, string LabelKey)> ToolbarItems()
+        private IEnumerable<(Button Btn, string Glyph, string LabelKey)> ToolbarItems()
         {
-            yield return (NewEventBtn, 0xE710, "Str_Btn_New");      // Add
+            yield return (NewEventBtn, "\uE710", "Str_Btn_New");      // Add
             // E8B5 / EDE1, picked from a build. The old E8DA / E8E5 pair was the
             // arrow-into-page and arrow-out-of-page glyphs - correct in meaning, but they render as
             // two nearly identical pages and read as one button drawn twice.
-            yield return (ImportBtn,   0xE8B5, "Str_Btn_Import");   // Import
-            yield return (ExportBtn,   0xEDE1, "Str_Btn_Export");   // Export
-            yield return (DeletedBtn,  0xE74D, "Str_Btn_Deleted");  // Delete (trash can), not yet confirmed from a build
-            yield return (SearchBtn,   0xE721, "Str_Btn_Search");   // Search (magnifier), not yet confirmed from a build
+            yield return (ImportBtn, "\uE8B5", "Str_Btn_Import");   // Import
+            yield return (ExportBtn, "\uEDE1", "Str_Btn_Export");   // Export
+            yield return (DeletedBtn, "\uE74D", "Str_Btn_Deleted");  // Delete (trash can), not yet confirmed from a build
+            yield return (SearchBtn, "\uE721", "Str_Btn_Search");   // Search (magnifier), not yet confirmed from a build
             // E787 is the calendar - confirmed from a build that it renders as one, so it
             // belongs on MONTH. It was on Today, and E736 (guessed as GridView) was on Month and
             // actually draws an open book. Today moved to E8D1. (2026-07-30, both picked
             // by looking at a real render rather than trusting the glyph docs - the rule this
             // file got wrong twice.)
-            yield return (TodayBtn,    0xE8D1, "Str_Btn_Today");    // Today
-            yield return (TabMonth,    0xE787, "Str_View_Month");   // Calendar          (confirmed)
-            yield return (TabWeek,     0xE8C0, "Str_View_Week");    // CalendarWeek      (confirmed)
-            yield return (TabDay,      0xE8BF, "Str_View_Day");     // CalendarDay       (confirmed)
-            yield return (TabAgenda,   0xE8FD, "Str_View_Agenda");  // List              (confirmed)
+            yield return (TodayBtn, "\uE8D1", "Str_Btn_Today");    // Today
+            yield return (TabMonth, "\uE787", "Str_View_Month");   // Calendar          (confirmed)
+            yield return (TabWeek, "\uE8C0", "Str_View_Week");    // CalendarWeek      (confirmed)
+            yield return (TabDay, "\uE8BF", "Str_View_Day");     // CalendarDay       (confirmed)
+            yield return (TabAgenda, "\uE8FD", "Str_View_Agenda");  // List              (confirmed)
         }
 
         /// <summary>The overlay label key whose shortcut a toolbar button carries (ShortcutsOverlay.cs).</summary>
@@ -74,6 +74,7 @@ namespace Killendar.Shell
             // The Month dropdown arrow is not a toolbar item, but it must stand as tall as the
             // Month button it belongs to in every size and text mode.
             MonthModeBtn.Height = TabMonth.Height;
+            MonthModeBtn.MinHeight = TabMonth.MinHeight;
             // Either change alters every button's width, so the cached widths are stale: drop
             // them, not just re-test. Also re-read the captions the overflow menu copies.
             RefreshViewOverflowMenu();
