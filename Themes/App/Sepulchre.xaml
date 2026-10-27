@@ -1,0 +1,10 @@
+<!-- Killendar's own theme values: keys only Killendar's views use, or Killendar's layout of a
+     family key it reads directly. ThemeManager.AppTokens (Services/AppTheme.cs) merges the Sepulchre values
+     over the family palette. -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <!-- The selected day or view in the calendar header takes the pane tone, not the selection gradient. -->
+    <SolidColorBrush x:Key="CalendarViewSelectedBrush" Color="#454039" po:Freeze="True"/>
+</ResourceDictionary>

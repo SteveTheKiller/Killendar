@@ -88,7 +88,7 @@
                     </Grid>
                 </Border>
 
-                <StackPanel Grid.Row="1" Margin="22,14,22,10">
+                <StackPanel Grid.Row="1" Margin="24,14,24,10">
                     <TextBlock x:Name="HeadingText" Text="{DynamicResource Str_Rem_Head}"
                                theme:HeadingAccent.Enabled="True"
                                FontFamily="{DynamicResource HeadingFont}" FontSize="18"
@@ -99,7 +99,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Orientation="Horizontal"
-                            HorizontalAlignment="Right" Margin="22,0,22,18">
+                            HorizontalAlignment="Right" Margin="24,0,24,18">
                     <Button x:Name="OpenButton" Content="{DynamicResource Str_Rem_Open}" Click="Open_Click"
                             Style="{StaticResource SurfaceButton}"
                             Height="28" MinWidth="80" Padding="12,2" Margin="0,0,8,0"/>

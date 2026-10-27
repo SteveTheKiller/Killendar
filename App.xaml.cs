@@ -85,6 +85,9 @@ namespace Killendar
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            // First, so every path below (helpers, setup prompts, the CLI) builds the family
+            // theme engine with Killendar's defaults and tokens (Services/AppTheme.cs).
+            Services.AppTheme.Configure();
             if (Array.Exists(e.Args, a => string.Equals(a, TrustedUpdate.HelperArgument, StringComparison.OrdinalIgnoreCase)))
             {
                 Shutdown(TrustedUpdate.Apply(e.Args));
@@ -106,6 +109,7 @@ namespace Killendar
 
             KillerFamily.Accessibility.AccessibleControls.Initialize();
             KillerFamily.Theming.AccentShadow.Initialize();
+            Controls.AltDrag.Register();   // Alt+drag moves any window (Controls/AltDrag.cs)
             var cliArgs = KillerFamily.CommandLine.CommandLineEntry.GetArguments(e.Args, ["agenda", "create"]);
             if (cliArgs != null)
             {
@@ -208,8 +212,12 @@ namespace Killendar
 
             // Locale after the theme, and still before the window: the string dictionary has to be
             // in place before any {DynamicResource Str_*} in MainWindow.xaml is first resolved.
-            Services.LocaleManager.GetSetting = Settings.Get;
-            Services.LocaleManager.SetSetting = Settings.Set;
+            // The family LocaleManager reads and writes "Locale" through the ThemeManager hooks wired
+            // above. Killendar saved Czech and Italian as "Cs" and "It" before it took the family
+            // names; the kit maps the old "Ja" itself.
+            string? savedLocale = Settings.Get("Locale");
+            if (savedLocale == "Cs") Settings.Set("Locale", "CsCZ");
+            else if (savedLocale == "It") Settings.Set("Locale", "ItIT");
             Services.LocaleManager.Initialize();
 
             Services.DateFormatManager.GetSetting = Settings.Get;

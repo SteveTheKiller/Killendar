@@ -2,13 +2,103 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <!-- The file picker's tree is a white sunken client area, so its chevron mask must match. -->
+    <SolidColorBrush x:Key="TerminalBackgroundBrush" Color="#000000" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MonitorCellBrush"        Color="#000000" po:Freeze="True"/>
+    <!-- ...and the text ON that black. 98SE's TextBrush is #000000 and its PrimaryBrush #004f00,
+         both picked against a light gray app - on a black console they are invisible and nearly
+         invisible. The console's own light gray and bright green, as CMD had. -->
+    <SolidColorBrush x:Key="TerminalForegroundBrush" Color="#c0c0c0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TerminalAccentBrush"     Color="#00c000" po:Freeze="True"/>
+    <!-- Text ON the black monitor cells (Performance tab). TextBrush is black here and MutedText
+         near-black, both invisible on the CRT readouts, so the cells get phosphor greens instead:
+         the console green above for values and titles, a dimmer green for labels and captions -
+         a retro green for the text in the black squares. -->
+    <SolidColorBrush x:Key="MonitorTextBrush"  Color="#00c000" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MonitorMutedBrush" Color="#008000" po:Freeze="True"/>
+    <!-- ...and the accent on them. PrimaryBrush here is a dark color chosen against the gray
+         window face, and the CPU trace, its headline and the per-processor squares drawn in it
+         are all but invisible on black. The era's bright cyan: it reads at a glance and is
+         none of the greens, the disk orange or the memory blue already on the dashboard. -->
+    <SolidColorBrush x:Key="MonitorAccentBrush" Color="#00c0c0" po:Freeze="True"/>
+    <!-- The Events/Processes/Registry tables' alternate-row stripe: a SOLID light gray on the
+         white rows, deliberately NOT the #c0c0c0 window face - white and gray striped, but not
+         the same gray as the main window color. #dfdfdf is the era's scrollbar
+         channel gray, already in the palette. -->
+    <SolidColorBrush x:Key="GridRowAltBrush" Color="#dfdfdf" po:Freeze="True"/>
+    <!-- A hovered monitor tile: a slightly lifted black, NOT RowHoverBrush - that is the window
+         face gray here and made the tile vanish into the window. -->
+    <SolidColorBrush x:Key="MonitorHoverBrush" Color="#1c1c1c" po:Freeze="True"/>
+    <!-- The tool tabs' sunken wells are WHITE client areas: the Events/Processes tables, the
+         Registry value grid (ToolContentBrush) and the Registry tree (ToolTreeBrush), like
+         Explorer's own panes. -->
+    <SolidColorBrush x:Key="ToolContentBrush" Color="#ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ToolTreeBrush"    Color="#ffffff" po:Freeze="True"/>
+    <!-- A text document is a white sunken client area, not the #c0c0c0 window face. Kept
+         separate from SurfaceBrush so the rest of the 98SE chrome remains correctly gray. -->
+    <SolidColorBrush x:Key="EditorBackgroundBrush" Color="#ffffff" po:Freeze="True"/>
+    <!-- The fill that masks the tree's connecting line where the chevron crosses it
+         (arrowFill, Controls/Controls.xaml). Its only job is to vanish into the surface behind
+         the chevron, so it has to BE that surface. ThemeManager mirrors it onto
+         SolidBackgroundBrush, which is right for every other theme - there the tree is
+         transparent and the window really does show through it. Here it is wrong twice over:
+         the folder tree sits in the sunken WHITE list well (SidebarPaneBrush) and the Registry
+         tree in its own white well (ToolTreeBrush), while SolidBackgroundBrush is the #c0c0c0
+         window face - so the mask painted a gray wedge through the middle of every chevron.
+         Stated here so only this theme differs; the Mirror is skipped whenever the key already
+         exists. WHITE, tracking SidebarPaneBrush and ToolTreeBrush above - if either of those
+         stops being #ffffff, this has to follow. -->
     <SolidColorBrush x:Key="TreeChevronMaskBrush" Color="#ffffff" po:Freeze="True"/>
+    <!-- The Performance tab's black cells sit together with thin 2px seams instead of floating
+         in gray gutters, and the info panel and detail card run flush to the pane edges - the
+         padding between all the black cells goes away, and the right edge lines up with
+         the tab strip. -->
+    <Thickness x:Key="MonitorDetailMargin">0,0,0,2</Thickness>
+    <Thickness x:Key="MonitorInfoMargin">0,0,0,2</Thickness>
+    <!-- The Storage Analyzer's address row: inset so its sunken field and buttons sit inside
+         the bar instead of running into the page line above and the well below. -->
+    <Thickness x:Key="StorageBarMargin">3,3,3,3</Thickness>
+    <!-- The toolbar overflow popup (FilePane.xaml OverflowPopup): square and shadowless here. -->
+    <CornerRadius x:Key="OverflowCornerRadius">0</CornerRadius>
+    <sys:Double x:Key="OverflowShadowOpacity">0</sys:Double>
+    <Thickness x:Key="MonitorTileListMargin">0,0,2,2</Thickness>
+    <Thickness x:Key="MonitorTileMargin">0,0,0,2</Thickness>
+    <!-- The cell grid runs flush to the pane edges; the cells' own 1px PaneBorderBrush frames
+         are the seams between neighbors. -->
+    <Thickness x:Key="MonitorGridMargin">0</Thickness>
+    <Thickness x:Key="PerformanceTabFootThickness">0</Thickness>
+    <!-- A REAL, reserved frame around the complete Performance PAGE. The 3px top inset is the
+         full-width gray strip directly below the entire tab bar; the 2px side/bottom insets keep
+         the black dashboard and its internal dividers inside the same continuous frame. -->
+    <Thickness x:Key="PerformanceContentInset">2,3,2,2</Thickness>
+    <SolidColorBrush x:Key="PerformancePageFrameBrush" Color="#c0c0c0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PerformancePageFrameDarkBrush" Color="#808080" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PerformancePageFrameLightBrush" Color="#dfdfdf" po:Freeze="True"/>
+    <Thickness x:Key="PerformancePageFrameDarkThickness">1,1,0,0</Thickness>
+    <Thickness x:Key="PerformancePageFrameLightThickness">0,0,1,1</Thickness>
+    <!-- The raised bevel already supplies the About window edge; suppress its modern extra ring. -->
+    <Thickness x:Key="OverlayCardBorderThickness">0</Thickness>
+    <Visibility x:Key="DialogWordmarkVisibility">Collapsed</Visibility>
+    <Visibility x:Key="DialogPlainTitleVisibility">Visible</Visibility>
+    <SolidColorBrush x:Key="CheckBoxBackgroundBrush" Color="#ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="CheckBoxCheckedBackgroundBrush" Color="#ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="CheckBoxBorderBrush" Color="#808080" po:Freeze="True"/>
+    <SolidColorBrush x:Key="CheckBoxCheckedBorderBrush" Color="#808080" po:Freeze="True"/>
+    <sys:Double x:Key="CheckBoxGlyphSize">13</sys:Double>
+    <Thickness x:Key="CheckBoxSunkenDarkThickness">1,1,0,0</Thickness>
+    <Thickness x:Key="CheckBoxSunkenLightThickness">0,0,1,1</Thickness>
+    <!-- The tool-tab wells are filled edge to edge: no gutters around the Events/Processes
+         grids, and the Registry split runs flush left and right with only the skinny splitter
+         dividing tree from values. -->
+    <Thickness x:Key="ToolGridMargin">0</Thickness>
+    <Thickness x:Key="ProcessGridMargin">0</Thickness>
+    <Thickness x:Key="RegSplitMargin">0</Thickness>
+    <Thickness x:Key="RegGridMargin">0</Thickness>
+    <sys:Double x:Key="RegSplitterWidth">3</sys:Double>
+    <!-- Selected DataGrid cell text: white on the solid navy selection block. -->
+    <SolidColorBrush x:Key="GridSelectedTextBrush" Color="#ffffff" po:Freeze="True"/>
 
     <sys:Double x:Key="GrainOpacity" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">0</sys:Double>
     <sys:Double x:Key="IconShadowOpacity" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">0</sys:Double>
-
-    <sys:Double x:Key="WordmarkShadowOpacity" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">0</sys:Double>
 
     <!-- Text-stroke shadows behind button labels. Nulled, as on Light: any Effect
          rasterizes ClearType, so on a light surface the label just looks blurry. -->
@@ -32,6 +122,27 @@
     <SolidColorBrush x:Key="ScrollThumbBrush" Color="#c0c0c0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
     <SolidColorBrush x:Key="ScrollThumbHoverBrush" Color="#a0a0a0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
+    <!-- Traffic light. Three FIXED colors on purpose: the status dot sits in the footer
+         permanently, and using the accent made "all fine" mean whatever accent was picked. -->
+    <SolidColorBrush x:Key="OkBrush"   Color="#1a7f37" po:Freeze="True"/>
+    <SolidColorBrush x:Key="WarnBrush" Color="#a86a00" po:Freeze="True"/>
+
+    <!-- Device-type label colors (darkened for a light pane) -->
+    <SolidColorBrush x:Key="TypeRouter"     Color="#B06000" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TypeWindows"    Color="#1D5FB0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TypePrinter"    Color="#9C3F66" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TypeSwitch"     Color="#5A5A5A" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TypeHypervisor" Color="#B02A2A" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TypeNas"        Color="#157A45" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TypeIot"        Color="#6A2A9C" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TypeServer"     Color="#B0481A" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TypeLinux"      Color="#7A6A10" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TypeDns"        Color="#1A6A8C" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TypeHa"         Color="#157A4F" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TypeMobile"     Color="#4040A8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TypeCamera"     Color="#9A6800" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TypeSmarttv"    Color="#864A86" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TypeMedia"      Color="#256A9C" po:Freeze="True"/>
 
     <!-- Shortcut categories. One color per group, shared by the list headings and the
          keyboard map's keycap borders (KeyboardMapOverlay.cs). -->
@@ -60,21 +171,15 @@
     <SolidColorBrush x:Key="BackgroundBrush" Color="#c0c0c0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
     <SolidColorBrush x:Key="SurfaceBrush" Color="#c0c0c0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+
+    <SolidColorBrush x:Key="PaneBrush" Color="#c0c0c0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+
+    <SolidColorBrush x:Key="FocusedPaneBrush" Color="#c0c0c0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+
+    <SolidColorBrush x:Key="TabActiveBrush" Color="#c0c0c0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+
+    <SolidColorBrush x:Key="TabInactiveBrush" Color="#9f9f9f" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
     <SolidColorBrush x:Key="KeyCapBrush" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
-    <SolidColorBrush x:Key="InputFieldBrush" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
-
-    <!-- Calendar and editor/list panes are Win98 client areas, not button faces. -->
-    <SolidColorBrush x:Key="PaneBrush" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
-    <SolidColorBrush x:Key="ChipBrush" Color="#d9e5f6" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
-
-    <!-- The PDF canvas needs separation from the classic #c0c0c0 window face without turning
-         white and competing with the pages themselves. This slightly deeper neutral frames white
-         documents while keeping the application unmistakably in the Win98 palette. -->
-    <SolidColorBrush x:Key="BgCanvas" Color="#aaaaaa" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
-
-    <!-- 98SE communicates split-pane focus by shading the complete live pane, not by drawing
-         the accent halo used by the rounded themes. The selected tab uses this same brush. -->
-    <SolidColorBrush x:Key="FocusedPaneBrush" Color="#9f9f9f" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
     <SolidColorBrush x:Key="TableHeaderBrush" Color="#c0c0c0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
@@ -82,16 +187,13 @@
 
     <SolidColorBrush x:Key="PaneBorderBrush" Color="#808080" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
-    <!-- This is both the HWND/DWM outline and RootBorder's outermost pixel. On the right and
-         bottom of a classic raised window the darkest line is the LAST, outside edge. -->
-    <SolidColorBrush x:Key="AppBorderBrush" Color="#000000" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+    <SolidColorBrush x:Key="AppBorderBrush" Color="#c0c0c0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
     <SolidColorBrush x:Key="TextBrush" Color="#000000" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
     <SolidColorBrush x:Key="MutedTextBrush" Color="#404040" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
     <SolidColorBrush x:Key="ChromeTextBrush" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
-    <SolidColorBrush x:Key="FilenameBrush" Color="#e8e8e8" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
     <SolidColorBrush x:Key="DimTextBrush" Color="#4f4f4f" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
@@ -131,11 +233,6 @@
 
     <CornerRadius x:Key="FlyoutCornerRadius" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</CornerRadius>
 
-    <FontFamily x:Key="MenuFontFamily" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Microsoft Sans Serif</FontFamily>
-    <FontFamily x:Key="UiFont" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Microsoft Sans Serif</FontFamily>
-    <sys:Double x:Key="MenuFontSize" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">11</sys:Double>
-    <Thickness x:Key="MenuItemPadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">6,3,8,3</Thickness>
-
     <CornerRadius x:Key="AccentSwatchCornerRadius" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</CornerRadius>
 
     <LinearGradientBrush x:Key="TitleBarBrush" StartPoint="0,0" EndPoint="1,0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><GradientStop Color="#004000" Offset="0" /><GradientStop Color="#3a7d44" Offset="1" /></LinearGradientBrush>
@@ -144,83 +241,44 @@
 
     <sys:Double x:Key="BarShadowOpacity" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">0</sys:Double>
 
-    <!-- Theme switches merge per-key in place, so a key missing here keeps the previous theme's
-         value. This one was missing, which is why the header shadow survived a switch into 98SE
-         and hung over the tab strip. -->
-    <sys:Double x:Key="HeaderShadowOpacity" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">0</sys:Double>
-
     <sys:Double x:Key="FlyoutShadowOpacity" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">0</sys:Double>
-
-    <sys:Double x:Key="AboutShadowOpacity" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">0</sys:Double>
-    <sys:Double x:Key="AboutIconShadowOpacity" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">0</sys:Double>
-    <Visibility x:Key="AboutCaptionVisibility" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Visible</Visibility>
-    <Visibility x:Key="AboutModernCloseVisibility" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Collapsed</Visibility>
-    <sys:Double x:Key="ShortcutShadowOpacity" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">0</sys:Double>
-    <sys:Double x:Key="ShortcutHeaderShadowOpacity" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">0</sys:Double>
-    <Visibility x:Key="ShortcutCaptionVisibility" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Visible</Visibility>
-    <Visibility x:Key="ShortcutModernHeaderVisibility" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Collapsed</Visibility>
-
-    <LinearGradientBrush x:Key="DialogTitleBarBrush" StartPoint="0,0" EndPoint="1,0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><GradientStop Color="#004000" Offset="0"/><GradientStop Color="#3a7d44" Offset="1"/></LinearGradientBrush>
-
-    <SolidColorBrush x:Key="FileDialogPaneBrush" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
-
-    <Thickness x:Key="SplitHostMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
-
-    <sys:Double x:Key="SplitPaneGutterWidth" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">8</sys:Double>
 
     <Thickness x:Key="WindowFrameThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">3</Thickness>
 
-    <SolidColorBrush x:Key="DialogFrameBrush" Color="#000000" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
-
-    <!-- Overlay close button, classic face: MDL2 X glyph, black, bevel-sized (KillerScan's 98SE values). -->
-    <sys:Double x:Key="AboutCloseWidth" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">18</sys:Double>
-    <sys:Double x:Key="AboutCloseHeight" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">16</sys:Double>
-    <Thickness x:Key="AboutCloseMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,4,4,0</Thickness>
-    <Thickness x:Key="AboutCaptionCloseMargin">0,1,1,2</Thickness>
-    <Thickness x:Key="AboutBodyMargin">8,18,8,18</Thickness>
-    <sys:String x:Key="AboutCloseGlyph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">&#xE8BB;</sys:String>
-    <FontFamily x:Key="AboutCloseFont" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Segoe MDL2 Assets</FontFamily>
-    <SolidColorBrush x:Key="AboutCloseFg" Color="#000000" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
-    <SolidColorBrush x:Key="AboutCloseHoverFg" Color="#000000" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
-    <Thickness x:Key="DialogFrameThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">1</Thickness>
-    <Thickness x:Key="DialogFramePadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">2</Thickness>
-    <!-- Dialogs and the main window share KillerNotes' symmetric Win98 sizing frame. -->
-    <Thickness x:Key="DialogWindowFrameThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">3</Thickness>
-    <Thickness x:Key="DialogWindowFramePadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">5</Thickness>
-
-    <!-- Structural controls (tabs, scroll arrows and pane joins) remain one physical pixel.
-         Buttons have their own 2px classic edge below so their depth cannot leak into tabs. -->
     <Thickness x:Key="BevelLightThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">1,1,0,0</Thickness>
 
     <Thickness x:Key="BevelDarkThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,1,1</Thickness>
 
-    <Thickness x:Key="ButtonBevelLightThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">2,2,0,0</Thickness>
-    <Thickness x:Key="ButtonBevelDarkThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,2,2</Thickness>
-    <Thickness x:Key="ToolBevelLightThickness">0</Thickness>
-    <Thickness x:Key="ToolBevelDarkThickness">0</Thickness>
-    <Thickness x:Key="ToolHoverBevelLightThickness">1,1,0,0</Thickness>
-    <Thickness x:Key="ToolHoverBevelDarkThickness">0,0,1,1</Thickness>
-    <Thickness x:Key="CheckSunkenDarkThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">1,1,0,0</Thickness>
-    <Thickness x:Key="CheckSunkenLightThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,1,1</Thickness>
+    <Thickness x:Key="TabBevelLightThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">1,1,0,0</Thickness>
 
     <Thickness x:Key="TabActiveBevelDarkThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,1,0</Thickness>
 
     <Thickness x:Key="TabInactiveBevelDarkThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,1,0</Thickness>
 
-    <Thickness x:Key="TabStripeThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
+    <!-- Win98 tab edges: 1px white top and left, 1px #808080 right, then 1px black outside
+         that. The bevel pair draws the white and the #808080; the outline Border draws the
+         black in the tab's own 1px right border column. Every margin reaches the tab's foot
+         so the side lines run down to the page line as they do in the real control. -->
+    <Thickness x:Key="TabBevelMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">-8,-6,-5,-2</Thickness>
+    <SolidColorBrush x:Key="TabOuterOutlineBrush" Color="#000000" po:Freeze="True"/>
+    <Thickness x:Key="TabOuterOutlineThickness">0,0,1,0</Thickness>
+    <!-- The dark rule at the foot of the tab band. A Win98 tab strip has only the page's white
+         top line under the unselected tabs, so this one is transparent here. -->
+    <SolidColorBrush x:Key="RetroTabJoinLineBrush" Color="#00000000" po:Freeze="True"/>
 
-    <Thickness x:Key="TabBevelMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">-12,-4,-5,-4</Thickness>
+    <Thickness x:Key="TabActiveOuterOutlineMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">-8,-4,-5,-4</Thickness>
 
-    <!-- The selected tab's dark right edge must reach the same strip/card seam as its light
-         left edge. A -2 bottom stopped it two pixels early and made it dissolve into the band. -->
-    <Thickness x:Key="TabActiveBevelDarkMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">-12,-4,-5,-4</Thickness>
+    <Thickness x:Key="TabInactiveOuterOutlineMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">-8,-6,-6,-2</Thickness>
 
-    <!-- Inner half of the selected tab's raised edge. The outer white edge is drawn by
-         tabBevelLight; this inset face-color highlight continues the pane's second bevel
-         pixel up the tab and across its top. -->
+    <Thickness x:Key="TabActiveBevelLightMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">-8,-4,-4,-4</Thickness>
+
+    <Thickness x:Key="TabActiveBevelDarkMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">-8,-4,-4,-4</Thickness>
+
     <SolidColorBrush x:Key="TabActiveInnerBevelBrush" Color="#dfdfdf" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
-    <Thickness x:Key="TabActiveInnerBevelThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">1,1,0,0</Thickness>
-    <Thickness x:Key="TabActiveInnerBevelMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">-11,-3,-4,-4</Thickness>
+    <Thickness x:Key="TabActiveInnerBevelThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
+    <Thickness x:Key="TabActiveInnerBevelMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">-7,-3,-4,0</Thickness>
+
+    <Thickness x:Key="TabGrainMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">-8,-4,-5,-5</Thickness>
 
     <SolidColorBrush x:Key="TabSeamPatchBrush" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
@@ -230,13 +288,7 @@
 
     <SolidColorBrush x:Key="ComboButtonBrush" Color="#c0c0c0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
-    <SolidColorBrush x:Key="ComboButtonHoverBrush" Color="#c0c0c0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
-
     <sys:Double x:Key="ComboButtonMinWidth" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">16</sys:Double>
-
-    <sys:Double x:Key="ComboButtonSize" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">18</sys:Double>
-
-    <sys:Double x:Key="ZoomBoxHeight" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">22</sys:Double>
 
     <Thickness x:Key="ComboChevMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">5,-2,-6,-2</Thickness>
 
@@ -248,54 +300,83 @@
 
     <SolidColorBrush x:Key="ComboHighlightTextBrush" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
-    <Thickness x:Key="TabFocusThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
+    <Thickness x:Key="TabFocusThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,1,0</Thickness>
 
-    <Thickness x:Key="TabFocusFirstThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
+    <Thickness x:Key="TabFocusFirstThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,1,0</Thickness>
 
-    <Thickness x:Key="TabFocusLastThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
+    <Thickness x:Key="TabFocusLastThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,1,0</Thickness>
 
-    <Thickness x:Key="TabFocusOnlyThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
+    <Thickness x:Key="TabFocusOnlyThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,1,0</Thickness>
 
-    <Thickness x:Key="TabFocusPadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">12,4,5,4</Thickness>
+    <Thickness x:Key="TabFocusPadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">8,4,4,4</Thickness>
 
-    <Thickness x:Key="TabFocusFirstPadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">12,4,5,4</Thickness>
+    <Thickness x:Key="TabFocusFirstPadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">8,4,4,4</Thickness>
 
-    <Thickness x:Key="TabFocusLastPadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">12,4,5,4</Thickness>
+    <Thickness x:Key="TabFocusLastPadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">8,4,4,4</Thickness>
 
-    <Thickness x:Key="TabFocusOnlyPadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">12,4,5,4</Thickness>
+    <Thickness x:Key="TabFocusOnlyPadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">8,4,4,4</Thickness>
 
     <Thickness x:Key="TreePanePadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">2,0,0,0</Thickness>
 
+    <CornerRadius x:Key="ChartCornerRadius" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</CornerRadius>
 
     <sys:Double x:Key="TabChamfer" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">3</sys:Double>
 
-    <Thickness x:Key="TabPadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">12,4,5,4</Thickness>
+    <Thickness x:Key="TabPadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">8,6,5,2</Thickness>
 
-    <Thickness x:Key="TabActivePadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">12,4,5,4</Thickness>
+    <Thickness x:Key="TabActivePadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">8,4,4,4</Thickness>
+    <!-- The active tab keeps a 1px right border column (its brush is transparent here) so the
+         black outer line has a column of its own instead of being clipped off the tab's edge.
+         The right padding above is one less than the inactive tab's to pay for it. -->
+    <Thickness x:Key="TabStripeThickness">0,0,1,0</Thickness>
 
     <SolidColorBrush x:Key="BevelLightBrush" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
     <SolidColorBrush x:Key="BevelDarkBrush" Color="#808080" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
+    <!-- The raised edge is the Win98 four-color one: white then #dfdfdf on the top and left,
+         black then #808080 on the bottom and right. BevelLight/BevelDark are the outer light and
+         inner dark rings; these two are the inner light and outer dark rings, 1px inside and on
+         the edge respectively. Zero and transparent on every other theme. -->
+    <Thickness x:Key="BevelInnerMargin">1</Thickness>
+    <!-- The search card and its chips are raised Win98 controls: bevel, no accent outline. -->
+    <Thickness x:Key="SearchCardBorderThickness">0</Thickness>
+    <Thickness x:Key="ModeButtonBorderThickness">0</Thickness>
+    <CornerRadius x:Key="ModeButtonCornerRadius">0</CornerRadius>
+    <sys:Double x:Key="CaptionSearchGlyphSize">9</sys:Double>
+    <!-- Wider than the 2px between maximize and close, so search reads as its own button. -->
+    <Thickness x:Key="CaptionSearchMargin">0,0,6,0</Thickness>
+    <!-- The search box reads as one Win98 dialog: Microsoft Sans Serif throughout, normal weight
+         on its push buttons. Only the KillerSearch title keeps Lacquer (SearchTitleFont). -->
+    <FontFamily x:Key="SearchSectionFont">Microsoft Sans Serif</FontFamily>
+    <sys:Double x:Key="SearchSectionFontSize">11</sys:Double>
+    <FontWeight x:Key="SearchSectionFontWeight">Bold</FontWeight>
+    <FontWeight x:Key="ModeButtonFontWeight">Normal</FontWeight>
+    <SolidColorBrush x:Key="BevelInnerLightBrush" Color="#dfdfdf" po:Freeze="True"/>
+    <Thickness x:Key="BevelInnerLightThickness">1,1,0,0</Thickness>
+    <SolidColorBrush x:Key="BevelOuterDarkBrush" Color="#000000" po:Freeze="True"/>
+    <Thickness x:Key="BevelOuterDarkThickness">0,0,1,1</Thickness>
+    <!-- Toolbar buttons: flat at rest, a 1px raised edge on hover, sunk on press (Explorer's
+         toolbar). The hovered face stays button-face gray rather than the family wash. -->
+    <Thickness x:Key="ToolHoverBevelLightThickness">1,1,0,0</Thickness>
+    <Thickness x:Key="ToolHoverBevelDarkThickness">0,0,1,1</Thickness>
+    <SolidColorBrush x:Key="ToolHoverFaceBrush" Color="#c0c0c0" po:Freeze="True"/>
+
     <Thickness x:Key="DetailsPaneBorderThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
 
     <sys:Double x:Key="DetailsDividerWidth" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">0</sys:Double>
 
-    <Thickness x:Key="TabMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,5,0,1</Thickness>
-    <!-- Leave the pane's outer gray pixel exposed when its first tab is behind the
-         selected tab. The negative right margin preserves the shared tab seam. -->
-    <Thickness x:Key="TabInactiveFirstMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">1,5,-1,1</Thickness>
-    <!-- Reserve the strip's final pixel for the outer gray frame. The tab's own dark
-         bevel then remains visible one pixel inside it instead of being clipped. -->
-    <Thickness x:Key="TabInactiveLastMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,5,1,1</Thickness>
-    <!-- The raised pane's visible light edge is its inner x pixel. Keep a first active tab on
-         that same pixel so the line does not step sideways where the tab meets the pane. -->
-    <Thickness x:Key="TabActiveFirstMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">1,3,0,0</Thickness>
-    <Thickness x:Key="TabActiveLastMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,3,1,0</Thickness>
-    <Thickness x:Key="TabActiveOnlyMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">1,3,1,0</Thickness>
+    <Thickness x:Key="TabMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,5,0,0</Thickness>
+    <Thickness x:Key="TabActiveMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">-2,3,0,0</Thickness>
+    <Thickness x:Key="TabInactiveFirstMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,5,0,0</Thickness>
+    <Thickness x:Key="TabInactiveLastMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,5,0,0</Thickness>
+    <Thickness x:Key="TabActiveFirstMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,3,0,0</Thickness>
+    <Thickness x:Key="TabActiveLastMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">-2,3,0,0</Thickness>
+    <Thickness x:Key="TabActiveOnlyMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,3,0,0</Thickness>
     <Visibility x:Key="RetroTabJoinVisibility" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Visible</Visibility>
     <Visibility x:Key="RetroActiveTabOutlineVisibility" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Visible</Visibility>
     <sys:Double x:Key="TabBandHeight" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">28</sys:Double>
+
     <Thickness x:Key="FooterStatusPadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">10.5,0,12,0</Thickness>
 
     <SolidColorBrush x:Key="TabRingIdleBrush" Color="Transparent" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
@@ -318,20 +399,19 @@
 
     <SolidColorBrush x:Key="FrameInnerDarkBrush" Color="#808080" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
-    <LinearGradientBrush x:Key="WindowFrameBrush" StartPoint="0,0" EndPoint="1,1" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><GradientStop Color="#cbcbcb" Offset="0" /><GradientStop Color="#bcbcbc" Offset="1" /></LinearGradientBrush>
+    <!-- The frame face is flat button-face gray, as the Win98 frame is: 4px of #c0c0c0 between
+         the outer bevel pair and the caption/client (WindowFramePadding), not a gradient. -->
+    <SolidColorBrush x:Key="WindowFrameBrush" Color="#c0c0c0" po:Freeze="True"/>
 
     <Thickness x:Key="WindowFrameMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">2</Thickness>
 
-    <Thickness x:Key="WindowFramePadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">5,4,5,5</Thickness>
-
-    <FontFamily x:Key="FooterStatusFont" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Consolas</FontFamily>
-    <FontFamily x:Key="FooterMetaFont" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Consolas</FontFamily>
+    <Thickness x:Key="WindowFramePadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">4</Thickness>
 
     <Thickness x:Key="TitleBarBleed" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
 
     <Thickness x:Key="AboutCaptionMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">2,2,2,0</Thickness>
 
-    <Thickness x:Key="AboutContentMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">2,10,2,0</Thickness>
+    <Thickness x:Key="AboutContentMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,20,0,0</Thickness>
 
     <FontFamily x:Key="DetailsNameFont" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Courier New</FontFamily>
 
@@ -360,6 +440,9 @@
     <Visibility x:Key="DialogInlineSelVisibility" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Collapsed</Visibility>
 
     <Thickness x:Key="DialogContentMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">3,3,3,3</Thickness>
+    <!-- The raised frame is the dialog edge; the ordinary card ring would double its right/bottom. -->
+    <Thickness x:Key="DialogOuterBorderThickness">0</Thickness>
+    <Thickness x:Key="DialogTitleBarPadding">8,0,2,0</Thickness>
 
     <Thickness x:Key="DialogRowMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">3,0,3,0</Thickness>
 
@@ -377,11 +460,7 @@
 
     <Thickness x:Key="FrameInnerDarkThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,1,1</Thickness>
 
-    <Thickness x:Key="SidebarPanelMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,2,0,0</Thickness>
-
-    <Thickness x:Key="SidebarInnerDarkThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
-
-    <Visibility x:Key="SidebarInnerDarkVisibility" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Collapsed</Visibility>
+    <Thickness x:Key="SidebarPanelMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,5,0,0</Thickness>
 
     <sys:Double x:Key="ScrollBarThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">16</sys:Double>
 
@@ -395,21 +474,21 @@
 
     <Thickness x:Key="ScrollThumbMarginH" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
 
-    <SolidColorBrush x:Key="ScrollTrackBrush" Color="#dfdfdf" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+    <DrawingBrush x:Key="ScrollTrackBrush" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,2,2" ViewboxUnits="Absolute" Viewbox="0,0,2,2" Stretch="None" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="#ffffff" Geometry="M0,0 H2 V2 H0 Z"/>
+                <GeometryDrawing Brush="#dfdfdf" Geometry="M0,0 H1 V1 H0 Z M1,1 H2 V2 H1 Z"/>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
 
-    <SolidColorBrush x:Key="ScrollTrackBevelDark" Color="Transparent" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+    <SolidColorBrush x:Key="ScrollTrackBevelDark" Color="#808080" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
-    <SolidColorBrush x:Key="ScrollTrackBevelLight" Color="Transparent" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+    <SolidColorBrush x:Key="ScrollTrackBevelLight" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
     <sys:Double x:Key="ScrollArrowSize" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">16</sys:Double>
 
-    <!-- The pane overlaps the scrollbar's outermost top row. Draw the up-button bevel one
-         pixel inside its own template instead of patching it above the pane afterward. -->
-    <Thickness x:Key="ScrollArrowTopBevelMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,1,0,0</Thickness>
-
-    <!-- Raised Win98 panel edge. The markup crosses these historic key names against the
-         opposite-side thicknesses, so the colors here intentionally produce white/face on the
-         top-left and gray/black on the bottom-right. -->
     <SolidColorBrush x:Key="PaneBevelDarkBrush" Color="#808080" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
     <SolidColorBrush x:Key="PaneBevelLightBrush" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
@@ -420,11 +499,12 @@
 
     <SolidColorBrush x:Key="PaneBevelDark2Brush" Color="#000000" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
-    <SolidColorBrush x:Key="PaneBevelLight2Brush" Color="#c0c0c0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+    <!-- Sunken wells are the Win98 double recess: #808080 then black on the top and left,
+         white then #dfdfdf on the bottom and right (the inner ring is PaneBevel2*). -->
+    <SolidColorBrush x:Key="PaneBevelLight2Brush" Color="#dfdfdf" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
-    <!-- Document clients are raised; the sidebar intentionally remains recessed. -->
     <SolidColorBrush x:Key="DocumentPaneBevelTopLeftBrush" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
-    <SolidColorBrush x:Key="DocumentPaneBevelBottomRightBrush" Color="#808080" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+    <SolidColorBrush x:Key="DocumentPaneBevelBottomRightBrush" Color="#000000" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
     <SolidColorBrush x:Key="DocumentPaneBevelInnerTopLeftBrush" Color="#dfdfdf" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
     <SolidColorBrush x:Key="DocumentPaneBevelInnerBottomRightBrush" Color="#808080" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
@@ -440,7 +520,8 @@
 
     <Thickness x:Key="TabBarMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
 
-    <Thickness x:Key="PaneEdgeThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
+    <Thickness x:Key="PaneEdgeSideThickness">0</Thickness>
+    <Thickness x:Key="PaneEdgeBottomThickness">0</Thickness>
 
     <SolidColorBrush x:Key="FooterBevelDarkBrush" Color="#808080" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
@@ -454,13 +535,13 @@
 
     <Thickness x:Key="FooterCellPadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">4,0,4,0</Thickness>
 
-    <Thickness x:Key="FooterPadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,-2,0</Thickness>
+    <Thickness x:Key="FooterPadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
 
     <SolidColorBrush x:Key="TextFieldBrush" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
     <SolidColorBrush x:Key="RadioWellBrush" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
-    <SolidColorBrush x:Key="SidebarRailBrush" Color="#c0c0c0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+    <SolidColorBrush x:Key="SidebarPaneBrush" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
     <SolidColorBrush x:Key="ChipFaceBrush" Color="#c0c0c0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
@@ -478,20 +559,31 @@
 
     <SolidColorBrush x:Key="OutlineHoverTextBrush" Color="#000000" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
+    <SolidColorBrush x:Key="Syn_Comment" Color="#008000" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+
+    <SolidColorBrush x:Key="Syn_String" Color="#a31515" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+
+    <SolidColorBrush x:Key="Syn_Number" Color="#098658" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+
+    <SolidColorBrush x:Key="Syn_Variable" Color="#001080" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+
+    <SolidColorBrush x:Key="Syn_Type" Color="#267f99" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+
+    <SolidColorBrush x:Key="Syn_Operator" Color="#af00db" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+
+    <SolidColorBrush x:Key="Syn_Keyword" Color="#0000ff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+
     <SolidColorBrush x:Key="BarEdgeBrush" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
-    <!-- Raised card: light TOP/LEFT, dark BOTTOM/RIGHT. The old 2,2,0,1 put a LIGHT line on the
-         bottom edge with no dark bottom at all, which is the classic SUNKEN cue - the annotate
-         bars read as pressed into the page instead of floating over it. -->
-    <Thickness x:Key="BarEdgeThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">2,2,0,0</Thickness>
+    <Thickness x:Key="BarEdgeThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
+
+    <Thickness x:Key="LocationBarEdgeThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
 
     <SolidColorBrush x:Key="BarEdgeDarkBrush" Color="#808080" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
-    <Thickness x:Key="BarEdgeDarkThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,2,2</Thickness>
+    <Thickness x:Key="BarEdgeDarkThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,0,1</Thickness>
 
     <Thickness x:Key="BarPadding" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
-
-    <SolidColorBrush x:Key="AboutPanelBrush" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
     <SolidColorBrush x:Key="CaptionButtonBrush" Color="#c0c0c0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
@@ -504,28 +596,19 @@
     <SolidColorBrush x:Key="CaptionCloseHoverFgBrush" Color="#000000" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
     <SolidColorBrush x:Key="CaptionGlyphBrush" Color="#000000" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+    <SolidColorBrush x:Key="ElevatedTagBrush" Color="#ffffff" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
     <sys:Double x:Key="TitleBarHeight" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">22</sys:Double>
 
-    <Visibility x:Key="PlainTitleVisibility" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Visible</Visibility>
+    <sys:Double x:Key="CaptionButtonWidth" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">16</sys:Double>
 
-    <Visibility x:Key="WordmarkVisibility" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Collapsed</Visibility>
+    <sys:Double x:Key="CaptionButtonHeight" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">14</sys:Double>
 
-    <Visibility x:Key="GripDotsVisibility" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Collapsed</Visibility>
-
-    <Visibility x:Key="GripHatchVisibility" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Visible</Visibility>
-
-    <Thickness x:Key="RootBorderThickness" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
-
-    <sys:Double x:Key="CaptionButtonWidth" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">18</sys:Double>
-
-    <sys:Double x:Key="CaptionButtonHeight" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">16</sys:Double>
-
-    <Thickness x:Key="CaptionButtonMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,1,0</Thickness>
+    <Thickness x:Key="CaptionButtonMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0</Thickness>
 
     <Thickness x:Key="CaptionCloseGap" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">2,0,0,0</Thickness>
 
-    <Thickness x:Key="CaptionButtonsMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,3,0</Thickness>
+    <Thickness x:Key="CaptionButtonsMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,0,2,0</Thickness>
 
     <Thickness x:Key="TitleTextMargin" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">0,-1,0,0</Thickness>
 
@@ -536,6 +619,12 @@
     <sys:Double x:Key="WordmarkEmbossOpacity" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">1</sys:Double>
 
     <FontFamily x:Key="ChromeFontFamily" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Microsoft Sans Serif</FontFamily>
+    <FontFamily x:Key="UiFont" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Microsoft Sans Serif</FontFamily>
+    <FontFamily x:Key="MonoFont" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Microsoft Sans Serif</FontFamily>
+    <FontFamily x:Key="MenuFontFamily" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Microsoft Sans Serif</FontFamily>
+    <sys:Double x:Key="MenuFontSize" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">11</sys:Double>
+    <FontFamily x:Key="FooterStatusFont" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Consolas</FontFamily>
+    <FontFamily x:Key="FooterMetaFont" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">Consolas</FontFamily>
 
     <sys:Double x:Key="TitleIconSize" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">16</sys:Double>
 
@@ -571,11 +660,34 @@
 
     <SolidColorBrush x:Key="SortButtonBrush" Color="#c0c0c0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
 
+    <LinearGradientBrush x:Key="DialogTitleBarBrush" StartPoint="0,0" EndPoint="1,0" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><GradientStop Color="#004000" Offset="0"/><GradientStop Color="#3a7d44" Offset="1"/></LinearGradientBrush>
+    <sys:Double x:Key="WordmarkShadowOpacity" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">0</sys:Double>
     <SolidColorBrush x:Key="FooterBackgroundBrush" Color="#FFC0C0C0" po:Freeze="True"/>
     <SolidColorBrush x:Key="MenuSeparatorBrush" Color="#FF808080" po:Freeze="True"/>
     <SolidColorBrush x:Key="RadioAccent" Color="#FF004F00" po:Freeze="True"/>
     <SolidColorBrush x:Key="SelectionAccent" Color="#FF004F00" po:Freeze="True"/>
     <SolidColorBrush x:Key="AccentLogo" Color="#FF004F00" po:Freeze="True"/>
+    <SolidColorBrush x:Key="FileDialogPaneBrush" Color="#ffffff" po:Freeze="True"/>
     <Thickness x:Key="CompactInputPadding">2,1</Thickness>
     <sys:Double x:Key="CompactInputMinHeight">22</sys:Double>
+
+    <!-- Family additions from KillerScan (ThemeManager.ApplyFamilyAdditions): the Win98 shapes
+         of the dialog frame, the About panel, the combo button and the input dialog caption. -->
+    <SolidColorBrush x:Key="DialogFrameBrush" Color="#000000" po:Freeze="True"/>
+    <Thickness x:Key="DialogFrameThickness">0</Thickness>
+    <Thickness x:Key="DialogFramePadding">2</Thickness>
+    <Thickness x:Key="DialogWindowFrameThickness">3</Thickness>
+    <Thickness x:Key="DialogWindowFramePadding">5</Thickness>
+    <CornerRadius x:Key="DialogCloseCornerRadius">0</CornerRadius>
+    <Thickness x:Key="OverlayFrameBleed">-5,-4,-5,-5</Thickness>
+    <SolidColorBrush x:Key="InputDialogTitleBrush" Color="#000080" po:Freeze="True"/>
+    <SolidColorBrush x:Key="AboutPanelBrush" Color="#ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="AboutPanelEdgeBrush" Color="#00000000" po:Freeze="True"/>
+    <SolidColorBrush x:Key="AboutPanelBevelTopBrush" Color="#808080" po:Freeze="True"/>
+    <SolidColorBrush x:Key="AboutPanelBevelBottomBrush" Color="#ffffff" po:Freeze="True"/>
+    <Thickness x:Key="AboutPanelBevelTopThickness">1,1,0,0</Thickness>
+    <Thickness x:Key="AboutPanelBevelBottomThickness">0,0,1,1</Thickness>
+    <SolidColorBrush x:Key="ComboFieldHoverBrush" Color="#ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ComboButtonHoverBrush" Color="#c0c0c0" po:Freeze="True"/>
+    <sys:Double x:Key="ComboButtonHeight">26</sys:Double>
 </ResourceDictionary>

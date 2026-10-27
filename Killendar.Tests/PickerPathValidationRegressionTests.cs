@@ -52,6 +52,7 @@ namespace Killendar.Tests
             Directory.CreateDirectory(directory);
             Directory.CreateDirectory(Path.Combine(directory, "x.txt"));
             var settings = new Dictionary<string, string>();
+            Killendar.Services.AppTheme.Configure();
             ThemeManager.GetSetting = key => settings.TryGetValue(key, out var value) ? value : null;
             ThemeManager.SetSetting = (key, value) => settings[key] = value;
             try
@@ -59,7 +60,7 @@ namespace Killendar.Tests
                 app.ShutdownMode = ShutdownMode.OnExplicitShutdown;
                 if (app.Resources.MergedDictionaries.Count == 0)
                 {
-                    foreach (string resource in new[] { "Themes/Dark.xaml", "Controls/Controls.xaml", "Strings/en-US.xaml" })
+                    foreach (string resource in new[] { "Themes/Dark.xaml", "Controls/Controls.xaml", "Controls/AppStyles.xaml", "Strings/en-US.xaml" })
                         app.Resources.MergedDictionaries.Add(new ResourceDictionary
                         {
                             Source = new Uri("/Killendar;component/" + resource, UriKind.Relative)

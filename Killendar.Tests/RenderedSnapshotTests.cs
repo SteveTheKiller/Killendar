@@ -71,11 +71,12 @@ namespace Killendar.Tests
             Seed(profile.Calendars);
             var app = new Application { ShutdownMode = ShutdownMode.OnExplicitShutdown };
             // The palette slot is filled by ThemeManager.Apply below; Dark only holds its place.
-            foreach (string resource in new[] { "Themes/Dark.xaml", "Controls/Controls.xaml", "Strings/en-US.xaml" })
+            foreach (string resource in new[] { "Themes/Dark.xaml", "Controls/Controls.xaml", "Controls/AppStyles.xaml", "Strings/en-US.xaml" })
                 app.Resources.MergedDictionaries.Add(new ResourceDictionary
                 {
                     Source = new Uri("/Killendar;component/" + resource, UriKind.Relative)
                 });
+            Killendar.Services.AppTheme.Configure();
             ThemeManager.GetSetting = Settings.Get;
             ThemeManager.SetSetting = Settings.Set;
             // The theme as the app builds it: the accent, the derived brushes (dropdowns among

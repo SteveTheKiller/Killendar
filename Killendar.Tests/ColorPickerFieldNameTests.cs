@@ -23,7 +23,7 @@ namespace Killendar.Tests
                 {
                     // The picker reads its brushes and words from the application, as in the app.
                     var app = Application.Current ?? new Application { ShutdownMode = ShutdownMode.OnExplicitShutdown };
-                    foreach (string resource in new[] { "Themes/Dark.xaml", "Controls/Controls.xaml", "Strings/en-US.xaml" })
+                    foreach (string resource in new[] { "Themes/Dark.xaml", "Controls/Controls.xaml", "Controls/AppStyles.xaml", "Strings/en-US.xaml" })
                         app.Resources.MergedDictionaries.Add(new ResourceDictionary
                         {
                             Source = new Uri("/Killendar;component/" + resource, UriKind.Relative)

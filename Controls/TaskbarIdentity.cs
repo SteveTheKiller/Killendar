@@ -13,7 +13,7 @@ namespace Killendar.Controls
     /// </summary>
     internal static class TaskbarIdentity
     {
-        private const string AppName = "Killendar";
+        private const string AppName = Services.AppInfo.DisplayName;
         private const int WmDestroy = 0x0002;
 
         private static string? _label;

@@ -50,11 +50,12 @@ namespace Killendar.Tests
         {
             using var profile = new LocationProfile();
             var app = new Application { ShutdownMode = ShutdownMode.OnExplicitShutdown };
-            foreach (string resource in new[] { "Themes/Dark.xaml", "Controls/Controls.xaml", "Strings/en-US.xaml" })
+            foreach (string resource in new[] { "Themes/Dark.xaml", "Controls/Controls.xaml", "Controls/AppStyles.xaml", "Strings/en-US.xaml" })
                 app.Resources.MergedDictionaries.Add(new ResourceDictionary
                 {
                     Source = new Uri("/Killendar;component/" + resource, UriKind.Relative)
                 });
+            Killendar.Services.AppTheme.Configure();
             ThemeManager.GetSetting = Settings.Get;
             ThemeManager.SetSetting = Settings.Set;
             using var source = new HwndSource(new HwndSourceParameters("Killendar location keyboard fixture")

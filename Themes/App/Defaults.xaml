@@ -1,0 +1,40 @@
+<!-- Killendar's own theme values: keys only Killendar's views use, or Killendar's layout of a
+     family key it reads directly. ThemeManager.AppTokens (Services/AppTheme.cs) merges the defaults for every theme
+     over the family palette. -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <Thickness x:Key="AboutBodyMargin">8,10,8,18</Thickness>
+    <Thickness x:Key="AboutCaptionCloseMargin">0,0,0,0</Thickness>
+    <Visibility x:Key="AboutCaptionVisibility">Collapsed</Visibility>
+    <Visibility x:Key="AboutModernCloseVisibility">Visible</Visibility>
+    <sys:Double x:Key="AboutShadowOpacity">0.6</sys:Double>
+    <Thickness x:Key="ButtonBevelDarkThickness">0,0,0,0</Thickness>
+    <Thickness x:Key="ButtonBevelLightThickness">0,0,0,0</Thickness>
+    <Thickness x:Key="CheckSunkenDarkThickness">0,0,0,0</Thickness>
+    <Thickness x:Key="CheckSunkenLightThickness">0,0,0,0</Thickness>
+    <Thickness x:Key="ContentPaneBaseBorderThickness">0,0,0,0</Thickness>
+    <Thickness x:Key="ContentPaneOutlineThickness">1,1,1,1</Thickness>
+    <Thickness x:Key="DialogCaptionCloseMargin">0,0,0,0</Thickness>
+    <sys:Double x:Key="DialogShadowOpacity">0.72</sys:Double>
+    <CornerRadius x:Key="DialogTitleCornerRadius">6,6,0,0</CornerRadius>
+    <Thickness x:Key="DialogTitleTextMargin">14,0,0,0</Thickness>
+    <SolidColorBrush x:Key="DropdownArrowBrush" Color="#00FFFFFF" po:Freeze="True"/>
+    <SolidColorBrush x:Key="EditorPaneBrush" Color="#00FFFFFF" po:Freeze="True"/>
+    <Thickness x:Key="OverlayBevelDarkThickness">0,0,0,0</Thickness>
+    <SolidColorBrush x:Key="OverlayBevelInnerDarkBrush" Color="#00FFFFFF" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OverlayBevelInnerLightBrush" Color="#00FFFFFF" po:Freeze="True"/>
+    <Thickness x:Key="OverlayBevelInnerMargin">0,0,0,0</Thickness>
+    <Thickness x:Key="OverlayBevelLightThickness">0,0,0,0</Thickness>
+    <SolidColorBrush x:Key="OverlayBevelOuterDarkBrush" Color="#00FFFFFF" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OverlayBevelOuterLightBrush" Color="#00FFFFFF" po:Freeze="True"/>
+    <Visibility x:Key="ShortcutCaptionVisibility">Collapsed</Visibility>
+    <Visibility x:Key="ShortcutModernHeaderVisibility">Visible</Visibility>
+    <FontWeight x:Key="SidebarHeadingWeight">Normal</FontWeight>
+    <GridLength x:Key="TitleBarGridLength">32</GridLength>
+    <Thickness x:Key="ContentPaneMargin">0,0,8,0</Thickness>
+    <Thickness x:Key="TitleLogoMargin">4,4,0,0</Thickness>
+    <SolidColorBrush x:Key="FooterBevelDarkBrush" Color="#00FFFFFF" po:Freeze="True"/>
+    <SolidColorBrush x:Key="FooterBevelLightBrush" Color="#00FFFFFF" po:Freeze="True"/>
+</ResourceDictionary>

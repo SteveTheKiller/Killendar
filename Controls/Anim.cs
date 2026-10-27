@@ -94,7 +94,7 @@ namespace Killendar.Controls
 
             var clock = System.Diagnostics.Stopwatch.StartNew();
             double from = window.Opacity;
-            void Tick(object? _, EventArgs _1)
+            void Tick(object? sender, EventArgs e)
             {
                 double t = clock.Elapsed.TotalMilliseconds / FadeMs;
                 if (t >= 1)

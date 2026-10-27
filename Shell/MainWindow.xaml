@@ -947,7 +947,7 @@
             <Rectangle Canvas.Left="10" Canvas.Top="10" Width="2" Height="2" Fill="{DynamicResource DimTextBrush}"/>
         </Canvas>
         <Canvas Grid.Row="2" Width="14" Height="14" Panel.ZIndex="51"
-                Visibility="{DynamicResource GripHatchVisibility}"
+                Visibility="{DynamicResource GripLinesVisibility}"
                 HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,3,3"
                 Background="Transparent" Cursor="SizeNWSE" MouseLeftButtonDown="ResizeGrip_MouseDown">
             <Line X1="12" Y1="3" X2="3" Y2="12" Stroke="{DynamicResource BevelDarkBrush}"/>

@@ -1,0 +1,45 @@
+<!-- Killendar's own theme values: keys only Killendar's views use, or Killendar's layout of a
+     family key it reads directly. ThemeManager.AppTokens (Services/AppTheme.cs) merges the 98SE values
+     over the family palette. -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <Thickness x:Key="AboutBodyMargin">8,18,8,18</Thickness>
+    <Thickness x:Key="AboutCaptionCloseMargin">0,1,1,2</Thickness>
+    <Visibility x:Key="AboutCaptionVisibility">Visible</Visibility>
+    <Visibility x:Key="AboutModernCloseVisibility">Collapsed</Visibility>
+    <sys:Double x:Key="AboutShadowOpacity">0</sys:Double>
+    <Thickness x:Key="ButtonBevelDarkThickness">0,0,2,2</Thickness>
+    <Thickness x:Key="ButtonBevelLightThickness">2,2,0,0</Thickness>
+    <Thickness x:Key="CheckSunkenDarkThickness">1,1,0,0</Thickness>
+    <Thickness x:Key="CheckSunkenLightThickness">0,0,1,1</Thickness>
+    <Thickness x:Key="ContentPaneBaseBorderThickness">0,0,0,0</Thickness>
+    <Thickness x:Key="ContentPaneOutlineThickness">0,0,0,0</Thickness>
+    <Thickness x:Key="DialogCaptionCloseMargin">0,2,3,2</Thickness>
+    <sys:Double x:Key="DialogShadowOpacity">0</sys:Double>
+    <CornerRadius x:Key="DialogTitleCornerRadius">0,0,0,0</CornerRadius>
+    <Thickness x:Key="DialogTitleTextMargin">4,0,0,0</Thickness>
+    <SolidColorBrush x:Key="DropdownArrowBrush" Color="#FFC0C0C0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="EditorPaneBrush" Color="#FFC0C0C0" po:Freeze="True"/>
+    <Thickness x:Key="OverlayBevelDarkThickness">0,0,1,1</Thickness>
+    <SolidColorBrush x:Key="OverlayBevelInnerDarkBrush" Color="#FF808080" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OverlayBevelInnerLightBrush" Color="#FFFFFFFF" po:Freeze="True"/>
+    <Thickness x:Key="OverlayBevelInnerMargin">1,1,1,1</Thickness>
+    <Thickness x:Key="OverlayBevelLightThickness">1,1,0,0</Thickness>
+    <SolidColorBrush x:Key="OverlayBevelOuterDarkBrush" Color="#FF000000" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OverlayBevelOuterLightBrush" Color="#FFDFDFDF" po:Freeze="True"/>
+    <Visibility x:Key="ShortcutCaptionVisibility">Visible</Visibility>
+    <Visibility x:Key="ShortcutModernHeaderVisibility">Collapsed</Visibility>
+    <FontWeight x:Key="SidebarHeadingWeight">Bold</FontWeight>
+    <GridLength x:Key="TitleBarGridLength">22</GridLength>
+    <Thickness x:Key="ContentPaneMargin">0,0,0,0</Thickness>
+    <Thickness x:Key="TitleLogoMargin">4,2,0,0</Thickness>
+    <SolidColorBrush x:Key="FooterBevelDarkBrush" Color="#FF808080" po:Freeze="True"/>
+    <SolidColorBrush x:Key="FooterBevelLightBrush" Color="#FFFFFFFF" po:Freeze="True"/>
+    <SolidColorBrush x:Key="InputFieldBrush" Color="#FFFFFFFF" po:Freeze="True"/>
+    <!-- The calendar is a white client area on 98SE, as Windows 98 drew a document window. The family
+         98SE pane is the gray face; Killendar keeps its calendar and dialogs on white. -->
+    <SolidColorBrush x:Key="PaneBrush" Color="#FFFFFFFF" po:Freeze="True"/>
+    <SolidColorBrush x:Key="FilenameBrush" Color="#FFE8E8E8" po:Freeze="True"/>
+</ResourceDictionary>
