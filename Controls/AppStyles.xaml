@@ -108,4 +108,48 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- The view switcher (Month, Week, Day, Agenda): the family ToolbarButton look, plus the
+         selected view CalendarHost marks with CommandParameter="selected". The selected tile is
+         a raised object, so it owns the shadow and the glyph drops its own. The selected trigger
+         comes after IsMouseOver on purpose: hovering the selected view keeps its tile instead
+         of swapping in RowHoverBrush under the selection foreground. -->
+    <Style x:Key="ViewTabButton" TargetType="Button" BasedOn="{StaticResource ToolbarButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                            CornerRadius="{DynamicResource SmallCornerRadius}" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <ContentPresenter.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="2" Direction="270"
+                                                  Opacity="{DynamicResource IconShadowOpacity}"/>
+                            </ContentPresenter.Effect>
+                        </ContentPresenter>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource RowHoverBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource SurfaceBrush}"/>
+                        </Trigger>
+                        <Trigger Property="CommandParameter" Value="selected">
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource CalendarViewSelectedBrush}"/>
+                            <Setter TargetName="content" Property="Effect" Value="{x:Null}"/>
+                            <Setter TargetName="Bd" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="2" Direction="270"
+                                                      Opacity="{DynamicResource SelectedTileShadowOpacity}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.4"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

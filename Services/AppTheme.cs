@@ -61,6 +61,9 @@ namespace Killendar.Services
         {
             bool se98 = theme == Theme.SE98;
             ThemeManager.Mirror(d, "CalendarViewSelectedBrush", "SelectionBg");
+            // The selected view tile is raised: its shadow covers far more area than an icon
+            // shadow, so it runs lighter to read at the same weight. 98SE stays flat.
+            d["SelectedTileShadowOpacity"] = se98 ? 0d : 0.45d;
 
             // The classic calendar is a white client area. Give unclassified appointments a
             // pale version of the selected 98SE accent instead of the old face gray, which could
