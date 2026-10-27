@@ -22,7 +22,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - The footer's Install button runs on the shared KillerUI template code, with Killendar's all-users choice and calendar handling kept the same.
 
 ### Added
-- About groups settings in two columns and can hide shortcut hints in menus and tooltips without disabling keyboard shortcuts.
+- About groups settings in two columns and can hide shortcut hints in menus and tooltips without disabling keyboard shortcuts. Hover tooltips clear large pointers while preserving custom placement.
 - Alt+drag moves any Killendar window from anywhere inside it.
 - When Killendar is already installed for all users, the install prompt ticks and locks the all-users box and says it will update that copy.
 
