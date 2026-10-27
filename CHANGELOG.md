@@ -18,6 +18,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Accent buttons such as Save and OK rest with an accent outline, as in the other Killer apps, and the About card, the window menu and the signature check share the KillerUI template code.
 - Confirm prompts use the family dialog frame shared with the other Killer apps, and their Cancel button follows the chosen language. The window chrome, toolbar, app size, tray, folder tree and update notices now run on the KillerUI template code with Killendar's own behavior kept.
 - Menus opened from the rail now sit level with their own button, while the theme and language menus stay in the corner of the calendar pane. The accent dots in the theme menu can be reached with Tab and the arrow keys and are named for screen readers.
+- Dates, times, month and day names and numbers follow the Windows region format instead of the interface language, as in the other Killer apps; the date format setting still applies.
 - Toolbar captions are larger and set in the family sans, captions under the icons wrap instead of running wide, and the toolbar right-click menu stays open so display modes can be compared.
 - The open, save and folder picker now uses the family file picker card and frame shared with the other Killer apps, and pictures keep their plain file icons.
 - The footer's Install button runs on the shared KillerUI template code, with Killendar's all-users choice and calendar handling kept the same.

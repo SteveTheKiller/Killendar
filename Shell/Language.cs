@@ -17,6 +17,9 @@ namespace Killendar.Shell
             // Translator test mode (--lang-file): a saved edit re-applies the strings, so rebuild
             // the code-built ones the same way a language switch does.
             LocaleManager.ExternalReloaded += RelocalizeDynamicUi;
+            // The event is static, so a closed window would stay subscribed and alive. An app
+            // with several windows opens and closes many.
+            Closed += (_, _) => LocaleManager.ExternalReloaded -= RelocalizeDynamicUi;
         }
 
         private void LangButton_Click(object sender, RoutedEventArgs e) => _languageMenu.Open();
