@@ -388,7 +388,7 @@
                             <StackPanel x:Name="RailStack" VerticalAlignment="Bottom" Margin="0,0,0,6">
 
                                 <Button x:Name="CategoriesButton" Style="{StaticResource RailButton}"
-                                        Click="CategoriesButton_Click" Content="&#xE8EC;" Margin="0,0,0,6"
+                                        Click="CategoriesButton_Click" Content="&#xE8EC;" Margin="0,0,0,10"
                                         ToolTip="{DynamicResource Str_TT_Categories}"/>
 
                                 <!-- Week/Day grid density (Density.cs). Click cycles, wheel steps -
@@ -398,11 +398,11 @@
                                      (2026-07-30) -->
                                 <Button x:Name="DensityBtn" Style="{StaticResource RailButton}"
                                         Click="DensityBtn_Click" PreviewMouseWheel="DensityBtn_MouseWheel"
-                                        Content="&#xE8A1;" Margin="0,0,0,6"
+                                        Content="&#xE8A1;" Margin="0,0,0,10"
                                         ToolTip="{DynamicResource Str_TT_Density}"/>
 
                                 <Button x:Name="DateSettingsButton" Style="{StaticResource RailButton}"
-                                        Click="DateSettingsButton_Click" Content="&#xE787;" Margin="0,0,0,6"
+                                        Click="DateSettingsButton_Click" Content="&#xE787;" Margin="0,0,0,10"
                                         ToolTip="{DynamicResource Str_TT_DateSettings}">
                                     <Button.ContextMenu>
                                         <ContextMenu x:Name="DateSettingsContextMenu"/>
@@ -418,10 +418,10 @@
                                      standard - not a Segoe MDL2 glyph. Same overlay as F1. -->
                                 <Button x:Name="ShortcutsButton" Style="{StaticResource RailButton}"
                                         Click="ShortcutsButton_Click" Content="?" FontFamily="Consolas"
-                                        FontSize="18" Margin="0,0,0,6"
+                                        FontSize="18" Margin="0,0,0,10"
                                         ToolTip="{DynamicResource Str_TT_Shortcuts}"/>
                                 <Button x:Name="LangButton" Style="{StaticResource RailButton}"
-                                        Click="LangButton_Click" Content="&#xF2B7;" Margin="0,0,0,6"
+                                        Click="LangButton_Click" Content="&#xF2B7;" Margin="0,0,0,10"
                                         ToolTip="{DynamicResource Str_TT_Language}">
                                     <Button.ContextMenu>
                                         <ContextMenu x:Name="LangMenu"/>
