@@ -45,7 +45,6 @@ namespace Killendar.Shell
 
             RestoreWindowPlacement();
             InitAppScale();
-            InitAppScaleExtras();   // AppScale.Extras.cs
             SourceInitialized += MainWindow_SourceInitialized;
             ApplyGrainTexture();
             Loaded += (_, _) =>
