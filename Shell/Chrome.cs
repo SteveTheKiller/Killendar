@@ -36,6 +36,7 @@ namespace Killendar.Shell
             // Windows 11 snap layouts flyout on the maximize button. Added after WindowChrome's
             // hook, so it answers WM_NCHITTEST first.
             SnapLayouts.Attach(this, MaximizeBtn);
+            BeforeWorkAreaFit();
             // After RestoreWindowPlacement (constructor) and before the first show: a default or
             // saved size larger than this monitor's work area is shrunk and moved onto it.
             WorkAreaFit.Fit(this);
@@ -53,9 +54,23 @@ namespace Killendar.Shell
 
         protected override void OnClosed(EventArgs e)
         {
-            WindowPlacement.Save(this, Services.ThemeManager.SetSetting);
+            bool savePlacement = true;
+            AdjustSaveWindowPlacement(ref savePlacement);
+            if (savePlacement) WindowPlacement.Save(this, Services.ThemeManager.SetSetting);
             base.OnClosed(e);
         }
+
+        /// <summary>App hook: runs in SourceInitialized just before WorkAreaFit, for an app that
+        /// restores its own saved bounds once the window has a handle.</summary>
+        partial void BeforeWorkAreaFit();
+
+        /// <summary>App hook: set <paramref name="save"/> to false for an app that keeps its own
+        /// window bounds instead of the kit's WindowPlacement setting.</summary>
+        partial void AdjustSaveWindowPlacement(ref bool save);
+
+        /// <summary>App hook: set <paramref name="whole"/> to true while the window should maximize
+        /// over the whole monitor, taskbar included (a fullscreen mode), instead of the work area.</summary>
+        partial void CoverWholeMonitor(ref bool whole);
 
         protected override void OnStateChanged(EventArgs e)
         {
@@ -119,8 +134,10 @@ namespace Killendar.Shell
 
             var info = new MONITORINFO { cbSize = Marshal.SizeOf(typeof(MONITORINFO)) };
             GetMonitorInfo(monitor, ref info);
-            RECT work = info.rcWork;
+            bool whole = false;
+            CoverWholeMonitor(ref whole);
             RECT mon = info.rcMonitor;
+            RECT work = whole ? mon : info.rcWork;
 
             mmi.ptMaxPosition.x = Math.Abs(work.left - mon.left);
             mmi.ptMaxPosition.y = Math.Abs(work.top - mon.top);

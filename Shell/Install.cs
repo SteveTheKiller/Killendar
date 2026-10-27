@@ -1,61 +1,124 @@
+using System;
+using System.Threading.Tasks;
 using System.Windows;
 using Killendar.Controls;
-using Killendar.Services;
 
+// The footer's portable badge: a PORTABLE label and an "Install <App>..." button, shown only when
+// the exe is running from somewhere other than an install location.
+//
+// This is the UI half of the family install system. The ENGINE - IsPortable, InstallAndRelaunch,
+// the /silent and machine-wide paths, shortcut creation, uninstall - lives in the host app's
+// App.xaml.cs, because it runs before any window exists. The kit does not ship it; copy it from
+// KillerNotes or Killendar, which have the current version. This file assumes only:
+//
+//     App.IsPortable()                                        -> bool
+//     App.InstallAndRelaunch(bool wantDesktop, bool allUsers) -> bool, false if it did not happen
+//     App.IsDemo                                              -> bool
+//
+// Everything an app adds lives in its own Shell/Install.Extras.cs through ConfigureInstall: the
+// all-users checkbox (and locking it when a machine-wide copy already exists), async checks that
+// can call the install off, flushing before the relaunch and reopening after a failure, its own
+// install call (off the interface thread, or one that can defer the relaunch), and its own status
+// line. AfterPortableBadgeRefreshed runs after every badge refresh.
 namespace Killendar.Shell
 {
-    /// <summary>
-    /// The UI half of the family install system. The engine is all in App.xaml.cs (IsPortable,
-    /// InstallAndRelaunch, the silent and machine-wide paths); this is the footer badge that
-    /// offers it, matching KillerNotes, KillerScan and KillerShell.
-    ///
-    /// Killendar's InstallAndRelaunch takes an all-users flag as well as the desktop shortcut,
-    /// so the confirm carries two checkboxes rather than KillerNotes' one.
-    /// </summary>
     public partial class MainWindow
     {
-        /// <summary>Shows the badge when running from outside the installed location. Hidden in
-        /// demo mode so marketing screenshots stay clean.</summary>
+        /// <summary>Shows the badge when running portable. Call from Loaded, and again after a
+        /// failed install so the button comes back. Hidden in demo mode, so a marketing
+        /// screenshot of an uninstalled build does not carry an Install button.</summary>
         private void RefreshPortableBadge()
         {
             bool show = App.IsPortable() && !App.IsDemo;
             PortableBadge.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+            AfterPortableBadgeRefreshed();
         }
 
-        private void Install_Click(object sender, RoutedEventArgs e)
+        private async void Install_Click(object sender, RoutedEventArgs e)
         {
-            var dlg = new ConfirmDialog(
-                LocaleManager.Loc("Str_Dlg_InstallMsg"),
-                LocaleManager.Loc("Str_Dlg_InstallBullets"),
-                LocaleManager.Loc("Str_Btn_DoInstall"),
-                LocaleManager.Loc("Str_Btn_Cancel"),
-                check1Label: LocaleManager.Loc("Str_Chk_Desktop"),   check1Initial: true,
-                check2Label: LocaleManager.Loc("Str_Chk_AllUsers"),  check2Initial: false)
-            { Owner = this };
-            // Already installed for all users (by an admin, winget, choco or an RMM)? Then this
-            // updates that copy in place, so the all-users box is ticked and locked with a note.
-            if (App.MachineInstallExists())
-                dlg.LockCheck2(LocaleManager.Loc("Str_Install_AlreadyAllUsers"));
+            var options = new InstallOptions();
+            ConfigureInstall(options);
+
+            var dlg = options.OfferAllUsers
+                ? new ConfirmDialog(
+                    Loc("Str_Dlg_InstallMsg"),
+                    Loc("Str_Dlg_InstallBullets"),
+                    Loc("Str_Btn_DoInstall"),
+                    Loc("Str_Btn_Cancel"),
+                    check1Label: Loc("Str_Chk_Desktop"), check1Initial: true,
+                    check2Label: Loc("Str_Chk_AllUsers"), check2Initial: false) { Owner = this }
+                : new ConfirmDialog(
+                    Loc("Str_Dlg_InstallMsg"),
+                    Loc("Str_Dlg_InstallBullets"),
+                    Loc("Str_Btn_DoInstall"),
+                    Loc("Str_Btn_Cancel"),
+                    check1Label: Loc("Str_Chk_Desktop"), check1Initial: true) { Owner = this };
+            if (options.OfferAllUsers && options.AllUsersLockNote != null)
+                dlg.LockCheck2(options.AllUsersLockNote);
             dlg.ShowDialog();
             if (!dlg.Confirmed) return;
+            if (options.CanInstallAsync != null && !await options.CanInstallAsync()) return;
 
-            // The install relaunches from the new location, so this process is about to end.
-            // Close the store first: it holds a SQLite handle on the open Killendar, and the
-            // pooled file handle has to be released before a second process opens the same file
-            // (two writers on one .kcal is the failure mode single-instance exists to prevent).
             PortableBadge.Visibility = Visibility.Collapsed;
-            _store.Close();
 
-            if (!App.InstallAndRelaunch(wantDesktop: dlg.Check1Checked, allUsers: dlg.Check2Checked))
-            {
-                // Elevation refused, or the copy failed. Put the badge back and reopen, so the
-                // session carries on rather than being left with a closed store.
-                RefreshPortableBadge();
-                OpenCalendarData();
-                // SetStatus is an explicit IShellServices implementation, so it is not callable
-                // unqualified from inside MainWindow.
-                ((Features.IShellServices)this).SetStatus(LocaleManager.Loc("Str_Status_InstallFailed"));
-            }
+            // FLUSH FIRST. The install relaunches from the new location, so this process is about
+            // to end: write out whatever is unsaved, and release any file handle the installed
+            // copy is about to want (Killendar closes its SQLite store here).
+            options.BeforeInstall?.Invoke();
+
+            bool desktop = dlg.Check1Checked;
+            bool allUsers = options.OfferAllUsers && dlg.Check2Checked;
+            InstallOutcome outcome = options.InstallAsync != null
+                ? await options.InstallAsync(desktop, allUsers)
+                : App.InstallAndRelaunch(wantDesktop: desktop, allUsers: allUsers)
+                    ? InstallOutcome.Installed : InstallOutcome.Failed;
+            if (outcome == InstallOutcome.Installed) return;
+
+            // Elevation refused, the copy failed or the relaunch waits. Put the badge back and
+            // reopen anything that was closed above, so the session carries on.
+            RefreshPortableBadge();
+            options.AfterInstallFailed?.Invoke();
+            string status = Loc(outcome == InstallOutcome.Deferred
+                ? "Str_Status_RelaunchDeferred" : "Str_Status_InstallFailed");
+            if (options.ShowStatus != null) options.ShowStatus(status);
+            else StatusText.Text = status;
         }
+
+        /// <summary>How an install attempt ended. Deferred means the copy is installed but the
+        /// relaunch waits, which only an app supplying InstallAsync reports.</summary>
+        private enum InstallOutcome { Installed, Failed, Deferred }
+
+        /// <summary>The app's install behavior, filled in by ConfigureInstall. Every member is
+        /// optional; left alone, the badge offers the desktop shortcut only.</summary>
+        private sealed class InstallOptions
+        {
+            /// <summary>Adds the all-users checkbox (Str_Chk_AllUsers), unticked.</summary>
+            public bool OfferAllUsers { get; set; }
+
+            /// <summary>Ticks and locks the all-users checkbox with this note.</summary>
+            public string? AllUsersLockNote { get; set; }
+
+            /// <summary>Runs after the confirm; false calls the install off.</summary>
+            public Func<Task<bool>>? CanInstallAsync { get; set; }
+
+            /// <summary>Runs on the interface thread just before the install.</summary>
+            public Action? BeforeInstall { get; set; }
+
+            /// <summary>Replaces App.InstallAndRelaunch(desktop, allUsers).</summary>
+            public Func<bool, bool, Task<InstallOutcome>>? InstallAsync { get; set; }
+
+            /// <summary>Runs after a failed or deferred install, once the badge is back.</summary>
+            public Action? AfterInstallFailed { get; set; }
+
+            /// <summary>Replaces writing the failure line to StatusText.</summary>
+            public Action<string>? ShowStatus { get; set; }
+        }
+
+        /// <summary>App hook: fill in the app's install behavior.</summary>
+        partial void ConfigureInstall(InstallOptions options);
+
+        /// <summary>App hook: runs after every badge refresh, for example to name the badge for
+        /// screen readers.</summary>
+        partial void AfterPortableBadgeRefreshed();
     }
 }

@@ -19,6 +19,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Confirm prompts use the family dialog frame shared with the other Killer apps, and their Cancel button follows the chosen language. The window chrome, toolbar, app size, tray, folder tree and update notices now run on the KillerUI template code with Killendar's own behavior kept.
 - Menus opened from the rail now sit level with their own button, while the theme and language menus stay in the corner of the calendar pane. The accent dots in the theme menu can be reached with Tab and the arrow keys and are named for screen readers.
 - The open, save and folder picker now uses the family file picker card and frame shared with the other Killer apps, and pictures keep their plain file icons.
+- The footer's Install button runs on the shared KillerUI template code, with Killendar's all-users choice and calendar handling kept the same.
 
 ### Added
 - About groups settings in two columns and can hide shortcut hints in menus and tooltips without disabling keyboard shortcuts.
