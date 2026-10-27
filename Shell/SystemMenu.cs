@@ -8,27 +8,44 @@ using KillerFamily.Accessibility;
 // ============================================================
 // THEMED WINDOWS SYSTEM MENU
 //
-// WindowChrome makes the 36px title bar a real native caption, which is what buys free snap,
-// drag and double-click-maximize - but it also means Windows answers a caption right-click (and
-// Alt+Space) with its own stock white HMENU. That menu is drawn by Win32, not WPF, so no brush
-// or style in the app can reach it. The only way to theme it is to suppress the two messages
-// that raise it and show our own.
+// WindowChrome turns the title bar into a real native caption, which is what buys free snap,
+// drag and double-click-maximize - but it also means Windows answers a caption right-click
+// (and Alt+Space) with its own stock white HMENU. That menu is drawn by Win32, not WPF, so no
+// brush, style or theme in the app can reach it. The ONLY way to theme it is to suppress the
+// two messages that raise it and show our own.
 //
-// This is the kit's copy (KillerUI/Shell/SystemMenu.cs), which came from KillerScan. KillerShell
-// has an equivalent inside its Chrome.cs. Ported into Killendar 2026-07-30 - it was one of three
-// apps still showing the stock white menu.
+// So: swallow them and pop a normal WPF ContextMenu, which picks up the app's implicit
+// ContextMenu / MenuItem / Separator styles for free. Each item posts back the exact
+// WM_SYSCOMMAND the native menu would have sent, so behavior is identical - including Move and
+// Size, which hand off to Windows' own modal drag loops.
 //
-// The ContextMenu it pops picks up the app's implicit ContextMenu / MenuItem / Separator styles,
-// so it themes itself. Each item posts back the exact WM_SYSCOMMAND the native menu would have
-// sent, so behavior is unchanged - including Move and Size, which hand off to Windows' own
-// modal drag loops.
+// ---- Wiring it up -------------------------------------------------------------------------
+//   1. Drop this file in as a MainWindow partial and fix the namespace.
+//   2. The window needs an HwndSource hook. If Chrome.cs already has a WndProc, add this as the
+//      FIRST thing it does:
+//
+//          if (TryHandleSystemMenu(msg, wParam, lParam)) { handled = true; return IntPtr.Zero; }
+//
+//   3. Chrome.cs must define `private const int HTCAPTION = 2;` (most already do).
+//   4. Add the six Str_Sys_* keys to en-US.xaml at minimum. Missing keys fall back to English
+//      rather than rendering the key name, so a half-translated locale still reads correctly.
+//
+// TRAP (KillerPDF, 2026-07-31): an Absolute-placement ContextMenu with no PlacementTarget has
+// NO inheritance context, so it only sees APP-level implicit styles. An app that keeps its
+// ContextMenu/MenuItem styles in the window's resources (KillerPDF does) gets the stock white
+// menu. ShowSystemMenu below therefore sets PlacementTarget = this - harmless with
+// PlacementMode.Absolute (it supplies the resource context without affecting position). Do not
+// remove it when porting.
+//
+// Originally written for KillerScan; KillerShell's older Minimize/Maximize/Close-only copy in
+// Chrome.cs was replaced with this file on 2026-10-23, when Close gained Windows' Alt+F4 hint and
+// the default item its bold. Ported into
+// the kit 2026-07-30 because three of five apps were still showing the stock white menu.
 // ============================================================
 namespace Killendar.Shell
 {
     public partial class MainWindow
     {
-        // WM_GETMINMAXINFO / WM_ERASEBKGND / WM_NCLBUTTONDOWN / HTCAPTION are declared in
-        // Chrome.cs on this same partial class - do not redeclare them here.
         private const int WM_NCRBUTTONUP = 0x00A5;
         private const int WM_SYSCOMMAND  = 0x0112;
 
@@ -43,8 +60,8 @@ namespace Killendar.Shell
         private ContextMenu? _sysMenu;
 
         /// <summary>
-        /// Called first thing from WndProc (Chrome.cs). Returns true when the message was ours
-        /// and the native menu should be suppressed.
+        /// Call from WndProc. Returns true when the message was ours and the native menu should
+        /// be suppressed.
         /// </summary>
         private bool TryHandleSystemMenu(int msg, IntPtr wParam, IntPtr lParam)
         {
@@ -95,6 +112,9 @@ namespace Killendar.Shell
                 mi.FontWeight = cmd == defaultCommand ? FontWeights.Bold : FontWeights.Normal;
             }
 
+            // See the TRAP note in the header: without a PlacementTarget an Absolute-placement
+            // menu has no inheritance context and misses window-level implicit styles.
+            _sysMenu.PlacementTarget = this;
             _sysMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Absolute;
             if (screenPoint is { } p)
             {
@@ -119,12 +139,14 @@ namespace Killendar.Shell
         {
             var menu = new ContextMenu();
 
-            // E923/E921/E922/E8BB are the same four the title-bar caption buttons already draw,
-            // so the menu and the caption agree. E7C2 is the four-way move arrow, E740 the
-            // diagonal resize arrow. All six are the set KillerScan shipped after rendering them.
-            MenuItem Add(string key, string fallback, int cmd, int glyph, bool danger = false)
+            // Every codepoint below was verified present in segmdl2.ttf by RENDERING it, not
+            // trusted from documentation - this repo has shipped a missing-glyph box before.
+            // E923/E921/E922/E8BB are the same four the title-bar caption buttons draw, so the
+            // menu and the caption agree. E7C2 is the four-way move arrow, E740 the diagonal
+            // resize arrow.
+            MenuItem Add(string key, string fallback, int cmd, int glyph, string gesture = "", bool danger = false)
             {
-                var mi = new MenuItem { Tag = cmd, Padding = new Thickness(12, 7, 24, 7) };
+                var mi = new MenuItem { Tag = cmd, Padding = new Thickness(12, 7, 24, 7), InputGestureText = gesture };
                 mi.SetResourceReference(HeaderedItemsControl.HeaderProperty, key);
                 // Loc() returns the key itself when a string is missing; fall back to English so a
                 // half-translated locale never shows "Str_Sys_Move" in the menu.
@@ -153,8 +175,7 @@ namespace Killendar.Shell
             Add("Str_Sys_Minimize", "Minimize", SC_MINIMIZE, 0xE921);
             Add("Str_Sys_Maximize", "Maximize", SC_MAXIMIZE, 0xE922);
             menu.Items.Add(new Separator());
-            var close = Add("Str_Sys_Close", "Close", SC_CLOSE, 0xE8BB, danger: true);
-            close.InputGestureText = "Alt+F4";
+            Add("Str_Sys_Close",    "Close",    SC_CLOSE,    0xE8BB, gesture: "Alt+F4", danger: true);
             return menu;
         }
 

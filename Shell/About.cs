@@ -4,17 +4,21 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using Killendar.Controls;
-using Killendar.Features;
+using Killendar.Features.About;
+using Killendar.Services;
 
 namespace Killendar.Shell
 {
     /// <summary>
     /// The About overlay's window half: the fade, the click handling, and the IAboutHost
     /// implementation that maps the controller's values onto the named XAML elements.
+    /// Everything the card SAYS is decided in Features/About/AboutController.cs. Rows only this
+    /// app's card has (Start with Windows, Close to tray, KillerScan's vendor database) are mapped
+    /// in the app's own Shell/About.Extras.cs.
     /// </summary>
     public partial class MainWindow : IAboutHost
     {
-        private readonly AboutController _about = null!;
+        private AboutController _about = null!;
 
         private void ShowAboutOverlay() => _about.Show();
 
@@ -41,16 +45,20 @@ namespace Killendar.Shell
         bool IAboutHost.UpdateEnabled { set => AboutUpdateButton.IsEnabled = value; }
 
         bool IAboutHost.StartupUpdateCheck { set => AboutStartupUpdateCheck.IsChecked = value; }
-        bool IAboutHost.StartWithWindows   { set => AboutStartWithWindows.IsChecked = value; }
-        bool IAboutHost.CloseToTray        { set => AboutCloseToTray.IsChecked = value; }
 
         void IAboutHost.ShowCard() => FadeOverlayIn(AboutOverlay);
 
-        // ---- Overlay fade ----
+        // ---- Overlay fade (shared with the shortcuts overlay, ShortcutsOverlay.cs) ----
+
+        /// <summary>App hook: an overlay is about to show (KillerScan dims the frame behind it).</summary>
+        partial void OnOverlayShowing(UIElement overlay);
+
+        /// <summary>App hook: an overlay finished hiding.</summary>
+        partial void OnOverlayHidden(UIElement overlay);
 
         private void FadeOverlayIn(UIElement o)
         {
-            ClassicFrameChrome.Opacity = 0.42;
+            OnOverlayShowing(o);
             o.Visibility = Visibility.Visible;
             Anim.FadeIn(o);
         }
@@ -64,7 +72,7 @@ namespace Killendar.Shell
             a.Completed += (_, _) =>
             {
                 o.Visibility = Visibility.Collapsed;
-                ClassicFrameChrome.Opacity = 1;
+                OnOverlayHidden(o);
             };
             o.BeginAnimation(UIElement.OpacityProperty, a);
         }
@@ -78,33 +86,23 @@ namespace Killendar.Shell
 
         private void AboutVersion_Click(object sender, MouseButtonEventArgs e) => _about.OpenReleaseNotes();
 
-        private void AboutUpdateButton_Click(object sender, RoutedEventArgs e) => _about.Update();
-
-        private void AboutDiagnostics_Click(object sender, RoutedEventArgs e)
+        /// <summary>The footer version opens the About card, as in every app. One overlay at a
+        /// time, so the F1 overlay steps aside first.</summary>
+        private void VersionLabel_Click(object sender, MouseButtonEventArgs e)
         {
-            try
-            {
-                Clipboard.SetText(Services.Diagnostics.Build(_store));
-                StatusText.Text = Loc("Str_About_DiagnosticsCopied");
-            }
-            catch (System.Runtime.InteropServices.ExternalException)
-            {
-                StatusText.Text = Loc("Str_About_DiagnosticsFailed");   // another program is holding the clipboard
-            }
+            e.Handled = true;
+            if (ShortcutsOverlay.Visibility == Visibility.Visible) ShortcutsOverlay.Visibility = Visibility.Collapsed;
+            ShowAboutOverlay();
         }
+
+        private void AboutUpdateButton_Click(object sender, RoutedEventArgs e) => _about.Update();
 
         private void AboutStartupUpdateCheck_Click(object sender, RoutedEventArgs e)
             => _about.SetStartupCheck(AboutStartupUpdateCheck.IsChecked == true);
 
-        private void AboutStartWithWindows_Click(object sender, RoutedEventArgs e)
-            => _about.SetStartWithWindows(AboutStartWithWindows.IsChecked == true);
-
-        private void AboutCloseToTray_Click(object sender, RoutedEventArgs e)
-            => _about.SetCloseToTray(AboutCloseToTray.IsChecked == true);
-
         private void AboutLink_Navigate(object sender, RequestNavigateEventArgs e)
         {
-            Services.WebLink.Open(e.Uri.AbsoluteUri);
+            WebLink.Open(e.Uri.AbsoluteUri);
             e.Handled = true;
         }
     }

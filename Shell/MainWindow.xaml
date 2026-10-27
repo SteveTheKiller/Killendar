@@ -192,7 +192,7 @@
 
                     <!-- The action you came here to do, then file actions, then where you are in time. -->
                     <StackPanel x:Name="ToolbarLeft" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <Button x:Name="NewEventBtn" Content="{DynamicResource Str_Btn_New}" Style="{StaticResource OutlineButton}"
+                        <Button x:Name="NewEventBtn" Content="{DynamicResource Str_Btn_New}" Style="{StaticResource BareButton}"
                                 Tag="toolbar"
                                 Padding="12,4" Margin="0,0,10,0" Click="NewEventBtn_Click"/>
 

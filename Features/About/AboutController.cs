@@ -3,15 +3,33 @@ using System.Threading.Tasks;
 using Killendar.Controls;
 using Killendar.Services;
 
-namespace Killendar.Features
+namespace Killendar.Features.About
 {
     /// <summary>
     /// The About card's content: version and release date, the code-signing publisher and
     /// thumbprint, the running exe's SHA-256, and a quiet update check with optional one-click
     /// self-update.
+    ///
+    /// One controller serves every app. Rows only some cards have arrive as capability interfaces
+    /// on the host (IAboutStartup, IAboutTray, in IAboutHost.cs), and anything a single app adds
+    /// lives in that app's own AboutController.Extras.cs, which implements the partial hooks below.
+    /// A hook nobody implements compiles away.
     /// </summary>
-    internal sealed class AboutController
+    internal sealed partial class AboutController
     {
+        /// <summary>App hook: fill the app's own rows; runs as the card is filled, before it shows.</summary>
+        partial void OnShow();
+
+        /// <summary>App hook: adjust the signature the card shows (KillerScan's --demo preview).</summary>
+        partial void AdjustSignature(ref bool valid, ref string subject, ref string thumbprint);
+
+        /// <summary>App hook: replace a raw placeholder value ("(none)", "(unavailable)") with
+        /// localized text.</summary>
+        partial void ShownValue(ref string value);
+
+        /// <summary>App hook: skip the startup update prompt (KillerScan skips it under --demo).</summary>
+        partial void SkipStartupCheck(ref bool skip);
+
         private readonly IAboutHost _host;
 
         /// <summary>Tag of the newer release found by the check, null when there is nothing to
@@ -26,12 +44,12 @@ namespace Killendar.Features
 
         internal AboutController(IAboutHost host) => _host = host;
 
-        internal static bool StartupCheckEnabled => Settings.Get(StartupCheckSetting) != "0";
+        internal static bool StartupCheckEnabled => ThemeManager.GetSetting(StartupCheckSetting) != "0";
 
         /// <summary>Saves the startup check choice from either the About checkbox or the prompt.</summary>
         internal void SetStartupCheck(bool enabled)
         {
-            Settings.Set(StartupCheckSetting, enabled ? "1" : "0");
+            ThemeManager.SetSetting(StartupCheckSetting, enabled ? "1" : "0");
             _host.StartupUpdateCheck = enabled;
         }
 
@@ -40,26 +58,29 @@ namespace Killendar.Features
         internal void SetStartWithWindows(bool enabled)
         {
             KillerFamily.Deployment.StartupRegistration.Set(AppInfo.DisplayName, enabled);
-            _host.StartWithWindows = KillerFamily.Deployment.StartupRegistration.IsEnabled(AppInfo.DisplayName);
+            if (_host is IAboutStartup startup)
+                startup.StartWithWindows = KillerFamily.Deployment.StartupRegistration.IsEnabled(AppInfo.DisplayName);
         }
 
         /// <summary>Whether closing the main window hides it to the notification area. Read by
         /// CloseToTray each time the window closes, so the checkbox takes effect at once.</summary>
-        internal static bool CloseToTrayEnabled => Settings.Get(KillerFamily.Shell.CloseToTray.SettingName) == "1";
+        internal static bool CloseToTrayEnabled => ThemeManager.GetSetting(KillerFamily.Shell.CloseToTray.SettingName) == "1";
 
         /// <summary>Saves the Close to system tray choice from the About checkbox.</summary>
         internal void SetCloseToTray(bool enabled)
         {
-            Settings.Set(KillerFamily.Shell.CloseToTray.SettingName, enabled ? "1" : "0");
-            _host.CloseToTray = enabled;
+            ThemeManager.SetSetting(KillerFamily.Shell.CloseToTray.SettingName, enabled ? "1" : "0");
+            if (_host is IAboutTray tray) tray.CloseToTray = enabled;
         }
 
-        /// <summary>Once per run, after the calendar is open: when a newer release exists, offers it
-        /// with an "Always check on startup" box so the check can be turned off right there. The
-        /// About card's checkbox turns it back on. Skipped under --demo so captures stay clean.</summary>
+        /// <summary>Once per run, after the main window is showing: when a newer release exists, offers
+        /// it in the same dialog as the About card's update, with an "Always check on startup" box so the
+        /// check can be turned off right there. The About card's checkbox turns it back on.</summary>
         internal async void CheckOnStartup()
         {
-            if (_startupCheckStarted || App.IsDemo || !StartupCheckEnabled) return;
+            bool skip = false;
+            SkipStartupCheck(ref skip);
+            if (_startupCheckStarted || skip || !StartupCheckEnabled) return;
             _startupCheckStarted = true;
             var tag = await UpdateService.CheckAsync(AppInfo.AssemblyVersion);
             if (tag is null || _updating) return;
@@ -88,6 +109,7 @@ namespace Killendar.Features
             _host.ReleaseDate = AppInfo.ReleaseDate;
 
             var (sigValid, subject, thumb) = CodeSignature.GetSignerInfo();
+            AdjustSignature(ref sigValid, ref subject, ref thumb);
             _host.Publisher = sigValid ? subject : _host.Loc("Str_About_Unsigned");
 
             // Shown only when the exe is signed by the expected publisher AND the signature actually
@@ -100,12 +122,16 @@ namespace Killendar.Features
             // non-ASCII bytes to the source.
             _host.Alias        = (char)0x201C + AppInfo.AkaName + (char)0x201D;
             _host.AliasVisible = signedByPublisher;
-            _host.Thumbprint   = thumb;
+            string shownThumb  = thumb;
+            ShownValue(ref shownThumb);
+            _host.Thumbprint   = shownThumb;
             _host.Sha256       = _host.Loc("Str_About_Computing");
             _host.UpdateVisible = false;
             _host.StartupUpdateCheck = StartupCheckEnabled;
-            _host.StartWithWindows = KillerFamily.Deployment.StartupRegistration.IsEnabled(AppInfo.DisplayName);
-            _host.CloseToTray = CloseToTrayEnabled;
+            if (_host is IAboutStartup startup)
+                startup.StartWithWindows = KillerFamily.Deployment.StartupRegistration.IsEnabled(AppInfo.DisplayName);
+            if (_host is IAboutTray tray) tray.CloseToTray = CloseToTrayEnabled;
+            OnShow();
 
             _host.ShowCard();
 
@@ -113,7 +139,12 @@ namespace Killendar.Features
             Task.Run(() =>
             {
                 var hash = CodeSignature.ExeSha256();
-                _host.Window.Dispatcher.BeginInvoke((Action)(() => _host.Sha256 = hash));
+                _host.Window.Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    string shown = hash;
+                    ShownValue(ref shown);
+                    _host.Sha256 = shown;
+                }));
             });
 
             CheckForUpdate();
@@ -134,8 +165,8 @@ namespace Killendar.Features
         }
 
         /// <summary>Downloads the newer release, verifies it, and hands off to the helper that swaps
-        /// the exe and relaunches. Every failure path falls back to the releases page, so a user who
-        /// cannot be updated automatically is never left thinking nothing happened.</summary>
+        /// the exe and relaunches. Download failures open the releases page; the replacement helper
+        /// shows its own error log if it cannot finish after elevation.</summary>
         internal async void Update()
         {
             var tag = _updateTag;
@@ -154,7 +185,7 @@ namespace Killendar.Features
         private async Task InstallAsync(string tag)
         {
             if (_updating) return;
-            _updating           = true;
+            _updating = true;
             _host.UpdateEnabled = false;
             _host.UpdateText    = _host.Loc("Str_About_Downloading");
 

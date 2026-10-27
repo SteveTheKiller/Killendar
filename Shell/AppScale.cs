@@ -2,110 +2,130 @@ using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 
+// App-wide accessibility size, the family feature from KillerNotes and KillerPDF: roll the mouse
+// wheel over the title-bar wordmark and everything under the title bar grows or shrinks in small
+// steps. A LayoutTransform reflows and re-rasterizes text instead of stretching a bitmap, so the
+// UI stays crisp at any size. The title bar itself stays fixed, so the wordmark being scrolled
+// never moves under the cursor. Persisted app-wide through the ThemeManager settings hooks
+// ("AppScale").
+//
+// MainWindow.xaml names:
+//   LogoBar    the title-bar wordmark host, IsHitTestVisibleInChrome="True" so it gets the wheel,
+//              wired to LogoBar_MouseWheel and LogoBar_MouseLeftButtonDown
+//   ScaleHost  the element holding everything below the title bar (toolbar, sidebar, content,
+//              footer) - the one LayoutTransform target
+//   StatusText the footer status line that carries the "App size 120%" readout
+//
+// A document or canvas that has its own zoom (a PDF page, an image) should sit OUTSIDE ScaleHost
+// or reset the transform for itself: app size and content zoom are two separate controls.
 namespace Killendar.Shell
 {
-    /// <summary>App-wide accessibility sizing driven from the fixed title-bar wordmark.</summary>
     public partial class MainWindow
     {
-        private const double AppScaleMin = 0.80;
-        private const double AppScaleMax = 1.50;
-        private const double AppScaleStep = 0.02;
-        private const double BaseContentMinHeight = 400;
-        private const double FixedChromeHeight = 60; // 36 title + 24 footer
-
         private double _appScale = 1.0;
-        private DispatcherTimer? _appScaleHide;
-        private string? _statusBeforeScale;
+        private const double AppScaleMin = 0.7, AppScaleMax = 2.5, AppScaleStep = 0.02;
 
+        /// <summary>Call from the constructor after InitializeComponent to restore the saved size.</summary>
         private void InitAppScale()
         {
-            if (double.TryParse(Settings.Get("AppScale"), NumberStyles.Float,
+            if (double.TryParse(Services.ThemeManager.GetSetting("AppScale"), NumberStyles.Float,
                                 CultureInfo.InvariantCulture, out double saved))
                 ApplyAppScale(saved);
-            else
-                ApplyAppScale(1.0);
         }
 
+        // One small step per wheel notch: fine-grained, no big jumps.
         private void LogoBar_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (_riding) return;
             ApplyAppScale(_appScale + (e.Delta > 0 ? AppScaleStep : -AppScaleStep), persist: true);
             e.Handled = true;
         }
 
-        // The wordmark opts into client hit testing so it can receive the wheel. Restore native
-        // caption drag and double-click maximize behavior explicitly.
+        // The wordmark is a client hit (for the wheel above), not caption, so drag and
+        // double-click-maximize are restored here by hand. The drag is handed to Windows as a
+        // caption press rather than DragMove: DragMove throws while maximized, and the native
+        // path restores the window under the cursor and keeps following it.
         private void LogoBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (ReferenceEquals(e.OriginalSource, TitleKillendarLabel)) return;
             if (e.ClickCount == 2)
             {
-                MaximizeBtn_Click(this, new RoutedEventArgs());
+                MaximizeBtn_Click(this, new RoutedEventArgs());   // Chrome.cs
                 e.Handled = true;
                 return;
             }
-            if (e.ButtonState == MouseButtonState.Pressed && WindowState != WindowState.Maximized)
-                DragMove();
+            if (e.ButtonState != MouseButtonState.Pressed) return;
+            e.Handled = true;
+            var hwnd = new WindowInteropHelper(this).Handle;
+            if (hwnd != IntPtr.Zero) SendMessage(hwnd, WM_NCLBUTTONDOWN, new IntPtr(HTCAPTION), IntPtr.Zero);
         }
 
-        private void ApplyAppScale(double scale, bool persist = false)
+        /// <summary>Optional app hook: scale the app's own content instead of ScaleHost.</summary>
+        partial void ApplyAppScaleTo(double scale, ref bool handled);
+
+        internal void ApplyAppScale(double scale, bool persist = false)
         {
-            scale = Math.Round(Math.Max(AppScaleMin, Math.Min(AppScaleMax, scale)), 2);
+            scale = Math.Round(Math.Max(AppScaleMin, Math.Min(AppScaleMax, scale)), 3);
             _appScale = scale;
+            // An app whose scaled content is not one element (KillerScan's scan bar rides in the
+            // title bar) implements ApplyAppScaleTo and sets handled; everyone else scales ScaleHost.
+            bool handled = false;
+            ApplyAppScaleTo(scale, ref handled);
+            if (!handled) ScaleHost.LayoutTransform = scale == 1.0 ? Transform.Identity : new ScaleTransform(scale, scale);
 
-            ScaleHost.LayoutTransform = scale == 1.0
-                ? Transform.Identity
-                : new ScaleTransform(scale, scale);
-            ScaleHost.UseLayoutRounding = scale == 1.0;
-            TextOptions.SetTextFormattingMode(ScaleHost,
-                scale == 1.0 ? TextFormattingMode.Display : TextFormattingMode.Ideal);
-
-            MinWidth = Math.Min(_sidebarOpen ? OpenMinWidth : ClosedMinWidth,
-                                SystemParameters.WorkArea.Width);
-            MinHeight = Math.Min(FixedChromeHeight + BaseContentMinHeight * scale,
-                                 SystemParameters.WorkArea.Height);
-
-            if (WindowState == WindowState.Normal)
+            // The window runs Display + ClearType, which pixel-snaps glyphs for maximum crispness at
+            // 1:1. Under a fractional scale those snapped stems land on partial device pixels and
+            // the text goes soft. Ideal + Grayscale positions glyphs at sub-pixel precision and
+            // stays smooth at any size; at exactly 1.0 the window's own crisp setting comes back.
+            if (scale == 1.0)
             {
-                double currentWidth = ActualWidth > 0 ? ActualWidth : Width;
-                double currentHeight = ActualHeight > 0 ? ActualHeight : Height;
-                Width = Math.Max(currentWidth, MinWidth);
-                Height = Math.Max(currentHeight, MinHeight);
-                // Keep the grown window inside its own monitor's work area. SystemParameters.WorkArea
-                // is the primary monitor only, and clamping to it dragged a window on another monitor
-                // to the primary on every launch. Before the HWND exists (the constructor restoring
-                // the saved scale) the SourceInitialized fit does this instead.
-                if (PresentationSource.FromVisual(this) != null)
-                    KillerFamily.Windowing.WorkAreaFit.Fit(this, keepMargin: false);
+                ScaleHost.ClearValue(TextOptions.TextFormattingModeProperty);
+                ScaleHost.ClearValue(TextOptions.TextRenderingModeProperty);
+            }
+            else
+            {
+                TextOptions.SetTextFormattingMode(ScaleHost, TextFormattingMode.Ideal);
+                TextOptions.SetTextRenderingMode(ScaleHost, TextRenderingMode.Grayscale);
             }
 
             if (persist)
             {
-                Settings.Set("AppScale", scale.ToString("0.00", CultureInfo.InvariantCulture));
-                ShowAppScaleReadout();
+                Services.ThemeManager.SetSetting("AppScale", scale.ToString("0.###", CultureInfo.InvariantCulture));
+                ShowScaleReadout(scale);
             }
         }
 
-        private void ShowAppScaleReadout()
+        // The readout is transient. Every wheel notch rewrites it and restarts the hold timer, so
+        // the footer carries it while you are sizing and gives the line back a beat after you stop.
+        // Whatever was showing before the first notch of a burst is put back, but only if the
+        // readout is still the text on screen, so a status written in the meantime is never
+        // overwritten by a stale one. Normal priority rather than the DispatcherTimer default of
+        // Background, so busy work cannot leave the readout parked on the footer.
+        private DispatcherTimer? _appScaleHide;
+        private string _appScaleStatusWas = string.Empty;
+        private string _appScaleReadout = string.Empty;
+
+        private void ShowScaleReadout(double scale)
         {
-            if (_appScaleHide == null)
+            if (_appScaleHide is null)
             {
-                _appScaleHide = new DispatcherTimer(DispatcherPriority.Normal)
-                    { Interval = TimeSpan.FromSeconds(5) };
+                _appScaleHide = new DispatcherTimer(DispatcherPriority.Normal) { Interval = TimeSpan.FromSeconds(5) };
                 _appScaleHide.Tick += (_, _) =>
                 {
-                    _appScaleHide.Stop();
-                    StatusText.Text = _statusBeforeScale ?? Loc("Str_Status_Ready");
-                    _statusBeforeScale = null;
+                    _appScaleHide!.Stop();
+                    if (StatusText.Text == _appScaleReadout) StatusText.Text = _appScaleStatusWas;
                 };
             }
 
-            if (!_appScaleHide.IsEnabled) _statusBeforeScale = StatusText.Text;
+            // Only the first notch of a burst snapshots; the rest are our own readout.
+            if (!_appScaleHide.IsEnabled) _appScaleStatusWas = StatusText.Text;
             _appScaleHide.Stop();
-            StatusText.Text = $"UI  {(int)Math.Round(_appScale * 100)}%";
+
+            string format = TryFindResource("Str_St_AppSize") as string ?? "App size {0}%";
+            _appScaleReadout = string.Format(CultureInfo.CurrentCulture, format, (int)Math.Round(scale * 100));
+            StatusText.Text = _appScaleReadout;
             _appScaleHide.Start();
         }
     }

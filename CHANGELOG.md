@@ -12,6 +12,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Changed
 - Themes, palettes and control styles now come from the shared KillerUI template, so buttons, caption buttons, menus and the 98SE frame look the same as in the other Killer apps.
+- Accent buttons such as Save and OK rest with an accent outline, as in the other Killer apps, and the About card, app scaling, the window menu and the signature check share the KillerUI template code.
 
 ### Added
 - About groups settings in two columns and can hide shortcut hints in menus and tooltips without disabling keyboard shortcuts.

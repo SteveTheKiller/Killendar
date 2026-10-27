@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Input;
 using Killendar.Features;
+using Killendar.Features.About;
 
 // The main window's constructor and the handlers that belong to no feature. The rest of MainWindow
 // is split by surface: Chrome.cs (caption buttons, placement, grain), ThemeFlyout.cs (theme and
@@ -44,6 +45,7 @@ namespace Killendar.Shell
 
             RestoreWindowPlacement();
             InitAppScale();
+            InitAppScaleExtras();   // AppScale.Extras.cs
             SourceInitialized += MainWindow_SourceInitialized;
             ApplyGrainTexture();
             Loaded += (_, _) =>
@@ -101,13 +103,6 @@ namespace Killendar.Shell
                 new FrameworkElement[] { ThemeButton, LangButton, ShortcutsButton },
                 new FrameworkElement[] { CategoriesButton, DensityBtn, DateSettingsButton },
                 Settings.Get("RailOrder"), value => Settings.Set("RailOrder", value));
-        }
-
-        /// <summary>The footer version label opens the About card.</summary>
-        private void VersionLabel_Click(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-            ShowAboutOverlay();
         }
     }
 }

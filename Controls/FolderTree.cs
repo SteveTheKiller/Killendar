@@ -14,7 +14,7 @@ using System.Windows.Media;
 namespace Killendar.Controls
 {
     // ═══════════════════════════════════════════════════════════
-    //  FOLDER TREE  -  the file dialog's left pane, below places
+    //  FOLDER TREE  -  the file dialog's left pane, above places
     // ═══════════════════════════════════════════════════════════
     // Ported from KillerShell's FolderTree.cs (the family reference), minus what a modal file
     // dialog does not need: no demo mode, no expansion persistence (the dialog reveals the
@@ -41,7 +41,7 @@ namespace Killendar.Controls
         // their label is "Local Disk (C:)" rather than a bare folder name.
         public bool IsDrive { get; }
 
-        public ObservableCollection<FolderNode> Children { get; } = [];
+        public ObservableCollection<FolderNode> Children { get; } = new();
 
         public FolderNode(string path, string name, bool mayHaveChildren)
         {

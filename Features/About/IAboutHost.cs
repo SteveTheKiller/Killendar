@@ -1,4 +1,4 @@
-namespace Killendar.Features
+namespace Killendar.Features.About
 {
     /// <summary>
     /// What AboutController needs from the window hosting it, beyond the shared shell services.
@@ -37,15 +37,21 @@ namespace Killendar.Features
         /// <summary>The "Check for updates on startup" checkbox, first of the card's checkboxes.</summary>
         bool StartupUpdateCheck { set; }
 
-        /// <summary>The "Start with Windows" checkbox, under the update checkbox. Off until the user
-        /// turns it on.</summary>
-        bool StartWithWindows { set; }
-
-        /// <summary>The "Close to system tray" checkbox, under Start with Windows. Off until the user
-        /// turns it on.</summary>
-        bool CloseToTray { set; }
-
         /// <summary>Fades the About card in.</summary>
         void ShowCard();
+    }
+
+    /// <summary>A card with the "Start with Windows" checkbox, under the update checkbox. Off until
+    /// the user turns it on.</summary>
+    internal interface IAboutStartup
+    {
+        bool StartWithWindows { set; }
+    }
+
+    /// <summary>A card with the "Close to system tray" checkbox, under Start with Windows. Off until
+    /// the user turns it on (KillerShot, a tray app, defaults to on).</summary>
+    internal interface IAboutTray
+    {
+        bool CloseToTray { set; }
     }
 }
