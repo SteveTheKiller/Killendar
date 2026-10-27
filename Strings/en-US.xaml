@@ -473,6 +473,7 @@
     <sys:String x:Key="Str_Btn_DoInstall">Install</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">Add a desktop shortcut</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">Install for everyone on this computer (needs admin)</sys:String>
+    <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar is already installed for all users on this PC, so this will update that copy. Windows will ask for permission.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">Install did not complete - Killendar is still running portable.</sys:String>
 
     <!-- Shortcuts overlay (F1). One binding table in Shell/ShortcutsOverlay.cs feeds both the
@@ -646,5 +647,10 @@
     <sys:String x:Key="Str_Color_Red">Red</sys:String>
     <sys:String x:Key="Str_Color_Green">Green</sys:String>
     <sys:String x:Key="Str_Color_Blue">Blue</sys:String>
+    <sys:String x:Key="Str_Color_Orange">Orange</sys:String>
+    <sys:String x:Key="Str_Color_Yellow">Yellow</sys:String>
+    <sys:String x:Key="Str_Color_Teal">Teal</sys:String>
+    <sys:String x:Key="Str_Color_Purple">Purple</sys:String>
+    <sys:String x:Key="Str_Color_Magenta">Magenta</sys:String>
     <sys:String x:Key="Str_Color_Hex">Hex color</sys:String>
 </ResourceDictionary>

@@ -408,6 +408,7 @@
     <sys:String x:Key="Str_Btn_DoInstall">安裝</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">新增桌面捷徑</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">為這台電腦上的所有使用者安裝（需要系統管理員）</sys:String>
+    <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar 已為這台電腦上的所有使用者安裝，因此將更新該複本。Windows 會要求授權。</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">安裝未完成 - Killendar 仍以可攜版執行。</sys:String>
 
     <!-- 類別 -->
@@ -620,5 +621,10 @@
     <sys:String x:Key="Str_Color_Red">紅色</sys:String>
     <sys:String x:Key="Str_Color_Green">綠色</sys:String>
     <sys:String x:Key="Str_Color_Blue">藍色</sys:String>
+    <sys:String x:Key="Str_Color_Orange">橘色</sys:String>
+    <sys:String x:Key="Str_Color_Yellow">黃色</sys:String>
+    <sys:String x:Key="Str_Color_Teal">藍綠色</sys:String>
+    <sys:String x:Key="Str_Color_Purple">紫色</sys:String>
+    <sys:String x:Key="Str_Color_Magenta">洋紅</sys:String>
     <sys:String x:Key="Str_Color_Hex">十六進位色彩</sys:String>
 </ResourceDictionary>

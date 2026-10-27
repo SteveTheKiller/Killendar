@@ -474,6 +474,7 @@
     <sys:String x:Key="Str_Btn_DoInstall">Установить</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">Добавить ярлык на рабочий стол</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">Установить для всех на этом компьютере (нужны права администратора)</sys:String>
+    <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar уже установлен для всех пользователей этого компьютера, поэтому будет обновлена та копия. Windows запросит разрешение.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">Установка не завершилась - Killendar по-прежнему работает портативно.</sys:String>
 
     <!-- Shortcuts overlay (F1). One binding table in Shell/ShortcutsOverlay.cs feeds both the
@@ -647,5 +648,10 @@
     <sys:String x:Key="Str_Color_Red">Красный</sys:String>
     <sys:String x:Key="Str_Color_Green">Зелёный</sys:String>
     <sys:String x:Key="Str_Color_Blue">Синий</sys:String>
+    <sys:String x:Key="Str_Color_Orange">Оранжевый</sys:String>
+    <sys:String x:Key="Str_Color_Yellow">Жёлтый</sys:String>
+    <sys:String x:Key="Str_Color_Teal">Бирюзовый</sys:String>
+    <sys:String x:Key="Str_Color_Purple">Фиолетовый</sys:String>
+    <sys:String x:Key="Str_Color_Magenta">Пурпурный</sys:String>
     <sys:String x:Key="Str_Color_Hex">Шестнадцатеричный цвет</sys:String>
 </ResourceDictionary>

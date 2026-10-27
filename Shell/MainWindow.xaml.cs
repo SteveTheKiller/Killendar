@@ -70,12 +70,15 @@ namespace Killendar.Shell
                 }), System.Windows.Threading.DispatcherPriority.Background);
             };
 
-            // Every flyout opens at the content pane's bottom-left corner: inside the window, above
-            // the footer, clear of the rail. Set before the flyouts are built (FlyoutPlacement.cs).
+            // Rail flyouts open in the content pane beside the rail: inside the window, above the
+            // footer, clear of the rail. Set before the flyouts are built (Shell/FlyoutPlacement.cs);
+            // the side set by InitSidebarSide is kept.
             Controls.FlyoutPlacement.UsePane(ContentPane);
 
             InitThemePicker();
+            ConfigureThemePicker();   // ThemeFlyout.Extras.cs
             InitLanguageMenu();
+            InitDateSettingsMenu();   // Language.Extras.cs
             // After InitLanguageMenu: the toolbar captions are read through Loc(), so the locale
             // has to be settled before they are built. (ToolbarStyle.cs)
             InitToolbarStyle();

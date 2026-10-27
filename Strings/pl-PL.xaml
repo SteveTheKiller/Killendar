@@ -143,6 +143,7 @@
     <sys:String x:Key="Str_Btn_DoInstall">Zainstaluj</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">Dodaj skrót na pulpicie</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">Zainstaluj dla wszystkich użytkowników tego komputera (wymaga administratora)</sys:String>
+    <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar jest już zainstalowany dla wszystkich użytkowników tego komputera, więc spowoduje to aktualizację tej instalacji. System Windows poprosi o zgodę.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">Instalacja nie została zakończona - Killendar nadal działa w trybie przenośnym.</sys:String>
     <sys:String x:Key="Str_KS_Title">Skróty Klawiaturowe</sys:String>
     <sys:String x:Key="Str_KS_ViewList">LISTA</sys:String>
@@ -567,5 +568,10 @@
     <sys:String x:Key="Str_Color_Red">Czerwony</sys:String>
     <sys:String x:Key="Str_Color_Green">Zielony</sys:String>
     <sys:String x:Key="Str_Color_Blue">Niebieski</sys:String>
+    <sys:String x:Key="Str_Color_Orange">Pomarańczowy</sys:String>
+    <sys:String x:Key="Str_Color_Yellow">Żółty</sys:String>
+    <sys:String x:Key="Str_Color_Teal">Morski</sys:String>
+    <sys:String x:Key="Str_Color_Purple">Fioletowy</sys:String>
+    <sys:String x:Key="Str_Color_Magenta">Purpurowy</sys:String>
     <sys:String x:Key="Str_Color_Hex">Kolor szesnastkowy</sys:String>
 </ResourceDictionary>

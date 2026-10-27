@@ -473,6 +473,7 @@
     <sys:String x:Key="Str_Btn_DoInstall">Орнату</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">Жұмыс үстеліне таңбаша қосу</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">Осы компьютердегі барлығына орнату (әкімші құқығы керек)</sys:String>
+    <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar осы компьютерде барлық пайдаланушылар үшін әлдеқашан орнатылған, сондықтан бұл сол көшірмені жаңартады. Windows рұқсат сұрайды.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">Орнату аяқталмады - Killendar әлі де портативті режимде жұмыс істеп тұр.</sys:String>
 
     <!-- Shortcuts overlay (F1). One binding table in Shell/ShortcutsOverlay.cs feeds both the
@@ -646,5 +647,10 @@
     <sys:String x:Key="Str_Color_Red">Қызыл</sys:String>
     <sys:String x:Key="Str_Color_Green">Жасыл</sys:String>
     <sys:String x:Key="Str_Color_Blue">Көк</sys:String>
+    <sys:String x:Key="Str_Color_Orange">Қызғылт сары</sys:String>
+    <sys:String x:Key="Str_Color_Yellow">Сары</sys:String>
+    <sys:String x:Key="Str_Color_Teal">Көкшіл жасыл</sys:String>
+    <sys:String x:Key="Str_Color_Purple">Күлгін</sys:String>
+    <sys:String x:Key="Str_Color_Magenta">Күлгін қызыл</sys:String>
     <sys:String x:Key="Str_Color_Hex">Он алтылық түс</sys:String>
 </ResourceDictionary>

@@ -408,6 +408,7 @@
     <sys:String x:Key="Str_Btn_DoInstall">Nainstalovat</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">Přidat zástupce na plochu</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">Nainstalovat pro všechny uživatele tohoto počítače (vyžaduje správce)</sys:String>
+    <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar je již nainstalován pro všechny uživatele tohoto počítače, takže se aktualizuje tato kopie. Windows si vyžádají oprávnění.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">Instalace nebyla dokončena - Killendar běží dál přenosně.</sys:String>
 
     <!-- Kategorie -->
@@ -620,5 +621,10 @@
     <sys:String x:Key="Str_Color_Red">Červená</sys:String>
     <sys:String x:Key="Str_Color_Green">Zelená</sys:String>
     <sys:String x:Key="Str_Color_Blue">Modrá</sys:String>
+    <sys:String x:Key="Str_Color_Orange">Oranžová</sys:String>
+    <sys:String x:Key="Str_Color_Yellow">Žlutá</sys:String>
+    <sys:String x:Key="Str_Color_Teal">Modrozelená</sys:String>
+    <sys:String x:Key="Str_Color_Purple">Fialová</sys:String>
+    <sys:String x:Key="Str_Color_Magenta">Purpurová</sys:String>
     <sys:String x:Key="Str_Color_Hex">Barva v šestnáctkovém zápisu</sys:String>
 </ResourceDictionary>

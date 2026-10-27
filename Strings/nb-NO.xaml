@@ -473,6 +473,7 @@
     <sys:String x:Key="Str_Btn_DoInstall">Installer</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">Legg til en snarvei på skrivebordet</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">Installer for alle på denne datamaskinen (krever administrator)</sys:String>
+    <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar er allerede installert for alle brukere på denne PC-en, så dette oppdaterer den kopien. Windows ber om tillatelse.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">Installasjonen ble ikke fullført - Killendar kjører fortsatt som portabel.</sys:String>
 
     <!-- Shortcuts overlay (F1). One binding table in Shell/ShortcutsOverlay.cs feeds both the
@@ -646,5 +647,10 @@
     <sys:String x:Key="Str_Color_Red">Rød</sys:String>
     <sys:String x:Key="Str_Color_Green">Grønn</sys:String>
     <sys:String x:Key="Str_Color_Blue">Blå</sys:String>
+    <sys:String x:Key="Str_Color_Orange">Oransje</sys:String>
+    <sys:String x:Key="Str_Color_Yellow">Gul</sys:String>
+    <sys:String x:Key="Str_Color_Teal">Blågrønn</sys:String>
+    <sys:String x:Key="Str_Color_Purple">Lilla</sys:String>
+    <sys:String x:Key="Str_Color_Magenta">Magenta</sys:String>
     <sys:String x:Key="Str_Color_Hex">Heksfarge</sys:String>
 </ResourceDictionary>

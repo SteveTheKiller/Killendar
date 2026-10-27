@@ -475,6 +475,7 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Btn_DoInstall">Telepítés</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">Adjon hozzá egy asztali parancsikont</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">Telepítés mindenki számára ezen a számítógépen (rendszergazda szükséges)</sys:String>
+    <sys:String x:Key="Str_Install_AlreadyAllUsers">A Killendar már telepítve van az összes felhasználó számára ezen a számítógépen, így ez frissíti a másolatot. A Windows engedélyt fog kérni.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">A telepítés nem fejeződött be - a Killendar továbbra is hordozható.</sys:String>
 
     <!-- Shortcuts overlay (F1). One binding table in Shell/ShortcutsOverlay.cs feeds both the
@@ -648,5 +649,10 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Color_Red">Piros</sys:String>
     <sys:String x:Key="Str_Color_Green">Zöld</sys:String>
     <sys:String x:Key="Str_Color_Blue">Kék</sys:String>
+    <sys:String x:Key="Str_Color_Orange">Narancs</sys:String>
+    <sys:String x:Key="Str_Color_Yellow">Sárga</sys:String>
+    <sys:String x:Key="Str_Color_Teal">Kékeszöld</sys:String>
+    <sys:String x:Key="Str_Color_Purple">Lila</sys:String>
+    <sys:String x:Key="Str_Color_Magenta">Bíborvörös</sys:String>
     <sys:String x:Key="Str_Color_Hex">Hexadecimális szín</sys:String>
 </ResourceDictionary>

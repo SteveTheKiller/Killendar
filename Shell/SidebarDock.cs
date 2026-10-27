@@ -83,7 +83,7 @@ namespace Killendar.Shell
             }
             Grid.SetColumn(PortableBadgeHost, _sidebarRight ? 0 : 2);
 
-            Controls.FlyoutPlacement.RailOnRight = _sidebarRight;
+            Controls.FlyoutPlacement.UsePane(ContentPane, _sidebarRight ? SidebarSide.Right : SidebarSide.Left);
         }
 
         // The calendar card butts against the rail and keeps the theme's inset on its window side.

@@ -1,65 +1,97 @@
 using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Media;
-using System.Windows.Input;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Automation;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 using Killendar.Services;
+using Killendar.Shell;
 
 namespace Killendar.Controls
 {
     /// <summary>
-    /// The title-bar theme and accent pickers: the flyout, the selection rings, and applying what
-    /// was picked. Constructed with the elements it drives, so it looks nothing up by name.
+    /// Canonical KillerPDF-style theme picker: a radio-row ContextMenu listing all thirteen themes,
+    /// with ONE vertical accent strip beside the list, repainted for whichever accent-capable
+    /// family (Dark, Light, Black, 98SE) is selected, and the Film Grain switch under both columns.
+    /// Each accent is a radio option with a screen reader name, reachable by Tab and the arrow
+    /// keys.
+    ///
+    /// App hooks (set after constructing; leave them null to keep the kit behavior):
+    ///   ThemeChangeTransition and AccentChangeTransition wrap the apply in the app's own
+    ///     transition. The default cross-fades through ThemeTransition; pass
+    ///     <c>apply => apply()</c> for no fade.
+    ///   ThemeApplied runs after a theme or accent is applied, for app frame work such as
+    ///     DwmChrome.SetRoundedCorners.
     /// </summary>
     internal sealed class ThemePicker
     {
+        private static readonly Theme[] Themes =
+        [
+            Theme.Dark, Theme.Light, Theme.Black, Theme.SE98, Theme.Blood, Theme.Greed,
+            Theme.Cyanotic, Theme.Ectoplasm, Theme.Decay, Theme.Malaise, Theme.Sepulchre,
+            Theme.Delirium, Theme.Mourning
+        ];
+
+        private const double AccentStripWidth = 39;
+        private const double AccentSlideMs = 170;
+
         private readonly Window _window;
         private readonly ContextMenu _menu;
-        private readonly UIElement _button;
+        private readonly FrameworkElement _button;
+        private readonly FrameworkElement _pane;
         private Grid? _accentHost;
-        private readonly List<Border> _accentDots = [];
+        private readonly List<RadioButton> _accentDots = [];
         private CheckBox? _filmGrainCheck;
-        internal ThemePicker(Window window, ContextMenu menu, UIElement themeButton)
+        // True while this picker is the one changing the theme, so ThemeChanged does not rebuild
+        // the menu out from under the accent strip's slide.
+        private bool _applying;
+
+        /// <summary>Wraps a theme change; null cross-fades through ThemeTransition.</summary>
+        internal Action<Action>? ThemeChangeTransition { get; set; }
+
+        /// <summary>Wraps an accent change; null cross-fades through ThemeTransition.</summary>
+        internal Action<Action>? AccentChangeTransition { get; set; }
+
+        /// <summary>Runs after the picker applies a theme or an accent.</summary>
+        internal Action? ThemeApplied { get; set; }
+
+        private void RunTransition(Action<Action>? transition, Action apply)
+        {
+            if (transition != null) transition(apply);
+            else ThemeTransition.CrossFade((FrameworkElement)_window.Content, apply);
+        }
+
+        internal ThemePicker(Window window, ContextMenu menu, FrameworkElement button,
+                             FrameworkElement contentPane)
         {
             _window = window;
             _menu = menu;
-            _button = themeButton;
-            if (_button is FrameworkElement button)
-                button.ContextMenuOpening += (_, e) => { e.Handled = true; Toggle(); };
-            // This is a palette tester, not a one-shot command menu. Both flags matter: StaysOpen
-            // keeps the ContextMenu alive. StaysOpenOnClick belongs to the chrome-free generated
-            // MenuItem wrapper in MainWindow.xaml; replacing ItemContainerStyle here restores the
-            // normal hover fill and icon gutter around the entire palette.
-            _menu.StaysOpen = true;
+            _button = button;
+            _pane = contentPane;
+            if (_button is FrameworkElement themeButton)
+                themeButton.ContextMenuOpening += (_, e) => { e.Handled = true; Toggle(); };
         }
 
-        /// <summary>Themes that carry a user-chosen accent. The rest are fixed palettes, so their
-        /// accent row is hidden rather than shown doing nothing.</summary>
-        private static bool HasAccents(Theme t) =>
-            t == Theme.Dark || t == Theme.Light || t == Theme.Black || t == Theme.SE98;
-
-        /// <summary>
-        /// Opens or closes the menu. Identical to LanguageMenu.Open - same control type, same
-        /// placement call, same fade - because this IS a ContextMenu now. It used to be a Popup
-        /// with its own chrome and its own open animation, which is why it never matched the
-        /// locale menu no matter how many times the two were tuned by hand.
-        /// (2026-07-30)
-        /// </summary>
         internal void Toggle()
         {
             if (_menu.IsOpen) { _menu.IsOpen = false; return; }
-
-            BuildPdfMenu();
-            FlyoutPlacement.Attach(_menu, _button);
+            Build();
+            FlyoutPlacement.UsePane(_pane);
+            FlyoutPlacement.Attach(_menu, null);   // a big menu: always the pane corner
             _menu.IsOpen = true;
-            Anim.FadeIn(_menu);
+            _menu.BeginAnimation(UIElement.OpacityProperty,
+                new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(150))
+                { EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut } });
         }
 
-        private void BuildPdfMenu(bool animateAccent = false)
+        internal void Refresh()
+        {
+            if (_menu.IsOpen && !_applying) Build();
+        }
+
+        private void Build()
         {
             _menu.Items.Clear();
             _accentHost = null;
@@ -70,60 +102,32 @@ namespace Killendar.Controls
             var panel = new Grid { Margin = new Thickness(12, 10, 2, 10) };
             panel.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             panel.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            panel.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            panel.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
             var list = new StackPanel { MinWidth = 120 };
             Grid.SetColumn(list, 0);
             panel.Children.Add(list);
-
-            Theme[] themes =
-            [
-                Theme.Dark, Theme.Light, Theme.Black, Theme.SE98, Theme.Blood, Theme.Greed,
-                Theme.Cyanotic, Theme.Ectoplasm, Theme.Decay, Theme.Malaise, Theme.Sepulchre,
-                Theme.Delirium, Theme.Mourning
-            ];
-            foreach (Theme theme in themes)
+            foreach (var theme in Themes)
             {
-                var radio = new RadioButton { Content = DisplayName(theme), Tag = theme, GroupName = "ThemeGroup",
-                    Style = (Style)Application.Current.FindResource("ThemeRadio"), IsChecked = ThemeManager.Current == theme };
-                radio.Checked += (_, _) =>
+                var radio = new RadioButton
                 {
-                    if (theme == ThemeManager.Current) return;
-                    ThemeManager.Apply(theme);
-                    DwmChrome.SetRoundedCorners(_window, rounded: theme != Theme.SE98
-                                                                 && _window.WindowState == WindowState.Normal);
-                    DwmChrome.SetThemeBorder(_window);
-                    ReplaceAccentStrip(panel, theme, animate: true);
+                    Content = ThemeLabel(theme), Tag = theme, GroupName = "ThemeGroup",
+                    Style = (Style)_window.FindResource("ThemeRadio"),
+                    IsChecked = ThemeManager.Current == theme
                 };
+                radio.Checked += (_, _) => Theme_Checked(panel, theme);
                 list.Children.Add(radio);
             }
-
             if (HasAccents(ThemeManager.Current))
             {
                 _accentHost = BuildAccentStrip(ThemeManager.Current);
                 panel.Children.Add(_accentHost);
-                if (animateAccent)
-                {
-                    _accentHost.Width = 0;
-                    _accentHost.ClipToBounds = true;
-                    var slide = new DoubleAnimation(0, 39, TimeSpan.FromMilliseconds(170))
-                    { EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut } };
-                    slide.Completed += (_, _) =>
-                    {
-                        if (_accentHost != null)
-                        {
-                            _accentHost.BeginAnimation(FrameworkElement.WidthProperty, null);
-                            _accentHost.Width = 39;
-                        }
-                    };
-                    _accentHost.BeginAnimation(FrameworkElement.WidthProperty, slide);
-                }
             }
 
-            // Film Grain: one switch for the grain texture on every surface (Services/FilmGrain.cs).
-            // Its own row under both columns, so the accent strip still runs the height of the
-            // theme list only.
-            panel.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            panel.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            // Film Grain: one switch for the grain texture on every surface (Services/FilmGrain.cs),
+            // on its own row under both columns so the accent strip still runs the height of the
+            // theme list only. Alt+Shift+G runs the same toggle, so the tooltip carries the chord.
             var grainRow = new StackPanel();
             Grid.SetRow(grainRow, 1);
             Grid.SetColumnSpan(grainRow, 2);
@@ -149,13 +153,13 @@ namespace Killendar.Controls
             grainRow.Children.Add(grainDivider);
             var filmGrain = new CheckBox
             {
-                Style = (Style)Application.Current.FindResource("ThemeCheck"),
+                Style = (Style)_window.FindResource("ThemeCheck"),
                 IsChecked = FilmGrain.Enabled,
                 Margin = new Thickness(0),
             };
             filmGrain.SetResourceReference(ContentControl.ContentProperty, "Str_Theme_FilmGrain");
             filmGrain.Click += (_, _) => FilmGrain.Set(filmGrain.IsChecked == true);
-            filmGrain.ToolTip = (Application.Current.TryFindResource("Str_Theme_FilmGrain") as string) + " (Alt+Shift+G)";
+            filmGrain.ToolTip = (_window.TryFindResource("Str_Theme_FilmGrain") as string) + " (Alt+Shift+G)";
             _filmGrainCheck = filmGrain;
             grainRow.Children.Add(filmGrain);
             panel.Children.Add(grainRow);
@@ -170,6 +174,25 @@ namespace Killendar.Controls
             _filmGrainCheck?.IsChecked = FilmGrain.Enabled;
         }
 
+        private void Theme_Checked(Grid panel, Theme theme)
+        {
+            if (theme == ThemeManager.Current) return;
+            _applying = true;
+            try
+            {
+                RunTransition(ThemeChangeTransition, () =>
+                {
+                    ThemeManager.Apply(theme);
+                    DwmChrome.SetThemeBorder(_window);
+                    ThemeApplied?.Invoke();
+                });
+            }
+            finally { _applying = false; }
+            ReplaceAccentStrip(panel, theme, animate: true);
+        }
+
+        /// <summary>Swaps the strip for the newly selected family, sliding it in from zero width,
+        /// or removes it for a fixed-palette theme.</summary>
         private void ReplaceAccentStrip(Grid panel, Theme family, bool animate)
         {
             if (_accentHost != null) panel.Children.Remove(_accentHost);
@@ -183,22 +206,22 @@ namespace Killendar.Controls
 
             _accentHost.Width = 0;
             _accentHost.ClipToBounds = true;
-            var slide = new DoubleAnimation(0, 39, TimeSpan.FromMilliseconds(170))
+            var slide = new DoubleAnimation(0, AccentStripWidth, TimeSpan.FromMilliseconds(AccentSlideMs))
             { EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut } };
             slide.Completed += (_, _) =>
             {
                 if (_accentHost == null) return;
                 _accentHost.BeginAnimation(FrameworkElement.WidthProperty, null);
-                _accentHost.Width = 39;
+                _accentHost.Width = AccentStripWidth;
             };
             _accentHost.BeginAnimation(FrameworkElement.WidthProperty, slide);
         }
 
-        /// <summary>KillerPDF's current picker: one vertical strip beside the complete theme list,
+        /// <summary>KillerPDF's picker: one vertical strip beside the complete theme list,
         /// repainted for whichever accent-capable family is selected.</summary>
         private Grid BuildAccentStrip(Theme family)
         {
-            var host = new Grid { Width = 39 };
+            var host = new Grid { Width = AccentStripWidth };
             Grid.SetColumn(host, 1);
 
             var divider = new Border
@@ -211,6 +234,9 @@ namespace Killendar.Controls
             host.Children.Add(divider);
 
             var strip = new Grid { Margin = new Thickness(7, 6, 2, 6) };
+            // One Tab stop for the whole strip; the arrow keys move between accents.
+            KeyboardNavigation.SetTabNavigation(strip, KeyboardNavigationMode.Once);
+            KeyboardNavigation.SetDirectionalNavigation(strip, KeyboardNavigationMode.Cycle);
             var colors = StripColors(family);
             for (int i = 0; i < colors.Length; i++)
             {
@@ -218,71 +244,83 @@ namespace Killendar.Controls
                 var (accent, hex) = colors[i];
                 var dot = new Border
                 {
-                    Tag = accent,
-                    Style = (Style)Application.Current.FindResource("AccentDot"),
+                    Style = (Style)_window.FindResource("AccentDot"),
                     Width = 26,
                     Height = double.NaN,
                     VerticalAlignment = VerticalAlignment.Stretch,
-                    Margin = new Thickness(0, 0, 0, i == colors.Length - 1 ? 0 : 8),
                     Background = AccentStripBrush(family, accent, hex),
                     RenderTransformOrigin = new Point(0.5, 0.5),
                     RenderTransform = new ScaleTransform(),
                 };
-                dot.MouseEnter += (_, _) => RingAccentStrip(family);
-                dot.MouseLeave += (_, _) => RingAccentStrip(family);
                 if (ThemeManager.AccentChoiceFor(family) == accent)
-                    dot.BorderBrush = Application.Current.TryFindResource("TextBrush") as Brush;
-                dot.MouseLeftButtonUp += (_, _) =>
+                    dot.BorderBrush = _window.TryFindResource("TextBrush") as Brush;
+
+                // The pill is drawn as before, inside a bare radio option, so the keyboard and
+                // screen readers reach it. The ring is the focus cue, so there is no focus rectangle.
+                var presenter = new FrameworkElementFactory(typeof(ContentPresenter));
+                presenter.SetValue(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Stretch);
+                presenter.SetValue(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Stretch);
+                var option = new RadioButton
+                {
+                    Tag = accent, GroupName = "ThemeAccentGroup", Content = dot,
+                    Width = 26, VerticalAlignment = VerticalAlignment.Stretch,
+                    HorizontalContentAlignment = HorizontalAlignment.Stretch,
+                    VerticalContentAlignment = VerticalAlignment.Stretch,
+                    Margin = new Thickness(0, 0, 0, i == colors.Length - 1 ? 0 : 8),
+                    IsChecked = ThemeManager.AccentChoiceFor(family) == accent,
+                    FocusVisualStyle = null,
+                    Template = new ControlTemplate(typeof(RadioButton)) { VisualTree = presenter },
+                };
+                AutomationProperties.SetName(option,
+                    _window.TryFindResource("Str_Color_" + accent) as string ?? accent.ToString());
+                option.MouseEnter += (_, _) => RingAccentStrip(family);
+                option.MouseLeave += (_, _) => RingAccentStrip(family);
+                option.GotKeyboardFocus += (_, _) => RingAccentStrip(family);
+                option.LostKeyboardFocus += (_, _) => RingAccentStrip(family);
+                option.Checked += (_, _) =>
                 {
                     if (ThemeManager.AccentChoiceFor(family) == accent) return;
-                    CrossfadeAccent(() => ThemeManager.ApplyAccent(family, accent),
-                                    () => DwmChrome.SetThemeBorder(_window));
+                    _applying = true;
+                    try
+                    {
+                        RunTransition(AccentChangeTransition, () =>
+                        {
+                            ThemeManager.ApplyAccent(family, accent);
+                            DwmChrome.SetThemeBorder(_window);
+                            ThemeApplied?.Invoke();
+                        });
+                    }
+                    finally { _applying = false; }
                     RingAccentStrip(family);
                 };
-                _accentDots.Add(dot);
-                Grid.SetRow(dot, i);
-                strip.Children.Add(dot);
+                _accentDots.Add(option);
+                Grid.SetRow(option, i);
+                strip.Children.Add(option);
             }
             host.Children.Add(strip);
             return host;
         }
 
-        // Each pill shows its accent the way a selection does: the palette's own SelectionBg
-        // gradient, read from that accent's theme file. 98SE keeps its flat Win98 swatches.
-        private static readonly Dictionary<(Theme, Accent), Brush> AccentStripBrushes = [];
+        private static bool HasAccents(Theme theme) =>
+            theme == Theme.Dark || theme == Theme.Light || theme == Theme.Black || theme == Theme.SE98;
 
-        private static Brush AccentStripBrush(Theme family, Accent accent, string flatHex)
-        {
-            if (AccentStripBrushes.TryGetValue((family, accent), out var cached)) return cached;
-            Brush brush;
-            if (family == Theme.SE98)
-                brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(flatHex));
-            else
-            {
-                string path = accent == Accent.Green
-                    ? $"Themes/{family}.xaml"
-                    : $"Themes/Accents/{family}/{accent}.xaml";
-                var palette = new ResourceDictionary
-                {
-                    Source = new Uri($"/Killendar;component/{path}", UriKind.Relative)
-                };
-                brush = ((Brush)palette["SelectionBg"]).CloneCurrentValue();
-            }
-            brush.Freeze();
-            AccentStripBrushes[(family, accent)] = brush;
-            return brush;
-        }
+        private object ThemeLabel(Theme theme) =>
+            _window.TryFindResource(theme == Theme.SE98 ? "Str_Theme_98SE" : "Str_Theme_" + theme)
+                ?? (theme == Theme.SE98 ? "98SE" : theme.ToString());
 
         // The ring marks the chosen accent and follows the mouse, and the pill under the mouse
         // lifts a little (KillerNotes). 98SE swatches stay flat.
         private void RingAccentStrip(Theme family)
         {
             var selected = ThemeManager.AccentChoiceFor(family);
-            Brush? ring = Application.Current.TryFindResource("TextBrush") as Brush;
-            foreach (Border dot in _accentDots)
+            Brush? ring = _window.TryFindResource("TextBrush") as Brush;
+            foreach (RadioButton option in _accentDots)
             {
-                dot.BorderBrush = dot.IsMouseOver || (dot.Tag is Accent accent && accent == selected) ? ring : Brushes.Transparent;
-                bool pop = dot.IsMouseOver && family != Theme.SE98;
+                var dot = (Border)option.Content;
+                bool chosen = option.Tag is Accent accent && accent == selected;
+                option.IsChecked = chosen;
+                dot.BorderBrush = option.IsMouseOver || option.IsKeyboardFocusWithin || chosen ? ring : Brushes.Transparent;
+                bool pop = option.IsMouseOver && family != Theme.SE98;
                 if (dot.RenderTransform is ScaleTransform scale)
                 {
                     scale.BeginAnimation(ScaleTransform.ScaleXProperty,
@@ -297,51 +335,32 @@ namespace Killendar.Controls
             }
         }
 
-        /// <summary>Hide the synchronous DynamicResource repaint beneath a snapshot and reveal
-        /// the new accent as one composed frame. This matters most in 98SE, where title, frame,
-        /// selection, calendar bands and controls all change together.</summary>
-        private void CrossfadeAccent(Action swap, Action frame)
+        // Each pill shows its accent the way a selection does: the palette's own SelectionBg
+        // gradient, read from that accent's theme file. 98SE keeps its flat Win98 swatches.
+        private static readonly Dictionary<(Theme, Accent), Brush> AccentStripBrushes = [];
+
+        private static Brush AccentStripBrush(Theme family, Accent accent, string flatHex)
         {
-            if (_window.Content is not Panel root || root.ActualWidth <= 0 || root.ActualHeight <= 0)
+            if (AccentStripBrushes.TryGetValue((family, accent), out var cached)) return cached;
+            Brush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(flatHex));
+            if (family != Theme.SE98)
             {
-                swap();
-                frame();
-                return;
-            }
-
-            Image? ghost = null;
-            try
-            {
-                var bitmap = new RenderTargetBitmap(
-                    (int)Math.Ceiling(root.ActualWidth), (int)Math.Ceiling(root.ActualHeight),
-                    96, 96, PixelFormats.Pbgra32);
-                bitmap.Render(root);
-                bitmap.Freeze();
-                ghost = new Image { Source = bitmap, Stretch = Stretch.Fill, IsHitTestVisible = false };
-                Panel.SetZIndex(ghost, 10000);
-                if (root is Grid grid)
+                string path = accent == Accent.Green
+                    ? $"Themes/{family}.xaml"
+                    : $"Themes/Accents/{family}/{accent}.xaml";
+                try
                 {
-                    Grid.SetRowSpan(ghost, Math.Max(1, grid.RowDefinitions.Count));
-                    Grid.SetColumnSpan(ghost, Math.Max(1, grid.ColumnDefinitions.Count));
+                    var palette = new ResourceDictionary { Source = new Uri($"pack://application:,,,/{path}") };
+                    if (palette["SelectionBg"] is Brush selection) brush = selection.CloneCurrentValue();
                 }
-                root.Children.Add(ghost);
+                catch { /* accent file not present: the flat swatch color stands */ }
             }
-            catch { ghost = null; }
-
-            swap();
-            if (ghost == null) { frame(); return; }
-            Image held = ghost;
-            _window.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Loaded,
-                new Action(() =>
-                {
-                    frame();
-                    var fade = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(190))
-                    { EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut } };
-                    fade.Completed += (_, _) => root.Children.Remove(held);
-                    held.BeginAnimation(UIElement.OpacityProperty, fade);
-                }));
+            brush.Freeze();
+            AccentStripBrushes[(family, accent)] = brush;
+            return brush;
         }
 
+        // The swatch order and flat colors are the family's, top to bottom, shared with every app.
         private static (Accent Accent, string Hex)[] StripColors(Theme family) => family switch
         {
             Theme.Light =>
@@ -365,16 +384,5 @@ namespace Killendar.Controls
                 (Accent.Teal, "#1FB8A8"), (Accent.Blue, "#4580D9"), (Accent.Purple, "#B982E3"), (Accent.Magenta, "#FF52C9")
             ],
         };
-
-        private static string DisplayName(Theme theme)
-        {
-            string key = theme switch
-            {
-                Theme.SE98 => "Str_Theme_98SE",
-                _ => "Str_Theme_" + theme,
-            };
-            return Application.Current.TryFindResource(key) as string ?? theme.ToString();
-        }
-
     }
 }

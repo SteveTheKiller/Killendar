@@ -32,6 +32,10 @@ namespace Killendar.Shell
                 check1Label: LocaleManager.Loc("Str_Chk_Desktop"),   check1Initial: true,
                 check2Label: LocaleManager.Loc("Str_Chk_AllUsers"),  check2Initial: false)
             { Owner = this };
+            // Already installed for all users (by an admin, winget, choco or an RMM)? Then this
+            // updates that copy in place, so the all-users box is ticked and locked with a note.
+            if (App.MachineInstallExists())
+                dlg.LockCheck2(LocaleManager.Loc("Str_Install_AlreadyAllUsers"));
             dlg.ShowDialog();
             if (!dlg.Confirmed) return;
 

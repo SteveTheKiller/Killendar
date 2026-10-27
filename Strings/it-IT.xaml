@@ -432,6 +432,7 @@
     <sys:String x:Key="Str_Btn_DoInstall">Installa</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">Aggiungi un collegamento sul desktop</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">Installa per tutti gli utenti di questo computer (richiede l'amministratore)</sys:String>
+    <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar è già installato per tutti gli utenti di questo PC, quindi questa operazione aggiornerà quella copia. Windows chiederà l'autorizzazione.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">L'installazione non è stata completata - Killendar continua in modalità portatile.</sys:String>
 
     <sys:String x:Key="Str_KS_Title">Scorciatoie da tastiera</sys:String>
@@ -599,5 +600,10 @@
     <sys:String x:Key="Str_Color_Red">Rosso</sys:String>
     <sys:String x:Key="Str_Color_Green">Verde</sys:String>
     <sys:String x:Key="Str_Color_Blue">Blu</sys:String>
+    <sys:String x:Key="Str_Color_Orange">Arancione</sys:String>
+    <sys:String x:Key="Str_Color_Yellow">Giallo</sys:String>
+    <sys:String x:Key="Str_Color_Teal">Verde acqua</sys:String>
+    <sys:String x:Key="Str_Color_Purple">Viola</sys:String>
+    <sys:String x:Key="Str_Color_Magenta">Magenta</sys:String>
     <sys:String x:Key="Str_Color_Hex">Colore esadecimale</sys:String>
 </ResourceDictionary>

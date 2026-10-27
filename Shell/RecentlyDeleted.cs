@@ -50,7 +50,7 @@ namespace Killendar.Shell
                 _deletedMenu.HorizontalOffset = 0;
                 _deletedMenu.VerticalOffset = 4;
             }
-            else FlyoutPlacement.Attach(_deletedMenu, this);   // shed into "...": open from the pane
+            else FlyoutPlacement.Attach(_deletedMenu, null);   // shed into "...": the pane corner
             _deletedMenu.IsOpen = true;
             Anim.FadeIn(_deletedMenu);
         }

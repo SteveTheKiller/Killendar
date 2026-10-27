@@ -408,6 +408,7 @@
     <sys:String x:Key="Str_Btn_DoInstall">インストール</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">デスクトップショートカットを追加</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">このコンピューターのすべてのユーザーにインストール（管理者権限が必要）</sys:String>
+    <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar はこの PC のすべてのユーザー用に既にインストールされているため、そのコピーが更新されます。Windows が許可を求めます。</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">インストールは完了しませんでした。Killendar はポータブルのまま動作しています。</sys:String>
 
     <!-- カテゴリ -->
@@ -620,5 +621,10 @@
     <sys:String x:Key="Str_Color_Red">赤</sys:String>
     <sys:String x:Key="Str_Color_Green">緑</sys:String>
     <sys:String x:Key="Str_Color_Blue">青</sys:String>
+    <sys:String x:Key="Str_Color_Orange">オレンジ</sys:String>
+    <sys:String x:Key="Str_Color_Yellow">黄</sys:String>
+    <sys:String x:Key="Str_Color_Teal">ティール</sys:String>
+    <sys:String x:Key="Str_Color_Purple">紫</sys:String>
+    <sys:String x:Key="Str_Color_Magenta">マゼンタ</sys:String>
     <sys:String x:Key="Str_Color_Hex">16 進カラー</sys:String>
 </ResourceDictionary>

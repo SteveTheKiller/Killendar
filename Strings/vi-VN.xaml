@@ -445,6 +445,7 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Btn_DoInstall">Cài đặt</sys:String>
   <sys:String x:Key="Str_Chk_Desktop">Thêm lối tắt trên màn hình nền</sys:String>
   <sys:String x:Key="Str_Chk_AllUsers">Cài đặt cho mọi người dùng trên máy tính này (cần quyền quản trị viên)</sys:String>
+  <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar đã được cài cho tất cả người dùng trên PC này, vì vậy thao tác này sẽ cập nhật bản đó. Windows sẽ yêu cầu quyền.</sys:String>
   <sys:String x:Key="Str_Status_InstallFailed">Cài đặt chưa hoàn tất. Killendar vẫn đang chạy ở chế độ di động.</sys:String>
   <!-- Shortcuts overlay (F1). One binding table in Shell/ShortcutsOverlay.cs feeds both the
          list and the keyboard map, so each of these is used in exactly one place. -->
@@ -614,5 +615,10 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
     <sys:String x:Key="Str_Color_Red">Đỏ</sys:String>
     <sys:String x:Key="Str_Color_Green">Xanh lá</sys:String>
     <sys:String x:Key="Str_Color_Blue">Xanh dương</sys:String>
+    <sys:String x:Key="Str_Color_Orange">Cam</sys:String>
+    <sys:String x:Key="Str_Color_Yellow">Vàng</sys:String>
+    <sys:String x:Key="Str_Color_Teal">Xanh mòng két</sys:String>
+    <sys:String x:Key="Str_Color_Purple">Tím</sys:String>
+    <sys:String x:Key="Str_Color_Magenta">Hồng tím</sys:String>
     <sys:String x:Key="Str_Color_Hex">Màu hex</sys:String>
 </ResourceDictionary>

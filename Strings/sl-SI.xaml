@@ -406,6 +406,7 @@ Killendar se bo ponovno zagnal z namestitvenega mesta.</sys:String>
     <sys:String x:Key="Str_Btn_DoInstall">Namesti</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">Dodaj bližnjico na namizje</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">Namesti za vse uporabnike tega računalnika (zahteva skrbniške pravice)</sys:String>
+    <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar je že nameščen za vse uporabnike tega računalnika, zato bo posodobljena ta namestitev. Windows bo zahteval dovoljenje.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">Namestitev ni bila dokončana. Killendar še vedno deluje v prenosnem načinu.</sys:String>
     <sys:String x:Key="Str_KS_Title">Bližnjice na tipkovnici</sys:String>
     <sys:String x:Key="Str_KS_ViewList">SEZNAM</sys:String>
@@ -569,5 +570,10 @@ Killendar se bo ponovno zagnal z namestitvenega mesta.</sys:String>
     <sys:String x:Key="Str_Color_Red">Rdeča</sys:String>
     <sys:String x:Key="Str_Color_Green">Zelena</sys:String>
     <sys:String x:Key="Str_Color_Blue">Modra</sys:String>
+    <sys:String x:Key="Str_Color_Orange">Oranžna</sys:String>
+    <sys:String x:Key="Str_Color_Yellow">Rumena</sys:String>
+    <sys:String x:Key="Str_Color_Teal">Modrozelena</sys:String>
+    <sys:String x:Key="Str_Color_Purple">Vijolična</sys:String>
+    <sys:String x:Key="Str_Color_Magenta">Magenta</sys:String>
     <sys:String x:Key="Str_Color_Hex">Šestnajstiška barva</sys:String>
 </ResourceDictionary>

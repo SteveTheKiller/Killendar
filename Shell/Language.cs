@@ -1,97 +1,49 @@
 using System.Windows;
 using Killendar.Services;
 
+// The language menu's window half: the handler the XAML binds to, and putting the strings that were
+// set from code back after a live language change. MainWindow.xaml names LangButton (a RailButton)
+// and its LangMenu ContextMenu; ContentPane is the same flyout boundary the theme picker uses.
 namespace Killendar.Shell
 {
-    /// <summary>
-    /// The language menu's window half: the handler the XAML binds to, and putting the strings that
-    /// were set from code back after a live language change.
-    /// </summary>
     public partial class MainWindow
     {
         private Controls.LanguageMenu _languageMenu = null!;
-        private Controls.DateSettingsMenu _dateSettingsMenu = null!;
 
-        /// <summary>Builds the rail menu over the button's own ContextMenu.</summary>
+        /// <summary>Call from the constructor after InitThemePicker.</summary>
         private void InitLanguageMenu()
         {
-            _languageMenu = new Controls.LanguageMenu(
-                // LangButton, not RailFlyoutAnchor: a flyout hangs off its own button (family rule,
-                // see the ThemePopup note in MainWindow.xaml).
-                LangMenu, LangButton, RelocalizeDynamicUi);
-            _dateSettingsMenu = new Controls.DateSettingsMenu(
-                DateSettingsContextMenu, DateSettingsButton, ReformatOpenEditor, ReformatOpenEditorTimes, RelocalizeDynamicUi);
-            InitHolidayCalendar();   // HolidayCalendar.cs
+            _languageMenu = new Controls.LanguageMenu(LangMenu, LangButton, ContentPane, RelocalizeDynamicUi);
+            // Translator test mode (--lang-file): a saved edit re-applies the strings, so rebuild
+            // the code-built ones the same way a language switch does.
+            LocaleManager.ExternalReloaded += RelocalizeDynamicUi;
         }
 
         private void LangButton_Click(object sender, RoutedEventArgs e) => _languageMenu.Open();
-        private void DateSettingsButton_Click(object sender, RoutedEventArgs e) => _dateSettingsMenu.Open();
-
-        /// <summary>Look up a localized string.</summary>
-        private string Loc(string key) => LocaleManager.Loc(key);
-
-        /// <summary>An open editor is showing dates in the old pattern, so reformat what is in the
-        /// fields rather than leaving a mix of the two.</summary>
-        private void ReformatOpenEditor(DateStyle style)
-        {
-            if (_sidebarOpen) _appointments.ChangeDateStyle(style);
-            else DateFormatManager.Apply(style);
-            RefreshDisplayedTimes();
-        }
-
-        private void ReformatOpenEditorTimes(TimeStyle style)
-        {
-            if (_sidebarOpen) _appointments.ChangeTimeStyle(style);
-            else DateFormatManager.ApplyTime(style);
-            RefreshDisplayedTimes();
-        }
-
-        /// <summary>Chips, the time gutter and agenda rows are built with the current date style
-        /// and clock, so they are rebuilt when either changes.</summary>
-        private void RefreshDisplayedTimes()
-        {
-            _calendar.Refresh();
-            if (_agendaDay != null && AgendaScroll.Visibility == Visibility.Visible) BuildDayAgendaRows();
-        }
 
         /// <summary>
         /// Re-applies strings that were set from code, so a live language switch updates them.
-        /// Static {DynamicResource Str_*} in XAML refreshes itself; this is the remainder -
-        /// anything a handler assigned to .Text or .Content, plus the code-built calendar views.
+        /// {DynamicResource Str_*} in XAML refreshes itself; this is the remainder. The app adds its
+        /// own code-built text here (views it builds, tooltips that track state).
         /// </summary>
         private void RelocalizeDynamicUi()
         {
-            // The views are rebuilt wholesale, which re-reads every string they use.
-            _calendar.Refresh();
-
-            // The time zone list names "this computer" in the language; rebuilt on next use.
-            FieldZone.Items.Clear();
-            if (ZoneRow.Visibility == Visibility.Visible) BuildZoneChoices();
-
-            // Tooltips that carry a shortcut, including the panel button's, which tracks its state.
-            ApplyShortcutTooltips();
-
-            if (_agendaDay is System.DateTime day && AgendaScroll.Visibility == Visibility.Visible)
-            {
-                SidebarTitle.Text = day.ToString("D");
-                BuildDayAgendaRows();
-            }
-            else
-            {
-                // The editor can retain an agenda day as its return target.
-                _appointments.RefreshLocalizedText();
-                BuildRepeatChips();
-                BuildScopeChips();
-                BuildReminderChoices();   // ReminderField.cs
-            }
-
-            // Toolbar captions and its right-click menu are built in code, so they do not follow
-            // a DynamicResource on their own.
+            // Toolbar captions and its right-click menu are built in code (ToolbarStyle.cs).
             RelocalizeToolbar();
 
-            // The status line is transient by nature; put it back to a neutral, translated idle
-            // rather than leaving the previous language's sentence sitting there.
-            StatusText.Text = Loc("Str_Status_Ready");
+            // The F1 overlay is built from the table, so an open one is rebuilt in the new language.
+            if (ShortcutsOverlay.Visibility == Visibility.Visible) ApplyShortcutView(_ksMapView);
+
+            // The status line is transient; put it back to a neutral, translated idle rather than
+            // leaving the previous language's sentence sitting there.
+            StatusText.Text = LocaleManager.Loc("Str_Status_Ready");
+
+            RelocalizeAppUi();
         }
+
+        /// <summary>App hook: re-apply the app's own code-built text (views it builds, tooltips
+        /// that track state) after a language switch, from an app file, so this one stays the
+        /// kit's.</summary>
+        partial void RelocalizeAppUi();
     }
 }

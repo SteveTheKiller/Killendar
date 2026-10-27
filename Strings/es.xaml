@@ -408,6 +408,7 @@
     <sys:String x:Key="Str_Btn_DoInstall">Instalar</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">Añadir un acceso directo en el escritorio</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">Instalar para todos los usuarios de este equipo (requiere administrador)</sys:String>
+    <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar ya está instalado para todos los usuarios de este PC, así que se actualizará esa copia. Windows pedirá permiso.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">La instalación no se completó: Killendar sigue en modo portátil.</sys:String>
 
     <!-- Categorías -->
@@ -620,5 +621,10 @@
     <sys:String x:Key="Str_Color_Red">Rojo</sys:String>
     <sys:String x:Key="Str_Color_Green">Verde</sys:String>
     <sys:String x:Key="Str_Color_Blue">Azul</sys:String>
+    <sys:String x:Key="Str_Color_Orange">Naranja</sys:String>
+    <sys:String x:Key="Str_Color_Yellow">Amarillo</sys:String>
+    <sys:String x:Key="Str_Color_Teal">Verde azulado</sys:String>
+    <sys:String x:Key="Str_Color_Purple">Morado</sys:String>
+    <sys:String x:Key="Str_Color_Magenta">Magenta</sys:String>
     <sys:String x:Key="Str_Color_Hex">Color hexadecimal</sys:String>
 </ResourceDictionary>

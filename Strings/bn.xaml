@@ -408,6 +408,7 @@
     <sys:String x:Key="Str_Btn_DoInstall">ইনস্টল</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">ডেস্কটপ শর্টকাট যোগ করুন</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">এই কম্পিউটারের সব ব্যবহারকারীর জন্য ইনস্টল করুন (অ্যাডমিন লাগবে)</sys:String>
+    <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar ইতিমধ্যেই এই পিসির সব ব্যবহারকারীর জন্য ইনস্টল করা আছে, তাই সেই কপিটিই হালনাগাদ হবে। Windows অনুমতি চাইবে।</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">ইনস্টল সম্পূর্ণ হয়নি - Killendar এখনও পোর্টেবল হিসেবে চলছে।</sys:String>
 
     <!-- বিভাগ -->
@@ -620,5 +621,10 @@
     <sys:String x:Key="Str_Color_Red">লাল</sys:String>
     <sys:String x:Key="Str_Color_Green">সবুজ</sys:String>
     <sys:String x:Key="Str_Color_Blue">নীল</sys:String>
+    <sys:String x:Key="Str_Color_Orange">কমলা</sys:String>
+    <sys:String x:Key="Str_Color_Yellow">হলুদ</sys:String>
+    <sys:String x:Key="Str_Color_Teal">টিল</sys:String>
+    <sys:String x:Key="Str_Color_Purple">বেগুনি</sys:String>
+    <sys:String x:Key="Str_Color_Magenta">ম্যাজেন্টা</sys:String>
     <sys:String x:Key="Str_Color_Hex">হেক্স রং</sys:String>
 </ResourceDictionary>
