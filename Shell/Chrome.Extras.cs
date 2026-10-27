@@ -72,8 +72,8 @@ namespace Killendar.Shell
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             // Unsaved appointment input is asked about BEFORE the tray can hide the window. Once
-            // hidden, the only way out is the tray's Exit, a shutdown, which ignores a cancel and
-            // so cannot ask; asking here means a hidden window never holds unsaved input. The
+            // hidden, a shutdown (sign-out, an update) is a way out that ignores a cancel and so
+            // cannot ask; asking here means a hidden window never holds unsaved input. The
             // fade's second pass through here finds nothing left to ask.
             if (!_closeFaded && !ShutdownStarted() && !_appointments.ConfirmReplace())
             {
