@@ -13,7 +13,11 @@ namespace Killendar.Shell
         private void InitThemePicker()
         {
             _themePicker = new Controls.ThemePicker(this, ThemeMenu, ThemeButton, ContentPane);
-            Services.ThemeManager.ThemeChanged += () => _themePicker.Refresh();
+            // ThemeChanged is static: the handler comes off when the window closes, or the closed
+            // window stays reachable from it for the life of the app.
+            Action refresh = () => _themePicker.Refresh();
+            Services.ThemeManager.ThemeChanged += refresh;
+            Closed += (_, _) => Services.ThemeManager.ThemeChanged -= refresh;
         }
 
         private void ThemeButton_Click(object sender, RoutedEventArgs e) => _themePicker.Toggle();
