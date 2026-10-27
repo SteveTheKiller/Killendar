@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.4.1] - Unreleased
 
 ### Fixed
+- Self-update runs on the family update code, which keeps Killendar's signature checks inside the helper and adds pinned publication folders, a publisher check on the published copy, same-publisher replacement and stable-only releases. Installed paths, registry keys and the exe name are unchanged.
 - File dialogs stay responsive on slow or crowded folders, cancel stale loads and identify incomplete listings.
 - Black table headers match the content surface, and softer grain keeps dark surfaces from looking gray.
 - The file picker's Accept button can no longer fire twice: it stays off while a folder is loading or an accept is already running. A mistyped folder path now returns to the last folder that worked instead of leaving an empty list.
