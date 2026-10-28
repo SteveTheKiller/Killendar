@@ -105,7 +105,8 @@ namespace Killendar.Controls
             panel.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             panel.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
-            var list = new StackPanel { MinWidth = 120 };
+            // Sized by the longest theme name, so the accent strip sits right beside the names.
+            var list = new StackPanel();
             Grid.SetColumn(list, 0);
             panel.Children.Add(list);
             foreach (var theme in Themes)
@@ -245,6 +246,9 @@ namespace Killendar.Controls
                 var dot = new Border
                 {
                     Style = (Style)_window.FindResource("AccentDot"),
+                    // AccentDot's 7px right margin spaces a row of dots; in this 26px column it
+                    // would cut 7px off the right of every pill.
+                    Margin = new Thickness(0),
                     Width = 26,
                     Height = double.NaN,
                     VerticalAlignment = VerticalAlignment.Stretch,
