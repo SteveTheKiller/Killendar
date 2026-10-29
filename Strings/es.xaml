@@ -150,6 +150,7 @@
     <sys:String x:Key="Str_Imp_PvSkipped">Ilegibles o no compatibles, se omitirán: {0}</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedDraftHead">¿Guardar los cambios de esta cita?</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">Lo que escribió aún no se ha guardado.</sys:String>
+    <sys:String x:Key="Str_Dlg_LockedDraftHead">¿Descartar la cita que estaba escribiendo?</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Descartar</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Seguir editando</sys:String>
     <sys:String x:Key="Str_Lbl_TimeFormat">formato de hora</sys:String>

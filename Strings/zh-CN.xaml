@@ -150,6 +150,7 @@
     <sys:String x:Key="Str_Imp_PvSkipped">无法读取或不受支持，将跳过：{0}</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedDraftHead">保存对此约会的更改？</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">您输入的内容尚未保存。</sys:String>
+    <sys:String x:Key="Str_Dlg_LockedDraftHead">放弃正在填写的约会？</sys:String>
     <sys:String x:Key="Str_Btn_Discard">放弃</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">继续编辑</sys:String>
     <sys:String x:Key="Str_Lbl_TimeFormat">时间格式</sys:String>

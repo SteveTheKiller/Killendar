@@ -150,6 +150,7 @@
     <sys:String x:Key="Str_Imp_PvSkipped">Nečitelné nebo nepodporované, budou přeskočeny: {0}</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedDraftHead">Uložit změny této schůzky?</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">To, co jste napsali, ještě není uloženo.</sys:String>
+    <sys:String x:Key="Str_Dlg_LockedDraftHead">Zahodit rozepsanou schůzku?</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Zahodit</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Pokračovat v úpravách</sys:String>
     <sys:String x:Key="Str_Lbl_TimeFormat">formát času</sys:String>

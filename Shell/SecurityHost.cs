@@ -41,6 +41,15 @@ namespace Killendar.Shell
 
         bool ISecurityHost.ConfirmLeaveDraft() => _appointments.ConfirmReplace();
 
+        bool ISecurityHost.ConfirmDiscardDraft()
+        {
+            if (!_appointments.HasUnsavedChanges) return true;
+            var dlg = new Controls.ConfirmDialog(Loc("Str_Dlg_LockedDraftHead"), Loc("Str_Dlg_DiscardDraftBody"),
+                Loc("Str_Btn_Discard"), Loc("Str_Btn_KeepEditing")) { Owner = this };
+            dlg.ShowDialog();
+            return dlg.Confirmed;
+        }
+
         /// <summary>Routes a shell-opened file after the active Killendar has opened. Internal:
         /// App also calls this for a path forwarded from a blocked second launch.</summary>
         internal void HandlePendingOpenFile()
@@ -64,7 +73,8 @@ namespace Killendar.Shell
 
         private void LockButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_store.HasPassword && !_security.IsLocked) ShowLockMenu();   // Lock.cs
+            if (_security.IsLocked) AskToUnlock();                           // Lock.cs
+            else if (_store.HasPassword) ShowLockMenu();
             else _security.ToggleLock();
         }
 

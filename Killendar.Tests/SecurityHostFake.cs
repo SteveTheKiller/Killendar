@@ -13,6 +13,8 @@ namespace Killendar.Tests
         internal bool LeaveDraft = true;
         internal int DraftQuestions;
         public bool ConfirmLeaveDraft() { DraftQuestions++; return LeaveDraft; }
+        internal bool DiscardDraft = true;
+        public bool ConfirmDiscardDraft() { DraftQuestions++; return DiscardDraft; }
         public Window Window => null!;
         public string Loc(string key) => key + " {0}";
         public void SetStatus(string text) => Statuses.Add(text);

@@ -150,6 +150,7 @@
     <sys:String x:Key="Str_Imp_PvSkipped">Illisibles ou non pris en charge, seront ignorés : {0}</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedDraftHead">Enregistrer les modifications de ce rendez-vous ?</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">Ce que vous avez saisi n'est pas encore enregistré.</sys:String>
+    <sys:String x:Key="Str_Dlg_LockedDraftHead">Abandonner le rendez-vous en cours de saisie ?</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Abandonner</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Continuer la modification</sys:String>
     <sys:String x:Key="Str_Lbl_TimeFormat">format de l'heure</sys:String>

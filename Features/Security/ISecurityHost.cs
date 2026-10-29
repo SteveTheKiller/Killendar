@@ -32,5 +32,10 @@ namespace Killendar.Features
         /// <summary>True when there is no unsaved appointment input, or the user chose to discard
         /// it. False means stay on the current Killendar.</summary>
         bool ConfirmLeaveDraft();
+
+        /// <summary>The locked version of ConfirmLeaveDraft: the Killendar the draft belongs to is
+        /// closed, so it can only be discarded or kept. True when there is none or it was
+        /// discarded.</summary>
+        bool ConfirmDiscardDraft();
     }
 }

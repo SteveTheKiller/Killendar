@@ -196,6 +196,7 @@
     <sys:String x:Key="Str_Imp_PvSkipped">Unreadable or unsupported, will be skipped: {0}</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedDraftHead">Save your changes to this appointment?</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">What you typed has not been saved.</sys:String>
+    <sys:String x:Key="Str_Dlg_LockedDraftHead">Discard the appointment you were writing?</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Discard</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Keep editing</sys:String>
     <sys:String x:Key="Str_Lbl_TimeFormat">time format</sys:String>

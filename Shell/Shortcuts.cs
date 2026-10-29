@@ -37,7 +37,7 @@ namespace Killendar.Shell
             if (_security.IsLocked)
             {
                 e.Handled = true;
-                AskToUnlockWhenSeen();
+                AskToUnlock();
                 return;
             }
 

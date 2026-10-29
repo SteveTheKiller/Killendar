@@ -196,6 +196,7 @@
     <sys:String x:Key="Str_Imp_PvSkipped">Нечитані або непідтримувані, буде пропущено: {0}</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedDraftHead">Зберегти зміни цієї зустрічі?</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">Введене ще не збережено.</sys:String>
+    <sys:String x:Key="Str_Dlg_LockedDraftHead">Видалити недописану зустр&#x0456;ч?</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Не зберігати</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Продовжити редагування</sys:String>
     <sys:String x:Key="Str_Lbl_TimeFormat">формат часу</sys:String>

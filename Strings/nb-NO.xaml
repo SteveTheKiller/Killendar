@@ -196,6 +196,7 @@
     <sys:String x:Key="Str_Imp_PvSkipped">Uleselige eller ikke støttet, hoppes over: {0}</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedDraftHead">Lagre endringene i denne avtalen?</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">Det du har skrevet, er ikke lagret ennå.</sys:String>
+    <sys:String x:Key="Str_Dlg_LockedDraftHead">Forkaste avtalen du holdt på å skrive?</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Forkast</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Fortsett å redigere</sys:String>
     <sys:String x:Key="Str_Lbl_TimeFormat">tidsformat</sys:String>

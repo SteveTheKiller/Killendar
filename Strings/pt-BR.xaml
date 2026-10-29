@@ -196,6 +196,7 @@
     <sys:String x:Key="Str_Imp_PvSkipped">Ilegíveis ou não compatíveis, serão ignorados: {0}</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedDraftHead">Salvar as alterações deste compromisso?</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">O que você digitou ainda não foi salvo.</sys:String>
+    <sys:String x:Key="Str_Dlg_LockedDraftHead">Descartar o compromisso que você estava escrevendo?</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Descartar</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Continuar editando</sys:String>
     <sys:String x:Key="Str_Lbl_TimeFormat">formato de hora</sys:String>

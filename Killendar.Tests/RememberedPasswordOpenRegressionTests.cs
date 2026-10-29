@@ -137,6 +137,7 @@ namespace Killendar.Tests
             public void RestoreSidebar() { }
             public void CloseSidebar() { }
             public bool ConfirmLeaveDraft() => true;
+            public bool ConfirmDiscardDraft() => true;
         }
     }
 }

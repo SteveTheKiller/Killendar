@@ -196,6 +196,7 @@
     <sys:String x:Key="Str_Imp_PvSkipped">Olvashatatlan vagy nem támogatott, kimaradnak: {0}</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedDraftHead">Menti a találkozó módosításait?</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">A beírtak még nincsenek mentve.</sys:String>
+    <sys:String x:Key="Str_Dlg_LockedDraftHead">Elveti az elkezdett találkozót?</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Elvetés</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Szerkesztés folytatása</sys:String>
     <sys:String x:Key="Str_Lbl_TimeFormat">időformátum</sys:String>

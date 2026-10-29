@@ -150,6 +150,7 @@
     <sys:String x:Key="Str_Imp_PvSkipped">Unlesbar oder nicht unterstützt, werden übersprungen: {0}</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedDraftHead">Änderungen an diesem Termin speichern?</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">Ihre Eingaben sind noch nicht gespeichert.</sys:String>
+    <sys:String x:Key="Str_Dlg_LockedDraftHead">Den angefangenen Termin verwerfen?</sys:String>
     <sys:String x:Key="Str_Btn_Discard">Verwerfen</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">Weiter bearbeiten</sys:String>
     <sys:String x:Key="Str_Lbl_TimeFormat">zeitformat</sys:String>

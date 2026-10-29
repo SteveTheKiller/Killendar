@@ -62,16 +62,23 @@ namespace Killendar.Features
             return true;
         }
 
-        /// <summary>Asks for the password of the locked Killendar. Canceling quits, as it does at
-        /// launch: there is nothing to show without the password.</summary>
-        internal void Unlock()
+        /// <summary>Asks for the password of the locked Killendar. Canceling leaves it locked
+        /// rather than quitting, so the Killendars button can still open a different one.
+        /// True once it is open again.</summary>
+        internal bool Unlock()
         {
-            if (!IsLocked) return;
-            if (!Open(exitOnCancel: true) || !_store.IsOpen) return;
+            if (!IsLocked) return true;
+            if (!Open(exitOnCancel: false) || !_store.IsOpen) return false;
+            EndLock();
+            _host.SetStatus(TakePendingStatus() ?? _host.Loc("Str_Status_Unlocked"));
+            return true;
+        }
+
+        private void EndLock()
+        {
             IsLocked = false;
             _host.ShowLocked(false);
             _host.RefreshView();
-            _host.SetStatus(TakePendingStatus() ?? _host.Loc("Str_Status_Unlocked"));
         }
 
         /// <summary>Drops the remembered password. Call when switching to a different file, whose
@@ -208,7 +215,18 @@ namespace Killendar.Features
         /// </summary>
         internal void ShowKillendars()
         {
-            if (IsLocked) return;   // the unlock prompt is the only way back in
+            if (IsLocked)
+            {
+                // The locked Killendar is already closed. The dialog can still open a different
+                // one, so a forgotten password never leaves the app stuck on this file.
+                string locked = EventStore.ActiveFile;
+                EventStore.LastRename = null;
+                string lockedDir = EventStore.DataDir;
+                var pick = new KillendarsDialog { Owner = _host.Window };
+                pick.ShowDialog();
+                ApplyLockedSelection(pick.Selected, locked, lockedDir);
+                return;
+            }
             // The panel is NOT closed here. It used to be, unconditionally, which meant merely
             // LOOKING at the Killendars list threw away whatever you were composing - and on a
             // narrow window it also gave back the width the panel had borrowed, so the main window
@@ -228,6 +246,60 @@ namespace Killendar.Features
             dlg.ShowDialog();
 
             ApplyKillendarSelection(dlg.Selected, previous, previousDir, previousPath);
+        }
+
+        /// <summary>What Manage Killendars picked while locked. A different Killendar opens and
+        /// ends the lock once it is open; the locked one asks for its password; a canceled or
+        /// failed open, or a hidden draft the user keeps, leaves the old Killendar locked.
+        /// True when a Killendar is open afterwards.</summary>
+        internal bool ApplyLockedSelection(string? selected, string locked, string? lockedDir = null)
+        {
+            lockedDir ??= EventStore.DataDir;
+            // A rename in the dialog moved the locked file without unlocking it.
+            if (EventStore.LastRename is { } rename &&
+                string.Equals(rename.From, locked, StringComparison.OrdinalIgnoreCase))
+                locked = rename.To;
+            string lockedPath = Path.Combine(lockedDir, locked);
+            bool lockedExists = File.Exists(lockedPath);
+
+            // Deleting the locked file in the dialog made another one active.
+            string target = selected ?? EventStore.ActiveFile;
+            if (lockedExists && string.Equals(Path.Combine(EventStore.DataDir, target), lockedPath,
+                                              StringComparison.OrdinalIgnoreCase))
+            {
+                EventStore.SetActive(locked);
+                return selected != null && Unlock();
+            }
+
+            // The draft belongs to the locked Killendar, which cannot take a save while closed.
+            if (!_host.ConfirmDiscardDraft())
+            {
+                StayOn(locked, lockedDir, lockedExists);
+                return false;
+            }
+            EventStore.SetActive(target);
+            _password = null;
+            if (Open(exitOnCancel: false) && _store.IsOpen)
+            {
+                _host.CloseSidebar();
+                EndLock();
+                RefreshActiveLabel();
+                _host.SetStatus(TakePendingStatus()
+                                ?? string.Format(_host.Loc("Str_Status_Opened"), _store.DisplayName));
+                return true;
+            }
+            _store.Close();
+            StayOn(locked, lockedDir, lockedExists);
+            return false;
+        }
+
+        /// <summary>Points the app back at the locked Killendar after a locked switch went nowhere.</summary>
+        private static void StayOn(string locked, string lockedDir, bool lockedExists)
+        {
+            if (!lockedExists) return;
+            if (!string.Equals(EventStore.DataDir, lockedDir, StringComparison.OrdinalIgnoreCase))
+                EventStore.SetDataDir(lockedDir);
+            EventStore.SetActive(locked);
         }
 
         /// <summary>Opens what Manage Killendars selected (or reopens the active file), falling

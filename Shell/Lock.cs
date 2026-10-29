@@ -18,6 +18,9 @@ namespace Killendar.Shell
     {
         private DispatcherTimer? _idleTimer;
         private bool _unlockAsking;
+        /// <summary>The unlock prompt was canceled: it stays away until the padlock, a key or a
+        /// fresh lock asks for it, so the title bar's Killendars button can be reached.</summary>
+        private bool _unlockDeclined;
         /// <summary>A lock that came while an import was writing; taken once it finishes.</summary>
         private bool _lockWaiting;
 
@@ -52,7 +55,12 @@ namespace Killendar.Shell
             // A window locked while hidden or minimized asks when it comes back.
             Activated += (_, _) => AskToUnlockWhenSeen();
             // Restoring from the taskbar can activate before the state leaves Minimized.
-            StateChanged += (_, _) => AskToUnlockWhenSeen();
+            StateChanged += (_, _) =>
+            {
+                // Put away and brought back, the window asks again even after a cancel.
+                if (WindowState == WindowState.Minimized) _unlockDeclined = false;
+                AskToUnlockWhenSeen();
+            };
         }
 
         private void OnSessionSwitch(object sender, SessionSwitchEventArgs e)
@@ -77,17 +85,27 @@ namespace Killendar.Shell
             var pending = _store.HasPassword ? _store.DueReminders(DateTime.Now).Count : 0;
             var coming = _store.HasPassword ? _store.UpcomingReminderTimes(DateTime.Now, TimeSpan.FromDays(1)) : [];
             if (!_security.Lock()) return;
+            _unlockDeclined = false;
+            LockButton.ToolTip = Loc("Str_Pw_UnlockHead");
             RemindWhileLocked(pending, coming);   // ReminderAlerts.cs
             Dispatcher.BeginInvoke(new Action(AskToUnlockWhenSeen), DispatcherPriority.Background);
         }
 
         private void AskToUnlockWhenSeen()
         {
-            if (!_security.IsLocked || _unlockAsking || !IsVisible || WindowState == WindowState.Minimized) return;
+            if (!_security.IsLocked || _unlockDeclined || _unlockAsking || !IsVisible || WindowState == WindowState.Minimized) return;
             _unlockAsking = true;
-            try { _security.Unlock(); }
+            try { _unlockDeclined = !_security.Unlock(); }
             finally { _unlockAsking = false; }
             if (!_security.IsLocked) CheckReminders();
+            else StatusText.Text = Loc("Str_Pw_UnlockHead");
+        }
+
+        /// <summary>The padlock or a key press while locked: asks again after a canceled prompt.</summary>
+        private void AskToUnlock()
+        {
+            _unlockDeclined = false;
+            AskToUnlockWhenSeen();
         }
 
         private void LockShortcut()

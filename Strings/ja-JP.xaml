@@ -150,6 +150,7 @@
     <sys:String x:Key="Str_Imp_PvSkipped">読み取れないか未対応のためスキップ: {0}</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedDraftHead">この予定の変更を保存しますか?</sys:String>
     <sys:String x:Key="Str_Dlg_DiscardDraftBody">入力した内容はまだ保存されていません。</sys:String>
+    <sys:String x:Key="Str_Dlg_LockedDraftHead">入力中の予定を破棄&#x3057;ますか?</sys:String>
     <sys:String x:Key="Str_Btn_Discard">破棄</sys:String>
     <sys:String x:Key="Str_Btn_KeepEditing">編集を続ける</sys:String>
     <sys:String x:Key="Str_Lbl_TimeFormat">時刻形式</sys:String>
