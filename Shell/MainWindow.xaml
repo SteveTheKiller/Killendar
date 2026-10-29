@@ -876,7 +876,7 @@
                                Foreground="{DynamicResource TextFooter}"
                                FontFamily="{DynamicResource BrandSansFont}"
                                FontSize="16" TextOptions.TextFormattingMode="Ideal" VerticalAlignment="Center"
-                               Margin="4,0,0,0" Padding="{DynamicResource FooterCellPadding}"/>
+                               Margin="{DynamicResource FooterStatusInset}" Padding="{DynamicResource FooterCellPadding}"/>
                     <Border IsHitTestVisible="False" BorderBrush="{DynamicResource FooterBevelDarkBrush}"
                             BorderThickness="{DynamicResource FooterCellLightThickness}"/>
                     <Border IsHitTestVisible="False" BorderBrush="{DynamicResource FooterBevelLightBrush}"

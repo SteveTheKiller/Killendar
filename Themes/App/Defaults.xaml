@@ -22,6 +22,8 @@
     <Thickness x:Key="DialogTitleTextMargin">14,0,0,0</Thickness>
     <SolidColorBrush x:Key="DropdownArrowBrush" Color="#00FFFFFF" po:Freeze="True"/>
     <SolidColorBrush x:Key="EditorPaneBrush" Color="#00FFFFFF" po:Freeze="True"/>
+    <!-- The footer status text: no status light sits in the corner, so it keeps the 16px KillerNotes and KillerPDF use. -->
+    <Thickness x:Key="FooterStatusInset">16,0,0,0</Thickness>
     <Thickness x:Key="OverlayBevelDarkThickness">0,0,0,0</Thickness>
     <SolidColorBrush x:Key="OverlayBevelInnerDarkBrush" Color="#00FFFFFF" po:Freeze="True"/>
     <SolidColorBrush x:Key="OverlayBevelInnerLightBrush" Color="#00FFFFFF" po:Freeze="True"/>

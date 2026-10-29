@@ -24,6 +24,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - Toolbar captions are larger and set in the family sans, captions under the icons wrap instead of running wide, and the toolbar right-click menu stays open so display modes can be compared.
 - The open, save and folder picker now uses the family file picker card and frame shared with the other Killer apps, and pictures keep their plain file icons.
 - The footer's Install button runs on the shared KillerUI template code, with Killendar's all-users choice and calendar handling kept the same.
+- The footer status text sits 16 pixels from the window edge, as in KillerNotes and KillerPDF, instead of 4. 98SE keeps its spacing.
 
 ### Added
 - About groups settings in two columns and can hide shortcut hints in menus and tooltips without disabling keyboard shortcuts. Hover tooltips clear large pointers while preserving custom placement.

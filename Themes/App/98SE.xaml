@@ -37,6 +37,7 @@
     <Thickness x:Key="TitleLogoMargin">4,2,0,0</Thickness>
     <SolidColorBrush x:Key="FooterBevelDarkBrush" Color="#FF808080" po:Freeze="True"/>
     <SolidColorBrush x:Key="FooterBevelLightBrush" Color="#FFFFFFFF" po:Freeze="True"/>
+    <Thickness x:Key="FooterStatusInset">4,0,0,0</Thickness>
     <SolidColorBrush x:Key="InputFieldBrush" Color="#FFFFFFFF" po:Freeze="True"/>
     <!-- The calendar is a white client area on 98SE, as Windows 98 drew a document window. The family
          98SE pane is the gray face; Killendar keeps its calendar and dialogs on white. -->
