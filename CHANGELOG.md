@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.4.1] - Unreleased
 
 ### Fixed
+- The elevated part of an update compiles its helper code in a folder only administrators can open, so another program running as you cannot slip code into it, and an update that finished is no longer reported as failed when the app cannot be reopened afterward.
 - The tray icon's menu opens from the pointer upward, out of the notification area, the same way in every Killer app. A short menu no longer covers the tray icons and a taller one no longer floats about 40 pixels above them.
 - Updates keep working after the publisher's code signing certificate is renewed. A release must still carry a valid signature naming the same publisher, but no longer the exact certificate of the installed copy.
 - Self-update runs on the family update code, which keeps Killendar's signature checks inside the helper and adds pinned publication folders, a publisher check on the published copy, same-publisher replacement and stable-only releases. Installed paths, registry keys and the exe name are unchanged.
