@@ -118,6 +118,47 @@ namespace Killendar.Tests
         }
 
         [Fact]
+        public void AFinishedMachineUninstallClearsOnlyFailedAttemptsBesideIt()
+        {
+            using var fixture = new Fixture();
+            string Attempt(string state, params string[] extra)
+            {
+                string folder = DeferredUninstall.OperationDirectory(fixture.Staging, Guid.NewGuid().ToString("N"));
+                Directory.CreateDirectory(folder);
+                File.WriteAllText(Path.Combine(folder, DeferredUninstall.WorkerName), "helper");
+                UninstallWorkflow.WriteReceipt(Path.Combine(folder, DeferredUninstall.ReceiptName), new UninstallWorkflow.Receipt { State = state });
+                foreach (string name in extra) File.WriteAllText(Path.Combine(folder, name), "kept");
+                return folder;
+            }
+            string failed = Attempt("Failed");
+            string failedWithConfig = Attempt("Failed", DeferredUninstall.WorkerName + ".config");
+            string pending = Attempt("Pending");
+            string withNotes = Attempt("Failed", "notes.txt");
+            string lookalike = Path.Combine(fixture.Staging, "Uninstall-notes");
+            Directory.CreateDirectory(lookalike);
+            File.WriteAllText(Path.Combine(lookalike, DeferredUninstall.WorkerName), "helper");
+            string noReceipt = DeferredUninstall.OperationDirectory(fixture.Staging, Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(noReceipt);
+            File.WriteAllText(Path.Combine(noReceipt, DeferredUninstall.WorkerName), "helper");
+            string current = DeferredUninstall.OperationDirectory(fixture.Staging, fixture.OperationId);
+            Directory.CreateDirectory(current);
+            File.WriteAllText(Path.Combine(current, DeferredUninstall.WorkerName), "running helper");
+            UninstallWorkflow.WriteReceipt(Path.Combine(current, DeferredUninstall.ReceiptName), new UninstallWorkflow.Receipt { State = "Failed" });
+            var scheduled = new System.Collections.Generic.List<string>();
+
+            DeferredUninstall.ScheduleMachineCleanup(current, fixture.Installation, path => { scheduled.Add(path); return true; });
+
+            Assert.False(Directory.Exists(failed), "A failed attempt would hold the install folder open.");
+            Assert.False(Directory.Exists(failedWithConfig), "A failed attempt's config goes with it.");
+            Assert.True(File.Exists(Path.Combine(pending, DeferredUninstall.WorkerName)), "An attempt that has not failed is left alone.");
+            Assert.True(File.Exists(Path.Combine(withNotes, "notes.txt")), "A folder holding anything else is left alone.");
+            Assert.True(File.Exists(Path.Combine(lookalike, DeferredUninstall.WorkerName)), "A folder that only looks like an attempt is left alone.");
+            Assert.True(File.Exists(Path.Combine(noReceipt, DeferredUninstall.WorkerName)), "A folder with no receipt saying it failed is left alone.");
+            Assert.True(File.Exists(Path.Combine(current, DeferredUninstall.WorkerName)), "The running worker's own folder is left for the restart.");
+            Assert.Contains(current, scheduled);
+        }
+
+        [Fact]
         public void ActualDelegatedChildExitCodeIsPropagated()
         {
             using var fixture = new Fixture();
