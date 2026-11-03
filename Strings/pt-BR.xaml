@@ -656,4 +656,8 @@
     <sys:String x:Key="Str_Color_Purple">Roxo</sys:String>
     <sys:String x:Key="Str_Color_Magenta">Magenta</sys:String>
     <sys:String x:Key="Str_Color_Hex">Cor hexadecimal</sys:String>
+    <sys:String x:Key="Str_Scroll_Up">Rolar para cima</sys:String>
+    <sys:String x:Key="Str_Scroll_Down">Rolar para baixo</sys:String>
+    <sys:String x:Key="Str_Scroll_Left">Rolar para a esquerda</sys:String>
+    <sys:String x:Key="Str_Scroll_Right">Rolar para a direita</sys:String>
 </ResourceDictionary>

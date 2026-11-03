@@ -624,4 +624,8 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
     <sys:String x:Key="Str_Color_Purple">Tím</sys:String>
     <sys:String x:Key="Str_Color_Magenta">Hồng tím</sys:String>
     <sys:String x:Key="Str_Color_Hex">Màu hex</sys:String>
+    <sys:String x:Key="Str_Scroll_Up">Cuộn lên</sys:String>
+    <sys:String x:Key="Str_Scroll_Down">Cuộn xuống</sys:String>
+    <sys:String x:Key="Str_Scroll_Left">Cuộn sang trái</sys:String>
+    <sys:String x:Key="Str_Scroll_Right">Cuộn sang phải</sys:String>
 </ResourceDictionary>

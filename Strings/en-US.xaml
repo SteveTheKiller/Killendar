@@ -656,4 +656,8 @@
     <sys:String x:Key="Str_Color_Purple">Purple</sys:String>
     <sys:String x:Key="Str_Color_Magenta">Magenta</sys:String>
     <sys:String x:Key="Str_Color_Hex">Hex color</sys:String>
+    <sys:String x:Key="Str_Scroll_Up">Scroll up</sys:String>
+    <sys:String x:Key="Str_Scroll_Down">Scroll down</sys:String>
+    <sys:String x:Key="Str_Scroll_Left">Scroll left</sys:String>
+    <sys:String x:Key="Str_Scroll_Right">Scroll right</sys:String>
 </ResourceDictionary>

@@ -10,6 +10,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 
 ### Fixed
 
+- The file picker resolves place and drive icons in the background and restores its position on any monitor. Scrollbar buttons have localized screen-reader names.
 - Appointments are saved in a fixed date format whatever the Windows region. On a Thai or Arabic region they were saved centuries off, and on a region that writes times with dots they could not be read back; those dotted times now load too.
 - Exported .ics files carry Gregorian dates whatever the Windows region, and a description with several lines comes back whole when the file is imported again instead of stopping at the first line break.
 - An unsaved appointment is no longer lost without asking. Clicking a reminder, opening Manage Killendars, Update now and the Install badge all ask first, Save in that prompt actually saves, closing a locked Killendar offers to discard rather than a Save that could not work, and renaming the open Killendar more than once in Manage Killendars keeps the appointment you were writing.

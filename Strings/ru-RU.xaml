@@ -657,4 +657,8 @@
     <sys:String x:Key="Str_Color_Purple">Фиолетовый</sys:String>
     <sys:String x:Key="Str_Color_Magenta">Пурпурный</sys:String>
     <sys:String x:Key="Str_Color_Hex">Шестнадцатеричный цвет</sys:String>
+    <sys:String x:Key="Str_Scroll_Up">Прокрутить вверх</sys:String>
+    <sys:String x:Key="Str_Scroll_Down">Прокрутить вниз</sys:String>
+    <sys:String x:Key="Str_Scroll_Left">Прокрутить влево</sys:String>
+    <sys:String x:Key="Str_Scroll_Right">Прокрутить вправо</sys:String>
 </ResourceDictionary>

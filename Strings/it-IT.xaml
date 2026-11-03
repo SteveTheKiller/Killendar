@@ -609,4 +609,8 @@
     <sys:String x:Key="Str_Color_Purple">Viola</sys:String>
     <sys:String x:Key="Str_Color_Magenta">Magenta</sys:String>
     <sys:String x:Key="Str_Color_Hex">Colore esadecimale</sys:String>
+    <sys:String x:Key="Str_Scroll_Up">Scorri verso l'alto</sys:String>
+    <sys:String x:Key="Str_Scroll_Down">Scorri verso il basso</sys:String>
+    <sys:String x:Key="Str_Scroll_Left">Scorri a sinistra</sys:String>
+    <sys:String x:Key="Str_Scroll_Right">Scorri a destra</sys:String>
 </ResourceDictionary>
