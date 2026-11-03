@@ -80,6 +80,12 @@ namespace Killendar.Tests
                         var filters = (ComboBox)dialog.FindName("FilterCombo");
                         var accept = (Button)dialog.FindName("AcceptButton");
                         var metadata = (TextBlock)dialog.FindName("SelMeta");
+                        var pathBox = (TextBox)dialog.FindName("PathBox");
+                        // The first listing must land before anything else is judged.
+                        PumpUntil(() => !dialog.IsDirectoryListingBusy);
+                        Assert.True(directory == pathBox.Text, "First listing: path '" + pathBox.Text + "', busy "
+                            + dialog.IsDirectoryListingBusy + ", available " + dialog.IsDirectoryListingAvailable
+                            + ", status '" + metadata.Text + "'");
                         foreach (string invalid in new[] { "bad|name.ics", "bad\"name.ics",
                             new string('x', 300) + ".ics", @"C::\broken.ics" })
                         foreach (string route in new[] { "enter", "accept", "filter" })
@@ -111,8 +117,9 @@ namespace Killendar.Tests
                         PressEnter(name);
                         // The picker lists and probes off the UI thread; wait for it as a person would.
                         PumpUntil(() => !dialog.IsDirectoryListingBusy && name.Text.Length == 0);
-                        Assert.True(directory == ((TextBox)dialog.FindName("PathBox")).Text,
-                            "Path box after a wildcard: '" + ((TextBox)dialog.FindName("PathBox")).Text + "'");
+                        Assert.True(directory == pathBox.Text, "After a wildcard: path '" + pathBox.Text + "', busy "
+                            + dialog.IsDirectoryListingBusy + ", available " + dialog.IsDirectoryListingAvailable
+                            + ", status '" + metadata.Text + "'");
                         Assert.Equal("*.txt", filters.Items[0]);
                         Assert.Equal("", name.Text);
 
@@ -145,7 +152,8 @@ namespace Killendar.Tests
             while (!done() && clock.ElapsedMilliseconds < 10000)
             {
                 var frame = new DispatcherFrame();
-                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => frame.Continue = false));
+                // Lowest priority, so every queued picker callback runs before the frame ends.
+                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => frame.Continue = false));
                 Dispatcher.PushFrame(frame);
                 Thread.Sleep(10);
             }
