@@ -116,7 +116,7 @@ namespace Killendar.Shell
             {
                 ShowFromTray();
                 Activate();
-                if (reminder != null && !_security.IsLocked) ShowDayAgenda(reminder.Start.Date, reminder.Id);
+                if (reminder != null && !_security.IsLocked) ReminderOpen.Run(_appointments.ConfirmReplace, () => ShowDayAgenda(reminder.Start.Date, reminder.Id));
             };
             window.Closed += (_, _) => { if (_remindersWindow == window) _remindersWindow = null; };
             _remindersWindow = window;
@@ -136,6 +136,23 @@ namespace Killendar.Shell
                 : DateFormatManager.MonthDay(reminder.Start) + " " + DateFormatManager.Time(reminder.Start)
                   + " - " + DateFormatManager.Time(reminder.End);
             return string.IsNullOrWhiteSpace(reminder.Location) ? when : when + "    " + reminder.Location;
+        }
+    }
+}
+
+namespace Killendar.Shell
+{
+    /// <summary>The decision behind a reminder's Open button, kept out of the window so it can be
+    /// tested: opening a day replaces the sidebar, so a pending draft is asked about first.</summary>
+    internal static class ReminderOpen
+    {
+        /// <summary>Runs <paramref name="show"/> unless the user chose to keep the draft being
+        /// edited. True when the day was shown.</summary>
+        internal static bool Run(Func<bool> confirmReplace, Action show)
+        {
+            if (!confirmReplace()) return false;
+            show();
+            return true;
         }
     }
 }

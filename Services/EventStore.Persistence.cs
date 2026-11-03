@@ -245,7 +245,12 @@ namespace Killendar.Services
         private void UpdateRow(CalendarEvent ev)
         {
             var idx = _events.FindIndex(e => e.Id == ev.Id);
-            if (idx < 0) return;
+            if (idx < 0)
+            {
+                // A save that lands nowhere must not look like it worked: the caller keeps its draft.
+                LoadError = _db == null ? "No Killendar is open." : "That appointment is no longer in this Killendar.";
+                return;
+            }
             // An imported one-off keeps the source clock it arrived with. Once it has been moved,
             // that clock still names the OLD start, and a repeat added now would generate from
             // there. A stored one-off therefore always re-anchors to the start being saved;

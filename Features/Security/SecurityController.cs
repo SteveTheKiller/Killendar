@@ -213,7 +213,16 @@ namespace Killendar.Features
         /// The Manage Killendars dialog. The store is closed for its whole lifetime so any file -
         /// the active one included - can be renamed or deleted safely, then reopened afterwards.
         /// </summary>
-        internal void ShowKillendars()
+        internal void ShowKillendars() => ShowKillendars(() =>
+        {
+            var dlg = new KillendarsDialog { Owner = _host.Window };
+            dlg.ShowDialog();
+            return dlg.Selected;
+        });
+
+        /// <summary>Manage Killendars with the dialog injected: <paramref name="showDialog"/> shows
+        /// it and returns the Killendar it picked, or null.</summary>
+        internal void ShowKillendars(Func<string?> showDialog)
         {
             if (IsLocked)
             {
@@ -222,9 +231,7 @@ namespace Killendar.Features
                 string locked = EventStore.ActiveFile;
                 EventStore.LastRename = null;
                 string lockedDir = EventStore.DataDir;
-                var pick = new KillendarsDialog { Owner = _host.Window };
-                pick.ShowDialog();
-                ApplyLockedSelection(pick.Selected, locked, lockedDir);
+                ApplyLockedSelection(showDialog(), locked, lockedDir);
                 return;
             }
             // The panel is NOT closed here. It used to be, unconditionally, which meant merely
@@ -236,16 +243,18 @@ namespace Killendar.Features
             // appointment belongs to the store it was started in, and saving it into a different
             // Killendar would be wrong. Canceling, or picking the file already open, leaves the
             // panel exactly as it was.
+            //
+            // The draft question comes first, while the store is still open: Save in that prompt
+            // writes into the store, and a closed one refuses a new draft and silently drops an
+            // edited one.
+            if (!_host.ConfirmLeaveDraft()) return;
             string previous = EventStore.ActiveFile;
             string previousDir = EventStore.DataDir;
             string previousPath = EventStore.ActivePath;
             _store.Close();
             EventStore.LastRename = null;
 
-            var dlg = new KillendarsDialog { Owner = _host.Window };
-            dlg.ShowDialog();
-
-            ApplyKillendarSelection(dlg.Selected, previous, previousDir, previousPath);
+            ApplyKillendarSelection(showDialog(), previous, previousDir, previousPath);
         }
 
         /// <summary>What Manage Killendars picked while locked. A different Killendar opens and

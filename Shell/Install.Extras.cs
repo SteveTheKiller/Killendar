@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Killendar.Services;
 
 namespace Killendar.Shell
@@ -19,6 +20,9 @@ namespace Killendar.Shell
             // The store holds a SQLite handle on the open Killendar, and the pooled file handle
             // has to be released before a second process opens the same file (two writers on one
             // .kcal is the failure mode single-instance exists to prevent).
+            // The install ends in a shutdown that OnClosing no longer asks about, so a pending
+            // appointment draft is asked about first; keeping it calls the install off.
+            options.CanInstallAsync = () => Task.FromResult(ConfirmDraftBeforeExit());
             options.BeforeInstall = () => _store.Close();
             // Reopen, so the session carries on rather than being left with a closed store.
             options.AfterInstallFailed = OpenCalendarData;

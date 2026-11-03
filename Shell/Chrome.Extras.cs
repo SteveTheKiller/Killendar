@@ -10,7 +10,7 @@ namespace Killendar.Shell
     /// (unsaved input, close to tray, the exit fade), restoring to maximized after a minimize,
     /// square corners on 98SE, and the themed system menu hook.
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow : Features.About.IAboutDraftGuard
     {
         // The first close request is held while the whole window fades. The helper sets this
         // before issuing its own deferred Close(), so Alt+F4, the caption button, the system
@@ -69,13 +69,39 @@ namespace Killendar.Shell
 
         private static bool ShutdownStarted() => s_isShuttingDown?.GetValue(null) is true;
 
+        /// <summary>Which prompt guards an unsaved appointment draft on the way out.</summary>
+        internal static ClosePrompt ClosePromptFor(bool isLocked, bool shutdownStarted) =>
+            shutdownStarted ? ClosePrompt.None
+            : isLocked ? ClosePrompt.DiscardDraft
+            : ClosePrompt.ReplaceDraft;
+
+        /// <summary>Asks the right question for <see cref="ClosePromptFor"/>. False means the user
+        /// chose to keep editing.</summary>
+        internal static bool ConfirmClose(bool isLocked, bool shutdownStarted, Func<bool> replace, Func<bool> discard) =>
+            ClosePromptFor(isLocked, shutdownStarted) switch
+            {
+                ClosePrompt.None => true,
+                ClosePrompt.DiscardDraft => discard(),
+                _ => replace(),
+            };
+
+        /// <summary>The draft question for an app-initiated exit (Update now, the Install badge),
+        /// asked before the shutdown starts because OnClosing stays silent once it has.</summary>
+        internal bool ConfirmDraftBeforeExit() =>
+            ConfirmClose(_security.IsLocked, false, _appointments.ConfirmReplace,
+                         ((Features.ISecurityHost)this).ConfirmDiscardDraft);
+
+        bool Features.About.IAboutDraftGuard.ConfirmDraftBeforeExit() => ConfirmDraftBeforeExit();
+
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             // Unsaved appointment input is asked about BEFORE the tray can hide the window. Once
             // hidden, a shutdown (sign-out, an update) is a way out that ignores a cancel and so
             // cannot ask; asking here means a hidden window never holds unsaved input. The
             // fade's second pass through here finds nothing left to ask.
-            if (!_closeFaded && !ShutdownStarted() && !_appointments.ConfirmReplace())
+            if (!_closeFaded && !ConfirmClose(_security.IsLocked, ShutdownStarted(),
+                                              _appointments.ConfirmReplace,
+                                              ((Features.ISecurityHost)this).ConfirmDiscardDraft))
             {
                 e.Cancel = true;
                 return;
@@ -90,4 +116,9 @@ namespace Killendar.Shell
             base.OnClosing(e);
         }
     }
+}
+
+namespace Killendar.Shell
+{
+    public enum ClosePrompt { None, ReplaceDraft, DiscardDraft }
 }
