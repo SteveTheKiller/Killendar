@@ -102,7 +102,8 @@ namespace Killendar.Services
         /// (the install and uninstall registration) runs last, once the files are gone.</summary>
         public static int CompleteDeferred(string directory, string[] ownedFiles, Action removeMetadata,
             int attempts = 30, int retryMilliseconds = 1000, Action<Exception>? report = null,
-            Action? removeIntegration = null)
+            Action? removeIntegration = null, Func<bool>? isRunning = null,
+            int runningWaitMilliseconds = 30000, Action<string>? delete = null)
         {
             try
             {
@@ -110,16 +111,20 @@ namespace Killendar.Services
                 string[] paths = KillerFamily.Deployment.InstalledFileCleanup.OwnedPaths(directory, ownedFiles);
                 if (paths.Length != ownedFiles.Length)
                     return KillerFamily.Deployment.InstallerExitCodes.SecurityRejected;
+                WaitForInstancesToExit(isRunning, runningWaitMilliseconds, retryMilliseconds);
                 removeIntegration?.Invoke();
                 for (int attempt = 0; attempt < attempts; attempt++)
                 {
+                    bool deleting = false;
                     try
                     {
                         // Revalidate immediately before each removal attempt, including after a wait.
                         string[] current = KillerFamily.Deployment.InstalledFileCleanup.OwnedPaths(directory, ownedFiles);
                         if (current.Length != paths.Length)
                             return KillerFamily.Deployment.InstallerExitCodes.SecurityRejected;
-                        foreach (string path in current) DeleteLiteral(path);
+                        deleting = true;
+                        foreach (string path in current) DeleteLiteral(path, delete);
+                        deleting = false;
                         foreach (string path in current)
                             if (!Absent(path)) return KillerFamily.Deployment.InstallerExitCodes.Failure;
                         removeMetadata();
@@ -127,6 +132,9 @@ namespace Killendar.Services
                     }
                     catch (IOException error) when (attempt + 1 < attempts &&
                         KillerFamily.Deployment.InstallerExitCodes.FromException(error) == KillerFamily.Deployment.InstallerExitCodes.Busy)
+                    { Thread.Sleep(retryMilliseconds); }
+                    // A mapped image of a copy that is still running is refused with access denied.
+                    catch (UnauthorizedAccessException) when (deleting && attempt + 1 < attempts)
                     { Thread.Sleep(retryMilliseconds); }
                 }
             }
@@ -138,6 +146,21 @@ namespace Killendar.Services
             return KillerFamily.Deployment.InstallerExitCodes.Failure;
         }
 
+        /// <summary>Waits, bounded, until no copy of the program is running from the install folder.
+        /// Nothing may be removed while one is, or the install would be left half removed.</summary>
+        private static void WaitForInstancesToExit(Func<bool>? isRunning, int waitMilliseconds, int pollMilliseconds)
+        {
+            if (isRunning == null) return;
+            var clock = Stopwatch.StartNew();
+            while (isRunning())
+            {
+                if (clock.ElapsedMilliseconds >= waitMilliseconds)
+                    throw new System.ComponentModel.Win32Exception(KillerFamily.Deployment.InstallerExitCodes.Busy,
+                        "Killendar is still running. Close it, then run the uninstaller again.");
+                Thread.Sleep(pollMilliseconds);
+            }
+        }
+
         public static bool Absent(string path)
         {
             try { File.GetAttributes(path); return false; }
@@ -145,10 +168,10 @@ namespace Killendar.Services
             catch (DirectoryNotFoundException) { return true; }
         }
 
-        public static void DeleteLiteral(string path)
+        public static void DeleteLiteral(string path, Action<string>? delete = null)
         {
             if (Absent(path)) return;
-            try { File.Delete(path); }
+            try { (delete ?? File.Delete)(path); }
             catch (FileNotFoundException) { if (!Absent(path)) throw; }
             catch (DirectoryNotFoundException) { if (!Absent(path)) throw; }
             if (!Absent(path)) throw new IOException("An owned file remains after removal: " + path);

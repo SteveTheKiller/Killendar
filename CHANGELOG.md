@@ -8,6 +8,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ### Fixed
 - Appointments are saved in a fixed date format whatever the Windows region. On a Thai or Arabic region they were saved centuries off, and on a region that writes times with dots they could not be read back; those dotted times now load too.
+- Uninstalling while Killendar is still open, for example in the tray, now waits up to 30 seconds for it to close and otherwise stops before removing anything. It used to take away the shortcuts and file links, then fail on the running program and leave the rest behind.
 - The month view no longer crashes when the open Killendar and a shown one hold the same appointment spanning several days.
 - A per-user or portable update that fails now reopens Killendar instead of leaving it closed, including when antivirus or a locked-down PowerShell stops the update helper from loading, a published copy that fails its final check is swapped back for the previous version and never started, and update downloads stream to disk with a size cap and an overall deadline.
 - The agenda command and KillerMCP's agenda list a range day by day, so a limit drops the last days instead of the first appointments when all-day items fall later in the range.

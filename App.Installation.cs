@@ -356,7 +356,31 @@ namespace Killendar
             return new DeferredUninstall().RunWorker(Process.GetCurrentProcess().MainModule!.FileName,
                 UninstallStagingRoot(machine), machine ? MachineInstallDir : InstallDir, InstalledFiles,
                 machine, args[2], () => RemoveUninstallMetadata(machine),
-                removeIntegration: () => RemoveUninstallIntegration(machine));
+                removeIntegration: () => RemoveUninstallIntegration(machine),
+                isRunning: () => InstanceRunningUnder(machine ? MachineInstallDir : InstallDir));
+        }
+
+        /// <summary>True when another Killendar.exe (for example hidden in the tray) runs from the
+        /// install folder. This process and its uninstall worker are not counted.</summary>
+        internal static bool InstanceRunningUnder(string directory)
+        {
+            string root = Path.GetFullPath(directory).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
+            int self = Process.GetCurrentProcess().Id;
+            foreach (Process process in Process.GetProcessesByName("Killendar"))
+                using (process)
+                {
+                    try
+                    {
+                        if (process.Id == self) continue;
+                        string image = process.MainModule?.FileName ?? "";
+                        if (image.StartsWith(root, StringComparison.OrdinalIgnoreCase)
+                            && string.Equals(Path.GetFileName(image), "Killendar.exe", StringComparison.OrdinalIgnoreCase))
+                            return true;
+                    }
+                    catch (Exception error) when (error is System.ComponentModel.Win32Exception
+                        || error is InvalidOperationException || error is NotSupportedException) { }
+                }
+            return false;
         }
 
         private static int Uninstall(bool silent, string? requestedOperationId)

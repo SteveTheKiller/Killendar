@@ -93,7 +93,7 @@ namespace Killendar.Services
         public int RunWorker(string currentImage, string stagingRoot, string targetDirectory,
             string[] ownedFiles, bool machine, string operationId, Action removeMetadata,
             int parentWaitMilliseconds = 30000, int attempts = 30, int retryMilliseconds = 1000,
-            Action? removeIntegration = null)
+            Action? removeIntegration = null, Func<bool>? isRunning = null, int runningWaitMilliseconds = 30000)
         {
             string directory = OperationDirectory(stagingRoot, operationId);
             string path = Path.Combine(directory, ReceiptName);
@@ -121,7 +121,8 @@ namespace Killendar.Services
                 {
                     removeMetadata();
                     receipt.MetadataRemoved = true;
-                }, attempts, retryMilliseconds, error => receipt.Error = error.Message, removeIntegration);
+                }, attempts, retryMilliseconds, error => receipt.Error = error.Message, removeIntegration,
+                    isRunning, runningWaitMilliseconds);
                 receipt.RemainingFiles = ownedFiles.Select(file => Path.Combine(targetDirectory, file))
                     .Where(file => !UninstallWorkflow.Absent(file)).ToArray();
                 receipt.State = result == 0 ? "Completed" : "Failed";

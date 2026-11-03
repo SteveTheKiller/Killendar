@@ -19,6 +19,7 @@ namespace Killendar.Tests
         [InlineData("parent-timeout", 1618)]
         [InlineData("tampered-helper", 1625)]
         [InlineData("metadata-denied", 5)]
+        [InlineData("running-instance", 1618)]
         public void CopiedWorkerPublishesOnlyVerifiedTerminalResults(string scenario, int expected)
         {
             using var fixture = new Fixture();
@@ -42,9 +43,11 @@ namespace Killendar.Tests
                     if (scenario == "metadata-denied") throw new UnauthorizedAccessException("fixture metadata denied");
                     Assert.False(File.Exists(fixture.Image));
                     File.Delete(fixture.Marker);
-                }, 1, 1, 0);
+                }, 1, 1, 0, null, scenario == "running-instance" ? () => true : (Func<bool>?)null, 20);
             Assert.Equal(expected, result);
             var terminal = UninstallWorkflow.ReadReceipt(fixture.Receipt);
+            if (scenario == "running-instance")
+                Assert.Equal("Killendar is still running. Close it, then run the uninstaller again.", terminal.Error);
             Assert.Equal(expected, terminal.ExitCode);
             Assert.Equal(expected == 0 ? "Completed" : "Failed", terminal.State);
             Assert.Equal(expected != 0, File.Exists(fixture.Marker));
