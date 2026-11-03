@@ -133,7 +133,7 @@ namespace Killendar.Tests
             var menu = (ContextMenu)window.FindName("LangMenu");
             var columns = (StackPanel)((MenuItem)menu.Items[0]).Header;
             var radio = columns.Children.OfType<StackPanel>().SelectMany(column => column.Children.OfType<RadioButton>())
-                .Single(button => Equals(button.Tag, locale.ToString()));
+                .Single(button => Equals(button.Tag, locale));   // the family language menu tags items with the Locale itself
             radio.IsChecked = true;
             Assert.Equal(locale, LocaleManager.Current);
         }

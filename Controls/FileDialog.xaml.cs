@@ -231,7 +231,7 @@ namespace Killendar.Controls
 
         private void RejectTyped()
         {
-            SelMeta.Text = Loc("Str_Err_InvalidChars");
+            SelMeta.Text = Loc("Str_Dlg_InvalidPath");
             FileNameBox.Focus();
         }
         private bool _navigating;
@@ -1292,7 +1292,7 @@ namespace Killendar.Controls
             var typed = PathBox.Text?.Trim().Trim('"');
             e.Handled = true;
             if (string.IsNullOrEmpty(typed)) return;
-            if (IsMalformedTyped(typed!)) { SelMeta.Text = Loc("Str_Err_InvalidChars"); return; }
+            if (IsMalformedTyped(typed!)) { SelMeta.Text = Loc("Str_Dlg_InvalidPath"); return; }
             string resolved = ResolveTyped(typed!);
             // A drive-relative or unresolvable entry would otherwise be looked up against the process's folder.
             if (!IsFullyQualified(resolved)) { SelMeta.Text = Loc("Str_Dlg_NoSuchFolder"); return; }
