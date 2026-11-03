@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using Killendar.Controls;
@@ -65,62 +66,25 @@ namespace Killendar.Shell
 
             foreach (string name in names) FieldCategories.Children.Add(CategoryChipButton(name));
 
-            bool none = names.Count == 0;
-            FieldCategoriesEmpty.Visibility = none ? Visibility.Visible : Visibility.Collapsed;
-            FieldCategories.Visibility      = none ? Visibility.Collapsed : Visibility.Visible;
-
-            // With no categories defined there are no chips to right-click, so the empty-state
-            // line is the way in.
-            FieldCategoriesEmpty.Cursor = Cursors.Hand;
-            FieldCategoriesEmpty.MouseLeftButtonUp  -= OpenCategoriesFromHint;
-            FieldCategoriesEmpty.MouseRightButtonUp -= OpenCategoriesFromHint;
-            FieldCategoriesEmpty.MouseLeftButtonUp  += OpenCategoriesFromHint;
-            FieldCategoriesEmpty.MouseRightButtonUp += OpenCategoriesFromHint;
-        }
-
-        private void OpenCategoriesFromHint(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-            OpenCategoriesDialog();
+            // With no categories defined there are no chips to right-click, so a hint button in the
+            // chip row is the way in. It is a real Button so the keyboard and screen readers reach it.
+            if (names.Count == 0)
+                FieldCategories.Children.Add(CategoryChips.CreateHint(OpenCategoriesDialog));
+            FieldCategoriesEmpty.Visibility = Visibility.Collapsed;
+            FieldCategories.Visibility      = Visibility.Visible;
         }
 
         /// <summary>Preserves assignment order because the first category colors the appointment.</summary>
         private string ReadCategoryChips() => string.Join(", ", _categoryOrder);
 
-        private Border CategoryChipButton(string name)
+        private ToggleButton CategoryChipButton(string name)
         {
-            var chip = new Border
+            var chip = CategoryChips.Create(name, () =>
             {
-                CornerRadius    = new CornerRadius(3),
-                Padding         = new Thickness(7, 2, 7, 2),
-                Margin          = new Thickness(0, 0, 4, 4),
-                BorderThickness = new Thickness(1),
-                Cursor          = Cursors.Hand,
-                Tag             = name,
-                Child           = new TextBlock { Text = name, FontSize = 11 }
-            };
-            PaintCategoryChip(chip, name);
-            chip.MouseLeftButtonUp += (_, _) =>
-            {
-                if (_selectedCategories.Remove(name))
-                    _categoryOrder.RemoveAll(n => string.Equals(n, name, System.StringComparison.OrdinalIgnoreCase));
-                else
-                {
-                    _selectedCategories.Add(name);
-                    _categoryOrder.Add(name);
-                }
+                CategoryChips.Toggle(_selectedCategories, _categoryOrder, name);
                 RefreshCategoryChips();
-            };
-            // Hover dims a chip briefly; repaint from its selection state when the pointer leaves.
-            chip.MouseEnter += (_, _) =>
-            {
-                chip.Opacity = 0.82;
-            };
-            chip.MouseLeave += (_, _) =>
-            {
-                chip.Opacity = 1.0;
-                PaintCategoryChip(chip, name);
-            };
+            });
+            PaintCategoryChip(chip, name);
             var menu = new ContextMenu();
             var primary = new MenuItem();
             primary.SetResourceReference(HeaderedItemsControl.HeaderProperty, "Str_Cat_MakePrimary");
@@ -137,26 +101,90 @@ namespace Killendar.Shell
 
         private void RefreshCategoryChips()
         {
-            foreach (Border chip in FieldCategories.Children.OfType<Border>())
+            foreach (ToggleButton chip in FieldCategories.Children.OfType<ToggleButton>())
                 PaintCategoryChip(chip, (string)chip.Tag);
+        }
+
+        private void PaintCategoryChip(ToggleButton chip, string name) =>
+            CategoryChips.Paint(chip, name, _selectedCategories.Contains(name), _categoryOrder);
+    }
+
+    /// <summary>
+    /// Builds the assignment chips and the empty-state hint. They are real buttons (focusable,
+    /// Space/Enter, a toggle pattern for screen readers) rather than clickable Borders.
+    /// </summary>
+    internal static class CategoryChips
+    {
+        /// <summary>Flips <paramref name="name"/> in the assignment, keeping assignment order.</summary>
+        internal static void Toggle(HashSet<string> selected, List<string> order, string name)
+        {
+            if (selected.Remove(name))
+                order.RemoveAll(n => string.Equals(n, name, System.StringComparison.OrdinalIgnoreCase));
+            else
+            {
+                selected.Add(name);
+                order.Add(name);
+            }
+        }
+
+        internal static ToggleButton Create(string name, System.Action onClick)
+        {
+            var chip = new ToggleButton
+            {
+                Content          = name,
+                Tag              = name,
+                FontSize         = 11,
+                Padding          = new Thickness(7, 2, 7, 2),
+                Margin           = new Thickness(0, 0, 4, 4),
+                BorderThickness  = new Thickness(1),
+                Cursor           = Cursors.Hand,
+                Template         = ChipTemplate(typeof(ToggleButton), 3),
+                FocusVisualStyle = null
+            };
+            System.Windows.Automation.AutomationProperties.SetName(chip, name);
+            chip.Click += (_, _) => onClick();
+            return chip;
+        }
+
+        internal static Button CreateHint(System.Action open)
+        {
+            var text = new TextBlock { FontSize = 9.5, TextWrapping = TextWrapping.Wrap };
+            text.SetResourceReference(TextBlock.TextProperty, "Str_Hint_NoCategories");
+            var hint = new Button
+            {
+                Content          = text,
+                Margin           = new Thickness(0, 0, 0, 10),
+                Padding          = new Thickness(0),
+                BorderThickness  = new Thickness(0),
+                Background       = Brushes.Transparent,
+                Cursor           = Cursors.Hand,
+                HorizontalContentAlignment = HorizontalAlignment.Left,
+                Template         = ChipTemplate(typeof(Button), 0),
+                FocusVisualStyle = null
+            };
+            hint.SetResourceReference(Control.ForegroundProperty, "DimTextBrush");
+            hint.SetResourceReference(Control.FontFamilyProperty, "UiFont");
+            hint.SetResourceReference(System.Windows.Automation.AutomationProperties.NameProperty, "Str_Hint_NoCategories");
+            hint.Click += (_, _) => open();
+            hint.MouseRightButtonUp += (_, e) => { e.Handled = true; open(); };
+            return hint;
         }
 
         // Selected reads as the category filled solid; unselected as its outline only, so the
         // color is visible either way and the state is unambiguous at a glance.
-        private void PaintCategoryChip(Border chip, string name)
+        internal static void Paint(ToggleButton chip, string name, bool on, IList<string> order)
         {
             var color = CategoryManager.ColorOf(name);
             var fill  = CategoryManager.BrushOf(name);
-            bool on   = _selectedCategories.Contains(name);
-            var text  = (TextBlock)chip.Child;
 
-            bool primary = on && _categoryOrder.Count > 0 &&
-                string.Equals(_categoryOrder[0], name, System.StringComparison.OrdinalIgnoreCase);
+            bool primary = on && order.Count > 0 &&
+                string.Equals(order[0], name, System.StringComparison.OrdinalIgnoreCase);
+            chip.IsChecked = on;
             chip.BorderBrush = primary ? CategoryManager.ForegroundFor(color) : fill;
             chip.Background = on ? fill : Brushes.Transparent;
-            if (on) text.Foreground = CategoryManager.ForegroundFor(color);
-            else text.SetResourceReference(TextBlock.ForegroundProperty, "TextBrush");
-            text.FontWeight = primary ? FontWeights.Bold : FontWeights.Normal;
+            if (on) chip.Foreground = CategoryManager.ForegroundFor(color);
+            else chip.SetResourceReference(Control.ForegroundProperty, "TextBrush");
+            chip.FontWeight = primary ? FontWeights.Bold : FontWeights.Normal;
             if (on)
             {
                 chip.BorderThickness = new Thickness(primary ? 2 : 1);
@@ -168,6 +196,43 @@ namespace Killendar.Shell
                 chip.BorderThickness = new Thickness(1);
                 chip.Padding = new Thickness(7, 2, 7, 2);
             }
+        }
+
+        // One bare template: the colors are user data painted onto Background/BorderBrush by
+        // Paint, so no theme trigger may override them. Hover dims, keyboard focus draws a ring.
+        private static ControlTemplate ChipTemplate(System.Type target, double radius)
+        {
+            var ring = new FrameworkElementFactory(typeof(Border), "ring");
+            ring.SetValue(UIElement.IsHitTestVisibleProperty, false);
+            ring.SetValue(Border.CornerRadiusProperty, new CornerRadius(radius + 1));
+            ring.SetValue(Border.BorderThicknessProperty, new Thickness(1));
+            ring.SetValue(FrameworkElement.MarginProperty, new Thickness(-2));
+            ring.SetResourceReference(Border.BorderBrushProperty, "TextBrush");
+            ring.SetValue(UIElement.VisibilityProperty, Visibility.Collapsed);
+
+            var border = new FrameworkElementFactory(typeof(Border), "border");
+            border.SetValue(Border.CornerRadiusProperty, new CornerRadius(radius));
+            border.SetValue(Border.BackgroundProperty, new TemplateBindingExtension(Control.BackgroundProperty));
+            border.SetValue(Border.BorderBrushProperty, new TemplateBindingExtension(Control.BorderBrushProperty));
+            border.SetValue(Border.BorderThicknessProperty, new TemplateBindingExtension(Control.BorderThicknessProperty));
+            border.SetValue(Border.PaddingProperty, new TemplateBindingExtension(Control.PaddingProperty));
+            var presenter = new FrameworkElementFactory(typeof(ContentPresenter));
+            presenter.SetValue(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Center);
+            presenter.SetValue(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Center);
+            border.AppendChild(presenter);
+
+            var grid = new FrameworkElementFactory(typeof(Grid));
+            grid.AppendChild(ring);
+            grid.AppendChild(border);
+
+            var template = new ControlTemplate(target) { VisualTree = grid };
+            var hover = new Trigger { Property = UIElement.IsMouseOverProperty, Value = true };
+            hover.Setters.Add(new Setter(UIElement.OpacityProperty, 0.82));
+            template.Triggers.Add(hover);
+            var focus = new Trigger { Property = UIElement.IsKeyboardFocusedProperty, Value = true };
+            focus.Setters.Add(new Setter(UIElement.VisibilityProperty, Visibility.Visible, "ring"));
+            template.Triggers.Add(focus);
+            return template;
         }
     }
 }

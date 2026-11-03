@@ -728,7 +728,7 @@ namespace Killendar.Features
             if (_allDay) end = endDate.Date;
             else if (TryParseTime(_view.FieldEndTime, out var endTime)) end = endDate.Date + endTime;
             else return;
-            if (_allDay && by.TotalDays < 1) return;   // an all-day appointment moves by whole days
+            if (_allDay && Math.Abs(by.TotalDays) < 1) return;   // an all-day appointment moves by whole days
             _loading = true;
             try
             {

@@ -70,9 +70,23 @@ namespace Killendar.Shell
         {
             if (_settingPhotonText) return;
             CancelLocationLookup();
-            if (!_photonEnabled || !_sidebarOpen || EditorScroll.Visibility != Visibility.Visible ||
-                FieldLocation.Text.Trim().Length < 3) return;
+            if (!LocationLookupPolicy.ShouldStart(false, _photonEnabled, _sidebarOpen,
+                    EditorScroll.Visibility == Visibility.Visible, FieldLocation.Text)) return;
             _photonDelay.Start();
+        }
+
+        /// <summary>Puts text in the location box without it counting as typing: a template, a
+        /// loaded appointment, a cleared form or an accepted suggestion must not start a lookup.</summary>
+        private void FillLocation(string text)
+        {
+            bool was = _settingPhotonText;
+            _settingPhotonText = true;
+            try
+            {
+                FieldLocation.Text = text;
+                CancelLocationLookup();
+            }
+            finally { _settingPhotonText = was; }
         }
 
         private async Task QueryPhotonAsync(string query)
@@ -185,12 +199,18 @@ namespace Killendar.Shell
         {
             if (LocationSuggestionsList.SelectedItem is not string address) return;
             CancelLocationLookup();
-            _settingPhotonText = true;
-            FieldLocation.Text = address;
+            FillLocation(address);
             FieldLocation.CaretIndex = address.Length;
-            _settingPhotonText = false;
             LocationSuggestionsPopup.IsOpen = false;
             FieldLocation.Focus();
         }
+    }
+
+    /// <summary>Whether a change to the location box should start the opt-in address lookup.</summary>
+    internal static class LocationLookupPolicy
+    {
+        internal static bool ShouldStart(bool programmatic, bool enabled, bool sidebarOpen,
+            bool editorVisible, string text) =>
+            !programmatic && enabled && sidebarOpen && editorVisible && text.Trim().Length >= 3;
     }
 }

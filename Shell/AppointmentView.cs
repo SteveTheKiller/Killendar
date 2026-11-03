@@ -11,7 +11,7 @@ namespace Killendar.Shell
         private AppointmentEditor _appointments = null!;
 
         string IAppointmentView.FieldTitle       { get => FieldTitle.Text;       set => FieldTitle.Text = value; }
-        string IAppointmentView.FieldLocation    { get => FieldLocation.Text;    set => FieldLocation.Text = value; }
+        string IAppointmentView.FieldLocation    { get => FieldLocation.Text;    set => FillLocation(value); }
         string IAppointmentView.FieldDescription { get => FieldDescription.Text; set => FieldDescription.Text = value; }
         string IAppointmentView.FieldAttendees   { get => FieldAttendees.Text;   set => FieldAttendees.Text = value; }
 
