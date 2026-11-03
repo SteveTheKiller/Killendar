@@ -18,6 +18,17 @@ namespace Killendar.Shell
         /// Null when the sidebar is closed or was opened straight into the editor ("+ New").</summary>
         private DateTime? _agendaDay;
 
+        /// <summary>The row Edit should load: the store's current copy of what the list captured, so a
+        /// drag since the list was built is not written back over. Falls back to the captured row.</summary>
+        internal static CalendarEvent CurrentRow(Func<Guid, DateTime?, CalendarEvent?> lookup, CalendarEvent captured) =>
+            lookup(captured.Id, captured.OccurrenceStart) ?? captured;
+
+        private CalendarEvent? LookupCurrent(Guid id, DateTime? occurrenceStart)
+        {
+            if (occurrenceStart == null || _agendaDay == null) return _store.GetById(id);
+            return _store.GetOnDay(_agendaDay.Value).FirstOrDefault(e => e.Id == id && e.OccurrenceStart == occurrenceStart);
+        }
+
         /// <summary>The appointment that was clicked, marked in the list with the family
         /// selection fill. Survives an edit round-trip so the row stays marked after Save.</summary>
         private Guid? _agendaHighlight;
@@ -162,7 +173,7 @@ namespace Killendar.Shell
             edit.SetResourceReference(StyleProperty, "RailButton");
             // Load switches the panel to editor mode itself (IAppointmentView.OpenPanel);
             // _agendaDay stays set, so Save/Cancel land back on this day's list.
-            edit.Click += (_, _) => { _agendaHighlight = ev.Id; _appointments.Load(ev); };
+            edit.Click += (_, _) => { _agendaHighlight = ev.Id; _appointments.Load(CurrentRow(LookupCurrent, ev)); };
             Grid.SetRow(edit, 1);
             Grid.SetColumn(edit, 1);
             if (ev.SourceCalendar.Length == 0) row.Children.Add(edit);

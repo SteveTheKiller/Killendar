@@ -34,6 +34,8 @@ namespace Killendar.Shell
             // repaint below reads them fresh.
             _store.Changed += Holidays.Refresh;
             _store.Changed += () => _calendar.Refresh();
+            // The sidebar day list holds the rows it was built from, so it rebuilds too while showing.
+            _store.Changed += () => { if (_agendaDay != null && AgendaScroll.Visibility == Visibility.Visible) BuildDayAgendaRows(); };
             // A color picker previewing a category repaints the calendar without writing, so it
             // cannot come through _store.Changed.
             Services.CategoryManager.Previewed += () =>

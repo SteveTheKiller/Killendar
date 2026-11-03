@@ -83,9 +83,16 @@ namespace Killendar.Cli
             if (days < 1 || days > 31 || limit < 1 || limit > 100)
                 throw new ArgumentException("Invalid agenda bounds");
             var store = new EventStore();
+            string? savedDays = null, savedHours = null;
             try
             {
                 store.OpenReadOnly(database);
+                // The CLI never runs App startup, so the saved work week and the holiday calendar are loaded
+                // here; a repeat set to move off days off would otherwise expand against Monday to Friday.
+                savedDays = WorkSchedule.FormatDays(WorkSchedule.Days);
+                savedHours = WorkSchedule.FormatHours(WorkSchedule.StartHour, WorkSchedule.EndHour);
+                WorkSchedule.Load(Settings.Get(WorkSchedule.DaysSetting), Settings.Get(WorkSchedule.HoursSetting));
+                Holidays.Load(store, database);
                 // GetInRange puts every all-day item of the range first; the agenda reads day by day,
                 // so the limit must cut the latest days, not the earliest timed ones.
                 return [.. store.GetInRange(from.Date, from.Date.AddDays(days))
@@ -103,7 +110,12 @@ namespace Killendar.Cli
                         recurring = ev.IsSeries || ev.IsOccurrence,
                     })];
             }
-            finally { store.Close(); }
+            finally
+            {
+                store.Close();
+                Holidays.Close();
+                if (savedDays != null) WorkSchedule.Load(savedDays, savedHours);
+            }
         }
     }
 }
