@@ -26,7 +26,23 @@ namespace Killendar.Tests
         [Fact]
         public void TooltipEndsWithTheKeysInParentheses()
         {
-            Assert.Equal("Import (Ctrl+I)", MainWindow.WithShortcut("Import", "Str_KS_Import"));
+            // An invisible marker sits before the bracket, so hiding hints works in any language.
+            Assert.Equal("Import ​(Ctrl+I)", MainWindow.WithShortcut("Import", "Str_KS_Import"));
+        }
+
+        [Fact]
+        public void HiddenHintsDropSingleKeyAndTranslatedSuffixes()
+        {
+            var converter = new KillerFamily.Layout.TooltipTextConverter();
+            bool was = KillerFamily.Layout.ShortcutHints.Current.Enabled;
+            try
+            {
+                KillerFamily.Layout.ShortcutHints.Current.Enabled = false;
+                foreach (var (text, bare) in new[] { (KillerFamily.Layout.ShortcutHints.WithHint("Today", "T"), "Today"),
+                                                     (KillerFamily.Layout.ShortcutHints.WithHint("Duplizieren", "Strg+D"), "Duplizieren") })
+                    Assert.Equal(bare, converter.Convert(text, typeof(object), null!, System.Globalization.CultureInfo.InvariantCulture));
+            }
+            finally { KillerFamily.Layout.ShortcutHints.Current.Enabled = was; }
         }
     }
 }

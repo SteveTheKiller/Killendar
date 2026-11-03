@@ -112,7 +112,7 @@ namespace Killendar.Shell
 
         /// <summary>A tooltip with the action's keys after it, as in "Import (Ctrl+I)".</summary>
         internal static string WithShortcut(string text, string labelKey)
-            => ShortcutKeys(labelKey) is { } keys ? text + " (" + keys + ")" : text;
+            => KillerFamily.Layout.ShortcutHints.WithHint(text, ShortcutKeys(labelKey));
 
         /// <summary>
         /// Every button that runs a bound action shows its keys (family rule: shortcuts appear on
