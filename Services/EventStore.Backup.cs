@@ -182,12 +182,17 @@ namespace Killendar.Services
         /// calendar that was just encrypted leaves no readable copy behind and an old password
         /// opens nothing. A backup that cannot be rewritten is left as it was and reported.</summary>
 
-        private void RekeyBackups(string? oldPassword, string? newPassword)
+        /// <summary>Moves a rewritten backup into place. A test seam for a move that fails.</summary>
+        internal Action<string, string> RekeyMove { get; set; } = File.Move;
+
+        private void RekeyBackups(string calendarPath, string? oldPassword, string? newPassword)
         {
             BackupsNotRekeyed.Clear();
-            foreach (var backup in ListBackups())
+            foreach (var backup in ListBackupsFor(calendarPath))
             {
                 string staged = backup.Path + ".rekey";
+                string aside = backup.Path + ".rekey-old";
+                bool keepStaged = false;
                 try
                 {
                     using (var source = new SqliteConnection(new SqliteConnectionStringBuilder
@@ -196,12 +201,22 @@ namespace Killendar.Services
                         source.Open();
                         ExportVerified(source, staged, newPassword);
                     }
-                    File.Delete(backup.Path);
-                    File.Move(staged, backup.Path);
+                    // The original is only set aside until the rewrite is in place, so a failed
+                    // move costs nothing; if even the put-back fails, the rewrite is kept too.
+                    TryDelete(aside);
+                    File.Move(backup.Path, aside);
+                    try { RekeyMove(staged, backup.Path); }
+                    catch
+                    {
+                        try { File.Move(aside, backup.Path); }
+                        catch { keepStaged = true; }
+                        throw;
+                    }
+                    TryDelete(aside);
                 }
                 catch (Exception ex)
                 {
-                    TryDelete(staged);
+                    if (!keepStaged) TryDelete(staged);
                     LastBackupError = ex.Message;
                     BackupsNotRekeyed.Add(backup.Path);
                 }

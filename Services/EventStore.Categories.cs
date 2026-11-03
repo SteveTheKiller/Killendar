@@ -322,9 +322,11 @@ namespace Killendar.Services
 
         /// <summary>True while WriteImport runs. Anything else that would use the database on
         /// another thread - the command pipe - must refuse rather than share the connection.</summary>
-        public bool IsImporting => _importing;
+        public bool IsImporting => _importing || System.Threading.Volatile.Read(ref _importsPending) > 0;
         private volatile bool _importing;
+        private int _importsPending;   // raised before waiting on the gate, so a lock cannot slip in between
         private readonly object _writeGate = new();
+        internal object WriteGate => _writeGate;
 
         /// <summary>
         /// Writes a planned import in one transaction WITHOUT touching the in-memory mirror or
@@ -335,13 +337,18 @@ namespace Killendar.Services
         public void WriteImport(ImportPlan plan, CancellationToken cancel, Action? afterRow = null)
         {
             if (_db == null) throw new InvalidOperationException("No Killendar is open.");
-            lock (_writeGate)
+            System.Threading.Interlocked.Increment(ref _importsPending);
+            try
             {
-                _importing = true;
-                BackupNow(DateTime.Now);
-                try { WriteRows(plan, cancel, afterRow); }
-                finally { _importing = false; }
+                lock (_writeGate)
+                {
+                    _importing = true;
+                    BackupNow(DateTime.Now);
+                    try { WriteRows(plan, cancel, afterRow); }
+                    finally { _importing = false; }
+                }
             }
+            finally { System.Threading.Interlocked.Decrement(ref _importsPending); }
         }
 
         private void WriteRows(ImportPlan plan, CancellationToken cancel, Action? afterRow)

@@ -11,8 +11,11 @@ namespace Killendar.Services
     /// <summary>A password change that returned has committed: the calendar is open with the new
     /// password. A non-null RetainedBackup is the previous file, left behind because it could not
     /// be deleted, and the caller must tell the user where it is.</summary>
-    public sealed class PasswordChangeOutcome(string? retainedBackup, bool retainedBackupIsUnencrypted)
+    public sealed class PasswordChangeOutcome(string? retainedBackup, bool retainedBackupIsUnencrypted, bool reopenNeeded = false)
     {
+        /// <summary>The file carries the new password but reopening it failed, so the store is
+        /// closed: the caller must reopen it with the new password.</summary>
+        public bool ReopenNeeded { get; } = reopenNeeded;
         public string? RetainedBackup { get; } = retainedBackup;
         public bool RetainedBackupIsUnencrypted { get; } = retainedBackupIsUnencrypted;
     }
@@ -41,6 +44,10 @@ namespace Killendar.Services
 
         /// <summary>Changes the password using supplied replacement and owned restoration-copy deletion operations.</summary>
         public PasswordChangeOutcome SetPassword(string? newPassword, Action<string, string, string> replaceFile, Action<string> deleteRestorationCopy)
+            => SetPassword(newPassword, replaceFile, deleteRestorationCopy, Open);
+
+        /// <summary>As above, reopening the rewritten file through <paramref name="reopen"/>.</summary>
+        internal PasswordChangeOutcome SetPassword(string? newPassword, Action<string, string, string> replaceFile, Action<string> deleteRestorationCopy, Action<string, string?> reopen)
         {
             if (replaceFile == null) throw new ArgumentNullException(nameof(replaceFile));
             if (deleteRestorationCopy == null) throw new ArgumentNullException(nameof(deleteRestorationCopy));
@@ -122,8 +129,20 @@ namespace Killendar.Services
                 try { File.Delete(tmp); } catch { /* best effort */ }
                 throw;
             }
-            Open(path, newPassword);
-            RekeyBackups(oldPassword, newPassword);
+            // The swap has committed: the file carries the new key. A reopen that keeps failing
+            // does not undo that, so the backups and the .bak are still dealt with.
+            bool reopenNeeded = false;
+            for (int attempt = 1; ; attempt++)
+            {
+                try { reopen(path, newPassword); break; }
+                catch (Exception)
+                {
+                    try { Close(); } catch { /* best effort */ }
+                    if (attempt >= 3) { reopenNeeded = true; break; }
+                    System.Threading.Thread.Sleep(100 * attempt);
+                }
+            }
+            RekeyBackups(path, oldPassword, newPassword);
 
             // The change has committed once the rewritten file opens. A backup that will not delete
             // (antivirus, permissions) is reported, not thrown: throwing here would tell the user a
@@ -131,9 +150,9 @@ namespace Killendar.Services
             try { deleteRestorationCopy(bak); }
             catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
             {
-                return new PasswordChangeOutcome(bak, oldPassword == null);
+                return new PasswordChangeOutcome(bak, oldPassword == null, reopenNeeded);
             }
-            return new PasswordChangeOutcome(null, false);
+            return new PasswordChangeOutcome(null, false, reopenNeeded);
         }
 
         private static string Protection(string? password) => password == null ? "unencrypted" : "encrypted";
@@ -212,6 +231,7 @@ namespace Killendar.Services
                     "-locked-" + DateTime.Now.ToString("yyyyMMdd-HHmmss", System.Globalization.CultureInfo.InvariantCulture) + Extension);
             SqliteConnection.ClearAllPools();
             File.Move(src, dest);
+            RenameBackups(src, dest);   // its backups go with it, not to the next calendar of that name
             return dest;
         }
     }
