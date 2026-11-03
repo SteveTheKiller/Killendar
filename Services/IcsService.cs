@@ -1172,14 +1172,14 @@ namespace Killendar.Services
                     ? owner.ExternalUid
                     : ev.ExternalUid.Length > 0 ? ev.ExternalUid : ev.SeriesKey.ToString();
                 sb.AppendLine(FoldLine("UID:" + uid));
-                sb.AppendLine($"DTSTAMP:{DateTime.UtcNow:yyyyMMdd'T'HHmmss'Z'}");
-                sb.AppendLine($"CREATED:{ev.Created.ToUniversalTime():yyyyMMdd'T'HHmmss'Z'}");
-                sb.AppendLine($"LAST-MODIFIED:{ev.Modified.ToUniversalTime():yyyyMMdd'T'HHmmss'Z'}");
+                sb.AppendLine(FormattableString.Invariant($"DTSTAMP:{DateTime.UtcNow:yyyyMMdd'T'HHmmss'Z'}"));
+                sb.AppendLine(FormattableString.Invariant($"CREATED:{ev.Created.ToUniversalTime():yyyyMMdd'T'HHmmss'Z'}"));
+                sb.AppendLine(FormattableString.Invariant($"LAST-MODIFIED:{ev.Modified.ToUniversalTime():yyyyMMdd'T'HHmmss'Z'}"));
 
                 if (ev.AllDay)
                 {
-                    sb.AppendLine($"DTSTART;VALUE=DATE:{ev.Start:yyyyMMdd}");
-                    sb.AppendLine($"DTEND;VALUE=DATE:{ev.End:yyyyMMdd}");
+                    sb.AppendLine(FormattableString.Invariant($"DTSTART;VALUE=DATE:{ev.Start:yyyyMMdd}"));
+                    sb.AppendLine(FormattableString.Invariant($"DTEND;VALUE=DATE:{ev.End:yyyyMMdd}"));
                 }
                 else if ((ev.IsSeries || NominalDuration.HasValue(ev)) && Recurrence.UsesTimeBasis(ev))
                 {
@@ -1192,7 +1192,7 @@ namespace Killendar.Services
                     var endUtc = startUtc + duration;
                     if (ev.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone)
                     {
-                        sb.AppendLine(FoldLine($"DTSTART;TZID=\"{ev.RepeatZoneId}\":{nominalStart:yyyyMMdd'T'HHmmss}"));
+                        sb.AppendLine(FoldLine(FormattableString.Invariant($"DTSTART;TZID=\"{ev.RepeatZoneId}\":{nominalStart:yyyyMMdd'T'HHmmss}")));
                         if (NominalDuration.HasValue(ev)) sb.AppendLine("DURATION:" + NominalDuration.Format(ev));
                         else
                         {
@@ -1203,21 +1203,21 @@ namespace Killendar.Services
                     }
                     else
                     {
-                        sb.AppendLine($"DTSTART:{startUtc:yyyyMMdd'T'HHmmss'Z'}");
+                        sb.AppendLine(FormattableString.Invariant($"DTSTART:{startUtc:yyyyMMdd'T'HHmmss'Z'}"));
                         if (NominalDuration.HasValue(ev)) sb.AppendLine("DURATION:" + NominalDuration.Format(ev));
-                        else sb.AppendLine($"DTEND:{endUtc:yyyyMMdd'T'HHmmss'Z'}");
+                        else sb.AppendLine(FormattableString.Invariant($"DTEND:{endUtc:yyyyMMdd'T'HHmmss'Z'}"));
                     }
                 }
                 else if (ev.IsSeries || NominalDuration.HasValue(ev))
                 {
-                    sb.AppendLine($"DTSTART:{ev.Start:yyyyMMdd'T'HHmmss}");
+                    sb.AppendLine(FormattableString.Invariant($"DTSTART:{ev.Start:yyyyMMdd'T'HHmmss}"));
                     if (NominalDuration.HasValue(ev)) sb.AppendLine("DURATION:" + NominalDuration.Format(ev));
-                    else sb.AppendLine($"DTEND:{ev.End:yyyyMMdd'T'HHmmss}");
+                    else sb.AppendLine(FormattableString.Invariant($"DTEND:{ev.End:yyyyMMdd'T'HHmmss}"));
                 }
                 else
                 {
-                    sb.AppendLine($"DTSTART:{ev.Start.ToUniversalTime():yyyyMMdd'T'HHmmss'Z'}");
-                    sb.AppendLine($"DTEND:{ev.End.ToUniversalTime():yyyyMMdd'T'HHmmss'Z'}");
+                    sb.AppendLine(FormattableString.Invariant($"DTSTART:{ev.Start.ToUniversalTime():yyyyMMdd'T'HHmmss'Z'}"));
+                    sb.AppendLine(FormattableString.Invariant($"DTEND:{ev.End.ToUniversalTime():yyyyMMdd'T'HHmmss'Z'}"));
                 }
 
                 if (ev.IsOverride && ev.OccurrenceAnchor.HasValue)
@@ -1321,7 +1321,7 @@ namespace Killendar.Services
                 default:                 sb.Append("YEARLY");  break;
             }
 
-            if (ev.RepeatInterval > 1) sb.Append(";INTERVAL=").Append(ev.RepeatInterval);
+            if (ev.RepeatInterval > 1) sb.Append(";INTERVAL=").Append(ev.RepeatInterval.ToString(System.Globalization.CultureInfo.InvariantCulture));
 
             if (ev.Repeat == RepeatFreq.Weekly && ev.RepeatDays != null && ev.RepeatDays.Count > 0)
             {
@@ -1331,23 +1331,23 @@ namespace Killendar.Services
             }
 
             if (ev.Repeat == RepeatFreq.Monthly && ev.RepeatMonthWeek != 0)
-                sb.Append(";BYDAY=").Append(ev.RepeatMonthWeek).Append(WeekdayCode(Recurrence.SeriesClockStart(ev).DayOfWeek));
+                sb.Append(";BYDAY=").Append(ev.RepeatMonthWeek.ToString(System.Globalization.CultureInfo.InvariantCulture)).Append(WeekdayCode(Recurrence.SeriesClockStart(ev).DayOfWeek));
 
             if (ev.Repeat == RepeatFreq.Weekly)
                 sb.Append(";WKST=").Append(WeekdayCode(ev.RepeatWeekStart));
 
             if (ev.RepeatCount > 0)
-                sb.Append(";COUNT=").Append(ev.RepeatCount);
+                sb.Append(";COUNT=").Append(ev.RepeatCount.ToString(System.Globalization.CultureInfo.InvariantCulture));
             else if (ev.RepeatUntilExact.HasValue || ev.RepeatUntil.HasValue)
             {
                 var until = ev.RepeatUntilExact ?? ev.RepeatUntil!.Value.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
-                if (ev.AllDay) sb.Append(";UNTIL=").Append(until.ToString("yyyyMMdd"));
+                if (ev.AllDay) sb.Append(";UNTIL=").Append(until.ToString("yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture));
                 else if (ev.RepeatTimeBasis == RecurrenceTimeBasis.Local)
-                    sb.Append(";UNTIL=").Append(until.ToString("yyyyMMdd'T'HHmmss"));
+                    sb.Append(";UNTIL=").Append(until.ToString("yyyyMMdd'T'HHmmss", System.Globalization.CultureInfo.InvariantCulture));
                 else
                 {
                     if (until.Kind != DateTimeKind.Utc) until = DateTime.SpecifyKind(until, DateTimeKind.Local).ToUniversalTime();
-                    sb.Append(";UNTIL=").Append(until.ToString("yyyyMMdd'T'HHmmss'Z'"));
+                    sb.Append(";UNTIL=").Append(until.ToString("yyyyMMdd'T'HHmmss'Z'", System.Globalization.CultureInfo.InvariantCulture));
                 }
             }
 
@@ -1373,13 +1373,14 @@ namespace Killendar.Services
 
         private static string IdentityProperty(string name, DateTime value, OccurrenceTimeBasis basis, string zone)
         {
-            if (basis == OccurrenceTimeBasis.Date) return name + ";VALUE=DATE:" + value.ToString("yyyyMMdd");
-            if (basis == OccurrenceTimeBasis.SourceZone) return name + ";TZID=\"" + zone + "\":" + value.ToString("yyyyMMdd'T'HHmmss");
-            return name + ":" + value.ToString(basis == OccurrenceTimeBasis.Utc ? "yyyyMMdd'T'HHmmss'Z'" : "yyyyMMdd'T'HHmmss");
+            if (basis == OccurrenceTimeBasis.Date) return name + ";VALUE=DATE:" + value.ToString("yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
+            if (basis == OccurrenceTimeBasis.SourceZone) return name + ";TZID=\"" + zone + "\":" + value.ToString("yyyyMMdd'T'HHmmss", System.Globalization.CultureInfo.InvariantCulture);
+            return name + ":" + value.ToString(basis == OccurrenceTimeBasis.Utc ? "yyyyMMdd'T'HHmmss'Z'" : "yyyyMMdd'T'HHmmss", System.Globalization.CultureInfo.InvariantCulture);
         }
 
         private static string EscapeText(string s)
-            => s.Replace("\\", "\\\\").Replace(",", "\\,")
+            => s.Replace("\r\n", "\n").Replace("\r", "\n")
+                .Replace("\\", "\\\\").Replace(",", "\\,")
                 .Replace(";", "\\;").Replace("\n", "\\n");
 
         /// <summary>RFC-5545 line folding at 75 octets.</summary>

@@ -34,6 +34,25 @@ namespace Killendar.Tests
             Assert.Equal(@"unknown\q trailing\", Assert.Single(result.Events).Title);
         }
 
+        [Fact]
+        public void CarriageReturnsInDescriptionSurviveExportAndImportAsLineBreaks()
+        {
+            var original = new CalendarEvent
+            {
+                Title = "Notes",
+                Description = "line1\r\nline2\rline3",
+                AllDay = true,
+                Start = new DateTime(2026, 10, 20),
+                End = new DateTime(2026, 10, 21)
+            };
+            string ics = IcsService.BuildIcs(new[] { original });
+            Assert.DoesNotContain("\r\\n", ics);
+            Assert.Contains("\r\nDESCRIPTION:line1\\nline2\\nline3\r\n", ics);
+            var result = IcsService.ParseText(ics);
+            Assert.Equal(0, result.Unreadable);
+            Assert.Equal("line1\nline2\nline3", Assert.Single(result.Events).Description);
+        }
+
         private static void AssertRoundTrip(string text)
         {
             var original = new CalendarEvent
