@@ -103,6 +103,35 @@ namespace Killendar.Controls
             }
         }
 
+        /// <summary>The Killendar that is locked while this dialog is open, or null when none is.
+        /// Its file cannot be renamed or deleted from here: that would let someone without the
+        /// password destroy it, backups included. Open and New still work.</summary>
+        internal string? LockedFile
+        {
+            get => _lockedFile;
+            set { _lockedFile = value; ShowAllowedActions(SelectedFile); }
+        }
+        private string? _lockedFile;
+
+        private void ShowAllowedActions(string? name)
+        {
+            var allowed = AllowedFor(name);
+            DeleteBtn.IsEnabled = allowed.CanDelete;
+            RenameMenu.IsEnabled = allowed.CanRename;
+            DeleteMenu.IsEnabled = allowed.CanDelete;
+        }
+
+        /// <summary>Which row actions the dialog offers for <paramref name="name"/> while
+        /// <paramref name="lockedFile"/> is locked.</summary>
+        internal static (bool CanRename, bool CanDelete) AllowedActions(string? lockedFile, string name)
+        {
+            bool locked = lockedFile != null && string.Equals(lockedFile, name, StringComparison.OrdinalIgnoreCase);
+            return (!locked, !locked);
+        }
+
+        private (bool CanRename, bool CanDelete) AllowedFor(string? name)
+            => name == null ? (true, true) : AllowedActions(LockedFile, name);
+
         private ListBoxItem? SelectedItem => KcList.SelectedItem as ListBoxItem;
         private string? SelectedFile => SelectedItem?.Tag as string;
 
@@ -128,7 +157,7 @@ namespace Killendar.Controls
         {
             if (e.OriginalSource is TextBox || SelectedItem == null) return;
             if (e.Key == Key.Enter) Open_Click(sender, e);
-            else if (e.Key == Key.F2) BeginRename(SelectedItem);
+            else if (e.Key == Key.F2) { if (AllowedFor(SelectedFile).CanRename) BeginRename(SelectedItem); }
             else if (e.Key == Key.Delete) Delete_Click(sender, e);
             else return;
             e.Handled = true;
@@ -136,7 +165,7 @@ namespace Killendar.Controls
 
         private void RenameMenu_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedItem is ListBoxItem item) BeginRename(item);
+            if (SelectedItem is ListBoxItem item && AllowedFor(SelectedFile).CanRename) BeginRename(item);
         }
 
         private void BeginRename(ListBoxItem item)
@@ -231,6 +260,7 @@ namespace Killendar.Controls
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedFile is not string name) { DlgStatus.Text = Loc("Str_Kc_SelectFirst"); return; }
+            if (!AllowedFor(name).CanDelete) return;
 
             var confirm = new ConfirmDialog(
                 string.Format(Loc("Str_Kc_DeleteHead"), name),
@@ -287,6 +317,7 @@ namespace Killendar.Controls
         private void KcList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (SelectedFile is not string name) return;
+            ShowAllowedActions(name);
             var last = EventStore.ListBackupsFor(Path.Combine(EventStore.DataDir, name)).FirstOrDefault();
             DlgStatus.Text = EventStore.DataDir + Environment.NewLine + (last == null
                 ? Loc("Str_Kc_NoBackups")
@@ -298,6 +329,7 @@ namespace Killendar.Controls
         /// <summary>Lists the selected calendar's backups under Restore a backup, newest first.</summary>
         private void RowMenu_Opened(object sender, RoutedEventArgs e)
         {
+            ShowAllowedActions(SelectedFile);
             RestoreBackupMenu.Items.Clear();
             var backups = SelectedFile is string name
                 ? EventStore.ListBackupsFor(Path.Combine(EventStore.DataDir, name))

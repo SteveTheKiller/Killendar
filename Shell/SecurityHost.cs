@@ -55,21 +55,25 @@ namespace Killendar.Shell
         internal void HandlePendingOpenFile()
         {
             string? path = App.PendingOpenFile;
-            if (path == null) return;
-
-            if (string.Equals(Path.GetExtension(path), ".ics",
-                              System.StringComparison.OrdinalIgnoreCase))
+            // While locked nothing is open to receive the file: it stays pending, and the unlock
+            // (Lock.cs, Killendars button) calls this again.
+            switch (PendingOpenPolicy.Decide(path, _security.IsLocked))
             {
-                App.PendingOpenFile = null;
-                _ics.Import(path);
-                return;
+                case PendingOpenAction.ImportIcs:
+                    App.PendingOpenFile = null;
+                    _ics.Import(path!);
+                    break;
+                case PendingOpenAction.AdoptKcal:
+                    _security.AdoptPendingFile();
+                    break;
             }
-
-            _security.AdoptPendingFile();
         }
 
         private void KillendarsButton_Click(object sender, RoutedEventArgs e)
-            => _security.ShowKillendars();
+        {
+            _security.ShowKillendars();
+            HandlePendingOpenFile();   // a file forwarded while locked, if that ended the lock
+        }
 
         private void LockButton_Click(object sender, RoutedEventArgs e)
         {
@@ -83,6 +87,25 @@ namespace Killendar.Shell
         {
             e.Handled = true;
             _security.ShowKillendars();
+            HandlePendingOpenFile();
+        }
+    }
+}
+
+namespace Killendar.Shell
+{
+    public enum PendingOpenAction { None, Defer, ImportIcs, AdoptKcal }
+
+    internal static class PendingOpenPolicy
+    {
+        /// <summary>What to do with a forwarded file. While locked nothing is open to receive it, so it
+        /// stays pending until the unlock.</summary>
+        internal static PendingOpenAction Decide(string? path, bool isLocked)
+        {
+            if (path == null) return PendingOpenAction.None;
+            if (isLocked) return PendingOpenAction.Defer;
+            return string.Equals(System.IO.Path.GetExtension(path), ".ics", System.StringComparison.OrdinalIgnoreCase)
+                ? PendingOpenAction.ImportIcs : PendingOpenAction.AdoptKcal;
         }
     }
 }

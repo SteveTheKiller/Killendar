@@ -52,7 +52,24 @@ namespace Killendar.Services
         /// empty Killendar at the old name on the next open.</summary>
         /// <summary>The most recent rename, so a caller holding the old name (Manage Killendars'
         /// return path) can follow it instead of reopening, and so recreating, the old file.</summary>
-        internal static (string From, string To)? LastRename;
+        internal static (string From, string To)? LastRename
+        {
+            get => _renames.Count == 0 ? null : _renames[_renames.Count - 1];
+            set { if (value is { } rename) _renames.Add(rename); else _renames.Clear(); }
+        }
+
+        /// <summary>Every rename since the list was last cleared, oldest first. Renaming A to B to
+        /// C in one Manage session must still lead from A to C.</summary>
+        private static readonly System.Collections.Generic.List<(string From, string To)> _renames = [];
+
+        /// <summary>The name <paramref name="name"/> has now, following every rename made since the
+        /// list was cleared. A name that was never renamed comes back unchanged.</summary>
+        internal static string FollowRenames(string name)
+        {
+            foreach (var (from, to) in _renames.ToArray())
+                if (string.Equals(name, from, StringComparison.OrdinalIgnoreCase)) name = to;
+            return name;
+        }
 
         public static void RenameKillendar(string oldName, string newName)
         {

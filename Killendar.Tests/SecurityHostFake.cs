@@ -25,6 +25,7 @@ namespace Killendar.Tests
         public void RefreshView() { }
         public bool IsSidebarOpen => false;
         public void RestoreSidebar() { }
-        public void CloseSidebar() { }
+        internal int CloseSidebarCalls;
+        public void CloseSidebar() => CloseSidebarCalls++;
     }
 }

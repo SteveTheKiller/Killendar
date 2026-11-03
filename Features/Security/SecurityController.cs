@@ -230,7 +230,7 @@ namespace Killendar.Features
         /// </summary>
         internal void ShowKillendars() => ShowKillendars(() =>
         {
-            var dlg = new KillendarsDialog { Owner = _host.Window };
+            var dlg = new KillendarsDialog { Owner = _host.Window, LockedFile = IsLocked ? EventStore.ActiveFile : null };
             dlg.ShowDialog();
             return dlg.Selected;
         });
@@ -287,9 +287,7 @@ namespace Killendar.Features
         {
             lockedDir ??= EventStore.DataDir;
             // A rename in the dialog moved the locked file without unlocking it.
-            if (EventStore.LastRename is { } rename &&
-                string.Equals(rename.From, locked, StringComparison.OrdinalIgnoreCase))
-                locked = rename.To;
+            locked = EventStore.FollowRenames(locked);
             string lockedPath = Path.Combine(lockedDir, locked);
             bool lockedExists = File.Exists(lockedPath);
 
@@ -347,11 +345,11 @@ namespace Killendar.Features
             // A rename in the dialog moved the previous Killendar without changing it: follow it, so
             // it is still the one the panel's input belongs to. A previous file that is gone (the
             // dialog deleted it) is never named again: opening a missing path creates an empty one.
-            if (EventStore.LastRename is { } rename &&
-                string.Equals(rename.From, previous, StringComparison.OrdinalIgnoreCase))
+            string followed = EventStore.FollowRenames(previous);
+            if (!string.Equals(followed, previous, StringComparison.Ordinal))
             {
-                previous = rename.To;
-                previousPath = Path.Combine(previousDir, rename.To);
+                previous = followed;
+                previousPath = Path.Combine(previousDir, followed);
             }
             bool previousExists = File.Exists(previousPath);
 
@@ -496,7 +494,8 @@ namespace Killendar.Features
                     }
                     var outcome = _store.SetPassword(dlg.Password);
                     _password = dlg.Password;
-                    _host.SetStatus(WithBackupWarning(PasswordStatus(outcome, "Str_Status_Encrypted")));
+                    AfterPasswordChange(outcome, _password);
+                    if (!IsLocked) _host.SetStatus(WithBackupWarning(PasswordStatus(outcome, "Str_Status_Encrypted")));
                 }
                 else
                 {
@@ -516,7 +515,8 @@ namespace Killendar.Features
                     }
                     var outcome = _store.SetPassword(string.IsNullOrEmpty(dlg.Password) ? null : dlg.Password);
                     _password = string.IsNullOrEmpty(dlg.Password) ? null : dlg.Password;
-                    _host.SetStatus(WithBackupWarning(PasswordStatus(outcome, _store.HasPassword
+                    AfterPasswordChange(outcome, _password);
+                    if (!IsLocked) _host.SetStatus(WithBackupWarning(PasswordStatus(outcome, _password != null
                         ? "Str_Status_PwChanged" : "Str_Status_PwRemoved")));
                 }
             }
@@ -541,7 +541,25 @@ namespace Killendar.Features
             _store.BackupsNotRekeyed.Count == 0 ? status
                 : status + " " + string.Format(_host.Loc("Str_Status_BackupNotRekeyed"), string.Join(", ", _store.BackupsNotRekeyed));
 
-        internal void RefreshLockState() => _host.ShowLockState(_store.HasPassword);
+        /// <summary>A password change can commit and still leave the store closed (the reopen kept
+        /// failing). The new password is the one the file now needs, so it is tried once more; if the
+        /// file still will not open, the app locks and asks for the password rather than showing a
+        /// calendar that is not there.</summary>
+        internal void AfterPasswordChange(PasswordChangeOutcome outcome, string? newPassword)
+        {
+            if (!outcome.ReopenNeeded || _store.IsOpen) return;
+            _password = newPassword;
+            try { _store.Open(EventStore.ActivePath, newPassword); }
+            catch (Exception) { try { _store.Close(); } catch (Exception) { } }
+            if (_store.IsOpen) return;
+            _password = null;
+            IsLocked = true;
+            _host.ShowLocked(true);
+            _host.RefreshView();
+            _host.SetStatus(_host.Loc("Str_Pw_UnlockHead"));
+        }
+
+        internal void RefreshLockState() => _host.ShowLockState(IsLocked || _store.HasPassword);
 
         /// <summary>The label is hidden when there is only the default Killendar and nothing is
         /// encrypted - the common case does not need the noise.</summary>

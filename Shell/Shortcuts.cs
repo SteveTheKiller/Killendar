@@ -36,8 +36,14 @@ namespace Killendar.Shell
             // Locked: no shortcut reaches the calendar; a key press asks for the password (Lock.cs).
             if (_security.IsLocked)
             {
-                e.Handled = true;
-                AskToUnlock();
+                // After a canceled prompt Tab, Space and Enter reach the title-bar buttons, and the
+                // window menu keys are never swallowed (LockedKeyPolicy).
+                if (LockedKeyPolicy.Decide(true, _unlockDeclined, e.Key, e.SystemKey, Keyboard.Modifiers)
+                    == LockedKeyAction.AskToUnlock)
+                {
+                    e.Handled = true;
+                    AskToUnlock();
+                }
                 return;
             }
 
@@ -228,5 +234,40 @@ namespace Killendar.Shell
         }
 
 
+    }
+}
+
+namespace Killendar.Shell
+{
+    public enum LockedKeyAction { PassThrough, AskToUnlock }
+
+    internal static class LockedKeyPolicy
+    {
+        /// <summary>What a key press does while the window is locked. A declined prompt must not trap
+        /// keyboard users: Tab, Shift+Tab, Space and Enter reach the title-bar buttons (and the modifier
+        /// press that starts Shift+Tab), and the window menu keys Alt+F4 and Alt+Space are never taken.
+        /// Anything else still asks for the password.</summary>
+        internal static LockedKeyAction Decide(bool isLocked, bool declined, System.Windows.Input.Key key,
+            System.Windows.Input.Key systemKey, System.Windows.Input.ModifierKeys modifiers)
+        {
+            if (!isLocked) return LockedKeyAction.PassThrough;
+            var real = key == System.Windows.Input.Key.System ? systemKey : key;
+            if (key == System.Windows.Input.Key.System &&
+                (real == System.Windows.Input.Key.F4 || real == System.Windows.Input.Key.Space))
+                return LockedKeyAction.PassThrough;
+            if (!declined) return LockedKeyAction.AskToUnlock;
+            switch (real)
+            {
+                case System.Windows.Input.Key.LeftShift: case System.Windows.Input.Key.RightShift:
+                case System.Windows.Input.Key.LeftCtrl: case System.Windows.Input.Key.RightCtrl:
+                case System.Windows.Input.Key.LeftAlt: case System.Windows.Input.Key.RightAlt:
+                    return LockedKeyAction.PassThrough;
+                case System.Windows.Input.Key.Tab: case System.Windows.Input.Key.Space: case System.Windows.Input.Key.Enter:
+                    bool plain = (modifiers & (System.Windows.Input.ModifierKeys.Control | System.Windows.Input.ModifierKeys.Alt)) == 0;
+                    return plain ? LockedKeyAction.PassThrough : LockedKeyAction.AskToUnlock;
+                default:
+                    return LockedKeyAction.AskToUnlock;
+            }
+        }
     }
 }

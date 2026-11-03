@@ -99,7 +99,7 @@ namespace Killendar.Shell
             _unlockAsking = true;
             try { _unlockDeclined = !_security.Unlock(); }
             finally { _unlockAsking = false; }
-            if (!_security.IsLocked) CheckReminders();
+            if (!_security.IsLocked) { CheckReminders(); HandlePendingOpenFile(); }
             else StatusText.Text = Loc("Str_Pw_UnlockHead");
         }
 
