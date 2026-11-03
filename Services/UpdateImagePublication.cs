@@ -66,7 +66,16 @@ namespace Killendar.Services
             script.AppendLine("Elevated = " + (elevated ? "$true" : "$false"));
             script.AppendLine("Unsafe = $false");
             script.AppendLine("ShowReport = " + (showReport ? "$true" : "$false")).AppendLine("}");
-            if (!guardEmitted) script.AppendLine(Guard);
+            // An antivirus or a locked-down PowerShell can refuse Add-Type, which would end the helper
+            // with the app already closed. The per-user helper runs as the same user at the same rights
+            // as the app, so it starts the installed copy plainly instead. The elevated helper never
+            // does: without the guard it has no safe way to start the app at normal rights.
+            if (!guardEmitted && !elevated)
+                script.AppendLine("try {").AppendLine(Guard).AppendLine("} catch {")
+                    .AppendLine("    try { [IO.File]::AppendAllText($plan.Report, [Environment]::NewLine + 'The update helper could not load: ' + $_.Exception.Message) } catch { }")
+                    .AppendLine("    if (Test-Path -LiteralPath $plan.Target) { try { if ($plan.Reopen) { Start-Process -FilePath $plan.Target -ArgumentList $plan.Reopen } else { Start-Process -FilePath $plan.Target } } catch { } }")
+                    .AppendLine("    exit 1").AppendLine("}");
+            else if (!guardEmitted) script.AppendLine(Guard);
             script.AppendLine(Operations);
             if (overrides is not null) script.AppendLine(overrides);
             // Whatever the mode, a failed publication reopens the copy that is installed (after the

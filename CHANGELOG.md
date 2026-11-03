@@ -7,7 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [1.4.1] - Unreleased
 
 ### Fixed
-- A per-user or portable update that fails now reopens Killendar instead of leaving it closed, a published copy that fails its final check is swapped back for the previous version and never started, and update downloads stream to disk with a size cap and an overall deadline.
+- A per-user or portable update that fails now reopens Killendar instead of leaving it closed, including when antivirus or a locked-down PowerShell stops the update helper from loading, a published copy that fails its final check is swapped back for the previous version and never started, and update downloads stream to disk with a size cap and an overall deadline.
 - The file picker no longer stalls on a disconnected network folder when it opens, and a relative path typed in the path box is refused instead of being looked up against the wrong folder.
 - Keyboard focus cues respect the theme, Windows contrast refreshes are coalesced and restore frame colors, and picker selections keep text and icons shadow-free.
 - An all-users update reopens Killendar for the signed-in user at normal rights, whether it finishes or stops early. Windows was refusing that relaunch, so the app stayed closed. Files left behind by earlier failed updates are cleared when the next update is staged.

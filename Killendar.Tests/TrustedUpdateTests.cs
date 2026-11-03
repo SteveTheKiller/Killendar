@@ -29,6 +29,65 @@ namespace Killendar.Tests
         }
 
         [Fact]
+        public void PerUserHelperReopensTheAppWhenItsGuardCannotCompile()
+        {
+            // An antivirus or locked-down PowerShell can refuse Add-Type. The per-user helper runs as
+            // the same user as the app, so it falls back to a plain start of the installed copy.
+            string path = Path.Combine(TestScratch.Root, "guard-fallback-" + Guid.NewGuid().ToString("N") + ".exe");
+            UpdateImagePublication.RememberVerified(path, new string('A', 64), new string('B', 40));
+            try
+            {
+                string script = UpdateImagePublication.Script(path, @"C:\Apps\Killendar.exe", false,
+                    "https://example.invalid/releases", "Killendar");
+                int guard = script.IndexOf("if (-not ('KillerUpdateGuard' -as [type]))", StringComparison.Ordinal);
+                int wrapper = script.LastIndexOf("try {", guard, StringComparison.Ordinal);
+                int fallback = script.IndexOf("Start-Process -FilePath $plan.Target", guard, StringComparison.Ordinal);
+                Assert.True(guard > 0, "The guard is emitted.");
+                Assert.True(wrapper >= 0 && script.IndexOf("$plan = ", StringComparison.Ordinal) < wrapper,
+                    "The guard is wrapped after the plan exists.");
+                Assert.True(fallback > guard, "A guard failure starts the installed copy.");
+                Assert.True(fallback < script.IndexOf("Invoke-UpdateImagePublication $plan $ops", StringComparison.Ordinal),
+                    "The fallback belongs to the guard, not to the publication.");
+                Assert.Equal("0", ParseErrors(script));
+            }
+            finally { if (File.Exists(path + ".recovery.txt")) File.Delete(path + ".recovery.txt"); }
+        }
+
+        // Parses (never runs) a generated helper with Windows PowerShell's own parser and returns the error count.
+        private static string ParseErrors(string script)
+        {
+            string file = Path.Combine(TestScratch.Root, "helper-" + Guid.NewGuid().ToString("N") + ".ps1");
+            File.WriteAllText(file, script, Encoding.UTF8);
+            try
+            {
+                var start = new ProcessStartInfo(Path.Combine(Environment.SystemDirectory, @"WindowsPowerShell\v1.0\powershell.exe"),
+                    "-NoLogo -NoProfile -NonInteractive -Command \"$e=$null;$null=[Management.Automation.Language.Parser]::ParseFile('"
+                    + file.Replace("'", "''") + "',[ref]$null,[ref]$e);$e.Count\"")
+                { UseShellExecute = false, CreateNoWindow = true, RedirectStandardOutput = true };
+                using var process = Process.Start(start)!;
+                string output = process.StandardOutput.ReadToEnd().Trim();
+                process.WaitForExit(30000);
+                return output;
+            }
+            finally { File.Delete(file); }
+        }
+
+        [Fact]
+        public void ElevatedHelperKeepsItsGuardUnwrapped()
+        {
+            // The elevated helper must never start the app as administrator, so it gets no plain fallback.
+            string path = Path.Combine(TestScratch.Root, "guard-elevated-" + Guid.NewGuid().ToString("N") + ".exe");
+            UpdateImagePublication.RememberVerified(path, new string('A', 64), new string('B', 40));
+            try
+            {
+                string script = UpdateImagePublication.Script(path, @"C:\Apps\Killendar.exe", true,
+                    "https://example.invalid/releases", "Killendar");
+                Assert.DoesNotContain("Start-Process -FilePath $plan.Target", script);
+            }
+            finally { if (File.Exists(path + ".recovery.txt")) File.Delete(path + ".recovery.txt"); }
+        }
+
+        [Fact]
         public void RequestAcceptsOnlyCompleteAbsoluteData()
         {
             string[] args = { TrustedUpdate.HelperArgument, Convert.ToBase64String(Encoding.Unicode.GetBytes(@"C:\download.exe")),
