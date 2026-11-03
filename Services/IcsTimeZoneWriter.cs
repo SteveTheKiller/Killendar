@@ -7,8 +7,18 @@ namespace Killendar.Services
 {
     internal static class IcsTimeZoneWriter
     {
-        internal static string Build(string id, TimeZoneInfo zone)
+        /// <summary>Years of transitions written when the caller gives no span: from the start of
+        /// the Windows-era rules to this many years ahead. Zones usually carry a rule running to
+        /// year 9999, and expanding it whole wrote ~20,000 RDATEs per zone.</summary>
+        private const int DefaultYearsAhead = 50;
+        private const int DefaultFirstYear = 1970;
+
+        /// <param name="firstYear">First year to write transitions for (default 1970).</param>
+        /// <param name="lastYear">Last year to write transitions for (default now + 50).</param>
+        internal static string Build(string id, TimeZoneInfo zone, int? firstYear = null, int? lastYear = null)
         {
+            int windowStart = Math.Max(1, firstYear ?? DefaultFirstYear);
+            int windowEnd = Math.Min(9999, lastYear ?? DateTime.UtcNow.Year + DefaultYearsAhead);
             if (id.IndexOfAny(new[] { '\r', '\n', ':', ';', '"', ',' }) >= 0)
                 throw new NotSupportedException("The calendar time zone identifier cannot be exported: " + id);
             var candidates = new SortedSet<DateTime>();
@@ -17,7 +27,7 @@ namespace Killendar.Services
                 candidates.Add(rule.DateStart.Date);
                 if (rule.DateEnd.Date < DateTime.MaxValue.Date) candidates.Add(rule.DateEnd.Date.AddDays(1));
                 if (rule.DaylightDelta == TimeSpan.Zero) continue;
-                for (int year = rule.DateStart.Year; year <= rule.DateEnd.Year; year++)
+                for (int year = Math.Max(rule.DateStart.Year, windowStart); year <= Math.Min(rule.DateEnd.Year, windowEnd); year++)
                 {
                     Add(rule.DaylightTransitionStart, year, rule);
                     Add(rule.DaylightTransitionEnd, year, rule);

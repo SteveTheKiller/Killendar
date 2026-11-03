@@ -53,7 +53,7 @@ namespace Killendar.Services
             string ctype = HeaderValue(head, "Content-Type");
             string cte   = HeaderValue(head, "Content-Transfer-Encoding").Trim().ToLowerInvariant();
 
-            if (ctype.StartsWith("text/calendar", StringComparison.OrdinalIgnoreCase))
+            if (IsCalendarPart(ctype, head))
                 return DecodeBody(body, cte, Param(ctype, "charset"));
 
             if (ctype.StartsWith("multipart/", StringComparison.OrdinalIgnoreCase))
@@ -69,6 +69,18 @@ namespace Killendar.Services
             }
 
             return null;
+        }
+
+        /// <summary>A part that carries an invite: text/calendar, application/ics, or any part whose
+        /// name or filename says .ics (mail clients often send attachments as octet-stream).</summary>
+        private static bool IsCalendarPart(string ctype, string head)
+        {
+            if (ctype.StartsWith("text/calendar", StringComparison.OrdinalIgnoreCase) ||
+                ctype.StartsWith("application/ics", StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (ctype.StartsWith("multipart/", StringComparison.OrdinalIgnoreCase)) return false;
+            return Param(ctype, "name").EndsWith(".ics", StringComparison.OrdinalIgnoreCase) ||
+                   Param(HeaderValue(head, "Content-Disposition"), "filename").EndsWith(".ics", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>

@@ -17,6 +17,36 @@ namespace Killendar.Tests
             Assert.Equal("31/12/2026", DateFormatManager.Format(new DateTime(2026, 12, 31)));
         }
 
+        [Theory]
+        [InlineData(DateStyle.US, "1/2/2026", "m/d/yyyy")]
+        [InlineData(DateStyle.EU, "02/01/2026", "dd/mm/yyyy")]
+        public void SlashStylesPrintALiteralSlashUnderAGermanCulture(DateStyle style, string expected, string hint)
+        {
+            var oldCurrent = CultureInfo.CurrentCulture;
+            var oldDefault = CultureInfo.DefaultThreadCurrentCulture;
+            try
+            {
+                var german = new CultureInfo("de-DE");
+                CultureInfo.CurrentCulture = german;
+                CultureInfo.DefaultThreadCurrentCulture = german;
+                DateFormatManager.SetSetting = (_, _) => { };
+                DateFormatManager.Apply(style);
+
+                Assert.Equal(expected, DateFormatManager.Format(new DateTime(2026, 1, 2)));
+                Assert.Equal(hint, DateFormatManager.Hint);
+                if (style == DateStyle.US)
+                {
+                    Assert.True(DateFormatManager.TryParse("1/2/2026", out var parsed));
+                    Assert.Equal(new DateTime(2026, 1, 2), parsed);
+                }
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = oldCurrent;
+                CultureInfo.DefaultThreadCurrentCulture = oldDefault;
+            }
+        }
+
         [Fact]
         public void ParserAcceptsIsoAlongsideSelectedFormat()
         {

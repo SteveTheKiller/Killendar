@@ -42,6 +42,35 @@ namespace Killendar.Tests
         }
 
         [Fact]
+        public void RangeExportOfAnEndlessDailySeriesRequiresANarrowerRange()
+        {
+            using var fixture = new AppointmentFixture();
+            var start = new DateTime(2026, 1, 5, 9, 0, 0);
+            fixture.Store.Add(new CalendarEvent { Title = "Endless", Start = start, End = start.AddHours(1),
+                Repeat = RepeatFreq.Daily });
+            var transfer = new IcsTransfer(null!, fixture.Store);
+
+            var error = Assert.Throws<InvalidOperationException>(() =>
+                transfer.GatherRangeRows(new DateTime(2026, 1, 1), new DateTime(2201, 1, 1)));
+
+            Assert.Contains("date range", error.Message);
+        }
+
+        [Fact]
+        public void RangeExportWithinTheLimitReturnsEveryOccurrence()
+        {
+            using var fixture = new AppointmentFixture();
+            var start = new DateTime(2026, 1, 5, 9, 0, 0);
+            fixture.Store.Add(new CalendarEvent { Title = "Endless", Start = start, End = start.AddHours(1),
+                Repeat = RepeatFreq.Daily });
+            var transfer = new IcsTransfer(null!, fixture.Store);
+
+            var rows = transfer.GatherRangeRows(new DateTime(2026, 1, 1), new DateTime(2026, 2, 1));
+
+            Assert.Equal(27, rows.Count);
+        }
+
+        [Fact]
         public void FutureUnboundedSeriesHasAtLeastItsFirstYearInTheExportSpan()
         {
             using var fixture = new AppointmentFixture();

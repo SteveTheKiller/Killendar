@@ -500,7 +500,7 @@ namespace Killendar.Features
                     // expansion, so overrides and skipped dates behave exactly as on screen.
                     case ".csv":
                     {
-                        var rows = _store.GetInRange(from, toEx);
+                        var rows = GatherRangeRows(from, toEx);
                         if (CsvService.RequiresSpreadsheetProtection(rows))
                         {
                             var warning = new ConfirmDialog(_host.Loc("Str_Dlg_ExportTitle"),
@@ -517,7 +517,7 @@ namespace Killendar.Features
                     case ".htm":
                     case ".html":
                     {
-                        var rows = _store.GetInRange(from, toEx);
+                        var rows = GatherRangeRows(from, toEx);
                         HtmlExport.ExportToFile(rows, from, toEx, dlg.FileName, HtmlOptions.Parse(Settings.Get(HtmlOptions.Setting)));
                         count = rows.Count;
                         break;
@@ -615,6 +615,20 @@ namespace Killendar.Features
             foreach (var e in _store.Events.Where(e => e.IsSeries))
                 foreach (var occurrence in Recurrence.Expand(e, from, toEx))
                     if (++total > WholeExportOccurrenceLimit) RequireExportRange();
+        }
+
+        /// <summary>
+        /// The expanded rows a CSV or HTML export of [from, toEx) carries. The same occurrence
+        /// ceiling as the whole-calendar path applies, counted lazily so an endless series over a
+        /// century stops at the limit instead of materializing every date.
+        /// </summary>
+        internal List<CalendarEvent> GatherRangeRows(DateTime from, DateTime toEx)
+        {
+            int total = 0;
+            foreach (var e in _store.Events.Where(e => e.IsSeries))
+                foreach (var occurrence in Recurrence.Expand(e, from, toEx))
+                    if (++total > WholeExportOccurrenceLimit) RequireExportRange();
+            return _store.GetInRange(from, toEx);
         }
 
         private void RequireExportRange()

@@ -36,6 +36,31 @@ namespace Killendar.Tests
             AssertInvite("utf-8", "8bit", raw: true);
         }
 
+        [Theory]
+        [InlineData("application/ics; name=invite.ics", "")]
+        [InlineData("application/octet-stream; name=\"invite.ICS\"", "")]
+        [InlineData("application/octet-stream", "Content-Disposition: attachment; filename=invite.ics\r\n")]
+        public void Base64IcsAttachmentIsReadAsAnInvite(string contentType, string extraHeader)
+        {
+            const string calendar = "BEGIN:VCALENDAR\nBEGIN:VEVENT\nSUMMARY:Attached\nEND:VEVENT\nEND:VCALENDAR\n";
+            string body = Convert.ToBase64String(Encoding.UTF8.GetBytes(calendar.Replace("\n", "\r\n")), Base64FormattingOptions.InsertLineBreaks);
+            string eml = "MIME-Version: 1.0\r\nContent-Type: multipart/mixed; boundary=b\r\n\r\n--b\r\nContent-Type: text/plain\r\n\r\nSee attached.\r\n--b\r\nContent-Type: " +
+                contentType + "\r\nContent-Transfer-Encoding: base64\r\n" + extraHeader + "\r\n" + body + "\r\n--b--\r\n";
+            string folder = Path.Combine(TestScratch.Root + @"\eml", Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(folder);
+            string path = Path.Combine(folder, "invite.eml");
+            try
+            {
+                File.WriteAllBytes(path, Encoding.ASCII.GetBytes(eml));
+                Assert.Equal(calendar, EmlService.ExtractCalendarText(path)?.Replace("\r\n", "\n"));
+            }
+            finally
+            {
+                File.Delete(path);
+                Directory.Delete(folder);
+            }
+        }
+
         private static void AssertInvite(string charset, string transfer, bool nested = false, bool raw = false)
         {
             const string calendar = "BEGIN:VCALENDAR\nBEGIN:VEVENT\nSUMMARY:Caf\u00e9\nLOCATION:Montr\u00e9al\nDESCRIPTION:R\u00e9union\nEND:VEVENT\nEND:VCALENDAR\n";

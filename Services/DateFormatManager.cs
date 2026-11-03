@@ -68,7 +68,17 @@ namespace Killendar.Services
             .Replace("yyyy", "yyyy");
 
         /// <summary>Format a date for display in the editor.</summary>
-        public static string Format(DateTime d) => d.ToString(Pattern, CultureInfo.CurrentCulture);
+        public static string Format(DateTime d) => d.ToString(DisplayPattern, CultureInfo.CurrentCulture);
+
+        /// <summary>Pattern used for printing: a bare '/' in a custom format means the culture's date
+        /// separator, so under de-DE "M/d/yyyy" printed 1.2.2026 beside a hint saying m/d/yyyy.
+        /// Quoting it keeps what is printed equal to what the hint promises.</summary>
+        private static string DisplayPattern => _current switch
+        {
+            DateStyle.US => "M'/'d'/'yyyy",
+            DateStyle.EU => "dd'/'MM'/'yyyy",
+            _            => Pattern,
+        };
 
         // ── Display times ────────────────────────────────────────────────────────────────
         //

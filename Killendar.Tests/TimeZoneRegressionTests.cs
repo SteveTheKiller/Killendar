@@ -10,6 +10,20 @@ namespace Killendar.Tests
     [Collection("Calendar settings")]
     public sealed class TimeZoneRegressionTests
     {
+        [Fact]
+        public void ZoneDefinitionKeepsTransitionsBoundedAndCoversTheEventYear()
+        {
+            var eastern = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+
+            string definition = IcsTimeZoneWriter.Build("Eastern Standard Time", eastern);
+
+            int rdates = definition.Split('\n').Where(l => l.StartsWith("RDATE:", StringComparison.Ordinal))
+                .Sum(l => l.Substring(6).Split(',').Length);
+            Assert.True(rdates < 400, "RDATE values: " + rdates);
+            Assert.Contains("20260308T020000", definition);
+            Assert.Contains("20261101T020000", definition);
+        }
+
         private const string Tokyo = "Tokyo Standard Time";   // no daylight saving
         private static readonly DateTime At = new(2026, 10, 13, 9, 0, 0);
 
