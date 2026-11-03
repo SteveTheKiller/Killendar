@@ -82,7 +82,9 @@ namespace Killendar.Tests
                         var metadata = (TextBlock)dialog.FindName("SelMeta");
                         var pathBox = (TextBox)dialog.FindName("PathBox");
                         // The first listing must land before anything else is judged.
-                        PumpUntil(() => !dialog.IsDirectoryListingBusy);
+                        // The start folder is probed off the UI thread before it lists, so "not busy" alone
+                        // can mean the listing has not started yet.
+                        PumpUntil(() => dialog.IsDirectoryListingAvailable);
                         Assert.True(directory == pathBox.Text, "First listing: path '" + pathBox.Text + "', busy "
                             + dialog.IsDirectoryListingBusy + ", available " + dialog.IsDirectoryListingAvailable
                             + ", status '" + metadata.Text + "'");
@@ -116,7 +118,7 @@ namespace Killendar.Tests
                         name.Text = "*.txt";
                         PressEnter(name);
                         // The picker lists and probes off the UI thread; wait for it as a person would.
-                        PumpUntil(() => !dialog.IsDirectoryListingBusy && name.Text.Length == 0);
+                        PumpUntil(() => dialog.IsDirectoryListingAvailable && name.Text.Length == 0);
                         Assert.True(directory == pathBox.Text, "After a wildcard: path '" + pathBox.Text + "', busy "
                             + dialog.IsDirectoryListingBusy + ", available " + dialog.IsDirectoryListingAvailable
                             + ", status '" + metadata.Text + "'");
