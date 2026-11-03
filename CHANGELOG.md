@@ -6,33 +6,43 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ## [1.4.1] - Unreleased
 
+Killendar 1.4.1 stops appointments from being saved centuries off on some Windows regions and unsaved appointments from being lost without asking, closes lock and update gaps, makes install, update and uninstall recover cleanly, and moves the look and controls onto the shared KillerUI template.
+
 ### Fixed
+
 - Appointments are saved in a fixed date format whatever the Windows region. On a Thai or Arabic region they were saved centuries off, and on a region that writes times with dots they could not be read back; those dotted times now load too.
-- Uninstalling while Killendar is still open, for example in the tray, now waits up to 30 seconds for it to close and otherwise stops before removing anything. It used to take away the shortcuts and file links, then fail on the running program and leave the rest behind.
 - Exported .ics files carry Gregorian dates whatever the Windows region, and a description with several lines comes back whole when the file is imported again instead of stopping at the first line break.
-- An encrypted Killendar locks on idle or with Windows even while Manage Killendars is open. It used to stay unlocked behind the dialog and reopen without asking for the password.
 - An unsaved appointment is no longer lost without asking. Clicking a reminder, opening Manage Killendars, Update now and the Install badge all ask first, Save in that prompt actually saves, and closing a locked Killendar offers to discard rather than a Save that could not work.
+- An encrypted Killendar locks on idle or with Windows even while Manage Killendars is open. It used to stay unlocked behind the dialog and reopen without asking for the password.
+- A failed backup re-encryption keeps the original backup instead of deleting it, a password change that went through is no longer reported as failed when reopening the file stumbles, the backups of a Killendar set aside after a forgotten password stay with it, and an import that is waiting to write holds off a lock instead of losing its calendar mid-way.
 - The month view no longer crashes when the open Killendar and a shown one hold the same appointment spanning several days.
+- The calendar command pipe and the single-instance pipe accept only your own account, so another person signed in to the same PC cannot receive appointment details or stall Killendar by taking the pipe name first, and a calendar no longer fails to open because another account holds its native library lock.
+- Installing for all users verifies and copies the very same file, so nothing can swap the program between the check and the copy, and installing an older copy over a newer all-users install asks first.
+- Uninstalling while Killendar is still open, for example in the tray, now waits up to 30 seconds for it to close and otherwise stops before removing anything. It used to take away the shortcuts and file links, then fail on the running program and leave the rest behind. Uninstall also removes leftover update files, its own helper copy and the empty .kcal registry key.
 - A per-user or portable update that fails now reopens Killendar instead of leaving it closed, including when antivirus or a locked-down PowerShell stops the update helper from loading, a published copy that fails its final check is swapped back for the previous version and never started, and update downloads stream to disk with a size cap and an overall deadline.
-- The agenda command and KillerMCP's agenda list a range day by day, so a limit drops the last days instead of the first appointments when all-day items fall later in the range.
-- The file picker no longer stalls on a disconnected network folder when it opens, and a relative path typed in the path box is refused instead of being looked up against the wrong folder.
-- Keyboard focus cues respect the theme, Windows contrast refreshes are coalesced and restore frame colors, and picker selections keep text and icons shadow-free.
 - An all-users update reopens Killendar for the signed-in user at normal rights, whether it finishes or stops early. Windows was refusing that relaunch, so the app stayed closed. Files left behind by earlier failed updates are cleared when the next update is staged.
-- A finished all-users uninstall clears the files earlier failed attempts kept, so they no longer hold the install folder open after the restart.
 - Update and uninstall helpers load PowerShell modules only from Windows' own folder, so a module planted in your Documents cannot run inside them as administrator; a failed uninstall reports the real reason and retries when a copy is still running; a stalled update says so instead of silently doing nothing; and the window no longer freezes while an update is handed off.
 - The elevated part of an update compiles its helper code in a folder only administrators can open, so another program running as you cannot slip code into it, and an update that finished is no longer reported as failed when the app cannot be reopened afterward.
-- An update that cannot finish because the app did not close says so in its recovery report, the Update button stays off once an update has started, and a translation file can no longer give a setting the wrong kind of value.
 - Updates keep working after the publisher's code signing certificate is renewed. A release must still carry a valid signature naming the same publisher, but no longer the exact certificate of the installed copy.
 - Self-update runs on the family update code, which keeps Killendar's signature checks inside the helper and adds pinned publication folders, a publisher check on the published copy, same-publisher replacement and stable-only releases. Installed paths, registry keys and the exe name are unchanged.
+- An update that cannot finish because the app did not close says so in its recovery report, the Update button stays off once an update has started, and a translation file can no longer give a setting the wrong kind of value.
 - A locked Killendar no longer leaves you stuck with its password prompt. Canceling the prompt keeps it locked instead of quitting, the Killendars button can then open or create a different Killendar, and the padlock or any key brings the prompt back.
+- Dragging an appointment moves it by the distance dragged. Grabbing the second day of an overnight or multi-day appointment, or a long bar in the month view away from its first day, used to throw its start by hours or days.
+- Category chips in the appointment panel can be reached and toggled from the keyboard and are named for screen readers, Alt+Left moves an all-day appointment back a day, and filling an appointment from a template no longer starts a location lookup on its own.
+- A date-range CSV or HTML export over an endless repeat stops at the same limit as a whole-calendar export instead of freezing, time zone definitions in exported .ics files stay small, the slash date styles print slashes on regions that use dots, and an email whose invite is attached as an .ics file imports.
+- The agenda command and KillerMCP's agenda list a range day by day, so a limit drops the last days instead of the first appointments when all-day items fall later in the range.
+- The file picker no longer stalls on a disconnected network folder when it opens, and a relative path typed in the path box is refused instead of being looked up against the wrong folder.
+- File dialogs stay responsive on slow or crowded folders, cancel stale loads and identify incomplete listings.
+- The file picker's Accept button can no longer fire twice: it stays off while a folder is loading or an accept is already running. A mistyped folder path now returns to the last folder that worked instead of leaving an empty list.
+- A finished all-users uninstall clears the files earlier failed attempts kept, so they no longer hold the install folder open after the restart.
+- The file picker's recent locations and places lists are named for screen readers, and dragging the reminders or search window by its title bar can no longer crash after a quick tap.
+- Keyboard focus cues respect the theme, Windows contrast refreshes are coalesced and restore frame colors, and picker selections keep text and icons shadow-free.
 - Dialog title bars match the rest of the dialog in every theme except 98SE. They had their own band, a lighter strip in Light and a gradient in several dark themes, and the title bar painted its film grain twice.
 - The tray icon's menu opens from the pointer upward, out of the notification area, the same way in every Killer app. A short menu no longer covers the tray icons and a taller one no longer floats about 40 pixels above them.
-- File dialogs stay responsive on slow or crowded folders, cancel stale loads and identify incomplete listings.
 - Black table headers match the content surface, and softer grain keeps dark surfaces from looking gray.
-- The file picker's Accept button can no longer fire twice: it stays off while a folder is loading or an accept is already running. A mistyped folder path now returns to the last folder that worked instead of leaving an empty list.
-- The file picker's recent locations and places lists are named for screen readers.
 
 ### Changed
+
 - Themes, palettes and control styles now come from the shared KillerUI template, so buttons, caption buttons, menus and the 98SE frame look the same as in the other Killer apps.
 - Accent buttons such as Save and OK rest with an accent outline, as in the other Killer apps, and the About card, the window menu and the signature check share the KillerUI template code.
 - Confirm prompts use the family dialog frame shared with the other Killer apps, and their Cancel button follows the chosen language. The window chrome, toolbar, app size, tray, folder tree and update notices now run on the KillerUI template code with Killendar's own behavior kept.
@@ -44,6 +54,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - The footer status text sits 16 pixels from the window edge, as in KillerNotes and KillerPDF, instead of 4. 98SE keeps its spacing.
 
 ### Added
+
 - About groups settings in two columns and can hide shortcut hints in menus and tooltips without disabling keyboard shortcuts. Hover tooltips clear large pointers while preserving custom placement.
 - Alt+drag moves any Killendar window from anywhere inside it.
 - When Killendar is already installed for all users, the install prompt ticks and locks the all-users box and says it will update that copy.
@@ -118,6 +129,7 @@ Killendar 1.4.0 adds reminders, undo, search, verified backups, holidays and tim
 ## [1.3.1] - 2026-10-19
 
 ### Added
+
 - Added a right-hand position for the appointment panel and its rail, picked from the rail's right-click menu or with Alt+Shift+Left and Alt+Shift+Right. The arrow of the side the panel is already on opens or closes it.
 - Rail buttons can be dragged into any order, which is remembered. Theme, language and shortcuts stay together at the bottom, with date settings moved out of that group and the chevron at the top. Removed the option to swap those ends.
 - Installed copies add their folder to PATH, so commands such as `killendar agenda` run from any new terminal. `killendar --help` lists commands, and `--cli` stays compatible. Portable copies run from their folder or full path. Uninstalling removes the installed PATH entry.
@@ -130,6 +142,7 @@ Killendar 1.4.0 adds reminders, undo, search, verified backups, holidays and tim
 - The website's About page lists KillerBench and KillerShot under Also try, with larger app icons.
 
 ### Changed
+
 - Film grain is softer and shows on every theme, Black included. Its specks come in many shades, and some lean toward a color opposite the theme accent, such as purple on green and orange-brown on blue and red.
 - Rail buttons and the collapse arrow sit centered across the rail on either side, with the same space toward the panel and the edge, and the arrow is larger. The side choices in the rail's right-click menu show a picture of each position.
 - The period header above the calendar, the sidebar date heading and the dialog headings use Lacquer, the wordmark's app-name face, in place of Killer Sans. 98SE keeps Killer Sans.
@@ -142,6 +155,7 @@ Killendar 1.4.0 adds reminders, undo, search, verified backups, holidays and tim
 - Primary, outline and secondary buttons sit raised on a soft shadow that lifts on hover and sets down when pressed. 98SE keeps its flat beveled buttons.
 
 ### Fixed
+
 - ICS export now folds Unicode text at UTF-8 byte boundaries without breaking emoji or exceeding the line limit.
 - An oversized or invalid ICS duration now skips that event and leaves the rest of the import intact.
 - ICS duration applies correctly whether it appears before or after the event start.
@@ -184,15 +198,18 @@ Killendar 1.4.0 adds reminders, undo, search, verified backups, holidays and tim
 ## [1.3.0] - 2026-10-14
 
 ### Added
+
 - Added a Film Grain switch to the theme menu. It is on by default, and turning it off removes the grain texture from every surface.
 - Added the Windows 11 snap layouts menu to the maximize button.
 
 ### Changed
+
 - The wordmarks use Punktype and Lacquer, and the interface text, headings and footers use Killer Sans, in place of the typewriter font in the app and on the website.
 - Confirm, install and uninstall dialogs use the family setup dialog layout, with a notice icon, a larger Killer Sans heading and evenly sized buttons.
 - The Malaise theme's calendar pane is a shade darker than the window around it, in the app and on the website.
 
 ### Fixed
+
 - Silent installs return specific Windows error codes and reject a second concurrent install instead of reporting a general failure.
 - A silent install started without admin rights, as the Microsoft Store runs it, installs for the current user with no prompt instead of failing.
 - Chocolatey uninstalls run the silent uninstaller and fail with its exit code instead of opening the uninstall prompt.
@@ -215,6 +232,7 @@ Killendar 1.4.0 adds reminders, undo, search, verified backups, holidays and tim
 ## [1.2.0] - 2026-10-07
 
 ### Added
+
 - Added a silent uninstall, `/uninstall-silent`, registered as the quiet uninstall so WinGet and other package managers can remove Killendar without a prompt.
 - Ukrainian localization.
 - Norwegian (Bokmål) localization.
@@ -223,12 +241,14 @@ Killendar 1.4.0 adds reminders, undo, search, verified backups, holidays and tim
 - Link both shortcut views to the online guide and how-to, with more space beside the close button.
 
 ### Changed
+
 - Improved menu and selection contrast, softened material-theme footers and 98SE footer text, matched the 98SE About bevel to the sidebar, and used subtle gray Delirium dividers.
 - The two-column language menu now has room for all 19 languages.
 - Filled buttons, hovered outline buttons, checked chips and accent picker pills use gradients outside 98SE, and accent swatches lift on hover.
 - Menu rows now show accent text and icons on the theme's hover color.
 
 ### Fixed
+
 - Opening a Killendar already in the active folder uses the existing file instead of creating a duplicate (#18).
 - Opening an iCalendar file with Killendar now imports its events, and Killendar appears in the Windows Open with list for `.ics` files.
 - Assigned categories are visibly selected, retain their primary color, and offer Make primary without clearing other selections (#16).
@@ -258,11 +278,13 @@ Killendar 1.4.0 adds reminders, undo, search, verified backups, holidays and tim
 1.1.4 adds calendar access through KillerMCP and expands localization.
 
 ### Added
+
 - KillerMCP can use the installed app to read the calendar agenda without changing it.
 - KillerMCP can create appointments in the open, unlocked calendar.
 - Vietnamese localization for the app and website.
 
 ### Fixed
+
 - The 98SE calendar edge, toolbar buttons, and About controls now match the classic styling.
 - Closing the appointment panel with Escape leaves the B shortcut ready to reopen it (#15).
 - Standalone installation dialogs use the default Dark/Red theme, including uninstall and installation conflicts.
@@ -274,6 +296,7 @@ Killendar 1.4.0 adds reminders, undo, search, verified backups, holidays and tim
 ## [1.1.3] - 2026-09-02
 
 ### Fixed
+
 - Changing the week start immediately updates the calendar dates as well as the headings (#6).
 - Rolling Month navigation has larger range arrows and distinct week and range tooltips (#11).
 
@@ -282,14 +305,17 @@ Killendar 1.4.0 adds reminders, undo, search, verified backups, holidays and tim
 1.1.2 improves the calendar layout.
 
 ### Added
+
 - Agenda automatically shows two columns in wide windows and one column in narrow windows.
 - Date format and week-start settings have their own flyout above the language button.
 
 ### Changed
+
 - The calendar name sits beside the database controls in the title bar.
 - Sepulchre uses brown for the selected calendar view button.
 
 ### Fixed
+
 - The sidebar density button no longer overlaps the date and matches the other controls' size (#10).
 
 ## [1.1.1] - 2026-09-01
@@ -297,6 +323,7 @@ Killendar 1.4.0 adds reminders, undo, search, verified backups, holidays and tim
 1.1.1 fixes the time box crash and the first round of user reports, and adds a crash log, two languages and optional address suggestions.
 
 ### Added
+
 - Multi-day appointments now appear as one continuous block across the Month view (#1).
 - Rolling Month view now has separate one-week and full-range navigation buttons (#11).
 - Calendar-grid and appointment-sidebar density can now be adjusted independently (#10).
@@ -309,10 +336,12 @@ Killendar 1.4.0 adds reminders, undo, search, verified backups, holidays and tim
 - First launch now picks the interface language from the Windows display language when it is one of the fifteen shipped, falling back to English.
 
 ### Changed
+
 - The SQLCipher encryption native is now built from upstream source (SQLCipher 4.18.0, SQLite 3.53.4) and vendored in the repo, replacing the deprecated SQLitePCLRaw.lib.e_sqlcipher package.
 - The appointment sidebar heading is larger.
 
 ### Fixed
+
 - Typing an hour such as 8 or 8AM into a time box no longer crashes the app; a one-letter time pattern was being read as a standard format specifier (#14).
 - Changing the start date or time now moves the end by the same amount, so the appointment keeps its length (#14).
 - File-picker names now show their complete text in a hover tooltip when a column clips them.
@@ -329,6 +358,7 @@ Killendar 1.4.0 adds reminders, undo, search, verified backups, holidays and tim
 1.1.0 adds seven themes, scalable interface sizing and more flexible month and sidebar layouts. It also fixes all-day editing, calendar layout, localization and machine-wide uninstall.
 
 ### Added
+
 - Seven themes: 98SE, Ectoplasm, Decay, Mourning, Sepulchre, Delirium and Malaise. Killendar now includes all thirteen Killer Tools palettes, with six classic accent colors for 98SE.
 - Interface scaling from 80% to 150% by scrolling the title-bar wordmark. Scale-aware minimum sizes keep the calendar and sidebar usable.
 - A folder picker in Manage Killendars for changing the data folder, including one-click portable storage beside the executable.
@@ -336,12 +366,14 @@ Killendar 1.4.0 adds reminders, undo, search, verified backups, holidays and tim
 - Polish translation, bringing the interface to eleven languages.
 
 ### Changed
+
 - Ctrl+wheel over Month view zooms between one and six visible weeks, increasing appointment capacity as the cells grow.
 - The appointment sidebar can be resized down to 250 pixels and remembers its width between runs.
 - The themed file picker remembers separate open and save folders, includes Explorer Quick Access, supports horizontal mouse-wheel scrolling, and is now used when loading an external Killendar.
 - The theme picker now uses a stable full-height list with a separate accent strip. Menus, overlays, selection states, sidebar layout and rounded corners have also been tightened across the interface.
 
 ### Fixed
+
 - Editing an all-day appointment no longer shows its exclusive stored boundary as the visible end date or adds another day each time the appointment is saved.
 - Machine-wide uninstall now requests administrator access and correctly removes the Program Files copy, Common Start Menu shortcut and HKLM registration.
 - Multi-day and ordinary appointments now share the same sorted, scrollable stack inside each Month-view day, eliminating the competing overlay lanes that caused overlaps and misalignment.
