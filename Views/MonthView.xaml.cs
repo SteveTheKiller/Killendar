@@ -730,6 +730,22 @@ namespace Killendar.Views
             EventSelected?.Invoke(ev);
         }
 
+        /// <summary>The dropped start as a delta in whole days between the grabbed and released cells.</summary>
+        internal static DateTime DroppedStart(DateTime eventStart, DateTime grabCellDay, DateTime dropCellDay, bool allDay)
+        {
+            var day = eventStart.Date.AddDays((dropCellDay.Date - grabCellDay.Date).Days);
+            return allDay ? day : day + eventStart.TimeOfDay;
+        }
+
+        /// <summary>The day under a point in CalGrid (uniform star rows and columns over the grid start).</summary>
+        private DateTime CellDayAt(Point p)
+        {
+            int rows = Math.Max(1, CalGrid.RowDefinitions.Count);
+            int c = (int)Math.Max(0, Math.Min(6, p.X / (CalGrid.ActualWidth / 7)));
+            int r = (int)Math.Max(0, Math.Min(rows - 1, p.Y / (CalGrid.ActualHeight / rows)));
+            return (_visibleWeeks > 0 ? _rollingStart : StartOfGrid(_anchor)).AddDays(r * 7 + c).Date;
+        }
+
         /// <summary>
         /// Drag a chip to another day (2026-07-31). Same shape as TimeGridView.WireDrag:
         /// the chip rides a RenderTransform, a press that never travels stays a click, and
@@ -746,6 +762,7 @@ namespace Killendar.Views
             chip.RenderTransform = move;
 
             Point start = default;
+            DateTime grabDay = default;
             bool dragging = false;
             // The family grab cursor: open hand over the chip, closed hand while it is carried.
             chip.Cursor = Controls.DragCursors.Open;
@@ -762,6 +779,7 @@ namespace Killendar.Views
             chip.AddHandler(MouseLeftButtonDownEvent, new MouseButtonEventHandler((_, e) =>
             {
                 start = e.GetPosition(CalGrid);
+                grabDay = CalGrid.ActualWidth < 1 || CalGrid.ActualHeight < 1 ? ev.Start.Date : CellDayAt(start);
                 dragging = false;
                 chip.CaptureMouse();
             }), handledEventsToo: true);
@@ -792,15 +810,12 @@ namespace Killendar.Views
                 if (!wasDragging) return;
 
                 if (CalGrid.ActualWidth < 1 || CalGrid.ActualHeight < 1) return;
-                int rows = Math.Max(1, CalGrid.RowDefinitions.Count);
-                int c = (int)Math.Max(0, Math.Min(6, p.X / (CalGrid.ActualWidth / 7)));
-                int r = (int)Math.Max(0, Math.Min(rows - 1, p.Y / (CalGrid.ActualHeight / rows)));
-                var target = (_visibleWeeks > 0 ? _rollingStart : StartOfGrid(_anchor))
-                    .AddDays(r * 7 + c).Date;
+                var target = CellDayAt(p);
 
-                // Month moves the DATE and keeps the clock; an all-day event lands on the date
-                // itself and the controller keeps its span.
-                EventDropped?.Invoke(ev, target + (ev.AllDay ? TimeSpan.Zero : ev.Start.TimeOfDay));
+                // Month moves the start by the whole days between the grabbed and released cells,
+                // so grabbing a spanning bar on its fourth day moves it by the pointer's travel.
+                // The clock is kept; the controller keeps an all-day event's span.
+                EventDropped?.Invoke(ev, DroppedStart(ev.Start, grabDay, target, ev.AllDay));
             }), handledEventsToo: true);
 
             chip.LostMouseCapture += (_, _) => Reset();

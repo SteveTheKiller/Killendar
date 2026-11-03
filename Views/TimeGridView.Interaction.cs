@@ -278,7 +278,7 @@ namespace Killendar.Views
                 canvas.SizeChanged += (_, _) => PositionChip(chip, canvas, lane, myLanes);
                 PositionChip(chip, canvas, lane, myLanes);
 
-                WireDrag(chip, ev, top, canvas);
+                WireDrag(chip, ev, canvas);
                 canvas.Children.Add(chip);
             }
         }
@@ -291,13 +291,14 @@ namespace Killendar.Views
         /// Chip itself fires on release. Down and up register handledEventsToo because Chip has
         /// already Handled both to keep them off the day canvas.
         /// </summary>
-        private void WireDrag(Border chip, CalendarEvent ev, double chipTop, Canvas canvas)
+        private void WireDrag(Border chip, CalendarEvent ev, Canvas canvas)
         {
             if (ev.SourceCalendar.Length > 0) return;   // another Killendar's: read only
             var move = new TranslateTransform();
             chip.RenderTransform = move;
 
             Point start = default;
+            DateTime grabTime = default;   // the time under the pointer at mouse-down, on the grabbed segment's day
             bool dragging = false;
             // The family grab cursor: open hand over the chip, closed hand while it is carried.
             chip.Cursor = Controls.DragCursors.Open;
@@ -317,6 +318,8 @@ namespace Killendar.Views
             chip.AddHandler(MouseLeftButtonDownEvent, new MouseButtonEventHandler((_, e) =>
             {
                 start = e.GetPosition(_bodyGrid);
+                double grabMins = Math.Max(0, Math.Min(24 * 60, e.GetPosition(canvas).Y / CalendarChrome.HourHeight * 60));
+                grabTime = (canvas.Tag is DateTime day ? day.Date : RangeStart).AddMinutes(grabMins);
                 dragging = false;
                 chip.CaptureMouse();
             }), handledEventsToo: true);
@@ -359,8 +362,10 @@ namespace Killendar.Views
                 chip.ReleaseMouseCapture();          // fires LostMouseCapture -> Reset()
                 if (!wasDragging) return;            // a click - Chip's own release handler fires it
 
-                // Column from the pointer, time from where the chip's TOP landed - so the grab
-                // point inside the chip does not shift the drop by however far down you grabbed.
+                // Column from the pointer. The new start is the old start moved by the time the
+                // pointer travelled (grab to release), so the grab point inside the chip does not
+                // shift the drop, and a clipped overnight continuation segment still moves the
+                // event's real start.
                 // The gutter as laid out: wider when a second time zone's hours sit in it.
                 double gutter = _bodyGrid.ColumnDefinitions.Count > 0 ? _bodyGrid.ColumnDefinitions[0].ActualWidth : 46;
                 double dayW = Math.Max(1, (_bodyGrid.ActualWidth - gutter) / Days);
@@ -372,15 +377,27 @@ namespace Killendar.Views
                 // half-hour appointments unplaceable at density 0 (2026-07-31). A denser
                 // grid still gives its finer snap.
                 int snap = Math.Min(30, CalendarChrome.SnapMinutes);
-                double topMins = (chipTop + dy) / CalendarChrome.HourHeight * 60;
-                int mins = (int)Math.Round(topMins / snap) * snap;
-                mins = Math.Max(0, Math.Min(24 * 60 - snap, mins));
+                double dropMins = Math.Max(0, Math.Min(24 * 60,
+                    (grabTime.TimeOfDay.TotalMinutes + dy / CalendarChrome.HourHeight * 60)));
+                var dropTime = RangeStart.AddDays(col).AddMinutes(dropMins);
 
-                EventDropped?.Invoke(ev, RangeStart.AddDays(col).AddMinutes(mins));
+                EventDropped?.Invoke(ev, DroppedStart(ev.Start, grabTime, dropTime, snap));
             }), handledEventsToo: true);
 
             // Capture stolen mid-drag (a dialog, focus loss): the chip snaps home, nothing commits.
             chip.LostMouseCapture += (_, _) => Reset();
+        }
+
+        /// <summary>
+        /// The dropped start as a delta: the event's start moved by however far the pointer travelled
+        /// in time between grab and release, snapped to the grid and kept inside the day.
+        /// </summary>
+        internal static DateTime DroppedStart(DateTime eventStart, DateTime grabTime, DateTime dropTime, int snapMinutes)
+        {
+            var moved = eventStart + (dropTime - grabTime);
+            int mins = (int)Math.Round(moved.TimeOfDay.TotalMinutes / snapMinutes) * snapMinutes;
+            mins = Math.Max(0, Math.Min(24 * 60 - snapMinutes, mins));
+            return moved.Date.AddMinutes(mins);
         }
 
         private static void PositionChip(Border chip, Canvas canvas, int lane, int laneCount)
