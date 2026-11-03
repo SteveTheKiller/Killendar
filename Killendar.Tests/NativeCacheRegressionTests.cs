@@ -10,6 +10,13 @@ namespace Killendar.Tests
     public sealed class NativeCacheRegressionTests
     {
         [Fact]
+        public void PublicationLockIsScopedToTheCurrentUser()
+        {
+            Assert.StartsWith(@"Local\Killendar.SqlCipherCache.",
+                SqlCipherBootstrap.PublicationMutexName(@"C:\Users\someone\cache\e_sqlcipher.dll"));
+        }
+
+        [Fact]
         public void PublicationRepairsSameLengthCorruption()
         {
             string directory = Path.Combine(TestScratch.Root + @"\native-cache",

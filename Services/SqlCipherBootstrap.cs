@@ -68,15 +68,19 @@ namespace Killendar.Services
             }
         }
 
+        internal static string PublicationMutexName(string target)
+        {
+            using var hash = SHA256.Create();
+            return @"Local\Killendar.SqlCipherCache." + BitConverter.ToString(
+                hash.ComputeHash(Encoding.UTF8.GetBytes(target.ToUpperInvariant()))).Replace("-", "");
+        }
+
         internal static void PublishVerifiedCache(string target, byte[] contents)
         {
             target = Path.GetFullPath(target);
             byte[] expectedHash;
             using (var hash = SHA256.Create()) expectedHash = hash.ComputeHash(contents);
-            string mutexName;
-            using (var hash = SHA256.Create())
-                mutexName = @"Global\Killendar.SqlCipherCache." + BitConverter.ToString(
-                    hash.ComputeHash(Encoding.UTF8.GetBytes(target.ToUpperInvariant()))).Replace("-", "");
+            string mutexName = PublicationMutexName(target);
             Mutex mutex;
             try { mutex = new Mutex(false, mutexName); }
             catch (Exception ex) when (ex is UnauthorizedAccessException || ex is IOException ||

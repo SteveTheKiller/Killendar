@@ -2,7 +2,11 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
+using System.Runtime.InteropServices;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Text;
+using Microsoft.Win32.SafeHandles;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -99,12 +103,16 @@ namespace Killendar.Services
 
         private static string PipeName => "Killendar-" + Process.GetCurrentProcess().SessionId + "-CalendarCommands";
 
-        public static string Send(string request)
+        public static string Send(string request) => Send(request, PipeName, null);
+
+        internal static string Send(string request, string pipeName,
+            Func<PipeStream, SecurityIdentifier?>? serverOwner)
         {
             try
             {
-                using var pipe = new NamedPipeClientStream(".", PipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
+                using var pipe = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
                 pipe.Connect(2000);
+                PipeGuard.RequireCurrentUserServer(pipe, serverOwner);
                 if (!WriteResponse(pipe, request, ExchangeTimeout)) throw new IOException("Calendar command could not be sent.");
                 return ReadRequest(pipe, ExchangeTimeout) ?? throw new IOException("Killendar did not answer the calendar command.");
             }
@@ -114,25 +122,100 @@ namespace Killendar.Services
             }
         }
 
+        internal static NamedPipeServerStream CreateServer(string name) =>
+            PipeGuard.CreateServer(name, PipeDirection.InOut);
+
         internal static void Start(Dispatcher dispatcher, Func<string, string> execute)
         {
-            var thread = new Thread(() =>
-            {
-                while (true)
-                {
-                    try
-                    {
-                        using var pipe = new NamedPipeServerStream(PipeName, PipeDirection.InOut, 1,
-                            PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
-                        pipe.WaitForConnection();
-                        Serve(pipe, request => dispatcher.Invoke(() => execute(request)));
-                    }
-                    catch (IOException) { }
-                    catch (ObjectDisposedException) { return; }
-                    catch (Exception) { }
-                }
-            }) { IsBackground = true, Name = "Killendar calendar command pipe" };
+            string name = PipeName;
+            var thread = new Thread(() => PipeGuard.RunServerLoop(
+                () => CreateServer(name),
+                pipe => Serve(pipe, request => dispatcher.Invoke(() => execute(request))),
+                () => false, Thread.Sleep))
+            { IsBackground = true, Name = "Killendar calendar command pipe" };
             thread.Start();
         }
+    }
+
+    /// <summary>Pipe names live in a machine-wide namespace, so another local user could pre-create
+    /// one. Servers restrict access to the current user; clients refuse a server owned by anyone else.</summary>
+    internal static class PipeGuard
+    {
+        [DllImport("kernel32.dll", SetLastError = true), DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        private static extern bool GetNamedPipeServerProcessId(SafePipeHandle pipe, out uint processId);
+
+        [DllImport("kernel32.dll", SetLastError = true), DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        private static extern IntPtr OpenProcess(uint access, bool inherit, uint processId);
+
+        [DllImport("kernel32.dll", SetLastError = true), DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        private static extern bool CloseHandle(IntPtr handle);
+
+        [DllImport("advapi32.dll", SetLastError = true), DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        private static extern bool OpenProcessToken(IntPtr process, uint access, out IntPtr token);
+
+        private const uint ProcessQueryLimitedInformation = 0x1000;
+        private const uint TokenQuery = 0x0008;
+
+        /// <summary>The account running the process at the other end of a connected client pipe, or
+        /// null when it cannot be determined.</summary>
+        internal static SecurityIdentifier? OwnerOfServer(PipeStream pipe)
+        {
+            if (!GetNamedPipeServerProcessId(pipe.SafePipeHandle, out uint pid)) return null;
+            IntPtr process = OpenProcess(ProcessQueryLimitedInformation, false, pid);
+            if (process == IntPtr.Zero) return null;
+            try
+            {
+                if (!OpenProcessToken(process, TokenQuery, out IntPtr token)) return null;
+                try { using var identity = new WindowsIdentity(token); return identity.User; }
+                finally { CloseHandle(token); }
+            }
+            finally { CloseHandle(process); }
+        }
+
+        /// <summary>Refuses a connected pipe whose server is not run by the current user.</summary>
+        internal static void RequireCurrentUserServer(PipeStream pipe, Func<PipeStream, SecurityIdentifier?>? lookup)
+        {
+            var owner = (lookup ?? OwnerOfServer)(pipe);
+            if (owner == null || owner != WindowsIdentity.GetCurrent().User)
+                throw new IOException("The pipe server is not running as the current user.");
+        }
+
+        internal static NamedPipeServerStream CreateServer(string name, PipeDirection direction)
+        {
+            var security = new PipeSecurity();
+            security.AddAccessRule(new PipeAccessRule(WindowsIdentity.GetCurrent().User!,
+                PipeAccessRights.FullControl, AccessControlType.Allow));
+            return new NamedPipeServerStream(name, direction, 1, PipeTransmissionMode.Byte,
+                PipeOptions.Asynchronous, 0, 0, security);
+        }
+
+        /// <summary>Serves one connection at a time until <paramref name="stop"/> or disposal. A failure
+        /// to create the pipe (a squatter holds the name, access denied) waits 250 ms, doubling to
+        /// 5 s, instead of spinning; a completed connection resets the wait.</summary>
+        internal static void RunServerLoop(Func<NamedPipeServerStream> create, Action<NamedPipeServerStream> handle,
+            Func<bool> stop, Action<TimeSpan> delay)
+        {
+            var wait = TimeSpan.Zero;
+            while (!stop())
+            {
+                try
+                {
+                    using var pipe = create();
+                    pipe.WaitForConnection();
+                    handle(pipe);
+                    wait = TimeSpan.Zero;
+                }
+                catch (ObjectDisposedException) { return; }
+                catch (Exception)
+                {
+                    wait = NextWait(wait);
+                    delay(wait);
+                }
+            }
+        }
+
+        internal static TimeSpan NextWait(TimeSpan previous) =>
+            previous == TimeSpan.Zero ? TimeSpan.FromMilliseconds(250)
+            : TimeSpan.FromMilliseconds(Math.Min(previous.TotalMilliseconds * 2, 5000));
     }
 }

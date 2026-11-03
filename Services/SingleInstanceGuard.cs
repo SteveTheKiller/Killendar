@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
+using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,6 +55,11 @@ namespace Killendar.Services
             _timeoutMilliseconds = timeoutMilliseconds;
         }
 
+        internal Func<string, NamedPipeServerStream> ServerFactory { get; set; } =
+            name => PipeGuard.CreateServer(name, PipeDirection.In);
+        internal Action<TimeSpan> Delay { get; set; } = Thread.Sleep;
+        internal Func<PipeStream, SecurityIdentifier?>? ServerOwner { get; set; }
+
         private string PipeName => _id + "-" + Process.GetCurrentProcess().SessionId;
 
         /// <summary>Claims the single-instance slot. Returns false when another instance already holds
@@ -83,6 +89,7 @@ namespace Killendar.Services
                 byte[] payload = new UTF8Encoding(false, true).GetBytes(path + "\n");
                 using var pipe = new NamedPipeClientStream(".", PipeName, PipeDirection.Out, PipeOptions.Asynchronous);
                 pipe.Connect(_timeoutMilliseconds);
+                PipeGuard.RequireCurrentUserServer(pipe, ServerOwner);
                 AwaitWithin(pipe.WriteAsync(payload, 0, payload.Length), _timeoutMilliseconds);
                 return true;
             }
@@ -98,12 +105,12 @@ namespace Killendar.Services
         {
             var thread = new Thread(() =>
             {
+                var wait = TimeSpan.Zero;
                 while (!_disposed)
                 {
                     try
                     {
-                        using var server = new NamedPipeServerStream(
-                            PipeName, PipeDirection.In, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+                        using var server = ServerFactory(PipeName);
                         lock (_serverGate)
                         {
                             if (_disposed) return;
@@ -112,8 +119,15 @@ namespace Killendar.Services
                         server.WaitForConnection();
                         string path = ReadPayload(server);
                         _dispatch(() => _onForwarded(path));
+                        wait = TimeSpan.Zero;
                     }
-                    catch (IOException) { /* client vanished mid-handshake - keep listening */ }
+                    catch (Exception ex) when (ex is UnauthorizedAccessException || ex is IOException)
+                    {
+                        // Another account holds the pipe name, or a client vanished mid-handshake:
+                        // keep listening, but wait and retry rather than spin or crash.
+                        wait = PipeGuard.NextWait(wait);
+                        Delay(wait);
+                    }
                     catch (TimeoutException) { }
                     catch (DecoderFallbackException) { }
                     catch (ObjectDisposedException) when (_disposed) { return; }
