@@ -109,13 +109,18 @@ namespace Killendar.Tests
                         Assert.Equal("*.ics", filters.Items[0]);
                         name.Text = "*.txt";
                         PressEnter(name);
-                        Assert.Equal(directory, ((TextBox)dialog.FindName("PathBox")).Text);
+                        // The picker lists and probes off the UI thread; wait for it as a person would.
+                        PumpUntil(() => !dialog.IsDirectoryListingBusy && name.Text.Length == 0);
+                        Assert.True(directory == ((TextBox)dialog.FindName("PathBox")).Text,
+                            "Path box after a wildcard: '" + ((TextBox)dialog.FindName("PathBox")).Text + "'");
                         Assert.Equal("*.txt", filters.Items[0]);
                         Assert.Equal("", name.Text);
 
                         name.Text = "\"accepted.ics\"";
                         accept.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-                        Assert.Equal(Path.Combine(directory, "accepted.ics"), dialog.FileName);
+                        PumpUntil(() => !dialog.IsVisible);
+                        Assert.True(Path.Combine(directory, "accepted.ics") == dialog.FileName,
+                            "File name after Accept: '" + dialog.FileName + "'");
                         Assert.False(dialog.IsVisible);
                         Assert.Empty(Directory.GetFiles(directory));
                     }
@@ -130,6 +135,19 @@ namespace Killendar.Tests
                 ThemeManager.GetSetting = previousGet;
                 ThemeManager.SetSetting = previousSet;
                 Directory.Delete(directory, true);
+            }
+        }
+
+        // Runs the dispatcher until the condition holds or ten seconds pass.
+        private static void PumpUntil(Func<bool> done)
+        {
+            var clock = System.Diagnostics.Stopwatch.StartNew();
+            while (!done() && clock.ElapsedMilliseconds < 10000)
+            {
+                var frame = new DispatcherFrame();
+                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => frame.Continue = false));
+                Dispatcher.PushFrame(frame);
+                Thread.Sleep(10);
             }
         }
 
