@@ -125,6 +125,38 @@ namespace Killendar.Tests
             });
         }
 
+        [Fact]
+        public void SourceIsHeldAgainstWritesAndRenamesWhileItIsVerified()
+        {
+            InScratch((source, target) =>
+            {
+                bool checkedHeld = false;
+                InstalledImagePublication.Publish(source, target, () => { }, verifySource: held =>
+                {
+                    Assert.Equal(source, held);
+                    Assert.ThrowsAny<IOException>(() => File.WriteAllText(source, "swapped"));
+                    Assert.ThrowsAny<IOException>(() => File.Move(source, source + ".moved"));
+                    Assert.ThrowsAny<IOException>(() => File.Delete(source));
+                    checkedHeld = true;
+                });
+                Assert.True(checkedHeld);
+                Assert.Equal("new complete image", File.ReadAllText(target));
+            });
+        }
+
+        [Fact]
+        public void RejectedSourceNeverStagesOrRegisters()
+        {
+            InScratch((source, target) =>
+            {
+                Assert.Throws<System.Security.SecurityException>(() => InstalledImagePublication.Publish(source, target,
+                    () => throw new Exception("Registration must not run."),
+                    verifySource: _ => throw new System.Security.SecurityException("untrusted publisher")));
+                Assert.Equal("old complete image", File.ReadAllText(target));
+                Assert.Empty(Directory.GetFiles(Path.GetDirectoryName(target)!, "*.install-*"));
+            });
+        }
+
         private static void InScratch(Action<string, string> exercise)
         {
             string root = Path.Combine(TestScratch.Root, "install-image-" + Guid.NewGuid().ToString("N"));

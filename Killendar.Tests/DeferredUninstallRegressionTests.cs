@@ -162,6 +162,49 @@ namespace Killendar.Tests
         }
 
         [Fact]
+        public void OwnedFilesTakeUpdateLeftoversAlongWithTheInstalledImage()
+        {
+            using var fixture = new Fixture();
+            const string hex = "0123456789abcdef0123456789abcdef";
+            string[] leftovers =
+            {
+                "Killendar.exe.old-" + hex, ".update-" + hex + ".exe", ".update-" + hex + ".exe.recovery.txt",
+                "Killendar.exe." + hex + ".bak"
+            };
+            foreach (string name in leftovers) File.WriteAllText(Path.Combine(fixture.Installation, name), "leftover");
+            string kept = Path.Combine(fixture.Installation, "Killendar.exe.old-" + hex.Replace('0', '1'));
+            File.WriteAllText(kept, "recovery copy");
+            File.WriteAllText(kept + ".keep", "marker");
+            File.WriteAllText(Path.Combine(fixture.Installation, "notes.txt"), "not ours");
+
+            string[] owned = DeferredUninstall.OwnedFiles(fixture.Installation, new[] { "Killendar.exe" });
+
+            Assert.Equal(new[] { "Killendar.exe" }.Concat(leftovers).OrderBy(n => n, StringComparer.Ordinal),
+                owned.OrderBy(n => n, StringComparer.Ordinal));
+            Assert.Equal(owned.Length, KillerFamily.Deployment.InstalledFileCleanup.OwnedPaths(fixture.Installation, owned).Length);
+        }
+
+        [Fact]
+        public void PerUserCleanupStartsAHiddenPowerShellThatRemovesTheOperationAndEmptyInstallFolders()
+        {
+            ProcessStartInfo? started = null;
+            string operation = @"C:\Users\x y\AppData\Local\Killendar\Uninstall-0123456789abcdef0123456789abcdef";
+            string install = @"C:\Users\x y\AppData\Local\Programs\Kill'endar";
+
+            DeferredUninstall.SchedulePerUserCleanup(operation, install, start => { started = start; return true; });
+
+            Assert.NotNull(started);
+            Assert.True(started!.CreateNoWindow);
+            Assert.False(started.UseShellExecute);
+            Assert.Equal("powershell.exe", Path.GetFileName(started.FileName).ToLowerInvariant());
+            string[] words = started.Arguments.Split(' ');
+            string script = System.Text.Encoding.Unicode.GetString(Convert.FromBase64String(words[words.Length - 1]));
+            Assert.Equal("-EncodedCommand", words[words.Length - 2]);
+            Assert.Contains("[IO.Directory]::Delete('" + operation + "',$true)", script);
+            Assert.Contains(@"[IO.Directory]::Delete('C:\Users\x y\AppData\Local\Programs\Kill''endar')", script);
+        }
+
+        [Fact]
         public void ActualDelegatedChildExitCodeIsPropagated()
         {
             using var fixture = new Fixture();

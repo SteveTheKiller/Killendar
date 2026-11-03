@@ -8,7 +8,8 @@ namespace KillerFamily.Deployment
     internal static class InstalledImagePublication
     {
         internal static void Publish(string source, string target, Action register,
-            Action<string, string>? copy = null, Action<string, string, string>? replace = null)
+            Action<string, string>? copy = null, Action<string, string, string>? replace = null,
+            Action<string>? verifySource = null)
         {
             source = Path.GetFullPath(source);
             target = Path.GetFullPath(target);
@@ -17,12 +18,17 @@ namespace KillerFamily.Deployment
             string token = Guid.NewGuid().ToString("N");
             string staged = target + ".install-" + token;
             string backup = target + ".previous-" + token;
-            byte[] expected = Hash(source);
+            // Open the source once and keep it: no writer, rename or delete can slip in between the
+            // trust check, the hash and the copy. Every later step reads this same handle.
+            using var held = new FileStream(source, FileMode.Open, FileAccess.Read, FileShare.Read);
+            verifySource?.Invoke(source);
+            byte[] expected = Hash(held);
+            held.Position = 0;
             byte[]? original = File.Exists(target) ? Hash(target) : null;
             bool published = false;
             try
             {
-                (copy ?? CopyFlushed)(source, staged);
+                (copy ?? ((from, to) => CopyFlushed(held, to)))(source, staged);
                 Verify(staged, expected);
                 if (original != null)
                     (replace ?? ((from, to, previous) => File.Replace(from, to, previous)))(staged, target, backup);
@@ -63,9 +69,9 @@ namespace KillerFamily.Deployment
             TryDelete(backup);
         }
 
-        private static void CopyFlushed(string source, string target)
+        private static void CopyFlushed(Stream input, string target)
         {
-            using var input = File.OpenRead(source);
+            input.Position = 0;
             using var output = new FileStream(target, FileMode.CreateNew, FileAccess.Write, FileShare.None);
             input.CopyTo(output);
             output.Flush(true);
@@ -74,6 +80,11 @@ namespace KillerFamily.Deployment
         private static byte[] Hash(string path)
         {
             using var input = File.OpenRead(path);
+            return Hash(input);
+        }
+
+        private static byte[] Hash(Stream input)
+        {
             using var hash = SHA256.Create();
             return hash.ComputeHash(input);
         }

@@ -100,16 +100,30 @@ namespace Killendar.Services
                 using (var k = root.OpenSubKey(
                            @"Software\Classes\.ics\OpenWithProgids", writable: true))
                     k?.DeleteValue(IcsProgId, throwOnMissingValue: false);
+                bool removeExtension = false;
                 using (var k = root.OpenSubKey(
                            @"Software\Classes\" + EventStore.Extension, writable: true))
                 {
                     // Only drop the default if it is still ours - another app may have taken it.
                     if (k != null && (k.GetValue("") as string) == ProgId)
                         k.SetValue("", "");
+                    removeExtension = k != null && IsEmptyExtensionKey(k);
                 }
+                // Leave nothing behind when the blanked key holds nothing else.
+                if (removeExtension)
+                    root.DeleteSubKey(@"Software\Classes\" + EventStore.Extension, throwOnMissingSubKey: false);
                 SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, IntPtr.Zero, IntPtr.Zero);
             }
             catch { /* best-effort */ }
+        }
+
+        /// <summary>True when the key has no subkeys and no values beyond an empty default.</summary>
+        private static bool IsEmptyExtensionKey(RegistryKey key)
+        {
+            if (key.SubKeyCount > 0) return false;
+            foreach (string name in key.GetValueNames())
+                if (name.Length > 0 || !string.IsNullOrEmpty(key.GetValue("") as string)) return false;
+            return true;
         }
 
         /// <summary>The calendar file handed to us on the command line, or null. Anything else is

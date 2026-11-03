@@ -8,6 +8,23 @@ using Microsoft.Win32;
 
 namespace Killendar
 {
+    /// <summary>The older-over-newer check shared by the per-user and all-users install paths.</summary>
+    internal static class InstallDowngrade
+    {
+        /// <summary>True to go ahead. Asks only when both versions parse and the running one is older.</summary>
+        internal static bool Accepted(string runningExe, string installedExe,
+            Func<string, string?> fileVersion, Func<string, bool> ask)
+        {
+            string runningText = fileVersion(runningExe) ?? "";
+            string installedText = fileVersion(installedExe) ?? "";
+            if (Version.TryParse(runningText, out var running) && Version.TryParse(installedText, out var installed)
+                && running < installed)
+                return ask($"You are about to install an older version ({runningText}) over " +
+                    $"the currently installed version ({installedText}).\n\nDowngrade anyway?");
+            return true;
+        }
+    }
+
     public partial class App
     {
         private static readonly string[] InstalledFiles = { "Killendar.exe" };
@@ -92,6 +109,8 @@ namespace Killendar
         {
             if (allUsers)
             {
+                if (File.Exists(MachineInstallExe)
+                    && !ConfirmDowngrade(Process.GetCurrentProcess().MainModule!.FileName, MachineInstallExe)) return false;
                 if (!RunElevatedSilentInstall()) return false;
 
                 // Only ever one install: drop the per-user copy so there is a single Start Menu
@@ -104,6 +123,21 @@ namespace Killendar
             if (!DoInstall(wantDesktop) || !File.Exists(InstallExe)) return false;
             return new InstallRelaunch().StartInstalled(InstallExe, () => Current.Shutdown());
         }
+
+        /// <summary>Runs while Publish holds the source open with no write or delete share, so the
+        /// bytes checked here are the bytes hashed and copied. The signature must be valid, name the
+        /// publisher, and match the installed copy's publisher when that copy is signed.</summary>
+        private static void VerifyInstallSource(string heldSource, string installedExe)
+        {
+            var installed = File.Exists(installedExe) ? CodeSignature.GetSignerInfo(installedExe) : (false, "", "");
+            var incoming = CodeSignature.GetSignerInfo(heldSource);
+            ReleaseIdentity.VerifySigner((installed.Item1, installed.Item2), (incoming.valid, incoming.subject), false);
+        }
+
+        private static bool ConfirmDowngrade(string runningExe, string installedExe)
+            => InstallDowngrade.Accepted(runningExe, installedExe,
+                path => FileVersionInfo.GetVersionInfo(path).FileVersion,
+                message => ShowInstallDialog(message, true));
 
         /// <summary>Re-run this exe elevated with /silent and wait for it to finish.</summary>
         private static bool RunElevatedSilentInstall()
@@ -189,7 +223,7 @@ namespace Killendar
                     WriteInstallKeys(hive, installDir, installExe);
                     FileAssociations.Register(hive, installExe);
                     Services.CommandLinePath.Register(installDir, machine);
-                });
+                }, verifySource: held => VerifyInstallSource(held, installExe));
                 return KillerFamily.Deployment.InstallerExitCodes.Success;
             }
             catch (Exception ex)
@@ -218,21 +252,7 @@ namespace Killendar
                 return false;
             }
 
-            if (File.Exists(InstallExe))
-            {
-                string runningText = FileVersionInfo.GetVersionInfo(src).FileVersion ?? "";
-                string installedText = FileVersionInfo.GetVersionInfo(InstallExe).FileVersion ?? "";
-                if (Version.TryParse(runningText, out var runningVersion) &&
-                    Version.TryParse(installedText, out var installedVersion) &&
-                    runningVersion < installedVersion)
-                {
-                    var choice = ShowInstallDialog(
-                        $"You are about to install an older version ({runningText}) over " +
-                        $"the currently installed version ({installedText}).\n\nDowngrade anyway?",
-                        true);
-                    if (!choice) return false;
-                }
-            }
+            if (File.Exists(InstallExe) && !ConfirmDowngrade(src, InstallExe)) return false;
 
             try
             {
@@ -251,7 +271,7 @@ namespace Killendar
                         WriteInstallKeys(Registry.CurrentUser, InstallDir, InstallExe);
                         FileAssociations.Register(Registry.CurrentUser, InstallExe);
                         Services.CommandLinePath.Register(InstallDir, machine: false);
-                    });
+                    }, verifySource: held => VerifyInstallSource(held, InstallExe));
                 }
                 catch (Exception copyEx) when (copyEx is UnauthorizedAccessException or IOException)
                 {
@@ -353,12 +373,22 @@ namespace Killendar
             bool machine = args[1] == "machine";
             if (machine && !KillerFamily.Deployment.InstallerExitCodes.IsElevated())
                 return KillerFamily.Deployment.InstallerExitCodes.AccessDenied;
-            return new DeferredUninstall().RunWorker(Process.GetCurrentProcess().MainModule!.FileName,
-                UninstallStagingRoot(machine), machine ? MachineInstallDir : InstallDir, InstalledFiles,
+            int result = new DeferredUninstall().RunWorker(Process.GetCurrentProcess().MainModule!.FileName,
+                UninstallStagingRoot(machine), machine ? MachineInstallDir : InstallDir, OwnedUninstallFiles(machine),
                 machine, args[2], () => RemoveUninstallMetadata(machine),
                 removeIntegration: () => RemoveUninstallIntegration(machine),
                 isRunning: () => InstanceRunningUnder(machine ? MachineInstallDir : InstallDir));
+            // A machine uninstall leaves its worker folder to the restart; a per-user one has no
+            // such step, so a hidden process removes the worker folder and the empty install folder.
+            if (result == 0 && !machine)
+                DeferredUninstall.SchedulePerUserCleanup(
+                    DeferredUninstall.OperationDirectory(UninstallStagingRoot(false), args[2]), InstallDir, DeferredUninstall.StartCleanup);
+            return result;
         }
+
+        /// <summary>The installed exe plus any update leftovers beside it, so none keep the folder.</summary>
+        private static string[] OwnedUninstallFiles(bool machine)
+            => DeferredUninstall.OwnedFiles(machine ? MachineInstallDir : InstallDir, InstalledFiles, ExeName);
 
         /// <summary>True when another Killendar.exe (for example hidden in the tray) runs from the
         /// install folder. This process and its uninstall worker are not counted.</summary>
@@ -410,7 +440,7 @@ namespace Killendar
             }
 
             int result = new DeferredUninstall().Start(Process.GetCurrentProcess().MainModule!.FileName,
-                UninstallStagingRoot(machine), machine ? MachineInstallDir : InstallDir, InstalledFiles, machine, operationId);
+                UninstallStagingRoot(machine), machine ? MachineInstallDir : InstallDir, OwnedUninstallFiles(machine), machine, operationId);
             Console.Error.WriteLine("Uninstall result: " + result + ". Status and retained helper files: " + operationDirectory);
             if (result != UninstallWorkflow.Pending && !silent)
                 ShowInstallDialog("Uninstall could not start. Result: " + result + "\n\nRetained files and status, if created:\n" + operationDirectory);

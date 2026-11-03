@@ -144,6 +144,40 @@ namespace Killendar.Services
             }
         }
 
+        /// <summary>The installed files plus the update working files (.old-, .update-, .recovery.txt,
+        /// .bak) an update left beside the exe, by name. Computed at uninstall time so leftovers never
+        /// keep the folder. Every name still passes InstalledFileCleanup.OwnedPaths.</summary>
+        internal static string[] OwnedFiles(string directory, string[] installedFiles, string exe = "Killendar.exe")
+            => installedFiles.Concat(ExecutableDeployment.UninstallLeftovers(directory, exe))
+                .Distinct(StringComparer.OrdinalIgnoreCase).ToArray();
+
+        /// <summary>Replaced in tests. Starts the detached cleanup process.</summary>
+        internal static Func<ProcessStartInfo, bool> StartCleanup = start =>
+        {
+            using var process = Process.Start(start);
+            return process != null;
+        };
+
+        /// <summary>A per-user uninstall runs from a worker copy in the operation folder, which cannot
+        /// delete itself. A hidden PowerShell outlives the worker, retries until the folder is
+        /// free, removes it, then removes the install folder if nothing else is in it.</summary>
+        internal static void SchedulePerUserCleanup(string operationDirectory, string targetDirectory, Func<ProcessStartInfo, bool> start)
+        {
+            try
+            {
+                static string Quote(string path) => "'" + Path.GetFullPath(path).Replace("'", "''") + "'";
+                string script = "for($i=0;$i -lt 60;$i++){try{[IO.Directory]::Delete(" + Quote(operationDirectory)
+                    + ",$true);break}catch{Start-Sleep 1}};try{[IO.Directory]::Delete(" + Quote(targetDirectory) + ")}catch{}";
+                string encoded = Convert.ToBase64String(System.Text.Encoding.Unicode.GetBytes(script));
+                string shell = Path.Combine(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe");
+                start(new ProcessStartInfo(shell, "-NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand " + encoded)
+                {
+                    UseShellExecute = false, CreateNoWindow = true, WindowStyle = ProcessWindowStyle.Hidden
+                });
+            }
+            catch { /* Best effort: the uninstall itself already succeeded. */ }
+        }
+
         /// <summary>A machine-wide uninstall runs from a copy staged inside the install folder, which
         /// cannot delete itself. Once it succeeds, the copy, its folder and the install folder (empty
         /// by then) are left for Windows to remove at the next restart.</summary>

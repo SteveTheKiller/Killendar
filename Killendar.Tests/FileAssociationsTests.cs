@@ -80,5 +80,63 @@ namespace Killendar.Tests
                 Registry.CurrentUser.DeleteSubKeyTree(keyName, throwOnMissingSubKey: false);
             }
         }
+
+        [Fact]
+        public void UnregisterDeletesTheEmptyExtensionKeyItBlanked()
+        {
+            WithScratchRoot(root =>
+            {
+                FileAssociations.Register(root, @"C:\Apps\Killendar.exe");
+                FileAssociations.Unregister(root);
+                Assert.Null(root.OpenSubKey(@"Software\Classes\" + EventStore.Extension));
+            });
+        }
+
+        [Fact]
+        public void UnregisterLeavesTheExtensionKeyWhenAnotherProgIdOwnsIt()
+        {
+            WithScratchRoot(root =>
+            {
+                using (var k = root.CreateSubKey(@"Software\Classes\" + EventStore.Extension))
+                    k.SetValue("", "Other.Calendar");
+                FileAssociations.Unregister(root);
+                using var kept = root.OpenSubKey(@"Software\Classes\" + EventStore.Extension)!;
+                Assert.Equal("Other.Calendar", kept.GetValue(""));
+            });
+        }
+
+        [Fact]
+        public void UnregisterLeavesTheExtensionKeyWhenItHoldsSubkeysOrOtherValues()
+        {
+            WithScratchRoot(root =>
+            {
+                FileAssociations.Register(root, @"C:\Apps\Killendar.exe");
+                using (var k = root.CreateSubKey(@"Software\Classes\" + EventStore.Extension + @"\OpenWithProgids"))
+                    k.SetValue("Other.Calendar", "");
+                FileAssociations.Unregister(root);
+                using var kept = root.OpenSubKey(@"Software\Classes\" + EventStore.Extension)!;
+                Assert.Equal("", kept.GetValue(""));
+                Assert.NotNull(kept.OpenSubKey("OpenWithProgids"));
+
+                using (var k = root.CreateSubKey(@"Software\Classes\.other"))
+                    k.SetValue("Content Type", "text/x-other");
+                using (var k = root.CreateSubKey(@"Software\Classes\" + EventStore.Extension))
+                    k.SetValue("", FileAssociations.ProgId);
+                root.DeleteSubKeyTree(@"Software\Classes\" + EventStore.Extension + @"\OpenWithProgids");
+                using (var k = root.OpenSubKey(@"Software\Classes\" + EventStore.Extension, true)!)
+                    k.SetValue("Content Type", "text/x-kcal");
+                FileAssociations.Unregister(root);
+                using var valued = root.OpenSubKey(@"Software\Classes\" + EventStore.Extension)!;
+                Assert.Equal("text/x-kcal", valued.GetValue("Content Type"));
+            });
+        }
+
+        private static void WithScratchRoot(Action<RegistryKey> exercise)
+        {
+            string keyName = @"Software\Killendar.Tests\" + Guid.NewGuid().ToString("N");
+            using RegistryKey root = Registry.CurrentUser.CreateSubKey(keyName)!;
+            try { exercise(root); }
+            finally { Registry.CurrentUser.DeleteSubKeyTree(keyName, throwOnMissingSubKey: false); }
+        }
     }
 }
