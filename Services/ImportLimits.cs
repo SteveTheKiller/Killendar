@@ -21,6 +21,13 @@ namespace Killendar.Services
         internal static int MaxEvents = 100_000;
         internal static int MaxMimeDepth = 10;
 
+        /// <summary>Most RDATE values, and most EXDATE values, one appointment keeps; the rest are
+        /// counted as a lost detail.</summary>
+        internal static int MaxDatesPerEvent = 10_000;
+
+        /// <summary>Most distinct custom time zones a file may define; later ones are treated as unreadable.</summary>
+        internal static int MaxCustomZones = 256;
+
         /// <summary>Refuses a file before any of it is read.</summary>
         internal static void CheckFile(string path)
         {

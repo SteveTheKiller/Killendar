@@ -124,13 +124,13 @@ namespace Killendar.Services
         private static IcsParseResult ParseLines(List<string> lines, CancellationToken cancel)
         {
             var previous = _fileZones;
-            _fileZones = ReadFileZones(lines);
+            _fileZones = ReadFileZones(lines, cancel);
             try { return ParseLinesWithZones(lines, cancel); }
             finally { _fileZones = previous; }
         }
 
         /// <summary>Every VTIMEZONE whose TZID Windows cannot name, matched to a Windows zone where one fits.</summary>
-        private static Dictionary<string, (string? SystemId, IcsCustomZone Zone)> ReadFileZones(List<string> lines)
+        private static Dictionary<string, (string? SystemId, IcsCustomZone Zone)> ReadFileZones(List<string> lines, CancellationToken cancel)
         {
             var zones = new Dictionary<string, (string?, IcsCustomZone)>(StringComparer.Ordinal);
             List<string>? block = null;
@@ -140,6 +140,7 @@ namespace Killendar.Services
                 if (block == null) continue;
                 if (line.StartsWith("END:VTIMEZONE", StringComparison.OrdinalIgnoreCase))
                 {
+                    cancel.ThrowIfCancellationRequested();
                     var definition = block;
                     block = null;
                     // Only a name Windows cannot resolve needs the file's rules; a definition
@@ -148,7 +149,7 @@ namespace Killendar.Services
                     string? id = definition.Select(l => (Head: l.Split(':')[0].Split(';')[0].Trim(), Line: l))
                         .Where(x => x.Head.Equals("TZID", StringComparison.OrdinalIgnoreCase) && x.Line.Contains(":"))
                         .Select(x => x.Line.Substring(x.Line.IndexOf(':') + 1).Trim().Trim('"')).FirstOrDefault();
-                    if (id == null || id.Length == 0 || zones.ContainsKey(id) || TZConvert.TryGetTimeZoneInfo(id, out _)) continue;
+                    if (id == null || id.Length == 0 || zones.ContainsKey(id) || zones.Count >= ImportLimits.MaxCustomZones || TZConvert.TryGetTimeZoneInfo(id, out _)) continue;
                     IcsCustomZone? zone;
                     try { zone = IcsCustomZone.Read(definition); }
                     catch (ArgumentException) { zone = null; }
@@ -189,6 +190,7 @@ namespace Killendar.Services
             bool calendarCanceled = false;
             bool canceled = false;
             bool lostDetails = false;
+            bool sawCreated = false;
             var canceledDates = new List<(Guid series, (DateTime dt, bool allDay, RecurrenceTimeBasis basis, DateTime? anchor, string zone) date)>();
 
             int read = 0;
@@ -229,6 +231,7 @@ namespace Killendar.Services
                         recurrenceIdValue = null;
                         canceled = false;
                         lostDetails = false;
+                        sawCreated = false;
                         exclusions.Clear();
                         extraDates.Clear();
                     }
@@ -339,18 +342,22 @@ namespace Killendar.Services
                                     current.RepeatCount = 1;
                                 }
                                 var clock = Recurrence.SeriesClockStart(current);
+                                var seenExtras = new HashSet<DateTime>(current.ExtraDates);
+                                int visited = 0;
                                 foreach (var extra in extraDates)
                                 {
+                                    if ((visited++ & 255) == 0) cancel.ThrowIfCancellationRequested();
                                     var day = extra.allDay || current.AllDay ? extra.dt.Date : CanonicalExclusion(current, extra);
                                     if (!current.AllDay && !extra.allDay && day.TimeOfDay != clock.TimeOfDay) lostDetails = true;
-                                    if (!current.ExtraDates.Contains(day.Date)) current.ExtraDates.Add(day.Date);
+                                    if (seenExtras.Add(day.Date)) current.ExtraDates.Add(day.Date);
                                 }
                             }
 
+                            int excluded = 0;
                             foreach (var exclusion in exclusions)
                             {
-                                if (exclusion.allDay) current.SkipDates.Add(exclusion.dt.Date);
-                                else if (current.AllDay) repeating = true;
+                                if ((excluded++ & 255) == 0) cancel.ThrowIfCancellationRequested();
+                                if (exclusion.allDay || current.AllDay) current.SkipDates.Add(exclusion.dt.Date);
                                 else current.SkipOccurrences.Add(CanonicalExclusion(current, exclusion));
                             }
                             if (current.RepeatUntil.HasValue &&
@@ -397,6 +404,16 @@ namespace Killendar.Services
                                     current.RepeatMonthWeek = 0;
                                     repeating = true;
                                 }
+                            }
+
+                            // The same for a weekly rule whose days leave out the start's own weekday:
+                            // the series would skip its first date, so it is counted like the monthly case.
+                            if (current.Repeat == RepeatFreq.Weekly && current.RepeatDays.Count > 0 &&
+                                !current.RepeatDays.Contains(Recurrence.SeriesClockStart(current).DayOfWeek))
+                            {
+                                current.Repeat = RepeatFreq.None;
+                                current.RepeatDays = [];
+                                repeating = true;
                             }
 
                             if (_usedUnmatchedZone && current.Repeat != RepeatFreq.None) result.ZoneApproximated++;
@@ -475,6 +492,8 @@ namespace Killendar.Services
                         if (param.IndexOf("VALUE=PERIOD", StringComparison.OrdinalIgnoreCase) >= 0) { repeating = true; break; }
                         foreach (var part in value.Split(','))
                         {
+                            cancel.ThrowIfCancellationRequested();
+                            if (extraDates.Count >= ImportLimits.MaxDatesPerEvent) { lostDetails = true; break; }
                             var extra = ParseDateTime(part, param);
                             if (extra != null) extraDates.Add(extra.Value);
                         }
@@ -483,6 +502,8 @@ namespace Killendar.Services
                     case "EXDATE":
                         foreach (var part in value.Split(','))
                         {
+                            cancel.ThrowIfCancellationRequested();
+                            if (exclusions.Count >= ImportLimits.MaxDatesPerEvent) { lostDetails = true; break; }
                             var ex = ParseDateTime(part, param);
                             if (ex != null) exclusions.Add(ex.Value);
                         }
@@ -543,11 +564,18 @@ namespace Killendar.Services
                         duration = value;
                         break;
 
+                    // CREATED is the creation time; DTSTAMP stands in only when there is none.
                     case "CREATED":
+                    {
+                        var parsed = ParseDateTime(value, param);
+                        if (parsed != null) { current.Created = parsed.Value.dt; sawCreated = true; }
+                        break;
+                    }
+
                     case "DTSTAMP":
                     {
                         var parsed = ParseDateTime(value, param);
-                        if (parsed != null) current.Created = parsed.Value.dt;
+                        if (parsed != null && !sawCreated) current.Created = parsed.Value.dt;
                         break;
                     }
 
@@ -598,6 +626,9 @@ namespace Killendar.Services
                         break;
                 }
             }
+
+            // An appointment still open when the file ends never reached its END:VEVENT.
+            if (current != null) result.Unreadable++;
 
             foreach (var (series, date) in canceledDates)
             {
