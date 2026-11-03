@@ -72,6 +72,50 @@ namespace Killendar.Tests
                     Filter = "Calendar|*.ics|Text|*.txt", OverwritePrompt = false
                 };
                 Exception? interactionFailure = null;
+                // What the dialog read and who asked it to close, so a failed first listing says why.
+                var trace = new System.Text.StringBuilder();
+                var started = System.Diagnostics.Stopwatch.StartNew();
+                var reader = dialog.DirectoryListingReader;
+                dialog.DirectoryListingReader = (path, hidden, token) =>
+                {
+                    try
+                    {
+                        var result = reader(path, hidden, token);
+                        lock (trace) trace.Append(" | read '" + path + "' at " + started.ElapsedMilliseconds + " ms: exists "
+                            + result.Exists + ", complete " + result.Complete + ", " + result.Entries.Count + " rows, error '" + result.Error + "'");
+                        return result;
+                    }
+                    catch (Exception ex)
+                    {
+                        lock (trace) trace.Append(" | read '" + path + "' threw " + ex.GetType().Name + ": " + ex.Message);
+                        throw;
+                    }
+                };
+                dialog.SourceInitialized += (_, _) =>
+                {
+                    bool seen = false;
+                    System.Windows.Interop.HwndSource.FromHwnd(new System.Windows.Interop.WindowInteropHelper(dialog).Handle)
+                        .AddHook((IntPtr hwnd, int message, IntPtr wParam, IntPtr lParam, ref bool handled) =>
+                        {
+                            if (message == 0x0010 && !seen)
+                            {
+                                seen = true;
+                                lock (trace) trace.Append(" | WM_CLOSE at " + started.ElapsedMilliseconds + " ms from " + Environment.StackTrace);
+                            }
+                            return IntPtr.Zero;
+                        });
+                };
+                Func<string> state = () =>
+                {
+                    var type = typeof(FileDialog);
+                    Func<string, object?> field = name => type.GetField(name, System.Reflection.BindingFlags.Instance
+                        | System.Reflection.BindingFlags.NonPublic)?.GetValue(dialog);
+                    var status = ((TextBlock)dialog.FindName("SelMeta")).Text;
+                    string codes = string.Join(" ", Array.ConvertAll(status.ToCharArray(), c => ((int)c).ToString("X4")));
+                    lock (trace) return "visible " + dialog.IsVisible + ", closed " + field("_listingClosed") + ", fading "
+                        + field("_fadingOut") + ", current '" + field("_currentDir") + "', version " + field("_navigationVersion")
+                        + ", status code points [" + codes + "]" + trace;
+                };
                 dialog.Loaded += (_, _) => dialog.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     try
@@ -87,7 +131,7 @@ namespace Killendar.Tests
                         PumpUntil(() => dialog.IsDirectoryListingAvailable);
                         Assert.True(directory == pathBox.Text, "First listing: path '" + pathBox.Text + "', busy "
                             + dialog.IsDirectoryListingBusy + ", available " + dialog.IsDirectoryListingAvailable
-                            + ", status '" + metadata.Text + "'");
+                            + ", status '" + metadata.Text + "', " + state());
                         foreach (string invalid in new[] { "bad|name.ics", "bad\"name.ics",
                             new string('x', 300) + ".ics", @"C::\broken.ics" })
                         foreach (string route in new[] { "enter", "accept", "filter" })
