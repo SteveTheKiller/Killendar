@@ -103,18 +103,17 @@ namespace Killendar.Tests
 
         private static void RunInCulture(CultureInfo culture, Action body)
         {
+            // Only this thread's culture: the process-wide default would leak into tests running
+            // in parallel in other collections. The store writes on this thread.
             var current = CultureInfo.CurrentCulture;
-            var thread = CultureInfo.DefaultThreadCurrentCulture;
             try
             {
                 CultureInfo.CurrentCulture = culture;
-                CultureInfo.DefaultThreadCurrentCulture = culture;
                 body();
             }
             finally
             {
                 CultureInfo.CurrentCulture = current;
-                CultureInfo.DefaultThreadCurrentCulture = thread;
             }
         }
     }

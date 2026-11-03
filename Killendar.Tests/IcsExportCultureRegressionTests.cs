@@ -63,19 +63,17 @@ namespace Killendar.Tests
 
         private static string ExportUnder(string culture, params CalendarEvent[] events)
         {
+            // Only this thread's culture: the process-wide default would leak into tests running
+            // in parallel in other collections.
             var oldCurrent = CultureInfo.CurrentCulture;
-            var oldDefault = CultureInfo.DefaultThreadCurrentCulture;
             try
             {
-                var thai = CultureInfo.GetCultureInfo(culture);
-                CultureInfo.CurrentCulture = thai;
-                CultureInfo.DefaultThreadCurrentCulture = thai;
+                CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo(culture);
                 return IcsService.BuildIcs(events);
             }
             finally
             {
                 CultureInfo.CurrentCulture = oldCurrent;
-                CultureInfo.DefaultThreadCurrentCulture = oldDefault;
             }
         }
     }
