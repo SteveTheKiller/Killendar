@@ -40,7 +40,8 @@ namespace Killendar.Shell
             {
                 if (_lockWaiting && !_store.IsImporting) { LockAndAsk(); return; }
                 bool idle = AutoLock.IdleDue(AutoLock.IdleTime(), AutoLock.IdleMinutes(Settings.Get(AutoLock.IdleSetting)));
-                if (_store.HasPassword && !_security.IsLocked && idle) LockAndAsk();
+                // Manage Killendars closes the store, but an encrypted one it closed still locks.
+                if ((_store.HasPassword || _security.ManagingEncrypted) && !_security.IsLocked && idle) LockAndAsk();
                 // No password on the open one, but an encrypted Killendar is shown beside it.
                 else if (!_store.HasPassword && idle && ShownCalendars.AnyUnlockedEncrypted) ShownCalendars.LockEncrypted();
             };
@@ -68,7 +69,7 @@ namespace Killendar.Shell
             if (e.Reason == SessionSwitchReason.SessionLock && Settings.Get(AutoLock.WindowsSetting) == "1")
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    if (_store.HasPassword) LockAndAsk();
+                    if (_store.HasPassword || _security.ManagingEncrypted) LockAndAsk();
                     else ShownCalendars.LockEncrypted();
                 }));
         }
@@ -77,8 +78,9 @@ namespace Killendar.Shell
         {
             // An import writing on a worker thread owns the connection: lock when it is done.
             _lockWaiting = _store.IsImporting;
-            if (_lockWaiting || !_store.HasPassword) return;
-            // Overlays, menus and dialogs (search results above all) could still show the calendar.
+            if (_lockWaiting || !(_store.HasPassword || _security.ManagingEncrypted)) return;
+            // Overlays, menus and dialogs (search results above all, and Manage Killendars, whose
+            // return then takes the locked path) could still show the calendar.
             if (ShortcutsOverlay.Visibility == Visibility.Visible) ToggleShortcutsOverlay();
             if (_deletedMenu != null) _deletedMenu.IsOpen = false;
             foreach (Window owned in OwnedWindows.Cast<Window>().ToList()) owned.Close();

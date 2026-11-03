@@ -40,6 +40,10 @@ namespace Killendar.Features
 
         internal void RememberPassword(string password) => _password = password;
 
+        /// <summary>True while Manage Killendars has an encrypted Killendar closed and the session
+        /// still remembers its password. An idle or Windows lock must count this as open.</summary>
+        internal bool ManagingEncrypted { get; private set; }
+
         /// <summary>Closes the encrypted Killendar and forgets its password, so nothing in it can
         /// be read, changed or reached through the command pipe until the password is typed again.
         /// A draft in the panel is hidden with the calendar rather than asked about: an idle or
@@ -47,6 +51,17 @@ namespace Killendar.Features
         internal bool Lock()
         {
             if (IsLocked) return true;
+            // Manage Killendars already closed the encrypted store; the remembered password is
+            // what would reopen it, so forgetting it is the lock.
+            if (ManagingEncrypted)
+            {
+                _password = null;
+                ManagingEncrypted = false;
+                IsLocked = true;
+                _host.ShowLocked(true);
+                _host.RefreshView();
+                return true;
+            }
             // An import writing on a worker thread owns the connection; the caller retries later.
             if (!_store.IsOpen || _store.IsImporting) return false;
             if (!_store.HasPassword)
@@ -251,10 +266,17 @@ namespace Killendar.Features
             string previous = EventStore.ActiveFile;
             string previousDir = EventStore.DataDir;
             string previousPath = EventStore.ActivePath;
+            ManagingEncrypted = _store.HasPassword && _password != null;
             _store.Close();
             EventStore.LastRename = null;
 
-            ApplyKillendarSelection(showDialog(), previous, previousDir, previousPath);
+            string? picked;
+            try { picked = showDialog(); }
+            finally { ManagingEncrypted = false; }
+            // A lock that came while the dialog was open: the Killendar it closed stays locked,
+            // and whatever was picked goes through the locked path, which asks for passwords.
+            if (IsLocked) ApplyLockedSelection(picked, previous, previousDir);
+            else ApplyKillendarSelection(picked, previous, previousDir, previousPath);
         }
 
         /// <summary>What Manage Killendars picked while locked. A different Killendar opens and
