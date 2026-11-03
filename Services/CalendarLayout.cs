@@ -86,22 +86,26 @@ namespace Killendar.Services
         internal static List<AllDayPlacement> PlaceMultiDayRange(
             IEnumerable<CalendarEvent> events, DateTime rangeStart, int dayCount)
         {
-            var copies = events.Where(IsMultiDay).Select(e =>
+            // Each placed copy maps back to its own source row by reference, so rows that share an
+            // Id (the same appointment in the open and a shown Killendar) cannot collide.
+            var originalOf = new Dictionary<CalendarEvent, CalendarEvent>();
+            var copies = new List<CalendarEvent>();
+            foreach (var e in events.Where(IsMultiDay))
             {
                 var end = e.End.TimeOfDay == TimeSpan.Zero ? e.End : e.End.Date.AddDays(1);
-                return new CalendarEvent
+                var copy = new CalendarEvent
                 {
                     Id = e.Id, SeriesId = e.SeriesId, OccurrenceStart = e.OccurrenceStart,
                     Title = e.Title, Start = e.Start.Date, End = end,
                     AllDay = true, Categories = e.Categories,
                     Location = e.Location, Description = e.Description, Attendees = e.Attendees,
                 };
-            });
-            var byId = events.Where(IsMultiDay).ToDictionary(e =>
-                (e.Id, e.OccurrenceStart?.Ticks ?? 0L));
+                copies.Add(copy);
+                originalOf[copy] = e;
+            }
             var placements = PlaceAllDayRange(copies, rangeStart, dayCount);
             foreach (var p in placements)
-                if (byId.TryGetValue((p.Event.Id, p.Event.OccurrenceStart?.Ticks ?? 0L), out var original))
+                if (originalOf.TryGetValue(p.Event, out var original))
                     p.Event = original;
             return placements;
         }

@@ -1,3 +1,4 @@
+using System.Linq;
 using System;
 using Killendar.Models;
 using Killendar.Services;
@@ -83,6 +84,24 @@ namespace Killendar.Tests
             Assert.Equal(0, placement.StartColumn);
             Assert.Equal(4, placement.ColumnSpan);
             Assert.Same(ev, placement.Event);
+        }
+
+        [Fact]
+        public void SameMultiDayAppointmentInOpenAndShownCalendarKeepsBothPlacements()
+        {
+            var monday = new DateTime(2026, 3, 2);
+            var own = Event(monday, monday.AddDays(4));
+            var shown = Event(monday, monday.AddDays(4));
+            shown.Id = own.Id;
+            own.AllDay = shown.AllDay = true;
+            shown.SourceCalendar = "Work";
+
+            var placements = CalendarLayout.PlaceMultiDayRange(new[] { own, shown }, monday, 7);
+
+            Assert.Equal(2, placements.Count);
+            Assert.Contains(placements, p => ReferenceEquals(p.Event, own));
+            Assert.Contains(placements, p => ReferenceEquals(p.Event, shown));
+            Assert.Equal(new[] { 0, 1 }, placements.Select(p => p.Row).OrderBy(r => r).ToArray());
         }
 
         [Fact]
