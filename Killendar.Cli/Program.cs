@@ -86,7 +86,10 @@ namespace Killendar.Cli
             try
             {
                 store.OpenReadOnly(database);
+                // GetInRange puts every all-day item of the range first; the agenda reads day by day,
+                // so the limit must cut the latest days, not the earliest timed ones.
                 return [.. store.GetInRange(from.Date, from.Date.AddDays(days))
+                    .OrderBy(ev => ev.Start.Date).ThenBy(ev => ev.AllDay ? 0 : 1).ThenBy(ev => ev.Start)
                     .Take(limit)
                     .Select(ev => (object)new
                     {
