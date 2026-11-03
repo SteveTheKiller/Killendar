@@ -209,7 +209,7 @@ namespace Killendar.Services
             string dest = Path.Combine(
                 Path.GetDirectoryName(src) ?? DataDir,
                 Path.GetFileNameWithoutExtension(src) +
-                    "-locked-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") + Extension);
+                    "-locked-" + DateTime.Now.ToString("yyyyMMdd-HHmmss", System.Globalization.CultureInfo.InvariantCulture) + Extension);
             SqliteConnection.ClearAllPools();
             File.Move(src, dest);
             return dest;

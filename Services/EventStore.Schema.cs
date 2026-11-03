@@ -217,16 +217,30 @@ CREATE TABLE IF NOT EXISTS reminder_state (
         /// <summary>Formats an appointment boundary for storage. All-day events are floating
         /// calendar dates and MUST NOT be shifted into UTC.</summary>
         private static string ToStore(DateTime local, bool allDay) => allDay
-            ? DateTime.SpecifyKind(local, DateTimeKind.Unspecified).ToString(RoundTrip)
-            : local.ToUniversalTime().ToString(RoundTrip);
+            ? DateTime.SpecifyKind(local, DateTimeKind.Unspecified).ToString(RoundTrip, System.Globalization.CultureInfo.InvariantCulture)
+            : local.ToUniversalTime().ToString(RoundTrip, System.Globalization.CultureInfo.InvariantCulture);
 
+        // Parses a stored boundary with the invariant culture. Rows written by 1.4.0 under a region
+        // whose time separator is '.' (fi-FI, for one) read like 10.30.00; when the plain parse
+        // fails, retry with only the HH.mm.ss separators turned back into ':' and leave the
+        // fractional seconds alone.
+        private static bool TryParseStored(string s, System.Globalization.DateTimeStyles styles, out DateTime result)
+        {
+            var invariant = System.Globalization.CultureInfo.InvariantCulture;
+            if (DateTime.TryParse(s, invariant, styles, out result)) return true;
+            string fixedUp = System.Text.RegularExpressions.Regex.Replace(
+                s ?? "", @"(?<=T\d{2})\.(?=\d{2}\.\d{2})", ":");
+            fixedUp = System.Text.RegularExpressions.Regex.Replace(
+                fixedUp, @"(?<=T\d{2}:\d{2})\.(?=\d{2})", ":");
+            return fixedUp != s && DateTime.TryParse(fixedUp, invariant, styles, out result);
+        }
         private static DateTime FromStore(string s, bool allDay)
         {
             var styles = allDay
                 ? System.Globalization.DateTimeStyles.None
                 : System.Globalization.DateTimeStyles.AdjustToUniversal |
                   System.Globalization.DateTimeStyles.AssumeUniversal;
-            if (!DateTime.TryParse(s, System.Globalization.CultureInfo.InvariantCulture, styles, out var dt))
+            if (!TryParseStored(s, styles, out var dt))
                 return default;
             if (allDay) return DateTime.SpecifyKind(dt, DateTimeKind.Unspecified);
             return DateTime.SpecifyKind(dt, DateTimeKind.Utc).ToLocalTime();
@@ -235,11 +249,10 @@ CREATE TABLE IF NOT EXISTS reminder_state (
         // Created and Modified are already UTC in the model, so they are stored and read straight
         // through with no zone conversion.
         private static string ToStoreUtc(DateTime utc) =>
-            (utc.Kind == DateTimeKind.Local ? utc.ToUniversalTime() : utc).ToString(RoundTrip);
+            (utc.Kind == DateTimeKind.Local ? utc.ToUniversalTime() : utc).ToString(RoundTrip, System.Globalization.CultureInfo.InvariantCulture);
 
         private static DateTime FromStoreUtc(string s) =>
-            DateTime.TryParse(s, System.Globalization.CultureInfo.InvariantCulture,
-                System.Globalization.DateTimeStyles.AdjustToUniversal |
+            TryParseStored(s, System.Globalization.DateTimeStyles.AdjustToUniversal |
                 System.Globalization.DateTimeStyles.AssumeUniversal, out var dt)
                 ? DateTime.SpecifyKind(dt, DateTimeKind.Utc) : DateTime.UtcNow;
 
