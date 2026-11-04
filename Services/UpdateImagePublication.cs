@@ -163,6 +163,9 @@ function Invoke-UpdateImagePublication {
     $image = $null
     $warning = $null
     try {
+        # The installed copy's identity comes first, so a download that fails its checks below can
+        # still be recovered from: the app has already closed by now.
+        if ($ops.ContainsKey('CaptureOriginal')) { & $ops.CaptureOriginal $plan }
         # The download and the staged copy are each held open against writers, renames and
         # deletion while their hash and publisher signature are checked (Killendar's helper checks).
         $hold = & $ops.OpenImage $plan.Download
@@ -172,7 +175,6 @@ function Invoke-UpdateImagePublication {
             if (-not (& $ops.Publisher $plan.Download $plan)) { throw 'The downloaded update is not signed by the publisher.' }
         }
         finally { $hold.Dispose() }
-        if ($ops.ContainsKey('CaptureOriginal')) { & $ops.CaptureOriginal $plan }
         $parents = & $ops.PinParents $plan.Target
         & $ops.Stage $plan.Staged $bytes
         $hold = & $ops.OpenImage $plan.Staged

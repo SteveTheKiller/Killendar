@@ -114,6 +114,26 @@ namespace Killendar.Tests
             }
         }
 
+        [Fact]
+        public void PerUserHelperRecordsTheInstalledCopyBeforeCheckingTheDownload()
+        {
+            // The app has already closed when the helper starts. A download that fails its check must
+            // still find the installed copy's identity recorded, or recovery refuses to reopen it.
+            string path = Path.Combine(TestScratch.Root, "capture-order-" + Guid.NewGuid().ToString("N") + ".exe");
+            UpdateImagePublication.RememberVerified(path, new string('A', 64), new string('B', 40));
+            try
+            {
+                string script = UpdateImagePublication.Script(path, @"C:\Apps\Killendar.exe", false,
+                    "https://example.invalid/releases", "Killendar", originalHash: new string('C', 64));
+                int function = script.IndexOf("function Invoke-UpdateImagePublication", StringComparison.Ordinal);
+                int capture = script.IndexOf("& $ops.CaptureOriginal $plan", function, StringComparison.Ordinal);
+                int downloadCheck = script.IndexOf("$plan.Download", function, StringComparison.Ordinal);
+                Assert.True(function > 0 && capture > 0 && downloadCheck > 0, "The publication function captures and checks.");
+                Assert.True(capture < downloadCheck, "The installed copy's identity is captured before the download is opened.");
+            }
+            finally { if (File.Exists(path + ".recovery.txt")) File.Delete(path + ".recovery.txt"); }
+        }
+
         // Reverses ImmutablePowerShell.Arguments: the script travels gzip-compressed inside Base64.
         internal static string Unwrap(string arguments)
         {
