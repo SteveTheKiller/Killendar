@@ -71,6 +71,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Monthly-by-date and yearly repeats from Outlook, such as birthdays, import as repeats instead of a single appointment.
 - A repeating appointment whose end date is given without a time imports as a repeat.
 - A canceled day of an all-day repeating event from Outlook is removed from the series on import.
+- An imported appointment with a malformed reminder no longer makes later .ics exports invalid.
 
 ### Changed
 

@@ -249,6 +249,14 @@ namespace Killendar.Services
                 if (upper == "END")
                 {
                     string comp = value.Trim().ToUpperInvariant();
+                    // END:VEVENT closes whatever was left open inside it. An alarm missing its END
+                    // gets one, so the kept lines stay a whole alarm and the reminder survives.
+                    if (comp == "VEVENT" && current != null && stack.Contains("VEVENT"))
+                        while (stack[stack.Count - 1] != "VEVENT")
+                        {
+                            if (stack.Contains("VALARM")) current.KeptProperties.Add("END:" + stack[stack.Count - 1]);
+                            stack.RemoveAt(stack.Count - 1);
+                        }
                     if (current != null && stack.Contains("VALARM")) current.KeptProperties.Add(raw);
                     if (stack.Count > 0) stack.RemoveAt(stack.Count - 1);
 
