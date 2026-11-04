@@ -238,6 +238,7 @@ namespace Killendar.Services
                     attach.ExecuteNonQuery();
                 }
                 Dictionary<string, long> counts;
+                bool failed = false;
                 try
                 {
                     // One read transaction around the counts and the export (ATTACH cannot run
@@ -251,18 +252,36 @@ namespace Killendar.Services
                         export.CommandText = "SELECT sqlcipher_export('backup')";
                         export.ExecuteNonQuery();
                     }
-                    finally
+                    catch
                     {
-                        using var end = source.CreateCommand();
-                        end.CommandText = "COMMIT";
-                        end.ExecuteNonQuery();
+                        // SQLite may already have rolled back (a full disk or an I/O error does);
+                        // either way the export's own error is the one reported, not this cleanup's.
+                        try
+                        {
+                            using var rollback = source.CreateCommand();
+                            rollback.CommandText = "ROLLBACK";
+                            rollback.ExecuteNonQuery();
+                        }
+                        catch (SqliteException) { }
+                        throw;
                     }
+                    using (var end = source.CreateCommand()) { end.CommandText = "COMMIT"; end.ExecuteNonQuery(); }
+                }
+                catch
+                {
+                    failed = true;
+                    throw;
                 }
                 finally
                 {
-                    using var detach = source.CreateCommand();
-                    detach.CommandText = "DETACH DATABASE backup";
-                    detach.ExecuteNonQuery();
+                    // A DETACH that fails after an earlier failure must not replace that failure.
+                    try
+                    {
+                        using var detach = source.CreateCommand();
+                        detach.CommandText = "DETACH DATABASE backup";
+                        detach.ExecuteNonQuery();
+                    }
+                    catch (SqliteException) when (failed) { }
                 }
 
                 var check = new SqliteConnectionStringBuilder
