@@ -17,12 +17,12 @@ Color categories
 Define your own, name them and pick their colors. An appointment can carry several, and the first one colors it in every view. Renaming updates every appointment at once.
 
 iCalendar in and out
-Import and export written against RFC 5545 with no external dependencies. Categories travel with an appointment through both.
+Import and export written against RFC 5545. Categories travel with an appointment through both.
 
 Signed, and checkable
 The About card shows the publisher, the certificate thumbprint and the running exe's SHA-256, validated with WinVerifyTrust rather than just read off the file.
 
-Thirteen themes, nineteen languages
+Thirteen themes, twenty languages
 Every theme switchable while it runs. Dark, Light, Black and 98SE each take eight accent hues, so there are 41 looks in all. Single-key shortcuts that stand down while you are typing in a field. The theme menu can turn Film Grain on or off.","ঐচ্ছিক এনক্রিপশনসহ ক্যালেন্ডার, অ্যাকাউন্ট বা সিঙ্ক ছাড়াই।
 
 ইনস্টল করুন বা পোর্টেবল চালান। ফ্রি, ওপেন সোর্স, GPLv3। অ্যাকাউন্ট নেই, সাবস্ক্রিপশন নেই, সিঙ্ক সার্ভিস নেই। কোনো টেলিমেট্রি পাঠানো হয় না, বিজ্ঞাপনও নেই... কখনও না।
@@ -40,12 +40,12 @@ Every theme switchable while it runs. Dark, Light, Black and 98SE each take eigh
 নিজেরটি বানান, নাম দিন, রঙ বাছুন। একটি অ্যাপয়েন্টমেন্ট একাধিক নিতে পারে, প্রথমটি সব ভিউয়ে তার রঙ ঠিক করে। নাম বদলালে সব অ্যাপয়েন্টমেন্ট একসাথে আপডেট হয়।
 
 iCalendar আসা-যাওয়া
-ইমপোর্ট ও এক্সপোর্ট RFC 5545 অনুযায়ী লেখা, কোনো বাইরের ডিপেন্ডেন্সি নেই। বিভাগগুলো দুদিকেই অ্যাপয়েন্টমেন্টের সঙ্গে যায়। .ics ইমপোর্ট / এক্সপোর্ট
+ইমপোর্ট ও এক্সপোর্ট RFC 5545 অনুযায়ী লেখা। বিভাগগুলো দুদিকেই অ্যাপয়েন্টমেন্টের সঙ্গে যায়। .ics ইমপোর্ট / এক্সপোর্ট
 
 স্বাক্ষরিত এবং যাচাইযোগ্য
 সম্পর্কে কার্ডে প্রকাশক, সার্টিফিকেটের থাম্বপ্রিন্ট ও চলন্ত exe-এর SHA-256 দেখায়, শুধু ফাইল থেকে পড়ে নয়, WinVerifyTrust দিয়ে যাচাই করে।
 
-তেরোটি থিম, ১৯টি ভাষা
+তেরোটি থিম, ২০টি ভাষা
 প্রতিটি থিম চলন্ত অবস্থায় বদলানো যায়, চারটিতে (Dark, Light, Black ও 98SE) আটটি অ্যাকসেন্ট রঙ। এক-কী শর্টকাট, যা ফিল্ডে টাইপ করার সময় সরে দাঁড়ায়। থিম মেনু থেকে ফিল্ম গ্রেইন চালু বা বন্ধ করা যায়।","Kalendář s volitelným šifrováním, bez účtu a synchronizace.
 
 Nainstalujte, nebo používejte přenosně. Zdarma, open source, GPLv3. Bez účtu, bez předplatného, bez synchronizační služby. Žádná telemetrie, žádné reklamy... nikdy.
@@ -63,12 +63,12 @@ Barevné kategorie
 Definujte vlastní, pojmenujte je a vyberte barvy. Schůzka jich může nést více, první ji barví v každém zobrazení. Přejmenování aktualizuje všechny schůzky najednou.
 
 iCalendar dovnitř i ven
-Import a export napsané podle RFC 5545 bez externích závislostí. Kategorie cestují se schůzkou oběma směry. Import / export .ics
+Import a export napsané podle RFC 5545. Kategorie cestují se schůzkou oběma směry. Import / export .ics
 
 Podepsaný a ověřitelný
 Karta O aplikaci ukazuje vydavatele, otisk certifikátu a SHA-256 běžícího exe, ověřené přes WinVerifyTrust, ne jen přečtené ze souboru.
 
-Třináct motivů, 19 jazyků
+Třináct motivů, 20 jazyků
 Každý motiv lze přepnout za běhu. Dark, Light, Black a 98SE mají po osmi akcentových barvách, celkem 41 vzhledů. Jednoklávesové zkratky, které se odmlčí, když píšete do pole. Nabídka motivů umožňuje zapnout nebo vypnout filmové zrno.","Ein Kalender mit optionaler Verschlüsselung, ohne Konto und Synchronisierung.
 
 Installieren oder portabel nutzen. Kostenlos, Open Source, GPLv3. Kein Konto, kein Abo, kein Sync-Dienst. Keine Telemetrie und keine Werbung... niemals.
@@ -86,12 +86,12 @@ Farbkategorien
 Eigene anlegen, benennen, Farben wählen. Ein Termin kann mehrere tragen, die erste färbt ihn in jeder Ansicht. Umbenennen aktualisiert alle Termine auf einmal.
 
 iCalendar rein und raus
-Import und Export gegen RFC 5545 geschrieben, ohne externe Abhängigkeiten. Kategorien reisen in beide Richtungen mit dem Termin.
+Import und Export gegen RFC 5545 geschrieben. Kategorien reisen in beide Richtungen mit dem Termin.
 
 Signiert und nachprüfbar
 Die Info-Karte zeigt Herausgeber, Zertifikat-Fingerabdruck und den SHA-256 der laufenden Exe, validiert mit WinVerifyTrust statt nur aus der Datei gelesen.
 
-Dreizehn Designs, 19 Sprachen
+Dreizehn Designs, 20 Sprachen
 Jedes Design zur Laufzeit wechselbar. Dark, Light, Black und 98SE tragen je acht Akzentfarben, also 41 Looks insgesamt. Einzeltasten-Kürzel, die pausieren, während Sie in ein Feld tippen. Im Themenmenü lässt sich Filmkorn ein- oder ausschalten.","Un calendario con cifrado opcional, sin cuenta ni sincronización.
 
 Instálalo o úsalo portátil. Gratis, código abierto, GPLv3. Sin cuenta, sin suscripción, sin servicio de sincronización. No se envía telemetría y no hay anuncios... nunca.
@@ -109,12 +109,12 @@ Categorías de color
 Define las tuyas, ponles nombre y elige sus colores. Una cita puede llevar varias, y la primera la colorea en todas las vistas. Renombrar actualiza todas las citas a la vez.
 
 iCalendar de entrada y salida
-Importación y exportación escritas contra RFC 5545 sin dependencias externas. Las categorías viajan con la cita en ambas direcciones. Importa / exporta .ics
+Importación y exportación escritas contra RFC 5545. Las categorías viajan con la cita en ambas direcciones. Importa / exporta .ics
 
 Firmado y comprobable
 La tarjeta Acerca de muestra el editor, la huella del certificado y el SHA-256 del exe en ejecución, validado con WinVerifyTrust en lugar de solo leerlo del archivo.
 
-Trece temas, 19 idiomas
+Trece temas, 20 idiomas
 Cada tema se cambia en marcha. Dark, Light, Black y 98SE admiten ocho acentos cada uno, 41 aspectos en total. Atajos de una tecla que se apartan mientras escribes en un campo. El menú de temas permite activar o desactivar Grano de película.","Un calendrier avec chiffrement facultatif, sans compte ni synchronisation.
 
 Installez-le ou utilisez-le portable. Gratuit, open source, GPLv3. Sans compte, sans abonnement, sans service de synchronisation. Aucune télémétrie envoyée et aucune pub... jamais.
@@ -132,12 +132,12 @@ Catégories de couleur
 Définissez les vôtres, nommez-les, choisissez leurs couleurs. Un rendez-vous peut en porter plusieurs, la première le colore dans chaque vue. Renommer met à jour tous les rendez-vous d'un coup.
 
 iCalendar en entrée et en sortie
-Import et export écrits contre la RFC 5545 sans dépendances externes. Les catégories voyagent avec le rendez-vous dans les deux sens. Import / export .ics
+Import et export écrits contre la RFC 5545. Les catégories voyagent avec le rendez-vous dans les deux sens. Import / export .ics
 
 Signé, et vérifiable
 La carte À propos montre l'éditeur, l'empreinte du certificat et le SHA-256 de l'exe en cours, validé avec WinVerifyTrust plutôt que simplement lu dans le fichier.
 
-Treize thèmes, 19 langues
+Treize thèmes, 20 langues
 Chaque thème se change en cours d'exécution. Dark, Light, Black et 98SE prennent chacun huit accents, soit 41 apparences en tout. Des raccourcis à une touche qui s'effacent pendant que vous tapez dans un champ. Le menu des thèmes permet d'activer ou de désactiver le grain de film.","Naptár választható titkosítással, fiók és szinkronizálás nélkül.
 
 Telepítse vagy futtassa a hordozható eszközt. Ingyenes, nyílt forráskódú, GPLv3. Nincs fiók, nincs előfizetés, nincs szinkronizálási szolgáltatás. Nem küldenek telemetriát és nincsenek hirdetések... soha.
@@ -155,12 +155,12 @@ Színkategóriák
 Határozza meg a sajátját, nevezze el őket, és válassza ki a színüket. Egy találkozó több, és a az első színezi minden nézetben. Az átnevezés minden találkozót egyszerre frissít.
 
 iCalendar be és ki
-Az RFC 5545-re írt import és exportálás külső függőségek nélkül. Kategóriák utazás időpont egyeztetéssel mindkettőn keresztül.
+Az RFC 5545-re írt import és exportálás. Kategóriák utazás időpont egyeztetéssel mindkettőn keresztül.
 
 Aláírva, ellenőrizhető
 A Névjegy kártya a kiadót, a tanúsítvány ujjlenyomatát és a futó exe-ket mutatja SHA-256, a WinVerifyTrust segítségével érvényesítve, nem csak a fájlt olvasva.
 
-Tizenhárom téma, 19 nyelv
+Tizenhárom téma, 20 nyelv
 Minden téma váltható futás közben. A Sötét, Világos, Fekete és a 98SE mindegyik nyolc hangsúlyos árnyalattal rendelkezik, így összesen 41 megjelenés érhető el. Egygombos parancsikonok, amelyek leállnak a mezőbe való beírás közben. A témamenüben be- és kikapcsolható a filmszemcsézettség.","Un calendario con cifratura facoltativa, senza account né sincronizzazione.
 
 Installalo o usalo portatile. Gratuito, open source, GPLv3. Nessun account, nessun abbonamento, nessun servizio di sincronizzazione. Nessuna telemetria inviata e nessuna pubblicità... mai.
@@ -178,12 +178,12 @@ Categorie di colore
 Definisci le tue, dai loro un nome e scegli i colori. Un appuntamento può portarne più di una, e la prima lo colora in ogni vista. Rinominarne una aggiorna tutti gli appuntamenti in una volta.
 
 iCalendar in entrata e in uscita
-Importazione ed esportazione scritte sull'RFC 5545 senza dipendenze esterne. Le categorie viaggiano con un appuntamento in entrambe le direzioni.
+Importazione ed esportazione scritte sull'RFC 5545. Le categorie viaggiano con un appuntamento in entrambe le direzioni.
 
 Firmato, e verificabile
 La scheda Informazioni mostra l'editore, l'impronta del certificato e lo SHA-256 dell'exe in esecuzione, convalidati con WinVerifyTrust invece che semplicemente letti dal file.
 
-Tredici temi, 19 lingue
+Tredici temi, 20 lingue
 Ogni tema si cambia mentre l'app è in esecuzione. Scuro, Chiaro, Nero e 98SE prendono ciascuno otto tinte di accento, quindi 41 aspetti in tutto. Scorciatoie a tasto singolo che si fermano mentre scrivi in un campo. Il menu dei temi permette di attivare o disattivare la grana della pellicola.","暗号化を選べるカレンダー。アカウントや同期は不要です。
 
 インストールしてもポータブルでも。無料、オープンソース、GPLv3。アカウントなし、サブスクなし、同期サービスなし。テレメトリは送信せず、広告も... 永遠になし。
@@ -201,12 +201,12 @@ Ogni tema si cambia mentre l'app è in esecuzione. Scuro, Chiaro, Nero e 98SE pr
 自分で作って名前と色を決める。予定は複数持て、最初の一つがすべての表示で色を付けます。名前変更は全予定を一括更新。
 
 iCalendar の出入り
-読み書きは外部依存なしで RFC 5545 に沿って実装。カテゴリは双方向で予定と一緒に移動します。
+読み書きはRFC 5545 に沿って実装。カテゴリは双方向で予定と一緒に移動します。
 
 署名済み、検証可能
 バージョン情報カードは発行元、証明書の拇印、実行中の exe の SHA-256 を表示し、ファイルから読むだけでなく WinVerifyTrust で検証します。
 
-テーマ十三種、19 か国語
+テーマ十三種、20 か国語
 どのテーマも実行中に切り替え可能。Dark、Light、Black、98SE はそれぞれ八色のアクセントを持ち、合計 41 通り。入力中は遠慮するワンキーショートカット。 テーマメニューでフィルムグレインをオンまたはオフにできます。","Қосымша шифрлауы бар, тіркелгісіз және синхрондаусыз күнтізбе.
 
 Орнатыңыз немесе портативті түрде іске қосыңыз. Тегін, ашық бастапқы код, GPLv3. Тіркелгісіз, жазылымсыз, синхрондау қызметінсіз. Ешқандай телеметрия жіберілмейді және жарнама жоқ... ешқашан.
@@ -224,12 +224,12 @@ iCalendar の出入り
 Өзіңіздікін белгілеңіз, атауын беріп, түстерін таңдаңыз. Бір кездесуде бірнеше санат бола алады, ал біріншісі оны әр көріністе бояйды. Атауын өзгерту барлық кездесуді бірден жаңартады.
 
 iCalendar кіріс пен шығыс
-Импорт пен экспорт сыртқы тәуелділіктерсіз, тікелей RFC 5545 бойынша жазылған. Санаттар екі бағытта да кездесумен бірге жүреді.
+Импорт пен экспорт тікелей RFC 5545 бойынша жазылған. Санаттар екі бағытта да кездесумен бірге жүреді.
 
 Қол қойылған және тексерілетін
 Бағдарлама туралы карточкасы жариялаушыны, сертификат саусақ ізін және іске қосылған exe файлының SHA-256 мәнін көрсетеді, олар файлдан жай оқылмай, WinVerifyTrust арқылы тексеріледі.
 
-Он үш тақырып, 19 тіл
+Он үш тақырып, 20 тіл
 Әр тақырыпты жұмыс кезінде ауыстыруға болады. Қараңғы, Ашық, Қара және 98SE сегіз акцент реңкінен алады, сондықтан барлығы 41 түр шығады. Өрісте теріп отырғанда әрекет етпейтін жалғыз пернелік тіркесімдер. Тақырыптар мәзірінде пленка түйіршігін қосуға немесе өшіруге болады.","En kalender med valgfri kryptering, uten konto eller synkronisering.
 
 Installer eller kjør bærbart. Gratis, åpen kildekode, GPLv3. Ingen konto, intet abonnement, ingen synkroniseringstjeneste. Ingen telemetri sendes og ingen reklame... aldri.
@@ -247,12 +247,12 @@ Fargekategorier
 Definer dine egne, gi dem navn og velg fargene deres. En avtale kan ha flere, og den første farger den i hver visning. Når du gir en kategori nytt navn, oppdateres alle avtaler på en gang.
 
 iCalendar inn og ut
-Import og eksport er skrevet direkte mot RFC 5545 uten eksterne avhengigheter. Kategorier følger med en avtale gjennom begge.
+Import og eksport er skrevet direkte mot RFC 5545. Kategorier følger med en avtale gjennom begge.
 
 Signert, og kan sjekkes
 Om-kortet viser utgiveren, sertifikatets avtrykk og SHA-256 for exe-filen som kjører, validert med WinVerifyTrust i stedet for bare lest fra filen.
 
-Tretten temaer, 19 språk
+Tretten temaer, 20 språk
 Hvert tema kan byttes mens appen kjører. Mørk, Lys, Svart og 98SE tar hver åtte aksentfarger, så det blir 41 utseender til sammen. Hurtigtaster med én tast som holder seg unna mens du skriver i et felt. Temamenyen kan slå filmkorn av eller på.","Kalendarz z opcjonalnym szyfrowaniem, bez konta i synchronizacji.
 
 Zainstaluj lub uruchom przenośnie. Za darmo, open source, GPLv3. Bez konta, bez subskrypcji, bez usługi synchronizacji. Żadna telemetria nie jest wysyłana i żadnych reklam... nigdy.
@@ -270,12 +270,12 @@ Kolorowe kategorie
 Zdefiniuj własne, nazwij je i wybierz kolory. Spotkanie może nosić kilka, a pierwsza koloruje je w każdym widoku. Zmiana nazwy aktualizuje wszystkie spotkania naraz.
 
 iCalendar w obie strony
-Import i eksport napisane według RFC 5545 bez zewnętrznych zależności. Kategorie podróżują ze spotkaniem w obu kierunkach. Import / eksport .ics
+Import i eksport napisane według RFC 5545. Kategorie podróżują ze spotkaniem w obu kierunkach. Import / eksport .ics
 
 Podpisany i sprawdzalny
 Karta O aplikacji pokazuje wydawcę, odcisk certyfikatu i SHA-256 działającego exe, zweryfikowane przez WinVerifyTrust, a nie tylko odczytane z pliku.
 
-Trzynaście motywów, 19 języków
+Trzynaście motywów, 20 języków
 Każdy motyw przełączysz w trakcie działania. Dark, Light, Black i 98SE mają po osiem kolorów akcentu, łącznie 41 wyglądów. Skróty jednym klawiszem, które ustępują, gdy piszesz w polu. Menu motywów pozwala włączyć lub wyłączyć ziarno filmowe.","Um calendário com criptografia opcional, sem conta nem sincronização.
 
 Instale ou execute em modo portátil. Gratuito, código aberto, GPLv3. Sem conta, sem assinatura, sem serviço de sincronização. Nenhuma telemetria é enviada e nunca há anúncios.
@@ -293,12 +293,12 @@ Categorias de cor
 Crie as suas, dê um nome e escolha as cores. Um compromisso pode ter várias, e a primeira o colore em todas as visões. Renomear atualiza todos os compromissos de uma vez.
 
 iCalendar de entrada e saída
-Importação e exportação escritas direto sobre a RFC 5545, sem dependências externas. As categorias acompanham o compromisso nos dois sentidos.
+Importação e exportação escritas direto sobre a RFC 5545. As categorias acompanham o compromisso nos dois sentidos.
 
 Assinado e verificável
 O cartão Sobre mostra o editor, a impressão digital do certificado e o SHA-256 do exe em execução, validados com WinVerifyTrust em vez de apenas lidos do arquivo.
 
-Treze temas, 19 idiomas
+Treze temas, 20 idiomas
 Todos os temas podem ser trocados com o aplicativo em uso. Escuro, Claro, Preto e 98SE aceitam oito tons de destaque cada, somando 41 visuais. Atalhos de tecla única que se desativam enquanto você digita em um campo. O menu de temas permite ativar ou desativar o grão de filme.","Календарь с необязательным шифрованием, без аккаунта и синхронизации.
 
 Установите или запустите портативно. Бесплатно, открытый исходный код, GPLv3. Без учётной записи, без подписки, без службы синхронизации. Никакой телеметрии и никакой рекламы... никогда.
@@ -316,12 +316,12 @@ SQLCipher на диске: AES-256, HMAC-SHA512 для каждой страни
 Задайте свои, дайте им имена и выберите цвета. У встречи может быть несколько категорий, и первая раскрашивает её в каждом виде. Переименование обновляет все встречи разом.
 
 iCalendar на входе и на выходе
-Импорт и экспорт написаны прямо по RFC 5545, без внешних зависимостей. Категории путешествуют вместе со встречей в обе стороны.
+Импорт и экспорт написаны прямо по RFC 5545. Категории путешествуют вместе со встречей в обе стороны.
 
 Подписан и проверяем
 Карточка о программе показывает издателя, отпечаток сертификата и SHA-256 запущенного exe, проверенный через WinVerifyTrust, а не просто считанный из файла.
 
-Тринадцать тем, 19 языков
+Тринадцать тем, 20 языков
 Любую тему можно сменить на ходу. Тёмная, Светлая, Чёрная и 98SE берут по восемь оттенков акцента, так что всего получается 41 вид. Сочетания из одной клавиши, которые отступают, пока вы печатаете в поле. В меню тем можно включить или выключить зернистость плёнки.","İsteğe bağlı şifrelemeli, hesap ve eşitleme gerektirmeyen bir takvim.
 
 Kurun ya da taşınabilir çalıştırın. Ücretsiz, açık kaynak, GPLv3. Hesap yok, abonelik yok, senkronizasyon servisi yok. Telemetri gönderilmez ve reklam yok... asla.
@@ -339,12 +339,12 @@ Renk kategorileri
 Kendinizinkini tanımlayın, adlandırın, renklerini seçin. Bir randevu birkaçını taşıyabilir; ilki onu her görünümde boyar. Yeniden adlandırmak tüm randevuları tek seferde günceller.
 
 iCalendar girer ve çıkar
-İçe ve dışa aktarma, harici bağımlılık olmadan RFC 5545'e göre yazıldı. Kategoriler randevuyla iki yönde de yolculuk eder.
+İçe ve dışa aktarma, RFC 5545'e göre yazıldı. Kategoriler randevuyla iki yönde de yolculuk eder.
 
 İmzalı ve doğrulanabilir
 Hakkında kartı yayımcıyı, sertifika parmak izini ve çalışan exe'nin SHA-256'sını gösterir; dosyadan okunmak yerine WinVerifyTrust ile doğrulanır.
 
-On üç tema, 19 dil
+On üç tema, 20 dil
 Her tema çalışırken değiştirilebilir; Dark, Light, Black ve 98SE sekizer vurgu rengi taşır, toplam 41 görünüm. Bir alana yazarken kenara çekilen tek tuşlu kısayollar. Tema menüsünden Film Tanesi açılıp kapatılabilir.","Календар із необов'язковим шифруванням, без облікового запису й синхронізації.
 
 Установіть або запустіть портативно. Безкоштовно, відкритий вихідний код, GPLv3. Без облікового запису, без підписки, без служби синхронізації. Жодної телеметрії і жодної реклами... ніколи.
@@ -362,12 +362,12 @@ SQLCipher на диску: AES-256, HMAC-SHA512 для кожної сторін
 Задайте свої, дайте їм назви та виберіть кольори. Зустріч може мати кілька категорій, і перша розфарбовує її в кожному поданні. Перейменування оновлює всі зустрічі одразу.
 
 iCalendar на вході й на виході
-Імпорт та експорт написано прямо за RFC 5545, без зовнішніх залежностей. Категорії мандрують разом із зустріччю в обидва боки.
+Імпорт та експорт написано прямо за RFC 5545. Категорії мандрують разом із зустріччю в обидва боки.
 
 Підписано й можна перевірити
 Картка про програму показує видавця, відбиток сертифіката та SHA-256 запущеного exe, перевірений через WinVerifyTrust, а не просто зчитаний із файлу.
 
-Тринадцять тем, 19 мов
+Тринадцять тем, 20 мов
 Будь-яку тему можна змінити на ходу. Темна, Світла, Чорна та 98SE беруть по вісім відтінків акценту, тож загалом виходить 41 вигляд. Комбінації з однієї клавіші, які відступають, поки ви друкуєте в полі. У меню тем можна ввімкнути або вимкнути зернистість плівки.","Lịch có mã hóa tùy chọn, không cần tài khoản hay đồng bộ hóa.
 
 Cài đặt hoặc chạy bản di động. Miễn phí, mã nguồn mở, GPLv3. Không cần tài khoản, không thuê bao, không dịch vụ đồng bộ. Không gửi dữ liệu đo từ xa và không có quảng cáo... mãi mãi.
@@ -385,12 +385,12 @@ Danh mục màu
 Tự tạo danh mục, đặt tên và chọn màu. Một cuộc hẹn có thể thuộc nhiều danh mục, và danh mục đầu tiên sẽ tô màu cho cuộc hẹn trong mọi chế độ xem. Khi đổi tên, mọi cuộc hẹn liên quan đều được cập nhật cùng lúc.
 
 Nhập và xuất iCalendar
-Tính năng nhập và xuất được xây dựng theo RFC 5545, không dùng thành phần phụ thuộc bên ngoài. Các danh mục đi cùng cuộc hẹn theo cả hai chiều.
+Tính năng nhập và xuất được xây dựng theo RFC 5545. Các danh mục đi cùng cuộc hẹn theo cả hai chiều.
 
 Được ký và có thể xác minh
 Thẻ Giới thiệu hiển thị nhà phát hành, dấu vân tay chứng chỉ và SHA-256 của tệp exe đang chạy, được xác thực bằng WinVerifyTrust thay vì chỉ đọc thông tin từ tệp.
 
-Mười ba giao diện, mười chín ngôn ngữ
+Mười ba giao diện, hai mươi ngôn ngữ
 Có thể chuyển đổi mọi giao diện ngay khi ứng dụng đang chạy. Dark, Light, Black và 98SE đều có tám màu nhấn, tạo nên tổng cộng 41 diện mạo. Các phím tắt một phím sẽ tự vô hiệu hóa khi bạn đang nhập vào một trường. Menu chủ đề cho phép bật hoặc tắt hạt phim.","可选择加密的日历，不需要账户或同步。
 
 安装或便携运行。免费、开源、GPLv3。无账户、无订阅、无同步服务。不发送遥测，没有广告... 永远。
@@ -408,12 +408,12 @@ Có thể chuyển đổi mọi giao diện ngay khi ứng dụng đang chạy. 
 自己定义、命名、选色。一个约会可以带多个类别，第一个决定它在所有视图里的颜色。重命名一次更新所有约会。
 
 iCalendar 进出自如
-导入导出按 RFC 5545 从零实现，无外部依赖。类别随约会双向同行。
+导入导出按 RFC 5545 从零实现。类别随约会双向同行。
 
 已签名，可验证
 关于卡片显示发布者、证书指纹和运行中 exe 的 SHA-256，用 WinVerifyTrust 验证而不是只从文件里读。
 
-十三套主题，19 种语言
+十三套主题，20 种语言
 每套主题运行中即可切换。Dark、Light、Black 和 98SE 各有八种强调色，共 41 种外观。单键快捷键在你输入时自动避让。 主题菜单可开启或关闭胶片颗粒。","可選擇加密的行事曆，不需要帳戶或同步。
 
 安裝或隨身執行。免費、開源、GPLv3。無帳戶、無訂閱、無同步服務。不傳送遙測，沒有廣告... 永遠。
@@ -431,12 +431,12 @@ iCalendar 进出自如
 自己定義、命名、選色。一個約會可以帶多個類別，第一個決定它在所有檢視裡的顏色。重新命名一次更新所有約會。
 
 iCalendar 進出自如
-匯入匯出按 RFC 5545 從零實作，無外部相依。類別隨約會雙向同行。
+匯入匯出按 RFC 5545 從零實作。類別隨約會雙向同行。
 
 已簽署，可驗證
 關於卡片顯示發行者、憑證指紋和執行中 exe 的 SHA-256，用 WinVerifyTrust 驗證而不是只從檔案裡讀。
 
-十三套主題，19 種語言
+十三套主題，20 種語言
 每套主題執行中即可切換。Dark、Light、Black 和 98SE 各有八種強調色，共 41 種外觀。單鍵快速鍵在你輸入時自動讓開。 主題選單可開啟或關閉膠片顆粒。","Koledar z izbirnim šifriranjem, brez računa in sinhronizacije.
 
 Namesti ali zaženi v prenosnem načinu. Brezplačno, odprtokodno, GPLv3. Brez računa, naročnine in storitve za sinhronizacijo. Brez pošiljanja telemetrije in brez oglasov. Za vedno.
@@ -454,7 +454,7 @@ Barvne kategorije
 Ustvari svoje kategorije, jih poimenuj in izberi barve. Dogodek ima lahko več kategorij; prva ga obarva v vseh pogledih. Preimenovanje hkrati posodobi vse dogodke.
 
 Uvoz in izvoz iCalendar
-Uvoz in izvoz sta napisana neposredno po RFC 5545 brez zunanjih odvisnosti. Kategorije se v obeh smereh prenašajo skupaj z dogodkom.
+Uvoz in izvoz sta napisana neposredno po RFC 5545. Kategorije se v obeh smereh prenašajo skupaj z dogodkom.
 
 Podpisan in preverljiv
 Kartica o programu prikaže izdajatelja, prstni odtis potrdila in SHA-256 zagnane datoteke exe. Podpis preveri z WinVerifyTrust, ne le prebere iz datoteke.
@@ -465,7 +465,7 @@ WhatsNew,Text,,,,,,,,,,,,,,,,,,,,
 ProductFeatures1,Text,"Month, week, day and agenda, sharing one prev / next / today.","মাস, সপ্তাহ, দিন ও সূচি - একই আগের / পরের / আজ ভাগ করে নেয়।","Měsíc, týden, den a agenda se společným předchozí / další / dnes.","Monat, Woche, Tag und Agenda mit einem gemeinsamen Zurück / Weiter / Heute.","Mes, semana, día y agenda, compartiendo un solo anterior / siguiente / hoy.","Mois, semaine, jour et agenda, partageant un seul précédent / suivant / aujourd'hui.","Hónap, hét, nap és napirend, egy előző / következő / mai megosztása.","Mese, settimana, giorno e agenda, con un unico precedente / successivo / oggi.",月・週・日・予定一覧が、前へ / 次へ / 今日を共有します。,"Ай, апта, күн және күн тәртібі, ортақ артқа / алға / бүгін батырмаларымен.","Måned, uke, dag og agenda, med felles forrige / neste / i dag.","Miesiąc, tydzień, dzień i agenda ze wspólnym poprzedni / następny / dziś.","Mês, semana, dia e pauta, compartilhando o mesmo anterior / próximo / hoje.","Месяц, неделя, день и расписание с общими кнопками назад / вперёд / сегодня.","Ay, hafta, gün ve ajanda; tek bir önceki / sonraki / bugün paylaşır.","Місяць, тиждень, день і розклад зі спільними кнопками назад / вперед / сьогодні.","Tháng, tuần, ngày và lịch biểu, cùng dùng các nút trước / tiếp / hôm nay.",月、周、日、日程，共用一组上一个 / 下一个 / 今天。,月、週、日、行程，共用一組上一個 / 下一個 / 今天。,"Mesec, teden, dan in dnevni red s skupnimi gumbi za prejšnje obdobje, naslednje obdobje in danes."
 ProductFeatures2,Text,"Overlapping appointments lay out side by side, never hidden.","ওভারল্যাপ অ্যাপয়েন্টমেন্ট পাশাপাশি বসে, কখনও লুকায় না।","Překrývající se schůzky leží vedle sebe, nikdy skryté.","Überlappende Termine stehen nebeneinander, nie versteckt.","Las citas solapadas se colocan lado a lado, nunca ocultas.","Les rendez-vous qui se chevauchent s'affichent côte à côte, jamais cachés.","Az egymást átfedő találkozók egymás mellett helyezkednek el, soha nem rejtve.","Gli appuntamenti sovrapposti si dispongono fianco a fianco, mai nascosti.",重なる予定は横に並び、隠れません。,"Қабаттасқан кездесулер қатар орналасады, ешқашан жасырылмайды.","Overlappende avtaler legges side om side, aldri skjult.","Nakładające się spotkania stają obok siebie, nigdy nie są ukryte.","Compromissos sobrepostos ficam lado a lado, nunca escondidos.",Пересекающиеся встречи раскладываются рядом и никогда не прячутся.,"Çakışan randevular yan yana dizilir, asla gizlenmez.","Зустрічі, що перетинаються, розкладаються поруч і ніколи не ховаються.",Các cuộc hẹn trùng giờ được xếp cạnh nhau và không bao giờ bị che khuất.,重叠的约会并排显示，从不遮挡。,重疊的約會並排顯示，從不遮擋。,Prekrivajoči se dogodki so prikazani drug ob drugem in nikoli skriti.
 ProductFeatures3,Text,"Color categories you define, painting every view.",আপনার সংজ্ঞায়িত রঙের বিভাগ প্রতিটি ভিউ রাঙায়।,"Barevné kategorie, které si definujete a které barví každé zobrazení.","Farbkategorien, die Sie selbst anlegen und die jede Ansicht färben.","Categorías de color que tú defines, pintando cada vista.","Des catégories de couleur que vous définissez, peignant chaque vue.",Az Ön által meghatározott színkategóriák minden nézetet lefestenek.,"Categorie di colore che definisci tu, che colorano ogni vista.",自分で定義するカラーカテゴリがすべての表示を彩ります。,Өзіңіз белгілейтін түсті санаттар әр көріністі бояйды.,"Fargekategorier du definerer selv, som farger hver visning.","Kolorowe kategorie, które sam definiujesz, malują każdy widok.",Categorias de cor definidas por você pintam todas as visões.,"Цветовые категории, которые задаёте вы, раскрашивают каждый вид.",Kendi tanımladığınız renk kategorileri her görünümü boyar.,"Кольорові категорії, які задаєте ви, розфарбовують кожне подання.","Danh mục màu do bạn định nghĩa, được hiển thị trong mọi chế độ xem.",你自己定义的颜色类别，给每个视图上色。,你自己定義的顏色類別，給每個檢視上色。,Lastne barvne kategorije obarvajo dogodke v vseh pogledih.
-ProductFeatures4,Text,"Thirteen themes, nineteen languages, single-key shortcuts.","তেরোটি থিম, ১৯টি ভাষা, এক-কী শর্টকাট।","Třináct motivů, 19 jazyků, jednoklávesové zkratky.","Dreizehn Designs, 19 Sprachen, Einzeltasten-Kürzel.","Trece temas, 19 idiomas, atajos de una sola tecla.","Treize thèmes, 19 langues, raccourcis à une seule touche.","Tizenhárom téma, 19 nyelv, egygombos gyorsbillentyűk.","Tredici temi, 19 lingue, scorciatoie a tasto singolo.",テーマ十三種、19 か国語、ワンキーのショートカット。,"Он үш тақырып, 19 тіл, жалғыз пернелік тіркесімдер.","Tretten temaer, 19 språk, snarveier med én tast.","Trzynaście motywów, 19 języków, skróty jednym klawiszem.","Treze temas, 19 idiomas, atalhos de uma tecla só.","Тринадцать тем, 19 языков, сочетания из одной клавиши.","On üç tema, 19 dil, tek tuşlu kısayollar.","Тринадцять тем, 19 мов, комбінації з однієї клавіші.","Mười ba giao diện, mười chín ngôn ngữ và các phím tắt một phím.",十三套主题、19 种语言、单键快捷键。,十三套佈景主題、19 種語言、單鍵快速鍵。,"Trinajst tem, dvajset jezikov in bližnjice z eno tipko."
+ProductFeatures4,Text,"Thirteen themes, twenty languages, single-key shortcuts.","তেরোটি থিম, ২০টি ভাষা, এক-কী শর্টকাট।","Třináct motivů, 20 jazyků, jednoklávesové zkratky.","Dreizehn Designs, 20 Sprachen, Einzeltasten-Kürzel.","Trece temas, 20 idiomas, atajos de una sola tecla.","Treize thèmes, 20 langues, raccourcis à une seule touche.","Tizenhárom téma, 20 nyelv, egygombos gyorsbillentyűk.","Tredici temi, 20 lingue, scorciatoie a tasto singolo.",テーマ十三種、20 か国語、ワンキーのショートカット。,"Он үш тақырып, 20 тіл, жалғыз пернелік тіркесімдер.","Tretten temaer, 20 språk, snarveier med én tast.","Trzynaście motywów, 20 języków, skróty jednym klawiszem.","Treze temas, 20 idiomas, atalhos de uma tecla só.","Тринадцать тем, 20 языков, сочетания из одной клавиши.","On üç tema, 20 dil, tek tuşlu kısayollar.","Тринадцять тем, 20 мов, комбінації з однієї клавіші.","Mười ba giao diện, hai mươi ngôn ngữ và các phím tắt một phím.",十三套主题、20 种语言、单键快捷键。,十三套佈景主題、20 種語言、單鍵快速鍵。,"Trinajst tem, dvajset jezikov in bližnjice z eno tipko."
 ProductFeatures5,Text,Set a password and the file is encrypted at rest with SQLCipher.,পাসওয়ার্ড দিলে ফাইলটি SQLCipher দিয়ে স্টোরেজে এনক্রিপ্টেড থাকে।,Nastavte heslo a soubor je šifrovaný v klidu pomocí SQLCipher.,"Passwort setzen, und die Datei ist mit SQLCipher im Ruhezustand verschlüsselt.",Pon una contraseña y el archivo queda cifrado en reposo con SQLCipher.,Mettez un mot de passe et le fichier est chiffré au repos avec SQLCipher.,"Állítson be egy jelszót, és a fájl nyugalmi állapotban titkosítva lesz az SQLCipher segítségével.",Imposta una password e il file è cifrato a riposo con SQLCipher.,パスワードを設定すると、ファイルは SQLCipher で保存時に暗号化されます。,"Құпия сөз қойсаңыз, файл SQLCipher арқылы дискіде шифрланады.","Sett et passord, så er filen kryptert i hvile med SQLCipher.","Ustaw hasło, a plik jest szyfrowany w spoczynku przez SQLCipher.",Defina uma senha e o arquivo fica criptografado em repouso com SQLCipher.,"Задайте пароль, и файл будет зашифрован на диске с помощью SQLCipher.","Bir parola belirleyin, dosya SQLCipher ile bekleme halinde şifrelenir.","Задайте пароль, і файл буде зашифровано на диску за допомогою SQLCipher.",Đặt mật khẩu và tệp sẽ được mã hóa khi lưu trữ bằng SQLCipher.,设个密码，文件就由 SQLCipher 静态加密。,設個密碼，檔案就由 SQLCipher 靜態加密。,Nastavi geslo in datoteka bo šifrirana na disku s SQLCipher.
 ProductFeatures6,Text,"AES-256, per-page HMAC-SHA512, SQLCipher's own key derivation.","AES-256, প্রতি পৃষ্ঠায় HMAC-SHA512, SQLCipher-এর নিজস্ব কী ডেরিভেশন।","AES-256, HMAC-SHA512 na stránku, vlastní odvození klíče SQLCipheru.","AES-256, HMAC-SHA512 pro Seite, SQLCiphers eigene Schlüsselableitung.","AES-256, HMAC-SHA512 por página y la derivación de clave del propio SQLCipher.","AES-256, HMAC-SHA512 par page, la dérivation de clé de SQLCipher lui-même.","AES-256, oldalankénti HMAC-SHA512, az SQLCipher saját kulcsának levezetése.","AES-256, HMAC-SHA512 per pagina, la derivazione di chiave di SQLCipher stesso.",AES-256、ページごとの HMAC-SHA512、SQLCipher 自身の鍵導出。,"AES-256, әр бетке HMAC-SHA512, SQLCipher-дің өз кілт шығару әдісі.","AES-256, HMAC-SHA512 per side og SQLCiphers egen nøkkelavledning.","AES-256, HMAC-SHA512 na stronę i własna derywacja klucza SQLCipher.","AES-256, HMAC-SHA512 por página, derivação de chave própria do SQLCipher.","AES-256, HMAC-SHA512 для каждой страницы, собственная выработка ключа SQLCipher.","AES-256, sayfa başına HMAC-SHA512, SQLCipher'ın kendi anahtar türetmesi.","AES-256, HMAC-SHA512 для кожної сторінки, власне вироблення ключа SQLCipher.","AES-256, HMAC-SHA512 trên từng trang, cùng cơ chế dẫn xuất khóa riêng của SQLCipher.",AES-256、每页 HMAC-SHA512、SQLCipher 自带的密钥派生。,AES-256、每頁 HMAC-SHA512、SQLCipher 自帶的金鑰派生。,"AES-256, HMAC-SHA512 za vsako stran in izpeljava ključa, ki jo zagotavlja SQLCipher."
 ProductFeatures7,Text,"Opt-in: no password leaves it plain SQLite, readable by anything.","ঐচ্ছিক: পাসওয়ার্ড না থাকলে সাধারণ SQLite, যেকোনো কিছু দিয়ে পড়া যায়।","Volitelné: bez hesla zůstává obyčejné SQLite, čitelné čímkoli.","Opt-in: ohne Passwort bleibt es normales SQLite, für alles lesbar.","Opcional: sin contraseña queda como SQLite normal, legible por cualquier cosa.","Optionnel : sans mot de passe, il reste du SQLite ordinaire, lisible par tout.","Opt-in: semmilyen jelszó nem hagyja sima SQLite-t, bármivel olvasható.","Opzionale: senza password resta SQLite in chiaro, leggibile da qualsiasi cosa.",任意選択：パスワードなしなら普通の SQLite のまま、何でも読めます。,"Қалауыңызша: құпия сөзсіз ол кәдімгі SQLite күйінде қалады, кез келген нәрсе оқи алады.","Valgfritt: uten passord forblir den vanlig SQLite, lesbar for hva som helst.","Opcjonalnie: bez hasła plik pozostaje zwykłym SQLite, czytelnym dla wszystkiego.","Opcional: sem senha, o arquivo continua em SQLite puro, legível por qualquer programa.","По желанию: без пароля это обычный SQLite, читаемый чем угодно.","İsteğe bağlı: parola yoksa düz SQLite kalır, her şeyle okunur.","За бажанням: без пароля це звичайний SQLite, який читається чим завгодно.",Tùy chọn bật: không đặt mật khẩu thì tệp vẫn là SQLite thuần và công cụ nào cũng có thể đọc.,可选：不设密码就是普通 SQLite，什么都能读。,可選：不設密碼就是普通 SQLite，什麼都能讀。,"Po izbiri: brez gesla ostane navadna zbirka SQLite, berljiva z običajnimi orodji."
