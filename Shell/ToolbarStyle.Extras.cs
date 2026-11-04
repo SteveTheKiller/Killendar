@@ -52,18 +52,23 @@ namespace Killendar.Shell
         }
 
         /// <summary>The overlay label key whose shortcut a toolbar button carries (ShortcutsOverlay.cs).</summary>
-        private string ToolbarShortcutKey(Button btn)
+        private string ToolbarShortcutKey(Button btn) => ToolbarShortcutKey(btn.Name);
+
+        /// <summary>The same, by the button's x:Name. The keys themselves come from the one binding
+        /// table (KsAll), so a tooltip can never name a key the overlay does not.</summary>
+        internal static string ToolbarShortcutKey(string buttonName) => buttonName switch
         {
-            if (ReferenceEquals(btn, NewEventBtn)) return "Str_KS_New";
-            if (ReferenceEquals(btn, ImportBtn))   return "Str_KS_Import";
-            if (ReferenceEquals(btn, ExportBtn))   return "Str_KS_Export";
-            if (ReferenceEquals(btn, TodayBtn))    return "Str_KS_Today";
-            if (ReferenceEquals(btn, TabMonth))    return "Str_KS_Month";
-            if (ReferenceEquals(btn, TabWeek))     return "Str_KS_Week";
-            if (ReferenceEquals(btn, TabDay))      return "Str_KS_Day";
-            if (ReferenceEquals(btn, TabAgenda))   return "Str_KS_Agenda";
-            return "";
-        }
+            nameof(NewEventBtn) => "Str_KS_New",
+            nameof(ImportBtn)   => "Str_KS_Import",
+            nameof(ExportBtn)   => "Str_KS_Export",
+            nameof(SearchBtn)   => "Str_KS_Search",
+            nameof(TodayBtn)    => "Str_KS_Today",
+            nameof(TabMonth)    => "Str_KS_Month",
+            nameof(TabWeek)     => "Str_KS_Week",
+            nameof(TabDay)      => "Str_KS_Day",
+            nameof(TabAgenda)   => "Str_KS_Agenda",
+            _ => "",
+        };
 
         // The name always stays reachable, and the tooltip carries the button's shortcut.
         partial void ToolbarTooltip(Button btn, string label, ref object tip)

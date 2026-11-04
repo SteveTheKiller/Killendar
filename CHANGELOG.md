@@ -83,6 +83,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - F12 while the keyboard map is open replaces it with About instead of stacking both.
 - The density button's tooltip switches language with the rest of the app.
 - The app size readout in the status bar is translated and no longer overwrites a newer status message.
+- The Search button's tooltip shows its Ctrl+F shortcut.
 
 ### Changed
 
