@@ -1123,13 +1123,24 @@ namespace Killendar.Services
 
         // ── Export ────────────────────────────────────────────────────────────
 
-        public static void ExportToFile(IEnumerable<CalendarEvent> events, string path)
+        /// <summary>Writes the file and returns how many appointments went out on UTC's clock
+        /// because their time zone could not be written (see BuildIcs).</summary>
+        public static int ExportToFile(IEnumerable<CalendarEvent> events, string path)
         {
-            FilePublication.WriteText(path, BuildIcs(events), new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+            FilePublication.WriteText(path, BuildIcs(events, out int zoneFallbacks), new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+            return zoneFallbacks;
         }
 
-        public static string BuildIcs(IEnumerable<CalendarEvent> events)
+        public static string BuildIcs(IEnumerable<CalendarEvent> events) => BuildIcs(events, out _);
+
+        /// <summary>
+        /// The calendar as .ics text. An appointment kept on a time zone that cannot be written as a
+        /// VTIMEZONE (one this computer cannot name, or a definition the writer refuses) goes out on
+        /// UTC's clock instead of failing the whole export; <paramref name="zoneFallbacks"/> counts them.
+        /// </summary>
+        public static string BuildIcs(IEnumerable<CalendarEvent> events, out int zoneFallbacks)
         {
+            zoneFallbacks = 0;
             var rows = new List<CalendarEvent>(events);
             var masters = new Dictionary<Guid, CalendarEvent>();
             foreach (var row in rows) if (row.IsSeries) masters[row.Id] = row;
@@ -1173,20 +1184,38 @@ namespace Killendar.Services
             sb.AppendLine("METHOD:PUBLISH");
 
             var zones = new HashSet<string>(StringComparer.Ordinal);
+            var definitions = new List<string>();
+            var unwritable = new HashSet<string>(StringComparer.Ordinal);
             foreach (var ev in rows)
             {
-                var used = new List<string>();
-                if (ev.IsOverride && ev.OccurrenceBasis == OccurrenceTimeBasis.SourceZone) used.Add(ev.OccurrenceZoneId);
-                if ((ev.IsSeries || NominalDuration.HasValue(ev)) && Recurrence.UsesTimeBasis(ev) &&
-                    ev.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone) used.Add(ev.RepeatZoneId);
-                foreach (string zone in used)
+                foreach (string zone in ZonesUsed(ev))
                 {
                     if (zone.Length == 0 || !zones.Add(zone)) continue;
-                    string definition = IcsTimeZoneWriter.Build(zone, TZConvert.GetTimeZoneInfo(zone));
-                    foreach (string line in definition.Replace("\r\n", "\n").Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries))
-                        sb.AppendLine(FoldLine(line));
+                    try { definitions.Add(IcsTimeZoneWriter.Build(zone, TZConvert.GetTimeZoneInfo(zone))); }
+                    catch (Exception ex) when (ex is NotSupportedException || ex is TimeZoneNotFoundException || ex is InvalidTimeZoneException)
+                    {
+                        unwritable.Add(zone);
+                    }
                 }
             }
+            if (unwritable.Count > 0)
+            {
+                // The fixed offset each zone had at an appointment's own start, for a zone this
+                // computer cannot read at all.
+                var known = new Dictionary<string, TimeSpan>(StringComparer.Ordinal);
+                foreach (var ev in rows)
+                    if (UsesSourceZone(ev) && unwritable.Contains(ev.RepeatZoneId) && !known.ContainsKey(ev.RepeatZoneId))
+                        known[ev.RepeatZoneId] = ev.RepeatAnchor!.Value - DateTime.SpecifyKind(ev.Start.ToUniversalTime(), DateTimeKind.Unspecified);
+                for (int i = 0; i < rows.Count; i++)
+                {
+                    if (!ZonesUsed(rows[i]).Any(unwritable.Contains)) continue;
+                    rows[i] = OnUtcClock(rows[i], unwritable, known);
+                    zoneFallbacks++;
+                }
+            }
+            foreach (string definition in definitions)
+                foreach (string line in definition.Replace("\r\n", "\n").Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries))
+                    sb.AppendLine(FoldLine(line));
 
             foreach (var ev in rows)
             {
@@ -1335,6 +1364,60 @@ namespace Killendar.Services
 
             sb.AppendLine("END:VCALENDAR");
             return sb.ToString().Replace("\r\n", "\n").Replace("\n", "\r\n");
+        }
+
+        private static bool UsesSourceZone(CalendarEvent ev) =>
+            (ev.IsSeries || NominalDuration.HasValue(ev)) && Recurrence.UsesTimeBasis(ev) &&
+            ev.RepeatTimeBasis == RecurrenceTimeBasis.SourceZone;
+
+        /// <summary>The time zones a row's written times name with TZID.</summary>
+        private static IEnumerable<string> ZonesUsed(CalendarEvent ev)
+        {
+            if (ev.IsOverride && ev.OccurrenceBasis == OccurrenceTimeBasis.SourceZone) yield return ev.OccurrenceZoneId;
+            if (UsesSourceZone(ev)) yield return ev.RepeatZoneId;
+        }
+
+        /// <summary>
+        /// A copy of the row with every time it keeps on an unwritable zone's clock moved onto UTC's
+        /// clock: the start, skipped and extra dates, the end of the repeat and the original date of
+        /// an edited occurrence. The receiving calendar then repeats it on UTC's clock.
+        /// </summary>
+        private static CalendarEvent OnUtcClock(CalendarEvent ev, HashSet<string> unwritable, Dictionary<string, TimeSpan> known)
+        {
+            var copy = ev.Clone();
+            DateTime ToUtc(DateTime nominal, string zone)
+            {
+                try
+                {
+                    var probe = new CalendarEvent { RepeatTimeBasis = RecurrenceTimeBasis.SourceZone, RepeatZoneId = zone };
+                    return DateTime.SpecifyKind(Recurrence.FromTimeBasis(probe, nominal), DateTimeKind.Unspecified);
+                }
+                catch (Exception ex) when ((ex is TimeZoneNotFoundException || ex is InvalidTimeZoneException) && known.ContainsKey(zone))
+                {
+                    return DateTime.SpecifyKind(nominal - known[zone], DateTimeKind.Unspecified);
+                }
+            }
+
+            if (copy.IsOverride && copy.OccurrenceBasis == OccurrenceTimeBasis.SourceZone &&
+                unwritable.Contains(copy.OccurrenceZoneId) && copy.OccurrenceAnchor.HasValue)
+            {
+                copy.OccurrenceAnchor = ToUtc(copy.OccurrenceAnchor.Value, copy.OccurrenceZoneId);
+                copy.OccurrenceBasis = OccurrenceTimeBasis.Utc;
+                copy.OccurrenceZoneId = "";
+            }
+            if (UsesSourceZone(copy) && unwritable.Contains(copy.RepeatZoneId))
+            {
+                string zone = copy.RepeatZoneId;
+                var clock = copy.RepeatAnchor!.Value.TimeOfDay;
+                copy.SkipOccurrences = [.. copy.SkipOccurrences.Select(n => ToUtc(n, zone))];
+                copy.ExtraDates = [.. copy.ExtraDates.Select(d => ToUtc(d.Date + clock, zone).Date)];
+                if (copy.RepeatUntilExact.HasValue && copy.RepeatUntilExact.Value.Kind != DateTimeKind.Utc)
+                    copy.RepeatUntilExact = DateTime.SpecifyKind(ToUtc(copy.RepeatUntilExact.Value, zone), DateTimeKind.Utc);
+                copy.RepeatAnchor = DateTime.SpecifyKind(copy.Start.ToUniversalTime(), DateTimeKind.Unspecified);
+                copy.RepeatTimeBasis = RecurrenceTimeBasis.Utc;
+                copy.RepeatZoneId = "";
+            }
+            return copy;
         }
 
         /// <summary>

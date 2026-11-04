@@ -47,21 +47,24 @@ namespace Killendar.Services
                 if (date.Date >= rule.DateStart.Date && date.Date <= rule.DateEnd.Date) candidates.Add(date);
             }
 
-            // The probe interval is shorter than the supported separation between distinct
-            // rule candidates. Reject dense definitions rather than miss an offset round trip.
-            DateTime? previous = null;
+            // A candidate within six hours of the last one kept adds nothing: the sweep around the
+            // kept one covers two days either side. Some zones put a rule boundary and a change an
+            // hour apart (Sao Tome in 2018, Bangladesh at the end of 2009).
+            // Around a merged candidate the probe steps by minutes, so two changes close
+            // together cannot hide between probes.
+            var kept = new List<(DateTime When, bool Dense)>();
             foreach (var candidate in candidates)
             {
-                if (previous.HasValue && candidate - previous.Value < TimeSpan.FromHours(6))
-                    throw new NotSupportedException("Calendar time zone transitions are too close to export safely: " + id);
-                previous = candidate;
+                if (kept.Count > 0 && candidate - kept[kept.Count - 1].When < TimeSpan.FromHours(6))
+                    kept[kept.Count - 1] = (kept[kept.Count - 1].When, true);
+                else kept.Add((candidate, false));
             }
 
             var transitions = new SortedDictionary<long, (DateTime Local, TimeSpan Before, TimeSpan After, bool Daylight)>();
             long margin = TimeSpan.FromDays(2).Ticks;
-            long step = TimeSpan.FromHours(6).Ticks;
-            foreach (var candidate in candidates)
+            foreach (var (candidate, dense) in kept)
             {
+                long step = dense ? TimeSpan.FromMinutes(15).Ticks : TimeSpan.FromHours(6).Ticks;
                 long left = Math.Max(1, candidate.Ticks - margin);
                 long stop = candidate.Ticks + Math.Min(margin, DateTime.MaxValue.Ticks - candidate.Ticks);
                 var before = Offset(left);
@@ -77,11 +80,18 @@ namespace Killendar.Services
                             long middle = low + (high - low) / 2;
                             if (Offset(middle) == before) low = middle; else high = middle;
                         }
-                        var utc = new DateTime(high, DateTimeKind.Utc);
                         var from = Offset(high - 1);
                         var to = Offset(high);
+                        // Windows writes an end-of-day change as 23:59:59.999; the real change is
+                        // the next whole second, where the new offset already holds.
                         if (high % TimeSpan.TicksPerSecond != 0)
-                            throw new NotSupportedException("Calendar time zone has a subsecond transition that cannot be exported: " + id);
+                        {
+                            long rounded = (high / TimeSpan.TicksPerSecond + 1) * TimeSpan.TicksPerSecond;
+                            if (rounded > DateTime.MaxValue.Ticks || Offset(rounded) != to)
+                                throw new NotSupportedException("Calendar time zone has a subsecond transition that cannot be exported: " + id);
+                            high = rounded;
+                        }
+                        var utc = new DateTime(high, DateTimeKind.Utc);
                         DateTime local;
                         try { local = DateTime.SpecifyKind(utc + from, DateTimeKind.Unspecified); }
                         catch (ArgumentOutOfRangeException)
