@@ -445,6 +445,6 @@ namespace Killendar.Controls
         private void Close_Click(object sender, RoutedEventArgs e) => Close();
 
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-            => DragMove();
+            => TitleBarDrag.Start(this, e);
     }
 }
