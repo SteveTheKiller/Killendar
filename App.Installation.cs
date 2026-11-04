@@ -54,6 +54,22 @@ namespace Killendar
         }
     }
 
+    /// <summary>Removes the other copy when Killendar is installed twice. Files go first, and the
+    /// registration (uninstall entry, shortcuts, file types, PATH) only once every owned file is
+    /// confirmed gone, as the real uninstall does, so a copy running elsewhere is left whole and
+    /// still uninstallable instead of orphaned.</summary>
+    internal static class InstalledCopyRemoval
+    {
+        internal static bool Remove(string directory, string[] files, Action removeRegistration)
+        {
+            KillerFamily.Deployment.InstalledFileCleanup.Remove(directory, files);
+            foreach (string path in KillerFamily.Deployment.InstalledFileCleanup.OwnedPaths(directory, files))
+                if (!UninstallWorkflow.Absent(path)) return false;
+            removeRegistration();
+            return true;
+        }
+    }
+
     public partial class App
     {
         private static readonly string[] InstalledFiles = { "Killendar.exe" };
@@ -104,29 +120,41 @@ namespace Killendar
             if (!ShowInstallDialog($"Killendar is installed twice. Remove the other {other} copy now?\n\nYour calendars and settings will not be removed.",
                 true, AppName + " installation conflict")) return;
 
-            if (runningMachine) RemovePerUserInstall();
+            bool removed;
+            if (runningMachine) removed = RemovePerUserInstall();
             else
             {
                 try
                 {
                     using var p = Process.Start(new ProcessStartInfo(current, "/remove-machine-conflict")
                     { UseShellExecute = true, Verb = "runas" });
-                    p?.WaitForExit();
+                    if (p == null) return;
+                    p.WaitForExit();
+                    removed = p.ExitCode == 0;
                 }
-                catch { }
+                catch { return; }   // elevation declined: nothing was touched
             }
+            // Both copies remain in full, so this prompt comes back on the next start.
+            if (!removed)
+                ShowInstallDialog($"The other {other} copy is in use, so it was not removed.\n\nClose Killendar wherever it is running, then start Killendar again.",
+                    heading: AppName + " installation conflict");
         }
 
-        private static void RemoveMachineInstallConflict()
+        /// <summary>The elevated half of the conflict repair. Nonzero when the machine copy's files
+        /// could not all be removed, in which case its registration is left in place.</summary>
+        private static int RemoveMachineInstallConflict()
         {
-            string common = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms), AppName);
-            try { Registry.LocalMachine.DeleteSubKeyTree(RegKey, false); } catch { }
-            try { Registry.LocalMachine.DeleteSubKeyTree(UninstallKey, false); } catch { }
-            FileAssociations.Unregister(Registry.LocalMachine);
-            try { File.Delete(Path.Combine(common, AppName + ".lnk")); } catch { }
-            try { if (Directory.Exists(common)) Directory.Delete(common, false); } catch { }
-            KillerFamily.Deployment.InstalledFileCleanup.Remove(MachineInstallDir, InstalledFiles);
-            Services.CommandLinePath.Unregister(MachineInstallDir, machine: true);
+            bool removed = InstalledCopyRemoval.Remove(MachineInstallDir, InstalledFiles, () =>
+            {
+                string common = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms), AppName);
+                try { Registry.LocalMachine.DeleteSubKeyTree(RegKey, false); } catch { }
+                try { Registry.LocalMachine.DeleteSubKeyTree(UninstallKey, false); } catch { }
+                FileAssociations.Unregister(Registry.LocalMachine);
+                try { File.Delete(Path.Combine(common, AppName + ".lnk")); } catch { }
+                try { if (Directory.Exists(common)) Directory.Delete(common, false); } catch { }
+                Services.CommandLinePath.Unregister(MachineInstallDir, machine: true);
+            });
+            return removed ? KillerFamily.Deployment.InstallerExitCodes.Success : KillerFamily.Deployment.InstallerExitCodes.Busy;
         }
 
         /// <summary>
@@ -138,7 +166,7 @@ namespace Killendar
         {
             if (allUsers)
                 return AllUsersDowngradeAccepted() && AllUsersInstall.Run(wantDesktop, DesktopLnk, MachineInstallExe,
-                    RunElevatedSilentInstall, RemovePerUserInstall, CreateShortcut, RelaunchMachineCopy);
+                    RunElevatedSilentInstall, () => RemovePerUserInstall(), CreateShortcut, RelaunchMachineCopy);
 
             if (!DoInstall(wantDesktop) || !File.Exists(InstallExe)) return false;
             return new InstallRelaunch().StartInstalled(InstallExe, () => Current.Shutdown());
@@ -150,7 +178,7 @@ namespace Killendar
         {
             if (!allUsers) return InstallAndRelaunch(wantDesktop, allUsers: false);
             return AllUsersDowngradeAccepted() && await AllUsersInstall.RunAsync(wantDesktop, DesktopLnk, MachineInstallExe,
-                RunElevatedSilentInstall, RemovePerUserInstall, CreateShortcut, RelaunchMachineCopy);
+                RunElevatedSilentInstall, () => RemovePerUserInstall(), CreateShortcut, RelaunchMachineCopy);
         }
 
         private static bool AllUsersDowngradeAccepted()
@@ -197,27 +225,28 @@ namespace Killendar
             }
         }
 
-        /// <summary>Remove a per-user install: files, shortcuts and its HKCU install markers.
-        /// The settings file in LOCALAPPDATA is deliberately left alone so theme, accent, locale
-        /// and window placement survive the move to a machine-wide install.</summary>
-        private static void RemovePerUserInstall()
-        {
-            try { if (File.Exists(StartMenuLnk)) File.Delete(StartMenuLnk); } catch { }
-            try { if (Directory.Exists(StartMenuDir)) Directory.Delete(StartMenuDir, false); } catch { }
-            try { if (File.Exists(DesktopLnk)) File.Delete(DesktopLnk); } catch { }
-            KillerFamily.Deployment.InstalledFileCleanup.Remove(InstallDir, InstalledFiles);
-            Services.CommandLinePath.Unregister(InstallDir, machine: false);
-            try
+        /// <summary>Remove a per-user install: files, then shortcuts and its HKCU install markers,
+        /// which stay when a file could not be removed (false). The settings file in LOCALAPPDATA
+        /// is deliberately left alone so theme, accent, locale and window placement survive the
+        /// move to a machine-wide install.</summary>
+        private static bool RemovePerUserInstall()
+            => InstalledCopyRemoval.Remove(InstallDir, InstalledFiles, () =>
             {
-                using var key = Registry.CurrentUser.OpenSubKey(RegKey, writable: true);
-                key?.DeleteValue("Installed", throwOnMissingValue: false);
-                key?.DeleteValue("InstallPath", throwOnMissingValue: false);
-            }
-            catch { }
-            try { Registry.CurrentUser.DeleteSubKeyTree(UninstallKey, throwOnMissingSubKey: false); }
-            catch { }
-            FileAssociations.Unregister(Registry.CurrentUser);
-        }
+                try { if (File.Exists(StartMenuLnk)) File.Delete(StartMenuLnk); } catch { }
+                try { if (Directory.Exists(StartMenuDir)) Directory.Delete(StartMenuDir, false); } catch { }
+                try { if (File.Exists(DesktopLnk)) File.Delete(DesktopLnk); } catch { }
+                Services.CommandLinePath.Unregister(InstallDir, machine: false);
+                try
+                {
+                    using var key = Registry.CurrentUser.OpenSubKey(RegKey, writable: true);
+                    key?.DeleteValue("Installed", throwOnMissingValue: false);
+                    key?.DeleteValue("InstallPath", throwOnMissingValue: false);
+                }
+                catch { }
+                try { Registry.CurrentUser.DeleteSubKeyTree(UninstallKey, throwOnMissingSubKey: false); }
+                catch { }
+                FileAssociations.Unregister(Registry.CurrentUser);
+            });
 
         // ============================================================
         // Silent install - winget / choco / RMM and the Microsoft Store

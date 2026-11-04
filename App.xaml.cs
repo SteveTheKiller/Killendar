@@ -178,8 +178,7 @@ namespace Killendar
 
             if (e.Args.Length > 0 && string.Equals(e.Args[0], "/remove-machine-conflict", StringComparison.OrdinalIgnoreCase))
             {
-                RemoveMachineInstallConflict();
-                Shutdown(0);
+                Shutdown(RemoveMachineInstallConflict());
                 return;
             }
 

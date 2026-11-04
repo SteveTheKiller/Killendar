@@ -66,6 +66,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - After a machine-wide install, double-clicking a .kcal file opens the installed copy instead of an old portable copy.
 - Installing for all users adds the desktop shortcut when Add a desktop shortcut is ticked.
 - The window no longer freezes while an all-users install runs.
+- Removing the second copy when Killendar is installed twice no longer leaves an orphaned program behind when that copy is running; you are told it is in use.
 
 ### Changed
 
