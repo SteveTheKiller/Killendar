@@ -415,6 +415,26 @@
     <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar はこの PC のすべてのユーザー用に既にインストールされているため、そのコピーが更新されます。Windows が許可を求めます。</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">インストールは完了しませんでした。Killendar はポータブルのまま動作しています。</sys:String>
     <sys:String x:Key="Str_Status_RelaunchDeferred">インストールが完了しました。インストール中に変更された作業を保護するため、Killendar は開いたままになっています。</sys:String>
+    <sys:String x:Key="Str_Btn_Yes">はい</sys:String>
+    <sys:String x:Key="Str_Btn_No">いいえ</sys:String>
+    <sys:String x:Key="Str_Btn_OK">OK</sys:String>
+    <sys:String x:Key="Str_Install_ConflictTitle">Killendar のインストールの競合</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemovePerUser">Killendar が 2 つインストールされています。もう一方の現在のユーザー用のコピーを今すぐ削除しますか？&#x0a;&#x0a;カレンダーと設定は削除されません。</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers">Killendar が 2 つインストールされています。もう一方のすべてのユーザー用のコピーを今すぐ削除しますか？&#x0a;&#x0a;カレンダーと設定は削除されません。</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyPerUser">もう一方の現在のユーザー用のコピーは使用中のため、削除されませんでした。&#x0a;&#x0a;Killendar が実行されているすべての場所で閉じてから、もう一度 Killendar を起動してください。</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyAllUsers">もう一方のすべてのユーザー用のコピーは使用中のため、削除されませんでした。&#x0a;&#x0a;Killendar が実行されているすべての場所で閉じてから、もう一度 Killendar を起動してください。</sys:String>
+    <sys:String x:Key="Str_Install_Downgrade">現在インストールされているバージョン ({1}) に、古いバージョン ({0}) を上書きインストールしようとしています。&#x0a;&#x0a;それでもダウングレードしますか？</sys:String>
+    <sys:String x:Key="Str_Install_Unsigned">インストールを拒否しました。実行中の EXE に有効な Authenticode 署名がありません。&#x0a;&#x0a;インストールできるのは署名済みの Killendar ビルドのみです。</sys:String>
+    <sys:String x:Key="Str_Install_WriteFailed">インストールしたコピーを次の場所に書き込めませんでした:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;開いている Killendar のウィンドウをすべて閉じてから、インストーラーをもう一度実行してください。</sys:String>
+    <sys:String x:Key="Str_Install_Failed">インストールに失敗しました:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_Title">Killendar をアンインストールしますか？</sys:String>
+    <sys:String x:Key="Str_Uninstall_Body">予定は保持されます。&#x0a;&#x0a;削除は Killendar が閉じた後に完了します。状態と残されるヘルパーファイル:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Btn_Uninstall">アンインストール</sys:String>
+    <sys:String x:Key="Str_Uninstall_ElevationFailed">アンインストールで管理者アクセスを要求できませんでした:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_CouldNotStart">アンインストールを開始できませんでした。結果: {0}&#x0a;&#x0a;残されたファイルと状態 (作成された場合):&#x0a;{1}</sys:String>
+    <sys:String x:Key="Str_Settings_NotSaved">設定ファイルを保存できませんでした。</sys:String>
+    <sys:String x:Key="Str_Settings_RenameUndone">設定ファイルを保存できなかったため、名前の変更を元に戻しました。</sys:String>
+    <sys:String x:Key="Str_Settings_DeleteNotSaved">Killendar は削除されましたが、設定ファイルを保存できなかったため、次回の起動時に同じ名前の空の Killendar が開くことがあります。</sys:String>
 
     <!-- カテゴリ -->
     <sys:String x:Key="Str_KS_Title">キーボードショートカット</sys:String>

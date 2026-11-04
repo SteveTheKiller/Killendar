@@ -415,6 +415,26 @@
     <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar 已为本电脑上的所有用户安装，因此将更新该副本。Windows 将请求授权。</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">安装未完成 - Killendar 仍以便携版运行。</sys:String>
     <sys:String x:Key="Str_Status_RelaunchDeferred">安装已完成。为保护安装期间更改的工作，Killendar 保持打开。</sys:String>
+    <sys:String x:Key="Str_Btn_Yes">是</sys:String>
+    <sys:String x:Key="Str_Btn_No">否</sys:String>
+    <sys:String x:Key="Str_Btn_OK">确定</sys:String>
+    <sys:String x:Key="Str_Install_ConflictTitle">Killendar 安装冲突</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemovePerUser">Killendar 被安装了两次。要立即删除另一个仅为当前用户安装的副本吗？&#x0a;&#x0a;你的日历和设置不会被删除。</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers">Killendar 被安装了两次。要立即删除另一个为所有用户安装的副本吗？&#x0a;&#x0a;你的日历和设置不会被删除。</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyPerUser">另一个仅为当前用户安装的副本正在使用，因此未被删除。&#x0a;&#x0a;请在 Killendar 运行的所有位置将其关闭，然后重新启动 Killendar。</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyAllUsers">另一个为所有用户安装的副本正在使用，因此未被删除。&#x0a;&#x0a;请在 Killendar 运行的所有位置将其关闭，然后重新启动 Killendar。</sys:String>
+    <sys:String x:Key="Str_Install_Downgrade">你即将用较旧的版本 ({0}) 覆盖当前已安装的版本 ({1})。&#x0a;&#x0a;仍要降级吗？</sys:String>
+    <sys:String x:Key="Str_Install_Unsigned">安装被拒绝：正在运行的 EXE 没有有效的 Authenticode 签名。&#x0a;&#x0a;只能安装经过签名的 Killendar 版本。</sys:String>
+    <sys:String x:Key="Str_Install_WriteFailed">无法将已安装的副本写入：&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;请关闭所有打开的 Killendar 窗口，然后重新运行安装程序。</sys:String>
+    <sys:String x:Key="Str_Install_Failed">安装失败：&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_Title">卸载 Killendar？</sys:String>
+    <sys:String x:Key="Str_Uninstall_Body">你的日程会保留。&#x0a;&#x0a;卸载将在 Killendar 关闭后完成。状态和保留的辅助文件：&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Btn_Uninstall">卸载</sys:String>
+    <sys:String x:Key="Str_Uninstall_ElevationFailed">卸载无法请求管理员权限：&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_CouldNotStart">卸载无法启动。结果：{0}&#x0a;&#x0a;保留的文件和状态（如已创建）：&#x0a;{1}</sys:String>
+    <sys:String x:Key="Str_Settings_NotSaved">无法保存设置文件。</sys:String>
+    <sys:String x:Key="Str_Settings_RenameUndone">无法保存设置文件，因此已撤销重命名。</sys:String>
+    <sys:String x:Key="Str_Settings_DeleteNotSaved">Killendar 已删除，但无法保存设置文件，因此下次启动时可能会以相同的名称打开一个空的 Killendar。</sys:String>
 
     <!-- 类别 -->
     <sys:String x:Key="Str_KS_Title">键盘快捷键</sys:String>

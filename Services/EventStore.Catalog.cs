@@ -82,7 +82,7 @@ namespace Killendar.Services
             if (string.Equals(oldName, ActiveFile, StringComparison.OrdinalIgnoreCase) && !RetargetActive(newName))
             {
                 File.Move(newPath, oldPath);
-                throw new SettingsWriteException("The settings file could not be saved, so the rename was undone.");
+                throw new SettingsWriteException(UiText.Loc("Str_Settings_RenameUndone"));
             }
             RenameBackups(oldPath, newPath);
             LastRename = (oldName, newName);
@@ -110,7 +110,7 @@ namespace Killendar.Services
             if (!string.Equals(name, ActiveFile, StringComparison.OrdinalIgnoreCase)) return;
             var left = ListKillendars();
             if (!RetargetActive(left.Count > 0 ? left[0] : DefaultFileName))
-                throw new SettingsWriteException("The Killendar was deleted, but the settings file could not be saved, so the next launch may open an empty Killendar under the same name.");
+                throw new SettingsWriteException(UiText.Loc("Str_Settings_DeleteNotSaved"));
         }
 
         public static void DeleteKillendar(string name)

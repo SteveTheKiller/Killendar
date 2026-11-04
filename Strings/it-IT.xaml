@@ -439,6 +439,26 @@
     <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar è già installato per tutti gli utenti di questo PC, quindi questa operazione aggiornerà quella copia. Windows chiederà l'autorizzazione.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">L'installazione non è stata completata - Killendar continua in modalità portatile.</sys:String>
     <sys:String x:Key="Str_Status_RelaunchDeferred">L’installazione è terminata. Killendar è rimasto aperto per proteggere il lavoro modificato durante l’installazione.</sys:String>
+    <sys:String x:Key="Str_Btn_Yes">Sì</sys:String>
+    <sys:String x:Key="Str_Btn_No">No</sys:String>
+    <sys:String x:Key="Str_Btn_OK">OK</sys:String>
+    <sys:String x:Key="Str_Install_ConflictTitle">Conflitto di installazione di Killendar</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemovePerUser">Killendar è installato due volte. Rimuovere ora l&apos;altra copia per l&apos;utente corrente?&#x0a;&#x0a;I tuoi calendari e le tue impostazioni non verranno rimossi.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers">Killendar è installato due volte. Rimuovere ora l&apos;altra copia per tutti gli utenti?&#x0a;&#x0a;I tuoi calendari e le tue impostazioni non verranno rimossi.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyPerUser">L&apos;altra copia per l&apos;utente corrente è in uso, quindi non è stata rimossa.&#x0a;&#x0a;Chiudi Killendar ovunque sia in esecuzione, poi avvia di nuovo Killendar.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyAllUsers">L&apos;altra copia per tutti gli utenti è in uso, quindi non è stata rimossa.&#x0a;&#x0a;Chiudi Killendar ovunque sia in esecuzione, poi avvia di nuovo Killendar.</sys:String>
+    <sys:String x:Key="Str_Install_Downgrade">Stai per installare una versione precedente ({0}) sopra quella attualmente installata ({1}).&#x0a;&#x0a;Vuoi eseguire comunque il downgrade?</sys:String>
+    <sys:String x:Key="Str_Install_Unsigned">Installazione rifiutata: l&apos;EXE in esecuzione non ha una firma Authenticode valida.&#x0a;&#x0a;Si possono installare solo build firmate di Killendar.</sys:String>
+    <sys:String x:Key="Str_Install_WriteFailed">Impossibile scrivere la copia installata in:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;Chiudi tutte le finestre di Killendar aperte, poi esegui di nuovo il programma di installazione.</sys:String>
+    <sys:String x:Key="Str_Install_Failed">Installazione non riuscita:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_Title">Disinstallare Killendar?</sys:String>
+    <sys:String x:Key="Str_Uninstall_Body">I tuoi appuntamenti verranno conservati.&#x0a;&#x0a;La rimozione termina dopo la chiusura di Killendar. Stato e file di supporto conservati:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Btn_Uninstall">Disinstalla</sys:String>
+    <sys:String x:Key="Str_Uninstall_ElevationFailed">La disinstallazione non ha potuto richiedere l&apos;accesso da amministratore:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_CouldNotStart">Impossibile avviare la disinstallazione. Risultato: {0}&#x0a;&#x0a;File conservati e stato, se creati:&#x0a;{1}</sys:String>
+    <sys:String x:Key="Str_Settings_NotSaved">Impossibile salvare il file delle impostazioni.</sys:String>
+    <sys:String x:Key="Str_Settings_RenameUndone">Impossibile salvare il file delle impostazioni, quindi la ridenominazione è stata annullata.</sys:String>
+    <sys:String x:Key="Str_Settings_DeleteNotSaved">Il Killendar è stato eliminato, ma non è stato possibile salvare il file delle impostazioni, quindi al prossimo avvio potrebbe aprirsi un Killendar vuoto con lo stesso nome.</sys:String>
 
     <sys:String x:Key="Str_KS_Title">Scorciatoie da tastiera</sys:String>
     <sys:String x:Key="Str_KS_ViewList">ELENCO</sys:String>

@@ -415,6 +415,26 @@
     <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar ইতিমধ্যেই এই পিসির সব ব্যবহারকারীর জন্য ইনস্টল করা আছে, তাই সেই কপিটিই হালনাগাদ হবে। Windows অনুমতি চাইবে।</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">ইনস্টল সম্পূর্ণ হয়নি - Killendar এখনও পোর্টেবল হিসেবে চলছে।</sys:String>
     <sys:String x:Key="Str_Status_RelaunchDeferred">ইনস্টলেশন শেষ হয়েছে। ইনস্টলেশনের সময় করা কাজের পরিবর্তন সুরক্ষিত রাখতে Killendar খোলা রয়েছে।</sys:String>
+    <sys:String x:Key="Str_Btn_Yes">হ্যাঁ</sys:String>
+    <sys:String x:Key="Str_Btn_No">না</sys:String>
+    <sys:String x:Key="Str_Btn_OK">ঠিক আছে</sys:String>
+    <sys:String x:Key="Str_Install_ConflictTitle">Killendar ইনস্টলেশন সংঘাত</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemovePerUser">Killendar দুইবার ইনস্টল করা আছে। বর্তমান ব্যবহারকারীর জন্য ইনস্টল করা অন্য কপিটি এখন সরাবেন?&#x0a;&#x0a;আপনার ক্যালেন্ডার ও সেটিংস সরানো হবে না।</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers">Killendar দুইবার ইনস্টল করা আছে। সব ব্যবহারকারীর জন্য ইনস্টল করা অন্য কপিটি এখন সরাবেন?&#x0a;&#x0a;আপনার ক্যালেন্ডার ও সেটিংস সরানো হবে না।</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyPerUser">বর্তমান ব্যবহারকারীর জন্য ইনস্টল করা অন্য কপিটি ব্যবহৃত হচ্ছে, তাই সরানো হয়নি।&#x0a;&#x0a;যেখানে যেখানে Killendar চলছে সেখানে সেটি বন্ধ করুন, তারপর আবার Killendar চালু করুন।</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyAllUsers">সব ব্যবহারকারীর জন্য ইনস্টল করা অন্য কপিটি ব্যবহৃত হচ্ছে, তাই সরানো হয়নি।&#x0a;&#x0a;যেখানে যেখানে Killendar চলছে সেখানে সেটি বন্ধ করুন, তারপর আবার Killendar চালু করুন।</sys:String>
+    <sys:String x:Key="Str_Install_Downgrade">আপনি বর্তমানে ইনস্টল করা সংস্করণের ({1}) ওপর একটি পুরোনো সংস্করণ ({0}) ইনস্টল করতে যাচ্ছেন।&#x0a;&#x0a;তবুও ডাউনগ্রেড করবেন?</sys:String>
+    <sys:String x:Key="Str_Install_Unsigned">ইনস্টলেশন প্রত্যাখ্যাত: চলমান EXE-তে বৈধ Authenticode স্বাক্ষর নেই।&#x0a;&#x0a;শুধু স্বাক্ষরিত Killendar বিল্ড ইনস্টল করা যায়।</sys:String>
+    <sys:String x:Key="Str_Install_WriteFailed">ইনস্টল করা কপিটি এখানে লেখা যায়নি:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;খোলা সব Killendar উইন্ডো বন্ধ করুন, তারপর ইনস্টলার আবার চালান।</sys:String>
+    <sys:String x:Key="Str_Install_Failed">ইনস্টল ব্যর্থ হয়েছে:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_Title">Killendar আনইনস্টল করবেন?</sys:String>
+    <sys:String x:Key="Str_Uninstall_Body">আপনার অ্যাপয়েন্টমেন্ট রাখা হবে।&#x0a;&#x0a;Killendar বন্ধ হওয়ার পর অপসারণ শেষ হবে। অবস্থা ও রেখে দেওয়া সহায়ক ফাইল:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Btn_Uninstall">আনইনস্টল করুন</sys:String>
+    <sys:String x:Key="Str_Uninstall_ElevationFailed">আনইনস্টল অ্যাডমিন অ্যাক্সেস চাইতে পারেনি:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_CouldNotStart">আনইনস্টল শুরু করা যায়নি। ফলাফল: {0}&#x0a;&#x0a;রেখে দেওয়া ফাইল ও অবস্থা, যদি তৈরি হয়ে থাকে:&#x0a;{1}</sys:String>
+    <sys:String x:Key="Str_Settings_NotSaved">সেটিংস ফাইল সংরক্ষণ করা যায়নি।</sys:String>
+    <sys:String x:Key="Str_Settings_RenameUndone">সেটিংস ফাইল সংরক্ষণ করা যায়নি, তাই নাম বদল ফিরিয়ে নেওয়া হয়েছে।</sys:String>
+    <sys:String x:Key="Str_Settings_DeleteNotSaved">Killendar মুছে ফেলা হয়েছে, কিন্তু সেটিংস ফাইল সংরক্ষণ করা যায়নি, তাই পরের বার চালু করলে একই নামে একটি খালি Killendar খুলতে পারে।</sys:String>
 
     <!-- বিভাগ -->
     <sys:String x:Key="Str_KS_Title">কীবোর্ড শর্টকাট</sys:String>

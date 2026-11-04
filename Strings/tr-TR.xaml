@@ -415,6 +415,26 @@
     <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar bu bilgisayarda zaten tüm kullanıcılar için kurulu, bu nedenle o kopya güncellenecek. Windows izin isteyecek.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">Yükleme tamamlanmadı - Killendar taşınabilir olarak çalışmaya devam ediyor.</sys:String>
     <sys:String x:Key="Str_Status_RelaunchDeferred">Kurulum tamamlandı. Kurulum sırasında değiştirilen çalışmayı korumak için Killendar açık kaldı.</sys:String>
+    <sys:String x:Key="Str_Btn_Yes">Evet</sys:String>
+    <sys:String x:Key="Str_Btn_No">Hayır</sys:String>
+    <sys:String x:Key="Str_Btn_OK">Tamam</sys:String>
+    <sys:String x:Key="Str_Install_ConflictTitle">Killendar yükleme çakışması</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemovePerUser">Killendar iki kez kurulu. Geçerli kullanıcı için kurulu diğer kopya şimdi kaldırılsın mı?&#x0a;&#x0a;Takvimleriniz ve ayarlarınız kaldırılmaz.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers">Killendar iki kez kurulu. Tüm kullanıcılar için kurulu diğer kopya şimdi kaldırılsın mı?&#x0a;&#x0a;Takvimleriniz ve ayarlarınız kaldırılmaz.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyPerUser">Geçerli kullanıcı için kurulu diğer kopya kullanımda olduğundan kaldırılmadı.&#x0a;&#x0a;Killendar&apos;ı çalıştığı her yerde kapatın, ardından Killendar&apos;ı yeniden başlatın.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyAllUsers">Tüm kullanıcılar için kurulu diğer kopya kullanımda olduğundan kaldırılmadı.&#x0a;&#x0a;Killendar&apos;ı çalıştığı her yerde kapatın, ardından Killendar&apos;ı yeniden başlatın.</sys:String>
+    <sys:String x:Key="Str_Install_Downgrade">Şu anda kurulu olan sürümün ({1}) üzerine daha eski bir sürüm ({0}) yüklemek üzeresiniz.&#x0a;&#x0a;Yine de eski sürüme geçilsin mi?</sys:String>
+    <sys:String x:Key="Str_Install_Unsigned">Yükleme reddedildi: çalışan EXE geçerli bir Authenticode imzasına sahip değil.&#x0a;&#x0a;Yalnızca imzalı Killendar derlemeleri yüklenebilir.</sys:String>
+    <sys:String x:Key="Str_Install_WriteFailed">Yüklenen kopya şuraya yazılamadı:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;Açık olan tüm Killendar pencerelerini kapatın, ardından yükleyiciyi yeniden çalıştırın.</sys:String>
+    <sys:String x:Key="Str_Install_Failed">Yükleme başarısız oldu:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_Title">Killendar kaldırılsın mı?</sys:String>
+    <sys:String x:Key="Str_Uninstall_Body">Randevularınız korunacak.&#x0a;&#x0a;Kaldırma işlemi Killendar kapandıktan sonra tamamlanır. Durum ve korunan yardımcı dosyalar:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Btn_Uninstall">Kaldır</sys:String>
+    <sys:String x:Key="Str_Uninstall_ElevationFailed">Kaldırma işlemi yönetici erişimi isteyemedi:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_CouldNotStart">Kaldırma işlemi başlatılamadı. Sonuç: {0}&#x0a;&#x0a;Oluşturulduysa korunan dosyalar ve durum:&#x0a;{1}</sys:String>
+    <sys:String x:Key="Str_Settings_NotSaved">Ayarlar dosyası kaydedilemedi.</sys:String>
+    <sys:String x:Key="Str_Settings_RenameUndone">Ayarlar dosyası kaydedilemedi, bu nedenle yeniden adlandırma geri alındı.</sys:String>
+    <sys:String x:Key="Str_Settings_DeleteNotSaved">Killendar silindi ancak ayarlar dosyası kaydedilemedi; bu nedenle bir sonraki açılışta aynı adla boş bir Killendar açılabilir.</sys:String>
 
     <!-- Kategoriler -->
     <sys:String x:Key="Str_KS_Title">Klavye kısayolları</sys:String>

@@ -169,7 +169,11 @@ namespace Killendar
                  string.Equals(e.Args[0], "/uninstall-silent", StringComparison.OrdinalIgnoreCase)))
             {
                 bool silent = string.Equals(e.Args[0], "/uninstall-silent", StringComparison.OrdinalIgnoreCase);
-                if (!silent) ThemeManager.Initialize();
+                if (!silent)
+                {
+                    ThemeManager.Initialize();
+                    SetupLocale.Apply(LocaleManager.Initialize);   // the prompt in the saved language
+                }
                 Controls.TaskbarIdentity.UseUninstall();
                 Shutdown(e.Args.Length <= 2 ? Uninstall(silent, e.Args.Length == 2 ? e.Args[1] : null)
                     : KillerFamily.Deployment.InstallerExitCodes.SecurityRejected);

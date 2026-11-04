@@ -480,6 +480,26 @@
     <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar is already installed for all users on this PC, so this will update that copy. Windows will ask for permission.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">Install did not complete - Killendar is still running portable.</sys:String>
     <sys:String x:Key="Str_Status_RelaunchDeferred">Installation finished. Killendar stayed open to protect work changed during installation.</sys:String>
+    <sys:String x:Key="Str_Btn_Yes">Yes</sys:String>
+    <sys:String x:Key="Str_Btn_No">No</sys:String>
+    <sys:String x:Key="Str_Btn_OK">OK</sys:String>
+    <sys:String x:Key="Str_Install_ConflictTitle">Killendar installation conflict</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemovePerUser">Killendar is installed twice. Remove the other per-user copy now?&#x0a;&#x0a;Your calendars and settings will not be removed.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers">Killendar is installed twice. Remove the other all-users copy now?&#x0a;&#x0a;Your calendars and settings will not be removed.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyPerUser">The other per-user copy is in use, so it was not removed.&#x0a;&#x0a;Close Killendar wherever it is running, then start Killendar again.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyAllUsers">The other all-users copy is in use, so it was not removed.&#x0a;&#x0a;Close Killendar wherever it is running, then start Killendar again.</sys:String>
+    <sys:String x:Key="Str_Install_Downgrade">You are about to install an older version ({0}) over the currently installed version ({1}).&#x0a;&#x0a;Downgrade anyway?</sys:String>
+    <sys:String x:Key="Str_Install_Unsigned">Installation refused: the running EXE does not carry a valid Authenticode signature.&#x0a;&#x0a;Only signed builds of Killendar can be installed.</sys:String>
+    <sys:String x:Key="Str_Install_WriteFailed">Couldn&apos;t write the installed copy at:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;Close any open Killendar window, then run the installer again.</sys:String>
+    <sys:String x:Key="Str_Install_Failed">Installation failed:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_Title">Uninstall Killendar?</sys:String>
+    <sys:String x:Key="Str_Uninstall_Body">Your appointments will be kept.&#x0a;&#x0a;Removal finishes after Killendar closes. Status and retained helper files:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Btn_Uninstall">Uninstall</sys:String>
+    <sys:String x:Key="Str_Uninstall_ElevationFailed">Uninstall could not request administrator access:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_CouldNotStart">Uninstall could not start. Result: {0}&#x0a;&#x0a;Retained files and status, if created:&#x0a;{1}</sys:String>
+    <sys:String x:Key="Str_Settings_NotSaved">The settings file could not be saved.</sys:String>
+    <sys:String x:Key="Str_Settings_RenameUndone">The settings file could not be saved, so the rename was undone.</sys:String>
+    <sys:String x:Key="Str_Settings_DeleteNotSaved">The Killendar was deleted, but the settings file could not be saved, so the next launch may open an empty Killendar under the same name.</sys:String>
 
     <!-- Shortcuts overlay (F1). One binding table in Shell/ShortcutsOverlay.cs feeds both the
          list and the keyboard map, so each of these is used in exactly one place. -->

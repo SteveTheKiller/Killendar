@@ -480,6 +480,26 @@
     <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar уже встановлено для всіх користувачів цього ПК, тому буде оновлено цю копію. Windows запитає дозвіл.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">Установлення не завершено - Killendar і далі працює як портативний.</sys:String>
     <sys:String x:Key="Str_Status_RelaunchDeferred">Встановлення завершено. Killendar залишився відкритим, щоб зберегти роботу, змінену під час встановлення.</sys:String>
+    <sys:String x:Key="Str_Btn_Yes">Так</sys:String>
+    <sys:String x:Key="Str_Btn_No">Ні</sys:String>
+    <sys:String x:Key="Str_Btn_OK">OK</sys:String>
+    <sys:String x:Key="Str_Install_ConflictTitle">Конфлікт установлення Killendar</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemovePerUser">Killendar установлено двічі. Видалити іншу копію для поточного користувача зараз?&#x0a;&#x0a;Ваші календарі та налаштування не буде видалено.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers">Killendar установлено двічі. Видалити іншу копію для всіх користувачів зараз?&#x0a;&#x0a;Ваші календарі та налаштування не буде видалено.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyPerUser">Інша копія для поточного користувача використовується, тому її не було видалено.&#x0a;&#x0a;Закрийте Killendar скрізь, де його запущено, а потім знову запустіть Killendar.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyAllUsers">Інша копія для всіх користувачів використовується, тому її не було видалено.&#x0a;&#x0a;Закрийте Killendar скрізь, де його запущено, а потім знову запустіть Killendar.</sys:String>
+    <sys:String x:Key="Str_Install_Downgrade">Ви збираєтеся установити старішу версію ({0}) поверх поточної встановленої версії ({1}).&#x0a;&#x0a;Все одно перейти на старішу версію?</sys:String>
+    <sys:String x:Key="Str_Install_Unsigned">Установлення відхилено: запущений EXE не має чинного підпису Authenticode.&#x0a;&#x0a;Установити можна лише підписані збірки Killendar.</sys:String>
+    <sys:String x:Key="Str_Install_WriteFailed">Не вдалося записати встановлену копію в:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;Закрийте всі відкриті вікна Killendar і знову запустіть програму встановлення.</sys:String>
+    <sys:String x:Key="Str_Install_Failed">Не вдалося виконати установлення:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_Title">Видалити Killendar?</sys:String>
+    <sys:String x:Key="Str_Uninstall_Body">Ваші зустрічі буде збережено.&#x0a;&#x0a;Видалення завершиться після закриття Killendar. Стан і збережені допоміжні файли:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Btn_Uninstall">Видалити</sys:String>
+    <sys:String x:Key="Str_Uninstall_ElevationFailed">Для видалення не вдалося запросити права адміністратора:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_CouldNotStart">Не вдалося запустити видалення. Результат: {0}&#x0a;&#x0a;Збережені файли та стан, якщо їх створено:&#x0a;{1}</sys:String>
+    <sys:String x:Key="Str_Settings_NotSaved">Не вдалося зберегти файл налаштувань.</sys:String>
+    <sys:String x:Key="Str_Settings_RenameUndone">Не вдалося зберегти файл налаштувань, тому перейменування скасовано.</sys:String>
+    <sys:String x:Key="Str_Settings_DeleteNotSaved">Killendar видалено, але файл налаштувань зберегти не вдалося, тому під час наступного запуску може відкритися порожній Killendar із тією самою назвою.</sys:String>
 
     <!-- Shortcuts overlay (F1). One binding table in Shell/ShortcutsOverlay.cs feeds both the
          list and the keyboard map, so each of these is used in exactly one place. -->

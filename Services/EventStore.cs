@@ -78,11 +78,11 @@ namespace Killendar.Services
             // calendar under the old name in the new folder on the next launch.
             string previous = Settings.Get("KillendarDataDir") ?? "";
             if (!Settings.TrySet("KillendarDataDir", path))
-                throw new SettingsWriteException("The settings file could not be saved.");
+                throw new SettingsWriteException(UiText.Loc("Str_Settings_NotSaved"));
             if (!Settings.TrySet("ActiveKillendar", DefaultFileName))
             {
                 Settings.TrySet("KillendarDataDir", previous);
-                throw new SettingsWriteException("The settings file could not be saved.");
+                throw new SettingsWriteException(UiText.Loc("Str_Settings_NotSaved"));
             }
         }
 

@@ -87,6 +87,7 @@ Killendar 1.4.1 closes security gaps in the command pipes and the updater, saves
 - A calendar that another program is holding open reports why it could not be opened instead of asking for a password it does not have.
 - Renaming the open Killendar or changing the data folder while the settings file cannot be saved is undone and reported, instead of opening an empty calendar on the next launch. Deleting the open Killendar in that state says so too.
 - If the safety backup taken before a password change or an import fails, the status line says so.
+- The install, uninstall and installation conflict messages and their buttons follow the chosen language, including the uninstall prompt opened from Windows Settings.
 
 ### Changed
 

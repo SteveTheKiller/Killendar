@@ -480,6 +480,26 @@
     <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar er allerede installert for alle brukere på denne PC-en, så dette oppdaterer den kopien. Windows ber om tillatelse.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">Installasjonen ble ikke fullført - Killendar kjører fortsatt som portabel.</sys:String>
     <sys:String x:Key="Str_Status_RelaunchDeferred">Installasjonen er fullført. Killendar forble åpen for å beskytte arbeid som ble endret under installasjonen.</sys:String>
+    <sys:String x:Key="Str_Btn_Yes">Ja</sys:String>
+    <sys:String x:Key="Str_Btn_No">Nei</sys:String>
+    <sys:String x:Key="Str_Btn_OK">OK</sys:String>
+    <sys:String x:Key="Str_Install_ConflictTitle">Installasjonskonflikt for Killendar</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemovePerUser">Killendar er installert to ganger. Fjerne den andre kopien for gjeldende bruker nå?&#x0a;&#x0a;Kalenderne og innstillingene dine blir ikke fjernet.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers">Killendar er installert to ganger. Fjerne den andre kopien for alle brukere nå?&#x0a;&#x0a;Kalenderne og innstillingene dine blir ikke fjernet.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyPerUser">Den andre kopien for gjeldende bruker er i bruk, så den ble ikke fjernet.&#x0a;&#x0a;Lukk Killendar overalt der den kjører, og start deretter Killendar på nytt.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyAllUsers">Den andre kopien for alle brukere er i bruk, så den ble ikke fjernet.&#x0a;&#x0a;Lukk Killendar overalt der den kjører, og start deretter Killendar på nytt.</sys:String>
+    <sys:String x:Key="Str_Install_Downgrade">Du er i ferd med å installere en eldre versjon ({0}) over den installerte versjonen ({1}).&#x0a;&#x0a;Vil du nedgradere likevel?</sys:String>
+    <sys:String x:Key="Str_Install_Unsigned">Installasjonen ble avvist: Den kjørende EXE-filen har ikke en gyldig Authenticode-signatur.&#x0a;&#x0a;Kun signerte bygg av Killendar kan installeres.</sys:String>
+    <sys:String x:Key="Str_Install_WriteFailed">Kunne ikke skrive den installerte kopien til:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;Lukk alle åpne Killendar-vinduer, og kjør installasjonsprogrammet på nytt.</sys:String>
+    <sys:String x:Key="Str_Install_Failed">Installasjonen mislyktes:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_Title">Avinstallere Killendar?</sys:String>
+    <sys:String x:Key="Str_Uninstall_Body">Avtalene dine beholdes.&#x0a;&#x0a;Fjerningen fullføres etter at Killendar er lukket. Status og beholdte hjelpefiler:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Btn_Uninstall">Avinstaller</sys:String>
+    <sys:String x:Key="Str_Uninstall_ElevationFailed">Avinstalleringen kunne ikke be om administratortilgang:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_CouldNotStart">Avinstalleringen kunne ikke starte. Resultat: {0}&#x0a;&#x0a;Beholdte filer og status, hvis de ble opprettet:&#x0a;{1}</sys:String>
+    <sys:String x:Key="Str_Settings_NotSaved">Innstillingsfilen kunne ikke lagres.</sys:String>
+    <sys:String x:Key="Str_Settings_RenameUndone">Innstillingsfilen kunne ikke lagres, så navneendringen ble angret.</sys:String>
+    <sys:String x:Key="Str_Settings_DeleteNotSaved">Killendar ble slettet, men innstillingsfilen kunne ikke lagres, så neste oppstart kan åpne en tom Killendar med samme navn.</sys:String>
 
     <!-- Shortcuts overlay (F1). One binding table in Shell/ShortcutsOverlay.cs feeds both the
          list and the keyboard map, so each of these is used in exactly one place. -->

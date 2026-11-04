@@ -13,14 +13,13 @@ namespace Killendar
     {
         /// <summary>True to go ahead. Asks only when both versions parse and the running one is older.</summary>
         internal static bool Accepted(string runningExe, string installedExe,
-            Func<string, string?> fileVersion, Func<string, bool> ask)
+            Func<string, string?> fileVersion, Func<string, string, bool> ask)
         {
             string runningText = fileVersion(runningExe) ?? "";
             string installedText = fileVersion(installedExe) ?? "";
             if (Version.TryParse(runningText, out var running) && Version.TryParse(installedText, out var installed)
                 && running < installed)
-                return ask($"You are about to install an older version ({runningText}) over " +
-                    $"the currently installed version ({installedText}).\n\nDowngrade anyway?");
+                return ask(runningText, installedText);
             return true;
         }
     }
@@ -101,7 +100,7 @@ namespace Killendar
         private static bool ShowInstallDialog(string message, bool confirmation = false, string? heading = null)
         {
             var dialog = new Controls.ConfirmDialog(heading ?? AppName, message,
-                confirmation ? "Yes" : "OK", confirmation ? "No" : "");
+                Loc(confirmation ? "Str_Btn_Yes" : "Str_Btn_OK"), confirmation ? Loc("Str_Btn_No") : "");
             if (Current.MainWindow?.IsVisible == true)
                 dialog.Owner = Current.MainWindow;
             else
@@ -121,9 +120,10 @@ namespace Killendar
             bool runningUser = string.Equals(current, InstallExe, StringComparison.OrdinalIgnoreCase);
             if (!runningMachine && !runningUser) return;
 
-            string other = runningMachine ? "per-user" : "all-users";
-            if (!ShowInstallDialog($"Killendar is installed twice. Remove the other {other} copy now?\n\nYour calendars and settings will not be removed.",
-                true, AppName + " installation conflict")) return;
+            SetupLocale.Apply(LocaleManager.Initialize);
+            string heading = Loc("Str_Install_ConflictTitle");
+            if (!ShowInstallDialog(Loc(runningMachine ? "Str_Install_ConflictRemovePerUser" : "Str_Install_ConflictRemoveAllUsers"),
+                true, heading)) return;
 
             bool removed;
             if (runningMachine) removed = RemovePerUserInstall();
@@ -141,8 +141,8 @@ namespace Killendar
             }
             // Both copies remain in full, so this prompt comes back on the next start.
             if (!removed)
-                ShowInstallDialog($"The other {other} copy is in use, so it was not removed.\n\nClose Killendar wherever it is running, then start Killendar again.",
-                    heading: AppName + " installation conflict");
+                ShowInstallDialog(Loc(runningMachine ? "Str_Install_ConflictBusyPerUser" : "Str_Install_ConflictBusyAllUsers"),
+                    heading: heading);
         }
 
         /// <summary>The elevated half of the conflict repair. Nonzero when the machine copy's files
@@ -207,7 +207,9 @@ namespace Killendar
         private static bool ConfirmDowngrade(string runningExe, string installedExe)
             => InstallDowngrade.Accepted(runningExe, installedExe,
                 path => FileVersionInfo.GetVersionInfo(path).FileVersion,
-                message => ShowInstallDialog(message, true));
+                (running, installed) => ShowInstallDialog(string.Format(Loc("Str_Install_Downgrade"), running, installed), true));
+
+        private static string Loc(string key) => UiText.Loc(key);
 
         /// <summary>Re-run this exe elevated with /silent and wait for it to finish.</summary>
         private static bool RunElevatedSilentInstall()
@@ -325,9 +327,7 @@ namespace Killendar
             var (valid, _, _) = CodeSignature.GetSignerInfo();
             if (!valid)
             {
-                ShowInstallDialog(
-                    "Installation refused: the running EXE does not carry a valid Authenticode " +
-                    "signature.\n\nOnly signed builds of Killendar can be installed.");
+                ShowInstallDialog(Loc("Str_Install_Unsigned"));
                 return false;
             }
 
@@ -354,17 +354,14 @@ namespace Killendar
                 }
                 catch (Exception copyEx) when (copyEx is UnauthorizedAccessException or IOException)
                 {
-                    ShowInstallDialog(
-                        "Couldn't write the installed copy at:\n" + InstallExe +
-                        "\n\n" + copyEx.Message +
-                        "\n\nClose any open Killendar window, then run the installer again.");
+                    ShowInstallDialog(string.Format(Loc("Str_Install_WriteFailed"), InstallExe, copyEx.Message));
                     return false;
                 }
                 return true;
             }
             catch (Exception ex)
             {
-                ShowInstallDialog("Installation failed:\n" + ex.Message);
+                ShowInstallDialog(string.Format(Loc("Str_Install_Failed"), ex.Message));
                 return false;
             }
         }
@@ -452,9 +449,9 @@ namespace Killendar
                     Verb = "runas",
                 }), ex =>
                 {
-                    string message = "Uninstall could not request administrator access:\n" + ex.Message;
-                    if (silent) Console.Error.WriteLine(message);
-                    else ShowInstallDialog(message);
+                    // The console line is a package-manager log and stays English.
+                    if (silent) Console.Error.WriteLine("Uninstall could not request administrator access:\n" + ex.Message);
+                    else ShowInstallDialog(string.Format(Loc("Str_Uninstall_ElevationFailed"), ex.Message));
                 });
         }
 
@@ -525,10 +522,10 @@ namespace Killendar
             if (!silent)
             {
                 var confirm = new Controls.ConfirmDialog(
-                    "Uninstall Killendar?",
-                    "Your appointments will be kept.\n\nRemoval finishes after Killendar closes. Status and retained helper files:\n" + operationDirectory,
-                    "Uninstall",
-                    "Cancel")
+                    Loc("Str_Uninstall_Title"),
+                    string.Format(Loc("Str_Uninstall_Body"), operationDirectory),
+                    Loc("Str_Btn_Uninstall"),
+                    Loc("Str_Btn_Cancel"))
                 { WindowStartupLocation = WindowStartupLocation.CenterScreen, ShowInTaskbar = true };
                 confirm.ShowDialog();
                 if (!confirm.Confirmed) return KillerFamily.Deployment.InstallerExitCodes.Cancelled;
@@ -538,7 +535,7 @@ namespace Killendar
                 UninstallStagingRoot(machine), machine ? MachineInstallDir : InstallDir, OwnedUninstallFiles(machine), machine, operationId);
             Console.Error.WriteLine("Uninstall result: " + result + ". Status and retained helper files: " + operationDirectory);
             if (result != UninstallWorkflow.Pending && !silent)
-                ShowInstallDialog("Uninstall could not start. Result: " + result + "\n\nRetained files and status, if created:\n" + operationDirectory);
+                ShowInstallDialog(string.Format(Loc("Str_Uninstall_CouldNotStart"), result, operationDirectory));
             return result;
         }
 

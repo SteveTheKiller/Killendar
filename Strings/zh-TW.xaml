@@ -415,6 +415,26 @@
     <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar 已為這台電腦上的所有使用者安裝，因此將更新該複本。Windows 會要求授權。</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">安裝未完成 - Killendar 仍以可攜版執行。</sys:String>
     <sys:String x:Key="Str_Status_RelaunchDeferred">安裝已完成。為保護安裝期間變更的工作，Killendar 保持開啟。</sys:String>
+    <sys:String x:Key="Str_Btn_Yes">是</sys:String>
+    <sys:String x:Key="Str_Btn_No">否</sys:String>
+    <sys:String x:Key="Str_Btn_OK">確定</sys:String>
+    <sys:String x:Key="Str_Install_ConflictTitle">Killendar 安裝衝突</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemovePerUser">Killendar 已安裝兩次。要立即移除另一個僅為目前使用者安裝的複本嗎？&#x0a;&#x0a;你的行事曆和設定不會被移除。</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers">Killendar 已安裝兩次。要立即移除另一個為所有使用者安裝的複本嗎？&#x0a;&#x0a;你的行事曆和設定不會被移除。</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyPerUser">另一個僅為目前使用者安裝的複本正在使用中，因此未被移除。&#x0a;&#x0a;請在 Killendar 執行的所有位置將其關閉，然後重新啟動 Killendar。</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyAllUsers">另一個為所有使用者安裝的複本正在使用中，因此未被移除。&#x0a;&#x0a;請在 Killendar 執行的所有位置將其關閉，然後重新啟動 Killendar。</sys:String>
+    <sys:String x:Key="Str_Install_Downgrade">你即將用較舊的版本 ({0}) 覆蓋目前已安裝的版本 ({1})。&#x0a;&#x0a;仍要降級嗎？</sys:String>
+    <sys:String x:Key="Str_Install_Unsigned">安裝遭拒：正在執行的 EXE 沒有有效的 Authenticode 簽章。&#x0a;&#x0a;只能安裝經過簽署的 Killendar 版本。</sys:String>
+    <sys:String x:Key="Str_Install_WriteFailed">無法將已安裝的複本寫入：&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;請關閉所有開啟的 Killendar 視窗，然後重新執行安裝程式。</sys:String>
+    <sys:String x:Key="Str_Install_Failed">安裝失敗：&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_Title">解除安裝 Killendar？</sys:String>
+    <sys:String x:Key="Str_Uninstall_Body">你的行程會保留。&#x0a;&#x0a;解除安裝將在 Killendar 關閉後完成。狀態和保留的輔助檔案：&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Btn_Uninstall">解除安裝</sys:String>
+    <sys:String x:Key="Str_Uninstall_ElevationFailed">解除安裝無法要求系統管理員權限：&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_CouldNotStart">解除安裝無法啟動。結果：{0}&#x0a;&#x0a;保留的檔案和狀態（如已建立）：&#x0a;{1}</sys:String>
+    <sys:String x:Key="Str_Settings_NotSaved">無法儲存設定檔。</sys:String>
+    <sys:String x:Key="Str_Settings_RenameUndone">無法儲存設定檔，因此已復原重新命名。</sys:String>
+    <sys:String x:Key="Str_Settings_DeleteNotSaved">Killendar 已刪除，但無法儲存設定檔，因此下次啟動時可能會以相同的名稱開啟一個空的 Killendar。</sys:String>
 
     <!-- 類別 -->
     <sys:String x:Key="Str_KS_Title">鍵盤快速鍵</sys:String>
