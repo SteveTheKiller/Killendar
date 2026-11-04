@@ -363,8 +363,19 @@ namespace Killendar.Services
                                 if (exclusion.allDay || current.AllDay) current.SkipDates.Add(exclusion.dt.Date);
                                 else current.SkipOccurrences.Add(CanonicalExclusion(current, exclusion));
                             }
+                            // A timed start whose UNTIL is only a date (a common slip): the series runs
+                            // through the end of that day on its own clock. A floating series compares
+                            // the date as it is; a UTC or zoned one gets that day's last second.
+                            if (current.RepeatUntil.HasValue && !current.AllDay && !current.RepeatUntilExact.HasValue &&
+                                Recurrence.UsesTimeBasis(current) && current.RepeatUntil.Value.Date < DateTime.MaxValue.Date)
+                            {
+                                var lastSecond = current.RepeatUntil.Value.Date.AddDays(1).AddSeconds(-1);
+                                current.RepeatUntilExact = DateTime.SpecifyKind(
+                                    current.RepeatTimeBasis == RecurrenceTimeBasis.Utc ? lastSecond : Recurrence.FromTimeBasis(current, lastSecond),
+                                    DateTimeKind.Utc);
+                            }
                             if (current.RepeatUntil.HasValue &&
-                                (current.AllDay == current.RepeatUntilExact.HasValue ||
+                                ((current.AllDay && current.RepeatUntilExact.HasValue) ||
                                  (!current.AllDay && current.RepeatUntilExact.HasValue &&
                                   (current.RepeatTimeBasis == RecurrenceTimeBasis.Local) == (current.RepeatUntilExact.Value.Kind == DateTimeKind.Utc))))
                             {
