@@ -101,6 +101,18 @@ namespace Killendar.Services
             }
         }
 
+        /// <summary>Deletes <paramref name="name"/> and, when it was the active Killendar, points the
+        /// setting at one that exists so the next launch does not recreate the deleted name empty.
+        /// A delete cannot be undone, so a setting that cannot be saved is reported instead.</summary>
+        public static void DeleteKillendarAndRetarget(string name)
+        {
+            DeleteKillendar(name);
+            if (!string.Equals(name, ActiveFile, StringComparison.OrdinalIgnoreCase)) return;
+            var left = ListKillendars();
+            if (!RetargetActive(left.Count > 0 ? left[0] : DefaultFileName))
+                throw new SettingsWriteException("The Killendar was deleted, but the settings file could not be saved, so the next launch may open an empty Killendar under the same name.");
+        }
+
         public static void DeleteKillendar(string name)
         {
             SqliteConnection.ClearAllPools();

@@ -30,6 +30,23 @@ namespace Killendar.Tests
         }
 
         [Fact]
+        public void DeletingTheActiveKillendarRetargetsItOrSaysItCouldNot()
+        {
+            File.WriteAllBytes(Path.Combine(_root, "A.kcal"), []);
+            File.WriteAllBytes(Path.Combine(_root, "B.kcal"), []);
+            EventStore.SetActive("A.kcal");
+
+            using (new FileStream(Settings.FilePath, FileMode.Open, FileAccess.Read, FileShare.None))
+                Assert.Throws<SettingsWriteException>(() => EventStore.DeleteKillendarAndRetarget("A.kcal"));
+            Assert.False(File.Exists(Path.Combine(_root, "A.kcal")));
+
+            File.WriteAllBytes(Path.Combine(_root, "C.kcal"), []);
+            EventStore.SetActive("C.kcal");
+            EventStore.DeleteKillendarAndRetarget("C.kcal");
+            Assert.Equal("B.kcal", EventStore.ActiveFile);
+        }
+
+        [Fact]
         public void RenameThatCannotRetargetTheActiveSettingIsUndone()
         {
             string a = Path.Combine(_root, "A.kcal");

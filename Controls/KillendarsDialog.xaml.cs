@@ -272,14 +272,9 @@ namespace Killendar.Controls
 
             try
             {
-                EventStore.DeleteKillendar(name);
-                // Deleting the active file leaves the setting pointing at nothing; retarget it so
-                // the caller reopens something that exists rather than resurrecting the name.
-                if (string.Equals(name, EventStore.ActiveFile, StringComparison.OrdinalIgnoreCase))
-                {
-                    var left = EventStore.ListKillendars();
-                    EventStore.SetActive(left.Count > 0 ? left[0] : EventStore.DefaultFileName);
-                }
+                // Deleting the active file retargets the setting, so the caller reopens something
+                // that exists rather than resurrecting the name.
+                EventStore.DeleteKillendarAndRetarget(name);
                 RefreshList();
                 DlgStatus.Text = string.Format(Loc("Str_Kc_Deleted"), name);
             }
