@@ -39,7 +39,7 @@ namespace Killendar.Services
         private const int MaxPayloadBytes = MaxPayloadCharacters * 4;
         internal bool ForwardingSucceeded { get; private set; } = true;
 
-        // Held for the process lifetime; the OS releases it on exit or on a crash.
+        // Held until Dispose, which the app calls on exit; the OS releases it on a crash.
         private Mutex? _mutex;
 
         internal SingleInstanceGuard(string id, Dispatcher dispatcher, Action<string?> onForwarded)
@@ -55,8 +55,11 @@ namespace Killendar.Services
             _timeoutMilliseconds = timeoutMilliseconds;
         }
 
+        // Two-way: the running instance answers with one byte once its dispatcher has started the
+        // forwarded launch, so a launch handed to a dispatcher that is shutting down is not counted.
         internal Func<string, NamedPipeServerStream> ServerFactory { get; set; } =
-            name => PipeGuard.CreateServer(name, PipeDirection.In);
+            name => PipeGuard.CreateServer(name, PipeDirection.InOut);
+        private const byte Accepted = 0x06;
         internal Action<TimeSpan> Delay { get; set; } = Thread.Sleep;
         internal Func<PipeStream, SecurityIdentifier?>? ServerOwner { get; set; }
 
@@ -79,7 +82,8 @@ namespace Killendar.Services
         }
 
         /// <summary>Second launch: hands the double-clicked path (or an empty line, meaning "just come
-        /// to the front") to the running instance. Failure is exposed to the startup caller.</summary>
+        /// to the front") to the running instance. Success means the running instance's dispatcher
+        /// started handling it; anything less is exposed to the startup caller as a failure.</summary>
         private bool Forward(string? path)
         {
             path ??= "";
@@ -87,11 +91,14 @@ namespace Killendar.Services
             try
             {
                 byte[] payload = new UTF8Encoding(false, true).GetBytes(path + "\n");
-                using var pipe = new NamedPipeClientStream(".", PipeName, PipeDirection.Out, PipeOptions.Asynchronous);
+                using var pipe = new NamedPipeClientStream(".", PipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
                 pipe.Connect(_timeoutMilliseconds);
                 PipeGuard.RequireCurrentUserServer(pipe, ServerOwner);
                 AwaitWithin(pipe.WriteAsync(payload, 0, payload.Length), _timeoutMilliseconds);
-                return true;
+                byte[] answer = new byte[1];
+                var read = pipe.ReadAsync(answer, 0, 1);
+                AwaitWithin(read, _timeoutMilliseconds);
+                return read.GetAwaiter().GetResult() == 1 && answer[0] == Accepted;
             }
             catch (IOException) { return false; }
             catch (TimeoutException) { return false; }
@@ -118,8 +125,16 @@ namespace Killendar.Services
                         }
                         server.WaitForConnection();
                         string path = ReadPayload(server);
-                        _dispatch(() => _onForwarded(path));
+                        // Signalled as the dispatcher starts the work, not after it: the handler can
+                        // open a password prompt, and the launching process should not wait on that.
+                        var started = new TaskCompletionSource<bool>();
+                        _dispatch(() =>
+                        {
+                            started.TrySetResult(true);
+                            _onForwarded(path);
+                        });
                         wait = TimeSpan.Zero;
+                        if (started.Task.Wait(_timeoutMilliseconds)) Answer(server);
                     }
                     catch (Exception ex) when (ex is UnauthorizedAccessException || ex is IOException)
                     {
@@ -136,6 +151,21 @@ namespace Killendar.Services
             { IsBackground = true, Name = _id + " single-instance pipe" };
             _thread = thread;
             thread.Start();
+        }
+
+        /// <summary>Tells the launching process its request was taken. A client that opened the pipe
+        /// for writing only (an older build) cannot read the answer; that is not an error here.</summary>
+        private void Answer(NamedPipeServerStream server)
+        {
+            try
+            {
+                AwaitWithin(server.WriteAsync([Accepted], 0, 1), _timeoutMilliseconds);
+                // Hold the pipe open until the client has read the answer and hung up, so closing
+                // this end cannot discard the byte before it arrives.
+                AwaitWithin(server.ReadAsync(new byte[1], 0, 1), _timeoutMilliseconds);
+            }
+            catch (IOException) { }
+            catch (TimeoutException) { }
         }
 
         private string ReadPayload(NamedPipeServerStream server)

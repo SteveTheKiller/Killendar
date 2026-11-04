@@ -263,6 +263,15 @@ namespace Killendar
             MainWindow.Show();
         }
 
+        protected override void OnExit(ExitEventArgs e)
+        {
+            // Exit handlers run first. Then the single-instance slot is given up, so a launch made
+            // from here on starts a new instance instead of forwarding to this departing one.
+            base.OnExit(e);
+            _instance?.Dispose();
+            _instance = null;
+        }
+
         /// <summary>True when launched with --demo. Read by the shell to keep marketing
         /// screenshots clean - the portable badge is suppressed in demo mode.</summary>
         internal static bool IsDemo { get; private set; }
