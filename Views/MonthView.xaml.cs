@@ -460,7 +460,7 @@ namespace Killendar.Views
                 eventList.Children.Add(chip);
             }
 
-            var eventScroll = new ScrollViewer
+            var eventScroll = new DayScrollViewer
             {
                 Content = eventList,
                 Margin = new Thickness(0, multiDayLanes * MultiDayLaneHeight, 0, 0),
