@@ -671,7 +671,7 @@ public static class KillerUpdateGuard {
     public static bool VerifyTrust(Func<uint, uint, uint> nativeVerify) {
         uint status = nativeVerify(1, 0x80);
         if (status == 0) return true;
-        return (status == 0x80092013 || status == 0x80092012 || status == 0x800B010E) && nativeVerify(0, 0x1010) == 0;
+        return status == 0x80092013 && nativeVerify(0, 0x1010) == 0;
     }
     // Starts the published image and fails unless a process was actually created. An elevated
     // helper starts it with the desktop shell's own token, at normal integrity, and only when that

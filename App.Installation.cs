@@ -199,10 +199,18 @@ namespace Killendar
         /// publisher, and match the installed copy's publisher when that copy is signed.</summary>
         private static void VerifyInstallSource(string heldSource, string installedExe)
         {
-            var installed = File.Exists(installedExe) ? CodeSignature.GetSignerInfo(installedExe) : (false, "", "");
+            bool exists = File.Exists(installedExe);
+            var installed = exists ? CodeSignature.GetSignerInfo(installedExe) : (false, "", "");
             var incoming = CodeSignature.GetSignerInfo(heldSource);
-            ReleaseIdentity.VerifySigner((installed.Item1, installed.Item2), (incoming.valid, incoming.subject), false);
+            CheckInstallSource(exists, (installed.Item1, installed.Item2), (incoming.valid, incoming.subject));
         }
+
+        /// <summary>A first install has no installed copy to match, so the incoming file only has to
+        /// carry a valid signature from the publisher. Read as an unsigned installed copy instead, it
+        /// fell to the development-build rule and refused the signed release (1.4.1).</summary>
+        internal static void CheckInstallSource(bool installedExists, (bool valid, string subject) installed,
+            (bool valid, string subject) incoming)
+            => ReleaseIdentity.VerifySigner(installedExists ? installed : incoming, incoming, false);
 
         private static bool ConfirmDowngrade(string runningExe, string installedExe)
             => InstallDowngrade.Accepted(runningExe, installedExe,

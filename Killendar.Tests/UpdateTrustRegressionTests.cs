@@ -78,15 +78,9 @@ namespace Killendar.Tests
         [InlineData(0u, 0u, true)]
         [InlineData(0x80092013u, 0u, true)]
         [InlineData(0x80092013u, 0x800B0101u, false)]
-        // No network at all (winget's validation sandbox): Windows reports that revocation could
-        // not be checked rather than that the server is offline. 1.4.1 refused its own signed
-        // installer there.
-        [InlineData(0x80092012u, 0u, true)]
-        [InlineData(0x800B010Eu, 0u, true)]
-        [InlineData(0x80092012u, 0x800B0109u, false)]
         [InlineData(0x800B010Cu, 0u, false)]
         [InlineData(0x80096010u, 0u, false)]
-        public void OnlyAnUncheckableRevocationEarnsTheCacheOnlyRetry(uint first, uint retry, bool trusted)
+        public void OnlyAnOfflineRevocationServerEarnsTheCacheOnlyRetry(uint first, uint retry, bool trusted)
         {
             var calls = new System.Collections.Generic.List<(uint revocation, uint flags)>();
             bool result = CodeSignature.VerifyTrust((revocation, flags) =>
@@ -98,8 +92,7 @@ namespace Killendar.Tests
             Assert.Equal(trusted, result);
             // WTD_REVOKE_WHOLECHAIN first; the retry is WTD_REVOKE_NONE with cache-only retrieval.
             Assert.Equal((1u, 0x80u), calls[0]);
-            bool uncheckable = first is 0x80092013u or 0x80092012u or 0x800B010Eu;
-            Assert.Equal(uncheckable ? 2 : 1, calls.Count);
+            Assert.Equal(first == 0x80092013u ? 2 : 1, calls.Count);
             if (calls.Count == 2) Assert.Equal((0u, 0x1010u), calls[1]);
         }
 

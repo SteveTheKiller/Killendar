@@ -184,9 +184,8 @@ namespace Killendar.Services
         {
             uint status = nativeVerify(1, 0x80);
             if (status == 0) return true;
-            // Revocation that could not be checked (server offline, no network, check incomplete)
-            // permits an integrity and trusted-chain retry from cache. Revoked or untrusted stays refused.
-            return status is 0x80092013 or 0x80092012 or 0x800B010E && nativeVerify(0, 0x1010) == 0;
+            // Only an offline revocation server permits an integrity and trusted-chain retry.
+            return status == 0x80092013 && nativeVerify(0, 0x1010) == 0;
         }
 
         /// <summary>SHA-256 of the running exe as lower-case hex. Slow on a large file, so callers

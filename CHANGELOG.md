@@ -6,11 +6,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ## [1.4.2] - 2026-11-04
 
-Killendar 1.4.2 installs through winget, Chocolatey and other silent installs on PCs that cannot reach the certificate revocation server.
+Killendar 1.4.2 fixes first-time installs, which 1.4.1 refused.
 
 ### Fixed
 
-- Silent installs and updates accept Killendar's signed installer when Windows cannot check certificate revocation, as on a PC with no network. A signature that is revoked, untrusted or does not match the file is still refused.
+- Installing Killendar on a PC that does not have it yet works again, from the install prompt, winget, Chocolatey or any other silent install. 1.4.1 refused its own signed installer with "The update signer is not trusted by this development build" (exit 1625). Installs over an existing copy were not affected.
 
 ## [1.4.1] - 2026-11-04
 
