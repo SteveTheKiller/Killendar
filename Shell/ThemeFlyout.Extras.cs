@@ -19,8 +19,6 @@ namespace Killendar.Shell
         /// <summary>Call from the constructor right after InitThemePicker.</summary>
         private void ConfigureThemePicker()
         {
-            // A palette tester, not a one-shot command menu: it stays open while themes are tried.
-            ThemeMenu.StaysOpen = true;
             _themePicker.ThemeChangeTransition = apply => apply();
             _themePicker.AccentChangeTransition = CrossfadeAccent;
             _themePicker.ThemeApplied = () =>
