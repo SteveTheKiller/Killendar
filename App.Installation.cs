@@ -25,6 +25,24 @@ namespace Killendar
         }
     }
 
+    /// <summary>The all-users install after its downgrade check: the elevated /silent child, then
+    /// the per-user copy's removal, the desktop shortcut and the relaunch. The process and file work
+    /// is passed in, so the order can be checked without installing anything.</summary>
+    internal static class AllUsersInstall
+    {
+        internal static bool Run(bool wantDesktop, string desktopLink, string machineExe, Func<bool> runElevated,
+            Action removePerUser, Action<string, string> createShortcut, Func<bool> relaunch)
+        {
+            if (!runElevated()) return false;
+            // Only ever one install: drop the per-user copy so there is a single Start Menu entry
+            // and a single uninstall entry. That removal deletes the per-user desktop shortcut, so
+            // the one asked for here, pointing at the machine copy, is made after it.
+            removePerUser();
+            if (wantDesktop) createShortcut(desktopLink, machineExe);
+            return relaunch();
+        }
+    }
+
     public partial class App
     {
         private static readonly string[] InstalledFiles = { "Killendar.exe" };
@@ -108,21 +126,20 @@ namespace Killendar
         internal static bool InstallAndRelaunch(bool wantDesktop, bool allUsers)
         {
             if (allUsers)
-            {
-                if (File.Exists(MachineInstallExe)
-                    && !ConfirmDowngrade(Process.GetCurrentProcess().MainModule!.FileName, MachineInstallExe)) return false;
-                if (!RunElevatedSilentInstall()) return false;
-
-                // Only ever one install: drop the per-user copy so there is a single Start Menu
-                // entry and a single uninstall entry. Settings are deliberately left alone.
-                RemovePerUserInstall();
-
-                return new InstallRelaunch().StartInstalled(MachineInstallExe, () => Current.Shutdown());
-            }
+                return AllUsersDowngradeAccepted() && AllUsersInstall.Run(wantDesktop, DesktopLnk, MachineInstallExe,
+                    RunElevatedSilentInstall, RemovePerUserInstall, CreateShortcut, RelaunchMachineCopy);
 
             if (!DoInstall(wantDesktop) || !File.Exists(InstallExe)) return false;
             return new InstallRelaunch().StartInstalled(InstallExe, () => Current.Shutdown());
         }
+
+        private static bool AllUsersDowngradeAccepted()
+            => !File.Exists(MachineInstallExe)
+                || ConfirmDowngrade(Process.GetCurrentProcess().MainModule!.FileName, MachineInstallExe);
+
+        // Settings are deliberately left alone by the per-user removal before this.
+        private static bool RelaunchMachineCopy()
+            => new InstallRelaunch().StartInstalled(MachineInstallExe, () => Current.Shutdown());
 
         /// <summary>Runs while Publish holds the source open with no write or delete share, so the
         /// bytes checked here are the bytes hashed and copied. The signature must be valid, name the
