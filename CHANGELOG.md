@@ -61,6 +61,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Week and Day mark today with an accent edge when another day is selected, matching Month.
 - Screen readers announce untitled appointments as untitled instead of starting with a comma.
 - Releasing a dragged appointment outside the calendar, or pressing Escape mid-drag, cancels the move instead of saving it at the nearest edge.
+- A Month appointment stays visible while you drag it to another day.
 
 ### Changed
 

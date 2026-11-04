@@ -753,7 +753,8 @@ namespace Killendar.Views
         /// which resets the drag state (the lesson the week grid taught the same day). The drop
         /// cell is plain arithmetic: uniform star rows and columns over StartOfGrid.
         /// The chip's z-order is per-panel, so the CELL is lifted while in flight - lifting only
-        /// the chip would slide it underneath every later-built neighbor cell.
+        /// the chip would slide it underneath every later-built neighbor cell. A day-cell chip
+        /// is also clipped by its cell's ScrollViewer, so it travels as a ghost on DragOverlay.
         /// </summary>
         private void WireDrag(Border chip, CalendarEvent ev, UIElement dragLayer)
         {
@@ -767,6 +768,14 @@ namespace Killendar.Views
             // The family grab cursor: open hand over the chip, closed hand while it is carried.
             chip.Cursor = Controls.DragCursors.Open;
 
+            // A day-cell chip lives inside its cell's ScrollViewer, whose presenter clips it to
+            // the cell however far its transform carries it. So a cell chip stays home, dimmed,
+            // and a ghost painted from it with a VisualBrush rides the overlay above the whole
+            // grid. A multi-day bar is a direct CalGrid child and still moves itself.
+            bool usesGhost = dragLayer != chip;
+            System.Windows.Shapes.Rectangle? ghost = null;
+            var ghostMove = new TranslateTransform();
+
             void Reset()
             {
                 dragging = false;
@@ -775,6 +784,34 @@ namespace Killendar.Views
                 move.X = move.Y = 0;
                 chip.Opacity = 1.0;
                 Panel.SetZIndex(dragLayer, dragLayer == chip ? 10 : 0);
+                if (ghost != null)
+                {
+                    DragOverlay.Children.Remove(ghost);
+                    ghost = null;
+                }
+            }
+
+            void ShowGhost()
+            {
+                if (chip.ActualWidth <= 0 || chip.ActualHeight <= 0) return;
+                var at = chip.TranslatePoint(new Point(0, 0), DragOverlay);
+                ghostMove.X = ghostMove.Y = 0;
+                ghost = new System.Windows.Shapes.Rectangle
+                {
+                    Width = chip.ActualWidth,
+                    Height = chip.ActualHeight,
+                    IsHitTestVisible = false,
+                    RenderTransform = ghostMove,
+                    Fill = new VisualBrush(chip)
+                    {
+                        Stretch = Stretch.None,
+                        AlignmentX = AlignmentX.Left,
+                        AlignmentY = AlignmentY.Top,
+                    },
+                };
+                Canvas.SetLeft(ghost, at.X);
+                Canvas.SetTop(ghost, at.Y);
+                DragOverlay.Children.Add(ghost);
             }
 
             chip.AddHandler(MouseLeftButtonDownEvent, new MouseButtonEventHandler((_, e) =>
@@ -799,8 +836,11 @@ namespace Killendar.Views
                     Controls.DragCursors.BeginDrag();
                     chip.Opacity = 0.7;
                     Panel.SetZIndex(dragLayer, 99);
+                    if (usesGhost) ShowGhost();
                 }
-                if (dragging) { move.X = dx; move.Y = dy; }
+                if (!dragging) return;
+                if (ghost != null) { ghostMove.X = dx; ghostMove.Y = dy; }
+                else { move.X = dx; move.Y = dy; }
             };
 
             chip.AddHandler(MouseLeftButtonUpEvent, new MouseButtonEventHandler((_, e) =>

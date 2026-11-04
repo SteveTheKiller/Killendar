@@ -29,5 +29,10 @@
         </Border>
 
         <Grid x:Name="CalGrid" Grid.Row="1"/>
+
+        <!-- A dragged day-cell chip's ghost rides here. The chip itself sits in its cell's
+             ScrollViewer, which clips it at the cell edge however the cell is lifted. Outside
+             CalGrid, because Rebuild clears CalGrid. -->
+        <Canvas x:Name="DragOverlay" Grid.RowSpan="2" IsHitTestVisible="False" Panel.ZIndex="100"/>
     </Grid>
 </UserControl>
