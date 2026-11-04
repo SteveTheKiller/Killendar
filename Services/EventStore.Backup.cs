@@ -257,6 +257,9 @@ namespace Killendar.Services
                         using var export = source.CreateCommand();
                         export.CommandText = "SELECT sqlcipher_export('backup')";
                         export.ExecuteNonQuery();
+                        using var end = source.CreateCommand();
+                        end.CommandText = "COMMIT";
+                        end.ExecuteNonQuery();
                     }
                     catch
                     {
@@ -271,7 +274,6 @@ namespace Killendar.Services
                         catch (SqliteException) { }
                         throw;
                     }
-                    using (var end = source.CreateCommand()) { end.CommandText = "COMMIT"; end.ExecuteNonQuery(); }
                 }
                 catch
                 {
