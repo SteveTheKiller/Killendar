@@ -74,8 +74,16 @@ namespace Killendar.Services
             string probe = Path.Combine(path, ".killendar-write-" + Guid.NewGuid().ToString("N") + ".tmp");
             using (File.Create(probe)) { }
             File.Delete(probe);
-            Settings.Set("KillendarDataDir", path);
-            SetActive(DefaultFileName);
+            // Both values or neither: a folder saved without its active name would open an empty
+            // calendar under the old name in the new folder on the next launch.
+            string previous = Settings.Get("KillendarDataDir") ?? "";
+            if (!Settings.TrySet("KillendarDataDir", path))
+                throw new SettingsWriteException("The settings file could not be saved.");
+            if (!Settings.TrySet("ActiveKillendar", DefaultFileName))
+            {
+                Settings.TrySet("KillendarDataDir", previous);
+                throw new SettingsWriteException("The settings file could not be saved.");
+            }
         }
 
         /// <summary>File name of the active Killendar inside DataDir, or an absolute path when the

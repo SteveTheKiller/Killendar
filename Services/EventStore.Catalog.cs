@@ -74,12 +74,31 @@ namespace Killendar.Services
         public static void RenameKillendar(string oldName, string newName)
         {
             SqliteConnection.ClearAllPools();
-            File.Move(Path.Combine(DataDir, oldName), Path.Combine(DataDir, newName));
-            RenameBackups(Path.Combine(DataDir, oldName), Path.Combine(DataDir, newName));
+            string oldPath = Path.Combine(DataDir, oldName), newPath = Path.Combine(DataDir, newName);
+            File.Move(oldPath, newPath);
+            // The active setting is retargeted before anything else follows the rename. If it
+            // cannot be saved (a sync client or antivirus holding settings.json), the rename is
+            // undone: the next launch reads the old name from disk and must find the file there.
+            if (string.Equals(oldName, ActiveFile, StringComparison.OrdinalIgnoreCase) && !RetargetActive(newName))
+            {
+                File.Move(newPath, oldPath);
+                throw new SettingsWriteException("The settings file could not be saved, so the rename was undone.");
+            }
+            RenameBackups(oldPath, newPath);
             LastRename = (oldName, newName);
             ShownCalendars.Renamed(oldName, newName);
-            if (string.Equals(oldName, ActiveFile, StringComparison.OrdinalIgnoreCase))
-                SetActive(newName);
+        }
+
+        /// <summary>Points the active setting at <paramref name="name"/>, retrying briefly because
+        /// the usual cause of a failed write is a short-lived lock on settings.json.</summary>
+        private static bool RetargetActive(string name)
+        {
+            for (int attempt = 1; ; attempt++)
+            {
+                if (Settings.TrySet("ActiveKillendar", name)) return true;
+                if (attempt >= 3) return false;
+                System.Threading.Thread.Sleep(100 * attempt);
+            }
         }
 
         public static void DeleteKillendar(string name)

@@ -334,8 +334,16 @@ namespace Killendar.Features
         {
             if (!lockedExists) return;
             if (!string.Equals(EventStore.DataDir, lockedDir, StringComparison.OrdinalIgnoreCase))
-                EventStore.SetDataDir(lockedDir);
+                ReturnToDataDir(lockedDir);
             EventStore.SetActive(locked);
+        }
+
+        /// <summary>Points the app back at a data folder it was already using. Best effort, as it
+        /// always was: when settings.json cannot be written, the folder in use stays as it is.</summary>
+        private static void ReturnToDataDir(string dir)
+        {
+            try { EventStore.SetDataDir(dir); }
+            catch (SettingsWriteException) { }
         }
 
         /// <summary>Opens what Manage Killendars selected (or reopens the active file), falling
@@ -367,7 +375,7 @@ namespace Killendar.Features
                 !_host.ConfirmLeaveDraft())
             {
                 if (!string.Equals(EventStore.DataDir, previousDir, StringComparison.OrdinalIgnoreCase))
-                    EventStore.SetDataDir(previousDir);
+                    ReturnToDataDir(previousDir);
                 EventStore.SetActive(previous);
             }
 
@@ -377,7 +385,7 @@ namespace Killendar.Features
             {
                 // Opening the chosen Killendar failed or its unlock was canceled - fall back to
                 // the previous one rather than leaving the app with nothing open.
-                EventStore.SetDataDir(previousDir);
+                ReturnToDataDir(previousDir);
                 EventStore.SetActive(previous);
                 _password = null;
                 opened = Open(exitOnCancel: false);

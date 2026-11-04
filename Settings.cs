@@ -46,7 +46,13 @@ namespace Killendar
             }
         }
 
-        internal static void Set(string key, string value)
+        /// <summary>Saves one value, best effort.</summary>
+        internal static void Set(string key, string value) => TrySet(key, value);
+
+        /// <summary>Saves one value. False when settings.json could not be written; the saved
+        /// file and the values read back both stay as they were, so a caller whose next launch
+        /// depends on the value (the active Killendar after a rename) can undo or report.</summary>
+        internal static bool TrySet(string key, string value)
         {
             lock (Gate)
             {
@@ -65,9 +71,21 @@ namespace Killendar
                     if (File.Exists(FilePath)) File.Replace(tmp, FilePath, FilePath + ".bak", true);
                     else File.Move(tmp, FilePath);
                     _cache = d;
+                    return true;
                 }
-                catch { /* Keep the last complete settings dictionary on publication failure. */ }
+                catch
+                {
+                    // Keep the last complete settings dictionary on publication failure.
+                    return false;
+                }
             }
         }
+    }
+
+    /// <summary>settings.json could not be written, so a change that depends on it was not made
+    /// (or was undone).</summary>
+    internal sealed class SettingsWriteException : IOException
+    {
+        internal SettingsWriteException(string message) : base(message) { }
     }
 }
