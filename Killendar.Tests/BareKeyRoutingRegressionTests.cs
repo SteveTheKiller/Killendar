@@ -52,7 +52,7 @@ namespace Killendar.Tests
         private static void OnSta(Action body)
         {
             Exception? failure = null;
-            var thread = new Thread(() => { try { body(); } catch (Exception ex) { failure = ex; } });
+            var thread = new Thread(() => { try { body(); } catch (Exception ex) { failure = ex; } finally { System.Windows.Threading.Dispatcher.CurrentDispatcher.InvokeShutdown(); } });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
             Assert.True(thread.Join(TimeSpan.FromSeconds(20)), "The key routing test hung.");

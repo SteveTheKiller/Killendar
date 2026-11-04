@@ -55,6 +55,7 @@ namespace Killendar.Tests
                     Exercise(parts[0], parts[1], parts[2]);
                 }
                 catch (Exception ex) { failure = ex; }
+                finally { System.Windows.Threading.Dispatcher.CurrentDispatcher.InvokeShutdown(); }
             }) { IsBackground = true };
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();

@@ -54,6 +54,7 @@ namespace Killendar.Tests
                 {
                     WeekStartManager.Apply(previous);
                     WeekStartManager.SetSetting = save;
+                    System.Windows.Threading.Dispatcher.CurrentDispatcher.InvokeShutdown();
                 }
             });
             thread.SetApartmentState(ApartmentState.STA);

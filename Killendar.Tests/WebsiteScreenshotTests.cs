@@ -182,6 +182,7 @@ namespace Killendar.Tests
                     Draw(Shots.Single(s => s.Id == parts[0]), parts[1]);
                 }
                 catch (Exception ex) { failure = ex; }
+                finally { System.Windows.Threading.Dispatcher.CurrentDispatcher.InvokeShutdown(); }
             }) { IsBackground = true };
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();

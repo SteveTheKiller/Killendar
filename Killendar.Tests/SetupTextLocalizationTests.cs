@@ -104,6 +104,7 @@ namespace Killendar.Tests
                         dictionaries[Path.GetFileName(file)] = (ResourceDictionary)XamlReader.Parse(File.ReadAllText(file));
                 }
                 catch (Exception ex) { failure = ex; }
+                finally { System.Windows.Threading.Dispatcher.CurrentDispatcher.InvokeShutdown(); }
             });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();

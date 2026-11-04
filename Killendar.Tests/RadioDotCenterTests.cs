@@ -32,6 +32,7 @@ namespace Killendar.Tests
             {
                 try { Check(scale); }
                 catch (Exception ex) { failure = ex; }
+                finally { System.Windows.Threading.Dispatcher.CurrentDispatcher.InvokeShutdown(); }
             });
             thread.SetApartmentState(System.Threading.ApartmentState.STA);
             thread.Start();

@@ -47,6 +47,7 @@ namespace Killendar.Tests
                     Assert.Equal(originalSize, heading.DesiredSize);
                 }
                 catch (Exception ex) { failure = ex; }
+                finally { System.Windows.Threading.Dispatcher.CurrentDispatcher.InvokeShutdown(); }
             });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();

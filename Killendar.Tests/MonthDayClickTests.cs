@@ -57,6 +57,7 @@ namespace Killendar.Tests
                     focused = scroll.IsKeyboardFocused;
                 }
                 catch (Exception ex) { failure = ex; }
+                finally { System.Windows.Threading.Dispatcher.CurrentDispatcher.InvokeShutdown(); }
             });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();

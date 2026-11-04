@@ -29,6 +29,7 @@ namespace Killendar.Tests
                     Assert.Equal(new Thickness(8, 0, 28, 0), path.Padding);
                 }
                 catch (Exception ex) { failure = ex; }
+                finally { System.Windows.Threading.Dispatcher.CurrentDispatcher.InvokeShutdown(); }
             });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();

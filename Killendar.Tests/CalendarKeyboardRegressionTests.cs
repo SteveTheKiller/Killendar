@@ -82,7 +82,7 @@ namespace Killendar.Tests
         private static void RunSta(Action body)
         {
             Exception? failure = null;
-            var thread = new Thread(() => { try { body(); } catch (Exception ex) { failure = ex; } });
+            var thread = new Thread(() => { try { body(); } catch (Exception ex) { failure = ex; } finally { System.Windows.Threading.Dispatcher.CurrentDispatcher.InvokeShutdown(); } });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
             thread.Join();
