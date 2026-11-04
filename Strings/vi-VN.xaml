@@ -456,19 +456,19 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Btn_No">Không</sys:String>
   <sys:String x:Key="Str_Btn_OK">OK</sys:String>
   <sys:String x:Key="Str_Install_ConflictTitle">Xung đột cài đặt Killendar</sys:String>
-  <sys:String x:Key="Str_Install_ConflictRemovePerUser">Killendar đã được cài đặt hai lần. Gỡ bản sao còn lại dành cho người dùng hiện tại ngay bây giờ?&#x0a;&#x0a;Lịch và cài đặt của bạn sẽ không bị xóa.</sys:String>
-  <sys:String x:Key="Str_Install_ConflictRemoveAllUsers">Killendar đã được cài đặt hai lần. Gỡ bản sao còn lại dành cho tất cả người dùng ngay bây giờ?&#x0a;&#x0a;Lịch và cài đặt của bạn sẽ không bị xóa.</sys:String>
-  <sys:String x:Key="Str_Install_ConflictBusyPerUser">Bản sao còn lại dành cho người dùng hiện tại đang được sử dụng nên chưa được gỡ.&#x0a;&#x0a;Hãy đóng Killendar ở mọi nơi đang chạy, rồi khởi động lại Killendar.</sys:String>
-  <sys:String x:Key="Str_Install_ConflictBusyAllUsers">Bản sao còn lại dành cho tất cả người dùng đang được sử dụng nên chưa được gỡ.&#x0a;&#x0a;Hãy đóng Killendar ở mọi nơi đang chạy, rồi khởi động lại Killendar.</sys:String>
-  <sys:String x:Key="Str_Install_Downgrade">Bạn sắp cài đặt phiên bản cũ hơn ({0}) đè lên phiên bản hiện đã cài ({1}).&#x0a;&#x0a;Vẫn hạ cấp chứ?</sys:String>
-  <sys:String x:Key="Str_Install_Unsigned">Đã từ chối cài đặt: tệp EXE đang chạy không có chữ ký Authenticode hợp lệ.&#x0a;&#x0a;Chỉ có thể cài đặt các bản dựng Killendar đã được ký.</sys:String>
-  <sys:String x:Key="Str_Install_WriteFailed">Không thể ghi bản sao đã cài đặt tại:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;Hãy đóng mọi cửa sổ Killendar đang mở, rồi chạy lại trình cài đặt.</sys:String>
-  <sys:String x:Key="Str_Install_Failed">Cài đặt không thành công:&#x0a;{0}</sys:String>
+  <sys:String x:Key="Str_Install_ConflictRemovePerUser" xml:space="preserve">Killendar đã được cài đặt hai lần. Gỡ bản sao còn lại dành cho người dùng hiện tại ngay bây giờ?&#x0a;&#x0a;Lịch và cài đặt của bạn sẽ không bị xóa.</sys:String>
+  <sys:String x:Key="Str_Install_ConflictRemoveAllUsers" xml:space="preserve">Killendar đã được cài đặt hai lần. Gỡ bản sao còn lại dành cho tất cả người dùng ngay bây giờ?&#x0a;&#x0a;Lịch và cài đặt của bạn sẽ không bị xóa.</sys:String>
+  <sys:String x:Key="Str_Install_ConflictBusyPerUser" xml:space="preserve">Bản sao còn lại dành cho người dùng hiện tại đang được sử dụng nên chưa được gỡ.&#x0a;&#x0a;Hãy đóng Killendar ở mọi nơi đang chạy, rồi khởi động lại Killendar.</sys:String>
+  <sys:String x:Key="Str_Install_ConflictBusyAllUsers" xml:space="preserve">Bản sao còn lại dành cho tất cả người dùng đang được sử dụng nên chưa được gỡ.&#x0a;&#x0a;Hãy đóng Killendar ở mọi nơi đang chạy, rồi khởi động lại Killendar.</sys:String>
+  <sys:String x:Key="Str_Install_Downgrade" xml:space="preserve">Bạn sắp cài đặt phiên bản cũ hơn ({0}) đè lên phiên bản hiện đã cài ({1}).&#x0a;&#x0a;Vẫn hạ cấp chứ?</sys:String>
+  <sys:String x:Key="Str_Install_Unsigned" xml:space="preserve">Đã từ chối cài đặt: tệp EXE đang chạy không có chữ ký Authenticode hợp lệ.&#x0a;&#x0a;Chỉ có thể cài đặt các bản dựng Killendar đã được ký.</sys:String>
+  <sys:String x:Key="Str_Install_WriteFailed" xml:space="preserve">Không thể ghi bản sao đã cài đặt tại:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;Hãy đóng mọi cửa sổ Killendar đang mở, rồi chạy lại trình cài đặt.</sys:String>
+  <sys:String x:Key="Str_Install_Failed" xml:space="preserve">Cài đặt không thành công:&#x0a;{0}</sys:String>
   <sys:String x:Key="Str_Uninstall_Title">Gỡ cài đặt Killendar?</sys:String>
-  <sys:String x:Key="Str_Uninstall_Body">Các cuộc hẹn của bạn sẽ được giữ lại.&#x0a;&#x0a;Việc gỡ sẽ hoàn tất sau khi Killendar đóng. Trạng thái và các tệp hỗ trợ được giữ lại:&#x0a;{0}</sys:String>
+  <sys:String x:Key="Str_Uninstall_Body" xml:space="preserve">Các cuộc hẹn của bạn sẽ được giữ lại.&#x0a;&#x0a;Việc gỡ sẽ hoàn tất sau khi Killendar đóng. Trạng thái và các tệp hỗ trợ được giữ lại:&#x0a;{0}</sys:String>
   <sys:String x:Key="Str_Btn_Uninstall">Gỡ cài đặt</sys:String>
-  <sys:String x:Key="Str_Uninstall_ElevationFailed">Quá trình gỡ cài đặt không thể yêu cầu quyền quản trị viên:&#x0a;{0}</sys:String>
-  <sys:String x:Key="Str_Uninstall_CouldNotStart">Không thể bắt đầu gỡ cài đặt. Kết quả: {0}&#x0a;&#x0a;Các tệp được giữ lại và trạng thái, nếu đã được tạo:&#x0a;{1}</sys:String>
+  <sys:String x:Key="Str_Uninstall_ElevationFailed" xml:space="preserve">Quá trình gỡ cài đặt không thể yêu cầu quyền quản trị viên:&#x0a;{0}</sys:String>
+  <sys:String x:Key="Str_Uninstall_CouldNotStart" xml:space="preserve">Không thể bắt đầu gỡ cài đặt. Kết quả: {0}&#x0a;&#x0a;Các tệp được giữ lại và trạng thái, nếu đã được tạo:&#x0a;{1}</sys:String>
   <sys:String x:Key="Str_Settings_NotSaved">Không thể lưu tệp cài đặt.</sys:String>
   <sys:String x:Key="Str_Settings_RenameUndone">Không thể lưu tệp cài đặt nên việc đổi tên đã được hoàn tác.</sys:String>
   <sys:String x:Key="Str_Settings_DeleteNotSaved">Killendar đã bị xóa, nhưng không thể lưu tệp cài đặt nên lần khởi động tiếp theo có thể mở một Killendar trống cùng tên.</sys:String>

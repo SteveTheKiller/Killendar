@@ -486,19 +486,19 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Btn_No">Nem</sys:String>
     <sys:String x:Key="Str_Btn_OK">OK</sys:String>
     <sys:String x:Key="Str_Install_ConflictTitle">Killendar telepítési ütközés</sys:String>
-    <sys:String x:Key="Str_Install_ConflictRemovePerUser">A Killendar kétszer van telepítve. Eltávolítja most a másik, az aktuális felhasználóhoz tartozó másolatot?&#x0a;&#x0a;A naptárai és a beállításai nem lesznek eltávolítva.</sys:String>
-    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers">A Killendar kétszer van telepítve. Eltávolítja most a másik, az összes felhasználóhoz tartozó másolatot?&#x0a;&#x0a;A naptárai és a beállításai nem lesznek eltávolítva.</sys:String>
-    <sys:String x:Key="Str_Install_ConflictBusyPerUser">A másik, az aktuális felhasználóhoz tartozó másolat használatban van, ezért nem lett eltávolítva.&#x0a;&#x0a;Zárja be a Killendart mindenhol, ahol fut, majd indítsa újra a Killendart.</sys:String>
-    <sys:String x:Key="Str_Install_ConflictBusyAllUsers">A másik, az összes felhasználóhoz tartozó másolat használatban van, ezért nem lett eltávolítva.&#x0a;&#x0a;Zárja be a Killendart mindenhol, ahol fut, majd indítsa újra a Killendart.</sys:String>
-    <sys:String x:Key="Str_Install_Downgrade">Egy régebbi verziót ({0}) készül telepíteni a jelenleg telepített verzió ({1}) fölé.&#x0a;&#x0a;Mégis visszalép a régebbi verzióra?</sys:String>
-    <sys:String x:Key="Str_Install_Unsigned">A telepítés elutasítva: a futó EXE nem rendelkezik érvényes Authenticode-aláírással.&#x0a;&#x0a;Csak a Killendar aláírt buildjei telepíthetők.</sys:String>
-    <sys:String x:Key="Str_Install_WriteFailed">Nem sikerült létrehozni a telepített másolatot itt:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;Zárjon be minden megnyitott Killendar-ablakot, majd futtassa újra a telepítőt.</sys:String>
-    <sys:String x:Key="Str_Install_Failed">A telepítés sikertelen:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemovePerUser" xml:space="preserve">A Killendar kétszer van telepítve. Eltávolítja most a másik, az aktuális felhasználóhoz tartozó másolatot?&#x0a;&#x0a;A naptárai és a beállításai nem lesznek eltávolítva.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers" xml:space="preserve">A Killendar kétszer van telepítve. Eltávolítja most a másik, az összes felhasználóhoz tartozó másolatot?&#x0a;&#x0a;A naptárai és a beállításai nem lesznek eltávolítva.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyPerUser" xml:space="preserve">A másik, az aktuális felhasználóhoz tartozó másolat használatban van, ezért nem lett eltávolítva.&#x0a;&#x0a;Zárja be a Killendart mindenhol, ahol fut, majd indítsa újra a Killendart.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyAllUsers" xml:space="preserve">A másik, az összes felhasználóhoz tartozó másolat használatban van, ezért nem lett eltávolítva.&#x0a;&#x0a;Zárja be a Killendart mindenhol, ahol fut, majd indítsa újra a Killendart.</sys:String>
+    <sys:String x:Key="Str_Install_Downgrade" xml:space="preserve">Egy régebbi verziót ({0}) készül telepíteni a jelenleg telepített verzió ({1}) fölé.&#x0a;&#x0a;Mégis visszalép a régebbi verzióra?</sys:String>
+    <sys:String x:Key="Str_Install_Unsigned" xml:space="preserve">A telepítés elutasítva: a futó EXE nem rendelkezik érvényes Authenticode-aláírással.&#x0a;&#x0a;Csak a Killendar aláírt buildjei telepíthetők.</sys:String>
+    <sys:String x:Key="Str_Install_WriteFailed" xml:space="preserve">Nem sikerült létrehozni a telepített másolatot itt:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;Zárjon be minden megnyitott Killendar-ablakot, majd futtassa újra a telepítőt.</sys:String>
+    <sys:String x:Key="Str_Install_Failed" xml:space="preserve">A telepítés sikertelen:&#x0a;{0}</sys:String>
     <sys:String x:Key="Str_Uninstall_Title">Eltávolítja a Killendart?</sys:String>
-    <sys:String x:Key="Str_Uninstall_Body">A találkozói megmaradnak.&#x0a;&#x0a;Az eltávolítás a Killendar bezárása után fejeződik be. Állapot és megőrzött segédfájlok:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_Body" xml:space="preserve">A találkozói megmaradnak.&#x0a;&#x0a;Az eltávolítás a Killendar bezárása után fejeződik be. Állapot és megőrzött segédfájlok:&#x0a;{0}</sys:String>
     <sys:String x:Key="Str_Btn_Uninstall">Eltávolítás</sys:String>
-    <sys:String x:Key="Str_Uninstall_ElevationFailed">Az eltávolítás nem tudott rendszergazdai hozzáférést kérni:&#x0a;{0}</sys:String>
-    <sys:String x:Key="Str_Uninstall_CouldNotStart">Az eltávolítás nem tudott elindulni. Eredmény: {0}&#x0a;&#x0a;Megőrzött fájlok és állapot, ha létrejöttek:&#x0a;{1}</sys:String>
+    <sys:String x:Key="Str_Uninstall_ElevationFailed" xml:space="preserve">Az eltávolítás nem tudott rendszergazdai hozzáférést kérni:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_CouldNotStart" xml:space="preserve">Az eltávolítás nem tudott elindulni. Eredmény: {0}&#x0a;&#x0a;Megőrzött fájlok és állapot, ha létrejöttek:&#x0a;{1}</sys:String>
     <sys:String x:Key="Str_Settings_NotSaved">A beállításfájlt nem sikerült menteni.</sys:String>
     <sys:String x:Key="Str_Settings_RenameUndone">A beállításfájlt nem sikerült menteni, ezért az átnevezés vissza lett vonva.</sys:String>
     <sys:String x:Key="Str_Settings_DeleteNotSaved">A Killendar törölve lett, de a beállításfájlt nem sikerült menteni, ezért a következő indításkor üres Killendar nyílhat meg ugyanazzal a névvel.</sys:String>

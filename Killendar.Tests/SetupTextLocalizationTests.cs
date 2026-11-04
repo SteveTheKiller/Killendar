@@ -112,6 +112,11 @@ namespace Killendar.Tests
 
             var english = dictionaries["en-US.xaml"];
             var wrong = new List<string>();
+            // XAML folds a written line break into a space unless the string preserves whitespace.
+            foreach (string file in files)
+                foreach (Match line in Regex.Matches(File.ReadAllText(file), @"x:Key=""(Str_\w+)""[^>]*>[^<]*&#x0a;"))
+                    if (dictionaries[Path.GetFileName(file)][line.Groups[1].Value] is string value && !value.Contains("\n"))
+                        wrong.Add($"{Path.GetFileName(file)} {line.Groups[1].Value} loses its line breaks");
             foreach (var pair in dictionaries.Where(d => d.Key != "en-US.xaml"))
                 foreach (var key in pair.Value.Keys.OfType<string>())
                     if (english[key] is string source && pair.Value[key] is string translated

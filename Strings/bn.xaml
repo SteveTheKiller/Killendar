@@ -408,7 +408,7 @@
     <sys:String x:Key="Str_Portable">পোর্টেবল</sys:String>
     <sys:String x:Key="Str_Btn_Install">Killendar ইনস্টল করুন</sys:String>
     <sys:String x:Key="Str_Dlg_InstallMsg">এই কম্পিউটারে Killendar ইনস্টল করবেন?</sys:String>
-    <sys:String x:Key="Str_Dlg_InstallBullets">Killendar আপনার প্রোগ্রাম ফোল্ডারে কপি হবে এবং স্টার্ট মেনুতে একটি এন্ট্রি যোগ হবে।&#x0a;আপনার Killendar ফাইলগুলিতে হাত দেওয়া হবে না, এবং exe-র এই কপিটিও যেখানে আছে সেখানেই থাকবে।&#x0a;Killendar ইনস্টল করা জায়গা থেকে আবার চালু হবে।</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallBullets" xml:space="preserve">Killendar আপনার প্রোগ্রাম ফোল্ডারে কপি হবে এবং স্টার্ট মেনুতে একটি এন্ট্রি যোগ হবে।&#x0a;আপনার Killendar ফাইলগুলিতে হাত দেওয়া হবে না, এবং exe-র এই কপিটিও যেখানে আছে সেখানেই থাকবে।&#x0a;Killendar ইনস্টল করা জায়গা থেকে আবার চালু হবে।</sys:String>
     <sys:String x:Key="Str_Btn_DoInstall">ইনস্টল</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">ডেস্কটপ শর্টকাট যোগ করুন</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">এই কম্পিউটারের সব ব্যবহারকারীর জন্য ইনস্টল করুন (অ্যাডমিন লাগবে)</sys:String>
@@ -419,19 +419,19 @@
     <sys:String x:Key="Str_Btn_No">না</sys:String>
     <sys:String x:Key="Str_Btn_OK">ঠিক আছে</sys:String>
     <sys:String x:Key="Str_Install_ConflictTitle">Killendar ইনস্টলেশন সংঘাত</sys:String>
-    <sys:String x:Key="Str_Install_ConflictRemovePerUser">Killendar দুইবার ইনস্টল করা আছে। বর্তমান ব্যবহারকারীর জন্য ইনস্টল করা অন্য কপিটি এখন সরাবেন?&#x0a;&#x0a;আপনার ক্যালেন্ডার ও সেটিংস সরানো হবে না।</sys:String>
-    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers">Killendar দুইবার ইনস্টল করা আছে। সব ব্যবহারকারীর জন্য ইনস্টল করা অন্য কপিটি এখন সরাবেন?&#x0a;&#x0a;আপনার ক্যালেন্ডার ও সেটিংস সরানো হবে না।</sys:String>
-    <sys:String x:Key="Str_Install_ConflictBusyPerUser">বর্তমান ব্যবহারকারীর জন্য ইনস্টল করা অন্য কপিটি ব্যবহৃত হচ্ছে, তাই সরানো হয়নি।&#x0a;&#x0a;যেখানে যেখানে Killendar চলছে সেখানে সেটি বন্ধ করুন, তারপর আবার Killendar চালু করুন।</sys:String>
-    <sys:String x:Key="Str_Install_ConflictBusyAllUsers">সব ব্যবহারকারীর জন্য ইনস্টল করা অন্য কপিটি ব্যবহৃত হচ্ছে, তাই সরানো হয়নি।&#x0a;&#x0a;যেখানে যেখানে Killendar চলছে সেখানে সেটি বন্ধ করুন, তারপর আবার Killendar চালু করুন।</sys:String>
-    <sys:String x:Key="Str_Install_Downgrade">আপনি বর্তমানে ইনস্টল করা সংস্করণের ({1}) ওপর একটি পুরোনো সংস্করণ ({0}) ইনস্টল করতে যাচ্ছেন।&#x0a;&#x0a;তবুও ডাউনগ্রেড করবেন?</sys:String>
-    <sys:String x:Key="Str_Install_Unsigned">ইনস্টলেশন প্রত্যাখ্যাত: চলমান EXE-তে বৈধ Authenticode স্বাক্ষর নেই।&#x0a;&#x0a;শুধু স্বাক্ষরিত Killendar বিল্ড ইনস্টল করা যায়।</sys:String>
-    <sys:String x:Key="Str_Install_WriteFailed">ইনস্টল করা কপিটি এখানে লেখা যায়নি:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;খোলা সব Killendar উইন্ডো বন্ধ করুন, তারপর ইনস্টলার আবার চালান।</sys:String>
-    <sys:String x:Key="Str_Install_Failed">ইনস্টল ব্যর্থ হয়েছে:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemovePerUser" xml:space="preserve">Killendar দুইবার ইনস্টল করা আছে। বর্তমান ব্যবহারকারীর জন্য ইনস্টল করা অন্য কপিটি এখন সরাবেন?&#x0a;&#x0a;আপনার ক্যালেন্ডার ও সেটিংস সরানো হবে না।</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers" xml:space="preserve">Killendar দুইবার ইনস্টল করা আছে। সব ব্যবহারকারীর জন্য ইনস্টল করা অন্য কপিটি এখন সরাবেন?&#x0a;&#x0a;আপনার ক্যালেন্ডার ও সেটিংস সরানো হবে না।</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyPerUser" xml:space="preserve">বর্তমান ব্যবহারকারীর জন্য ইনস্টল করা অন্য কপিটি ব্যবহৃত হচ্ছে, তাই সরানো হয়নি।&#x0a;&#x0a;যেখানে যেখানে Killendar চলছে সেখানে সেটি বন্ধ করুন, তারপর আবার Killendar চালু করুন।</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyAllUsers" xml:space="preserve">সব ব্যবহারকারীর জন্য ইনস্টল করা অন্য কপিটি ব্যবহৃত হচ্ছে, তাই সরানো হয়নি।&#x0a;&#x0a;যেখানে যেখানে Killendar চলছে সেখানে সেটি বন্ধ করুন, তারপর আবার Killendar চালু করুন।</sys:String>
+    <sys:String x:Key="Str_Install_Downgrade" xml:space="preserve">আপনি বর্তমানে ইনস্টল করা সংস্করণের ({1}) ওপর একটি পুরোনো সংস্করণ ({0}) ইনস্টল করতে যাচ্ছেন।&#x0a;&#x0a;তবুও ডাউনগ্রেড করবেন?</sys:String>
+    <sys:String x:Key="Str_Install_Unsigned" xml:space="preserve">ইনস্টলেশন প্রত্যাখ্যাত: চলমান EXE-তে বৈধ Authenticode স্বাক্ষর নেই।&#x0a;&#x0a;শুধু স্বাক্ষরিত Killendar বিল্ড ইনস্টল করা যায়।</sys:String>
+    <sys:String x:Key="Str_Install_WriteFailed" xml:space="preserve">ইনস্টল করা কপিটি এখানে লেখা যায়নি:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;খোলা সব Killendar উইন্ডো বন্ধ করুন, তারপর ইনস্টলার আবার চালান।</sys:String>
+    <sys:String x:Key="Str_Install_Failed" xml:space="preserve">ইনস্টল ব্যর্থ হয়েছে:&#x0a;{0}</sys:String>
     <sys:String x:Key="Str_Uninstall_Title">Killendar আনইনস্টল করবেন?</sys:String>
-    <sys:String x:Key="Str_Uninstall_Body">আপনার অ্যাপয়েন্টমেন্ট রাখা হবে।&#x0a;&#x0a;Killendar বন্ধ হওয়ার পর অপসারণ শেষ হবে। অবস্থা ও রেখে দেওয়া সহায়ক ফাইল:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_Body" xml:space="preserve">আপনার অ্যাপয়েন্টমেন্ট রাখা হবে।&#x0a;&#x0a;Killendar বন্ধ হওয়ার পর অপসারণ শেষ হবে। অবস্থা ও রেখে দেওয়া সহায়ক ফাইল:&#x0a;{0}</sys:String>
     <sys:String x:Key="Str_Btn_Uninstall">আনইনস্টল করুন</sys:String>
-    <sys:String x:Key="Str_Uninstall_ElevationFailed">আনইনস্টল অ্যাডমিন অ্যাক্সেস চাইতে পারেনি:&#x0a;{0}</sys:String>
-    <sys:String x:Key="Str_Uninstall_CouldNotStart">আনইনস্টল শুরু করা যায়নি। ফলাফল: {0}&#x0a;&#x0a;রেখে দেওয়া ফাইল ও অবস্থা, যদি তৈরি হয়ে থাকে:&#x0a;{1}</sys:String>
+    <sys:String x:Key="Str_Uninstall_ElevationFailed" xml:space="preserve">আনইনস্টল অ্যাডমিন অ্যাক্সেস চাইতে পারেনি:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_CouldNotStart" xml:space="preserve">আনইনস্টল শুরু করা যায়নি। ফলাফল: {0}&#x0a;&#x0a;রেখে দেওয়া ফাইল ও অবস্থা, যদি তৈরি হয়ে থাকে:&#x0a;{1}</sys:String>
     <sys:String x:Key="Str_Settings_NotSaved">সেটিংস ফাইল সংরক্ষণ করা যায়নি।</sys:String>
     <sys:String x:Key="Str_Settings_RenameUndone">সেটিংস ফাইল সংরক্ষণ করা যায়নি, তাই নাম বদল ফিরিয়ে নেওয়া হয়েছে।</sys:String>
     <sys:String x:Key="Str_Settings_DeleteNotSaved">Killendar মুছে ফেলা হয়েছে, কিন্তু সেটিংস ফাইল সংরক্ষণ করা যায়নি, তাই পরের বার চালু করলে একই নামে একটি খালি Killendar খুলতে পারে।</sys:String>

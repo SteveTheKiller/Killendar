@@ -153,19 +153,19 @@
     <sys:String x:Key="Str_Btn_No">Nie</sys:String>
     <sys:String x:Key="Str_Btn_OK">OK</sys:String>
     <sys:String x:Key="Str_Install_ConflictTitle">Konflikt instalacji programu Killendar</sys:String>
-    <sys:String x:Key="Str_Install_ConflictRemovePerUser">Killendar jest zainstalowany dwukrotnie. Usunąć teraz drugą kopię zainstalowaną dla bieżącego użytkownika?&#x0a;&#x0a;Twoje kalendarze i ustawienia nie zostaną usunięte.</sys:String>
-    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers">Killendar jest zainstalowany dwukrotnie. Usunąć teraz drugą kopię zainstalowaną dla wszystkich użytkowników?&#x0a;&#x0a;Twoje kalendarze i ustawienia nie zostaną usunięte.</sys:String>
-    <sys:String x:Key="Str_Install_ConflictBusyPerUser">Druga kopia zainstalowana dla bieżącego użytkownika jest używana, więc nie została usunięta.&#x0a;&#x0a;Zamknij Killendar wszędzie, gdzie jest uruchomiony, a następnie uruchom Killendar ponownie.</sys:String>
-    <sys:String x:Key="Str_Install_ConflictBusyAllUsers">Druga kopia zainstalowana dla wszystkich użytkowników jest używana, więc nie została usunięta.&#x0a;&#x0a;Zamknij Killendar wszędzie, gdzie jest uruchomiony, a następnie uruchom Killendar ponownie.</sys:String>
-    <sys:String x:Key="Str_Install_Downgrade">Zamierzasz zainstalować starszą wersję ({0}) na obecnie zainstalowanej wersji ({1}).&#x0a;&#x0a;Czy mimo to zainstalować starszą wersję?</sys:String>
-    <sys:String x:Key="Str_Install_Unsigned">Instalacja odrzucona: uruchomiony plik EXE nie ma prawidłowego podpisu Authenticode.&#x0a;&#x0a;Można instalować tylko podpisane wersje programu Killendar.</sys:String>
-    <sys:String x:Key="Str_Install_WriteFailed">Nie można zapisać zainstalowanej kopii w lokalizacji:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;Zamknij wszystkie otwarte okna Killendar, a następnie uruchom instalator ponownie.</sys:String>
-    <sys:String x:Key="Str_Install_Failed">Instalacja nie powiodła się:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemovePerUser" xml:space="preserve">Killendar jest zainstalowany dwukrotnie. Usunąć teraz drugą kopię zainstalowaną dla bieżącego użytkownika?&#x0a;&#x0a;Twoje kalendarze i ustawienia nie zostaną usunięte.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers" xml:space="preserve">Killendar jest zainstalowany dwukrotnie. Usunąć teraz drugą kopię zainstalowaną dla wszystkich użytkowników?&#x0a;&#x0a;Twoje kalendarze i ustawienia nie zostaną usunięte.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyPerUser" xml:space="preserve">Druga kopia zainstalowana dla bieżącego użytkownika jest używana, więc nie została usunięta.&#x0a;&#x0a;Zamknij Killendar wszędzie, gdzie jest uruchomiony, a następnie uruchom Killendar ponownie.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyAllUsers" xml:space="preserve">Druga kopia zainstalowana dla wszystkich użytkowników jest używana, więc nie została usunięta.&#x0a;&#x0a;Zamknij Killendar wszędzie, gdzie jest uruchomiony, a następnie uruchom Killendar ponownie.</sys:String>
+    <sys:String x:Key="Str_Install_Downgrade" xml:space="preserve">Zamierzasz zainstalować starszą wersję ({0}) na obecnie zainstalowanej wersji ({1}).&#x0a;&#x0a;Czy mimo to zainstalować starszą wersję?</sys:String>
+    <sys:String x:Key="Str_Install_Unsigned" xml:space="preserve">Instalacja odrzucona: uruchomiony plik EXE nie ma prawidłowego podpisu Authenticode.&#x0a;&#x0a;Można instalować tylko podpisane wersje programu Killendar.</sys:String>
+    <sys:String x:Key="Str_Install_WriteFailed" xml:space="preserve">Nie można zapisać zainstalowanej kopii w lokalizacji:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;Zamknij wszystkie otwarte okna Killendar, a następnie uruchom instalator ponownie.</sys:String>
+    <sys:String x:Key="Str_Install_Failed" xml:space="preserve">Instalacja nie powiodła się:&#x0a;{0}</sys:String>
     <sys:String x:Key="Str_Uninstall_Title">Odinstalować program Killendar?</sys:String>
-    <sys:String x:Key="Str_Uninstall_Body">Twoje spotkania zostaną zachowane.&#x0a;&#x0a;Usuwanie zakończy się po zamknięciu Killendar. Stan i zachowane pliki pomocnicze:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_Body" xml:space="preserve">Twoje spotkania zostaną zachowane.&#x0a;&#x0a;Usuwanie zakończy się po zamknięciu Killendar. Stan i zachowane pliki pomocnicze:&#x0a;{0}</sys:String>
     <sys:String x:Key="Str_Btn_Uninstall">Odinstaluj</sys:String>
-    <sys:String x:Key="Str_Uninstall_ElevationFailed">Odinstalowanie nie mogło zażądać uprawnień administratora:&#x0a;{0}</sys:String>
-    <sys:String x:Key="Str_Uninstall_CouldNotStart">Nie udało się uruchomić odinstalowania. Wynik: {0}&#x0a;&#x0a;Zachowane pliki i stan, jeśli zostały utworzone:&#x0a;{1}</sys:String>
+    <sys:String x:Key="Str_Uninstall_ElevationFailed" xml:space="preserve">Odinstalowanie nie mogło zażądać uprawnień administratora:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_CouldNotStart" xml:space="preserve">Nie udało się uruchomić odinstalowania. Wynik: {0}&#x0a;&#x0a;Zachowane pliki i stan, jeśli zostały utworzone:&#x0a;{1}</sys:String>
     <sys:String x:Key="Str_Settings_NotSaved">Nie udało się zapisać pliku ustawień.</sys:String>
     <sys:String x:Key="Str_Settings_RenameUndone">Nie udało się zapisać pliku ustawień, więc zmiana nazwy została cofnięta.</sys:String>
     <sys:String x:Key="Str_Settings_DeleteNotSaved">Killendar został usunięty, ale nie udało się zapisać pliku ustawień, więc przy następnym uruchomieniu może zostać otwarty pusty Killendar o tej samej nazwie.</sys:String>
@@ -442,7 +442,7 @@
     <sys:String x:Key="Str_Kc_AddBody">Kopia zostanie dodana do folderu danych i otwarta. Oryginalny plik pozostanie nietknięty - Killendar stale zapisuje dane, dlatego nie powinien pracować bezpośrednio na pliku z udziału sieciowego ani folderu Pobrane.</sys:String>
     <sys:String x:Key="Str_Btn_Add">Dodaj</sys:String>
     <sys:String x:Key="Str_Side_NoAppointments">Brak spotkań w tym dniu</sys:String>
-    <sys:String x:Key="Str_Dlg_InstallBullets">Killendar zostanie skopiowany do folderu programów i zostanie dodana pozycja w menu Start.&#x0a;Twoje Killendary pozostaną nietknięte, a ta kopia pliku exe zostanie tam, gdzie jest.&#x0a;Killendar uruchomi się ponownie z miejsca instalacji.</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallBullets" xml:space="preserve">Killendar zostanie skopiowany do folderu programów i zostanie dodana pozycja w menu Start.&#x0a;Twoje Killendary pozostaną nietknięte, a ta kopia pliku exe zostanie tam, gdzie jest.&#x0a;Killendar uruchomi się ponownie z miejsca instalacji.</sys:String>
     <sys:String x:Key="Str_KS_Hint">Pojedyncze klawisze są wyłączone podczas wpisywania tekstu</sys:String>
     <sys:String x:Key="Str_KS_GrpViews">WIDOKI</sys:String>
     <sys:String x:Key="Str_KS_GrpAppt">SPOTKANIA</sys:String>

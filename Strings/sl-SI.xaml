@@ -417,19 +417,19 @@ Killendar se bo ponovno zagnal z namestitvenega mesta.</sys:String>
     <sys:String x:Key="Str_Btn_No">Ne</sys:String>
     <sys:String x:Key="Str_Btn_OK">V redu</sys:String>
     <sys:String x:Key="Str_Install_ConflictTitle">Navzkrižje pri namestitvi Killendar</sys:String>
-    <sys:String x:Key="Str_Install_ConflictRemovePerUser">Killendar je nameščen dvakrat. Naj zdaj odstranim drugo kopijo za trenutnega uporabnika?&#x0a;&#x0a;Tvoji koledarji in nastavitve ne bodo odstranjeni.</sys:String>
-    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers">Killendar je nameščen dvakrat. Naj zdaj odstranim drugo kopijo za vse uporabnike?&#x0a;&#x0a;Tvoji koledarji in nastavitve ne bodo odstranjeni.</sys:String>
-    <sys:String x:Key="Str_Install_ConflictBusyPerUser">Druga kopija za trenutnega uporabnika se uporablja, zato ni bila odstranjena.&#x0a;&#x0a;Zapri Killendar povsod, kjer se izvaja, nato znova zaženi Killendar.</sys:String>
-    <sys:String x:Key="Str_Install_ConflictBusyAllUsers">Druga kopija za vse uporabnike se uporablja, zato ni bila odstranjena.&#x0a;&#x0a;Zapri Killendar povsod, kjer se izvaja, nato znova zaženi Killendar.</sys:String>
-    <sys:String x:Key="Str_Install_Downgrade">Čez trenutno nameščeno različico ({1}) nameravaš namestiti starejšo različico ({0}).&#x0a;&#x0a;Želiš vseeno namestiti starejšo različico?</sys:String>
-    <sys:String x:Key="Str_Install_Unsigned">Namestitev zavrnjena: zagnani EXE nima veljavnega podpisa Authenticode.&#x0a;&#x0a;Namestiti je mogoče samo podpisane različice Killendar.</sys:String>
-    <sys:String x:Key="Str_Install_WriteFailed">Nameščene kopije ni bilo mogoče zapisati v:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;Zapri vsa odprta okna Killendar in znova zaženi namestitveni program.</sys:String>
-    <sys:String x:Key="Str_Install_Failed">Namestitev ni uspela:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemovePerUser" xml:space="preserve">Killendar je nameščen dvakrat. Naj zdaj odstranim drugo kopijo za trenutnega uporabnika?&#x0a;&#x0a;Tvoji koledarji in nastavitve ne bodo odstranjeni.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers" xml:space="preserve">Killendar je nameščen dvakrat. Naj zdaj odstranim drugo kopijo za vse uporabnike?&#x0a;&#x0a;Tvoji koledarji in nastavitve ne bodo odstranjeni.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyPerUser" xml:space="preserve">Druga kopija za trenutnega uporabnika se uporablja, zato ni bila odstranjena.&#x0a;&#x0a;Zapri Killendar povsod, kjer se izvaja, nato znova zaženi Killendar.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyAllUsers" xml:space="preserve">Druga kopija za vse uporabnike se uporablja, zato ni bila odstranjena.&#x0a;&#x0a;Zapri Killendar povsod, kjer se izvaja, nato znova zaženi Killendar.</sys:String>
+    <sys:String x:Key="Str_Install_Downgrade" xml:space="preserve">Čez trenutno nameščeno različico ({1}) nameravaš namestiti starejšo različico ({0}).&#x0a;&#x0a;Želiš vseeno namestiti starejšo različico?</sys:String>
+    <sys:String x:Key="Str_Install_Unsigned" xml:space="preserve">Namestitev zavrnjena: zagnani EXE nima veljavnega podpisa Authenticode.&#x0a;&#x0a;Namestiti je mogoče samo podpisane različice Killendar.</sys:String>
+    <sys:String x:Key="Str_Install_WriteFailed" xml:space="preserve">Nameščene kopije ni bilo mogoče zapisati v:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;Zapri vsa odprta okna Killendar in znova zaženi namestitveni program.</sys:String>
+    <sys:String x:Key="Str_Install_Failed" xml:space="preserve">Namestitev ni uspela:&#x0a;{0}</sys:String>
     <sys:String x:Key="Str_Uninstall_Title">Odstranim Killendar?</sys:String>
-    <sys:String x:Key="Str_Uninstall_Body">Tvoji dogodki bodo ohranjeni.&#x0a;&#x0a;Odstranitev se konča, ko se Killendar zapre. Stanje in ohranjene pomožne datoteke:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_Body" xml:space="preserve">Tvoji dogodki bodo ohranjeni.&#x0a;&#x0a;Odstranitev se konča, ko se Killendar zapre. Stanje in ohranjene pomožne datoteke:&#x0a;{0}</sys:String>
     <sys:String x:Key="Str_Btn_Uninstall">Odstrani</sys:String>
-    <sys:String x:Key="Str_Uninstall_ElevationFailed">Pri odstranjevanju ni bilo mogoče zahtevati skrbniškega dostopa:&#x0a;{0}</sys:String>
-    <sys:String x:Key="Str_Uninstall_CouldNotStart">Odstranjevanja ni bilo mogoče zagnati. Rezultat: {0}&#x0a;&#x0a;Ohranjene datoteke in stanje, če obstajajo:&#x0a;{1}</sys:String>
+    <sys:String x:Key="Str_Uninstall_ElevationFailed" xml:space="preserve">Pri odstranjevanju ni bilo mogoče zahtevati skrbniškega dostopa:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_CouldNotStart" xml:space="preserve">Odstranjevanja ni bilo mogoče zagnati. Rezultat: {0}&#x0a;&#x0a;Ohranjene datoteke in stanje, če obstajajo:&#x0a;{1}</sys:String>
     <sys:String x:Key="Str_Settings_NotSaved">Datoteke z nastavitvami ni bilo mogoče shraniti.</sys:String>
     <sys:String x:Key="Str_Settings_RenameUndone">Datoteke z nastavitvami ni bilo mogoče shraniti, zato je bilo preimenovanje razveljavljeno.</sys:String>
     <sys:String x:Key="Str_Settings_DeleteNotSaved">Koledar Killendar je bil izbrisan, vendar datoteke z nastavitvami ni bilo mogoče shraniti, zato se lahko ob naslednjem zagonu odpre prazen koledar Killendar z istim imenom.</sys:String>

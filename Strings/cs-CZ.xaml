@@ -408,7 +408,7 @@
     <sys:String x:Key="Str_Portable">PŘENOSNÁ</sys:String>
     <sys:String x:Key="Str_Btn_Install">Nainstalovat Killendar</sys:String>
     <sys:String x:Key="Str_Dlg_InstallMsg">Nainstalovat Killendar do tohoto počítače?</sys:String>
-    <sys:String x:Key="Str_Dlg_InstallBullets">Killendar se zkopíruje do složky s programy a přidá se zástupce do nabídky Start.&#x0a;Vaše Killendary zůstanou nedotčené a tato kopie souboru exe zůstane tam, kde je.&#x0a;Killendar se restartuje z nainstalovaného umístění.</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallBullets" xml:space="preserve">Killendar se zkopíruje do složky s programy a přidá se zástupce do nabídky Start.&#x0a;Vaše Killendary zůstanou nedotčené a tato kopie souboru exe zůstane tam, kde je.&#x0a;Killendar se restartuje z nainstalovaného umístění.</sys:String>
     <sys:String x:Key="Str_Btn_DoInstall">Nainstalovat</sys:String>
     <sys:String x:Key="Str_Chk_Desktop">Přidat zástupce na plochu</sys:String>
     <sys:String x:Key="Str_Chk_AllUsers">Nainstalovat pro všechny uživatele tohoto počítače (vyžaduje správce)</sys:String>
@@ -419,19 +419,19 @@
     <sys:String x:Key="Str_Btn_No">Ne</sys:String>
     <sys:String x:Key="Str_Btn_OK">OK</sys:String>
     <sys:String x:Key="Str_Install_ConflictTitle">Konflikt instalace Killendar</sys:String>
-    <sys:String x:Key="Str_Install_ConflictRemovePerUser">Killendar je nainstalován dvakrát. Odstranit nyní druhou kopii pro aktuálního uživatele?&#x0a;&#x0a;Vaše kalendáře a nastavení nebudou odstraněny.</sys:String>
-    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers">Killendar je nainstalován dvakrát. Odstranit nyní druhou kopii pro všechny uživatele?&#x0a;&#x0a;Vaše kalendáře a nastavení nebudou odstraněny.</sys:String>
-    <sys:String x:Key="Str_Install_ConflictBusyPerUser">Druhá kopie pro aktuálního uživatele se používá, a proto nebyla odstraněna.&#x0a;&#x0a;Zavřete Killendar všude, kde běží, a poté Killendar spusťte znovu.</sys:String>
-    <sys:String x:Key="Str_Install_ConflictBusyAllUsers">Druhá kopie pro všechny uživatele se používá, a proto nebyla odstraněna.&#x0a;&#x0a;Zavřete Killendar všude, kde běží, a poté Killendar spusťte znovu.</sys:String>
-    <sys:String x:Key="Str_Install_Downgrade">Chystáte se nainstalovat starší verzi ({0}) přes aktuálně nainstalovanou verzi ({1}).&#x0a;&#x0a;Přesto přejít na starší verzi?</sys:String>
-    <sys:String x:Key="Str_Install_Unsigned">Instalace odmítnuta: spuštěný soubor EXE nemá platný podpis Authenticode.&#x0a;&#x0a;Lze nainstalovat pouze podepsaná sestavení Killendar.</sys:String>
-    <sys:String x:Key="Str_Install_WriteFailed">Nainstalovanou kopii se nepodařilo zapsat do:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;Zavřete všechna otevřená okna Killendar a spusťte instalační program znovu.</sys:String>
-    <sys:String x:Key="Str_Install_Failed">Instalace se nezdařila:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemovePerUser" xml:space="preserve">Killendar je nainstalován dvakrát. Odstranit nyní druhou kopii pro aktuálního uživatele?&#x0a;&#x0a;Vaše kalendáře a nastavení nebudou odstraněny.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictRemoveAllUsers" xml:space="preserve">Killendar je nainstalován dvakrát. Odstranit nyní druhou kopii pro všechny uživatele?&#x0a;&#x0a;Vaše kalendáře a nastavení nebudou odstraněny.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyPerUser" xml:space="preserve">Druhá kopie pro aktuálního uživatele se používá, a proto nebyla odstraněna.&#x0a;&#x0a;Zavřete Killendar všude, kde běží, a poté Killendar spusťte znovu.</sys:String>
+    <sys:String x:Key="Str_Install_ConflictBusyAllUsers" xml:space="preserve">Druhá kopie pro všechny uživatele se používá, a proto nebyla odstraněna.&#x0a;&#x0a;Zavřete Killendar všude, kde běží, a poté Killendar spusťte znovu.</sys:String>
+    <sys:String x:Key="Str_Install_Downgrade" xml:space="preserve">Chystáte se nainstalovat starší verzi ({0}) přes aktuálně nainstalovanou verzi ({1}).&#x0a;&#x0a;Přesto přejít na starší verzi?</sys:String>
+    <sys:String x:Key="Str_Install_Unsigned" xml:space="preserve">Instalace odmítnuta: spuštěný soubor EXE nemá platný podpis Authenticode.&#x0a;&#x0a;Lze nainstalovat pouze podepsaná sestavení Killendar.</sys:String>
+    <sys:String x:Key="Str_Install_WriteFailed" xml:space="preserve">Nainstalovanou kopii se nepodařilo zapsat do:&#x0a;{0}&#x0a;&#x0a;{1}&#x0a;&#x0a;Zavřete všechna otevřená okna Killendar a spusťte instalační program znovu.</sys:String>
+    <sys:String x:Key="Str_Install_Failed" xml:space="preserve">Instalace se nezdařila:&#x0a;{0}</sys:String>
     <sys:String x:Key="Str_Uninstall_Title">Odinstalovat Killendar?</sys:String>
-    <sys:String x:Key="Str_Uninstall_Body">Vaše schůzky zůstanou zachovány.&#x0a;&#x0a;Odstranění se dokončí po zavření Killendar. Stav a zachované pomocné soubory:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_Body" xml:space="preserve">Vaše schůzky zůstanou zachovány.&#x0a;&#x0a;Odstranění se dokončí po zavření Killendar. Stav a zachované pomocné soubory:&#x0a;{0}</sys:String>
     <sys:String x:Key="Str_Btn_Uninstall">Odinstalovat</sys:String>
-    <sys:String x:Key="Str_Uninstall_ElevationFailed">Odinstalaci se nepodařilo vyžádat oprávnění správce:&#x0a;{0}</sys:String>
-    <sys:String x:Key="Str_Uninstall_CouldNotStart">Odinstalaci se nepodařilo spustit. Výsledek: {0}&#x0a;&#x0a;Zachované soubory a stav, pokud byly vytvořeny:&#x0a;{1}</sys:String>
+    <sys:String x:Key="Str_Uninstall_ElevationFailed" xml:space="preserve">Odinstalaci se nepodařilo vyžádat oprávnění správce:&#x0a;{0}</sys:String>
+    <sys:String x:Key="Str_Uninstall_CouldNotStart" xml:space="preserve">Odinstalaci se nepodařilo spustit. Výsledek: {0}&#x0a;&#x0a;Zachované soubory a stav, pokud byly vytvořeny:&#x0a;{1}</sys:String>
     <sys:String x:Key="Str_Settings_NotSaved">Soubor nastavení se nepodařilo uložit.</sys:String>
     <sys:String x:Key="Str_Settings_RenameUndone">Soubor nastavení se nepodařilo uložit, proto bylo přejmenování vráceno zpět.</sys:String>
     <sys:String x:Key="Str_Settings_DeleteNotSaved">Killendar byl odstraněn, ale soubor nastavení se nepodařilo uložit, takže při dalším spuštění se může otevřít prázdný Killendar se stejným názvem.</sys:String>
