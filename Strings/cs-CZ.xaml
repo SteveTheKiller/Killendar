@@ -525,6 +525,7 @@
     <sys:String x:Key="Str_Density_Panel2">Názvy a místa</sys:String>
     <sys:String x:Key="Str_Density_Panel3">Vše</sys:String>
     <sys:String x:Key="Str_St_Density">Hustota mřížky: {0} čar za hodinu</sys:String>
+    <sys:String x:Key="Str_St_AppSize">Velikost aplikace {0} %</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">Pětidenní pracovní týden</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 dní</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOn">Zobrazení týdne ukazuje pracovní týden (po - pá)</sys:String>

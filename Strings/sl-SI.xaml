@@ -536,6 +536,7 @@ Killendar se bo ponovno zagnal z namestitvenega mesta.</sys:String>
     <sys:String x:Key="Str_Density_Panel2">Naslovi in kraji</sys:String>
     <sys:String x:Key="Str_Density_Panel3">Vse</sys:String>
     <sys:String x:Key="Str_St_Density">Gostota mreže: {0} vrstic na uro</sys:String>
+    <sys:String x:Key="Str_St_AppSize">Velikost aplikacije {0}%</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">Petdnevni delovni teden</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 dni</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOn">Tedenski pogled prikazuje delovni teden (od ponedeljka do petka)</sys:String>

@@ -7,8 +7,8 @@ using Xunit;
 
 namespace Killendar.Tests
 {
-    /// <summary>Every Str_ key the code asks Loc() for exists in every locale file, so no language
-    /// ever shows a raw key. Keys built by concatenation (a prefix plus a number or name) are left
+    /// <summary>Every Str_ key the code asks Loc() or FindResource for exists in every locale file,
+    /// so no language ever shows a raw key or an English fallback. Keys built by concatenation (a prefix plus a number or name) are left
     /// out; the scan only reads whole literals, including both arms of a conditional.</summary>
     public sealed class StringKeyCompletenessTests
     {
@@ -42,7 +42,7 @@ namespace Killendar.Tests
                 string relative = file.Substring(root.Length).TrimStart(Path.DirectorySeparatorChar);
                 if (SkippedFolders.Any(f => relative.Split(Path.DirectorySeparatorChar).Contains(f))) continue;
                 string text = File.ReadAllText(file);
-                foreach (Match call in Regex.Matches(text, @"\bLoc\("))
+                foreach (Match call in Regex.Matches(text, @"\b(?:Loc|TryFindResource|FindResource)\("))
                 {
                     string argument = Argument(text, call.Index + call.Length);
                     foreach (Match literal in Regex.Matches(argument, @"(?<!\+\s*)""(Str_\w+)""(?!\s*\+)"))

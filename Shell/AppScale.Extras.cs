@@ -9,8 +9,8 @@ namespace Killendar.Shell
     /// <summary>
     /// APP-OWNED: Killendar's side of the family app size (Shell/AppScale.cs). Killendar keeps its
     /// 80 to 150% range, ClearType text at every size, layout rounding only at 100%, a minimum
-    /// window size that follows the scale, the "UI  120%" readout, and no wheel while the sidebar
-    /// slides.
+    /// window size that follows the scale, a readout that leaves a newer status line alone, and no
+    /// wheel while the sidebar slides.
     /// </summary>
     public partial class MainWindow
     {
@@ -69,6 +69,7 @@ namespace Killendar.Shell
 
         private DispatcherTimer? _scaleReadoutHide;
         private string? _statusBeforeScale;
+        private string _scaleReadout = string.Empty;
 
         partial void ShowAppScaleReadout(double scale, ref bool handled)
         {
@@ -80,15 +81,31 @@ namespace Killendar.Shell
                 _scaleReadoutHide.Tick += (_, _) =>
                 {
                     _scaleReadoutHide.Stop();
-                    StatusText.Text = _statusBeforeScale ?? Loc("Str_Status_Ready");
+                    string? restore = AppScaleReadout.Restore(StatusText.Text, _scaleReadout, _statusBeforeScale, Loc("Str_Status_Ready"));
+                    if (restore != null) StatusText.Text = restore;
                     _statusBeforeScale = null;
                 };
             }
 
             if (!_scaleReadoutHide.IsEnabled) _statusBeforeScale = StatusText.Text;
             _scaleReadoutHide.Stop();
-            StatusText.Text = $"UI  {(int)Math.Round(scale * 100)}%";
+            _scaleReadout = AppScaleReadout.Text(TryFindResource("Str_St_AppSize") as string, scale);
+            StatusText.Text = _scaleReadout;
             _scaleReadoutHide.Start();
         }
+    }
+
+    /// <summary>The app-size readout's wording and its timeout, kept free of the window.</summary>
+    internal static class AppScaleReadout
+    {
+        /// <summary>The readout in the language's own wording, or the family wording when the
+        /// language has none.</summary>
+        internal static string Text(string? format, double scale)
+            => string.Format(System.Globalization.CultureInfo.CurrentCulture, format ?? "App size {0}%", (int)Math.Round(scale * 100));
+
+        /// <summary>What the status line shows when the readout times out: the line from before
+        /// the readout, or null to keep a newer line written in the meantime.</summary>
+        internal static string? Restore(string current, string readout, string? before, string ready)
+            => current == readout ? before ?? ready : null;
     }
 }

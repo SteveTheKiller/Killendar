@@ -610,6 +610,7 @@
     <sys:String x:Key="Str_Density_Panel2">Titler og steder</sys:String>
     <sys:String x:Key="Str_Density_Panel3">Alt</sys:String>
     <sys:String x:Key="Str_St_Density">Rutenetttetthet: {0} linje(r) per time</sys:String>
+    <sys:String x:Key="Str_St_AppSize">Appstørrelse {0} %</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">Arbeidsuke på 5 dager</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 dager</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOn">Ukevisningen viser arbeidsuken (man - fre)</sys:String>

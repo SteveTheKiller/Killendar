@@ -525,6 +525,7 @@
     <sys:String x:Key="Str_Density_Panel2">标题和地点</sys:String>
     <sys:String x:Key="Str_Density_Panel3">全部</sys:String>
     <sys:String x:Key="Str_St_Density">网格密度：每小时 {0} 条线</sys:String>
+    <sys:String x:Key="Str_St_AppSize">应用大小 {0}%</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">5 天工作周</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 天</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOn">周视图显示工作周 (周一 - 周五)</sys:String>

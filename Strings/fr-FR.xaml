@@ -525,6 +525,7 @@
     <sys:String x:Key="Str_Density_Panel2">Titres et lieux</sys:String>
     <sys:String x:Key="Str_Density_Panel3">Tout</sys:String>
     <sys:String x:Key="Str_St_Density">Densité de la grille : {0} ligne(s) par heure</sys:String>
+    <sys:String x:Key="Str_St_AppSize">Taille de l'application {0} %</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">Semaine de travail de 5 jours</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 jours</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOn">La vue semaine affiche la semaine de travail (lun - ven)</sys:String>

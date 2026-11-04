@@ -610,6 +610,7 @@
     <sys:String x:Key="Str_Density_Panel2">Атаулар мен орындар</sys:String>
     <sys:String x:Key="Str_Density_Panel3">Барлығы</sys:String>
     <sys:String x:Key="Str_St_Density">Тор тығыздығы: сағатына {0} сызық</sys:String>
+    <sys:String x:Key="Str_St_AppSize">Қолданба өлшемі {0}%</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">5 күндік жұмыс аптасы</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 күн</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOn">Апта көрінісі жұмыс аптасын көрсетеді (дс - жм)</sys:String>

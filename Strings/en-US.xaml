@@ -610,6 +610,7 @@
     <sys:String x:Key="Str_Density_Panel2">Titles and places</sys:String>
     <sys:String x:Key="Str_Density_Panel3">Everything</sys:String>
     <sys:String x:Key="Str_St_Density">Grid density: {0} line(s) per hour</sys:String>
+    <sys:String x:Key="Str_St_AppSize">App size {0}%</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">5-day work week</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5-Day</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOn">Week view shows the work week (Mon - Fri)</sys:String>

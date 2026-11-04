@@ -525,6 +525,7 @@
     <sys:String x:Key="Str_Density_Panel2">শিরোনাম ও স্থান</sys:String>
     <sys:String x:Key="Str_Density_Panel3">সবকিছু</sys:String>
     <sys:String x:Key="Str_St_Density">গ্রিড ঘনত্ব: প্রতি ঘণ্টায় {0}টি লাইন</sys:String>
+    <sys:String x:Key="Str_St_AppSize">অ্যাপের আকার {0}%</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">৫ দিনের কর্মসপ্তাহ</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">৫ দিন</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOn">সপ্তাহ ভিউ কর্মসপ্তাহ দেখায় (সোম - শুক্র)</sys:String>

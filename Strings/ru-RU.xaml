@@ -611,6 +611,7 @@
     <sys:String x:Key="Str_Density_Panel2">Названия и места</sys:String>
     <sys:String x:Key="Str_Density_Panel3">Всё</sys:String>
     <sys:String x:Key="Str_St_Density">Плотность сетки: {0} линий в час</sys:String>
+    <sys:String x:Key="Str_St_AppSize">Размер приложения {0}%</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">5-дневная рабочая неделя</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 дней</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOn">Вид недели показывает рабочую неделю (пн - пт)</sys:String>

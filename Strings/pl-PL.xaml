@@ -537,6 +537,7 @@
     <sys:String x:Key="Str_Density_Panel2">Tytuły i miejsca</sys:String>
     <sys:String x:Key="Str_Density_Panel3">Wszystko</sys:String>
     <sys:String x:Key="Str_St_Density">Gęstość siatki: {0} linii na godzinę</sys:String>
+    <sys:String x:Key="Str_St_AppSize">Rozmiar aplikacji {0}%</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">5-dniowy tydzień roboczy</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 dni</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOn">Widok tygodnia pokazuje dni robocze (pon.-pt.)</sys:String>

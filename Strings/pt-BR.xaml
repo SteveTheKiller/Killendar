@@ -610,6 +610,7 @@
     <sys:String x:Key="Str_Density_Panel2">Títulos e locais</sys:String>
     <sys:String x:Key="Str_Density_Panel3">Tudo</sys:String>
     <sys:String x:Key="Str_St_Density">Densidade da grade: {0} linha(s) por hora</sys:String>
+    <sys:String x:Key="Str_St_AppSize">Tamanho do aplicativo {0}%</sys:String>
     <sys:String x:Key="Str_TT_WorkWeek">Semana útil de 5 dias</sys:String>
     <sys:String x:Key="Str_Btn_WorkWeek">5 dias</sys:String>
     <sys:String x:Key="Str_St_WorkWeekOn">A visualização de semana mostra a semana útil (seg - sex)</sys:String>
