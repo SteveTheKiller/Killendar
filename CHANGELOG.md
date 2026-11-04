@@ -78,6 +78,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 
 ### Added
 
+- Translators can start Killendar with `--lang-file <file>` to try a translation file in the running app; it reloads on every save.
 - About groups settings in two columns and can hide shortcut hints in menus and tooltips without disabling keyboard shortcuts. Hover tooltips clear large pointers while preserving custom placement.
 - Alt+drag moves any Killendar window from anywhere inside it.
 - When Killendar is already installed for all users, the install prompt ticks and locks the all-users box and says it will update that copy.
