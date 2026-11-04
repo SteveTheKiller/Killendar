@@ -59,6 +59,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - An all-day appointment whose end date is before its start date is refused with a message instead of being saved as one day.
 - Agenda Previous and Next step by the chosen 7 or 14 day range instead of skipping weeks.
 - Week and Day mark today with an accent edge when another day is selected, matching Month.
+- Screen readers announce untitled appointments as untitled instead of starting with a comma.
 
 ### Changed
 

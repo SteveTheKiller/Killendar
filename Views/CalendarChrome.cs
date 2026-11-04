@@ -96,6 +96,19 @@ namespace Killendar.Views
         }
 
         /// <summary>
+        /// The chip's tooltip ("\n") or screen reader name (", "): title, time and location. An
+        /// untitled appointment (an .ics import can carry one) gets the placeholder the chip
+        /// itself shows, so neither starts with a bare separator.
+        /// </summary>
+        internal static string ChipText(CalendarEvent ev, string untitled, string separator)
+        {
+            string title = string.IsNullOrWhiteSpace(ev.Title) ? untitled : ev.Title;
+            return string.IsNullOrWhiteSpace(ev.Location)
+                ? title + separator + ev.TimeLabel
+                : title + separator + ev.TimeLabel + separator + ev.Location;
+        }
+
+        /// <summary>
         /// One appointment chip. The accent lives on a left edge bar rather than a filled
         /// background, so it reads the same against all six palettes instead of glowing on Light.
         ///
@@ -110,6 +123,7 @@ namespace Killendar.Views
         {
             bool other = ev.SourceCalendar.Length > 0;
             string? category = other ? null : Services.CategoryManager.PrimaryOf(ev);
+            string untitled = string.IsNullOrWhiteSpace(ev.Title) ? Services.LocaleManager.Loc("Str_Cal_NoTitle") : "";
             var chip = new ChipBorder(() => onClick(ev))
             {
                 CornerRadius    = Services.ThemeManager.Current == Services.Theme.SE98
@@ -120,15 +134,11 @@ namespace Killendar.Views
                 Cursor          = Cursors.Hand,
                 Focusable       = true,
                 Tag             = ev,
-                ToolTip         = string.IsNullOrWhiteSpace(ev.Location)
-                                    ? ev.Title + "\n" + ev.TimeLabel
-                                    : ev.Title + "\n" + ev.TimeLabel + "\n" + ev.Location
+                ToolTip         = ChipText(ev, untitled, "\n")
             };
             // A screen reader hears what the tooltip shows, and keyboard focus gets the family
             // ring rather than the system's dotted rectangle.
-            AutomationProperties.SetName(chip, string.IsNullOrWhiteSpace(ev.Location)
-                ? ev.Title + ", " + ev.TimeLabel
-                : ev.Title + ", " + ev.TimeLabel + ", " + ev.Location);
+            AutomationProperties.SetName(chip, ChipText(ev, untitled, ", "));
             chip.FocusVisualStyle = AccessibleControls.FocusStyleFor(chip);
             chip.SizeChanged += (_, _) => chip.FocusVisualStyle = AccessibleControls.FocusStyleFor(chip);
             if (other)
