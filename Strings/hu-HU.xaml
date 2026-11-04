@@ -660,6 +660,8 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_Color_Purple">Lila</sys:String>
     <sys:String x:Key="Str_Color_Magenta">Bíborvörös</sys:String>
     <sys:String x:Key="Str_Color_Hex">Hexadecimális szín</sys:String>
+    <sys:String x:Key="Str_Color_SatValue">Telítettség és fényerő</sys:String>
+    <sys:String x:Key="Str_Color_Hue">Színárnyalat</sys:String>
     <sys:String x:Key="Str_Scroll_Up">Görgetés felfelé</sys:String>
     <sys:String x:Key="Str_Scroll_Down">Görgetés lefelé</sys:String>
     <sys:String x:Key="Str_Scroll_Left">Görgetés balra</sys:String>

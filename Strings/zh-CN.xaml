@@ -632,6 +632,8 @@
     <sys:String x:Key="Str_Color_Purple">紫色</sys:String>
     <sys:String x:Key="Str_Color_Magenta">品红</sys:String>
     <sys:String x:Key="Str_Color_Hex">十六进制颜色</sys:String>
+    <sys:String x:Key="Str_Color_SatValue">饱和度和亮度</sys:String>
+    <sys:String x:Key="Str_Color_Hue">色调</sys:String>
     <sys:String x:Key="Str_Scroll_Up">向上滚动</sys:String>
     <sys:String x:Key="Str_Scroll_Down">向下滚动</sys:String>
     <sys:String x:Key="Str_Scroll_Left">向左滚动</sys:String>

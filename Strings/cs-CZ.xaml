@@ -632,6 +632,8 @@
     <sys:String x:Key="Str_Color_Purple">Fialová</sys:String>
     <sys:String x:Key="Str_Color_Magenta">Purpurová</sys:String>
     <sys:String x:Key="Str_Color_Hex">Barva v šestnáctkovém zápisu</sys:String>
+    <sys:String x:Key="Str_Color_SatValue">Sytost a jas</sys:String>
+    <sys:String x:Key="Str_Color_Hue">Odstín</sys:String>
     <sys:String x:Key="Str_Scroll_Up">Posunout nahoru</sys:String>
     <sys:String x:Key="Str_Scroll_Down">Posunout dolů</sys:String>
     <sys:String x:Key="Str_Scroll_Left">Posunout doleva</sys:String>

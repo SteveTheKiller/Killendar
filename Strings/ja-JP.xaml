@@ -632,6 +632,8 @@
     <sys:String x:Key="Str_Color_Purple">紫</sys:String>
     <sys:String x:Key="Str_Color_Magenta">マゼンタ</sys:String>
     <sys:String x:Key="Str_Color_Hex">16 進カラー</sys:String>
+    <sys:String x:Key="Str_Color_SatValue">彩度と明るさ</sys:String>
+    <sys:String x:Key="Str_Color_Hue">色相</sys:String>
     <sys:String x:Key="Str_Scroll_Up">上へスクロール</sys:String>
     <sys:String x:Key="Str_Scroll_Down">下へスクロール</sys:String>
     <sys:String x:Key="Str_Scroll_Left">左へスクロール</sys:String>

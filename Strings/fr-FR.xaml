@@ -632,6 +632,8 @@
     <sys:String x:Key="Str_Color_Purple">Violet</sys:String>
     <sys:String x:Key="Str_Color_Magenta">Magenta</sys:String>
     <sys:String x:Key="Str_Color_Hex">Couleur hexadécimale</sys:String>
+    <sys:String x:Key="Str_Color_SatValue">Saturation et luminosité</sys:String>
+    <sys:String x:Key="Str_Color_Hue">Teinte</sys:String>
     <sys:String x:Key="Str_Scroll_Up">Défiler vers le haut</sys:String>
     <sys:String x:Key="Str_Scroll_Down">Défiler vers le bas</sys:String>
     <sys:String x:Key="Str_Scroll_Left">Défiler vers la gauche</sys:String>

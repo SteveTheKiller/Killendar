@@ -14,34 +14,15 @@ namespace Killendar.Tests
     public sealed class ColorPickerFieldNameTests
     {
         [Fact]
-        public void PrecisionColorFieldsHaveSpokenNames()
+        public void PrecisionColorFieldsHaveSpokenNames() => PickerUi.Run(() =>
         {
-            Exception? failure = null;
-            var thread = new Thread(() =>
-            {
-                try
-                {
-                    // The picker reads its brushes and words from the application, as in the app.
-                    var app = Application.Current ?? new Application { ShutdownMode = ShutdownMode.OnExplicitShutdown };
-                    foreach (string resource in new[] { "Themes/Dark.xaml", "Controls/Controls.xaml", "Controls/AppStyles.xaml", "Strings/en-US.xaml" })
-                        app.Resources.MergedDictionaries.Add(new ResourceDictionary
-                        {
-                            Source = new Uri("/Killendar;component/" + resource, UriKind.Relative)
-                        });
-                    var dialog = new Killendar.Controls.ColorPickerDialog(null, Colors.SteelBlue);
-                    var boxes = Descendants(dialog).OfType<TextBox>().ToList();
-                    var names = boxes.Select(AutomationProperties.GetName).ToList();
-                    foreach (string expected in new[] { "Red", "Green", "Blue", "Hex color" })
-                        Assert.Contains(expected, names);
-                    dialog.Close();
-                }
-                catch (Exception ex) { failure = ex; }
-            });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            Assert.True(thread.Join(TimeSpan.FromSeconds(20)), "The color picker did not build.");
-            if (failure != null) throw new InvalidOperationException(failure.ToString());
-        }
+            var dialog = new Killendar.Controls.ColorPickerDialog(null, Colors.SteelBlue);
+            var boxes = Descendants(dialog).OfType<TextBox>().ToList();
+            var names = boxes.Select(AutomationProperties.GetName).ToList();
+            foreach (string expected in new[] { "Red", "Green", "Blue", "Hex color" })
+                Assert.Contains(expected, names);
+            dialog.Close();
+        });
 
         private static System.Collections.Generic.IEnumerable<DependencyObject> Descendants(DependencyObject root)
         {

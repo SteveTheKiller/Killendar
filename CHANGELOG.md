@@ -110,6 +110,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - About groups settings in two columns and can hide shortcut hints in menus and tooltips without disabling keyboard shortcuts. Hover tooltips clear large pointers while preserving custom placement.
 - Alt+drag moves any Killendar window from anywhere inside it.
 - When Killendar is already installed for all users, the install prompt ticks and locks the all-users box and says it will update that copy.
+- The color picker and the new-category color swatch can be used entirely from the keyboard and are named for screen readers.
 
 ## [1.4.0] - 2026-10-22
 

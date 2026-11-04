@@ -153,9 +153,17 @@ namespace Killendar.Controls
             // ClipToBounds off so the indicator dot shows fully when it sits at an edge/corner.
             _svArea = new Border { Width = SvW, Height = SvH, CornerRadius = new CornerRadius(3), ClipToBounds = false,
                 BorderBrush = R("InputBorderBrush"), BorderThickness = new Thickness(1), Child = svGrid, Cursor = Cursors.Cross };
-            _svArea.MouseLeftButtonDown += (s, e) => { _svArea.CaptureMouse(); SvPick(e.GetPosition(svGrid)); };
+            _svArea.MouseLeftButtonDown += (s, e) => { _svArea.Focus(); _svArea.CaptureMouse(); SvPick(e.GetPosition(svGrid)); };
             _svArea.MouseMove += (s, e) => { if (e.LeftButton == MouseButtonState.Pressed) SvPick(e.GetPosition(svGrid)); };
             _svArea.MouseLeftButtonUp += (s, e) => _svArea.ReleaseMouseCapture();
+            KeyStop(_svArea, L("Str_Color_SatValue", "Saturation and brightness"), null);
+            _svArea.KeyDown += (_, e) =>
+            {
+                if (ColorPickerKeys.NudgeSv(e.Key, Keyboard.Modifiers.HasFlag(ModifierKeys.Shift), _s, _v) is not { } sv) return;
+                (_s, _v) = sv;
+                SyncFromHsv();
+                e.Handled = true;
+            };
             pickRow.Children.Add(_svArea);
 
             var hueRect = new Rectangle { Width = HueW, Height = SvH, Fill = HueStripBrush() };
@@ -168,9 +176,17 @@ namespace Killendar.Controls
             hueGrid.Children.Add(hueRect); hueGrid.Children.Add(hueCanvas);
             var hueArea = new Border { Child = hueGrid, Cursor = Cursors.SizeNS, CornerRadius = new CornerRadius(3),
                 BorderBrush = R("InputBorderBrush"), BorderThickness = new Thickness(1) };
-            hueArea.MouseLeftButtonDown += (s, e) => { hueArea.CaptureMouse(); HuePick(e.GetPosition(hueRect)); };
+            hueArea.MouseLeftButtonDown += (s, e) => { hueArea.Focus(); hueArea.CaptureMouse(); HuePick(e.GetPosition(hueRect)); };
             hueArea.MouseMove += (s, e) => { if (e.LeftButton == MouseButtonState.Pressed) HuePick(e.GetPosition(hueRect)); };
             hueArea.MouseLeftButtonUp += (s, e) => hueArea.ReleaseMouseCapture();
+            KeyStop(hueArea, L("Str_Color_Hue", "Hue"), null);
+            hueArea.KeyDown += (_, e) =>
+            {
+                if (ColorPickerKeys.NudgeHue(e.Key, Keyboard.Modifiers.HasFlag(ModifierKeys.Shift), _h) is not { } hue) return;
+                _h = hue;
+                SyncFromHsv();
+                e.Handled = true;
+            };
             pickRow.Children.Add(hueArea);
             panel.Children.Add(pickRow);
 
@@ -207,12 +223,12 @@ namespace Killendar.Controls
 
             // Swatch header: Replace (assign current color to a slot) left, Reset far right.
             var swHeader = new Grid { Margin = new Thickness(0, 12, 0, 5), Width = SwatchCols * SwatchCell };
-            _replaceBtn = Chip(L("Str_Btn_Replace", "Replace"), L("Str_TT_ReplaceSwatch", "Click, then click a swatch to set it to the current color"));
+            _replaceBtn = Chip(L("Str_Btn_Replace", "Replace"), L("Str_TT_ReplaceSwatch", "Click, then click a swatch to set it to the current color"),
+                () => { _replaceArmed = !_replaceArmed; UpdateReplaceChip(); RebuildSavedRow(); });
             _replaceBtn.HorizontalAlignment = HorizontalAlignment.Left;
-            _replaceBtn.MouseLeftButtonUp += (_, _) => { _replaceArmed = !_replaceArmed; UpdateReplaceChip(); RebuildSavedRow(); };
-            var resetBtn = Chip(L("Str_Btn_Reset", "Reset"), L("Str_TT_ResetSwatches", "Reset swatches to defaults"));
+            var resetBtn = Chip(L("Str_Btn_Reset", "Reset"), L("Str_TT_ResetSwatches", "Reset swatches to defaults"),
+                () => { StoreSaved([.. DefaultSwatches]); _replaceArmed = false; UpdateReplaceChip(); RebuildSavedRow(); });
             resetBtn.HorizontalAlignment = HorizontalAlignment.Right;
-            resetBtn.MouseLeftButtonUp += (_, _) => { StoreSaved([.. DefaultSwatches]); _replaceArmed = false; UpdateReplaceChip(); RebuildSavedRow(); };
             swHeader.Children.Add(_replaceBtn);
             swHeader.Children.Add(resetBtn);
             panel.Children.Add(swHeader);
@@ -335,16 +351,21 @@ namespace Killendar.Controls
                         ? L("Str_TT_SwatchReplace", "Click to set this swatch to the current color")
                         : L("Str_TT_SwatchUse", "Click to use this color") };
                 if (_replaceArmed) sw.SetResourceReference(Border.BorderBrushProperty, "PrimaryBrush"); else sw.BorderBrush = R("InputBorderBrush");
-                sw.MouseLeftButtonUp += (_, _) =>
+                void Use(bool fromKey)
                 {
                     if (_replaceArmed)
                     {
                         var list = LoadSaved();
                         if (idx < list.Count) { list[idx] = HsvToRgb(_h, _s, _v); StoreSaved(list); }
                         _replaceArmed = false; UpdateReplaceChip(); RebuildSavedRow();
+                        // The row was rebuilt, so the keyboard stays on the slot it just set.
+                        if (fromKey && idx < _savedRow.Children.Count) _savedRow.Children[idx].Focus();
                     }
                     else SetFromColor(c);
-                };
+                }
+                sw.MouseLeftButtonUp += (_, _) => Use(false);
+                // The hex is the swatch's name in every language; the tooltip says what it does.
+                KeyStop(sw, $"#{c.R:X2}{c.G:X2}{c.B:X2}", sw.ToolTip as string, () => Use(true));
                 _savedRow.Children.Add(sw);
             }
         }
@@ -396,7 +417,24 @@ namespace Killendar.Controls
             return g;
         }
 
-        private Border Chip(string text, string tip)
+        /// <summary>Makes a drawn element a keyboard stop with a spoken name. With an action, Enter
+        /// or Space runs it, as a click does.</summary>
+        private static void KeyStop(FrameworkElement element, string name, string? help, Action? invoke = null)
+        {
+            element.Focusable = true;
+            KeyboardNavigation.SetIsTabStop(element, true);
+            System.Windows.Automation.AutomationProperties.SetName(element, name);
+            if (help != null) System.Windows.Automation.AutomationProperties.SetHelpText(element, help);
+            if (invoke == null) return;
+            element.KeyDown += (_, e) =>
+            {
+                if (!ColorPickerKeys.Activates(e.Key)) return;
+                invoke();
+                e.Handled = true;   // not the window's Enter, which accepts the dialog
+            };
+        }
+
+        private Border Chip(string text, string tip, Action invoke)
         {
             var b = new Border { Height = 20, MinWidth = 22, CornerRadius = new CornerRadius(3), Cursor = Cursors.Hand,
                 BorderBrush = R("InputBorderBrush"), BorderThickness = new Thickness(1), Background = R("PaneBrush"),
@@ -406,6 +444,8 @@ namespace Killendar.Controls
             // Unified hover, respecting Replace's armed highlight.
             b.MouseEnter += (_, _) => { if (b != _replaceBtn || !_replaceArmed) b.Background = R("InputBorderBrush"); };
             b.MouseLeave += (_, _) => { b.Background = (b == _replaceBtn && _replaceArmed) ? R("RowSelectedBrush") : R("PaneBrush"); };
+            b.MouseLeftButtonUp += (_, _) => invoke();
+            KeyStop(b, text, tip, invoke);
             return b;
         }
 
@@ -492,5 +532,40 @@ namespace Killendar.Controls
         [DllImport("user32.dll")] private static extern IntPtr GetDC(IntPtr hwnd);
         [DllImport("user32.dll")] private static extern int ReleaseDC(IntPtr hwnd, IntPtr hdc);
         [DllImport("gdi32.dll")] private static extern uint GetPixel(IntPtr hdc, int x, int y);
+    }
+
+    /// <summary>The picker's keyboard rules, kept free of the window: Enter or Space invokes a
+    /// swatch or chip, the arrows move the saturation and brightness square (left and right for
+    /// saturation, up and down for brightness) and the hue strip (up and down, as it is drawn).
+    /// Steps are 1 percent and 1 degree, ten times that with Shift.</summary>
+    internal static class ColorPickerKeys
+    {
+        internal static bool Activates(Key key) => key is Key.Enter or Key.Space;
+
+        internal static (double S, double V)? NudgeSv(Key key, bool coarse, double s, double v)
+        {
+            double step = coarse ? 0.1 : 0.01;
+            return key switch
+            {
+                Key.Left => (Clamp(s - step, 1), v),
+                Key.Right => (Clamp(s + step, 1), v),
+                Key.Up => (s, Clamp(v + step, 1)),
+                Key.Down => (s, Clamp(v - step, 1)),
+                _ => null,
+            };
+        }
+
+        internal static double? NudgeHue(Key key, bool coarse, double hue)
+        {
+            double step = coarse ? 10 : 1;
+            return key switch
+            {
+                Key.Up => Clamp(hue - step, 360),     // red sits at the top of the strip
+                Key.Down => Clamp(hue + step, 360),
+                _ => null,
+            };
+        }
+
+        private static double Clamp(double value, double max) => Math.Max(0, Math.Min(max, value));
     }
 }

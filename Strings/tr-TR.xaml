@@ -632,6 +632,8 @@
     <sys:String x:Key="Str_Color_Purple">Mor</sys:String>
     <sys:String x:Key="Str_Color_Magenta">Eflatun</sys:String>
     <sys:String x:Key="Str_Color_Hex">Onaltılık renk</sys:String>
+    <sys:String x:Key="Str_Color_SatValue">Doygunluk ve parlaklık</sys:String>
+    <sys:String x:Key="Str_Color_Hue">Ton</sys:String>
     <sys:String x:Key="Str_Scroll_Up">Yukarı kaydır</sys:String>
     <sys:String x:Key="Str_Scroll_Down">Aşağı kaydır</sys:String>
     <sys:String x:Key="Str_Scroll_Left">Sola kaydır</sys:String>

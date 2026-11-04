@@ -632,6 +632,8 @@
     <sys:String x:Key="Str_Color_Purple">Lila</sys:String>
     <sys:String x:Key="Str_Color_Magenta">Magenta</sys:String>
     <sys:String x:Key="Str_Color_Hex">Hex-Farbe</sys:String>
+    <sys:String x:Key="Str_Color_SatValue">Sättigung und Helligkeit</sys:String>
+    <sys:String x:Key="Str_Color_Hue">Farbton</sys:String>
     <sys:String x:Key="Str_Scroll_Up">Nach oben scrollen</sys:String>
     <sys:String x:Key="Str_Scroll_Down">Nach unten scrollen</sys:String>
     <sys:String x:Key="Str_Scroll_Left">Nach links scrollen</sys:String>

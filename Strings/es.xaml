@@ -632,6 +632,8 @@
     <sys:String x:Key="Str_Color_Purple">Morado</sys:String>
     <sys:String x:Key="Str_Color_Magenta">Magenta</sys:String>
     <sys:String x:Key="Str_Color_Hex">Color hexadecimal</sys:String>
+    <sys:String x:Key="Str_Color_SatValue">Saturación y brillo</sys:String>
+    <sys:String x:Key="Str_Color_Hue">Tono</sys:String>
     <sys:String x:Key="Str_Scroll_Up">Desplazar hacia arriba</sys:String>
     <sys:String x:Key="Str_Scroll_Down">Desplazar hacia abajo</sys:String>
     <sys:String x:Key="Str_Scroll_Left">Desplazar hacia la izquierda</sys:String>

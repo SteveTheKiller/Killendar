@@ -658,6 +658,8 @@
     <sys:String x:Key="Str_Color_Purple">Lilla</sys:String>
     <sys:String x:Key="Str_Color_Magenta">Magenta</sys:String>
     <sys:String x:Key="Str_Color_Hex">Heksfarge</sys:String>
+    <sys:String x:Key="Str_Color_SatValue">Metning og lysstyrke</sys:String>
+    <sys:String x:Key="Str_Color_Hue">Fargetone</sys:String>
     <sys:String x:Key="Str_Scroll_Up">Rull opp</sys:String>
     <sys:String x:Key="Str_Scroll_Down">Rull ned</sys:String>
     <sys:String x:Key="Str_Scroll_Left">Rull til venstre</sys:String>

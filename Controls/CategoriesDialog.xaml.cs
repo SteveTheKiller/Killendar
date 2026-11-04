@@ -162,7 +162,7 @@ namespace Killendar.Controls
 
         // ---- Add ----
 
-        private void NewColorSwatch_Click(object sender, MouseButtonEventArgs e)
+        private void NewColorSwatch_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new ColorPickerDialog(this, ColorFromHex(_newColor)) { Owner = this };
             if (dlg.ShowDialog() == true)

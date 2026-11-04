@@ -658,6 +658,8 @@
     <sys:String x:Key="Str_Color_Purple">Фіолетовий</sys:String>
     <sys:String x:Key="Str_Color_Magenta">Пурпуровий</sys:String>
     <sys:String x:Key="Str_Color_Hex">Шістнадцятковий колір</sys:String>
+    <sys:String x:Key="Str_Color_SatValue">Насиченість і яскравість</sys:String>
+    <sys:String x:Key="Str_Color_Hue">Відтінок</sys:String>
     <sys:String x:Key="Str_Scroll_Up">Прокрутити вгору</sys:String>
     <sys:String x:Key="Str_Scroll_Down">Прокрутити вниз</sys:String>
     <sys:String x:Key="Str_Scroll_Left">Прокрутити ліворуч</sys:String>
