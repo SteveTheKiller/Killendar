@@ -8,6 +8,19 @@ namespace Killendar.Tests
         private const string Desktop = @"C:\Users\pat\Desktop\Killendar.lnk";
         private const string MachineExe = @"C:\Program Files\Killendar\Killendar.exe";
 
+        // The desktop link is shared by both scopes now: removing the per-user copy (the twice-
+        // installed repair run from the machine copy) must not take a link that opens the machine copy.
+        [Theory]
+        [InlineData(@"C:\Users\pat\AppData\Local\Programs\Killendar\Killendar.exe", true)]
+        [InlineData(@"c:\users\PAT\appdata\local\programs\killendar\KILLENDAR.EXE", true)]
+        [InlineData(MachineExe, false)]
+        [InlineData(null, false)]
+        public void ThePerUserRemovalTakesOnlyItsOwnDesktopLink(string? target, bool removes)
+        {
+            Assert.Equal(removes, AllUsersInstall.PerUserOwnsDesktopLink(target,
+                @"C:\Users\pat\AppData\Local\Programs\Killendar\Killendar.exe"));
+        }
+
         [Fact]
         public void TheDesktopShortcutIsMadeForTheMachineCopyAfterThePerUserCopyIsRemoved()
         {

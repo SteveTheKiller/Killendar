@@ -52,6 +52,11 @@ namespace Killendar
             bool elevated = await System.Threading.Tasks.Task.Run(runElevated);
             return Run(wantDesktop, desktopLink, machineExe, () => elevated, removePerUser, createShortcut, relaunch);
         }
+
+        /// <summary>Whether the desktop link belongs to the per-user copy. Both scopes use the same
+        /// link name, so one that opens the machine copy, or whose target cannot be read, stays.</summary>
+        internal static bool PerUserOwnsDesktopLink(string? target, string perUserExe)
+            => !string.IsNullOrEmpty(target) && string.Equals(target, perUserExe, StringComparison.OrdinalIgnoreCase);
     }
 
     /// <summary>Removes the other copy when Killendar is installed twice. Files go first, and the
@@ -234,7 +239,12 @@ namespace Killendar
             {
                 try { if (File.Exists(StartMenuLnk)) File.Delete(StartMenuLnk); } catch { }
                 try { if (Directory.Exists(StartMenuDir)) Directory.Delete(StartMenuDir, false); } catch { }
-                try { if (File.Exists(DesktopLnk)) File.Delete(DesktopLnk); } catch { }
+                try
+                {
+                    if (File.Exists(DesktopLnk) && AllUsersInstall.PerUserOwnsDesktopLink(ShortcutTarget(DesktopLnk), InstallExe))
+                        File.Delete(DesktopLnk);
+                }
+                catch { }
                 Services.CommandLinePath.Unregister(InstallDir, machine: false);
                 try
                 {
@@ -405,6 +415,22 @@ namespace Killendar
                 sc.InvokeMember("Save", BindingFlags.InvokeMethod, null, shortcut, null);
             }
             catch { /* best-effort: a missing shortcut is not worth failing an install over */ }
+        }
+
+        /// <summary>The program a shortcut opens, or null when it cannot be read.</summary>
+        private static string? ShortcutTarget(string lnkPath)
+        {
+            try
+            {
+                var shellType = Type.GetTypeFromProgID("WScript.Shell");
+                if (shellType is null) return null;
+                object shell = Activator.CreateInstance(shellType)!;
+                object shortcut = shellType.InvokeMember("CreateShortcut",
+                    BindingFlags.InvokeMethod, null, shell, [lnkPath])!;
+                return shortcut.GetType().InvokeMember("TargetPath", BindingFlags.GetProperty,
+                    null, shortcut, null) as string;
+            }
+            catch { return null; }
         }
 
         // ============================================================
