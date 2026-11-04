@@ -73,6 +73,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - A canceled day of an all-day repeating event from Outlook is removed from the series on import.
 - An imported appointment with a malformed reminder no longer makes later .ics exports invalid.
 - A calendar file with an oversized time zone definition no longer stalls import, and Cancel stops it.
+- The suggested export file name uses the Gregorian year on Thai and other non-Gregorian regions.
 
 ### Changed
 

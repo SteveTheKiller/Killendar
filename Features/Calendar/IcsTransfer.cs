@@ -462,6 +462,9 @@ namespace Killendar.Features
             RunExport(f.Date, t.Date == DateTime.MaxValue.Date ? DateTime.MaxValue : t.Date.AddDays(1), whole: false);
         }
 
+        /// <summary>The file name the export picker offers: a Gregorian date whatever the region's calendar.</summary>
+        internal static string SuggestedExportName(DateTime today) => FormattableString.Invariant($"killendar-{today:yyyy-MM-dd}.ics");
+
         private void RunExport(DateTime from, DateTime toEx, bool whole)
         {
             if (!ConfirmPlaintextExport()) return;
@@ -470,7 +473,7 @@ namespace Killendar.Features
             {
                 Title = _host.Loc("Str_Dlg_ExportTitle"),
                 Filter = _host.Loc("Str_Dlg_ExportFilter"),
-                FileName = $"killendar-{DateTime.Today:yyyy-MM-dd}.ics",
+                FileName = SuggestedExportName(DateTime.Today),
                 DefaultExt = ".ics"
             };
             if (dlg.ShowDialog(_host.Window) != true) return;

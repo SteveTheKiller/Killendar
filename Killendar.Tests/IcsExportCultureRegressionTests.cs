@@ -61,6 +61,22 @@ namespace Killendar.Tests
             Assert.Contains("RDATE", ics);
         }
 
+        // KD-J (IE-007): the suggested file name is Gregorian too.
+        [Fact]
+        public void SuggestedExportNameIsGregorianUnderThaiCulture()
+        {
+            var oldCurrent = CultureInfo.CurrentCulture;
+            try
+            {
+                CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("th-TH");
+                Assert.Equal("killendar-2026-11-03.ics", Killendar.Features.IcsTransfer.SuggestedExportName(new DateTime(2026, 11, 3)));
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = oldCurrent;
+            }
+        }
+
         private static string ExportUnder(string culture, params CalendarEvent[] events)
         {
             // Only this thread's culture: the process-wide default would leak into tests running
