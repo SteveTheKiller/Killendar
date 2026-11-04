@@ -19,6 +19,10 @@ namespace Killendar.Shell
         private void AboutCloseToTray_Click(object sender, RoutedEventArgs e)
             => _about.SetCloseToTray(AboutCloseToTray.IsChecked == true);
 
+        // The version line is a hyperlink here, so a click, Enter or a screen reader's Invoke
+        // all open the release notes.
+        private void AboutVersionLink_Click(object sender, RoutedEventArgs e) => _about.OpenReleaseNotes();
+
         private void AboutDiagnostics_Click(object sender, RoutedEventArgs e)
         {
             try

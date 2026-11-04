@@ -1203,10 +1203,12 @@
                                         <StackPanel Margin="0,0,0,10">
                                             <TextBlock Text="{DynamicResource Str_About_Version}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
                                             <Grid Margin="0,1,0,0">
-                                                <TextBlock x:Name="AboutVersionBlock" Foreground="{DynamicResource PrimaryBrush}"
-                                                           FontFamily="{DynamicResource UiFont}" FontSize="13" Cursor="Hand"
-                                                           HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                                                           MouseLeftButtonUp="AboutVersion_Click"/>
+                                                <!-- A hyperlink, so the focus-trapped card reaches the
+                                                     release notes from the keyboard too (Tab, Enter). -->
+                                                <TextBlock FontFamily="{DynamicResource UiFont}" FontSize="13"
+                                                           HorizontalAlignment="Left" VerticalAlignment="Bottom"><Hyperlink
+                                                           Click="AboutVersionLink_Click" Foreground="{DynamicResource PrimaryBrush}"
+                                                           TextDecorations="None"><Run x:Name="AboutVersionBlock"/></Hyperlink></TextBlock>
                                                 <TextBlock x:Name="AboutReleaseDateBlock" Foreground="{DynamicResource MutedTextBrush}"
                                                            FontFamily="{DynamicResource UiFont}" FontSize="11" FontStyle="Italic"
                                                            HorizontalAlignment="Right" VerticalAlignment="Bottom"/>

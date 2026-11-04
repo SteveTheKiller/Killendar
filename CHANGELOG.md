@@ -85,6 +85,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - The app size readout in the status bar is translated and no longer overwrites a newer status message.
 - The Search button's tooltip shows its Ctrl+F shortcut.
 - The keyboard map lights all four arrow keys for moving an appointment with Alt.
+- The version line in About can be reached with Tab and opens the release notes with Enter.
 
 ### Changed
 
