@@ -21,9 +21,15 @@ The receipt includes `OperationId`, `Machine`, `TargetDirectory`, `State`, `Exit
 | `Completed`, code `0` | The owned executable was confirmed absent and required registration cleanup finished. |
 | `Failed`, nonzero code | Cleanup did not complete. Read `Error` and `RemainingFiles`. |
 
-A missing, malformed or still-pending receipt at the wrapper's deadline is an unconfirmed result. Do not turn it into success. The helper waits for its identified parent and retries sharing violations for bounded periods. Another running copy can keep the original executable mapped long enough to produce a failed result.
+A malformed or still-pending receipt at the wrapper's deadline is an unconfirmed result, and so is a missing machine receipt. Do not turn it into success. The helper waits for its identified parent and retries sharing violations for bounded periods. Another running copy can keep the original executable mapped long enough to produce a failed result.
 
-The operation directory retains `Killendar.Uninstall.exe`, its configuration if present, and the receipt as diagnostic evidence, including after completion. These files are not an installed application or a successful-removal signal. Cleanup does not recursively delete the installation directory, calendars, or other files stored beside the application.
+How long the receipt stays depends on the scope and the result:
+
+- Per-user, `Completed`: right after writing the receipt, the helper starts a hidden process that deletes the whole operation directory, receipt included. It retries once a second for up to a minute while the helper copy is still running, so the receipt usually disappears within seconds. A per-user wrapper must poll often enough to read `Completed` before then. A receipt that was seen as `Pending` and then disappeared is not proof of success on its own; confirm that `Killendar.exe` and the per-user uninstall entry are gone.
+- Machine, `Completed`: the helper copy, its configuration, the receipt, the operation directory and the installation directory are scheduled for removal at the next restart. Until then the receipt stays readable. The same successful uninstall also deletes earlier operation directories in the installation folder that hold nothing but a `Failed` receipt and its helper files.
+- `Failed`, either scope: the operation directory keeps `Killendar.Uninstall.exe`, its configuration if present, and the receipt as diagnostic evidence.
+
+These files are not an installed application or a successful-removal signal. Cleanup does not recursively delete the installation directory, calendars, or other files stored beside the application; the installation directory itself is removed only when nothing else is left in it.
 
 ## Package managers and scripts
 
@@ -35,6 +41,6 @@ Do not add `997` to a package manager's unconditional success codes. The local W
 
 Read the retained receipt and correct the reported cause, such as another running instance or denied access. A file-removal failure leaves the uninstall registration in place. If file removal succeeded but registration cleanup failed, the normal executable can be absent while the uninstall entry remains.
 
-In that case, reinstall the original signed build to restore its normal executable and registrations, then retry a normal uninstall with a new operation ID. Keep the failed receipt for diagnosis. Do not change its state, treat a missing executable alone as success, or rerun the retained worker against a failed receipt.
+In that case, reinstall the original signed build to restore its normal executable and registrations, then retry a normal uninstall with a new operation ID. Keep the failed receipt for diagnosis; on a machine installation, copy it elsewhere first, because the later successful uninstall deletes it. Do not change its state, treat a missing executable alone as success, or rerun the retained worker against a failed receipt.
 
 Common nonzero results include `1` for a general failure, `5` for denied access, `1223` for cancellation, `1618` for an unfinished child or locked image, and `1625` for a rejected helper or path validation.
