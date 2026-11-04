@@ -73,7 +73,7 @@ namespace Killendar.Shell
             new("Alt+R",    "Str_KS_Repeats",  KsCat.Appt, false, "R"),
             new("Ctrl+Shift+M", "Str_KS_ShrinkAppt", KsCat.Appt, true, "M"),
             new("Ctrl+D",   "Str_KS_Duplicate", KsCat.Appt, true, "D"),
-            new("Alt+Arrows", "Str_KS_Nudge",  KsCat.Appt, false, "Up", "Down"),
+            new("Alt+Arrows", "Str_KS_Nudge",  KsCat.Appt, false, "Up", "Down", "Left", "Right"),
             new("Ctrl+Z",   "Str_KS_Undo",     KsCat.Appt, true,  "Z"),
             new("Ctrl+Y",   "Str_KS_Redo",     KsCat.Appt, true,  "Y"),
 
@@ -109,6 +109,11 @@ namespace Killendar.Shell
             var keys = KsAll.Where(b => b.LabelKey == labelKey).Select(b => b.Keys).ToArray();
             return keys.Length == 0 ? null : string.Join(" / ", keys);
         }
+
+        /// <summary>The map keys a binding lights, found by how the list writes it ("Alt+Arrows"),
+        /// or an empty list when no binding reads that way.</summary>
+        internal static IReadOnlyList<string> ShortcutCaps(string keys)
+            => KsAll.Where(b => b.Keys == keys).SelectMany(b => b.Caps).ToArray();
 
         /// <summary>A tooltip with the action's keys after it, as in "Import (Ctrl+I)".</summary>
         internal static string WithShortcut(string text, string labelKey)
