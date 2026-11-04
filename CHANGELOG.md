@@ -8,6 +8,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 Killendar 1.4.1 stops appointments from being saved centuries off on some Windows regions and unsaved appointments from being lost without asking, closes lock and update gaps, makes install, update and uninstall recover cleanly, and moves the look and controls onto the shared KillerUI template.
 
+### Security
+
+- The calendar command pipe and the single-instance pipe accept only your own account, so another person signed in to the same PC cannot receive appointment details or stall Killendar by taking the pipe name first.
+- Update and uninstall helpers load PowerShell modules only from Windows' own folder, so a module planted in your Documents cannot run inside them as administrator.
+- The elevated part of an update compiles its helper code in a folder only administrators can open, so another program running as you cannot slip code into it.
+- An update must be signed with the exact publisher name, not merely one that contains it, and pass a certificate revocation check. Only an unreachable revocation server falls back to an offline check. Update metadata downloads are capped at 1 MB.
+
 ### Fixed
 
 - The file picker resolves place and drive icons in the background and restores its position on any monitor. Scrollbar buttons have localized screen-reader names.
@@ -18,15 +25,15 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - An encrypted Killendar locks on idle or with Windows even while Manage Killendars is open. It used to stay unlocked behind the dialog and reopen without asking for the password. While locked, the dialog can no longer delete or rename the locked Killendar, and a password change that went through but could not reopen the file now locks it and asks for the new password.
 - A failed backup re-encryption keeps the original backup instead of deleting it, a password change that went through is no longer reported as failed when reopening the file stumbles, the backups of a Killendar set aside after a forgotten password stay with it, and an import that is waiting to write holds off a lock instead of losing its calendar mid-way.
 - The month view no longer crashes when the open Killendar and a shown one hold the same appointment spanning several days.
-- The calendar command pipe and the single-instance pipe accept only your own account, so another person signed in to the same PC cannot receive appointment details or stall Killendar by taking the pipe name first, and a calendar no longer fails to open because another account holds its native library lock.
+- A calendar no longer fails to open because another account holds its native library lock.
 - Installing for all users verifies and copies the very same file, so nothing can swap the program between the check and the copy, and installing an older copy over a newer all-users install asks first.
 - Uninstalling while Killendar is still open, for example in the tray, now waits up to 30 seconds for it to close and otherwise stops before removing anything. It used to take away the shortcuts and file links, then fail on the running program and leave the rest behind. Uninstall also removes leftover update files, its own helper copy and the empty .kcal registry key.
 - A per-user update whose download fails its final check reopens the installed Killendar. The helper now records the installed copy before checking the download, so recovery no longer refused to start it.
 - A per-user or portable update that fails now reopens Killendar instead of leaving it closed, including when antivirus or a locked-down PowerShell stops the update helper from loading, a published copy that fails its final check is swapped back for the previous version and never started, and update downloads stream to disk with a size cap and an overall deadline.
 - An all-users update reopens Killendar for the signed-in user at normal rights, whether it finishes or stops early. Windows was refusing that relaunch, so the app stayed closed. Files left behind by earlier failed updates are cleared when the next update is staged.
-- Update and uninstall helpers load PowerShell modules only from Windows' own folder, so a module planted in your Documents cannot run inside them as administrator; a failed uninstall reports the real reason and retries when a copy is still running; a stalled update says so instead of silently doing nothing; and the window no longer freezes while an update is handed off.
-- The elevated part of an update compiles its helper code in a folder only administrators can open, so another program running as you cannot slip code into it, and an update that finished is no longer reported as failed when the app cannot be reopened afterward.
-- An all-users install can apply later updates. The elevated update compared the certificate's full name against part of it and refused every release. Release signatures must now carry the exact publisher name and pass a revocation check, falling back to an offline check only when the revocation server cannot be reached, update metadata downloads are capped at 1 MB, install and update lock each other out per folder, and uninstall removes the old copy an install over a running Killendar leaves behind.
+- A failed uninstall reports the real reason and retries when a copy is still running, a stalled update says so instead of silently doing nothing, and the window no longer freezes while an update is handed off.
+- An update that finished is no longer reported as failed when the app cannot be reopened afterward.
+- An all-users install can apply later updates. The elevated update compared the certificate's full name against part of it and refused every release. Install and update now lock each other out per folder, and uninstall removes the old copy an install over a running Killendar leaves behind.
 - Updates keep working after the publisher's code signing certificate is renewed. A release must still carry a valid signature naming the same publisher, but no longer the exact certificate of the installed copy.
 - Self-update runs on the family update code, which keeps Killendar's signature checks inside the helper and adds pinned publication folders, a publisher check on the published copy, same-publisher replacement and stable-only releases. Installed paths, registry keys and the exe name are unchanged.
 - An update that cannot finish because the app did not close says so in its recovery report, the Update button stays off once an update has started, and a translation file can no longer give a setting the wrong kind of value.
