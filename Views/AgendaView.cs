@@ -85,12 +85,15 @@ namespace Killendar.Views
         public DateTime Step(DateTime from, int direction) => StepBy(from, direction, WindowDays);
 
         /// <summary>
-        /// One page of the agenda. A horizon shorter than a month pages by its own length, so a
-        /// 7 or 14 day agenda never jumps over days it has not shown; a month or longer pages by a
-        /// calendar month, which keeps the anchor on the same date of the month.
+        /// One page of the agenda: the shorter of the horizon and a calendar month. A 7, 14 or 30
+        /// day agenda never jumps over days it has not shown, and a longer one pages by a month,
+        /// which keeps the anchor on the same date of the month.
         /// </summary>
-        internal static DateTime StepBy(DateTime from, int direction, int horizonDays) =>
-            horizonDays < 30 ? from.AddDays(direction * horizonDays) : from.AddMonths(direction);
+        internal static DateTime StepBy(DateTime from, int direction, int horizonDays)
+        {
+            var month = from.AddMonths(direction);
+            return Math.Abs((month - from).TotalDays) <= horizonDays ? month : from.AddDays(direction * horizonDays);
+        }
 
         public void Initialize(EventStore store)
         {
