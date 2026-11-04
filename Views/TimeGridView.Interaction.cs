@@ -71,6 +71,7 @@ namespace Killendar.Views
             // soon as the panel is talking about some other day - so the loudest thing on screen is
             // always the day being edited. This tint used to be unconditional, which is why Week
             // and Day did not match Month. (2026-07-30)
+            Border? todayEdge = null;
             if (date == DateTime.Today)
             {
                 _todayTint = new Border { Height = fullHeight, Opacity = 0.5, IsHitTestVisible = false };
@@ -79,17 +80,20 @@ namespace Killendar.Views
                 canvas.Children.Insert(0, _todayTint);
 
                 // Edges only - a full box would draw a line across the bottom of a column that
-                // scrolls, which reads as a divider rather than a marker.
-                _todayEdge = new Border
+                // scrolls, which reads as a divider rather than a marker. Added above the column
+                // divider, the shading and the hour lines (below the bands and chips): inserted
+                // under them, the divider drew over its left edge and the shading dimmed it.
+                todayEdge = new Border
                 {
                     Height = fullHeight,
                     IsHitTestVisible = false,
                     BorderThickness = new Thickness(1, 0, 1, 0),
                     Visibility = Visibility.Collapsed,
                 };
-                _todayEdge.Themed(Border.BorderBrushProperty, "PrimaryBrush");
-                _todayEdge.SetBinding(WidthProperty, new System.Windows.Data.Binding("ActualWidth") { Source = canvas });
-                canvas.Children.Insert(1, _todayEdge);
+                todayEdge.Themed(Border.BorderBrushProperty, "PrimaryBrush");
+                todayEdge.SetBinding(WidthProperty, new System.Windows.Data.Binding("ActualWidth") { Source = canvas });
+                canvas.Children.Add(todayEdge);
+                _todayEdge = todayEdge;
             }
 
             // Hover band. The column is one Canvas rather than a grid of cells, so there is nothing

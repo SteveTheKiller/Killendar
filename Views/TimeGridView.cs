@@ -147,9 +147,9 @@ namespace Killendar.Views
             // Today's column AND its header, on Month's rule: fill only while nothing is selected,
             // otherwise the accent edge. Selecting today itself keeps the fill - it is the
             // selected day.
-            bool todayFilled = _selDay == null || _selDay == DateTime.Today;
-            _todayTint?.Visibility = todayFilled ? Visibility.Visible : Visibility.Collapsed;
-            _todayEdge?.Visibility = Visibility.Collapsed;
+            bool edge = TodayEdgeShown(_selDay, DateTime.Today);
+            _todayTint?.Visibility = edge ? Visibility.Collapsed : Visibility.Visible;
+            _todayEdge?.Visibility = edge ? Visibility.Visible : Visibility.Collapsed;
 
             if (_todayHead != null)
             {
@@ -159,6 +159,11 @@ namespace Killendar.Views
                 _todayNum?.SetResourceReference(TextBlock.ForegroundProperty, "PrimaryBrush");
             }
         }
+
+        /// <summary>Month's today rule: the accent edge while some other day is selected, the
+        /// fill (and no edge) while nothing or today itself is.</summary>
+        internal static bool TodayEdgeShown(DateTime? selectedDay, DateTime today) =>
+            selectedDay != null && selectedDay.Value.Date != today.Date;
 
         public abstract string PeriodLabel { get; }
         public abstract DateTime Step(DateTime from, int direction);
