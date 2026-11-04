@@ -70,7 +70,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Exporting to .ics no longer fails when the calendar holds a repeating appointment from Brazil, Chile, Argentina, Egypt, Iran, Pakistan or another zone whose clock changes fall at the end of a day.
 - Monthly-by-date and yearly repeats from Outlook, such as birthdays, import as repeats instead of a single appointment.
 - A repeating appointment whose end date is given without a time imports as a repeat.
-- A canceled day of an all-day repeating event from Outlook is removed from the series on import.
+- A canceled day of an all-day repeating event from Outlook is removed from the series on import, and a skipped or extra date given with a time on an all-day repeat keeps its own date instead of moving a day early west of UTC.
 - An imported appointment with a malformed reminder no longer makes later .ics exports invalid.
 - A calendar file with an oversized time zone definition no longer stalls import, and Cancel stops it.
 - The suggested export file name uses the Gregorian year on Thai and other non-Gregorian regions.

@@ -358,7 +358,7 @@ namespace Killendar.Services
                                 foreach (var extra in extraDates)
                                 {
                                     if ((visited++ & 255) == 0) cancel.ThrowIfCancellationRequested();
-                                    var day = extra.allDay || current.AllDay ? extra.dt.Date : CanonicalExclusion(current, extra);
+                                    var day = extra.allDay || current.AllDay ? (extra.anchor ?? extra.dt).Date : CanonicalExclusion(current, extra);
                                     if (!current.AllDay && !extra.allDay && day.TimeOfDay != clock.TimeOfDay) lostDetails = true;
                                     if (seenExtras.Add(day.Date)) current.ExtraDates.Add(day.Date);
                                 }
@@ -368,7 +368,8 @@ namespace Killendar.Services
                             foreach (var exclusion in exclusions)
                             {
                                 if ((excluded++ & 255) == 0) cancel.ThrowIfCancellationRequested();
-                                if (exclusion.allDay || current.AllDay) current.SkipDates.Add(exclusion.dt.Date);
+                                // A timed value on an all-day series names its date on its own clock.
+                                if (exclusion.allDay || current.AllDay) current.SkipDates.Add((exclusion.anchor ?? exclusion.dt).Date);
                                 else current.SkipOccurrences.Add(CanonicalExclusion(current, exclusion));
                             }
                             // A timed start whose UNTIL is only a date (a common slip): the series runs
