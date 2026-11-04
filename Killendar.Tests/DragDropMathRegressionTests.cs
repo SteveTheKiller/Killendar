@@ -33,6 +33,17 @@ namespace Killendar.Tests
             Assert.Equal(new DateTime(2026, 3, 2, 23, 30, 0), TimeGridView.DroppedStart(start, grab, drop, 30));
         }
 
+        // Mon 09:00 grabbed at 09:30 and released at the column top: the pointer is clamped to
+        // Mon 00:00, and the start must stay on Monday rather than fall back to Sun 23:30.
+        [Fact]
+        public void TimeGrid_DropAtColumnTopStaysOnTheDropDay()
+        {
+            var start = new DateTime(2026, 3, 2, 9, 0, 0);
+            var grab = new DateTime(2026, 3, 2, 9, 30, 0);
+            var drop = new DateTime(2026, 3, 2, 0, 0, 0);
+            Assert.Equal(new DateTime(2026, 3, 2, 0, 0, 0), TimeGridView.DroppedStart(start, grab, drop, 30));
+        }
+
         [Fact]
         public void Month_GrabbingFourthDayOfBarAndMovingOneCellMovesOneDay()
         {

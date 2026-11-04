@@ -318,7 +318,8 @@ namespace Killendar.Views
             chip.AddHandler(MouseLeftButtonDownEvent, new MouseButtonEventHandler((_, e) =>
             {
                 start = e.GetPosition(_bodyGrid);
-                double grabMins = Math.Max(0, Math.Min(24 * 60, e.GetPosition(canvas).Y / CalendarChrome.HourHeight * 60));
+                // One minute short of midnight, so the bottom pixel stays on this column's day.
+                double grabMins = Math.Max(0, Math.Min(24 * 60 - 1, e.GetPosition(canvas).Y / CalendarChrome.HourHeight * 60));
                 grabTime = (canvas.Tag is DateTime day ? day.Date : RangeStart).AddMinutes(grabMins);
                 dragging = false;
                 chip.CaptureMouse();
@@ -377,7 +378,7 @@ namespace Killendar.Views
                 // half-hour appointments unplaceable at density 0 (2026-07-31). A denser
                 // grid still gives its finer snap.
                 int snap = Math.Min(30, CalendarChrome.SnapMinutes);
-                double dropMins = Math.Max(0, Math.Min(24 * 60,
+                double dropMins = Math.Max(0, Math.Min(24 * 60 - 1,
                     (grabTime.TimeOfDay.TotalMinutes + dy / CalendarChrome.HourHeight * 60)));
                 var dropTime = RangeStart.AddDays(col).AddMinutes(dropMins);
 
@@ -391,13 +392,17 @@ namespace Killendar.Views
         /// <summary>
         /// The dropped start as a delta: the event's start moved by however far the pointer travelled
         /// in time between grab and release, snapped to the grid and kept inside the day.
+        /// The day and the clock move separately: the day by the columns travelled, the clock by
+        /// the vertical travel, clamped within that day. Moving them as one span let a release at
+        /// the column top, less than the grab offset from midnight, land on the previous day.
         /// </summary>
         internal static DateTime DroppedStart(DateTime eventStart, DateTime grabTime, DateTime dropTime, int snapMinutes)
         {
-            var moved = eventStart + (dropTime - grabTime);
-            int mins = (int)Math.Round(moved.TimeOfDay.TotalMinutes / snapMinutes) * snapMinutes;
+            var day = eventStart.Date + (dropTime.Date - grabTime.Date);
+            double moved = (eventStart.TimeOfDay + (dropTime.TimeOfDay - grabTime.TimeOfDay)).TotalMinutes;
+            int mins = (int)Math.Round(moved / snapMinutes) * snapMinutes;
             mins = Math.Max(0, Math.Min(24 * 60 - snapMinutes, mins));
-            return moved.Date.AddMinutes(mins);
+            return day.AddMinutes(mins);
         }
 
         private static void PositionChip(Border chip, Canvas canvas, int lane, int laneCount)

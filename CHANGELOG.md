@@ -54,6 +54,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Dialog title bars match the rest of the dialog in every theme except 98SE. They had their own band, a lighter strip in Light and a gradient in several dark themes, and the title bar painted its film grain twice.
 - The tray icon's menu opens from the pointer upward, out of the notification area, the same way in every Killer app. A short menu no longer covers the tray icons and a taller one no longer floats about 40 pixels above them.
 - Black table headers match the content surface, and softer grain keeps dark surfaces from looking gray.
+- Dragging an appointment in Week or Day to the top of a column no longer moves it to the previous day.
 
 ### Changed
 
