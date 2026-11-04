@@ -220,19 +220,27 @@ CREATE TABLE IF NOT EXISTS reminder_state (
             ? DateTime.SpecifyKind(local, DateTimeKind.Unspecified).ToString(RoundTrip, System.Globalization.CultureInfo.InvariantCulture)
             : local.ToUniversalTime().ToString(RoundTrip, System.Globalization.CultureInfo.InvariantCulture);
 
-        // Parses a stored boundary with the invariant culture. Rows written by 1.4.0 under a region
-        // whose time separator is '.' (fi-FI, for one) read like 10.30.00; when the plain parse
-        // fails, retry with only the HH.mm.ss separators turned back into ':' and leave the
-        // fractional seconds alone.
+        // Parses a stored boundary with the invariant culture. 1.4.0 formatted stamps under the
+        // UI culture, and all 20 of its UI cultures write ':' by default, so a row that reads like
+        // 10.30.00 only comes from a Windows user whose region matched the UI culture and who
+        // changed the time separator to '.' in the region settings. When the plain parse fails,
+        // retry with only the HH.mm.ss separators turned back into ':'.
         private static bool TryParseStored(string s, System.Globalization.DateTimeStyles styles, out DateTime result)
         {
             var invariant = System.Globalization.CultureInfo.InvariantCulture;
             if (DateTime.TryParse(s, invariant, styles, out result)) return true;
+            string fixedUp = RepairDottedTime(s);
+            return fixedUp != s && DateTime.TryParse(fixedUp, invariant, styles, out result);
+        }
+
+        // Turns the HH.mm.ss separators of a dotted stamp back into ':' and leaves the fractional
+        // seconds alone. A well-formed stamp comes back unchanged.
+        private static string RepairDottedTime(string? s)
+        {
             string fixedUp = System.Text.RegularExpressions.Regex.Replace(
                 s ?? "", @"(?<=T\d{2})\.(?=\d{2}\.\d{2})", ":");
-            fixedUp = System.Text.RegularExpressions.Regex.Replace(
+            return System.Text.RegularExpressions.Regex.Replace(
                 fixedUp, @"(?<=T\d{2}:\d{2})\.(?=\d{2})", ":");
-            return fixedUp != s && DateTime.TryParse(fixedUp, invariant, styles, out result);
         }
         private static DateTime FromStore(string s, bool allDay)
         {
@@ -338,9 +346,16 @@ CREATE TABLE IF NOT EXISTS reminder_state (
             ? DateTime.SpecifyKind(value.Value, value.Value.Kind == DateTimeKind.Utc ? DateTimeKind.Utc : DateTimeKind.Unspecified)
                 .ToString(RoundTrip, System.Globalization.CultureInfo.InvariantCulture) : "";
 
-        private static DateTime? FromStoreExact(string value) => DateTime.TryParseExact(value, RoundTrip,
-            System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.RoundtripKind, out var stamp)
-            ? stamp : (DateTime?)null;
+        // Same dotted-time fallback as TryParseStored, for the skipped dates and the exact repeat end.
+        private static DateTime? FromStoreExact(string value)
+        {
+            var invariant = System.Globalization.CultureInfo.InvariantCulture;
+            var styles = System.Globalization.DateTimeStyles.RoundtripKind;
+            if (DateTime.TryParseExact(value, RoundTrip, invariant, styles, out var stamp)) return stamp;
+            string fixedUp = RepairDottedTime(value);
+            return fixedUp != value && DateTime.TryParseExact(fixedUp, RoundTrip, invariant, styles, out stamp)
+                ? stamp : (DateTime?)null;
+        }
 
         private static string JoinOccurrences(IEnumerable<DateTime> values) => string.Join(",", values.Select(value => ToStore(value, true)));
 

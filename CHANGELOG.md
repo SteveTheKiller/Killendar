@@ -90,6 +90,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - The title-bar menu opens at the pointer instead of slightly below and to the right.
 - Opening the appointment panel no longer pulls a narrow snapped window out of its snap position.
 - Locking an encrypted Killendar shown beside the open one removes its appointments from the sidebar day list right away.
+- Dates deleted from a repeating appointment, exact repeat end dates and dismissed reminders saved under a custom Windows time separator are read correctly.
 
 ### Changed
 

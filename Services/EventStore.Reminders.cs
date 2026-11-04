@@ -105,7 +105,8 @@ namespace Killendar.Services
                 if (!Guid.TryParse(r.GetString(0), out var id)) continue;
                 var until = DateTime.TryParse(r.GetString(3), CultureInfo.InvariantCulture,
                     DateTimeStyles.RoundtripKind, out var u) ? u.ToLocalTime() : DateTime.MinValue;
-                states[(id, r.GetString(1))] = (r.GetInt64(2) != 0, until);
+                // A dotted key from a 1.4.0 row matches the ':' key OccurrenceKey builds today.
+                states[(id, RepairDottedTime(r.GetString(1)))] = (r.GetInt64(2) != 0, until);
             }
             return states;
         }
