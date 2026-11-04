@@ -79,6 +79,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - A quick tap or click on the title bar of Manage Categories, Manage Killendars or the password prompt no longer closes Killendar.
 - Delete and F2 inside the category rename box edit the name instead of opening the delete prompt or a second rename box.
 - Escape on an open Reminder or Time zone list closes the list and keeps the appointment you are writing.
+- Letter shortcuts no longer fire while a dropdown or check box in the appointment editor has focus.
 
 ### Changed
 

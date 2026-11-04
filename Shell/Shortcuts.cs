@@ -194,7 +194,11 @@ namespace Killendar.Shell
                 return;
             }
 
-            if (TypingInField()) return;
+            // A focused dropdown or check box in the editor keeps its letters and arrows too.
+            var focused = Keyboard.FocusedElement;
+            if (ShortcutKeyPolicy.BareKeyBelongsToFocus(focused,
+                    focused is DependencyObject d && EditorScroll.IsAncestorOf(d), e.Key))
+                return;
 
             // A focused day or time slot uses the arrows to move between days and slots
             // (Views/CalendarKeyboard.cs); this preview handler runs first, so it must step aside
@@ -262,6 +266,20 @@ namespace Killendar.Shell
             if (dropDownOpen) return EscapeAction.LeaveToDropDown;
             if (sidebarOpen) return EscapeAction.CloseSidebar;
             return EscapeAction.None;
+        }
+
+        /// <summary>True when a bare key belongs to the focused control rather than to a calendar
+        /// shortcut. <paramref name="inEditor"/> says the control sits in the appointment editor.</summary>
+        internal static bool BareKeyBelongsToFocus(object? focused, bool inEditor, Key key)
+        {
+            if (focused is TextBox || focused is PasswordBox) return true;
+            // A dropdown searches its items by letter (an open list's items live in a popup, so
+            // they are not inside the editor's tree); a check box or chip in the editor uses the
+            // arrows to move between its neighbors.
+            bool owner = focused is ComboBox || focused is ComboBoxItem ||
+                         (inEditor && focused is System.Windows.Controls.Primitives.ToggleButton);
+            return owner && (key is >= Key.A and <= Key.Z || key is >= Key.D0 and <= Key.D9 ||
+                             key is Key.Left or Key.Right or Key.OemComma or Key.OemPeriod);
         }
     }
 
