@@ -172,12 +172,15 @@ namespace Killendar.Tests
             EventStore.SetActive("A.kcal");
             var security = new SecurityController(_host, _store);
 
-            security.AfterPasswordChange(new PasswordChangeOutcome(path + ".bak", true, reopenNeeded: true), "not the key");
+            security.AfterPasswordChange(new PasswordChangeOutcome(path + ".bak", true, reopenNeeded: true,
+                safetyBackupError: "disk full"), "not the key");
 
             Assert.True(security.IsLocked);
             string status = _host.Statuses[_host.Statuses.Count - 1];
             Assert.Contains(path + ".bak", status);
             Assert.DoesNotContain("Str_Status_PwPlainBackupKept", status);
+            // SS-008: the double failure is not a silent one.
+            Assert.Contains("Str_Status_BackupFailed disk full", status);
         }
 
         [Fact]

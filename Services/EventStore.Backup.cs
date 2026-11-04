@@ -120,13 +120,18 @@ namespace Killendar.Services
 
         /// <summary>Takes a verified backup and prunes the old ones. Returns its path, or null with
         /// LastBackupError set. Never throws: a backup is a safety net, not a reason to stop.</summary>
-        public string? BackupNow(DateTime now)
+        public string? BackupNow(DateTime now) => BackupNowWithError(now).Path;
+
+        /// <summary>BackupNow with its own outcome. The safety backups before a password change and
+        /// an import read the error from here rather than LastBackupError, which the daily backup
+        /// and the rekey pass also write.</summary>
+        private (string? Path, string? Error) BackupNowWithError(DateTime now)
         {
-            if (_db == null) return null;
+            if (_db == null) return (null, null);
             if (LoadError != null)
             {
                 LastBackupError = LoadError;   // a calendar that failed to load is not backed up over a good copy
-                return null;
+                return (null, LoadError);
             }
             lock (_writeGate)
             {
@@ -134,12 +139,12 @@ namespace Killendar.Services
                 {
                     string written = WriteBackup(_db, _file, _password, now);
                     LastBackupError = null;
-                    return written;
+                    return (written, null);
                 }
                 catch (Exception ex)
                 {
                     LastBackupError = ex.Message;
-                    return null;
+                    return (null, ex.Message);
                 }
             }
         }

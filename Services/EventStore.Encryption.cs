@@ -12,8 +12,13 @@ namespace Killendar.Services
     /// password. A non-null RetainedBackup is the previous file, left behind because it could not
     /// be deleted or because the rewritten file did not reopen, and the caller must tell the user
     /// where it is.</summary>
-    public sealed class PasswordChangeOutcome(string? retainedBackup, bool retainedBackupIsUnencrypted, bool reopenNeeded = false)
+    public sealed class PasswordChangeOutcome(string? retainedBackup, bool retainedBackupIsUnencrypted, bool reopenNeeded = false,
+        string? safetyBackupError = null)
     {
+        /// <summary>Why the backup taken before the change failed, or null when it verified. The
+        /// change went ahead without it, and the caller must say so.</summary>
+        public string? SafetyBackupError { get; } = safetyBackupError;
+
         /// <summary>The file carries the new password but reopening it failed, so the store is
         /// closed: the caller must reopen it with the new password.</summary>
         public bool ReopenNeeded { get; } = reopenNeeded;
@@ -54,7 +59,8 @@ namespace Killendar.Services
             if (deleteRestorationCopy == null) throw new ArgumentNullException(nameof(deleteRestorationCopy));
             if (_db == null) throw new InvalidOperationException("no Killendar is open");
             if (string.IsNullOrEmpty(newPassword)) newPassword = null;
-            BackupNow(DateTime.Now);   // best effort: a failed backup is reported, not a reason to refuse
+            // Best effort: a failed backup is reported through the outcome, not a reason to refuse.
+            string? safetyBackupError = BackupNowWithError(DateTime.Now).Error;
 
             string? oldPassword = _password;   // Close() clears it; kept for the rollback
             string path = _file;
@@ -147,7 +153,7 @@ namespace Killendar.Services
 
             // Nothing but the reopen proves the rewritten file opens. When it kept failing, the
             // previous file is the only copy known to be good, so it stays and is reported.
-            if (reopenNeeded) return new PasswordChangeOutcome(bak, oldPassword == null, reopenNeeded: true);
+            if (reopenNeeded) return new PasswordChangeOutcome(bak, oldPassword == null, reopenNeeded: true, safetyBackupError);
 
             // The change has committed once the rewritten file opens. A backup that will not delete
             // (antivirus, permissions) is reported, not thrown: throwing here would tell the user a
@@ -155,9 +161,9 @@ namespace Killendar.Services
             try { deleteRestorationCopy(bak); }
             catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
             {
-                return new PasswordChangeOutcome(bak, oldPassword == null, reopenNeeded);
+                return new PasswordChangeOutcome(bak, oldPassword == null, reopenNeeded, safetyBackupError);
             }
-            return new PasswordChangeOutcome(null, false, reopenNeeded);
+            return new PasswordChangeOutcome(null, false, reopenNeeded, safetyBackupError);
         }
 
         private static string Protection(string? password) => password == null ? "unencrypted" : "encrypted";

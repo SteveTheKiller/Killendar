@@ -36,6 +36,10 @@ namespace Killendar.Services
 
         /// <summary>True when there is anything at all to write.</summary>
         public bool HasWork => Fresh.Count > 0 || ChangesExisting;
+
+        /// <summary>Why the backup taken before the import was written failed, or null when it
+        /// verified. The import went ahead without it, and the caller must say so.</summary>
+        public string? BackupError { get; internal set; }
     }
 
     public partial class EventStore
@@ -191,7 +195,7 @@ namespace Killendar.Services
             var plan = PlanImport(incoming);
             if (!plan.HasWork) return 0;
 
-            BackupNow(DateTime.Now);
+            plan.BackupError = BackupNowWithError(DateTime.Now).Error;
             bool saved = Commit(() => WriteRows(plan, CancellationToken.None, null));
             if (saved) Show(plan);
             return saved ? plan.Fresh.Count : 0;
@@ -343,7 +347,7 @@ namespace Killendar.Services
                 lock (_writeGate)
                 {
                     _importing = true;
-                    BackupNow(DateTime.Now);
+                    plan.BackupError = BackupNowWithError(DateTime.Now).Error;   // best effort, reported through the plan
                     try { WriteRows(plan, cancel, afterRow); }
                     finally { _importing = false; }
                 }

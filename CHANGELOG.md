@@ -96,6 +96,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - If the calendar cannot be reopened after a password change, the previous copy of the file is kept and its location is shown instead of being deleted.
 - A calendar that another program is holding open reports why it could not be opened instead of asking for a password it does not have.
 - Renaming the open Killendar or changing the data folder while the settings file cannot be saved is undone and reported, instead of opening an empty calendar on the next launch.
+- If the safety backup taken before a password change or an import fails, the status line says so.
 
 ### Changed
 

@@ -543,12 +543,17 @@ namespace Killendar.Features
         }
 
         /// <summary>A committed change that left its previous copy behind names that copy, and an
-        /// unencrypted one asks to be deleted.</summary>
+        /// unencrypted one asks to be deleted. A safety backup that failed before the change is
+        /// reported too: the change went ahead without it.</summary>
         internal string PasswordStatus(PasswordChangeOutcome outcome, string successKey) =>
-            outcome.RetainedBackup == null
+            WithSafetyBackup(outcome, outcome.RetainedBackup == null
                 ? _host.Loc(successKey)
                 : string.Format(_host.Loc(outcome.RetainedBackupIsUnencrypted
-                    ? "Str_Status_PwPlainBackupKept" : "Str_Status_PwBackupKept"), outcome.RetainedBackup);
+                    ? "Str_Status_PwPlainBackupKept" : "Str_Status_PwBackupKept"), outcome.RetainedBackup));
+
+        private string WithSafetyBackup(PasswordChangeOutcome outcome, string status) =>
+            outcome.SafetyBackupError == null ? status
+                : status + " " + string.Format(_host.Loc("Str_Status_BackupFailed"), outcome.SafetyBackupError);
 
         /// <summary>A backup that could not be rewritten under the new password still opens with
         /// the old one, or with none; the user has to know which files to delete.</summary>
@@ -574,7 +579,7 @@ namespace Killendar.Features
                 try
                 {
                     File.Delete(outcome.RetainedBackup);
-                    return new PasswordChangeOutcome(null, false);
+                    return new PasswordChangeOutcome(null, false, safetyBackupError: outcome.SafetyBackupError);
                 }
                 catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
                 {
@@ -590,7 +595,7 @@ namespace Killendar.Features
             string status = _host.Loc("Str_Pw_UnlockHead");
             if (outcome.RetainedBackup != null)
                 status += " " + string.Format(_host.Loc("Str_Status_PwBackupKept"), outcome.RetainedBackup);
-            _host.SetStatus(status);
+            _host.SetStatus(WithSafetyBackup(outcome, status));
             return outcome;
         }
 
