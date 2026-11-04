@@ -64,7 +64,7 @@ namespace Killendar.Shell
                 }
                 if (!ctrl && !alt && !shift && e.Key == Key.F12)
                 {
-                    ShowAboutOverlay();
+                    ShowAboutFromKey();
                     e.Handled = true;
                     return;
                 }
@@ -235,7 +235,7 @@ namespace Killendar.Shell
                 // F12 is About. Killendar had F1 on About until 2026-07-30, which was the odd one
                 // out - do not swap these back.
                 case Key.F1:     ToggleShortcutsOverlay(); break;
-                case Key.F12:    ShowAboutOverlay(); break;
+                case Key.F12:    ShowAboutFromKey(); break;
 
                 default: return;   // leave e.Handled alone so anything else still routes normally
             }
@@ -243,7 +243,15 @@ namespace Killendar.Shell
             e.Handled = true;
         }
 
-
+        /// <summary>F12 opens About. One overlay at a time, so the F1 keyboard map steps aside first,
+        /// the same way the footer version does it (About.cs VersionLabel_Click).</summary>
+        private void ShowAboutFromKey()
+        {
+            bool handled = false;
+            CloseShortcutsForAbout(ref handled);
+            if (!handled && ShortcutsOverlay.Visibility == Visibility.Visible) ShortcutsOverlay.Visibility = Visibility.Collapsed;
+            ShowAboutOverlay();
+        }
     }
 }
 
