@@ -206,7 +206,7 @@
                              Padding and Margin are NOT set on the buttons: ToolbarStyle.cs sizes
                              every one of them per display mode now, and a local Padding would be
                              overwritten on the first apply anyway. -->
-                        <Rectangle Width="1" Fill="{DynamicResource CardBorderBrush}" Margin="4,6"/>
+                        <Rectangle x:Name="FileGroupDivider" Width="1" Fill="{DynamicResource CardBorderBrush}" Margin="4,6"/>
 
                         <Button x:Name="ImportBtn" Content="{DynamicResource Str_Btn_Import}" Style="{StaticResource ToolbarButton}"
                                 Click="ImportBtn_Click"/>
@@ -217,7 +217,7 @@
                         <Button x:Name="SearchBtn" Content="{DynamicResource Str_Btn_Search}" Style="{StaticResource ToolbarButton}"
                                 Click="SearchBtn_Click"/>
 
-                        <Rectangle Width="1" Fill="{DynamicResource CardBorderBrush}" Margin="4,6"/>
+                        <Rectangle x:Name="NavGroupDivider" Width="1" Fill="{DynamicResource CardBorderBrush}" Margin="4,6"/>
 
                         <!-- prev / Today / next, all three together, then the date after them
                              (2026-07-30 - changed from the arrows bracketing the whole row).

@@ -224,8 +224,25 @@ namespace Killendar.Shell
 
             if (!changed) return;
 
+            UpdateToolbarDividers();
             ViewOverflowBtn.Visibility = AnyShed() ? Visibility.Visible : Visibility.Collapsed;
             RebuildOverflowMenu();
+        }
+
+        /// <summary>Which of the two dividers show: one stands between New and the file buttons,
+        /// the other before the arrows. A divider only separates two groups that are showing, so
+        /// once the file buttons shed their dividers do not pile up beside New.</summary>
+        internal static (bool AfterNew, bool BeforeNav) ToolbarDividers(bool newShown, bool fileShown)
+            => (newShown && fileShown, newShown || fileShown);
+
+        private void UpdateToolbarDividers()
+        {
+            bool fileShown = false;
+            foreach (var b in new[] { ImportBtn, ExportBtn, DeletedBtn, SearchBtn })
+                if (b.Visibility == Visibility.Visible) fileShown = true;
+            var (afterNew, beforeNav) = ToolbarDividers(NewEventBtn.Visibility == Visibility.Visible, fileShown);
+            FileGroupDivider.Visibility = afterNew ? Visibility.Visible : Visibility.Collapsed;
+            NavGroupDivider.Visibility = beforeNav ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>True when something has gone into "..." (dropping words puts nothing there).</summary>
@@ -282,6 +299,7 @@ namespace Killendar.Shell
                 s.Element.Visibility = Visibility.Visible;
             }
             _viewWordsShed = false;
+            UpdateToolbarDividers();
             ViewOverflowBtn.Visibility = Visibility.Collapsed;
             QueueToolbarOverflowUpdate();
         }
