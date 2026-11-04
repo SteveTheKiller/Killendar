@@ -141,7 +141,7 @@ namespace Killendar.Tests
             HolidayFile();
             Holidays.Choose("Holidays.kcal", _open, "Home.kcal");
             var series = Fridays(1);
-            series.Start = new DateTime(DateTime.Today.Year, 12, 18, 9, 0, 0);
+            series.Start = new DateTime(2026, 12, 18, 9, 0, 0);
             series.End = series.Start.AddHours(1);
 
             string text = IcsService.BuildIcs([series]);
