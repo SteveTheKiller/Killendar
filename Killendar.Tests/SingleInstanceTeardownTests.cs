@@ -45,6 +45,37 @@ namespace Killendar.Tests
         }
 
         [Fact]
+        public void AnOlderInstanceWhosePipeOnlyReadsStillReceivesTheLaunch()
+        {
+            string id = "Killendar.Tests.Teardown." + Guid.NewGuid().ToString("N");
+            using var mutex = new Mutex(true, @"Local\" + id + "-SingleInstance");
+            string? received = null;
+            var server = new Thread(() =>
+            {
+                // An earlier build's server: inbound only, reads one line, never answers.
+                using var pipe = PipeGuard.CreateServer(id + "-" + System.Diagnostics.Process.GetCurrentProcess().SessionId,
+                    System.IO.Pipes.PipeDirection.In);
+                pipe.WaitForConnection();
+                using var reader = new System.IO.StreamReader(pipe);
+                received = reader.ReadLine();
+            }) { IsBackground = true };
+            server.Start();
+            try
+            {
+                Thread.Sleep(200);
+                using var secondary = new SingleInstanceGuard(id, action => action(), _ => { }, 2000);
+                Assert.False(secondary.Claim("older.ics"));
+                Assert.True(server.Join(5000));
+                Assert.Equal("older.ics", received);
+                Assert.True(secondary.ForwardingSucceeded);
+            }
+            finally
+            {
+                mutex.ReleaseMutex();
+            }
+        }
+
+        [Fact]
         public void ADisposedGuardLetsTheNextLaunchBecomeTheInstance()
         {
             string id = "Killendar.Tests.Teardown." + Guid.NewGuid().ToString("N");

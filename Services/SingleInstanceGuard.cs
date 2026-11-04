@@ -91,19 +91,28 @@ namespace Killendar.Services
             try
             {
                 byte[] payload = new UTF8Encoding(false, true).GetBytes(path + "\n");
-                using var pipe = new NamedPipeClientStream(".", PipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
-                pipe.Connect(_timeoutMilliseconds);
-                PipeGuard.RequireCurrentUserServer(pipe, ServerOwner);
-                AwaitWithin(pipe.WriteAsync(payload, 0, payload.Length), _timeoutMilliseconds);
-                byte[] answer = new byte[1];
-                var read = pipe.ReadAsync(answer, 0, 1);
-                AwaitWithin(read, _timeoutMilliseconds);
-                return read.GetAwaiter().GetResult() == 1 && answer[0] == Accepted;
+                try { return Send(payload, PipeDirection.InOut); }
+                // A running instance from an earlier build listens inbound only and refuses a
+                // two-way client. It never answers, so a completed write is all it can confirm.
+                catch (UnauthorizedAccessException) { return Send(payload, PipeDirection.Out); }
             }
             catch (IOException) { return false; }
             catch (TimeoutException) { return false; }
             catch (UnauthorizedAccessException) { return false; }
             catch (EncoderFallbackException) { return false; }
+        }
+
+        private bool Send(byte[] payload, PipeDirection direction)
+        {
+            using var pipe = new NamedPipeClientStream(".", PipeName, direction, PipeOptions.Asynchronous);
+            pipe.Connect(_timeoutMilliseconds);
+            PipeGuard.RequireCurrentUserServer(pipe, ServerOwner);
+            AwaitWithin(pipe.WriteAsync(payload, 0, payload.Length), _timeoutMilliseconds);
+            if (direction == PipeDirection.Out) return true;
+            byte[] answer = new byte[1];
+            var read = pipe.ReadAsync(answer, 0, 1);
+            AwaitWithin(read, _timeoutMilliseconds);
+            return read.GetAwaiter().GetResult() == 1 && answer[0] == Accepted;
         }
 
         /// <summary>First instance: listens for forwarded launches for the process lifetime on a
@@ -157,6 +166,7 @@ namespace Killendar.Services
         /// for writing only (an older build) cannot read the answer; that is not an error here.</summary>
         private void Answer(NamedPipeServerStream server)
         {
+            if (!server.CanWrite) return;
             try
             {
                 AwaitWithin(server.WriteAsync([Accepted], 0, 1), _timeoutMilliseconds);
