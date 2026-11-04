@@ -188,6 +188,7 @@ namespace Killendar.Services
         private void RekeyBackups(string calendarPath, string? oldPassword, string? newPassword)
         {
             BackupsNotRekeyed.Clear();
+            SweepRekeyLeftovers(calendarPath);
             foreach (var backup in ListBackupsFor(calendarPath))
             {
                 string staged = backup.Path + ".rekey";
@@ -309,6 +310,7 @@ namespace Killendar.Services
         /// that have one, and the newest of each of the four weeks before those.</summary>
         private static void Prune(string file)
         {
+            SweepRekeyLeftovers(file);
             var all = ListBackupsFor(file);
             var days = all.GroupBy(b => b.Taken.Date).Take(DailyKept).ToList();
             var keep = new HashSet<string>(days.Select(d => d.First().Path), StringComparer.OrdinalIgnoreCase);
@@ -325,7 +327,43 @@ namespace Killendar.Services
         /// are gone, and a new calendar of the same name must not inherit them.</summary>
         private static void DeleteBackups(string calendarPath)
         {
+            SweepRekeyLeftovers(calendarPath);
             foreach (var backup in ListBackupsFor(calendarPath)) TryDelete(backup.Path);
+        }
+
+        /// <summary>
+        /// Settles what a rekey pass that died between its two moves left behind. A .rekey-old
+        /// whose backup is missing is that backup, set aside under the previous key: it is put
+        /// back, so it is listed, pruned and rewritten like any other, because it may be the only
+        /// copy of that day. One whose backup is in place is a stale copy under the previous key
+        /// and is deleted, as is a staged .rekey beside a backup that is in place.
+        /// </summary>
+        private static void SweepRekeyLeftovers(string calendarPath)
+        {
+            if (string.IsNullOrEmpty(calendarPath)) return;
+            string dir = BackupDirFor(calendarPath);
+            if (!Directory.Exists(dir)) return;
+            string prefix = Path.GetFileNameWithoutExtension(calendarPath) + " ";
+            foreach (string suffix in new[] { ".rekey-old", ".rekey" })
+            {
+                string[] leftovers;
+                try { leftovers = Directory.GetFiles(dir, "*" + Extension + suffix); }
+                catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException) { return; }
+                foreach (string leftover in leftovers)
+                {
+                    if (!leftover.EndsWith(suffix, StringComparison.OrdinalIgnoreCase)) continue;
+                    string backup = leftover.Substring(0, leftover.Length - suffix.Length);
+                    string stem = Path.GetFileNameWithoutExtension(backup);
+                    if (!stem.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) ||
+                        !DateTime.TryParseExact(stem.Substring(prefix.Length), BackupStamp,
+                            CultureInfo.InvariantCulture, DateTimeStyles.None, out _)) continue;
+                    if (File.Exists(backup)) TryDelete(leftover);
+                    else if (suffix == ".rekey-old")
+                    {
+                        try { File.Move(leftover, backup); } catch { /* best effort; tried again next pass */ }
+                    }
+                }
+            }
         }
 
         /// <summary>Renames a calendar's backups along with it, so they stay listed under it.</summary>

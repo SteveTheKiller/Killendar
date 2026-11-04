@@ -14,6 +14,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Update and uninstall helpers load PowerShell modules only from Windows' own folder, so a module planted in your Documents cannot run inside them as administrator.
 - The elevated part of an update compiles its helper code in a folder only administrators can open, so another program running as you cannot slip code into it.
 - An update must be signed with the exact publisher name, not merely one that contains it, and pass a certificate revocation check. Only an unreachable revocation server falls back to an offline check. Update metadata downloads are capped at 1 MB.
+- Backup copies left under the previous password by an interrupted password change are cleaned up or restored as normal backups.
 
 ### Fixed
 
