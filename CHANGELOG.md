@@ -65,6 +65,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Opening a calendar while Killendar is closing no longer silently does nothing and reports success.
 - After a machine-wide install, double-clicking a .kcal file opens the installed copy instead of an old portable copy.
 - Installing for all users adds the desktop shortcut when Add a desktop shortcut is ticked.
+- The window no longer freezes while an all-users install runs.
 
 ### Changed
 

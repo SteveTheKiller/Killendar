@@ -24,6 +24,19 @@ namespace Killendar.Shell
             // appointment draft is asked about first; keeping it calls the install off.
             options.CanInstallAsync = () => Task.FromResult(ConfirmDraftBeforeExit());
             options.BeforeInstall = () => _store.Close();
+            // The all-users install waits for its elevated child off the interface thread, so the
+            // window keeps answering messages (the child's environment broadcast among them). The
+            // store is closed by then, so the window takes no input until the install ends.
+            options.InstallAsync = async (desktop, allUsers) =>
+            {
+                IsEnabled = false;
+                try
+                {
+                    return await App.InstallAndRelaunchAsync(desktop, allUsers)
+                        ? InstallOutcome.Installed : InstallOutcome.Failed;
+                }
+                finally { IsEnabled = true; }
+            };
             // Reopen, so the session carries on rather than being left with a closed store.
             options.AfterInstallFailed = OpenCalendarData;
             // SetStatus is an explicit IShellServices implementation, so it is not callable

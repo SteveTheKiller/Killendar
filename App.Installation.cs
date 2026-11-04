@@ -41,6 +41,17 @@ namespace Killendar
             if (wantDesktop) createShortcut(desktopLink, machineExe);
             return relaunch();
         }
+
+        /// <summary>The same steps for the interface thread. The wait for the elevated child runs on
+        /// a pool thread, so the window keeps answering messages, including the WM_SETTINGCHANGE
+        /// broadcast the child sends after registering its command path, which otherwise waits on
+        /// this unpumped window. The steps after it resume on the caller's thread.</summary>
+        internal static async System.Threading.Tasks.Task<bool> RunAsync(bool wantDesktop, string desktopLink, string machineExe,
+            Func<bool> runElevated, Action removePerUser, Action<string, string> createShortcut, Func<bool> relaunch)
+        {
+            bool elevated = await System.Threading.Tasks.Task.Run(runElevated);
+            return Run(wantDesktop, desktopLink, machineExe, () => elevated, removePerUser, createShortcut, relaunch);
+        }
     }
 
     public partial class App
@@ -131,6 +142,15 @@ namespace Killendar
 
             if (!DoInstall(wantDesktop) || !File.Exists(InstallExe)) return false;
             return new InstallRelaunch().StartInstalled(InstallExe, () => Current.Shutdown());
+        }
+
+        /// <summary>InstallAndRelaunch for the install badge, which runs on the interface thread: the
+        /// all-users path waits for its elevated child without blocking the dispatcher.</summary>
+        internal static async System.Threading.Tasks.Task<bool> InstallAndRelaunchAsync(bool wantDesktop, bool allUsers)
+        {
+            if (!allUsers) return InstallAndRelaunch(wantDesktop, allUsers: false);
+            return AllUsersDowngradeAccepted() && await AllUsersInstall.RunAsync(wantDesktop, DesktopLnk, MachineInstallExe,
+                RunElevatedSilentInstall, RemovePerUserInstall, CreateShortcut, RelaunchMachineCopy);
         }
 
         private static bool AllUsersDowngradeAccepted()
