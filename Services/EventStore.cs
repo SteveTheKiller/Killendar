@@ -287,11 +287,13 @@ namespace Killendar.Services
         /// genuinely corrupt file gives. Treating both as "needs a password" is the safe way
         /// round: the unlock screen offers a New Killendar escape hatch either way, and we never
         /// silently start empty over a file that only needed a key.</summary>
-        private static bool IsKeyFailure(SqliteException ex) =>
+        internal static bool IsKeyFailure(SqliteException ex) =>
             ex.SqliteErrorCode == 26 || ex.SqliteExtendedErrorCode == 26;
 
         /// <summary>True when a .kcal exists and cannot be read without a key. Manage Killendars
-        /// uses this for its encrypted flags.</summary>
+        /// uses this for its encrypted flags. Only a key failure counts: a plaintext file that
+        /// another program holds open or locks is not encrypted, and opening it reports why it
+        /// could not be read instead of asking for a password it never had.</summary>
         public static bool IsEncryptedFile(string path)
         {
             if (!File.Exists(path)) return false;
@@ -305,7 +307,7 @@ namespace Killendar.Services
                 cmd.ExecuteScalar();
                 return false;
             }
-            catch (SqliteException) { return true; }
+            catch (SqliteException ex) { return IsKeyFailure(ex); }
             finally { SqliteConnection.ClearAllPools(); }
         }
 

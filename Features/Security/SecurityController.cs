@@ -201,9 +201,16 @@ namespace Killendar.Features
                     _password = string.IsNullOrEmpty(dlg.Password) ? null : dlg.Password;
                     return true;
                 }
-                catch (SqliteException) { heading = _host.Loc("Str_Pw_WrongPw"); }
+                catch (SqliteException ex) { heading = UnlockFailureHeading(ex); }
             }
         }
+
+        /// <summary>Only a key failure means the password was wrong. Anything else (a file another
+        /// program holds open, a busy or unreadable one) is shown as it is, and the prompt stays up
+        /// so a retry can succeed once the file is free.</summary>
+        internal string UnlockFailureHeading(SqliteException error) => EventStore.IsKeyFailure(error)
+            ? _host.Loc("Str_Pw_WrongPw")
+            : string.Format(_host.Loc("Str_Status_LoadError"), error.Message);
 
         /// <summary>The escape hatch for a forgotten password. The appointments in the locked file
         /// are not recoverable, but the file itself is renamed aside and kept.</summary>

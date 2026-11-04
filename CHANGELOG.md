@@ -93,6 +93,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Dates deleted from a repeating appointment, exact repeat end dates and dismissed reminders saved under a custom Windows time separator are read correctly.
 - When a backup fails, the status line gives the real reason, such as a full disk, instead of a misleading database message.
 - If the calendar cannot be reopened after a password change, the previous copy of the file is kept and its location is shown instead of being deleted.
+- A calendar that another program is holding open reports why it could not be opened instead of asking for a password it does not have.
 
 ### Changed
 
