@@ -6,35 +6,32 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ## [1.4.1] - Unreleased
 
-Killendar 1.4.1 stops appointments from being saved centuries off on some Windows regions and unsaved appointments from being lost without asking, closes lock and update gaps, makes install, update and uninstall recover cleanly, and moves the look and controls onto the shared KillerUI template.
+Killendar 1.4.1 closes security gaps in the command pipes and the updater, saves dates the same way on every Windows region, stops unsaved appointments from being lost without asking, fixes import, export, drag and keyboard problems, makes install, update and uninstall recover cleanly, and moves the look and controls onto the shared KillerUI template.
 
 ### Security
 
 - The calendar command pipe and the single-instance pipe accept only your own account, so another person signed in to the same PC cannot receive appointment details or stall Killendar by taking the pipe name first.
 - Update and uninstall helpers load PowerShell modules only from Windows' own folder, so a module planted in your Documents cannot run inside them as administrator.
 - The elevated part of an update compiles its helper code in a folder only administrators can open, so another program running as you cannot slip code into it.
-- An update must be signed with the exact publisher name, not merely one that contains it, and pass a certificate revocation check. Only an unreachable revocation server falls back to an offline check. Update metadata downloads are capped at 1 MB.
-- Backup copies left under the previous password by an interrupted password change are cleaned up or restored as normal backups.
+- An update must be signed with the exact publisher name and pass a certificate revocation check. Only an unreachable revocation server falls back to an offline check. Update metadata downloads are capped at 1 MB.
 
 ### Fixed
 
 - The file picker resolves place and drive icons in the background and restores its position on any monitor. Scrollbar buttons have localized screen-reader names.
-- Appointments are saved in a fixed date format whatever the Windows region. On a Thai or Arabic region they were saved centuries off, and on a region that writes times with dots they could not be read back; those dotted times now load too.
+- Appointments are saved in a fixed date format whatever the Windows region. On a Thai or Arabic region they were saved centuries off, and on a region that writes times with dots they could not be read back; those dotted times now load too, including dates deleted from a repeating appointment, and reminders dismissed before the upgrade stay dismissed.
 - Exported .ics files carry Gregorian dates whatever the Windows region, and a description with several lines comes back whole when the file is imported again instead of stopping at the first line break.
 - An unsaved appointment is no longer lost without asking. Clicking a reminder, opening Manage Killendars, Update now and the Install badge all ask first, Save in that prompt actually saves, closing a locked Killendar offers to discard rather than a Save that could not work, and renaming the open Killendar more than once in Manage Killendars keeps the appointment you were writing.
 - Editing an appointment from the day list after dragging it keeps the new time. The list now refreshes when appointments change, and Edit used to load the old copy and put the appointment back where it was.
 - An encrypted Killendar locks on idle or with Windows even while Manage Killendars is open. It used to stay unlocked behind the dialog and reopen without asking for the password. While locked, the dialog can no longer delete or rename the locked Killendar, and a password change that went through but could not reopen the file now locks it and asks for the new password.
-- A failed backup re-encryption keeps the original backup instead of deleting it, a password change that went through is no longer reported as failed when reopening the file stumbles, the backups of a Killendar set aside after a forgotten password stay with it, and an import that is waiting to write holds off a lock instead of losing its calendar mid-way.
+- A failed backup re-encryption keeps the original backup instead of deleting it, a password change that went through is no longer reported as failed when reopening the file stumbles, the backups of a Killendar set aside after a forgotten password stay with it, and an import that is waiting to write holds off a lock instead of losing its calendar mid-way. When the file cannot be reopened after a password change, the previous copy is kept and its location is shown.
 - The month view no longer crashes when the open Killendar and a shown one hold the same appointment spanning several days.
 - A calendar no longer fails to open because another account holds its native library lock.
 - Installing for all users verifies and copies the very same file, so nothing can swap the program between the check and the copy, and installing an older copy over a newer all-users install asks first.
-- Uninstalling while Killendar is still open, for example in the tray, now waits up to 30 seconds for it to close and otherwise stops before removing anything. It used to take away the shortcuts and file links, then fail on the running program and leave the rest behind. Uninstall also removes leftover update files, its own helper copy and the empty .kcal registry key.
-- A per-user update whose download fails its final check reopens the installed Killendar. The helper now records the installed copy before checking the download, so recovery no longer refused to start it.
+- Uninstalling while Killendar is still open, for example in the tray, now waits up to 30 seconds for it to close and otherwise stops before removing anything. It used to take away the shortcuts and file links, then fail on the running program and leave the rest behind. Uninstall also removes leftover update files, its own helper copy, the old copy that an install over a running Killendar leaves behind and the empty .kcal registry key.
 - A per-user or portable update that fails now reopens Killendar instead of leaving it closed, including when antivirus or a locked-down PowerShell stops the update helper from loading, a published copy that fails its final check is swapped back for the previous version and never started, and update downloads stream to disk with a size cap and an overall deadline.
 - An all-users update reopens Killendar for the signed-in user at normal rights, whether it finishes or stops early. Windows was refusing that relaunch, so the app stayed closed. Files left behind by earlier failed updates are cleared when the next update is staged.
 - A failed uninstall reports the real reason and retries when a copy is still running, a stalled update says so instead of silently doing nothing, and the window no longer freezes while an update is handed off.
 - An update that finished is no longer reported as failed when the app cannot be reopened afterward.
-- An all-users install can apply later updates. The elevated update compared the certificate's full name against part of it and refused every release. Install and update now lock each other out per folder, and uninstall removes the old copy an install over a running Killendar leaves behind.
 - Updates keep working after the publisher's code signing certificate is renewed. A release must still carry a valid signature naming the same publisher, but no longer the exact certificate of the installed copy.
 - Self-update runs on the family update code, which keeps Killendar's signature checks inside the helper and adds pinned publication folders, a publisher check on the published copy, same-publisher replacement and stable-only releases. Installed paths, registry keys and the exe name are unchanged.
 - An update that cannot finish because the app did not close says so in its recovery report, the Update button stays off once an update has started, and a translation file can no longer give a setting the wrong kind of value.
@@ -55,7 +52,6 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Dialog title bars match the rest of the dialog in every theme except 98SE. They had their own band, a lighter strip in Light and a gradient in several dark themes, and the title bar painted its film grain twice.
 - The tray icon's menu opens from the pointer upward, out of the notification area, the same way in every Killer app. A short menu no longer covers the tray icons and a taller one no longer floats about 40 pixels above them.
 - Black table headers match the content surface, and softer grain keeps dark surfaces from looking gray.
-- Dragging an appointment in Week or Day to the top of a column no longer moves it to the previous day.
 - Opening one date of a repeating series no longer shows repeat settings that would be ignored on save.
 - An all-day appointment whose end date is before its start date is refused with a message instead of being saved as one day.
 - Agenda Previous and Next step by the chosen 7, 14 or 30 day range instead of skipping days.
@@ -71,11 +67,9 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Exporting to .ics no longer fails when the calendar holds a repeating appointment from Brazil, Chile, Argentina, Egypt, Iran, Pakistan or another zone whose clock changes fall at the end of a day. A repeat whose zone still cannot be written goes out in UTC, and the status line says how many did.
 - Monthly-by-date and yearly repeats from Outlook, such as birthdays, import as repeats instead of a single appointment.
 - A repeating appointment whose end date is given without a time imports as a repeat.
-- A canceled day of an all-day repeating event from Outlook is removed from the series on import, and a skipped or extra date given with a time on an all-day repeat keeps its own date instead of moving a day early west of UTC.
+- A canceled day of an all-day repeating event from Outlook is removed from the series on import, and an extra date given with a time on an all-day repeat keeps its own date instead of moving a day early west of UTC.
 - An imported appointment with a malformed reminder no longer makes later .ics exports invalid.
 - A calendar file with an oversized time zone definition no longer stalls import, and Cancel stops it.
-- The suggested export file name uses the Gregorian year on Thai and other non-Gregorian regions.
-- The ISO, US and EU date styles show and accept Gregorian dates on Thai and other non-Gregorian regions.
 - CSV files exported by Outlook in the Windows code page keep their accented characters on import.
 - A quick tap or click on the title bar of Manage Categories, Manage Killendars or the password prompt no longer closes Killendar.
 - Delete and F2 inside the category rename box edit the name instead of opening the delete prompt or a second rename box.
@@ -86,14 +80,10 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - The app size readout in the status bar is translated and no longer overwrites a newer status message.
 - The Search button's tooltip shows its Ctrl+F shortcut.
 - The keyboard map lights all four arrow keys for moving an appointment with Alt.
-- The version line in About can be reached with Tab and opens the release notes with Enter.
-- Clicking or typing during the Exit fade from the tray no longer leaves Killendar running with an invisible window.
 - The title-bar menu opens at the pointer instead of slightly below and to the right.
 - Opening the appointment panel no longer pulls a narrow snapped window out of its snap position.
 - Locking an encrypted Killendar shown beside the open one removes its appointments from the sidebar day list right away.
-- Dates deleted from a repeating appointment, exact repeat end dates and dismissed reminders saved under a custom Windows time separator are read correctly.
 - When a backup fails, the status line gives the real reason, such as a full disk, instead of a misleading database message.
-- If the calendar cannot be reopened after a password change, the previous copy of the file is kept and its location is shown instead of being deleted.
 - A calendar that another program is holding open reports why it could not be opened instead of asking for a password it does not have.
 - Renaming the open Killendar or changing the data folder while the settings file cannot be saved is undone and reported, instead of opening an empty calendar on the next launch. Deleting the open Killendar in that state says so too.
 - If the safety backup taken before a password change or an import fails, the status line says so.
@@ -104,7 +94,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Accent buttons such as Save and OK rest with an accent outline, as in the other Killer apps, and the About card, the window menu and the signature check share the KillerUI template code.
 - Confirm prompts use the family dialog frame shared with the other Killer apps, and their Cancel button follows the chosen language. The window chrome, toolbar, app size, tray, folder tree and update notices now run on the KillerUI template code with Killendar's own behavior kept.
 - Menus opened from the rail now sit level with their own button, while the theme and language menus stay in the corner of the calendar pane. The accent dots in the theme menu can be reached with Tab and the arrow keys and are named for screen readers.
-- Dates, times, month and day names and numbers follow the Windows region format instead of the interface language, as in the other Killer apps; the date format setting still applies.
+- Dates, times, month and day names and numbers follow the Windows region format instead of the interface language, as in the other Killer apps; the date format setting still applies, and its ISO, US and EU styles and the suggested export file name stay Gregorian under any region calendar.
 - Toolbar captions are larger and set in the family sans, captions under the icons wrap instead of running wide, and the toolbar right-click menu stays open so display modes can be compared.
 - The open, save and folder picker now uses the family file picker card and frame shared with the other Killer apps, and pictures keep their plain file icons.
 - The footer's Install button runs on the shared KillerUI template code, with Killendar's all-users choice and calendar handling kept the same.
@@ -118,6 +108,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Alt+drag moves any Killendar window from anywhere inside it.
 - When Killendar is already installed for all users, the install prompt ticks and locks the all-users box and says it will update that copy.
 - The color picker and the new-category color swatch can be used entirely from the keyboard and are named for screen readers.
+- The version line in About can be reached with Tab and opens the release notes with Enter.
 
 ## [1.4.0] - 2026-10-22
 
