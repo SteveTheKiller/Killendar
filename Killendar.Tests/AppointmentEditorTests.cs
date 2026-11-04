@@ -147,6 +147,56 @@ namespace Killendar.Tests
             }
         }
 
+        // ---- an all-day end before the start is refused like a timed one (VE-011) ----
+
+        [Fact]
+        public void AllDayEndBeforeStartIsRefused()
+        {
+            var style = DateFormatManager.Current;
+            using var fixture = new AppointmentFixture();
+            try
+            {
+                using (new CultureScope("en-US"))
+                {
+                    UseUsDates();
+                    fixture.Editor.NewAt(new DateTime(2026, 9, 10, 9, 0, 0));
+                    fixture.Editor.ToggleAllDay();
+                    fixture.View.FieldTitle = "Conference";
+                    fixture.View.FieldStartDate = "9/10/2026";
+                    fixture.View.FieldEndDate = "9/8/2026";
+                    fixture.Editor.Save();
+                    Assert.Equal("Str_Err_EndBeforeStart", fixture.View.Error);
+                    Assert.Empty(fixture.Store.Events);
+                }
+            }
+            finally { DateFormatManager.Apply(style); }
+        }
+
+        [Fact]
+        public void AllDayEndOnTheStartDaySavesOneDay()
+        {
+            var style = DateFormatManager.Current;
+            using var fixture = new AppointmentFixture();
+            try
+            {
+                using (new CultureScope("en-US"))
+                {
+                    UseUsDates();
+                    fixture.Editor.NewAt(new DateTime(2026, 9, 10, 9, 0, 0));
+                    fixture.Editor.ToggleAllDay();
+                    fixture.View.FieldTitle = "Conference";
+                    fixture.View.FieldStartDate = "9/10/2026";
+                    fixture.View.FieldEndDate = "9/10/2026";
+                    fixture.Editor.Save();
+                    Assert.Null(fixture.View.Error);
+                    var saved = Assert.Single(fixture.Store.Events);
+                    Assert.Equal(new DateTime(2026, 9, 10), saved.Start);
+                    Assert.Equal(new DateTime(2026, 9, 11), saved.End);
+                }
+            }
+            finally { DateFormatManager.Apply(style); }
+        }
+
         /// <summary>The parser reads CultureInfo.CurrentCulture, as the app sets it per locale.</summary>
         private sealed class CultureScope : IDisposable
         {

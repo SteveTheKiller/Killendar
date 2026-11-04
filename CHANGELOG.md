@@ -56,6 +56,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Black table headers match the content surface, and softer grain keeps dark surfaces from looking gray.
 - Dragging an appointment in Week or Day to the top of a column no longer moves it to the previous day.
 - Opening one date of a repeating series no longer shows repeat settings that would be ignored on save.
+- An all-day appointment whose end date is before its start date is refused with a message instead of being saved as one day.
 
 ### Changed
 

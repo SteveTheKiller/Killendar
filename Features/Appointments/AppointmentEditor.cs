@@ -494,6 +494,14 @@ namespace Killendar.Features
                     Reject("Str_Err_DateRange", AppointmentField.EndDate);
                     return;
                 }
+                // Refused like the timed path rather than clamped to one day: a typo in the
+                // through box must not save something other than what was typed. The time boxes
+                // are hidden here, so the caret goes to the end date.
+                if (endDate.Date < startDate.Date)
+                {
+                    Reject("Str_Err_EndBeforeStart", AppointmentField.EndDate);
+                    return;
+                }
                 // All-day is stored half-open, so a one-day event ends at the next midnight.
                 end = CalendarDateSpan.ExclusiveAllDayEnd(startDate, endDate);
             }
