@@ -662,7 +662,10 @@ namespace Killendar.Services
                 var master = result.Events.Find(e => e.Id == series && e.IsSeries);
                 if (master == null) continue;
                 if (date.allDay) master.SkipDates.Add(date.dt.Date);
-                else if (!master.AllDay) master.SkipOccurrences.Add(CanonicalExclusion(master, date));
+                // Outlook cancels a date of an all-day series with a timed RECURRENCE-ID; the date
+                // is the one it names on its own clock, not this computer's.
+                else if (master.AllDay) master.SkipDates.Add((date.anchor ?? date.dt).Date);
+                else master.SkipOccurrences.Add(CanonicalExclusion(master, date));
             }
 
             return result;
