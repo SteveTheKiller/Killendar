@@ -173,6 +173,14 @@ namespace Killendar.Services
             // fallback included, is a Gregorian date.
             if (_current == DateStyle.FollowWindows &&
                 DateTime.TryParseExact(raw, Pattern, CultureInfo.CurrentCulture, DateTimeStyles.None, out date)) return true;
+            // A fixed style typed with the region's separator (1.2.2026 on a German keyboard) still
+            // reads in the chosen order, on the Gregorian calendar.
+            if (_current != DateStyle.FollowWindows)
+            {
+                var regional = (DateTimeFormatInfo)CultureInfo.InvariantCulture.DateTimeFormat.Clone();
+                regional.DateSeparator = CultureInfo.CurrentCulture.DateTimeFormat.DateSeparator;
+                if (DateTime.TryParseExact(raw, Pattern, regional, DateTimeStyles.None, out date)) return true;
+            }
             var formats = new[] { "yyyy-MM-dd", "yyyy/MM/dd", "M/d/yyyy", "dd/MM/yyyy", "d.M.yyyy", "dd.MM.yyyy" };
             if (_current != DateStyle.FollowWindows) formats = [Pattern, .. formats];
             if (DateTime.TryParseExact(raw, formats, CultureInfo.InvariantCulture,

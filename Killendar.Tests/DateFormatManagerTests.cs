@@ -76,6 +76,31 @@ namespace Killendar.Tests
             }
         }
 
+        // The chosen style still wins when the date is typed with the region's separator: on a
+        // German region the US style reads 1.2.2026 month first, as it did before IE-008.
+        [Theory]
+        [InlineData(DateStyle.US, "1.2.2026", 1, 2)]
+        [InlineData(DateStyle.EU, "01.02.2026", 2, 1)]
+        public void TheChosenStyleReadsTheRegionSeparator(DateStyle style, string typed, int month, int day)
+        {
+            var oldCurrent = CultureInfo.CurrentCulture;
+            var oldStyle = DateFormatManager.Current;
+            DateFormatManager.SetSetting = (_, _) => { };
+            try
+            {
+                CultureInfo.CurrentCulture = new CultureInfo("de-DE");
+                DateFormatManager.Apply(style);
+
+                Assert.True(DateFormatManager.TryParse(typed, out var date));
+                Assert.Equal(new DateTime(2026, month, day), date);
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = oldCurrent;
+                DateFormatManager.Apply(oldStyle);
+            }
+        }
+
         [Fact]
         public void FollowWindowsKeepsTheRegionCalendar()
         {
