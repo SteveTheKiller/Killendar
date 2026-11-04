@@ -163,6 +163,9 @@ namespace Killendar.Tests
                         Assert.Equal("", metadata.Text);
                         name.Text = "*.ics";
                         PressEnter(name);
+                        // Enter first probes off the UI thread whether the text names a folder, and
+                        // only then applies the wildcard, so the name clears a moment later.
+                        PumpUntil(() => name.Text.Length == 0);
                         Assert.Equal("", name.Text);
                         Assert.Equal("*.ics", filters.Items[0]);
                         name.Text = "*.txt";
