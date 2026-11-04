@@ -10,17 +10,15 @@ namespace Killendar.Cli
 {
     public static class Program
     {
+        private const string AgendaUsage = "killendar agenda <yyyy-MM-dd> <days 1..31> [--limit 1..100] [--database absolute.kcal]";
+        private const string CreateUsage = "killendar create <json> (requires an open, unlocked Killendar)";
+
         public static int Main(string[] args)
         {
             if (args.Length > 1 && args[args.Length - 1] == "--json")
                 args = args.Take(args.Length - 1).ToArray();
-            if (args.Length == 1 && args[0] == "--help")
-            {
-                Console.WriteLine("killendar agenda <yyyy-MM-dd> <days 1..31> [--limit 1..100] [--database absolute.kcal]");
-                Console.WriteLine("killendar create <json> (requires an open, unlocked Killendar)");
-                Console.WriteLine("Output is JSON by default; an optional trailing --json is accepted.");
-                return 0;
-            }
+            if (args.Length >= 1 && (args[0] == "--help" || args[0] == "help"))
+                return Help(args);
             if (args.Length == 2 && args[0] == "create")
             {
                 try
@@ -45,20 +43,17 @@ namespace Killendar.Cli
                 || !DateTime.TryParseExact(args[1], "yyyy-MM-dd", CultureInfo.InvariantCulture,
                     DateTimeStyles.None, out var from)
                 || !int.TryParse(args[2], out int days) || days < 1 || days > 31)
-            {
-                Console.Error.WriteLine("Expected agenda <yyyy-MM-dd> <days 1..31>");
-                return 2;
-            }
+                return Usage(args.Length > 0 && args[0] == "create" ? CreateUsage : AgendaUsage);
             int limit = 50;
             string? database = null;
             for (int i = 3; i < args.Length; i += 2)
             {
-                if (i + 1 >= args.Length) return 2;
+                if (i + 1 >= args.Length) return Usage(AgendaUsage);
                 if (args[i] == "--limit" && int.TryParse(args[i + 1], out int count) && count >= 1 && count <= 100)
                     limit = count;
                 else if (args[i] == "--database" && Path.IsPathRooted(args[i + 1]))
                     database = args[i + 1];
-                else return 2;
+                else return Usage(AgendaUsage);
             }
             try
             {
@@ -76,6 +71,38 @@ namespace Killendar.Cli
                 Console.Error.WriteLine("Killendar agenda failed: " + ex.Message);
                 return 1;
             }
+        }
+
+        private static int Usage(string usage)
+        {
+            Console.Error.WriteLine("Usage: " + usage);
+            return 2;
+        }
+
+        private static int Help(string[] args)
+        {
+            if (args.Length == 1)
+            {
+                Console.WriteLine(AgendaUsage);
+                Console.WriteLine(CreateUsage);
+                Console.WriteLine("Output is JSON by default; an optional trailing --json is accepted.");
+                return 0;
+            }
+            if (args.Length == 2 && args[1] == "agenda")
+            {
+                Console.WriteLine(AgendaUsage);
+                Console.WriteLine("Lists the appointments of the days from the given date, with repeats expanded, as JSON.");
+                Console.WriteLine("--limit caps the items returned (default 50). --database reads another .kcal file instead of the active Killendar.");
+                return 0;
+            }
+            if (args.Length == 2 && args[1] == "create")
+            {
+                Console.WriteLine(CreateUsage);
+                Console.WriteLine("Adds an appointment, given as JSON with title, start and end, to the open Killendar.");
+                return 0;
+            }
+            Console.Error.WriteLine("No help for \"" + string.Join(" ", args.Skip(1)) + "\". The commands are agenda and create.");
+            return Usage(AgendaUsage + Environment.NewLine + CreateUsage);
         }
 
         public static object[] Agenda(string database, DateTime from, int days, int limit)
