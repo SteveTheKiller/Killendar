@@ -77,6 +77,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - The ISO, US and EU date styles show and accept Gregorian dates on Thai and other non-Gregorian regions.
 - CSV files exported by Outlook in the Windows code page keep their accented characters on import.
 - A quick tap or click on the title bar of Manage Categories, Manage Killendars or the password prompt no longer closes Killendar.
+- Delete and F2 inside the category rename box edit the name instead of opening the delete prompt or a second rename box.
 
 ### Changed
 

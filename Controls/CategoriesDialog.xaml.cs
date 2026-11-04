@@ -147,12 +147,13 @@ namespace Killendar.Controls
                 row.Content is not Grid grid || row.Tag is not string name)
                 return;
 
-            if (e.Key == Key.F2 && grid.Children.OfType<TextBlock>().FirstOrDefault() is { } label)
+            var action = CategoryListKeys.Decide(e.Key, e.OriginalSource);
+            if (action == CategoryListKey.Rename && grid.Children.OfType<TextBlock>().FirstOrDefault() is { } label)
             {
                 BeginRename(grid, label, name);
                 e.Handled = true;
             }
-            else if (e.Key == Key.Delete)
+            else if (action == CategoryListKey.Delete)
             {
                 DeleteCategory(name);
                 e.Handled = true;
@@ -324,5 +325,20 @@ namespace Killendar.Controls
 
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => TitleBarDrag.Start(this, e);
         private void Close_Click(object sender, RoutedEventArgs e) => Close();
+    }
+
+    internal enum CategoryListKey { None, Rename, Delete }
+
+    /// <summary>What a key pressed on the category list does. The list's PreviewKeyDown sees every
+    /// key first, including those typed into the inline rename box.</summary>
+    internal static class CategoryListKeys
+    {
+        internal static CategoryListKey Decide(Key key, object? source)
+        {
+            if (source is TextBox) return CategoryListKey.None;   // the rename box owns its keys
+            if (key == Key.F2) return CategoryListKey.Rename;
+            if (key == Key.Delete) return CategoryListKey.Delete;
+            return CategoryListKey.None;
+        }
     }
 }
