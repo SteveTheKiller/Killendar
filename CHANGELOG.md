@@ -86,6 +86,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - The Search button's tooltip shows its Ctrl+F shortcut.
 - The keyboard map lights all four arrow keys for moving an appointment with Alt.
 - The version line in About can be reached with Tab and opens the release notes with Enter.
+- Clicking or typing during the Exit fade from the tray no longer leaves Killendar running with an invisible window.
 
 ### Changed
 
