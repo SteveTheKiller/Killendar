@@ -75,6 +75,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - A calendar file with an oversized time zone definition no longer stalls import, and Cancel stops it.
 - The suggested export file name uses the Gregorian year on Thai and other non-Gregorian regions.
 - The ISO, US and EU date styles show and accept Gregorian dates on Thai and other non-Gregorian regions.
+- CSV files exported by Outlook in the Windows code page keep their accented characters on import.
 
 ### Changed
 

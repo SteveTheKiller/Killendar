@@ -163,9 +163,35 @@ namespace Killendar.Services
         public static CsvParseResult ParseFile(string path, CancellationToken cancel)
         {
             ImportLimits.CheckFile(path);
-            // ReadAllText detects and strips a BOM on its own, so Excel-written UTF-8 and
-            // Killendar's own export both arrive clean.
-            return ParseText(File.ReadAllText(path), cancel);
+            return ParseText(DecodeText(File.ReadAllBytes(path), AnsiEncoding()), cancel);
+        }
+
+        /// <summary>
+        /// A CSV file's text. A byte order mark names the encoding (Excel's UTF-8, Killendar's own
+        /// export, Unicode). Without one, bytes that are valid UTF-8 are read as UTF-8; anything
+        /// else is the ANSI code page Outlook's own CSV export writes, so accents survive.
+        /// </summary>
+        internal static string DecodeText(byte[] bytes, Encoding ansi)
+        {
+            foreach (var marked in new Encoding[] { new UTF8Encoding(true), new UTF32Encoding(false, true), new UTF32Encoding(true, true),
+                         new UnicodeEncoding(false, true), new UnicodeEncoding(true, true) })
+            {
+                var mark = marked.GetPreamble();
+                if (bytes.Length >= mark.Length && mark.Select((b, i) => bytes[i] == b).All(same => same))
+                    return marked.GetString(bytes, mark.Length, bytes.Length - mark.Length);
+            }
+            try { return new UTF8Encoding(false, throwOnInvalidBytes: true).GetString(bytes); }
+            catch (DecoderFallbackException) { return ansi.GetString(bytes); }
+        }
+
+        /// <summary>The system's ANSI code page. Where Windows runs UTF-8 as its ANSI page, the
+        /// region's legacy page stands in, which is what an older Outlook on it wrote.</summary>
+        private static Encoding AnsiEncoding()
+        {
+            if (Encoding.Default.CodePage != Encoding.UTF8.CodePage) return Encoding.Default;
+            int page = CultureInfo.CurrentCulture.TextInfo.ANSICodePage;
+            try { return page is 0 or 65001 ? Encoding.GetEncoding(1252) : Encoding.GetEncoding(page); }
+            catch (Exception ex) when (ex is ArgumentException || ex is NotSupportedException) { return Encoding.GetEncoding(1252); }
         }
 
         public static CsvParseResult ParseText(string text) => ParseText(text, CancellationToken.None);
