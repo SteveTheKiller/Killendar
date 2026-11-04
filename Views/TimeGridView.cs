@@ -165,12 +165,35 @@ namespace Killendar.Views
 
         protected DateTime RangeStart => FirstVisibleDay(_anchor);
 
+        /// <summary>
+        /// The hour at the top of the grid while this view was last on screen, or null before it
+        /// has been shown. Kept in hours rather than pixels, because Ctrl+wheel density changes
+        /// the hour height between visits.
+        /// </summary>
+        private double? _topHour;
+
+        /// <summary>
+        /// Where the grid opens: the working day (7am is above the first meeting for most) the
+        /// first time, and wherever it was left on every switch back to it.
+        /// </summary>
+        internal static double OpeningTopHour(double? rememberedTopHour) => rememberedTopHour ?? 7;
+
         public void Initialize(EventStore store)
         {
             _store = store;
+            // Read before Rebuild and before the view is laid out again, either of which can
+            // report an interim offset.
+            double target = OpeningTopHour(_topHour) * CalendarChrome.HourHeight;
             Rebuild();
-            // Open on the working day rather than midnight; 7am is above the first meeting for most.
-            Dispatcher.BeginInvoke((Action)(() => _scroller.ScrollToVerticalOffset(7 * CalendarChrome.HourHeight)));
+            Dispatcher.BeginInvoke((Action)(() => _scroller.ScrollToVerticalOffset(target)));
+        }
+
+        /// <summary>Remembers the top hour only while the grid is on screen with content, so a
+        /// detached view or a half-built one cannot overwrite it with zero.</summary>
+        private void RememberTopHour()
+        {
+            if (!IsLoaded || !IsVisible || _scroller.ExtentHeight <= 0) return;
+            _topHour = _scroller.VerticalOffset / CalendarChrome.HourHeight;
         }
 
         public void Refresh() => Rebuild();
@@ -255,6 +278,7 @@ namespace Killendar.Views
             // header grid gets a matching right inset, measured from the themed bar itself rather
             // than SystemParameters (the template is not the system metric - KillerShell's rule).
             _scroller.ScrollChanged += (_, _) => SyncHeaderInset();
+            _scroller.ScrollChanged += (_, _) => RememberTopHour();
             _scroller.SizeChanged   += (_, _) => SyncHeaderInset();
             _scroller.Loaded        += (_, _) => SyncHeaderInset();
 

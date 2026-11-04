@@ -70,6 +70,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - The open, save and folder picker now uses the family file picker card and frame shared with the other Killer apps, and pictures keep their plain file icons.
 - The footer's Install button runs on the shared KillerUI template code, with Killendar's all-users choice and calendar handling kept the same.
 - The footer status text sits 16 pixels from the window edge, as in KillerNotes and KillerPDF, instead of 4. 98SE keeps its spacing.
+- Week and Day keep their scroll position when you switch views.
 
 ### Added
 
