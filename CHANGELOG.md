@@ -57,6 +57,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Dragging an appointment in Week or Day to the top of a column no longer moves it to the previous day.
 - Opening one date of a repeating series no longer shows repeat settings that would be ignored on save.
 - An all-day appointment whose end date is before its start date is refused with a message instead of being saved as one day.
+- Agenda Previous and Next step by the chosen 7 or 14 day range instead of skipping weeks.
 
 ### Changed
 

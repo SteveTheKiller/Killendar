@@ -11,7 +11,8 @@ namespace Killendar.Views
     /// <summary>
     /// A flat, scrolling list of what is coming up, grouped by day. Shows the chosen number of
     /// days (60 unless the date settings menu says otherwise) from the anchor forward: an agenda is for reading ahead, so it deliberately does not page backwards
-    /// the way the grid views do - prev/next shifts the window a month at a time.
+    /// the way the grid views do - prev/next shifts the window by the horizon, a month at most
+    /// (see StepBy).
     /// </summary>
     internal sealed class AgendaView : UserControl, ICalendarView
     {
@@ -81,7 +82,15 @@ namespace Killendar.Views
             }
         }
 
-        public DateTime Step(DateTime from, int direction) => from.AddMonths(direction);
+        public DateTime Step(DateTime from, int direction) => StepBy(from, direction, WindowDays);
+
+        /// <summary>
+        /// One page of the agenda. A horizon shorter than a month pages by its own length, so a
+        /// 7 or 14 day agenda never jumps over days it has not shown; a month or longer pages by a
+        /// calendar month, which keeps the anchor on the same date of the month.
+        /// </summary>
+        internal static DateTime StepBy(DateTime from, int direction, int horizonDays) =>
+            horizonDays < 30 ? from.AddDays(direction * horizonDays) : from.AddMonths(direction);
 
         public void Initialize(EventStore store)
         {
