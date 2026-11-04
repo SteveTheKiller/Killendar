@@ -450,6 +450,7 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Chk_AllUsers">Cài đặt cho mọi người dùng trên máy tính này (cần quyền quản trị viên)</sys:String>
   <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar đã được cài cho tất cả người dùng trên PC này, vì vậy thao tác này sẽ cập nhật bản đó. Windows sẽ yêu cầu quyền.</sys:String>
   <sys:String x:Key="Str_Status_InstallFailed">Cài đặt chưa hoàn tất. Killendar vẫn đang chạy ở chế độ di động.</sys:String>
+  <sys:String x:Key="Str_Status_RelaunchDeferred">Đã cài đặt xong. Killendar vẫn mở để bảo vệ phần công việc đã thay đổi trong lúc cài đặt.</sys:String>
   <!-- Shortcuts overlay (F1). One binding table in Shell/ShortcutsOverlay.cs feeds both the
          list and the keyboard map, so each of these is used in exactly one place. -->
   <sys:String x:Key="Str_KS_Title">Phím tắt</sys:String>

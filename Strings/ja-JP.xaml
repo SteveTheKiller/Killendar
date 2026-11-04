@@ -413,6 +413,7 @@
     <sys:String x:Key="Str_Chk_AllUsers">このコンピューターのすべてのユーザーにインストール（管理者権限が必要）</sys:String>
     <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar はこの PC のすべてのユーザー用に既にインストールされているため、そのコピーが更新されます。Windows が許可を求めます。</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">インストールは完了しませんでした。Killendar はポータブルのまま動作しています。</sys:String>
+    <sys:String x:Key="Str_Status_RelaunchDeferred">インストールが完了しました。インストール中に変更された作業を保護するため、Killendar は開いたままになっています。</sys:String>
 
     <!-- カテゴリ -->
     <sys:String x:Key="Str_KS_Title">キーボードショートカット</sys:String>

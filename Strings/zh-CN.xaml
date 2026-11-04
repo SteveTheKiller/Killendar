@@ -413,6 +413,7 @@
     <sys:String x:Key="Str_Chk_AllUsers">为这台电脑上的所有用户安装（需要管理员）</sys:String>
     <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar 已为本电脑上的所有用户安装，因此将更新该副本。Windows 将请求授权。</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">安装未完成 - Killendar 仍以便携版运行。</sys:String>
+    <sys:String x:Key="Str_Status_RelaunchDeferred">安装已完成。为保护安装期间更改的工作，Killendar 保持打开。</sys:String>
 
     <!-- 类别 -->
     <sys:String x:Key="Str_KS_Title">键盘快捷键</sys:String>

@@ -479,6 +479,7 @@
     <sys:String x:Key="Str_Chk_AllUsers">Установить для всех на этом компьютере (нужны права администратора)</sys:String>
     <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar уже установлен для всех пользователей этого компьютера, поэтому будет обновлена та копия. Windows запросит разрешение.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">Установка не завершилась - Killendar по-прежнему работает портативно.</sys:String>
+    <sys:String x:Key="Str_Status_RelaunchDeferred">Установка завершена. Killendar остался открытым, чтобы сохранить работу, изменённую во время установки.</sys:String>
 
     <!-- Shortcuts overlay (F1). One binding table in Shell/ShortcutsOverlay.cs feeds both the
          list and the keyboard map, so each of these is used in exactly one place. -->

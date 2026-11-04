@@ -147,6 +147,7 @@
     <sys:String x:Key="Str_Chk_AllUsers">Zainstaluj dla wszystkich użytkowników tego komputera (wymaga administratora)</sys:String>
     <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar jest już zainstalowany dla wszystkich użytkowników tego komputera, więc spowoduje to aktualizację tej instalacji. System Windows poprosi o zgodę.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">Instalacja nie została zakończona - Killendar nadal działa w trybie przenośnym.</sys:String>
+    <sys:String x:Key="Str_Status_RelaunchDeferred">Instalacja została zakończona. Killendar pozostał otwarty, aby chronić pracę zmienioną podczas instalacji.</sys:String>
     <sys:String x:Key="Str_KS_Title">Skróty Klawiaturowe</sys:String>
     <sys:String x:Key="Str_KS_ViewList">LISTA</sys:String>
     <sys:String x:Key="Str_KS_ViewMap">KLAWIATURA</sys:String>

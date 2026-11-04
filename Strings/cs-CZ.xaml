@@ -413,6 +413,7 @@
     <sys:String x:Key="Str_Chk_AllUsers">Nainstalovat pro všechny uživatele tohoto počítače (vyžaduje správce)</sys:String>
     <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar je již nainstalován pro všechny uživatele tohoto počítače, takže se aktualizuje tato kopie. Windows si vyžádají oprávnění.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">Instalace nebyla dokončena - Killendar běží dál přenosně.</sys:String>
+    <sys:String x:Key="Str_Status_RelaunchDeferred">Instalace byla dokončena. Killendar zůstal otevřený, aby ochránil práci změněnou během instalace.</sys:String>
 
     <!-- Kategorie -->
     <sys:String x:Key="Str_KS_Title">Klávesové zkratky</sys:String>

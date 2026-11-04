@@ -413,6 +413,7 @@
     <sys:String x:Key="Str_Chk_AllUsers">Bu bilgisayardaki herkes için yükle (yönetici gerekir)</sys:String>
     <sys:String x:Key="Str_Install_AlreadyAllUsers">Killendar bu bilgisayarda zaten tüm kullanıcılar için kurulu, bu nedenle o kopya güncellenecek. Windows izin isteyecek.</sys:String>
     <sys:String x:Key="Str_Status_InstallFailed">Yükleme tamamlanmadı - Killendar taşınabilir olarak çalışmaya devam ediyor.</sys:String>
+    <sys:String x:Key="Str_Status_RelaunchDeferred">Kurulum tamamlandı. Kurulum sırasında değiştirilen çalışmayı korumak için Killendar açık kaldı.</sys:String>
 
     <!-- Kategoriler -->
     <sys:String x:Key="Str_KS_Title">Klavye kısayolları</sys:String>
