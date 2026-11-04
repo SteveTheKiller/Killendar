@@ -87,6 +87,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - The keyboard map lights all four arrow keys for moving an appointment with Alt.
 - The version line in About can be reached with Tab and opens the release notes with Enter.
 - Clicking or typing during the Exit fade from the tray no longer leaves Killendar running with an invisible window.
+- The title-bar menu opens at the pointer instead of slightly below and to the right.
 
 ### Changed
 
