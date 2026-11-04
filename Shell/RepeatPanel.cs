@@ -280,8 +280,13 @@ namespace Killendar.Shell
                 BuildRepeatMenu();
 
                 bool repeats = _repeatFreq != RepeatFreq.None;
-                RepeatDetail.Visibility = repeats ? Visibility.Visible : Visibility.Collapsed;
-                RepeatIntervalRow.Visibility = repeats ? Visibility.Visible : Visibility.Collapsed;
+                // One date of a series with "This date" lit: the pattern stays hidden whatever
+                // rebuilds the rows (loading, a language switch), on BuildScopeChips' rule.
+                bool patternHidden = SeriesScopeRow.Visibility == Visibility.Visible &&
+                                     !_editWholeSeries && !(_editFollowing && _followingOffered);
+                bool showRows = repeats && !patternHidden;
+                RepeatDetail.Visibility = showRows ? Visibility.Visible : Visibility.Collapsed;
+                RepeatIntervalRow.Visibility = showRows ? Visibility.Visible : Visibility.Collapsed;
                 if (!repeats) return;
 
                 RepeatUnitLabel.Text = Loc(UnitKey(_repeatFreq));

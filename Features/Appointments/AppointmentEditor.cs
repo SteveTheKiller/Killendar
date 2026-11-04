@@ -183,9 +183,11 @@ namespace Killendar.Features
             _view.FollowingOffered = oneDateOfASeries && _store.CanSplit(ev);
             _view.EditWholeSeries = false;
             _view.EditFollowing = false;
-            _view.RepeatSectionVisible = !oneDateOfASeries;
 
             LoadRepeatFrom(master ?? ev);
+            // After the pattern is loaded: each repeat field the load writes rebuilds the rows,
+            // and a series pattern would bring them back under "This date".
+            _view.RepeatSectionVisible = !oneDateOfASeries;
 
             _loadedZone = TimeZones.ZoneOf(master ?? ev);
             _view.FieldZoneId = _loadedZone;

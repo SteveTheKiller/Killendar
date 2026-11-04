@@ -55,6 +55,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - The tray icon's menu opens from the pointer upward, out of the notification area, the same way in every Killer app. A short menu no longer covers the tray icons and a taller one no longer floats about 40 pixels above them.
 - Black table headers match the content surface, and softer grain keeps dark surfaces from looking gray.
 - Dragging an appointment in Week or Day to the top of a column no longer moves it to the previous day.
+- Opening one date of a repeating series no longer shows repeat settings that would be ignored on save.
 
 ### Changed
 
