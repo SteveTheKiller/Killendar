@@ -43,4 +43,4 @@ Read the retained receipt and correct the reported cause, such as another runnin
 
 In that case, reinstall the original signed build to restore its normal executable and registrations, then retry a normal uninstall with a new operation ID. Keep the failed receipt for diagnosis; on a machine installation, copy it elsewhere first, because the later successful uninstall deletes it. Do not change its state, treat a missing executable alone as success, or rerun the retained worker against a failed receipt.
 
-Common nonzero results include `1` for a general failure, `5` for denied access, `1223` for cancellation, `1618` for an unfinished child or locked image, and `1625` for a rejected helper or path validation.
+Common nonzero results include `1` for a general failure, `5` for denied access, `112` for a full disk, `1223` for cancellation, `1618` for an unfinished child or locked image, and `1625` for a rejected helper or path validation.
