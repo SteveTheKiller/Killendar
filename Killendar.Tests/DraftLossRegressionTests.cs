@@ -136,4 +136,27 @@ namespace Killendar.Tests
             Assert.Equal(1, discard);
         }
     }
+
+    /// <summary>Escape closes whatever is on top. An open Reminder or Time zone dropdown is on top
+    /// of the panel, so it gets the key and the draft survives.</summary>
+    public sealed class EscapeTargetRegressionTests
+    {
+        [Fact]
+        public void EscapeOnAnOpenDropdownIsLeftToTheDropdown()
+            => Assert.Equal(EscapeAction.LeaveToDropDown, ShortcutKeyPolicy.Escape(true, false, false, true));
+
+        [Fact]
+        public void EscapeWithTheDropdownClosedClosesThePanel()
+            => Assert.Equal(EscapeAction.CloseSidebar, ShortcutKeyPolicy.Escape(false, false, false, true));
+
+        [Theory]
+        [InlineData(true, false, EscapeAction.CloseShortcuts)]
+        [InlineData(false, true, EscapeAction.CloseAbout)]
+        public void AnOverlayStillClosesFirst(bool shortcuts, bool about, EscapeAction expected)
+            => Assert.Equal(expected, ShortcutKeyPolicy.Escape(true, shortcuts, about, true));
+
+        [Fact]
+        public void EscapeWithNothingOpenDoesNothing()
+            => Assert.Equal(EscapeAction.None, ShortcutKeyPolicy.Escape(false, false, false, false));
+    }
 }

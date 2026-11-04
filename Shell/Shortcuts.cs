@@ -181,9 +181,15 @@ namespace Killendar.Shell
             // half-filled form is exactly when you press it.
             if (e.Key == Key.Escape)
             {
-                if (ShortcutsOverlay.Visibility == Visibility.Visible) { FadeOverlayOut(ShortcutsOverlay); }
-                else if (AboutOverlay.Visibility == Visibility.Visible) { AboutClose_Click(this, new RoutedEventArgs()); }
-                else if (_sidebarOpen) { CloseSidebar(); SidebarToggleBtn.Focus(); }
+                switch (ShortcutKeyPolicy.Escape(FieldReminder.IsDropDownOpen || FieldZone.IsDropDownOpen,
+                    ShortcutsOverlay.Visibility == Visibility.Visible, AboutOverlay.Visibility == Visibility.Visible, _sidebarOpen))
+                {
+                    // Not handled, so the ComboBox gets the paired KeyDown and closes its own list.
+                    case EscapeAction.LeaveToDropDown: return;
+                    case EscapeAction.CloseShortcuts: FadeOverlayOut(ShortcutsOverlay); break;
+                    case EscapeAction.CloseAbout: AboutClose_Click(this, new RoutedEventArgs()); break;
+                    case EscapeAction.CloseSidebar: CloseSidebar(); SidebarToggleBtn.Focus(); break;
+                }
                 e.Handled = true;
                 return;
             }
@@ -240,6 +246,24 @@ namespace Killendar.Shell
 namespace Killendar.Shell
 {
     public enum LockedKeyAction { PassThrough, AskToUnlock }
+
+    public enum EscapeAction { None, LeaveToDropDown, CloseShortcuts, CloseAbout, CloseSidebar }
+
+    /// <summary>The decisions behind the window's key routing, kept free of controls so they can be
+    /// tested without a window.</summary>
+    internal static class ShortcutKeyPolicy
+    {
+        /// <summary>What Escape closes: whatever is on top. An overlay covers everything, and an
+        /// open dropdown in the editor covers the panel it sits in.</summary>
+        internal static EscapeAction Escape(bool dropDownOpen, bool shortcutsVisible, bool aboutVisible, bool sidebarOpen)
+        {
+            if (shortcutsVisible) return EscapeAction.CloseShortcuts;
+            if (aboutVisible) return EscapeAction.CloseAbout;
+            if (dropDownOpen) return EscapeAction.LeaveToDropDown;
+            if (sidebarOpen) return EscapeAction.CloseSidebar;
+            return EscapeAction.None;
+        }
+    }
 
     internal static class LockedKeyPolicy
     {
