@@ -31,6 +31,22 @@ namespace Killendar.Tests
             Environment.SetEnvironmentVariable(AppPaths.ProfileRootVariable, Profile);
         }
 
+        /// <summary>A marker a child process writes, read once it is written. File.Exists turns true
+        /// the moment the child creates the file, while it may still hold it open to write, so a
+        /// read straight after Exists can hit a sharing violation. Null if nothing readable
+        /// appears within <paramref name="timeoutMs"/>.</summary>
+        internal static string? ReadMarker(string path, int timeoutMs = 10000)
+        {
+            string? text = null;
+            System.Threading.SpinWait.SpinUntil(() =>
+            {
+                try { text = File.ReadAllText(path); return text.Length > 0; }
+                catch (IOException) { return false; }
+                catch (UnauthorizedAccessException) { return false; }
+            }, timeoutMs);
+            return text;
+        }
+
         private static string ResolveRoot()
         {
             string? configured = Environment.GetEnvironmentVariable("KILLENDAR_TEST_ROOT");

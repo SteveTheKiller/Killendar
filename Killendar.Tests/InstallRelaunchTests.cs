@@ -151,7 +151,7 @@ namespace Killendar.Tests
                 Assert.True(parent.WaitForExit(60000), "Owned parent did not exit.");
                 Assert.Equal(0, parent.ExitCode);
                 Assert.True(SpinWait.SpinUntil(() => File.Exists(marker), 10000), "Installed copy did not launch after parent exit.");
-                Assert.Equal("first", File.ReadAllText(marker));
+                Assert.Equal("first", TestScratch.ReadMarker(marker));
             }
             finally
             {

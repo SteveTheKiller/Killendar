@@ -85,7 +85,7 @@ namespace Killendar.Tests
             try
             {
                 Assert.True(SpinWait.SpinUntil(() => File.Exists(fixture.Ready), 10000), fixture.ChildDiagnostics());
-                Assert.Equal("997", File.ReadAllText(fixture.Ready));
+                Assert.Equal("997", TestScratch.ReadMarker(fixture.Ready));
                 Assert.Equal("Pending", UninstallWorkflow.ReadReceipt(fixture.Receipt).State);
                 Assert.True(File.Exists(fixture.Image));
                 Assert.True(File.Exists(fixture.Marker));
