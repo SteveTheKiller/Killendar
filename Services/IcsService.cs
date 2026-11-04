@@ -174,6 +174,7 @@ namespace Killendar.Services
             bool haveStart = false;   // no DTSTART means no appointment, however much else parsed
             bool repeating = false;
             DayOfWeek? ruleDay = null;   // an ordinal rule's weekday, checked once DTSTART is known
+            int ruleMonthDay = 0, ruleMonth = 0;   // BYMONTHDAY and BYMONTH, checked the same way
             bool movedByKillendar = false;
             bool unsupportedRange = false;
             string? duration = null;
@@ -220,6 +221,8 @@ namespace Killendar.Services
                         haveStart    = false;
                         repeating    = false;
                         ruleDay      = null;
+                        ruleMonthDay = 0;
+                        ruleMonth    = 0;
                         movedByKillendar = false;
                         _usedUnmatchedZone = false;
                         unsupportedRange = false;
@@ -406,6 +409,19 @@ namespace Killendar.Services
                                 }
                             }
 
+                            // BYMONTHDAY and BYMONTH say nothing new only when they are the start's own
+                            // day and month on the series' clock.
+                            if ((ruleMonthDay != 0 || ruleMonth != 0) &&
+                                (current.Repeat == RepeatFreq.Monthly || current.Repeat == RepeatFreq.Yearly))
+                            {
+                                var clock = Recurrence.SeriesClockStart(current);
+                                if ((ruleMonthDay != 0 && clock.Day != ruleMonthDay) || (ruleMonth != 0 && clock.Month != ruleMonth))
+                                {
+                                    current.Repeat = RepeatFreq.None;
+                                    repeating = true;
+                                }
+                            }
+
                             // The same for a weekly rule whose days leave out the start's own weekday:
                             // the series would skip its first date, so it is counted like the monthly case.
                             if (current.Repeat == RepeatFreq.Weekly && current.RepeatDays.Count > 0 &&
@@ -482,7 +498,7 @@ namespace Killendar.Services
                     // single date, and the loss is COUNTED so the import can say so rather than
                     // hiding it.
                     case "RRULE":
-                        if (!ParseRRule(value, current, out ruleDay)) repeating = true;
+                        if (!ParseRRule(value, current, out ruleDay, out ruleMonthDay, out ruleMonth)) repeating = true;
                         break;
 
                     // A loose list of extra dates is not a pattern; there is nowhere to put it.
@@ -648,13 +664,17 @@ namespace Killendar.Services
         /// Supported: FREQ of DAILY / WEEKLY / MONTHLY / YEARLY, INTERVAL, COUNT, UNTIL, and
         /// BYDAY as plain weekday names. A monthly rule may also name one ordinal weekday ("2TU",
         /// "-1FR", or Outlook's BYDAY=TU;BYSETPOS=2) when it is the start's own; that is checked at
-        /// END:VEVENT. Deliberately NOT supported: other ordinal forms, BYMONTHDAY, BYWEEKNO and
-        /// the rest. Those are real rules Killendar has no way to draw, and half-importing one
+        /// END:VEVENT. One BYMONTHDAY (monthly, or yearly with BYMONTH) and one BYMONTH (yearly)
+        /// are read the same way: kept when they restate the start's own day and month.
+        /// Deliberately NOT supported: other ordinal forms, other BYMONTHDAY or BYMONTH uses,
+        /// BYWEEKNO and the rest. Those are real rules Killendar has no way to draw, and half-importing one
         /// would put the appointment on the wrong days - worse than importing it once and saying so.
         /// </summary>
-        private static bool ParseRRule(string value, CalendarEvent ev, out DayOfWeek? ruleDay)
+        private static bool ParseRRule(string value, CalendarEvent ev, out DayOfWeek? ruleDay, out int ruleMonthDay, out int ruleMonth)
         {
             ruleDay = null;
+            ruleMonthDay = 0;
+            ruleMonth = 0;
             var freq     = RepeatFreq.None;
             int interval = 1;
             int count    = 0;
@@ -736,12 +756,32 @@ namespace Killendar.Services
                         weekStart = parsedWeekStart.Value;
                         break;
 
+                    // One day of the month or one month: kept only when it is the start's own,
+                    // checked at END:VEVENT. Outlook writes "monthly on the 15th" and yearly
+                    // birthdays this way.
+                    case "BYMONTHDAY":
+                        if (ruleMonthDay != 0 || !int.TryParse(val, System.Globalization.NumberStyles.None,
+                                System.Globalization.CultureInfo.InvariantCulture, out ruleMonthDay) || ruleMonthDay is < 1 or > 31) return false;
+                        break;
+
+                    case "BYMONTH":
+                        if (ruleMonth != 0 || !int.TryParse(val, System.Globalization.NumberStyles.None,
+                                System.Globalization.CultureInfo.InvariantCulture, out ruleMonth) || ruleMonth is < 1 or > 12) return false;
+                        break;
+
                     default:
-                        return false;   // BYMONTHDAY, BYMONTH, BYWEEKNO, ...
+                        return false;   // BYWEEKNO, BYYEARDAY, BYHOUR, ...
                 }
             }
 
             if (freq == RepeatFreq.None) return false;
+
+            // BYMONTH narrows only a yearly rule to its month. BYMONTHDAY fits a monthly rule, or a
+            // yearly one that also names the month: alone on a yearly rule it means that day of
+            // every month. Neither combines with a weekday.
+            if (ruleMonth != 0 && freq != RepeatFreq.Yearly) return false;
+            if (ruleMonthDay != 0 && !(freq == RepeatFreq.Monthly || (freq == RepeatFreq.Yearly && ruleMonth != 0))) return false;
+            if ((ruleMonth != 0 || ruleMonthDay != 0) && (days.Count > 0 || ordinalDay != null || setPos.HasValue)) return false;
 
             // Outlook writes "the second Tuesday" as BYDAY=TU;BYSETPOS=2.
             if (setPos.HasValue)

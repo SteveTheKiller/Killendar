@@ -68,6 +68,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - The window no longer freezes while an all-users install runs.
 - Removing the second copy when Killendar is installed twice no longer leaves an orphaned program behind when that copy is running; you are told it is in use.
 - Exporting to .ics no longer fails when the calendar holds a repeating appointment from Brazil, Chile, Argentina, Egypt, Iran, Pakistan or another zone whose clock changes fall at the end of a day.
+- Monthly-by-date and yearly repeats from Outlook, such as birthdays, import as repeats instead of a single appointment.
 
 ### Changed
 
