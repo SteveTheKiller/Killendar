@@ -151,6 +151,7 @@ namespace Killendar.Shell
             _rideGrow = 0;
             if (WindowState != WindowState.Normal) return;
             if (ActualWidth >= OpenMinWidth) return;      // already room; the calendar can just shrink
+            if (InSnapSlot()) return;                     // a snapped window reports Normal too
 
             var (grow, moved) = SidebarGrowFit(CurrentWorkArea(), Left, ActualWidth,
                                                _sidebarWidth * _appScale);
@@ -166,6 +167,56 @@ namespace Killendar.Shell
                 Left = moved;
             }
         }
+
+        /// <summary>True when Windows has the window in a snap slot. Any failure reads as not
+        /// snapped, which keeps the old behavior.</summary>
+        private bool InSnapSlot()
+        {
+            try
+            {
+                if (PresentationSource.FromVisual(this) is not HwndSource source) return false;
+                var placement = new WINDOWPLACEMENT { length = Marshal.SizeOf<WINDOWPLACEMENT>() };
+                IntPtr monitor = MonitorFromWindow(source.Handle, MONITOR_DEFAULTTONEAREST);
+                var info = new MONITORINFO { cbSize = Marshal.SizeOf<MONITORINFO>() };
+                if (!GetWindowPlacement(source.Handle, ref placement) || !GetWindowRect(source.Handle, out RECT window) ||
+                    monitor == IntPtr.Zero || !GetMonitorInfo(monitor, ref info))
+                    return false;
+                return IsSnapped(ToRect(window), ToRect(placement.rcNormalPosition), ToRect(info.rcWork), ToRect(info.rcMonitor));
+            }
+            catch { return false; }
+        }
+
+        private static Rect ToRect(RECT r) => new(r.left, r.top, r.right - r.left, r.bottom - r.top);
+
+        /// <summary>
+        /// Whether a window showing <paramref name="window"/> (screen pixels) is snapped, given its
+        /// restore rectangle <paramref name="normal"/> as GetWindowPlacement reports it, in
+        /// workspace coordinates (offset by the work area's corner within the monitor). A window in
+        /// a snap slot keeps its pre-snap restore rectangle; any other normal window sits on it.
+        /// </summary>
+        internal static bool IsSnapped(Rect window, Rect normal, Rect work, Rect monitor)
+        {
+            normal.Offset(work.Left - monitor.Left, work.Top - monitor.Top);   // workspace -> screen
+            const double slack = 1;   // a pixel of rounding
+            return Math.Abs(window.Left - normal.Left) > slack || Math.Abs(window.Top - normal.Top) > slack ||
+                   Math.Abs(window.Width - normal.Width) > slack || Math.Abs(window.Height - normal.Height) > slack;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct WINDOWPLACEMENT
+        {
+            public int length, flags, showCmd;
+            public POINT ptMinPosition, ptMaxPosition;
+            public RECT rcNormalPosition;
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT placement);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool GetWindowRect(IntPtr hWnd, out RECT rect);
 
         /// <summary>
         /// How much a window at <paramref name="left"/> and <paramref name="width"/> can grow toward
