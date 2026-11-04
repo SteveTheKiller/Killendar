@@ -229,6 +229,7 @@
   <sys:String x:Key="Str_Status_Unlocked">Đã mở khóa</sys:String>
   <sys:String x:Key="Str_Status_ImportFailed">Nhập không thành công: {0}</sys:String>
   <sys:String x:Key="Str_Status_Exported">Đã xuất {0} cuộc hẹn</sys:String>
+  <sys:String x:Key="Str_Status_ExportZoneUtc">. {0} cuộc hẹn lặp lại được ghi theo UTC vì không thể xuất múi giờ của chúng</sys:String>
   <sys:String x:Key="Str_Status_ExportFailed">Xuất không thành công: {0}</sys:String>
   <sys:String x:Key="Str_Status_NothingToExport">Không có nội dung để xuất</sys:String>
   <sys:String x:Key="Str_Status_LoadError">Không thể mở Killendar này: {0}</sys:String>

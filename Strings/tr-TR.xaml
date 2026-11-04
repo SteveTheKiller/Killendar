@@ -194,6 +194,7 @@
     <sys:String x:Key="Str_Status_Unlocked">Kilit açıldı</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">İçe aktarma başarısız: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} randevu dışa aktarıldı</sys:String>
+    <sys:String x:Key="Str_Status_ExportZoneUtc">. {0} yinelenen randevu saat dilimi dışa aktarılamadığı için UTC olarak yazıldı</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Dışa aktarma başarısız: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Dışa aktarılacak bir şey yok</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Bu Killendar açılamadı: {0}</sys:String>

@@ -194,6 +194,7 @@
     <sys:String x:Key="Str_Status_Unlocked">已解鎖</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">匯入失敗：{0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">已匯出 {0} 個約會</sys:String>
+    <sys:String x:Key="Str_Status_ExportZoneUtc">。{0} 個重複約會因無法匯出其時區而以 UTC 寫入</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">匯出失敗：{0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">沒有可匯出的內容</sys:String>
     <sys:String x:Key="Str_Status_LoadError">無法開啟此 Killendar：{0}</sys:String>
@@ -633,7 +634,7 @@
     <sys:String x:Key="Str_Color_Magenta">洋紅</sys:String>
     <sys:String x:Key="Str_Color_Hex">十六進位色彩</sys:String>
     <sys:String x:Key="Str_Color_SatValue">飽和度和亮度</sys:String>
-    <sys:String x:Key="Str_Color_Hue">色調</sys:String>
+    <sys:String x:Key="Str_Color_Hue">色相</sys:String>
     <sys:String x:Key="Str_Scroll_Up">向上捲動</sys:String>
     <sys:String x:Key="Str_Scroll_Down">向下捲動</sys:String>
     <sys:String x:Key="Str_Scroll_Left">向左捲動</sys:String>

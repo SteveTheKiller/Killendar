@@ -194,6 +194,7 @@
     <sys:String x:Key="Str_Status_Unlocked">ロックを解除しました</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">読み込みに失敗しました: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} 件の予定を書き出しました</sys:String>
+    <sys:String x:Key="Str_Status_ExportZoneUtc">。繰り返しの予定 {0} 件は、タイム ゾーンを書き出せなかったため UTC で書き出しました</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">書き出しに失敗しました: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">書き出すものがありません</sys:String>
     <sys:String x:Key="Str_Status_LoadError">この Killendar を開けませんでした: {0}</sys:String>

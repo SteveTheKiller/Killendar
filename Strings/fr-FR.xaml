@@ -194,6 +194,7 @@
     <sys:String x:Key="Str_Status_Unlocked">Déverrouillé</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Échec de l'importation : {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} rendez-vous exportés</sys:String>
+    <sys:String x:Key="Str_Status_ExportZoneUtc">. {0} rendez-vous récurrents ont été écrits en UTC, car leur fuseau horaire n&apos;a pas pu être exporté</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Échec de l'exportation : {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Rien à exporter</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Impossible d'ouvrir ce Killendar : {0}</sys:String>

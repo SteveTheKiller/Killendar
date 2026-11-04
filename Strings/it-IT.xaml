@@ -224,6 +224,7 @@
     <sys:String x:Key="Str_Status_Unlocked">Sbloccato</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Importazione non riuscita: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Esportati {0} appuntamenti</sys:String>
+    <sys:String x:Key="Str_Status_ExportZoneUtc">. {0} appuntamenti che si ripetono sono stati scritti in UTC perché non è stato possibile esportare il loro fuso orario</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Esportazione non riuscita: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Niente da esportare</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Impossibile aprire questo Killendar: {0}</sys:String>

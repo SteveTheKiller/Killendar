@@ -194,6 +194,7 @@
     <sys:String x:Key="Str_Status_Unlocked">Desbloqueado</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Error al importar: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Se exportaron {0} citas</sys:String>
+    <sys:String x:Key="Str_Status_ExportZoneUtc">. {0} citas que se repiten se escribieron en UTC porque no se pudo exportar su zona horaria</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Error al exportar: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">No hay nada que exportar</sys:String>
     <sys:String x:Key="Str_Status_LoadError">No se pudo abrir este Killendar: {0}</sys:String>

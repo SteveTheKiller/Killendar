@@ -240,6 +240,7 @@
     <sys:String x:Key="Str_Status_Unlocked">Låst opp</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Importen mislyktes: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Eksporterte {0} avtaler</sys:String>
+    <sys:String x:Key="Str_Status_ExportZoneUtc">. {0} gjentakende avtaler ble skrevet i UTC fordi tidssonen deres ikke kunne eksporteres</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Eksporten mislyktes: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Ingenting å eksportere</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Kunne ikke åpne denne Killendar-filen: {0}</sys:String>

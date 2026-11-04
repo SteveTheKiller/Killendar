@@ -194,6 +194,7 @@
     <sys:String x:Key="Str_Status_Unlocked">已解锁</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">导入失败：{0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">已导出 {0} 个约会</sys:String>
+    <sys:String x:Key="Str_Status_ExportZoneUtc">。{0} 个重复约会因无法导出其时区而按 UTC 写入</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">导出失败：{0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">没有可导出的内容</sys:String>
     <sys:String x:Key="Str_Status_LoadError">无法打开此 Killendar：{0}</sys:String>

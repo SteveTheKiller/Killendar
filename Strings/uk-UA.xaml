@@ -240,6 +240,7 @@
     <sys:String x:Key="Str_Status_Unlocked">Розблоковано</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Не вдалося імпортувати: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Експортовано зустрічей: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ExportZoneUtc">. Повторюваних зустрічей, записаних у UTC, бо їхній часовий пояс не вдалося експортувати: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Не вдалося експортувати: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Нічого експортувати</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Не вдалося відкрити цей Killendar: {0}</sys:String>

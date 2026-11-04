@@ -213,6 +213,7 @@
     <sys:String x:Key="Str_Status_Unlocked">Odklenjeno</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Uvoz ni uspel: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Izvoženi dogodki: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ExportZoneUtc">. Ponavljajoči se dogodki, zapisani v UTC, ker njihovega časovnega pasu ni bilo mogoče izvoziti: {0}</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Izvoz ni uspel: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Ni vsebine za izvoz</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Tega koledarja Killendar ni bilo mogoče odpreti: {0}</sys:String>

@@ -240,6 +240,7 @@
     <sys:String x:Key="Str_Status_Unlocked">Desbloqueado</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Falha na importação: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} compromissos exportados</sys:String>
+    <sys:String x:Key="Str_Status_ExportZoneUtc">. {0} compromissos que se repetem foram gravados em UTC porque não foi possível exportar o fuso horário deles</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Falha na exportação: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Nada para exportar</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Não foi possível abrir este Killendar: {0}</sys:String>

@@ -194,6 +194,7 @@
     <sys:String x:Key="Str_Status_Unlocked">Odemčeno</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import selhal: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Exportováno {0} schůzek</sys:String>
+    <sys:String x:Key="Str_Status_ExportZoneUtc">. {0} opakujících se schůzek bylo zapsáno v UTC, protože jejich časové pásmo nešlo exportovat</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export selhal: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Není co exportovat</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Tento Killendar nelze otevřít: {0}</sys:String>

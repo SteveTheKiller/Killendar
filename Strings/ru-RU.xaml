@@ -241,6 +241,7 @@
     <sys:String x:Key="Str_Status_Unlocked">Разблокировано</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Импорт не удался: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Экспортировано встреч: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ExportZoneUtc">. Повторяющихся встреч записано в UTC: {0}, так как их часовой пояс не удалось экспортировать</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Экспорт не удался: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Нечего экспортировать</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Не удалось открыть этот Killendar: {0}</sys:String>

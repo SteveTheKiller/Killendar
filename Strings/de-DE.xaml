@@ -194,6 +194,7 @@
     <sys:String x:Key="Str_Status_Unlocked">Entsperrt</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import fehlgeschlagen: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">{0} Termine exportiert</sys:String>
+    <sys:String x:Key="Str_Status_ExportZoneUtc">. {0} sich wiederholende Termine wurden in UTC geschrieben, weil ihre Zeitzone nicht exportiert werden konnte</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export fehlgeschlagen: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Nichts zu exportieren</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Dieser Killendar konnte nicht geöffnet werden: {0}</sys:String>

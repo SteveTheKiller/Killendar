@@ -45,6 +45,7 @@
     <sys:String x:Key="Str_Status_Deleted">Usunięto {0}</sys:String>
     <sys:String x:Key="Str_Status_Imported">Zaimportowano spotkań: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Wyeksportowano spotkań: {0}</sys:String>
+    <sys:String x:Key="Str_Status_ExportZoneUtc">. {0} cyklicznych spotkań zapisano w UTC, ponieważ nie można było wyeksportować ich strefy czasowej</sys:String>
     <sys:String x:Key="Str_Dlg_ImportTitle">Importuj spotkania</sys:String>
     <sys:String x:Key="Str_Dlg_ExportTitle">Eksportuj spotkania</sys:String>
     <sys:String x:Key="Str_Cal_AllDay">cały dzień</sys:String>
