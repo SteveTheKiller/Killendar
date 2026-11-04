@@ -770,6 +770,7 @@ namespace Killendar.Views
             void Reset()
             {
                 dragging = false;
+                DragCommit.EndFor(chip);
                 Controls.DragCursors.EndDrag();
                 move.X = move.Y = 0;
                 chip.Opacity = 1.0;
@@ -794,6 +795,7 @@ namespace Killendar.Views
                      Math.Abs(dy) >= SystemParameters.MinimumVerticalDragDistance))
                 {
                     dragging = true;
+                    DragCommit.BeginFor(chip);       // Escape now snaps it home
                     Controls.DragCursors.BeginDrag();
                     chip.Opacity = 0.7;
                     Panel.SetZIndex(dragLayer, 99);
@@ -809,7 +811,9 @@ namespace Killendar.Views
                 chip.ReleaseMouseCapture();          // fires LostMouseCapture -> Reset()
                 if (!wasDragging) return;
 
-                if (CalGrid.ActualWidth < 1 || CalGrid.ActualHeight < 1) return;
+                // Let go off the grid (the weekday header, the sidebar, the toolbar): it snaps
+                // home rather than landing on the nearest edge cell.
+                if (!DragCommit.Lands(p, new Rect(0, 0, CalGrid.ActualWidth, CalGrid.ActualHeight))) return;
                 var target = CellDayAt(p);
 
                 // Month moves the start by the whole days between the grabbed and released cells,

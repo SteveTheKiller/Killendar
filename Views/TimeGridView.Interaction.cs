@@ -310,6 +310,7 @@ namespace Killendar.Views
             void Reset()
             {
                 dragging = false;
+                DragCommit.EndFor(chip);
                 Controls.DragCursors.EndDrag();
                 move.X = move.Y = 0;
                 chip.Opacity = 1.0;
@@ -339,6 +340,7 @@ namespace Killendar.Views
                      Math.Abs(dy) >= SystemParameters.MinimumVerticalDragDistance))
                 {
                     dragging = true;
+                    DragCommit.BeginFor(chip);       // Escape now snaps it home
                     Controls.DragCursors.BeginDrag();
                     chip.Opacity = 0.7;              // lifted, and the grid reads through it
                     Panel.SetZIndex(chip, 99);       // over its neighbors while in flight
@@ -363,16 +365,22 @@ namespace Killendar.Views
                 bool wasDragging = dragging;
                 var p = e.GetPosition(_bodyGrid);
                 double dy = p.Y - start.Y;
+                // Off the grid is judged against the scroller's viewport, not the body grid: the
+                // body is a full 24 hours tall, so a pointer over the day headers can still be
+                // inside it. The time gutter is off the grid too.
+                double gutter = _bodyGrid.ColumnDefinitions.Count > 0 ? _bodyGrid.ColumnDefinitions[0].ActualWidth : 46;
+                bool lands = DragCommit.Lands(e.GetPosition(_scroller),
+                    new Rect(gutter, 0, Math.Max(0, _scroller.ViewportWidth - gutter), _scroller.ViewportHeight));
 
                 chip.ReleaseMouseCapture();          // fires LostMouseCapture -> Reset()
                 if (!wasDragging) return;            // a click - Chip's own release handler fires it
+                if (!lands) return;                  // let go off the grid: it snaps home
 
                 // Column from the pointer. The new start is the old start moved by the time the
                 // pointer travelled (grab to release), so the grab point inside the chip does not
                 // shift the drop, and a clipped overnight continuation segment still moves the
                 // event's real start.
-                // The gutter as laid out: wider when a second time zone's hours sit in it.
-                double gutter = _bodyGrid.ColumnDefinitions.Count > 0 ? _bodyGrid.ColumnDefinitions[0].ActualWidth : 46;
+                // The gutter as laid out (read above): wider when a second time zone's hours sit in it.
                 double dayW = Math.Max(1, (_bodyGrid.ActualWidth - gutter) / Days);
                 int col = (int)Math.Max(0, Math.Min(Days - 1, (p.X - gutter) / dayW));
 

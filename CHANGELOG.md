@@ -60,6 +60,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Agenda Previous and Next step by the chosen 7 or 14 day range instead of skipping weeks.
 - Week and Day mark today with an accent edge when another day is selected, matching Month.
 - Screen readers announce untitled appointments as untitled instead of starting with a comma.
+- Releasing a dragged appointment outside the calendar, or pressing Escape mid-drag, cancels the move instead of saving it at the nearest edge.
 
 ### Changed
 
