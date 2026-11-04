@@ -20,7 +20,7 @@ namespace Killendar.Services
         public static Action<string, string> SetSetting { get; set; } = (_, _) => { };
 
         // ISO by default rather than FollowWindows: it sorts, it is unambiguous, and it is what the
-        // .ics files this app reads and writes use.
+        // .ics files this app reads and writes use. Like them it is always a Gregorian date.
         private static DateStyle _current = DateStyle.Iso;
         public static DateStyle Current => _current;
 
@@ -68,7 +68,12 @@ namespace Killendar.Services
             .Replace("yyyy", "yyyy");
 
         /// <summary>Format a date for display in the editor.</summary>
-        public static string Format(DateTime d) => d.ToString(DisplayPattern, CultureInfo.CurrentCulture);
+        public static string Format(DateTime d) => d.ToString(DisplayPattern, StyleCulture);
+
+        /// <summary>The fixed styles are Gregorian dates whatever calendar the region uses (a Thai
+        /// region would otherwise print 2569 under "ISO"); Follow Windows keeps the region's own.</summary>
+        private static CultureInfo StyleCulture =>
+            _current == DateStyle.FollowWindows ? CultureInfo.CurrentCulture : CultureInfo.InvariantCulture;
 
         /// <summary>Pattern used for printing: a bare '/' in a custom format means the culture's date
         /// separator, so under de-DE "M/d/yyyy" printed 1.2.2026 beside a hint saying m/d/yyyy.
@@ -139,7 +144,7 @@ namespace Killendar.Services
             DateStyle.US  => "M/d",
             DateStyle.EU  => "dd/MM",
             _ => WithoutYear(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern),
-        }, CultureInfo.CurrentCulture);
+        }, StyleCulture);
 
         /// <summary>Drops the year and the separator that went with it from a short date pattern.</summary>
         private static string WithoutYear(string pattern)
@@ -164,8 +169,13 @@ namespace Killendar.Services
             raw = (raw ?? "").Trim();
             if (raw.Length == 0) return false;
 
-            var formats = new[] { Pattern, "yyyy-MM-dd", "yyyy/MM/dd", "M/d/yyyy", "dd/MM/yyyy", "d.M.yyyy", "dd.MM.yyyy" };
-            if (DateTime.TryParseExact(raw, formats, CultureInfo.CurrentCulture,
+            // The region's own pattern reads on its own calendar; every fixed pattern, the ISO
+            // fallback included, is a Gregorian date.
+            if (_current == DateStyle.FollowWindows &&
+                DateTime.TryParseExact(raw, Pattern, CultureInfo.CurrentCulture, DateTimeStyles.None, out date)) return true;
+            var formats = new[] { "yyyy-MM-dd", "yyyy/MM/dd", "M/d/yyyy", "dd/MM/yyyy", "d.M.yyyy", "dd.MM.yyyy" };
+            if (_current != DateStyle.FollowWindows) formats = [Pattern, .. formats];
+            if (DateTime.TryParseExact(raw, formats, CultureInfo.InvariantCulture,
                                        DateTimeStyles.None, out date)) return true;
 
             return DateTime.TryParse(raw, CultureInfo.CurrentCulture, DateTimeStyles.None, out date);

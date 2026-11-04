@@ -47,6 +47,58 @@ namespace Killendar.Tests
             }
         }
 
+        // KD-J (IE-008): the fixed styles are Gregorian whatever the region's calendar.
+        [Theory]
+        [InlineData(DateStyle.Iso, "2026-11-03", "11-03")]
+        [InlineData(DateStyle.US, "11/3/2026", "11/3")]
+        [InlineData(DateStyle.EU, "03/11/2026", "03/11")]
+        public void FixedStylesAreGregorianUnderAThaiCulture(DateStyle style, string expected, string monthDay)
+        {
+            var oldCurrent = CultureInfo.CurrentCulture;
+            var oldStyle = DateFormatManager.Current;
+            DateFormatManager.SetSetting = (_, _) => { };
+            try
+            {
+                CultureInfo.CurrentCulture = new CultureInfo("th-TH");
+                DateFormatManager.Apply(style);
+
+                Assert.Equal(expected, DateFormatManager.Format(new DateTime(2026, 11, 3)));
+                Assert.Equal(monthDay, DateFormatManager.MonthDay(new DateTime(2026, 11, 3)));
+                Assert.True(DateFormatManager.TryParse(expected, out var typed));
+                Assert.Equal(new DateTime(2026, 11, 3), typed);
+                Assert.True(DateFormatManager.TryParse("2026-11-03", out var iso));
+                Assert.Equal(new DateTime(2026, 11, 3), iso);
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = oldCurrent;
+                DateFormatManager.Apply(oldStyle);
+            }
+        }
+
+        [Fact]
+        public void FollowWindowsKeepsTheRegionCalendar()
+        {
+            var oldCurrent = CultureInfo.CurrentCulture;
+            var oldStyle = DateFormatManager.Current;
+            DateFormatManager.SetSetting = (_, _) => { };
+            try
+            {
+                CultureInfo.CurrentCulture = new CultureInfo("th-TH");
+                DateFormatManager.Apply(DateStyle.FollowWindows);
+
+                // 2026 is year 2569 of the Thai Buddhist era.
+                Assert.Contains("2569", DateFormatManager.Format(new DateTime(2026, 11, 3)));
+                Assert.True(DateFormatManager.TryParse(DateFormatManager.Format(new DateTime(2026, 11, 3)), out var typed));
+                Assert.Equal(new DateTime(2026, 11, 3), typed);
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = oldCurrent;
+                DateFormatManager.Apply(oldStyle);
+            }
+        }
+
         [Fact]
         public void ParserAcceptsIsoAlongsideSelectedFormat()
         {
