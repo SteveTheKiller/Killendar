@@ -109,10 +109,21 @@ namespace Killendar
                 return;
             }
 
+            // Killendar.exe --lang-file <path> [calendar]: translator test mode (Services/LangFileSwitch.cs).
+            // Taken out after the helper checks above, which match their exact argument lists, and
+            // before the command-line routing and file capture below, so a calendar after it still opens.
+            var (langFile, args) = LangFileSwitch.Take(e.Args);
+            if (langFile != null)
+            {
+                try { LocaleManager.ExternalFile = Path.GetFullPath(langFile); }
+                catch (Exception ex) when (ex is ArgumentException || ex is NotSupportedException
+                    || ex is PathTooLongException || ex is System.Security.SecurityException) { /* bad path: normal locale */ }
+            }
+
             KillerFamily.Accessibility.AccessibleControls.Initialize();
             KillerFamily.Theming.AccentShadow.Initialize();
             Controls.AltDrag.Register();   // Alt+drag moves any window (Controls/AltDrag.cs)
-            var cliArgs = KillerFamily.CommandLine.CommandLineEntry.GetArguments(e.Args, ["agenda", "create"]);
+            var cliArgs = KillerFamily.CommandLine.CommandLineEntry.GetArguments(args, ["agenda", "create"]);
             if (cliArgs != null)
             {
                 Services.CliConsole.AttachToParent();
@@ -174,7 +185,7 @@ namespace Killendar
 
             // A shell-opened .kcal or .ics arrives as argv[0]. Captured before the single-instance check
             // so a blocked second launch can forward it to the running window.
-            CaptureOpenFileArgument(e.Args);
+            CaptureOpenFileArgument(args);
 
             // One Killendar per desktop session. Must come AFTER the /silent and /uninstall paths
             // above: those are meant to run alongside a live instance.
@@ -233,7 +244,7 @@ namespace Killendar
             // (rebuilding the file under a running instance would pull the rug out). Never touches
             // Default.kcal. Debug-only guard is intentionally absent - it is handy on a release
             // build too, and it cannot destroy real data.
-            if (e.Args.Any(a => string.Equals(a, "--demo", StringComparison.OrdinalIgnoreCase)))
+            if (args.Any(a => string.Equals(a, "--demo", StringComparison.OrdinalIgnoreCase)))
             {
                 IsDemo = true;
                 try { Services.DemoData.Build(); }
@@ -247,7 +258,7 @@ namespace Killendar
             MainWindow = new MainWindow();
             ShutdownMode = ShutdownMode.OnLastWindowClose;
             // Started from the Run value: open minimized on the taskbar.
-            if (KillerFamily.Deployment.StartupRegistration.HasMinimizedArgument(e.Args))
+            if (KillerFamily.Deployment.StartupRegistration.HasMinimizedArgument(args))
                 KillerFamily.Deployment.StartupRegistration.StartMinimized(MainWindow);
             MainWindow.Show();
         }
