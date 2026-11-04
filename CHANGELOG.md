@@ -68,7 +68,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Installing for all users adds the desktop shortcut when Add a desktop shortcut is ticked.
 - The window no longer freezes while an all-users install runs.
 - Removing the second copy when Killendar is installed twice no longer leaves an orphaned program behind when that copy is running; you are told it is in use.
-- Exporting to .ics no longer fails when the calendar holds a repeating appointment from Brazil, Chile, Argentina, Egypt, Iran, Pakistan or another zone whose clock changes fall at the end of a day.
+- Exporting to .ics no longer fails when the calendar holds a repeating appointment from Brazil, Chile, Argentina, Egypt, Iran, Pakistan or another zone whose clock changes fall at the end of a day. A repeat whose zone still cannot be written goes out in UTC, and the status line says how many did.
 - Monthly-by-date and yearly repeats from Outlook, such as birthdays, import as repeats instead of a single appointment.
 - A repeating appointment whose end date is given without a time imports as a repeat.
 - A canceled day of an all-day repeating event from Outlook is removed from the series on import, and a skipped or extra date given with a time on an all-day repeat keeps its own date instead of moving a day early west of UTC.

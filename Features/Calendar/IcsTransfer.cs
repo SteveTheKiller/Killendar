@@ -465,6 +465,14 @@ namespace Killendar.Features
         }
 
         /// <summary>The file name the export picker offers: a Gregorian date whatever the region's calendar.</summary>
+        /// <summary>The status after an export. Repeats whose time zone could not be written went
+        /// out on UTC's clock rather than failing the export, and the user is told how many.</summary>
+        internal static string ExportedStatus(Func<string, string> loc, int count, int zoneFallbacks)
+        {
+            string status = string.Format(loc("Str_Status_Exported"), count);
+            return zoneFallbacks == 0 ? status : status + string.Format(loc("Str_Status_ExportZoneUtc"), zoneFallbacks);
+        }
+
         internal static string SuggestedExportName(DateTime today) => FormattableString.Invariant($"killendar-{today:yyyy-MM-dd}.ics");
 
         private void RunExport(DateTime from, DateTime toEx, bool whole)
@@ -497,7 +505,7 @@ namespace Killendar.Features
                         if (!warning.Confirmed) return;
                     }
                 }
-                int count;
+                int count, zoneFallbacks = 0;
                 switch (format)
                 {
                     // CSV and HTML get EXPANDED occurrences - one row or chip per date, which is
@@ -533,13 +541,13 @@ namespace Killendar.Features
                     default:
                     {
                         var evs = whole ? [.. _store.Events] : SelectForIcs(from, toEx);
-                        IcsService.ExportToFile(evs, dlg.FileName);
+                        zoneFallbacks = IcsService.ExportToFile(evs, dlg.FileName);
                         count = evs.Count;
                         break;
                     }
                 }
 
-                _host.SetStatus(string.Format(_host.Loc("Str_Status_Exported"), count));
+                _host.SetStatus(ExportedStatus(_host.Loc, count, zoneFallbacks));
             }
             catch (Exception ex)
             {

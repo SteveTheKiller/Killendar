@@ -240,6 +240,7 @@
     <sys:String x:Key="Str_Status_Unlocked">Unlocked</sys:String>
     <sys:String x:Key="Str_Status_ImportFailed">Import failed: {0}</sys:String>
     <sys:String x:Key="Str_Status_Exported">Exported {0} appointments</sys:String>
+    <sys:String x:Key="Str_Status_ExportZoneUtc">. {0} repeating appointments were written in UTC because their time zone could not be exported</sys:String>
     <sys:String x:Key="Str_Status_ExportFailed">Export failed: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Nothing to export</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Could not open this Killendar: {0}</sys:String>
