@@ -51,6 +51,42 @@ namespace Killendar.Tests
                 "DTSTART:20261019T090000", "DTEND:20261019T100000", DateList(20000)), source.Token));
         }
 
+        // KD-I (IE-002): one zone part with a huge RDATE list.
+        private static System.Collections.Generic.List<string> ZoneWithRDates(int count)
+        {
+            var block = new System.Collections.Generic.List<string>
+                { "TZID:Made Up Long", "BEGIN:STANDARD", "DTSTART:19700101T000000", "TZOFFSETFROM:+0100", "TZOFFSETTO:+0000" };
+            var day = new DateTime(1971, 1, 1, 2, 0, 0);
+            for (int i = 0; i < count; i++) block.Add("RDATE:" + day.AddDays(i).ToString("yyyyMMdd'T'HHmmss", System.Globalization.CultureInfo.InvariantCulture));
+            block.Add("END:STANDARD");
+            return block;
+        }
+
+        [Fact]
+        public void AZoneWithAHugeRDateListReadsQuickly()
+        {
+            string Text(int count) => "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nBEGIN:VTIMEZONE\r\n" + string.Join("\r\n", ZoneWithRDates(count)) +
+                "\r\nEND:VTIMEZONE\r\nBEGIN:VEVENT\r\nUID:long@example.com\r\nSUMMARY:Long\r\n" +
+                "DTSTART;TZID=Made Up Long:20260715T090000\r\nDTEND;TZID=Made Up Long:20260715T100000\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n";
+            IcsService.ParseText(Text(10));   // first use of the zone lookups, so the timing below is the parse alone
+            string text = Text(200000);
+
+            var watch = Stopwatch.StartNew();
+            var parsed = IcsService.ParseText(text);
+            watch.Stop();
+
+            Assert.Single(parsed.Events);
+            Assert.True(watch.Elapsed < TimeSpan.FromSeconds(1), "took " + watch.Elapsed);
+        }
+
+        [Fact]
+        public void ACanceledTokenStopsReadingACustomZone()
+        {
+            using var source = new System.Threading.CancellationTokenSource();
+            source.Cancel();
+            Assert.ThrowsAny<OperationCanceledException>(() => IcsCustomZone.Read(ZoneWithRDates(5000), source.Token));
+        }
+
         [Fact]
         public void CustomZonesBeyondTheCapAreRefusedLikeUnreadableOnes()
         {

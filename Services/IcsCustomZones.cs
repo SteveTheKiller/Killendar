@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 
 namespace Killendar.Services
 {
@@ -55,13 +56,23 @@ namespace Killendar.Services
         }
 
         /// <summary>Reads one VTIMEZONE block (its lines, BEGIN to END). Null when it says nothing usable.</summary>
-        internal static IcsCustomZone? Read(List<string> block)
+        internal static IcsCustomZone? Read(List<string> block) => Read(block, CancellationToken.None);
+
+        /// <summary>As Read, polling <paramref name="cancel"/> while it works. RDATE values are
+        /// collected in a list (joining them into one string grew quadratically) and capped at
+        /// ImportLimits.MaxDatesPerEvent per part.</summary>
+        internal static IcsCustomZone? Read(List<string> block, CancellationToken cancel)
         {
+            cancel.ThrowIfCancellationRequested();
             var zone = new IcsCustomZone();
             var parts = new List<Dictionary<string, string>>();
+            var partDates = new List<List<string>>();
             Dictionary<string, string>? part = null;
+            List<string>? dates = null;
+            int read = 0;
             foreach (var line in block)
             {
+                if ((++read & 1023) == 0) cancel.ThrowIfCancellationRequested();
                 int colon = line.IndexOf(':');
                 if (colon < 0) continue;
                 string head = line.Substring(0, colon);
@@ -69,14 +80,19 @@ namespace Killendar.Services
                 string value = line.Substring(colon + 1).Trim();
                 if (name == "BEGIN" && (value.Equals("STANDARD", StringComparison.OrdinalIgnoreCase) ||
                                         value.Equals("DAYLIGHT", StringComparison.OrdinalIgnoreCase)))
-                { part = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase); continue; }
+                { part = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase); dates = []; continue; }
                 if (name == "END" && part != null && (value.Equals("STANDARD", StringComparison.OrdinalIgnoreCase) ||
                                                       value.Equals("DAYLIGHT", StringComparison.OrdinalIgnoreCase)))
-                { parts.Add(part); part = null; continue; }
+                { parts.Add(part); partDates.Add(dates!); part = null; dates = null; continue; }
                 if (part != null)
                 {
-                    // RDATE may repeat; keep them all.
-                    part[name] = part.TryGetValue(name, out var had) && name == "RDATE" ? had + "," + value : value;
+                    // RDATE may repeat; keep them all, up to the cap.
+                    if (name == "RDATE")
+                    {
+                        foreach (var d in value.Split(','))
+                            if (dates!.Count < ImportLimits.MaxDatesPerEvent) dates.Add(d.Trim());
+                    }
+                    else part[name] = value;
                 }
                 else if (name == "TZID") zone.Id = value.Trim('"');
                 else if (name == "X-LIC-LOCATION") zone.Location = value;
@@ -86,8 +102,10 @@ namespace Killendar.Services
             var changes = new List<(DateTime, TimeSpan)>();
             DateTime earliest = DateTime.MaxValue;
             TimeSpan earliestFrom = TimeSpan.Zero;
-            foreach (var p in parts)
+            for (int index = 0; index < parts.Count; index++)
             {
+                cancel.ThrowIfCancellationRequested();
+                var p = parts[index];
                 if (!p.TryGetValue("TZOFFSETTO", out var toText) || !TryOffset(toText, out var to)) return null;
                 var from = p.TryGetValue("TZOFFSETFROM", out var fromText) && TryOffset(fromText, out var f) ? f : to;
                 if (!p.TryGetValue("DTSTART", out var startText) || !TryLocal(startText, out var start)) return null;
@@ -95,9 +113,8 @@ namespace Killendar.Services
 
                 var walls = new List<DateTime> { start };
                 if (p.TryGetValue("RRULE", out var rule) && !Yearly(rule, start, from, walls)) return null;
-                if (p.TryGetValue("RDATE", out var rdates))
-                    foreach (var d in rdates.Split(','))
-                        if (TryLocal(d.Trim(), out var extra)) walls.Add(extra);
+                foreach (var d in partDates[index])
+                    if (TryLocal(d, out var extra)) walls.Add(extra);
                 foreach (var wall in walls)
                 {
                     if (wall.Year < 2 || wall.Year > 9998) continue;   // the year 1 placeholder some writers use

@@ -151,7 +151,7 @@ namespace Killendar.Services
                         .Select(x => x.Line.Substring(x.Line.IndexOf(':') + 1).Trim().Trim('"')).FirstOrDefault();
                     if (id == null || id.Length == 0 || zones.ContainsKey(id) || zones.Count >= ImportLimits.MaxCustomZones || TZConvert.TryGetTimeZoneInfo(id, out _)) continue;
                     IcsCustomZone? zone;
-                    try { zone = IcsCustomZone.Read(definition); }
+                    try { zone = IcsCustomZone.Read(definition, cancel); }
                     catch (ArgumentException) { zone = null; }
                     if (zone == null) continue;
                     zones[zone.Id] = (zone.MatchSystemZone(), zone);
