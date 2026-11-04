@@ -4,6 +4,14 @@ All notable changes to Killendar are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.2] - 2026-11-04
+
+Killendar 1.4.2 installs through winget, Chocolatey and other silent installs on PCs that cannot reach the certificate revocation server.
+
+### Fixed
+
+- Silent installs and updates accept Killendar's signed installer when Windows cannot check certificate revocation, as on a PC with no network. A signature that is revoked, untrusted or does not match the file is still refused.
+
 ## [1.4.1] - 2026-11-04
 
 Killendar 1.4.1 closes security gaps in the command pipes and the updater, saves dates the same way on every Windows region, stops unsaved appointments from being lost without asking, fixes import, export, drag and keyboard problems, makes install, update and uninstall recover cleanly, and moves the look and controls onto the shared KillerUI template.
