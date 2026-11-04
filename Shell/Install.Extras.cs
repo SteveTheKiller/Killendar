@@ -10,6 +10,9 @@ namespace Killendar.Shell
     /// </summary>
     public partial class MainWindow
     {
+        /// <summary>True while an all-users install waits with the store closed.</summary>
+        private bool _installing;
+
         partial void ConfigureInstall(InstallOptions options)
         {
             options.OfferAllUsers = true;
@@ -27,15 +30,17 @@ namespace Killendar.Shell
             // The all-users install waits for its elevated child off the interface thread, so the
             // window keeps answering messages (the child's environment broadcast among them). The
             // store is closed by then, so the window takes no input until the install ends.
+            // Auto-lock holds off too: it would ask for a password on the closed store.
             options.InstallAsync = async (desktop, allUsers) =>
             {
                 IsEnabled = false;
+                _installing = true;
                 try
                 {
                     return await App.InstallAndRelaunchAsync(desktop, allUsers)
                         ? InstallOutcome.Installed : InstallOutcome.Failed;
                 }
-                finally { IsEnabled = true; }
+                finally { _installing = false; IsEnabled = true; }
             };
             // Reopen, so the session carries on rather than being left with a closed store.
             options.AfterInstallFailed = OpenCalendarData;

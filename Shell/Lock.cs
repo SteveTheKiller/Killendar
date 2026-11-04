@@ -76,6 +76,8 @@ namespace Killendar.Shell
 
         private void LockAndAsk()
         {
+            // An all-users install has closed the store and ends in a relaunch.
+            if (_installing) return;
             // An import writing on a worker thread owns the connection: lock when it is done.
             _lockWaiting = _store.IsImporting;
             if (_lockWaiting || !(_store.HasPassword || _security.ManagingEncrypted)) return;
