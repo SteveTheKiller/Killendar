@@ -18,7 +18,13 @@ namespace Killendar.Shell
 
         private void InitShownCalendars()
         {
-            ShownCalendars.Changed += () => _calendar?.Refresh();
+            ShownCalendars.Changed += () =>
+            {
+                _calendar?.Refresh();
+                // The sidebar day list holds rows from the shown Killendars too, so it rebuilds
+                // while showing, as it does on _store.Changed (CalendarHost.cs).
+                if (_agendaDay != null && AgendaScroll.Visibility == Visibility.Visible) BuildDayAgendaRows();
+            };
             _shownMenu = new ContextMenu();
             KillendarsButton.ContextMenu = _shownMenu;
             KillendarsButton.ContextMenuOpening += (_, e) =>
