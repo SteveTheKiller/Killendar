@@ -16,7 +16,11 @@ namespace Killendar.Tests
         private const string PinnedThumbprint = "E478E4940DFD3547DAF2199494B399214FB3E0FD";
         private static readonly (bool valid, string subject) Unsigned = (false, "(not signed)");
 
-        private static AssemblyName Incoming(string name, Version? version) => new(name) { Version = version };
+        // Name is set as a property, never passed to the constructor. On .NET Framework the
+        // constructor parses a display name through Fusion, which hands back the casing it saw
+        // first: once the "killendar" case below has run, new AssemblyName("Killendar") comes back
+        // lowercase, and the newer-release cases fail on test order alone.
+        private static AssemblyName Incoming(string name, Version? version) => new() { Name = name, Version = version };
 
         // ---- VerifySigner ----
 
