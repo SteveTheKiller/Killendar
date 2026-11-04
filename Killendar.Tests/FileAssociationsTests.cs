@@ -131,6 +131,39 @@ namespace Killendar.Tests
             });
         }
 
+        [Fact]
+        public void AMachineRegistrationClearsTheUserShadowAPortableLaunchWrote()
+        {
+            WithScratchRoot(machine => WithScratchRoot(user =>
+            {
+                FileAssociations.Register(user, @"D:\Downloads\Killendar.exe");
+
+                FileAssociations.RegisterMachine(machine, user, @"C:\Program Files\Killendar\Killendar.exe");
+
+                using (var command = machine.OpenSubKey(@"Software\Classes\" + FileAssociations.ProgId + @"\shell\open\command")!)
+                    Assert.Equal("\"C:\\Program Files\\Killendar\\Killendar.exe\" \"%1\"", command.GetValue(""));
+                Assert.Null(user.OpenSubKey(@"Software\Classes\" + FileAssociations.ProgId));
+                Assert.Null(user.OpenSubKey(@"Software\Classes\" + EventStore.Extension));
+                using var openWith = user.OpenSubKey(@"Software\Classes\.ics\OpenWithProgids");
+                Assert.Null(openWith?.GetValue(FileAssociations.IcsProgId));
+            }));
+        }
+
+        [Fact]
+        public void AMachineRegistrationLeavesAnotherAppsUserCalendarDefault()
+        {
+            WithScratchRoot(machine => WithScratchRoot(user =>
+            {
+                using (var k = user.CreateSubKey(@"Software\Classes\" + EventStore.Extension))
+                    k.SetValue("", "Other.Calendar");
+
+                FileAssociations.RegisterMachine(machine, user, @"C:\Program Files\Killendar\Killendar.exe");
+
+                using var kept = user.OpenSubKey(@"Software\Classes\" + EventStore.Extension)!;
+                Assert.Equal("Other.Calendar", kept.GetValue(""));
+            }));
+        }
+
         private static void WithScratchRoot(Action<RegistryKey> exercise)
         {
             string keyName = @"Software\Killendar.Tests\" + Guid.NewGuid().ToString("N");

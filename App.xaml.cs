@@ -200,6 +200,8 @@ namespace Killendar
             string runningExe = Process.GetCurrentProcess().MainModule?.FileName ?? "";
             if (!string.Equals(runningExe, MachineInstallExe, StringComparison.OrdinalIgnoreCase))
                 FileAssociations.Register();   // portable/per-user: HKCU, best-effort, idempotent
+            else
+                FileAssociations.ClearUserShadow(Registry.CurrentUser);   // machine copy: HKLM serves every account
             // Start with Windows (About card): keep the Run value pointing at this exe.
             KillerFamily.Deployment.StartupRegistration.Refresh(Services.AppInfo.DisplayName);
             // Complete the shipped Dark/Red palette before standalone setup prompts.

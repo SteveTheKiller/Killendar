@@ -82,6 +82,31 @@ namespace Killendar.Services
             catch { /* best-effort */ }
         }
 
+        /// <summary>A machine-wide install's registration. HKCU Classes win over HKLM, so a per-user
+        /// registration a portable launch wrote would keep sending double-clicks to that copy; it is
+        /// cleared, leaving any other app's settings alone.</summary>
+        internal static void RegisterMachine(RegistryKey machineRoot, RegistryKey userRoot, string exe)
+        {
+            Register(machineRoot, exe);
+            ClearUserShadow(userRoot);
+        }
+
+        /// <summary>Removes Killendar's per-user registration when there is one. The machine copy
+        /// calls this at startup, so the account that runs it loses a shadow even when another
+        /// account answered the install's elevation prompt.</summary>
+        internal static void ClearUserShadow(RegistryKey userRoot)
+        {
+            try
+            {
+                using var progId = userRoot.OpenSubKey(@"Software\Classes\" + ProgId);
+                using var icsProgId = userRoot.OpenSubKey(@"Software\Classes\" + IcsProgId);
+                using var application = userRoot.OpenSubKey(@"Software\Classes\Applications\Killendar.exe");
+                if (progId == null && icsProgId == null && application == null) return;
+            }
+            catch { return; }
+            Unregister(userRoot);
+        }
+
         /// <summary>Takes it back out, from both uninstall paths. A ProgID pointing at a deleted exe
         /// is how you get a broken Open With list that nothing in the UI will offer to clean up.
         /// </summary>

@@ -223,7 +223,8 @@ namespace Killendar
                     Directory.CreateDirectory(startMenuDir);
                     CreateShortcut(startMenuLnk, installExe);
                     WriteInstallKeys(hive, installDir, installExe);
-                    FileAssociations.Register(hive, installExe);
+                    if (machine) FileAssociations.RegisterMachine(Registry.LocalMachine, Registry.CurrentUser, installExe);
+                    else FileAssociations.Register(hive, installExe);
                     Services.CommandLinePath.Register(installDir, machine);
                 }, verifySource: held => VerifyInstallSource(held, installExe));
                 return KillerFamily.Deployment.InstallerExitCodes.Success;
