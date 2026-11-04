@@ -45,6 +45,34 @@ namespace Killendar.Tests
         }
 
         [Fact]
+        public void AnOlderClientThatHangsUpBeforeTheAnswerLeavesTheListenerRunning()
+        {
+            // A 1.4.0 copy opens the pipe write-only, writes its path and disconnects. The reply
+            // byte then meets a closed pipe, and the next launch must still be forwarded.
+            string id = "Killendar.Tests.Teardown." + Guid.NewGuid().ToString("N");
+            var received = new System.Collections.Concurrent.ConcurrentQueue<string>();
+            using var primary = new SingleInstanceGuard(id, action => action(), received.Enqueue, 2000);
+            Assert.True(primary.Claim(null));
+            Thread.Sleep(200);
+
+            using (var old = new System.IO.Pipes.NamedPipeClientStream(".",
+                id + "-" + System.Diagnostics.Process.GetCurrentProcess().SessionId, System.IO.Pipes.PipeDirection.Out))
+            {
+                old.Connect(2000);
+                byte[] line = System.Text.Encoding.UTF8.GetBytes("older.ics\n");
+                old.Write(line, 0, line.Length);
+                old.Flush();
+            }
+
+            using var secondary = new SingleInstanceGuard(id, action => action(), _ => { }, 2000);
+            Assert.False(secondary.Claim("newer.ics"));
+            Assert.True(secondary.ForwardingSucceeded);
+            var deadline = DateTime.UtcNow.AddSeconds(5);
+            while (received.Count < 2 && DateTime.UtcNow < deadline) Thread.Sleep(20);
+            Assert.Equal(new[] { "older.ics", "newer.ics" }, received.ToArray());
+        }
+
+        [Fact]
         public void AnOlderInstanceWhosePipeOnlyReadsStillReceivesTheLaunch()
         {
             string id = "Killendar.Tests.Teardown." + Guid.NewGuid().ToString("N");
