@@ -24,7 +24,7 @@ namespace Killendar.Tests
             }
             finally
             {
-                Directory.Delete(directory, true);
+                Directory.Delete(Path.GetDirectoryName(directory)!, true);
             }
         }
 
@@ -44,7 +44,7 @@ namespace Killendar.Tests
             }
             finally
             {
-                if (Directory.Exists(directory)) Directory.Delete(directory, true);
+                Directory.Delete(Path.GetDirectoryName(directory)!, true);
             }
         }
 
