@@ -51,7 +51,7 @@ namespace Killendar.Tests
             // byte then meets a closed pipe, and the next launch must still be forwarded.
             string id = "Killendar.Tests.Teardown." + Guid.NewGuid().ToString("N");
             var received = new System.Collections.Concurrent.ConcurrentQueue<string>();
-            using var primary = new SingleInstanceGuard(id, action => action(), received.Enqueue, 2000);
+            using var primary = new SingleInstanceGuard(id, action => action(), path => received.Enqueue(path ?? ""), 2000);
             Assert.True(primary.Claim(null));
             Thread.Sleep(200);
 
