@@ -7,55 +7,9 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Killendar.Services
 {
-    /// <summary>Removes the single file owned by the portable installer.</summary>
+    /// <summary>Pins installation paths against rename and reparse-point substitution.</summary>
     internal static class InstallationFiles
     {
-        internal static void Remove(string directory)
-        {
-            directory = Path.GetFullPath(directory);
-            if (Path.GetDirectoryName(directory) == null)
-                throw new UnauthorizedAccessException("Cleanup cannot remove a volume root.");
-            using (PinDirectory(directory))
-            {
-                string image = Path.Combine(directory, "Killendar.exe");
-                if (File.Exists(image))
-                {
-                    if ((File.GetAttributes(image) & FileAttributes.ReparsePoint) != 0)
-                        throw new UnauthorizedAccessException("Cleanup cannot remove a linked installation image: " + image);
-                    File.Delete(image);
-                }
-            }
-            RemoveEmpty(directory);
-        }
-
-        internal static void RemoveEmpty(string directory)
-        {
-            string full = Path.GetFullPath(directory);
-            var parent = Path.GetDirectoryName(full);
-            if (parent == null) throw new UnauthorizedAccessException("Cleanup cannot remove a volume root.");
-            using (PinDirectory(parent))
-            {
-                if (!Directory.Exists(full)) return;
-                if ((File.GetAttributes(full) & FileAttributes.ReparsePoint) != 0)
-                    throw new UnauthorizedAccessException("Cleanup cannot traverse a linked directory: " + full);
-                if (Directory.GetFileSystemEntries(full).Length != 0)
-                {
-                    Console.Error.WriteLine("Unrelated contents were preserved in: " + full);
-                    return;
-                }
-                // Nonrecursive deletion never removes a late arrival or a link's target.
-                Directory.Delete(full, recursive: false);
-            }
-        }
-
-        internal static void RemoveShortcut(string path)
-        {
-            string full = Path.GetFullPath(path);
-            if (!string.Equals(Path.GetFileName(full), "Killendar.lnk", StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException("Cleanup only owns the Killendar shortcut.", nameof(path));
-            using (PinDirectory(Path.GetDirectoryName(full)!)) File.Delete(full);
-        }
-
         /// <summary>Keep every existing directory ancestor immovable during owned-file cleanup. With
         /// <paramref name="mustExist"/>, a missing ancestor fails instead of being skipped, as the
         /// update paths require (Killendar's UpdatePathSafety).</summary>

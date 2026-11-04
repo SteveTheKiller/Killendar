@@ -190,7 +190,14 @@ namespace Killendar
         {
             try
             {
-                using var installLease = KillerFamily.Deployment.InstallerExitCodes.Acquire(AppName);
+                // With admin rights (winget, choco, RMM) the install is machine-wide. Without them,
+                // as the Microsoft Store runs installers, it is the normal per-user install with no
+                // prompt. The app never needs admin rights.
+                bool machine = KillerFamily.Deployment.InstallerExitCodes.IsElevated();
+                string installDir = machine ? MachineInstallDir : InstallDir;
+                // The same per-folder lease the update helpers take, so an install and an update
+                // of one folder never publish over each other.
+                using var installLease = KillerFamily.Deployment.InstallerExitCodes.Acquire(AppName, installDir);
                 string src = Process.GetCurrentProcess().MainModule!.FileName;
                 var (valid, _, _) = CodeSignature.GetSignerInfo();
                 if (!valid)
@@ -199,11 +206,6 @@ namespace Killendar
                     return KillerFamily.Deployment.InstallerExitCodes.SecurityRejected;
                 }
 
-                // With admin rights (winget, choco, RMM) the install is machine-wide. Without them,
-                // as the Microsoft Store runs installers, it is the normal per-user install with no
-                // prompt. The app never needs admin rights.
-                bool machine = KillerFamily.Deployment.InstallerExitCodes.IsElevated();
-                string installDir = machine ? MachineInstallDir : InstallDir;
                 string installExe = machine ? MachineInstallExe : InstallExe;
                 string startMenuDir = machine
                     ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms), AppName)
