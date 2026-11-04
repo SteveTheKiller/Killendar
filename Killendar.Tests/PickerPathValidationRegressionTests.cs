@@ -31,6 +31,11 @@ namespace Killendar.Tests
                 try
                 {
                     System.IO.Packaging.PackUriHelper.Create(new Uri("file:///calendar.html"));
+                    // The app opens the picker from a click handler, where WPF has already set the
+                    // dispatcher's context. A fresh thread has none, so the finished listing came
+                    // back on a pool thread, failed on its first touch of the path box, and the
+                    // first listing never showed.
+                    SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
                     ExercisePickerActions();
                 }
                 catch (Exception ex) { failure = ex; }
