@@ -81,6 +81,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Escape on an open Reminder or Time zone list closes the list and keeps the appointment you are writing.
 - Letter shortcuts no longer fire while a dropdown or check box in the appointment editor has focus.
 - F12 while the keyboard map is open replaces it with About instead of stacking both.
+- The density button's tooltip switches language with the rest of the app.
 
 ### Changed
 

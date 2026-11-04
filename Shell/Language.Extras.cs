@@ -62,6 +62,7 @@ namespace Killendar.Shell
 
             // Tooltips that carry a shortcut, including the panel button's, which tracks its state.
             ApplyShortcutTooltips();
+            RefreshDensityTooltip();   // Density.cs builds it in code with the current step
 
             if (_agendaDay is System.DateTime day && AgendaScroll.Visibility == Visibility.Visible)
             {
