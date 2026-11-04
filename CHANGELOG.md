@@ -92,6 +92,7 @@ Killendar 1.4.1 stops appointments from being saved centuries off on some Window
 - Locking an encrypted Killendar shown beside the open one removes its appointments from the sidebar day list right away.
 - Dates deleted from a repeating appointment, exact repeat end dates and dismissed reminders saved under a custom Windows time separator are read correctly.
 - When a backup fails, the status line gives the real reason, such as a full disk, instead of a misleading database message.
+- If the calendar cannot be reopened after a password change, the previous copy of the file is kept and its location is shown instead of being deleted.
 
 ### Changed
 

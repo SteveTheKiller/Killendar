@@ -10,7 +10,8 @@ namespace Killendar.Services
 {
     /// <summary>A password change that returned has committed: the calendar is open with the new
     /// password. A non-null RetainedBackup is the previous file, left behind because it could not
-    /// be deleted, and the caller must tell the user where it is.</summary>
+    /// be deleted or because the rewritten file did not reopen, and the caller must tell the user
+    /// where it is.</summary>
     public sealed class PasswordChangeOutcome(string? retainedBackup, bool retainedBackupIsUnencrypted, bool reopenNeeded = false)
     {
         /// <summary>The file carries the new password but reopening it failed, so the store is
@@ -143,6 +144,10 @@ namespace Killendar.Services
                 }
             }
             RekeyBackups(path, oldPassword, newPassword);
+
+            // Nothing but the reopen proves the rewritten file opens. When it kept failing, the
+            // previous file is the only copy known to be good, so it stays and is reported.
+            if (reopenNeeded) return new PasswordChangeOutcome(bak, oldPassword == null, reopenNeeded: true);
 
             // The change has committed once the rewritten file opens. A backup that will not delete
             // (antivirus, permissions) is reported, not thrown: throwing here would tell the user a

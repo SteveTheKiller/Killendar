@@ -494,7 +494,7 @@ namespace Killendar.Features
                     }
                     var outcome = _store.SetPassword(dlg.Password);
                     _password = dlg.Password;
-                    AfterPasswordChange(outcome, _password);
+                    outcome = AfterPasswordChange(outcome, _password);
                     if (!IsLocked) _host.SetStatus(WithBackupWarning(PasswordStatus(outcome, "Str_Status_Encrypted")));
                 }
                 else
@@ -515,7 +515,7 @@ namespace Killendar.Features
                     }
                     var outcome = _store.SetPassword(string.IsNullOrEmpty(dlg.Password) ? null : dlg.Password);
                     _password = string.IsNullOrEmpty(dlg.Password) ? null : dlg.Password;
-                    AfterPasswordChange(outcome, _password);
+                    outcome = AfterPasswordChange(outcome, _password);
                     if (!IsLocked) _host.SetStatus(WithBackupWarning(PasswordStatus(outcome, _password != null
                         ? "Str_Status_PwChanged" : "Str_Status_PwRemoved")));
                 }
@@ -545,18 +545,38 @@ namespace Killendar.Features
         /// failing). The new password is the one the file now needs, so it is tried once more; if the
         /// file still will not open, the app locks and asks for the password rather than showing a
         /// calendar that is not there.</summary>
-        internal void AfterPasswordChange(PasswordChangeOutcome outcome, string? newPassword)
+        internal PasswordChangeOutcome AfterPasswordChange(PasswordChangeOutcome outcome, string? newPassword)
         {
-            if (!outcome.ReopenNeeded || _store.IsOpen) return;
+            if (!outcome.ReopenNeeded || _store.IsOpen) return outcome;
             _password = newPassword;
             try { _store.Open(EventStore.ActivePath, newPassword); }
             catch (Exception) { try { _store.Close(); } catch (Exception) { } }
-            if (_store.IsOpen) return;
+            if (_store.IsOpen)
+            {
+                // The rewritten file has now opened, so the previous copy the store kept while that
+                // was unproven can go. One that will not delete is still reported.
+                if (outcome.RetainedBackup == null) return outcome;
+                try
+                {
+                    File.Delete(outcome.RetainedBackup);
+                    return new PasswordChangeOutcome(null, false);
+                }
+                catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
+                {
+                    return outcome;
+                }
+            }
             _password = null;
             IsLocked = true;
             _host.ShowLocked(true);
             _host.RefreshView();
-            _host.SetStatus(_host.Loc("Str_Pw_UnlockHead"));
+            // The previous copy is the only one known to open, so it is named without the advice
+            // to delete it that an unencrypted leftover gets after a change that reopened.
+            string status = _host.Loc("Str_Pw_UnlockHead");
+            if (outcome.RetainedBackup != null)
+                status += " " + string.Format(_host.Loc("Str_Status_PwBackupKept"), outcome.RetainedBackup);
+            _host.SetStatus(status);
+            return outcome;
         }
 
         internal void RefreshLockState() => _host.ShowLockState(IsLocked || _store.HasPassword);

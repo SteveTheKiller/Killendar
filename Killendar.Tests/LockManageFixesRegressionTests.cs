@@ -154,11 +154,30 @@ namespace Killendar.Tests
                 (_, _) => throw new IOException("injected reopen failure"));
             Assert.True(outcome.ReopenNeeded);
             Assert.False(_store.IsOpen);
-            security.AfterPasswordChange(outcome, "new");
+            Assert.True(File.Exists(path + ".bak"));
+            var settled = security.AfterPasswordChange(outcome, "new");
 
             Assert.True(_store.IsOpen);
             Assert.False(security.IsLocked);
             Assert.True(security.RemembersPassword);
+            // SS-004: the reopen proved the rewritten file, so the kept previous copy goes.
+            Assert.False(File.Exists(path + ".bak"));
+            Assert.Null(settled.RetainedBackup);
+        }
+
+        [Fact]
+        public void AChangeThatStaysClosedNamesThePreviousCopyItKept()
+        {
+            string path = Create("A.kcal", "old");
+            EventStore.SetActive("A.kcal");
+            var security = new SecurityController(_host, _store);
+
+            security.AfterPasswordChange(new PasswordChangeOutcome(path + ".bak", true, reopenNeeded: true), "not the key");
+
+            Assert.True(security.IsLocked);
+            string status = _host.Statuses[_host.Statuses.Count - 1];
+            Assert.Contains(path + ".bak", status);
+            Assert.DoesNotContain("Str_Status_PwPlainBackupKept", status);
         }
 
         [Fact]

@@ -52,8 +52,10 @@ namespace Killendar.Tests
         }
 
         [Fact]
-        public void FailedReopenAfterACommittedChangeStillCleansUp()
+        public void FailedReopenAfterACommittedChangeKeepsThePreviousCopy()
         {
+            // SS-004: nothing but the reopen proves the rewritten file opens, so when it keeps
+            // failing the previous file is the only copy known to be good and stays, reported.
             using var fixture = new AppointmentFixture();
             fixture.Store.Add(Appointment("Kept"));
             string path = fixture.Store.FilePath;
@@ -62,8 +64,16 @@ namespace Killendar.Tests
                 (file, password) => throw new IOException("injected reopen failure"));
 
             Assert.True(outcome.ReopenNeeded);
-            Assert.False(File.Exists(path + ".bak"));
-            Assert.Null(outcome.RetainedBackup);
+            Assert.True(File.Exists(path + ".bak"));
+            Assert.Equal(path + ".bak", outcome.RetainedBackup);
+            Assert.True(outcome.RetainedBackupIsUnencrypted);
+            var previous = new EventStore();
+            try
+            {
+                previous.OpenReadOnly(path + ".bak");
+                Assert.Equal("Kept", Assert.Single(previous.Events).Title);
+            }
+            finally { previous.Close(); }
             Assert.Empty(fixture.Store.BackupsNotRekeyed);
             var backup = Assert.Single(EventStore.ListBackupsFor(path));
             Assert.True(EventStore.IsEncryptedFile(backup.Path));
