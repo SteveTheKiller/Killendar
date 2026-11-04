@@ -16,9 +16,10 @@ namespace Killendar.Tests
         public void IncompleteMigrationIsNotPublishedAndCorrectedInputCanRetry()
         {
             // Redirect the profile settings boundary in memory. Never write the real profile.
-            Assert.False(File.Exists(Path.Combine(Environment.GetFolderPath(
-                Environment.SpecialFolder.LocalApplicationData), "Killendar", "events.json")),
-                "Run this migration fixture in an isolated profile without a legacy source.");
+            // The suite profile (under TestScratch) is where the store looks for a legacy source.
+            Assert.False(File.Exists(Path.Combine(AppPaths.LocalData, "Killendar", "events.json")),
+                "The suite profile must not hold a legacy source.");
+            Assert.StartsWith(TestScratch.Root, AppPaths.LocalData, StringComparison.OrdinalIgnoreCase);
             string root = Path.Combine(TestScratch.Root, Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(root);
             var cache = typeof(Settings).GetField("_cache", BindingFlags.Static | BindingFlags.NonPublic)!;
