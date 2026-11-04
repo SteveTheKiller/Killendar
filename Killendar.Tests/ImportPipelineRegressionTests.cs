@@ -67,6 +67,22 @@ namespace Killendar.Tests
         }
 
         [Fact]
+        public void AFailedSafetyBackupIsReportedAfterTheImport()
+        {
+            // SS-008: the backup taken before an import is "best effort, reported", so a failed
+            // one has to reach the status line. A file where the Backups folder belongs blocks it.
+            using var fixture = new AppointmentFixture();
+            fixture.Store.Add(Appointments(1)[0]);
+            File.WriteAllText(Path.Combine(Path.GetDirectoryName(fixture.Store.FilePath)!, "Backups"), "");
+            var host = new EnglishCalendarHost();
+
+            new IcsTransfer(host, fixture.Store).Import(WriteIcs(fixture, Appointments(3)));
+
+            Assert.StartsWith("Imported 2 appointments", host.Status);
+            Assert.Contains("Backup failed: ", host.Status);
+        }
+
+        [Fact]
         public void CleanImportDoesNotAsk()
         {
             using var fixture = new AppointmentFixture();

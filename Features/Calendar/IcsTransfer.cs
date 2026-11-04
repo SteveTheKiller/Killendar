@@ -108,7 +108,9 @@ namespace Killendar.Features
                     _store.PublishImport(plan);
                 }
 
-                _host.SetStatus(Summary(source, plan));
+                // The safety backup before the write is best effort, and a failed one is said.
+                _host.SetStatus(Summary(source, plan) + (plan.BackupError == null ? ""
+                    : " " + string.Format(_host.Loc("Str_Status_BackupFailed"), plan.BackupError)));
             }
             catch (ImportLimitException)
             {
