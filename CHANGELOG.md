@@ -4,6 +4,14 @@ All notable changes to Killendar are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.3] - Unreleased
+
+Killendar 1.4.3 makes single-line text fields match the dropdowns beside them.
+
+### Changed
+
+- Single-line text fields are as tall as the dropdowns beside them, so form rows line up instead of the text boxes standing oversized.
+
 ## [1.4.2] - 2026-11-04
 
 Killendar 1.4.2 fixes first-time installs, which 1.4.1 refused.

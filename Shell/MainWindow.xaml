@@ -532,7 +532,7 @@
                                     </StackPanel>
 
                                     <TextBlock Text="{DynamicResource Str_Fld_Title}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
-                                    <TextBox x:Name="FieldTitle" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="4,3" Margin="0,2,0,10"
+                                    <TextBox x:Name="FieldTitle" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="4,0" Margin="0,2,0,10"
                                              AutomationProperties.Name="{DynamicResource Str_Fld_Title}"/>
 
                                     <CheckBox x:Name="AllDayToggle" Click="AllDayToggle_Click"
@@ -563,7 +563,7 @@
                                                     <ColumnDefinition Width="26"/>
                                                 </Grid.ColumnDefinitions>
                                                 <TextBox x:Name="FieldStartDate" Grid.Column="0" Style="{StaticResource DarkTextBox}" AutomationProperties.Name="{DynamicResource Str_A11y_StartDate}"
-                                                         Background="Transparent" BorderThickness="0" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,3"
+                                                         Background="Transparent" BorderThickness="0" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,0" Margin="0,-1"
                                                          TextChanged="FieldStart_TextChanged" ToolTip="{DynamicResource Str_Hint_Date}"/>
                                                 <Button x:Name="StartDatePickerBtn" Grid.Column="1" Content="&#xE787;" Click="StartDatePicker_Click" AutomationProperties.Name="{DynamicResource Str_A11y_ChooseStartDate}"
                                                         Style="{StaticResource SurfaceButton}" Background="Transparent" BorderThickness="0"
@@ -571,7 +571,7 @@
                                                         ToolTip="{DynamicResource Str_TT_ChooseDate}"/>
                                             </Grid>
                                         </Border>
-                                        <TextBox x:Name="FieldStartTime" Grid.Column="3" Style="{StaticResource DarkTextBox}" AutomationProperties.Name="{DynamicResource Str_A11y_StartTime}" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,3"
+                                        <TextBox x:Name="FieldStartTime" Grid.Column="3" Style="{StaticResource DarkTextBox}" AutomationProperties.Name="{DynamicResource Str_A11y_StartTime}" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,0"
                                                  TextChanged="FieldStart_TextChanged" ToolTip="{DynamicResource Str_Hint_Time}"/>
                                     </Grid>
 
@@ -590,7 +590,7 @@
                                                     <ColumnDefinition Width="26"/>
                                                 </Grid.ColumnDefinitions>
                                                 <TextBox x:Name="FieldEndDate" Grid.Column="0" Style="{StaticResource DarkTextBox}" AutomationProperties.Name="{DynamicResource Str_A11y_EndDate}"
-                                                         Background="Transparent" BorderThickness="0" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,3"
+                                                         Background="Transparent" BorderThickness="0" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,0" Margin="0,-1"
                                                          ToolTip="{DynamicResource Str_Hint_Date}"/>
                                                 <Button x:Name="EndDatePickerBtn" Grid.Column="1" Content="&#xE787;" Click="EndDatePicker_Click" AutomationProperties.Name="{DynamicResource Str_A11y_ChooseEndDate}"
                                                         Style="{StaticResource SurfaceButton}" Background="Transparent" BorderThickness="0"
@@ -598,7 +598,7 @@
                                                         ToolTip="{DynamicResource Str_TT_ChooseDate}"/>
                                             </Grid>
                                         </Border>
-                                        <TextBox x:Name="FieldEndTime" Grid.Column="3" Style="{StaticResource DarkTextBox}" AutomationProperties.Name="{DynamicResource Str_A11y_EndTime}" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,3" ToolTip="{DynamicResource Str_Hint_Time}"/>
+                                        <TextBox x:Name="FieldEndTime" Grid.Column="3" Style="{StaticResource DarkTextBox}" AutomationProperties.Name="{DynamicResource Str_A11y_EndTime}" FontFamily="{DynamicResource UiFont}" FontSize="12" Padding="4,0" ToolTip="{DynamicResource Str_Hint_Time}"/>
                                     </Grid>
 
                                     <!-- Shown once "Show time zones" is ticked (ZoneField.cs). The times above are on this zone's clock. -->
@@ -634,7 +634,7 @@
                                             <TextBlock Grid.Column="0" Text="{DynamicResource Str_Rep_Every}" Foreground="{DynamicResource MutedTextBrush}"
                                                        FontFamily="{DynamicResource UiFont}" FontSize="11" VerticalAlignment="Center" Margin="0,0,5,0"/>
                                             <TextBox x:Name="FieldRepeatInterval" Grid.Column="1" Style="{StaticResource DarkTextBox}"
-                                                     FontSize="12" Padding="4,3" TextAlignment="Center" TextChanged="RepeatInterval_TextChanged"/>
+                                                     FontSize="12" Padding="4,0" TextAlignment="Center" TextChanged="RepeatInterval_TextChanged"/>
                                             <TextBlock x:Name="RepeatUnitLabel" Grid.Column="2" Foreground="{DynamicResource MutedTextBrush}"
                                                        FontFamily="{DynamicResource UiFont}" FontSize="11" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                         </Grid>
@@ -658,7 +658,7 @@
                                              the tooltip says which. Two boxes where only one can
                                              ever be used is a box that is always dead. -->
                                         <TextBox x:Name="FieldRepeatEnd" Style="{StaticResource DarkTextBox}" FontSize="12"
-                                                 Padding="4,3" Margin="0,0,0,4" Visibility="Collapsed"/>
+                                                 Padding="4,0" Margin="0,0,0,4" Visibility="Collapsed"/>
 
                                         <!-- Extra dates outside the pattern, each a chip that removes itself. -->
                                         <TextBlock Text="{DynamicResource Str_Rep_AlsoOn}" Foreground="{DynamicResource DimTextBrush}"
@@ -669,7 +669,7 @@
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBox x:Name="FieldRepeatExtra" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="4,3"
+                                            <TextBox x:Name="FieldRepeatExtra" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="4,0"
                                                      AutomationProperties.Name="{DynamicResource Str_Rep_AlsoOn}" ToolTip="{DynamicResource Str_Hint_Date}"/>
                                             <Button x:Name="RepeatExtraAdd" Grid.Column="1" Style="{StaticResource RailButton}" Margin="4,0,0,0"
                                                     FontFamily="Segoe MDL2 Assets" FontSize="12" Content="&#xE710;"
@@ -692,7 +692,7 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBox x:Name="FieldLocation" Grid.Column="0" Style="{StaticResource DarkTextBox}"
                                                   AutomationProperties.Name="{DynamicResource Str_Fld_Location}"
-                                                  FontSize="12" Padding="4,3" TextChanged="FieldLocation_TextChanged"
+                                                  FontSize="12" Padding="4,0" TextChanged="FieldLocation_TextChanged"
                                                   PreviewKeyDown="LocationSuggestion_PreviewKeyDown"/>
                                         <Popup x:Name="LocationSuggestionsPopup" Grid.Column="0" PlacementTarget="{Binding ElementName=FieldLocation}"
                                                Placement="Bottom" StaysOpen="False" AllowsTransparency="True" PopupAnimation="Fade">
@@ -724,7 +724,7 @@
                                              VerticalScrollBarVisibility="Auto"/>
 
                                     <TextBlock Text="{DynamicResource Str_Fld_Attendees}" Foreground="{DynamicResource DimTextBrush}" FontFamily="{DynamicResource UiFont}" FontSize="10"/>
-                                    <TextBox x:Name="FieldAttendees" AutomationProperties.Name="{DynamicResource Str_Fld_Attendees}" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="4,3" Margin="0,2,0,2"
+                                    <TextBox x:Name="FieldAttendees" AutomationProperties.Name="{DynamicResource Str_Fld_Attendees}" Style="{StaticResource DarkTextBox}" FontSize="12" Padding="4,0" Margin="0,2,0,2"
                                              ToolTip="{DynamicResource Str_Hint_AttendeesTip}"/>
                                     <TextBlock Text="{DynamicResource Str_Hint_Attendees}" Foreground="{DynamicResource DimTextBrush}"
                                                FontFamily="{DynamicResource UiFont}" FontSize="9.5" Margin="0,0,0,10"/>

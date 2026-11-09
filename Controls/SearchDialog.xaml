@@ -86,7 +86,7 @@
                 </Border>
 
                 <StackPanel Grid.Row="1" Margin="24,14,24,18">
-                    <TextBox x:Name="QueryBox" Style="{StaticResource DarkTextBox}" FontSize="13" Padding="6,4"
+                    <TextBox x:Name="QueryBox" Style="{StaticResource DarkTextBox}" FontSize="13" Padding="6,0"
                              AutomationProperties.Name="{DynamicResource Str_Search_Box}"
                              TextChanged="QueryBox_TextChanged" PreviewKeyDown="QueryBox_PreviewKeyDown"/>
                     <TextBlock x:Name="HintText" Text="{DynamicResource Str_Search_Hint}" FontSize="10.5"
