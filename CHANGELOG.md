@@ -6,11 +6,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ## [1.4.3] - Unreleased
 
-Killendar 1.4.3 keeps the keyboard focus ring through theme changes and makes single-line text fields match the dropdowns beside them.
-
-### Fixed
-
-- Toolbar buttons, the sidebar rail buttons and the file picker's folder tree keep their keyboard focus ring after a theme change. It used to disappear from them, so a keyboard user could no longer see which of them had focus.
+Killendar 1.4.3 makes single-line text fields match the dropdowns beside them.
 
 ### Changed
 
