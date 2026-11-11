@@ -6,10 +6,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ## [1.4.3] - Unreleased
 
-Killendar 1.4.3 makes single-line text fields match the dropdowns beside them.
+Killendar 1.4.3 updates its SQLite, JSON and time zone libraries and makes single-line text fields match the dropdowns beside them.
 
 ### Changed
 
+- Updated SQLite and JSON processing to 10.0.15 and time zone conversion to 8.0.1.
 - Single-line text fields are as tall as the dropdowns beside them, so form rows line up instead of the text boxes standing oversized.
 
 ## [1.4.2] - 2026-11-04

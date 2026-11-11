@@ -79,8 +79,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.Text.Json" Version="10.0.13" />
-    <PackageReference Include="TimeZoneConverter" Version="8.0.0" />
+    <PackageReference Include="System.Text.Json" Version="10.0.15" />
+    <PackageReference Include="TimeZoneConverter" Version="8.0.1" />
     <!-- Keep the legacy framework package graph on patched versions. The app uses net48
          framework assemblies; ExcludeAssets=all keeps these inventory pins out of compilation
          and output, including the older runtime and cryptography dependencies of System.Net.Http. -->
@@ -95,7 +95,7 @@
          for Costura in-memory assemblies and crashes at startup. The static provider binds via
          plain DllImport, satisfied by SqlCipherBootstrap's preload. The .Core ADO.NET wrapper
          stays managed. Run the vulnerable-package scan at every release. -->
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="10.0.13" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="10.0.15" />
     <PackageReference Include="SQLitePCLRaw.core" Version="3.0.5" />
     <PackageReference Include="SQLitePCLRaw.provider.e_sqlcipher" Version="2.1.11" />
     <!-- The x64 SQLCipher native itself is VENDORED (third_party\sqlcipher\e_sqlcipher.dll,
@@ -103,7 +103,7 @@
          self-extracted at runtime (SqlCipherBootstrap). It replaces the
          SQLitePCLRaw.lib.e_sqlcipher package, whose whole line was deprecated upstream
          (legacy, unmaintained) in 2025. -->
-    <PackageReference Include="PolySharp" Version="1.16.0">
+    <PackageReference Include="PolySharp" Version="1.17.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
