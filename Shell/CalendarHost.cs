@@ -82,8 +82,9 @@ namespace Killendar.Shell
 
         internal string HandleCalendarCommand(string request)
         {
+            if (_security.IsLocked) return "{\"error\":\"Open and unlock Killendar before using calendar commands.\"}";
             var response = CalendarCommands.Create(_store, request);
-            if (_agendaDay != null) BuildDayAgendaRows();
+            if (_agendaDay != null && !CalendarCommands.IsAgenda(request)) BuildDayAgendaRows();
             return response;
         }
 

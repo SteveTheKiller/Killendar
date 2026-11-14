@@ -13,7 +13,9 @@ namespace Killendar.Cli
         private const string AgendaUsage = "killendar agenda <yyyy-MM-dd> <days 1..31> [--limit 1..100] [--database absolute.kcal]";
         private const string CreateUsage = "killendar create <json> (requires an open, unlocked Killendar)";
 
-        public static int Main(string[] args)
+        public static int Main(string[] args) => Run(args);
+
+        internal static int Run(string[] args, string? pipeName = null)
         {
             if (args.Length > 1 && args[args.Length - 1] == "--json")
                 args = args.Take(args.Length - 1).ToArray();
@@ -23,7 +25,7 @@ namespace Killendar.Cli
             {
                 try
                 {
-                    var response = CalendarCommandPipe.Send(args[1]);
+                    var response = pipeName == null ? CalendarCommandPipe.Send(args[1]) : CalendarCommandPipe.Send(args[1], pipeName, null);
                     using var result = JsonDocument.Parse(response);
                     if (result.RootElement.TryGetProperty("error", out var error))
                     {
@@ -57,6 +59,18 @@ namespace Killendar.Cli
             }
             try
             {
+                if (database == null)
+                {
+                    CalendarCommandPipe.RequireAvailable(pipeName);
+                    string request = JsonSerializer.Serialize(new { command = "agenda", date = args[1], days, limit });
+                    string response = pipeName == null ? CalendarCommandPipe.Send(request) : CalendarCommandPipe.Send(request, pipeName, null);
+                    using var result = JsonDocument.Parse(response);
+                    if (result.RootElement.ValueKind == JsonValueKind.Object && result.RootElement.TryGetProperty("error", out var error))
+                    { Console.Error.WriteLine(error.GetString()); return 1; }
+                    if (result.RootElement.ValueKind != JsonValueKind.Array) throw new InvalidDataException("Killendar returned an invalid agenda response.");
+                    Console.WriteLine(response);
+                    return 0;
+                }
                 var events = Agenda(database ?? EventStore.ActivePath, from, days, limit);
                 Console.WriteLine(JsonSerializer.Serialize(events));
                 return 0;
@@ -85,6 +99,7 @@ namespace Killendar.Cli
             {
                 Console.WriteLine(AgendaUsage);
                 Console.WriteLine(CreateUsage);
+                Console.WriteLine("Active-calendar agenda reads use the open, unlocked app (app-pipe-v1).");
                 Console.WriteLine("Output is JSON by default; an optional trailing --json is accepted.");
                 return 0;
             }
@@ -122,7 +137,21 @@ namespace Killendar.Cli
                 Holidays.Load(store, database);
                 // GetInRange puts every all-day item of the range first; the agenda reads day by day,
                 // so the limit must cut the latest days, not the earliest timed ones.
-                return [.. store.GetInRange(from.Date, from.Date.AddDays(days))
+                return Agenda(store, from, days, limit);
+            }
+            finally
+            {
+                store.Close();
+                Holidays.Close();
+                if (savedDays != null) WorkSchedule.Load(savedDays, savedHours);
+            }
+        }
+
+        public static object[] Agenda(EventStore store, DateTime from, int days, int limit)
+        {
+            if (!store.IsOpen || store.IsImporting) throw new InvalidOperationException("Open and unlock Killendar before reading appointments.");
+            if (days < 1 || days > 31 || limit < 1 || limit > 100) throw new ArgumentException("Invalid agenda bounds");
+            return [.. store.GetInRange(from.Date, from.Date.AddDays(days))
                     .OrderBy(ev => ev.Start.Date).ThenBy(ev => ev.AllDay ? 0 : 1).ThenBy(ev => ev.Start)
                     .Take(limit)
                     .Select(ev => (object)new
@@ -136,13 +165,6 @@ namespace Killendar.Cli
                         categories = ev.Categories,
                         recurring = ev.IsSeries || ev.IsOccurrence,
                     })];
-            }
-            finally
-            {
-                store.Close();
-                Holidays.Close();
-                if (savedDays != null) WorkSchedule.Load(savedDays, savedHours);
-            }
         }
     }
 }

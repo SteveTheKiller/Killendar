@@ -10,6 +10,17 @@ namespace Killendar.Services
     {
         private static readonly string[] DateTimeFormats = ["yyyy-MM-ddTHH:mm", "yyyy-MM-ddTHH:mm:ss"];
 
+        internal static bool IsAgenda(string request)
+        {
+            try
+            {
+                using var document = JsonDocument.Parse(request);
+                return document.RootElement.ValueKind == JsonValueKind.Object && document.RootElement.TryGetProperty("command", out var action) &&
+                    action.ValueKind == JsonValueKind.String && action.GetString() == "agenda";
+            }
+            catch (JsonException) { return false; }
+        }
+
         public static string Create(EventStore store, string request)
         {
             // An import writing on a worker thread owns the database until it finishes.
@@ -18,6 +29,17 @@ namespace Killendar.Services
             {
                 using var document = JsonDocument.Parse(request);
                 var input = document.RootElement;
+                if (IsAgenda(request))
+                {
+                    if (!store.IsOpen) return Error("Open and unlock Killendar before reading appointments.");
+                    if (input.EnumerateObject().Any(p => p.Name is not ("command" or "date" or "days" or "limit")) ||
+                        !input.TryGetProperty("date", out var date) || date.ValueKind != JsonValueKind.String ||
+                        !DateTime.TryParseExact(date.GetString(), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var from) ||
+                        !input.TryGetProperty("days", out var daysValue) || daysValue.ValueKind != JsonValueKind.Number || !daysValue.TryGetInt32(out int days) || days < 1 || days > 31 ||
+                        !input.TryGetProperty("limit", out var limitValue) || limitValue.ValueKind != JsonValueKind.Number || !limitValue.TryGetInt32(out int limit) || limit < 1 || limit > 100)
+                        return Error("Provide a valid agenda date, up to 31 days, and a limit up to 100 events.");
+                    return JsonSerializer.Serialize(Cli.Program.Agenda(store, from, days, limit));
+                }
                 if (!store.IsOpen || input.ValueKind != JsonValueKind.Object ||
                     input.EnumerateObject().Any(p => p.Name != "title" && p.Name != "start" &&
                         p.Name != "end" && p.Name != "allDay" && p.Name != "location" &&

@@ -103,6 +103,17 @@ namespace Killendar.Services
 
         private static string PipeName => "Killendar-" + Process.GetCurrentProcess().SessionId + "-CalendarCommands";
 
+        internal static void RequireAvailable(string? pipeName = null)
+        {
+            if (!WaitNamedPipe(@"\\.\pipe\" + (pipeName ?? PipeName), 1) && Marshal.GetLastWin32Error() == 2)
+                throw new InvalidOperationException("Open and unlock Killendar before using calendar commands through KillerMCP.");
+        }
+
+        [DllImport("kernel32.dll", EntryPoint = "WaitNamedPipeW", CharSet = CharSet.Unicode, SetLastError = true)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool WaitNamedPipe(string name, uint timeout);
+
         public static string Send(string request) => Send(request, PipeName, null);
 
         internal static string Send(string request, string pipeName,
@@ -110,6 +121,7 @@ namespace Killendar.Services
         {
             try
             {
+                RequireAvailable(pipeName);
                 using var pipe = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
                 pipe.Connect(2000);
                 PipeGuard.RequireCurrentUserServer(pipe, serverOwner);
@@ -118,7 +130,7 @@ namespace Killendar.Services
             }
             catch (Exception ex) when (ex is IOException || ex is TimeoutException)
             {
-                throw new InvalidOperationException("Open and unlock Killendar before creating appointments through KillerMCP.", ex);
+                throw new InvalidOperationException("Open and unlock Killendar before using calendar commands through KillerMCP.", ex);
             }
         }
 

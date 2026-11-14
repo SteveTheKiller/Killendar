@@ -8,6 +8,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 Killendar 1.4.3 updates its SQLite, JSON and time zone libraries and makes single-line text fields match the dropdowns beside them.
 
+### Fixed
+
+- CLI agenda reads use the open, unlocked app for encrypted calendars and fail promptly when it is closed.
+
 ### Changed
 
 - Updated SQLite and JSON processing to 10.0.15 and time zone conversion to 8.0.1.
