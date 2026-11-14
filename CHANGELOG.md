@@ -16,6 +16,7 @@ Killendar 1.4.3 updates its SQLite, JSON and time zone libraries and makes singl
 
 - Updated SQLite and JSON processing to 10.0.15 and time zone conversion to 8.0.1.
 - Single-line text fields are as tall as the dropdowns beside them, so form rows line up instead of the text boxes standing oversized.
+- The copyright at the right end of the footer ends 8 px before the corner grip, the same gap in every Killer app.
 
 ## [1.4.2] - 2026-11-04
 
