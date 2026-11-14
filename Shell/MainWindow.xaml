@@ -914,7 +914,7 @@
                     <Border IsHitTestVisible="False" BorderBrush="{DynamicResource FooterBevelLightBrush}"
                             BorderThickness="{DynamicResource FooterCellDarkThickness}"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
-                            Margin="{DynamicResource FooterCellPadding}">
+                            Margin="{DynamicResource FooterCornerPadding}">
                     <!-- FontSize 14.5 in the wordmark face (Killer Sans draws small for its em). The status line on the left stays 11.5. -->
                     <TextBlock x:Name="VersionLabel" Text="v1.0.0"
                                Foreground="{DynamicResource TextFooter}" FontFamily="{DynamicResource BrandSansFont}"
