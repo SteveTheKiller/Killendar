@@ -6,11 +6,32 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ## [1.5.0] - Unreleased
 
-Killendar 1.5.0 gives appointments the family's card menu, updates its SQLite, JSON and time zone libraries and makes single-line text fields match the dropdowns beside them.
+Killendar 1.5.0 gives appointments the family's card menu, hardens how it loads its database engine and checks updates, fixes a long list of data, keyboard and layout bugs, and lets a deleted template come back with Undo.
+
+### Security
+
+- The database engine is loaded from the exact file that was checked, with no window to swap it in between.
+- The command pipe refuses connections from the network, and the install lock is limited to the signed-in user.
+- Update checks verify the signer from the same signature check that approved the file.
 
 ### Fixed
 
 - CLI agenda reads use the open, unlocked app for encrypted calendars and fail promptly when it is closed.
+- CLI commands print to the console they were run from, and an export named "report." no longer gets a doubled dot.
+- The color picker opens under every theme, and Replace chip works under Blood, Cyanotic and Greed.
+- Saving after a drag keeps the appointment where it was dropped.
+- Duplicating one date of a repeating appointment no longer starts a new series.
+- A damaged or duplicated events.json from an older version no longer blocks every launch. Killendar keeps the file, says so and retries the move on the next start.
+- CSV import removes the apostrophe that protects values like "-call" on export, and imported rows keep stable ids.
+- Calendar imports take the newest revision of each appointment.
+- Ctrl+D and Ctrl+Delete act on the focused appointment, even while its card is open.
+- Clicking an hour slot lands on the half hour the hover band shows.
+- The month view, its drag and drop and the Next button work in December 9999 and January 0001.
+- Falling back to the previous encrypted Killendar no longer asks for its password again.
+- Search asks about an unsaved draft before it moves the calendar.
+- The window's minimum size fits the monitor it is on.
+- The day view title follows the language's date format.
+- The sidebar slides closed smoothly when it is closed while still opening.
 
 ### Changed
 
@@ -22,6 +43,12 @@ Killendar 1.5.0 gives appointments the family's card menu, updates its SQLite, J
 - Updated SQLite and JSON processing to 10.0.15 and time zone conversion to 8.0.1.
 - Single-line text fields are as tall as the dropdowns beside them, so form rows line up instead of the text boxes standing oversized.
 - The copyright at the right end of the footer ends 8 px before the corner grip, the same gap in every Killer app.
+- Selected files in the file picker use the same highlight as its places list and folder tree.
+- Large months build faster and use less memory, since appointment cards are built when they open.
+
+### Added
+
+- Deleting a template shows Undo in the status bar, which brings it back.
 
 ## [1.4.2] - 2026-11-04
 
