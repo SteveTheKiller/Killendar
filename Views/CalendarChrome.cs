@@ -131,7 +131,7 @@ namespace Killendar.Views
         /// </summary>
         internal static Border Chip(CalendarEvent ev, Action<CalendarEvent> onClick,
                                     bool compact = true, bool showTime = false, bool wrap = false,
-                                    bool showEndTime = false)
+                                    bool showEndTime = false, Action<ContextMenu>? extendCard = null)
         {
             bool other = ev.SourceCalendar.Length > 0;
             string? category = other ? null : Services.CategoryManager.PrimaryOf(ev);
@@ -227,7 +227,12 @@ namespace Killendar.Views
                 onClick(ev);
             };
 
-            chip.ContextMenu = AppointmentCard(ev, other, onClick);
+            LazyCard(chip, () =>
+            {
+                var card = AppointmentCard(ev, other, onClick);
+                extendCard?.Invoke(card);
+                return card;
+            });
 
             // wrap: the whole title, however long, instead of one trimmed line. The sidebar day
             // agenda asks for this at higher densities; the grid views never do - a wrapping
@@ -295,6 +300,28 @@ namespace Killendar.Views
             if (ev.SeriesId != null && !other)
                 menu.Items.Add(CardBuilder.Row(L("Str_Ctx_EditSeries"), null, Glyph(0xE70F), () => EditSeriesRequested?.Invoke(ev)));
             return menu;
+        }
+
+        [ThreadStatic] private static ContextMenu? _placeholder;
+
+        /// <summary>
+        /// Gives an element a right-click card that is built the first time it opens. Building
+        /// every chip's card up front made a 1000-chip render several times slower than it needed to
+        /// be (bench in scratch\kd-perf-20261114, 2026-11-14). The menu service only targets an element whose ContextMenu
+        /// is set, so each element holds one shared empty placeholder until then; the swap happens
+        /// in ContextMenuOpening, before the service reads the menu it opens. Works for the menu
+        /// key and Shift+F10 too, which the old button-down trick did not. The placeholder carries
+        /// one item because Microsoft's "Handle the ContextMenuOpening Event" page says the menu
+        /// being replaced must be neither null nor empty.
+        /// </summary>
+        internal static void LazyCard(FrameworkElement element, Func<ContextMenu> build)
+        {
+            element.ContextMenu = _placeholder ??= new ContextMenu { Items = { new MenuItem() } };
+            element.ContextMenuOpening += (_, _) =>
+            {
+                if (ReferenceEquals(element.ContextMenu, _placeholder))
+                    element.ContextMenu = build();
+            };
         }
 
         /// <summary>Starts a new group of rows at the end of a menu: a separator, except straight

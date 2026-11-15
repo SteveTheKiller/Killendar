@@ -547,7 +547,7 @@ namespace Killendar.Views
             cell.MouseLeftButtonUp += (_, _) =>
                 ApplyPointerState(cell, dayNum, inMonth, hoverBrush);
             // Right-click is the explicit create, for anyone who wants to skip the agenda.
-            cell.ContextMenu = CalendarChrome.DayMenu(date.Date.AddHours(9), d => SlotSelected?.Invoke(d));
+            CalendarChrome.LazyCard(cell, () => CalendarChrome.DayMenu(date.Date.AddHours(9), d => SlotSelected?.Invoke(d)));
 
             return cell;
         }
@@ -559,15 +559,10 @@ namespace Killendar.Views
         /// rail control a visible purpose without pretending a month grid has hourly subdivisions.
         /// Tooltips retain the full title/time/location at every level.
         /// </summary>
-        private Border BuildMonthChip(CalendarEvent ev, bool spanning = false, bool showTitle = true)
+        /// <summary>Month's own rows under the shared appointment card: add on this day, and
+        /// shrink or expand. Runs when the card first opens, never at render.</summary>
+        private void ExtendChipCard(ContextMenu menu, CalendarEvent ev, Guid shrinkKey, bool shrunk)
         {
-            Guid shrinkKey = ev.SeriesKey;
-            bool shrunk = _shrunkAppointments.Contains(shrinkKey);
-            int detail = shrunk ? 0 : CalendarChrome.Density;
-            var chip = CalendarChrome.Chip(ev, OnChipClick,
-                showTime: detail == 2, showEndTime: false);
-
-            var menu = chip.ContextMenu ?? new ContextMenu();
             CalendarChrome.AddRowGroup(menu);
             var add = new MenuItem
             {
@@ -596,7 +591,15 @@ namespace Killendar.Views
                 menu.IsOpen = false;
                 ToggleAppointmentSize(shrinkKey);
             };
-            chip.ContextMenu = menu;
+        }
+
+        private Border BuildMonthChip(CalendarEvent ev, bool spanning = false, bool showTitle = true)
+        {
+            Guid shrinkKey = ev.SeriesKey;
+            bool shrunk = _shrunkAppointments.Contains(shrinkKey);
+            int detail = shrunk ? 0 : CalendarChrome.Density;
+            var chip = CalendarChrome.Chip(ev, OnChipClick,
+                showTime: detail == 2, showEndTime: false, extendCard: menu => ExtendChipCard(menu, ev, shrinkKey, shrunk));
             chip.KeyDown += (_, e) =>
             {
                 if (e.Key != Key.M ||

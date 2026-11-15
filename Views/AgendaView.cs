@@ -181,8 +181,8 @@ namespace Killendar.Views
                 var headBox = new CalendarKeyboard.DayBorder(() => DaySelected?.Invoke(headDate.Date))
                 {
                     Child = head, Margin = head.Margin, HorizontalAlignment = HorizontalAlignment.Left,
-                    ContextMenu = CalendarChrome.DayMenu(headDate.Date.AddHours(9), d => SlotSelected?.Invoke(d))
                 };
+                CalendarChrome.LazyCard(headBox, () => CalendarChrome.DayMenu(headDate.Date.AddHours(9), d => SlotSelected?.Invoke(d)));
                 head.Margin = new Thickness(0);
                 CalendarKeyboard.MakeDay(headBox, headDate, rows: false);
                 group.Children.Add(headBox);
