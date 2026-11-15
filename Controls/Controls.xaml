@@ -2552,7 +2552,7 @@
         </Setter>
     </Style>
 
-    <!-- Row container: hover + accent selection. -->
+    <!-- Row container: hover + the shared selection gradient. -->
     <Style x:Key="PickerRow" TargetType="ListBoxItem">
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
@@ -2568,8 +2568,8 @@
                             <Setter TargetName="bg" Property="Background" Value="{DynamicResource RowHoverBrush}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="bg" Property="Background" Value="{DynamicResource PrimaryFillBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
+                            <Setter TargetName="bg" Property="Background" Value="{DynamicResource SelectionBg}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -2592,7 +2592,7 @@
                 <Setter Property="Foreground" Value="{DynamicResource DimTextBrush}"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>
@@ -2609,7 +2609,7 @@
                 <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>
@@ -2622,7 +2622,7 @@
         <Setter Property="Foreground" Value="{DynamicResource DimTextBrush}"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource SelectionFg}"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>

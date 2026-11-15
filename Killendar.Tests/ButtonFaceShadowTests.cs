@@ -36,6 +36,28 @@ namespace Killendar.Tests
             Assert.Empty(offenders);
         }
 
+        /// <summary>GI-007: every picker list selects with the same gradient as the places list,
+        /// folder tree and combo items, so the file list's rows and their text never use the
+        /// accent fill.</summary>
+        [Fact]
+        public void PickerRowsSelectWithTheSharedGradient()
+        {
+            XNamespace x = "http://schemas.microsoft.com/winfx/2006/xaml";
+            var xaml = XDocument.Load(Path.Combine(Root(), "Controls", "Controls.xaml"));
+            var styles = xaml.Descendants().Where(e => e.Name.LocalName == "Style")
+                .Where(s => s.Attribute(x + "Key") != null)
+                .GroupBy(s => (string)s.Attribute(x + "Key")!).ToDictionary(g => g.Key, g => g.Single());
+            foreach (string key in new[] { "PickerRow", "PickerGlyph", "PickerName", "PickerMeta" })
+            {
+                string text = styles[key].ToString();
+                Assert.DoesNotContain("PrimaryFillBrush", text);
+                Assert.DoesNotContain("OnPrimaryBrush", text);
+            }
+            string row = styles["PickerRow"].ToString();
+            Assert.Contains("{DynamicResource SelectionBg}", row);
+            Assert.Contains("{DynamicResource SelectionFg}", row);
+        }
+
         /// <summary>The theme picker's accent dots are toggle button faces; hover may grow them
         /// but never puts a drop shadow under them.</summary>
         [Fact]
