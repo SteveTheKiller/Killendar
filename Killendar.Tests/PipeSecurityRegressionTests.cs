@@ -106,6 +106,8 @@ namespace Killendar.Tests
             Assert.NotEmpty(rules);
             foreach (AuthorizationRule rule in rules)
             {
+                // The NETWORK deny (GB-002) is the one other entry; it is covered in SecurityHardeningRegressionTests.
+                if (rule.IdentityReference == new SecurityIdentifier(WellKnownSidType.NetworkSid, null)) continue;
                 Assert.Equal(WindowsIdentity.GetCurrent().User, rule.IdentityReference);
                 Assert.Equal(AccessControlType.Allow, ((PipeAccessRule)rule).AccessControlType);
             }

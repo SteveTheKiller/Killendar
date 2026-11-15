@@ -98,8 +98,8 @@ namespace Killendar.Services
             catch { return null; }
         }
 
-        /// <summary>The release in GitHub's latest-release <paramref name="json"/>, as "v1.2.3",
-        /// when it is a published, stable vX.Y.Z release newer than <paramref name="current"/>
+        /// <summary>The release's tag_name exactly as GitHub publishes it in the latest-release
+        /// <paramref name="json"/>, when it is a published, stable vX.Y.Z release newer than <paramref name="current"/>
         /// (KillerBench's release check). Null for anything else.</summary>
         internal static string? NewerReleaseTag(string json, Version current)
         {
@@ -112,7 +112,9 @@ namespace Killendar.Services
 
             var cur = new Version(current.Major, current.Minor, current.Build < 0 ? 0 : current.Build);
             var lat = new Version(latest.Major, latest.Minor, latest.Build < 0 ? 0 : latest.Build);
-            return lat > cur ? $"v{lat.ToString(3)}" : null;
+            // The caller builds the download URL from this, so it must be the release's own spelling
+            // ("1.9.0" or "v1.9.0"), not a rebuilt one that may name a tag that does not exist.
+            return lat > cur ? tag : null;
         }
 
         /// <summary>Reads <c>tag_name</c>, <c>draft</c> and <c>prerelease</c> from the top-level object of a

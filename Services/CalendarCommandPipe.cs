@@ -195,6 +195,11 @@ namespace Killendar.Services
         internal static NamedPipeServerStream CreateServer(string name, PipeDirection direction)
         {
             var security = new PipeSecurity();
+            // The owner's SID also appears on a network logon of the same account, so the allow
+            // below alone would let a remote session reach the pipe over SMB. A deny for the NETWORK
+            // group wins over the allow and keeps the pipe local.
+            security.AddAccessRule(new PipeAccessRule(new SecurityIdentifier(WellKnownSidType.NetworkSid, null),
+                PipeAccessRights.FullControl, AccessControlType.Deny));
             security.AddAccessRule(new PipeAccessRule(WindowsIdentity.GetCurrent().User!,
                 PipeAccessRights.FullControl, AccessControlType.Allow));
             return new NamedPipeServerStream(name, direction, 1, PipeTransmissionMode.Byte,

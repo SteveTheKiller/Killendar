@@ -30,9 +30,6 @@ namespace Killendar.Services
         private static volatile bool _ready;
 
         [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Unicode)]
-        private static extern bool SetDllDirectory(string lpPathName);
-
-        [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Unicode)]
         private static extern IntPtr LoadLibrary(string lpFileName);
 
         /// <summary>
@@ -57,15 +54,32 @@ namespace Killendar.Services
                     ?? throw new InvalidOperationException("The embedded SQLCipher native library is missing.");
                 using var embedded = new MemoryStream();
                 src.CopyTo(embedded);
-                PublishVerifiedCache(target, embedded.ToArray());
-                if (!SetDllDirectory(nativeDir))
-                    throw new Win32Exception(Marshal.GetLastWin32Error(),
-                        "Could not configure the SQLCipher native library path.");
-                if (LoadLibrary(target) == IntPtr.Zero)
-                    throw new Win32Exception(Marshal.GetLastWin32Error(),
-                        "Could not load the SQLCipher native library: " + target);
+                byte[] contents = embedded.ToArray();
+                PublishVerifiedCache(target, contents);
+                byte[] expectedHash;
+                using (var hash = SHA256.Create()) expectedHash = hash.ComputeHash(contents);
+                // No SetDllDirectory: the module is loaded by full path, and the provider's later
+                // LoadLibrary("e_sqlcipher") resolves to the module that is already loaded.
+                LoadVerified(target, expectedHash, LoadLibrary);
                 _ready = true;
             }
+        }
+
+        internal static void LoadVerified(string target, byte[] expectedHash, Func<string, IntPtr> load)
+        {
+            // The same handle that is hashed stays open (readers only, no writers, no rename or
+            // delete) until the loader has mapped the file, so the file that was checked is the file
+            // that gets loaded. Closing it between the check and LoadLibrary would leave a window
+            // for another process running as this user to swap the file.
+            using var verified = new FileStream(target, FileMode.Open, FileAccess.Read, FileShare.Read);
+            using (var hash = SHA256.Create())
+            {
+                if (!hash.ComputeHash(verified).SequenceEqual(expectedHash))
+                    throw new IOException("The cached SQLCipher native library differs from the embedded copy: " + target);
+            }
+            if (load(target) == IntPtr.Zero)
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "Could not load the SQLCipher native library: " + target);
         }
 
         internal static string PublicationMutexName(string target)
