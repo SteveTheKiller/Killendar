@@ -32,6 +32,19 @@ namespace Killendar.Tests
             Assert.Equal(EventStore.NormalizeCategories(expected), imported.Categories);
         }
 
+        // KD150-R2: text the user typed with its own leading apostrophe before a formula sign
+        // survives the round trip instead of losing that apostrophe on import.
+        [Theory]
+        [InlineData("'=ok")]
+        [InlineData("''+1")]
+        [InlineData("'-call")]
+        public void TypedApostropheBeforeAFormulaSignSurvivesTheRoundTrip(string text)
+        {
+            var row = new CalendarEvent { Title = text, Start = new DateTime(2026, 10, 20, 9, 0, 0),
+                End = new DateTime(2026, 10, 20, 10, 0, 0) };
+            Assert.Equal(text, Assert.Single(CsvService.ParseText(CsvService.BuildCsv(new[] { row })).Events).Title);
+        }
+
         [Theory]
         [InlineData("Ordinary appointment")]
         [InlineData("O'Brien")]

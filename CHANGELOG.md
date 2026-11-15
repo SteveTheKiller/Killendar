@@ -22,7 +22,7 @@ Killendar 1.5.0 gives appointments the family's card menu, hardens how it loads 
 - Saving after a drag keeps the appointment where it was dropped.
 - Duplicating one date of a repeating appointment no longer starts a new series.
 - A damaged or duplicated events.json from an older version no longer blocks every launch. Killendar keeps the file, says so and retries the move on the next start.
-- CSV import removes the apostrophe that protects values like "-call" on export, and imported rows keep stable ids.
+- CSV import removes the apostrophe that protects values like "-call" on export, keeps an apostrophe you typed yourself, and imported rows keep stable ids.
 - Calendar imports take the newest revision of each appointment.
 - Ctrl+D and Ctrl+Delete act on the focused appointment, even while its card is open.
 - Right-clicking an appointment in the sidebar's day list opens its card instead of the sidebar's Left and Right menu.

@@ -127,12 +127,16 @@ namespace Killendar.Services
             return !loneSign;
         }
 
+        // Formula text, and text that already has apostrophes in front of formula text, gets one more
+        // apostrophe on export. Import takes exactly one off, so a typed "'=ok" comes back whole.
+        private static bool NeedsApostrophe(string text) => NeedsProtection(text.TrimStart('\''));
+
         // Match the family spreadsheet policy: put protection before leading controls and
         // quote every text cell. Calendar importers can retain the apostrophe as literal text.
         private static string SpreadsheetField(string? value)
         {
             string text = value ?? "";
-            if (NeedsProtection(text)) text = "'" + text;
+            if (NeedsApostrophe(text)) text = "'" + text;
             return "\"" + text.Replace("\"", "\"\"") + "\"";
         }
 
@@ -328,7 +332,7 @@ namespace Killendar.Services
             string raw = row[i];
             // Export puts one apostrophe in front of text a spreadsheet would run as a formula.
             // Remove exactly that apostrophe so the round trip keeps the text and its identity.
-            if (raw.Length > 1 && raw[0] == '\'' && NeedsProtection(raw.Substring(1))) raw = raw.Substring(1);
+            if (raw.Length > 1 && raw[0] == '\'' && NeedsApostrophe(raw.Substring(1))) raw = raw.Substring(1);
             return raw.Trim();
         }
 
