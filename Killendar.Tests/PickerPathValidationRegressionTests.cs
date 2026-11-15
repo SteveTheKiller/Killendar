@@ -18,7 +18,12 @@ namespace Killendar.Tests
     {
         [Fact]
         public void InvalidPathsKeepDialogUsableThroughPickerActions()
-            => ScratchUiProcess.Run(typeof(PickerPathFixture));
+        {
+            // The fixture shows a real dialog, so it runs only where a hidden desktop or a lab VM
+            // sets KILLENDAR_WINDOW_TESTS=1. A plain local run must not open anything.
+            if (Environment.GetEnvironmentVariable("KILLENDAR_WINDOW_TESTS") != "1") return;
+            ScratchUiProcess.Run(typeof(PickerPathFixture));
+        }
     }
 
     public sealed class PickerPathFixture : MarshalByRefObject
@@ -167,7 +172,9 @@ namespace Killendar.Tests
                         // only then applies the wildcard, so the name clears a moment later.
                         PumpUntil(() => name.Text.Length == 0);
                         Assert.Equal("", name.Text);
-                        Assert.Equal("*.ics", filters.Items[0]);
+                        // A typed wildcard joins after the caller's own filters (GK-001).
+                        Assert.Equal("*.ics", filters.Items[filters.Items.Count - 1]);
+                        Assert.NotEqual("*.ics", filters.Items[0]);
                         name.Text = "*.txt";
                         PressEnter(name);
                         // The picker lists and probes off the UI thread; wait for it as a person would.
@@ -175,7 +182,7 @@ namespace Killendar.Tests
                         Assert.True(directory == pathBox.Text, "After a wildcard: path '" + pathBox.Text + "', busy "
                             + dialog.IsDirectoryListingBusy + ", available " + dialog.IsDirectoryListingAvailable
                             + ", status '" + metadata.Text + "'");
-                        Assert.Equal("*.txt", filters.Items[0]);
+                        Assert.Equal("*.txt", filters.Items[filters.Items.Count - 1]);
                         Assert.Equal("", name.Text);
 
                         name.Text = "\"accepted.ics\"";
