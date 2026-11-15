@@ -1039,6 +1039,9 @@ namespace Killendar.Services
                 // A 1px MDL2 stroke disappears against a gray button face at 16px.
                 combined["CaptionGlyphWeight"] = flat ? FontWeights.Bold : FontWeights.Normal;
 
+                // ...and at 10px the X fills a 98SE face edge to edge, which reads as off center.
+                combined["CaptionGlyphSize"] = flat ? 8.0 : 10.0;
+
                 // The About card only gets a caption band when the theme asks for one; 0 keeps
                 // every other theme's card at the exact layout it already had.
                 combined["AboutCaptionHeight"] = flat ? combined["DialogTitleBarHeight"] : 0.0;
