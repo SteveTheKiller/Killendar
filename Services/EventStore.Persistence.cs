@@ -27,30 +27,35 @@ namespace Killendar.Services
         /// the original row could never be deleted. Series links and reminder state follow.</summary>
         private void RepairUnreadableIds()
         {
-            var bad = new List<string>();
+            // Rows are fixed by rowid, because WHERE id = '' never matches a NULL id. A NULL or empty
+            // id cannot be anything's series or reminder link (an empty series_id means standalone),
+            // so only a non-empty old id carries its links to the new one.
+            var bad = new List<(long RowId, string? Raw)>();
             using (var find = _db!.CreateCommand())
             {
-                find.CommandText = "SELECT id FROM events";
+                find.CommandText = "SELECT rowid, id FROM events";
                 using var r = find.ExecuteReader();
                 while (r.Read())
                 {
-                    string raw = r.IsDBNull(0) ? "" : r.GetString(0);
-                    if (!Guid.TryParse(raw, out _)) bad.Add(raw);
+                    string? raw = r.IsDBNull(1) ? null : r.GetString(1);
+                    if (!Guid.TryParse(raw ?? "", out _)) bad.Add((r.GetInt64(0), raw));
                 }
             }
             if (bad.Count == 0) return;
             using var tx = _db.BeginTransaction();
-            foreach (string raw in bad)
+            foreach (var (rowId, raw) in bad)
             {
                 string fresh = Guid.NewGuid().ToString();
                 using var fix = _db.CreateCommand();
                 fix.Transaction = tx;
-                fix.CommandText =
-                    "UPDATE events SET id = $new WHERE id = $old; " +
-                    "UPDATE events SET series_id = $new WHERE series_id = $old; " +
-                    "UPDATE reminder_state SET event_id = $new WHERE event_id = $old;";
+                fix.CommandText = "UPDATE events SET id = $new WHERE rowid = $row;";
+                if (!string.IsNullOrEmpty(raw))
+                    fix.CommandText +=
+                        " UPDATE events SET series_id = $new WHERE series_id = $old;" +
+                        " UPDATE reminder_state SET event_id = $new WHERE event_id = $old;";
                 fix.Parameters.AddWithValue("$new", fresh);
-                fix.Parameters.AddWithValue("$old", raw);
+                fix.Parameters.AddWithValue("$row", rowId);
+                fix.Parameters.AddWithValue("$old", raw ?? "");
                 fix.ExecuteNonQuery();
             }
             tx.Commit();
