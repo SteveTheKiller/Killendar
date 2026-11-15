@@ -224,8 +224,7 @@ namespace Killendar.Views
                 // drew. Clamped one slot short of midnight rather than at 23:30, which was the old
                 // fixed half-hour assumption.
                 int snap = CalendarChrome.SnapMinutes;
-                double mins = Math.Max(0, Math.Min(24 * 60 - snap, y / CalendarChrome.HourHeight * 60));
-                int half = (int)Math.Round(mins / snap);
+                int half = SlotIndexAt(y, CalendarChrome.HourHeight, snap);
                 SlotSelected?.Invoke(date.Date.AddMinutes(half * snap));
             };
             canvas.MouseLeftButtonUp += (s, e) => hover.Opacity = HoverRest;
@@ -240,14 +239,22 @@ namespace Killendar.Views
                 // drew. Clamped one slot short of midnight rather than at 23:30, which was the old
                 // fixed half-hour assumption.
                 int snap = CalendarChrome.SnapMinutes;
-                double mins = Math.Max(0, Math.Min(24 * 60 - snap, y / CalendarChrome.HourHeight * 60));
-                int half = (int)Math.Round(mins / snap);
+                int half = SlotIndexAt(y, CalendarChrome.HourHeight, snap);
                 canvas.ContextMenu = CalendarChrome.DayMenu(
                     date.Date.AddMinutes(half * snap), d => SlotSelected?.Invoke(d), timed: true);
             };
 
             PlaceTimedEvents(canvas, date);
             return canvas;
+        }
+
+        /// <summary>The slot a click at <paramref name="y"/> lands in, counted in steps of
+        /// <paramref name="snap"/> minutes from midnight and clamped one slot short of it. Floored,
+        /// as the hover band is, so a click lands in the band it was drawn in.</summary>
+        internal static int SlotIndexAt(double y, double hourHeight, int snap)
+        {
+            double mins = Math.Max(0, Math.Min(24 * 60 - snap, y / hourHeight * 60));
+            return (int)Math.Floor(mins / snap);
         }
 
         private void PlaceTimedEvents(Canvas canvas, DateTime date)

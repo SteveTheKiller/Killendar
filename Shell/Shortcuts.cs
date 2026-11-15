@@ -33,7 +33,7 @@ namespace Killendar.Shell
             bool ctrl = (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control;
             bool alt = (Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt;
             bool shift = (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
-            bool ctrlShortcut = ctrl && !alt;
+            bool ctrlShortcut = ShortcutKeyPolicy.PlainCtrl(Keyboard.Modifiers);
 
             // Locked: no shortcut reaches the calendar; a key press asks for the password (Lock.cs).
             if (_security.IsLocked)
@@ -80,6 +80,16 @@ namespace Killendar.Shell
             // Appointment-editor accelerators remain available while a text box owns focus.
             // Ctrl+Enter is used instead of Ctrl+S so a multiline description keeps its normal
             // editing behavior; destructive delete retains the editor's confirmation path.
+            // Ctrl+D and Ctrl+Delete on a focused chip act on that chip's appointment through the
+            // card's own paths, even when the editor holds a different one.
+            if (ShortcutKeyPolicy.FocusedAppointment(Keyboard.FocusedElement) is { } chipEvent &&
+                Views.CalendarChrome.AppointmentKeyAction(e.Key, Keyboard.Modifiers) is { } chipAction)
+            {
+                chipAction(chipEvent);
+                e.Handled = true;
+                return;
+            }
+
             bool editingAppointment = _sidebarOpen && EditorScroll.Visibility == Visibility.Visible;
             if (editingAppointment && ctrlShortcut && e.Key == Key.Enter)
             {
@@ -115,14 +125,18 @@ namespace Killendar.Shell
                 e.Handled = true;
                 return;
             }
-            if (editingAppointment && alt && e.SystemKey == Key.A)
+            var editorAlt = editingAppointment
+                ? ShortcutKeyPolicy.EditorAlt(e.SystemKey, Keyboard.Modifiers,
+                    RepeatFreqButton.IsVisible && RepeatFreqButton.IsEnabled)
+                : EditorAltAction.None;
+            if (editorAlt == EditorAltAction.AllDay)
             {
                 AllDayToggle.IsChecked = !AllDayToggle.IsChecked;
                 AllDayToggle_Click(AllDayToggle, new RoutedEventArgs());
                 e.Handled = true;
                 return;
             }
-            if (editingAppointment && alt && e.SystemKey == Key.R)
+            if (editorAlt == EditorAltAction.Repeat)
             {
                 RepeatFreqButton_Click(RepeatFreqButton, new RoutedEventArgs());
                 e.Handled = true;
@@ -153,7 +167,7 @@ namespace Killendar.Shell
                 return;
             }
 
-            if (ctrlShortcut && shift && e.Key == Key.M &&
+            if (ctrl && shift && !alt && e.Key == Key.M &&
                 _calendar.ToggleFocusedMonthAppointment())
             {
                 e.Handled = true;
@@ -263,10 +277,34 @@ namespace Killendar.Shell
 
     public enum EscapeAction { None, LeaveToDropDown, CloseShortcuts, CloseAbout, CloseSidebar }
 
+    internal enum EditorAltAction { None, AllDay, Repeat }
+
     /// <summary>The decisions behind the window's key routing, kept free of controls so they can be
     /// tested without a window.</summary>
     internal static class ShortcutKeyPolicy
     {
+        /// <summary>True for a plain Ctrl chord, the modifier set every Ctrl shortcut in the
+        /// overlay list declares.</summary>
+        internal static bool PlainCtrl(ModifierKeys modifiers)
+            => modifiers == ModifierKeys.Control;
+
+        /// <summary>The editor's Alt+A and Alt+R chords, with Alt alone held. Alt+R needs the
+        /// repeat button to be shown and enabled: it is hidden while one occurrence is edited,
+        /// and a pattern must not land on a single date.</summary>
+        internal static EditorAltAction EditorAlt(Key systemKey, ModifierKeys modifiers, bool repeatAvailable)
+        {
+            if (modifiers != ModifierKeys.Alt) return EditorAltAction.None;
+            if (systemKey == Key.A) return EditorAltAction.AllDay;
+            if (systemKey == Key.R && repeatAvailable) return EditorAltAction.Repeat;
+            return EditorAltAction.None;
+        }
+
+        /// <summary>The appointment a focused chip stands for, when it is one of this Killendar's.
+        /// Another Killendar's appointment is read only, so it names none.</summary>
+        internal static Models.CalendarEvent? FocusedAppointment(object? focused)
+            => focused is Views.CalendarChrome.ChipBorder { Tag: Models.CalendarEvent ev } && ev.SourceCalendar.Length == 0
+                ? ev : null;
+
         /// <summary>What Escape closes: whatever is on top. An overlay covers everything, and an
         /// open dropdown in the editor covers the panel it sits in.</summary>
         internal static EscapeAction Escape(bool dropDownOpen, bool shortcutsVisible, bool aboutVisible, bool sidebarOpen)

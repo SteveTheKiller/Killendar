@@ -85,7 +85,8 @@ namespace Killendar
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            // First, so every path below (helpers, setup prompts, the CLI) builds the family
+            HookCrashLogging();   // CrashLog.cs - first, so it covers startup itself
+            // Next, so every path below (helpers, setup prompts, the CLI) builds the family
             // theme engine with Killendar's defaults and tokens (Services/AppTheme.cs).
             Services.AppTheme.Configure();
             // Killendar's file picker keeps plain shell icons for pictures in the icon grid.
@@ -135,7 +136,6 @@ namespace Killendar
                 return;
             }
 
-            HookCrashLogging();   // CrashLog.cs - first, so it covers startup itself
             base.OnStartup(e);
             // Every window (dialogs, pickers) takes the family UI face from the active theme unless it
             // sets its own, so no dialog falls back to the system Segoe UI.

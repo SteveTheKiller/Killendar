@@ -621,7 +621,12 @@ namespace Killendar.Features
             bool restoreSidebar = _host.IsSidebarOpen;
             _host.CloseSidebar();
             _store.Close();
-            if (!Open(exitOnCancel: false)) return;
+            if (!Open(exitOnCancel: false))
+            {
+                // The store is closed now, so the views must stop drawing what it held.
+                _host.RefreshView();
+                return;
+            }
             _host.RefreshView();
             if (restoreSidebar) _host.RestoreSidebar();
             _host.SetStatus(_host.Loc("Str_Status_Reloaded"));

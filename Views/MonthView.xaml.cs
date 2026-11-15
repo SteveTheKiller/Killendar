@@ -214,10 +214,24 @@ namespace Killendar.Views
                 if (_visibleWeeks <= 0) return _anchor.ToString("MMMM yyyy");
                 var start = _rollingStart;
                 var end = start.AddDays(_visibleWeeks * 7 - 1);
-                return start.Year == end.Year && start.Month == end.Month
-                    ? $"{start:MMMM d} - {end.Day}, {end:yyyy}"
-                    : $"{start:MMM d} - {end:MMM d}, {end:yyyy}";
+                // The culture's own orders: its month and day pattern for the start, and its long
+                // date without the weekday for the end, so German reads "2. November - 29.
+                // November 2026" rather than the English order.
+                var format = CultureInfo.CurrentCulture.DateTimeFormat;
+                return start.ToString(format.MonthDayPattern, CultureInfo.CurrentCulture) + " - " +
+                       end.ToString(WithoutWeekday(format.LongDatePattern), CultureInfo.CurrentCulture);
             }
+        }
+
+        /// <summary>A long date pattern with its weekday and the separator after it removed.</summary>
+        private static string WithoutWeekday(string pattern)
+        {
+            int at = pattern.IndexOf("dddd", StringComparison.Ordinal);
+            if (at < 0) return pattern;
+            int end = at + 4;
+            while (end < pattern.Length && (pattern[end] == ',' || pattern[end] == ' ' || pattern[end] == '.')) end++;
+            string trimmed = pattern.Remove(at, end - at).Trim().TrimEnd(',');
+            return trimmed.Length == 0 ? "D" : trimmed;
         }
 
         public DateTime Step(DateTime from, int direction) => _visibleWeeks > 0
@@ -265,6 +279,7 @@ namespace Killendar.Views
             // RepaintDay color a cell that is no longer in the tree.
             _cells.Clear();
             _rings.Clear();
+            _chipRebuilds.Clear();
 
             CalGrid.Children.Clear();
             CalGrid.RowDefinitions.Clear();
@@ -308,28 +323,36 @@ namespace Killendar.Views
                     CalGrid.Children.Add(cell);
                 }
 
+                int row = r;
                 foreach (var placement in multiDay)
                 {
                     DateTime visibleEventStart = placement.Event.Start.Date < start
                         ? start : placement.Event.Start.Date;
-                    bool showTitle = weekStart.AddDays(placement.StartColumn) == visibleEventStart;
-                    var chip = BuildMonthChip(placement.Event, spanning: true, showTitle);
-                    // An event that spans weeks has one bar per week, all in the same grid. The
-                    // week's first day tells a screen reader which bar it is on.
-                    AutomationProperties.SetName(chip, AutomationProperties.GetName(chip) + ", " +
-                        weekStart.AddDays(placement.StartColumn).ToString("D", CultureInfo.CurrentCulture));
-                    chip.Margin = new Thickness(
-                        placement.StartColumn == 0 ? 0 : 4,
-                        MultiDayTop + placement.Row * MultiDayLaneHeight,
-                        placement.StartColumn + placement.ColumnSpan == 7 ? 0 : 4,
-                        0);
-                    chip.VerticalAlignment = VerticalAlignment.Top;
-                    Panel.SetZIndex(chip, 10);
-                    Grid.SetRow(chip, r);
-                    Grid.SetColumn(chip, placement.StartColumn);
-                    Grid.SetColumnSpan(chip, placement.ColumnSpan);
-                    WireDrag(chip, placement.Event, chip);
-                    CalGrid.Children.Add(chip);
+                    DateTime barDay = weekStart.AddDays(placement.StartColumn);
+                    bool showTitle = barDay == visibleEventStart;
+                    Border Bar()
+                    {
+                        var chip = BuildMonthChip(placement.Event, barDay, spanning: true, showTitle);
+                        // An event that spans weeks has one bar per week, all in the same grid. The
+                        // week's first day tells a screen reader which bar it is on.
+                        AutomationProperties.SetName(chip, AutomationProperties.GetName(chip) + ", " +
+                            barDay.ToString("D", CultureInfo.CurrentCulture));
+                        chip.Margin = new Thickness(
+                            placement.StartColumn == 0 ? 0 : 4,
+                            MultiDayTop + placement.Row * MultiDayLaneHeight,
+                            placement.StartColumn + placement.ColumnSpan == 7 ? 0 : 4,
+                            0);
+                        chip.VerticalAlignment = VerticalAlignment.Top;
+                        Panel.SetZIndex(chip, 10);
+                        Grid.SetRow(chip, row);
+                        Grid.SetColumn(chip, placement.StartColumn);
+                        Grid.SetColumnSpan(chip, placement.ColumnSpan);
+                        WireDrag(chip, placement.Event, chip);
+                        return chip;
+                    }
+                    var bar = Bar();
+                    CalGrid.Children.Add(bar);
+                    TrackChip(placement.Event, CalGrid.Children, bar, Bar);
                 }
             }
             UpdateMonthSilhouette();
@@ -455,9 +478,15 @@ namespace Killendar.Views
             var eventList = new StackPanel();
             foreach (var ev in events)
             {
-                var chip = BuildMonthChip(ev);
-                WireDrag(chip, ev, cell);
+                Border CellChip()
+                {
+                    var built = BuildMonthChip(ev, date.Date);
+                    WireDrag(built, ev, cell);
+                    return built;
+                }
+                var chip = CellChip();
                 eventList.Children.Add(chip);
+                TrackChip(ev, eventList.Children, chip, CellChip);
             }
 
             var eventScroll = new DayScrollViewer
@@ -561,7 +590,9 @@ namespace Killendar.Views
         /// </summary>
         /// <summary>Month's own rows under the shared appointment card: add on this day, and
         /// shrink or expand. Runs when the card first opens, never at render.</summary>
-        private void ExtendChipCard(ContextMenu menu, CalendarEvent ev, Guid shrinkKey, bool shrunk)
+        /// <paramref name="day"/> is the cell the chip sits in, which for a bar that spans weeks
+        /// is that week's first day of it, not the appointment's start.
+        private void ExtendChipCard(ContextMenu menu, Guid shrinkKey, bool shrunk, DateTime day)
         {
             CalendarChrome.AddRowGroup(menu);
             var add = new MenuItem
@@ -570,7 +601,7 @@ namespace Killendar.Views
                 Icon = CalendarChrome.MenuGlyph(0xE710),
                 InputGestureText = "N",
             };
-            add.Click += (_, _) => SlotSelected?.Invoke(ev.Start.Date.AddHours(9));
+            add.Click += (_, _) => SlotSelected?.Invoke(day.Date.AddHours(9));
             menu.Items.Add(add);
             var sizeItem = new MenuItem
             {
@@ -584,6 +615,14 @@ namespace Killendar.Views
             menu.Items.Add(sizeItem);
             menu.PreviewKeyDown += (_, e) =>
             {
+                // N is the Add row's key, as it is on the day cell's card.
+                if (e.Key == Key.N && Keyboard.Modifiers == ModifierKeys.None)
+                {
+                    e.Handled = true;
+                    menu.IsOpen = false;
+                    SlotSelected?.Invoke(day.Date.AddHours(9));
+                    return;
+                }
                 if (e.Key != Key.M ||
                     (Keyboard.Modifiers & (ModifierKeys.Control | ModifierKeys.Shift)) !=
                     (ModifierKeys.Control | ModifierKeys.Shift)) return;
@@ -593,13 +632,13 @@ namespace Killendar.Views
             };
         }
 
-        private Border BuildMonthChip(CalendarEvent ev, bool spanning = false, bool showTitle = true)
+        private Border BuildMonthChip(CalendarEvent ev, DateTime day, bool spanning = false, bool showTitle = true)
         {
             Guid shrinkKey = ev.SeriesKey;
             bool shrunk = _shrunkAppointments.Contains(shrinkKey);
             int detail = shrunk ? 0 : CalendarChrome.Density;
             var chip = CalendarChrome.Chip(ev, OnChipClick,
-                showTime: detail == 2, showEndTime: false, extendCard: menu => ExtendChipCard(menu, ev, shrinkKey, shrunk));
+                showTime: detail == 2, showEndTime: false, extendCard: menu => ExtendChipCard(menu, shrinkKey, shrunk, day));
             chip.KeyDown += (_, e) =>
             {
                 if (e.Key != Key.M ||
@@ -724,7 +763,31 @@ namespace Killendar.Views
             if (!_shrunkAppointments.Remove(key)) _shrunkAppointments.Add(key);
             Settings.Set(ShrunkAppointmentsSetting,
                 string.Join(",", _shrunkAppointments.OrderBy(x => x)));
-            Rebuild();
+            // Only that appointment's chips change. The grid's lanes have a fixed height, so
+            // nothing else moves and the rest of the month keeps its elements.
+            foreach (var rebuild in _chipRebuilds.Where(c => c.Key == key).Select(c => c.Rebuild).ToList())
+                rebuild();
+        }
+
+        // Each chip on screen and how to draw it again in place, cleared by Rebuild.
+        private readonly System.Collections.Generic.List<(Guid Key, Action Rebuild)> _chipRebuilds = [];
+
+        /// <summary>Records how to swap a chip for a freshly built one at the same spot in its
+        /// panel, keeping keyboard focus on it.</summary>
+        private void TrackChip(CalendarEvent ev, UIElementCollection children, Border chip, Func<Border> build)
+        {
+            var current = chip;
+            _chipRebuilds.Add((ev.SeriesKey, () =>
+            {
+                int index = children.IndexOf(current);
+                if (index < 0) return;
+                bool focused = current.IsKeyboardFocusWithin;
+                var next = build();
+                children.RemoveAt(index);
+                children.Insert(index, next);
+                current = next;
+                if (focused) next.Focus();
+            }));
         }
 
         private void OnChipClick(CalendarEvent ev)

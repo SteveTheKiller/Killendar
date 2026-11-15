@@ -299,7 +299,29 @@ namespace Killendar.Views
 
             if (ev.SeriesId != null && !other)
                 menu.Items.Add(CardBuilder.Row(L("Str_Ctx_EditSeries"), null, Glyph(0xE70F), () => EditSeriesRequested?.Invoke(ev)));
+            if (!other)
+            {
+                // The open card is its own popup, so the window never sees these keys; the card
+                // runs the keys its strip shows on its own appointment.
+                menu.PreviewKeyDown += (_, e) =>
+                {
+                    if (AppointmentKeyAction(e.Key, Keyboard.Modifiers) is not { } action) return;
+                    e.Handled = true;
+                    menu.IsOpen = false;
+                    action(ev);
+                };
+            }
             return menu;
+        }
+
+        /// <summary>The card action a key chord runs on an appointment: Ctrl+D duplicates and
+        /// Ctrl+Delete deletes, through the same paths as the card's buttons.</summary>
+        internal static Action<CalendarEvent>? AppointmentKeyAction(Key key, ModifierKeys modifiers)
+        {
+            if (modifiers != ModifierKeys.Control) return null;
+            if (key == Key.D) return ev => DuplicateRequested?.Invoke(ev);
+            if (key == Key.Delete) return ev => DeleteRequested?.Invoke(ev);
+            return null;
         }
 
         [ThreadStatic] private static ContextMenu? _placeholder;

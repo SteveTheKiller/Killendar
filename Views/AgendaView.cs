@@ -82,7 +82,22 @@ namespace Killendar.Views
             }
         }
 
-        public DateTime Step(DateTime from, int direction) => StepBy(from, direction, WindowDays);
+        // The day of the month a run of monthly pages started on, and the date the last page
+        // landed on. A page from any other date starts a new run.
+        private int _pageDay;
+        private DateTime? _lastPage;
+
+        public DateTime Step(DateTime from, int direction)
+        {
+            if (_lastPage != from.Date) _pageDay = from.Day;
+            var next = StepBy(from, direction, WindowDays);
+            // A monthly page goes back to the run's own day where the month has it, so
+            // January 31 pages to February 28 and then March 31, not March 28.
+            if (next == from.AddMonths(direction))
+                next = new DateTime(next.Year, next.Month, Math.Min(_pageDay, DateTime.DaysInMonth(next.Year, next.Month)));
+            _lastPage = next.Date;
+            return next;
+        }
 
         /// <summary>
         /// One page of the agenda: the shorter of the horizon and a calendar month. A 7, 14 or 30

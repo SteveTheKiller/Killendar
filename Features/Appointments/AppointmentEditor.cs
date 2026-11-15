@@ -952,7 +952,8 @@ namespace Killendar.Features
                                        DateTimeStyles.None, out var dt) ||
                 DateTime.TryParseExact(raw, formats, DateFormatManager.ClockFormat(culture),
                                        DateTimeStyles.None, out dt) ||
-                DateTime.TryParse(raw, culture, DateTimeStyles.NoCurrentDateDefault, out dt))
+                DateTime.TryParse(raw, culture, DateTimeStyles.NoCurrentDateDefault, out dt) &&
+                dt.Date == DateTime.MinValue.Date)   // a typed date is not a time
             {
                 time = dt.TimeOfDay;
                 return true;

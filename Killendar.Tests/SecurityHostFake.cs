@@ -22,7 +22,8 @@ namespace Killendar.Tests
         internal bool Locked;
         public void ShowLocked(bool locked) => Locked = locked;
         public void ShowActiveKillendar(string name, bool visible) { }
-        public void RefreshView() { }
+        internal int Refreshes;
+        public void RefreshView() => Refreshes++;
         public bool IsSidebarOpen => false;
         public void RestoreSidebar() { }
         internal int CloseSidebarCalls;
