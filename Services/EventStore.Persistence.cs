@@ -22,6 +22,40 @@ namespace Killendar.Services
             "skip_occurrences, repeat_until_exact, occurrence_anchor, occurrence_basis, occurrence_zone_id, " +
             "duration_days, duration_time_ticks, external_uid, kept_properties, reminder_minutes, repeat_month_week, extra_dates, repeat_shift FROM events";
 
+        /// <summary>Gives every row whose id is not a readable Guid a new Guid, once, in the file.
+        /// A fresh id made only in memory changed on every open, so edits inserted new rows and
+        /// the original row could never be deleted. Series links and reminder state follow.</summary>
+        private void RepairUnreadableIds()
+        {
+            var bad = new List<string>();
+            using (var find = _db!.CreateCommand())
+            {
+                find.CommandText = "SELECT id FROM events";
+                using var r = find.ExecuteReader();
+                while (r.Read())
+                {
+                    string raw = r.IsDBNull(0) ? "" : r.GetString(0);
+                    if (!Guid.TryParse(raw, out _)) bad.Add(raw);
+                }
+            }
+            if (bad.Count == 0) return;
+            using var tx = _db.BeginTransaction();
+            foreach (string raw in bad)
+            {
+                string fresh = Guid.NewGuid().ToString();
+                using var fix = _db.CreateCommand();
+                fix.Transaction = tx;
+                fix.CommandText =
+                    "UPDATE events SET id = $new WHERE id = $old; " +
+                    "UPDATE events SET series_id = $new WHERE series_id = $old; " +
+                    "UPDATE reminder_state SET event_id = $new WHERE event_id = $old;";
+                fix.Parameters.AddWithValue("$new", fresh);
+                fix.Parameters.AddWithValue("$old", raw);
+                fix.ExecuteNonQuery();
+            }
+            tx.Commit();
+        }
+
         private void LoadIntoMemory()
         {
             var list = new List<CalendarEvent>();

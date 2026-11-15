@@ -24,7 +24,8 @@ namespace Killendar.Tests
                 Start = new DateTime(2026, 10, 20, 9, 0, 0), End = new DateTime(2026, 10, 20, 10, 0, 0) };
             var imported = Assert.Single(CsvService.ParseText(CsvService.BuildCsv(new[] { row })).Events);
             Assert.True(CsvService.RequiresSpreadsheetProtection(new[] { row }));
-            string expected = "'" + text.Replace("\r", "");
+            // Import removes the protecting apostrophe, so the text comes back as it was exported.
+            string expected = text.Replace("\r", "").Trim();
             Assert.Equal(expected, imported.Title);
             Assert.Equal(expected, imported.Description);
             Assert.Equal(expected, imported.Location);

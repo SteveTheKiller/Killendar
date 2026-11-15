@@ -196,6 +196,47 @@ namespace Killendar.Features
             _loadedZone = TimeZones.ZoneOf(master ?? ev);
             _view.FieldZoneId = _loadedZone;
             _view.ShowZone(TimeZones.Show, !oneDateOfASeries && !ev.IsSeries);
+            ShowTimes(ev);
+
+            Show();
+            _view.Focus(AppointmentField.Title, selectAll: true);
+            return true;
+        }
+
+        /// <summary>
+        /// A drag on the calendar moved <paramref name="before"/> to <paramref name="after"/>.
+        /// When that is the appointment open here, the panel's copy and its time boxes take the
+        /// new times, so a Save afterwards keeps the drag instead of putting the old times back.
+        /// Time boxes the user already changed are left as typed.
+        /// </summary>
+        internal void Moved(CalendarEvent before, CalendarEvent after)
+        {
+            if (_editing == null || _editing.Id != before.Id || _editing.Start != before.Start) return;
+            bool clean = !HasUnsavedChanges;
+            var typed = (_view.FieldStartDate, _view.FieldStartTime, _view.FieldEndDate, _view.FieldEndTime);
+            var old = _editing.Clone();
+            _editing.Start = after.Start;
+            _editing.End = after.End;
+            if (after.OccurrenceStart.HasValue) _editing.OccurrenceStart = after.OccurrenceStart;
+            if (_nominalEnd.HasValue) _nominalEnd = after.End;
+            _loading = true;
+            try
+            {
+                // The boxes follow the drag only while they still show the times that were loaded.
+                ShowTimes(old);
+                bool untouched = typed == (_view.FieldStartDate, _view.FieldStartTime, _view.FieldEndDate, _view.FieldEndTime);
+                if (untouched) ShowTimes(_editing);
+                else (_view.FieldStartDate, _view.FieldStartTime, _view.FieldEndDate, _view.FieldEndTime) = typed;
+            }
+            finally { _loading = false; }
+            _followedStart = CurrentStart();
+            SyncHighlightedSelection();
+            if (clean) _baseline = Snapshot();
+        }
+
+        /// <summary>Writes the start and end boxes for <paramref name="ev"/> on the loaded zone's clock.</summary>
+        private void ShowTimes(CalendarEvent ev)
+        {
             var zone = TimeZones.Show && !ev.AllDay ? TimeZones.Find(_loadedZone) : null;
             var shownStart = zone == null ? ev.Start : TimeZones.ToZone(ev.Start, zone);
             var shownEnd = zone == null ? ev.End : TimeZones.ToZone(ev.End, zone);
@@ -210,10 +251,6 @@ namespace Killendar.Features
                 : shownEnd;
             _view.FieldEndDate = DateFormatManager.Format(displayedEnd);
             _view.FieldEndTime = FormatTime(shownEnd);
-
-            Show();
-            _view.Focus(AppointmentField.Title, selectAll: true);
-            return true;
         }
 
         private void Show()
@@ -668,8 +705,18 @@ namespace Killendar.Features
         internal void Duplicate()
         {
             if (_editing == null) return;
+            // One date of a series shows the series pattern in the hidden repeat fields. Its copy
+            // is a single appointment on that date, so the pattern is cleared unless the whole
+            // series was chosen.
+            bool oneDate = _editing.IsOccurrence && !_view.EditWholeSeries && _store.GetSeriesMaster(_editing) != null;
             _editing = null;
             _nominalEnd = null;
+            if (oneDate)
+            {
+                _loading = true;
+                try { _view.ResetRepeat(); }
+                finally { _loading = false; }
+            }
             _view.Heading = _view.Loc("Str_Side_New");
             _view.CanDelete = false;
             _view.SeriesScopeVisible = false;

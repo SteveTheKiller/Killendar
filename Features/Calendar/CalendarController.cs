@@ -196,7 +196,7 @@ namespace Killendar.Features
         /// (2026-07-31); a plain appointment or an existing override just moves. The
         /// store raises Changed, which repaints every view.
         /// </summary>
-        private void MoveDropped(CalendarEvent ev, DateTime newStart)
+        internal void MoveDropped(CalendarEvent ev, DateTime newStart)
         {
             var edited = ev.Clone();
 
@@ -222,6 +222,8 @@ namespace Killendar.Features
 
             if (ev.SeriesId is Guid sid && ev.Id == sid) _store.SaveOccurrence(edited);
             else _store.Update(edited);
+            // The editor works on its own copy; tell it, or its Save puts the old times back.
+            if (_store.LoadError == null) _editor.Moved(ev, edited);
         }
 
         /// <summary>Status text for the state the store came up in, in order of how much it tells

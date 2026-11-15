@@ -115,6 +115,10 @@ namespace Killendar.Services
         /// <summary>Count migrated out of events.json on this launch, for the status bar. 0 = none.</summary>
         public int MigratedCount { get; private set; }
 
+        /// <summary>Why a pre-database events.json was left where it is, or null. Unlike
+        /// LoadError this never stops a calendar from opening.</summary>
+        public string? MigrationWarning { get; private set; }
+
         public bool IsOpen => _db != null;
         public bool HasPassword => _password != null;
         public string FilePath => _file;
@@ -193,6 +197,7 @@ namespace Killendar.Services
                 // looking connection or appointments from the previous calendar.
                 var candidate = new EventStore { _db = db };
                 candidate.EnsureSchema();
+                candidate.RepairUnreadableIds();
                 candidate.LoadIntoMemory();
                 CategoryManager.Refresh(candidate);
                 _db = db;

@@ -222,10 +222,17 @@ namespace Killendar.Services
             var incomingList = incoming.ToList();
             var incomingIds = new HashSet<Guid>(incomingList.Select(e => e.Id));
             var removed = new HashSet<Guid>();
-
+            // A file can carry the same UID more than once. The copy with the highest SEQUENCE is
+            // the organizer's latest version, so it stands for the UID; ties keep the first copy.
+            var latest = new Dictionary<Guid, CalendarEvent>();
             foreach (var ev in incomingList)
+                if (!latest.TryGetValue(ev.Id, out var kept) || MeetingInfo.Sequence(ev) > MeetingInfo.Sequence(kept))
+                    latest[ev.Id] = ev;
+
+            foreach (var copy in incomingList)
             {
-                if (!seen.Add(ev.Id)) { plan.AlreadyPresent++; continue; }
+                if (!seen.Add(copy.Id)) { plan.AlreadyPresent++; continue; }
+                var ev = latest[copy.Id];
                 if (!byId.TryGetValue(ev.Id, out var have)) { plan.Fresh.Add(ev); continue; }
                 if (MeetingInfo.Sequence(ev) <= MeetingInfo.Sequence(have)) { plan.AlreadyPresent++; continue; }
                 var update = ev.Clone();

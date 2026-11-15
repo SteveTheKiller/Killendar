@@ -135,6 +135,8 @@ namespace Killendar.Services
         private static bool Yearly(string rule, DateTime start, TimeSpan from, List<DateTime> walls)
         {
             int month = start.Month, week = 0, monthDay = 0, count = int.MaxValue;
+            int listFirst = 0, listLast = 0;
+            bool ordinalGiven = false;
             DayOfWeek? weekday = null;
             DateTime until = new(2100, 12, 31);
             foreach (var item in rule.Split(';'))
@@ -146,14 +148,17 @@ namespace Killendar.Services
                 {
                     case "FREQ": if (val != "YEARLY") return false; break;
                     case "BYMONTH": if (!int.TryParse(val, out month) || month < 1 || month > 12) return false; break;
-                    case "BYMONTHDAY": if (!int.TryParse(val, out monthDay)) return false; break;
+                    case "BYMONTHDAY":
+                        if (val.IndexOf(',') >= 0) { if (!TryWeekOfDays(val, out listFirst, out listLast)) return false; }
+                        else if (!int.TryParse(val, out monthDay)) return false;
+                        break;
                     case "COUNT": if (!int.TryParse(val, out count) || count < 1) return false; break;
                     case "UNTIL":
                         if (!TryLocal(val.TrimEnd('Z'), out var u)) return false;
                         until = val.EndsWith("Z", StringComparison.Ordinal) && u.Year > 1 && u.Year < 9999 ? u + from : u;
                         break;
                     case "BYDAY":
-                        if (val.Length < 3) return false;
+                        if (val.Length < 2) return false;
                         string code = val.Substring(val.Length - 2);
                         string ord = val.Substring(0, val.Length - 2);
                         weekday = code switch
@@ -164,7 +169,23 @@ namespace Killendar.Services
                         };
                         if (weekday == null || !int.TryParse(ord.Length == 0 ? "1" : ord, NumberStyles.AllowLeadingSign,
                             CultureInfo.InvariantCulture, out week) || week == 0 || week < -1 || week > 5) return false;
+                        ordinalGiven = ord.Length > 0;
                         break;
+                }
+            }
+            // BYMONTHDAY=8,9,10,11,12,13,14 with BYDAY=SU is the second Sunday written as a list.
+            // A list that starts on day 1, 8, 15 or 22 names that week; one that ends on the last
+            // day of the month names the last week. Any other list is not a rule read here.
+            // A bare weekday names every such day of the month, which is not a zone change rule.
+            if (weekday != null && !ordinalGiven && listFirst == 0) return false;
+            if (listFirst != 0)
+            {
+                if (weekday == null) return false;
+                if (!ordinalGiven)
+                {
+                    if ((listFirst - 1) % 7 == 0) week = (listFirst - 1) / 7 + 1;
+                    else if (listLast == DateTime.DaysInMonth(2001, month)) week = -1;
+                    else return false;
                 }
             }
             if (weekday == null && monthDay == 0) monthDay = start.Day;
@@ -190,6 +211,25 @@ namespace Killendar.Services
                 walls.Add(wall);
                 made++;
             }
+            return true;
+        }
+
+        /// <summary>True when the list is seven consecutive month days, such as 8 through 14.</summary>
+        private static bool TryWeekOfDays(string list, out int first, out int last)
+        {
+            first = last = 0;
+            var days = new List<int>();
+            foreach (var part in list.Split(','))
+            {
+                if (!int.TryParse(part.Trim(), NumberStyles.None, CultureInfo.InvariantCulture, out int day) ||
+                    day < 1 || day > 31) return false;
+                days.Add(day);
+            }
+            days.Sort();
+            if (days.Count != 7) return false;
+            for (int i = 1; i < days.Count; i++) if (days[i] != days[i - 1] + 1) return false;
+            first = days[0];
+            last = days[6];
             return true;
         }
 

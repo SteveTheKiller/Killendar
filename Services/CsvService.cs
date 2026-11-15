@@ -325,7 +325,11 @@ namespace Killendar.Services
         private static string Field(List<string> row, Dictionary<string, int> col, string name)
         {
             if (!col.TryGetValue(name, out int i) || i >= row.Count) return "";
-            return row[i].Trim();
+            string raw = row[i];
+            // Export puts one apostrophe in front of text a spreadsheet would run as a formula.
+            // Remove exactly that apostrophe so the round trip keeps the text and its identity.
+            if (raw.Length > 1 && raw[0] == '\'' && NeedsProtection(raw.Substring(1))) raw = raw.Substring(1);
+            return raw.Trim();
         }
 
         /// <summary>TRUE is what Outlook writes; 1 and YES cover hand-made files.</summary>

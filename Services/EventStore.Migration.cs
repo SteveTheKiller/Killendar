@@ -28,6 +28,7 @@ namespace Killendar.Services
         private void MigrateFromJsonIfNeeded()
         {
             MigratedCount = 0;
+            MigrationWarning = null;
             string target = ActivePath;
             if (File.Exists(target)) return;
 
@@ -48,10 +49,21 @@ namespace Killendar.Services
             catch (Exception ex)
             {
                 // A corrupt events.json must not block the app from starting on a fresh
-                // Killendar, and must not be renamed away either - it is the only copy.
-                LoadError = ex.Message;
+                // Killendar, and must not be renamed away either, because it is the only copy.
+                // The warning is kept apart from LoadError so the calendar still opens.
+                MigrationWarning = json + ": " + ex.Message;
                 return;
             }
+
+            // Old builds could write the same id twice. Every copy is a real appointment, so a
+            // repeated or empty id gets a new one instead of failing the count check below.
+            var ids = new HashSet<Guid>();
+            foreach (var ev in old)
+                if (ev.Id == Guid.Empty || !ids.Add(ev.Id))
+                {
+                    ev.Id = Guid.NewGuid();
+                    ids.Add(ev.Id);
+                }
 
             // Written plaintext deliberately: migration cannot invent a password, and the lock
             // button is how the user opts in afterwards.
