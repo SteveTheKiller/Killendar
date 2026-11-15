@@ -7,6 +7,8 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <Thickness x:Key="AboutBodyMargin">8,10,8,18</Thickness>
     <Thickness x:Key="AboutCaptionCloseMargin">0,0,0,0</Thickness>
+    <sys:Double x:Key="AboutCaptionCloseWidth">18</sys:Double>
+    <sys:Double x:Key="AboutCaptionCloseHeight">16</sys:Double>
     <Visibility x:Key="AboutCaptionVisibility">Collapsed</Visibility>
     <Visibility x:Key="AboutModernCloseVisibility">Visible</Visibility>
     <sys:Double x:Key="AboutShadowOpacity">0.6</sys:Double>

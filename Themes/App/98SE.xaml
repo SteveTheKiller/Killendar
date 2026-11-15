@@ -6,7 +6,11 @@
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <Thickness x:Key="AboutBodyMargin">8,18,8,18</Thickness>
-    <Thickness x:Key="AboutCaptionCloseMargin">0,1,1,2</Thickness>
+    <!-- Win98 sized a caption button from its caption: the caption minus 4 tall, 2 wider than
+         that. The band is 20px, so 18x16, centered, with the band's own 2px right inset. -->
+    <Thickness x:Key="AboutCaptionCloseMargin">0,0,0,0</Thickness>
+    <sys:Double x:Key="AboutCaptionCloseWidth">18</sys:Double>
+    <sys:Double x:Key="AboutCaptionCloseHeight">16</sys:Double>
     <Visibility x:Key="AboutCaptionVisibility">Visible</Visibility>
     <Visibility x:Key="AboutModernCloseVisibility">Collapsed</Visibility>
     <sys:Double x:Key="AboutShadowOpacity">0</sys:Double>

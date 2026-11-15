@@ -29,6 +29,27 @@ namespace Killendar.Tests
             Assert.Contains("combined[\"CaptionGlyphSize\"] = flat ? 8.0 : 10.0;", source);
         }
 
+        /// <summary>Win98 sized a caption button from its caption: height is the caption minus 4,
+        /// width is that plus 2. The About band is 20px, so its X is 18x16, centered.</summary>
+        [Fact]
+        public void AboutCaptionCloseFitsTheTwentyPixelBand()
+        {
+            XNamespace x = "http://schemas.microsoft.com/winfx/2006/xaml";
+            var main = XDocument.Load(Path.Combine(Root(), "Shell", "MainWindow.xaml"));
+            var close = Assert.Single(main.Descendants(), e => e.Name.LocalName == "Button"
+                && (string?)e.Attribute("Margin") == "{DynamicResource AboutCaptionCloseMargin}");
+            Assert.Equal("{DynamicResource AboutCaptionCloseWidth}", (string?)close.Attribute("Width"));
+            Assert.Equal("{DynamicResource AboutCaptionCloseHeight}", (string?)close.Attribute("Height"));
+            Assert.Equal("Center", (string?)close.Attribute("VerticalAlignment"));
+
+            var theme = XDocument.Load(Path.Combine(Root(), "Themes", "App", "98SE.xaml"));
+            string Val(string key) => Assert.Single(theme.Root!.Elements(),
+                e => (string?)e.Attribute(x + "Key") == key).Value;
+            Assert.Equal("18", Val("AboutCaptionCloseWidth"));
+            Assert.Equal("16", Val("AboutCaptionCloseHeight"));
+            Assert.Equal("0,0,0,0", Val("AboutCaptionCloseMargin"));
+        }
+
         private static string Root([CallerFilePath] string here = "")
             => Path.GetFullPath(Path.Combine(Path.GetDirectoryName(here)!, ".."));
     }

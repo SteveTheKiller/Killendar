@@ -1162,6 +1162,9 @@
                                            Foreground="{DynamicResource ChromeTextBrush}"/>
                                 <Button Content="&#xE8BB;" Click="AboutClose_Click"
                                         Style="{StaticResource ChromeCloseButton}" HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Width="{DynamicResource AboutCaptionCloseWidth}"
+                                        Height="{DynamicResource AboutCaptionCloseHeight}"
                                         Margin="{DynamicResource AboutCaptionCloseMargin}"/>
                             </Grid>
                         </Border>
