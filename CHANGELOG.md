@@ -25,6 +25,7 @@ Killendar 1.5.0 gives appointments the family's card menu, hardens how it loads 
 - CSV import removes the apostrophe that protects values like "-call" on export, and imported rows keep stable ids.
 - Calendar imports take the newest revision of each appointment.
 - Ctrl+D and Ctrl+Delete act on the focused appointment, even while its card is open.
+- Right-clicking an appointment in the sidebar's day list opens its card instead of the sidebar's Left and Right menu.
 - Clicking an hour slot lands on the half hour the hover band shows.
 - The month view, its drag and drop and the Next button work in December 9999 and January 0001.
 - Falling back to the previous encrypted Killendar no longer asks for its password again.

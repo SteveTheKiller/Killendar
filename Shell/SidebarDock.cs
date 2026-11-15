@@ -101,11 +101,7 @@ namespace Killendar.Shell
         // The rail's and panel's right-click menu selects the panel's docking side.
         private void SidebarArea_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            // Fields, buttons and lists in the panel keep their own menus.
-            for (var node = e.OriginalSource as DependencyObject; node != null && !ReferenceEquals(node, sender);
-                 node = node is Visual ? VisualTreeHelper.GetParent(node) : LogicalTreeHelper.GetParent(node))
-                if (node is TextBox || node is ComboBox || node is ButtonBase || node is ListBox)
-                    return;
+            if (!SidebarDockMenuApplies(e.OriginalSource as DependencyObject, sender)) return;
 
             var menu = new ContextMenu { Style = TryFindResource(typeof(ContextMenu)) as Style };
             menu.Items.Add(new MenuItem { Header = Loc("Str_Sidebar"), IsEnabled = false });
@@ -125,6 +121,20 @@ namespace Killendar.Shell
             menu.PlacementTarget = (UIElement)sender;
             menu.IsOpen = true;
             e.Handled = true;
+        }
+
+        /// <summary>Whether a right-click at this element opens the sidebar's dock menu: fields,
+        /// buttons and lists in the panel keep their own menus, and so does anything carrying its
+        /// own ContextMenu, like a day agenda appointment and its card. Marking that click handled
+        /// here stopped WPF from opening the closer menu.</summary>
+        internal static bool SidebarDockMenuApplies(DependencyObject? source, object sender)
+        {
+            for (var node = source; node != null && !ReferenceEquals(node, sender);
+                 node = node is Visual ? VisualTreeHelper.GetParent(node) : LogicalTreeHelper.GetParent(node))
+                if (node is TextBox || node is ComboBox || node is ButtonBase || node is ListBox
+                    || node is FrameworkElement { ContextMenu: not null })
+                    return false;
+            return true;
         }
 
         /// <summary>
