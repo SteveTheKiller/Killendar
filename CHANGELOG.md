@@ -41,7 +41,7 @@ Killendar 1.5.0 gives appointments the family's card menu, hardens how it loads 
 - Categories, calendars in the Killendars dialog, templates, the lock button, Recently deleted, folder options and Snooze open family cards with a title and icons on every row.
 - Menu shortcuts line up in their own column at the right edge.
 - Buttons sit flat with no shadow under them, and on 98SE the sliders and drop-down lists take the Win98 look.
-- Updated SQLite and JSON processing to 10.0.15 and time zone conversion to 8.0.1.
+- Updated SQLite to 10.0.15, JSON processing to 11.0.0 and time zone conversion to 8.0.1.
 - Single-line text fields are as tall as the dropdowns beside them, so form rows line up instead of the text boxes standing oversized.
 - The copyright at the right end of the footer ends 8 px before the corner grip, the same gap in every Killer app.
 - Selected files in the file picker use the same highlight as its places list and folder tree.

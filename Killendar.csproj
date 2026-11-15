@@ -79,7 +79,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.Text.Json" Version="10.0.15" />
+    <PackageReference Include="System.Text.Json" Version="11.0.0" />
     <PackageReference Include="TimeZoneConverter" Version="8.0.1" />
     <!-- Keep the legacy framework package graph on patched versions. The app uses net48
          framework assemblies; ExcludeAssets=all keeps these inventory pins out of compilation
@@ -103,7 +103,7 @@
          self-extracted at runtime (SqlCipherBootstrap). It replaces the
          SQLitePCLRaw.lib.e_sqlcipher package, whose whole line was deprecated upstream
          (legacy, unmaintained) in 2025. -->
-    <PackageReference Include="PolySharp" Version="1.17.0">
+    <PackageReference Include="PolySharp" Version="1.17.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
