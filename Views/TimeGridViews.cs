@@ -54,7 +54,19 @@ namespace Killendar.Views
 
         protected override DateTime FirstVisibleDay(DateTime anchor) => anchor.Date;
 
-        public override string PeriodLabel => Anchor.ToString("dddd, MMMM d, yyyy");
+        /// <summary>The weekday and the culture's own long date, so German reads "Samstag, 14.
+        /// November 2026" rather than the English order. A culture whose long date has no weekday
+        /// of its own (en-GB's) gets the weekday in front.</summary>
+        public override string PeriodLabel
+        {
+            get
+            {
+                var culture = CultureInfo.CurrentCulture;
+                string pattern = culture.DateTimeFormat.LongDatePattern;
+                string date = Anchor.ToString(pattern, culture);
+                return pattern.Contains("dddd") ? date : Anchor.ToString("dddd", culture) + ", " + date;
+            }
+        }
 
         public override DateTime Step(DateTime from, int direction) => from.AddDays(direction);
     }

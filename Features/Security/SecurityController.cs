@@ -481,8 +481,8 @@ namespace Killendar.Features
                 if (!confirm.Confirmed) return;
             }
 
+            // AdoptFile refreshes the view itself wherever the open Killendar changed.
             string status = AdoptFile(path);
-            _host.RefreshView();
             if (status.Length > 0) _host.SetStatus(status);
         }
 
