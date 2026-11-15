@@ -12,10 +12,12 @@ namespace Killendar.Tests
         // control that uses it (the rail, the folder tree, check rows, toolbar buttons and the danger
         // close button) once the style is applied again, as it is on a theme change. WPF only draws
         // FocusVisualStyle for keyboard focus, so leaving it to the family ring keeps clicks ring-free.
-        [Fact]
-        public void NoSharedStyleSwitchesTheKeyboardFocusRingOff()
+        [Theory]
+        [InlineData("Controls.xaml")]
+        [InlineData("AppStyles.xaml")]
+        public void NoSharedStyleSwitchesTheKeyboardFocusRingOff(string file)
         {
-            var xaml = XDocument.Load(Path.Combine(Root(), "Controls", "Controls.xaml"));
+            var xaml = XDocument.Load(Path.Combine(Root(), "Controls", file));
             XNamespace x = "http://schemas.microsoft.com/winfx/2006/xaml";
             var off = xaml.Descendants()
                 .Where(e => e.Name.LocalName == "Setter" && (string?)e.Attribute("Property") == "FocusVisualStyle"

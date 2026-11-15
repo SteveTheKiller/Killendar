@@ -20,6 +20,9 @@ namespace Killendar.Tests
         [Fact]
         public void TheMenuKeyOpensTheBuiltCardNotThePlaceholder() => OnSta(() =>
         {
+            // Shows a real window, so it runs only where it is asked for: a hidden desktop or a
+            // lab VM sets KILLENDAR_WINDOW_TESTS=1. A plain local run must not open anything.
+            if (Environment.GetEnvironmentVariable("KILLENDAR_WINDOW_TESTS") != "1") return;
             var chip = CalendarChrome.Chip(new CalendarEvent
             {
                 Title = "Standup",

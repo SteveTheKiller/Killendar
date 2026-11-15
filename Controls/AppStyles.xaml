@@ -27,7 +27,6 @@
         <Setter Property="Padding" Value="8,3"/>
         <Setter Property="Margin" Value="0,0,4,4"/>
         <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
@@ -111,7 +110,8 @@
 
     <!-- The view switcher (Month, Week, Day, Agenda): the family ToolbarButton look, plus the
          selected view CalendarHost marks with CommandParameter="selected". The selected tile is
-         a raised object, so it owns the shadow and the glyph drops its own. The selected trigger
+         marked by its fill alone: a button face never carries a shadow (ButtonFaceShadowTests),
+         and its label keeps the same glyph shadow as the other tabs. The selected trigger
          comes after IsMouseOver on purpose: hovering the selected view keeps its tile instead
          of swapping in RowHoverBrush under the selection foreground. -->
     <Style x:Key="ViewTabButton" TargetType="Button" BasedOn="{StaticResource ToolbarButton}">
@@ -136,13 +136,6 @@
                         </Trigger>
                         <Trigger Property="CommandParameter" Value="selected">
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource CalendarViewSelectedBrush}"/>
-                            <Setter TargetName="content" Property="Effect" Value="{x:Null}"/>
-                            <Setter TargetName="Bd" Property="Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="2" Direction="270"
-                                                      Opacity="{DynamicResource SelectedTileShadowOpacity}"/>
-                                </Setter.Value>
-                            </Setter>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.4"/>

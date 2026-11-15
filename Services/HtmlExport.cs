@@ -159,12 +159,17 @@ namespace Killendar.Services
             foreach (var name in names)
             {
                 string hex = CategoryManager.HexOf(name);
-                if (!Regex.IsMatch(hex ?? "", "^#[0-9A-Fa-f]{6}$")) hex = "#888888";
+                if (!IsHex(hex)) hex = "#888888";
                 sb.Append("<span class=\"cat\"><i style=\"background:").Append(hex).Append("\"></i>")
                   .Append(Html(name)).Append("</span>");
             }
             sb.Append("</div>\n");
         }
+
+        /// <summary>A #RRGGBB color and nothing after it. \z, not $: $ also matches before a
+        /// trailing newline, and "#AABBCC\n" from an edited .kcal then broke the whole export at
+        /// Convert.ToInt32.</summary>
+        internal static bool IsHex(string? hex) => Regex.IsMatch(hex ?? "", @"^#[0-9A-Fa-f]{6}\z");
 
         /// <summary>The appointment's first category color, for its bar or all-day fill, with
         /// whichever of white or near-black reads better on that fill. Nothing without one.</summary>
@@ -173,7 +178,7 @@ namespace Killendar.Services
             string? name = EventStore.SplitCategories(ev.Categories).FirstOrDefault();
             if (name == null) return "";
             string hex = CategoryManager.HexOf(name);
-            if (!Regex.IsMatch(hex ?? "", "^#[0-9A-Fa-f]{6}$")) return "";
+            if (!IsHex(hex)) return "";
             static double Channel(int c) { double v = c / 255.0; return v <= 0.03928 ? v / 12.92 : Math.Pow((v + 0.055) / 1.055, 2.4); }
             int rgb = Convert.ToInt32(hex!.Substring(1), 16);
             double luma = 0.2126 * Channel(rgb >> 16) + 0.7152 * Channel((rgb >> 8) & 0xFF) + 0.0722 * Channel(rgb & 0xFF);

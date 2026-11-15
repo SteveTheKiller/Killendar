@@ -62,7 +62,9 @@ namespace Killendar.Controls
             Colors.White,
         ];
 
-        private static SolidColorBrush R(string key) => (SolidColorBrush)Application.Current.Resources[key];
+        // Brush, not SolidColorBrush: eight themes paint surfaces or panes with gradients, and the
+        // old hard cast threw the moment the picker opened under them.
+        private static Brush R(string key) => Application.Current.Resources[key] as Brush ?? Brushes.Transparent;
         private static string L(string key, string fallback) =>
             Application.Current.TryFindResource(key) as string ?? fallback;
 
