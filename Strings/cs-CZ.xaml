@@ -578,6 +578,7 @@
     <!-- Místní nabídky -->
     <sys:String x:Key="Str_Ctx_AddAppointment">Přidat schůzku</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">Upravit sérii</sys:String>
+    <sys:String x:Key="Str_Ctx_Duplicate">Duplikovat</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Otevřít</sys:String>
 
     <sys:String x:Key="Str_Theme_Dark">Tmavý</sys:String>

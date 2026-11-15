@@ -1057,6 +1057,10 @@ namespace Killendar.Services
                 combined["AboutCloseGlyph"] = flat ? "\uE8BB" : "\u2715";
                 combined["AboutCloseFont"]  = flat ? new System.Windows.Media.FontFamily("Segoe MDL2 Assets")
                                                    : new System.Windows.Media.FontFamily("Segoe UI");
+                // 8 on 98SE: the 16x14 caption button has a 2 px bevel all round, and at the old
+                // 11 the bold X filled the whole face, jammed against the left highlight and the
+                // bottom shadow. 8 draws it centered with the bevel clear, the Win98 proportion.
+                combined["AboutCloseFontSize"] = flat ? 8.0 : 11.0;
                 combined["AboutCloseFg"] = flat ? combined["CaptionCloseBrush"] : combined["MutedTextBrush"];
                 if (flat) combined["AboutCloseHoverFg"] = combined["CaptionCloseBrush"];
                 else
@@ -1323,6 +1327,9 @@ namespace Killendar.Services
                     || combined["MenuHoverBrush"] is not SolidColorBrush hoverFill
                 ? combined["ComboHighlightTextBrush"]
                 : Frozen(ColorContrast.ReadableOn(hoverAccent.Color, hoverFill.Color, 4.5));
+            // Options that sit on the hover fill without being picked (a card segment's other choices) keep the
+            // plain menu text color; the accent marks only the picked one.
+            combined["MenuTrackTextBrush"] = ColorContrast.MenuTrackText(combined);
 
             // A dialog's caption band. TRANSPARENT by default, so the band shows the card's own
             // face and is invisible - the family look, where a dialog title blends into the

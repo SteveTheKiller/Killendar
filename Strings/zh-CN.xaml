@@ -578,6 +578,7 @@
     <!-- 右键菜单 -->
     <sys:String x:Key="Str_Ctx_AddAppointment">添加约会</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">编辑系列</sys:String>
+    <sys:String x:Key="Str_Ctx_Duplicate">复制</sys:String>
     <sys:String x:Key="Str_Ctx_Open">打开</sys:String>
 
     <sys:String x:Key="Str_Theme_Dark">深色</sys:String>

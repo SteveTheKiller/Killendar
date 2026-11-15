@@ -344,6 +344,7 @@
     <sys:String x:Key="Str_Kc_CopyFailed">Kopiranje ni uspelo: {0}</sys:String>
     <sys:String x:Key="Str_Ctx_AddAppointment">Dodaj dogodek</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">Uredi niz</sys:String>
+    <sys:String x:Key="Str_Ctx_Duplicate">Podvoji</sys:String>
     <sys:String x:Key="Str_Ctx_OpenAppointment">Odpri dogodek</sys:String>
     <sys:String x:Key="Str_Ctx_Shrink">Skrči</sys:String>
     <sys:String x:Key="Str_Ctx_Expand">Razširi</sys:String>

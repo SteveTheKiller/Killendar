@@ -376,6 +376,7 @@
   <sys:String x:Key="Str_Kc_CopyFailed">Không thể sao chép: {0}</sys:String>
   <sys:String x:Key="Str_Ctx_AddAppointment">Thêm cuộc hẹn</sys:String>
   <sys:String x:Key="Str_Ctx_EditSeries">Chỉnh sửa chuỗi</sys:String>
+  <sys:String x:Key="Str_Ctx_Duplicate">Nhân bản</sys:String>
   <sys:String x:Key="Str_Ctx_OpenAppointment">Mở cuộc hẹn</sys:String>
   <sys:String x:Key="Str_Ctx_Shrink">Thu gọn</sys:String>
   <sys:String x:Key="Str_Ctx_Expand">Mở rộng</sys:String>

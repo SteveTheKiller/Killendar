@@ -90,6 +90,12 @@ namespace Killendar.Features
                 var master = _store.GetSeriesMaster(ev);
                 if (master != null) _editor.Load(master);
             };
+            // The appointment card's strip. Duplicate and Delete act on what the editor loaded,
+            // so they run only when the load went through: a draft kept by its question stays
+            // the editor's, and is never the one copied or deleted.
+            CalendarChrome.EditRequested = ev => _editor.Load(ev);
+            CalendarChrome.DuplicateRequested = ev => { if (_editor.Load(ev)) _editor.Duplicate(); };
+            CalendarChrome.DeleteRequested = ev => { if (_editor.Load(ev)) _editor.Delete(); };
 
             SelectView("Month");
         }

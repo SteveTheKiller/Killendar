@@ -422,6 +422,7 @@
     <sys:String x:Key="Str_Kc_CopyFailed">Kopiowanie nie powiodło się: {0}</sys:String>
     <sys:String x:Key="Str_Ctx_AddAppointment">Dodaj spotkanie</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">Edytuj serię</sys:String>
+    <sys:String x:Key="Str_Ctx_Duplicate">Duplikuj</sys:String>
     <sys:String x:Key="Str_Ctx_OpenAppointment">Otwórz spotkanie</sys:String>
     <sys:String x:Key="Str_Ctx_Shrink">Zwiń</sys:String>
     <sys:String x:Key="Str_Ctx_Expand">Rozwiń</sys:String>

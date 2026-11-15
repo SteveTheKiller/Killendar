@@ -578,6 +578,7 @@
     <!-- 右鍵功能表 -->
     <sys:String x:Key="Str_Ctx_AddAppointment">新增約會</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">編輯系列</sys:String>
+    <sys:String x:Key="Str_Ctx_Duplicate">複製</sys:String>
     <sys:String x:Key="Str_Ctx_Open">開啟</sys:String>
 
     <sys:String x:Key="Str_Theme_Dark">深色</sys:String>

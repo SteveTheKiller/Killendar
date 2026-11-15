@@ -578,6 +578,7 @@
     <!-- কনটেক্সট মেনু -->
     <sys:String x:Key="Str_Ctx_AddAppointment">অ্যাপয়েন্টমেন্ট যোগ করুন</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">সিরিজ সম্পাদনা করুন</sys:String>
+    <sys:String x:Key="Str_Ctx_Duplicate">অনুলিপি</sys:String>
     <sys:String x:Key="Str_Ctx_Open">খুলুন</sys:String>
 
     <sys:String x:Key="Str_Theme_Dark">গাঢ়</sys:String>

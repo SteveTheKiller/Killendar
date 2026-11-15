@@ -578,6 +578,7 @@
     <!-- コンテキストメニュー -->
     <sys:String x:Key="Str_Ctx_AddAppointment">予定を追加</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">シリーズを編集</sys:String>
+    <sys:String x:Key="Str_Ctx_Duplicate">複製</sys:String>
     <sys:String x:Key="Str_Ctx_Open">開く</sys:String>
 
     <sys:String x:Key="Str_Theme_Dark">ダーク</sys:String>

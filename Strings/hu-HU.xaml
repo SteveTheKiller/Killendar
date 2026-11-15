@@ -399,6 +399,7 @@
     <sys:String x:Key="Str_Kc_CopyFailed">A másolás nem sikerült: {0}</sys:String>
     <sys:String x:Key="Str_Ctx_AddAppointment">Találkozó hozzáadása</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">Szerkessze a sorozatot</sys:String>
+    <sys:String x:Key="Str_Ctx_Duplicate">Másolat készítése</sys:String>
     <sys:String x:Key="Str_Ctx_OpenAppointment">Időpont megnyitása</sys:String>
     <sys:String x:Key="Str_Ctx_Shrink">Zsugorodik</sys:String>
     <sys:String x:Key="Str_Ctx_Expand">Bontsa ki</sys:String>

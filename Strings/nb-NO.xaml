@@ -399,6 +399,7 @@
     <sys:String x:Key="Str_Kc_CopyFailed">Kopieringen mislyktes: {0}</sys:String>
     <sys:String x:Key="Str_Ctx_AddAppointment">Legg til avtale</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">Rediger serien</sys:String>
+    <sys:String x:Key="Str_Ctx_Duplicate">Dupliser</sys:String>
     <sys:String x:Key="Str_Ctx_OpenAppointment">Åpne avtale</sys:String>
     <sys:String x:Key="Str_Ctx_Shrink">Forminsk</sys:String>
     <sys:String x:Key="Str_Ctx_Expand">Utvid</sys:String>

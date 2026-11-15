@@ -568,7 +568,7 @@ namespace Killendar.Views
                 showTime: detail == 2, showEndTime: false);
 
             var menu = chip.ContextMenu ?? new ContextMenu();
-            if (menu.Items.Count > 0) menu.Items.Add(new Separator());
+            CalendarChrome.AddRowGroup(menu);
             var add = new MenuItem
             {
                 Header = Services.LocaleManager.Loc("Str_Ctx_AddAppointment"),

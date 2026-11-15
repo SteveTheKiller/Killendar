@@ -400,6 +400,7 @@
     <sys:String x:Key="Str_Kc_CopyFailed">Копирование не удалось: {0}</sys:String>
     <sys:String x:Key="Str_Ctx_AddAppointment">Добавить встречу</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">Изменить серию</sys:String>
+    <sys:String x:Key="Str_Ctx_Duplicate">Дублировать</sys:String>
     <sys:String x:Key="Str_Ctx_OpenAppointment">Открыть встречу</sys:String>
     <sys:String x:Key="Str_Ctx_Shrink">Свернуть</sys:String>
     <sys:String x:Key="Str_Ctx_Expand">Развернуть</sys:String>

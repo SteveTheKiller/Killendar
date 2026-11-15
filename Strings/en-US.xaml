@@ -399,6 +399,7 @@
     <sys:String x:Key="Str_Kc_CopyFailed">Copy failed: {0}</sys:String>
     <sys:String x:Key="Str_Ctx_AddAppointment">Add appointment</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">Edit the series</sys:String>
+    <sys:String x:Key="Str_Ctx_Duplicate">Duplicate</sys:String>
     <sys:String x:Key="Str_Ctx_OpenAppointment">Open appointment</sys:String>
     <sys:String x:Key="Str_Ctx_Shrink">Shrink</sys:String>
     <sys:String x:Key="Str_Ctx_Expand">Expand</sys:String>

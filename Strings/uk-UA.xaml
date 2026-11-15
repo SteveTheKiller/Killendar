@@ -399,6 +399,7 @@
     <sys:String x:Key="Str_Kc_CopyFailed">Не вдалося скопіювати: {0}</sys:String>
     <sys:String x:Key="Str_Ctx_AddAppointment">Додати зустріч</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">Редагувати серію</sys:String>
+    <sys:String x:Key="Str_Ctx_Duplicate">Дублювати</sys:String>
     <sys:String x:Key="Str_Ctx_OpenAppointment">Відкрити зустріч</sys:String>
     <sys:String x:Key="Str_Ctx_Shrink">Згорнути</sys:String>
     <sys:String x:Key="Str_Ctx_Expand">Розгорнути</sys:String>

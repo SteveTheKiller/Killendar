@@ -578,6 +578,7 @@
     <!-- Bağlam menüleri -->
     <sys:String x:Key="Str_Ctx_AddAppointment">Randevu ekle</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">Seriyi düzenle</sys:String>
+    <sys:String x:Key="Str_Ctx_Duplicate">Çoğalt</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Aç</sys:String>
 
     <sys:String x:Key="Str_Theme_Dark">Koyu</sys:String>

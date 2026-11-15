@@ -399,6 +399,7 @@
     <sys:String x:Key="Str_Kc_CopyFailed">Көшіру сәтсіз аяқталды: {0}</sys:String>
     <sys:String x:Key="Str_Ctx_AddAppointment">Кездесу қосу</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">Сериясын өңдеу</sys:String>
+    <sys:String x:Key="Str_Ctx_Duplicate">Көшірме</sys:String>
     <sys:String x:Key="Str_Ctx_OpenAppointment">Кездесуді ашу</sys:String>
     <sys:String x:Key="Str_Ctx_Shrink">Кішірейту</sys:String>
     <sys:String x:Key="Str_Ctx_Expand">Ұлғайту</sys:String>

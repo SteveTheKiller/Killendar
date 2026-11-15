@@ -578,6 +578,7 @@
     <!-- Menús contextuales -->
     <sys:String x:Key="Str_Ctx_AddAppointment">Añadir cita</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">Editar la serie</sys:String>
+    <sys:String x:Key="Str_Ctx_Duplicate">Duplicar</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Abrir</sys:String>
 
     <sys:String x:Key="Str_Theme_Dark">Oscuro</sys:String>

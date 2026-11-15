@@ -578,6 +578,7 @@
     <!-- Menus contextuels -->
     <sys:String x:Key="Str_Ctx_AddAppointment">Ajouter un rendez-vous</sys:String>
     <sys:String x:Key="Str_Ctx_EditSeries">Modifier la série</sys:String>
+    <sys:String x:Key="Str_Ctx_Duplicate">Dupliquer</sys:String>
     <sys:String x:Key="Str_Ctx_Open">Ouvrir</sys:String>
 
     <sys:String x:Key="Str_Theme_Dark">Sombre</sys:String>

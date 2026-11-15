@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using KillerFamily.Controls;
 using Killendar.Models;
 using KillerFamily.Accessibility;
 
@@ -56,6 +57,17 @@ namespace Killendar.Views
         /// ever touches one date, so the whole series needs its own door). Set by the
         /// controller, which owns the store and the editor; same shape as WorkWeekToggle.</summary>
         internal static Action<CalendarEvent>? EditSeriesRequested;
+
+        /// <summary>The appointment card's Edit, Duplicate and Delete. Set by the controller, like
+        /// EditSeriesRequested: each loads the appointment in the editor and runs the editor's own
+        /// action, so the card asks the same questions the panel's buttons do.</summary>
+        internal static Action<CalendarEvent>? EditRequested;
+        internal static Action<CalendarEvent>? DuplicateRequested;
+        internal static Action<CalendarEvent>? DeleteRequested;
+
+        /// <summary>Marks the card's quick strip, whose bottom rule already separates it from the
+        /// rows under it, so a view adding rows does not draw a second line (AddRowGroup).</summary>
+        private const string QuickStripTag = "CardQuickStrip";
 
         private static int _density;
 
@@ -215,32 +227,7 @@ namespace Killendar.Views
                 onClick(ev);
             };
 
-            // Every appointment menu starts with the ordinary open action. One date of a series
-            // also carries "Edit the series": dragging or editing
-            // a chip only ever moves that date, so rescheduling the SERIES gets its own door
-            // (2026-07-31). The chip's own menu wins over the day cell's add-appointment
-            // menu because it is the closer one.
-            var menu = new ContextMenu();
-            var open = new MenuItem
-            {
-                Header = Services.LocaleManager.Loc("Str_Ctx_OpenAppointment"),
-                Icon = MenuGlyph(0xE8E5),
-                InputGestureText = "Enter",
-            };
-            open.Click += (_, _) => onClick(ev);
-            menu.Items.Add(open);
-
-            if (ev.SeriesId != null && !other)
-            {
-                var edit = new MenuItem
-                {
-                    Header = Services.LocaleManager.Loc("Str_Ctx_EditSeries"),
-                    Icon   = MenuGlyph(0xE70F),
-                };
-                edit.Click += (_, _) => EditSeriesRequested?.Invoke(ev);
-                menu.Items.Add(edit);
-            }
-            chip.ContextMenu = menu;
+            chip.ContextMenu = AppointmentCard(ev, other, onClick);
 
             // wrap: the whole title, however long, instead of one trimmed line. The sidebar day
             // agenda asks for this at higher densities; the grid views never do - a wrapping
@@ -272,6 +259,56 @@ namespace Killendar.Views
             chip.Child = line;
             return chip;
         }
+
+        /// <summary>
+        /// The appointment's right-click card (the family card menu): its title and time, a strip
+        /// of Open, Edit, Duplicate and Delete, then the rows. One date of a series also carries
+        /// "Edit the series": dragging or editing a chip only ever moves that date, so
+        /// rescheduling the SERIES gets its own door (2026-07-31). Another Killendar's appointment
+        /// is read only, so its strip offers Open alone. The chip's own card wins over the day
+        /// cell's add-appointment menu because it is the closer one.
+        /// </summary>
+        internal static ContextMenu AppointmentCard(CalendarEvent ev, bool other, Action<CalendarEvent> onClick)
+        {
+            string L(string key) => Services.LocaleManager.Loc(key);
+            string title = string.IsNullOrWhiteSpace(ev.Title) ? L("Str_Cal_NoTitle") : ev.Title;
+            string meta = string.IsNullOrWhiteSpace(ev.Location) ? ev.TimeLabel : ev.TimeLabel + "  ·  " + ev.Location;
+            if (other) meta = ev.SourceCalendar + "  ·  " + meta;
+
+            var menu = CardBuilder.Menu(300);
+            menu.Items.Add(CardBuilder.Header(title, meta));
+
+            var actions = new List<CardAction>
+            {
+                new(Glyph(0xE8E5), L("Str_Ctx_Open"), L("Str_Ctx_OpenAppointment"), "Enter", () => onClick(ev)),
+            };
+            if (!other)
+            {
+                actions.Add(new(Glyph(0xE70F), L("Str_Btn_Edit"), L("Str_Side_Edit"), null, () => EditRequested?.Invoke(ev)));
+                actions.Add(new(Glyph(0xE8C8), L("Str_Ctx_Duplicate"), L("Str_Ctx_Duplicate"), "Ctrl+D", () => DuplicateRequested?.Invoke(ev)));
+                actions.Add(new(Glyph(0xE74D), L("Str_Ctx_Delete"), L("Str_Ctx_Delete"), "Ctrl+Delete", () => DeleteRequested?.Invoke(ev)));
+            }
+            var strip = CardBuilder.QuickStrip(title, actions);
+            strip.Tag = QuickStripTag;
+            menu.Items.Add(strip);
+
+            if (ev.SeriesId != null && !other)
+                menu.Items.Add(CardBuilder.Row(L("Str_Ctx_EditSeries"), null, Glyph(0xE70F), () => EditSeriesRequested?.Invoke(ev)));
+            return menu;
+        }
+
+        /// <summary>Starts a new group of rows at the end of a menu: a separator, except straight
+        /// under a card's quick strip, whose own bottom rule already draws that line.</summary>
+        internal static void AddRowGroup(ContextMenu menu)
+        {
+            if (menu.Items.Count == 0) return;
+            if (menu.Items[menu.Items.Count - 1] is MenuItem { Tag: QuickStripTag }) return;
+            menu.Items.Add(new Separator());
+        }
+
+        /// <summary>An MDL2 glyph as a string, built from its codepoint for the reason MenuGlyph
+        /// gives.</summary>
+        private static string Glyph(int codepoint) => char.ConvertFromUtf32(codepoint);
 
         /// <summary>
         /// Right-click menu for a day cell or an hour slot. Shared so month, week and day all

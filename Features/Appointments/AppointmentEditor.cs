@@ -141,15 +141,19 @@ namespace Killendar.Features
             return true;
         }
 
-        internal void Load(CalendarEvent ev)
+        /// <summary>Opens <paramref name="ev"/> in the panel. False when it was not loaded: another
+        /// Killendar's read-only appointment, or the draft question answered Keep editing. A caller
+        /// that acts on the loaded appointment next (the card's Duplicate and Delete) checks this,
+        /// so it never acts on the draft that stayed.</summary>
+        internal bool Load(CalendarEvent ev)
         {
             // Another Killendar shown alongside is read only; changing it means opening it.
             if (ev.SourceCalendar.Length > 0)
             {
                 _view.SetStatus(string.Format(_view.Loc("Str_Status_OtherCalendar"), ev.SourceCalendar));
-                return;
+                return false;
             }
-            if (!ConfirmReplace()) return;
+            if (!ConfirmReplace()) return false;
             // Edit a copy: canceling must not leave half-typed changes on the stored object.
             _loading = true;
             _timeCulture = CultureInfo.CurrentCulture;
@@ -209,6 +213,7 @@ namespace Killendar.Features
 
             Show();
             _view.Focus(AppointmentField.Title, selectAll: true);
+            return true;
         }
 
         private void Show()
