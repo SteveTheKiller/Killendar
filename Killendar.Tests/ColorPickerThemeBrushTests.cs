@@ -11,6 +11,7 @@ namespace Killendar.Tests
     /// <summary>Decay, Delirium, Ectoplasm, Malaise and Sepulchre paint their surfaces with
     /// gradients, and Blood, Cyanotic and Greed their panes. The picker read every theme brush as a
     /// SolidColorBrush, so opening it (or arming Replace) under those themes threw.</summary>
+    [Collection("Calendar settings")]
     public sealed class ColorPickerThemeBrushTests
     {
         private static readonly string[] Keys =

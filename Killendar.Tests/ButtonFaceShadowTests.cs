@@ -36,6 +36,15 @@ namespace Killendar.Tests
             Assert.Empty(offenders);
         }
 
+        /// <summary>The theme picker's accent dots are toggle button faces; hover may grow them
+        /// but never puts a drop shadow under them.</summary>
+        [Fact]
+        public void ThemePickerDotsNeverGetAShadow()
+        {
+            string source = File.ReadAllText(Path.Combine(Root(), "Controls", "ThemePicker.cs"));
+            Assert.DoesNotContain("DropShadowEffect", source);
+        }
+
         private static string Root()
         {
             for (var dir = new DirectoryInfo(AppContext.BaseDirectory); dir != null; dir = dir.Parent)

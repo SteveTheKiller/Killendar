@@ -17,6 +17,7 @@ namespace Killendar.Tests
     /// <summary>The color picker and the new-category swatch work from the keyboard: every swatch,
     /// the Replace and Reset chips, the saturation and brightness square and the hue strip are
     /// focusable and named, Enter or Space invokes, and the arrows move the square and the strip.</summary>
+    [Collection("Calendar settings")]
     public sealed class ColorPickerKeyboardTests
     {
         [Theory]
@@ -136,25 +137,19 @@ namespace Killendar.Tests
 
         private static System.Windows.Threading.Dispatcher Start()
         {
-            System.Windows.Threading.Dispatcher? dispatcher = null;
-            using var ready = new ManualResetEventSlim();
-            var thread = new Thread(() =>
+            // The picker reads its brushes and words from the application, as in the app, so it
+            // runs on the thread that owns the shared test Application.
+            var dispatcher = TestApplication.Dispatcher;
+            dispatcher.Invoke(() =>
             {
-                dispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
-                // The picker reads its brushes and words from the application, as in the app.
-                var app = Application.Current ?? new Application { ShutdownMode = ShutdownMode.OnExplicitShutdown };
+                var app = Application.Current;
                 foreach (string resource in new[] { "Themes/Dark.xaml", "Controls/Controls.xaml", "Controls/AppStyles.xaml", "Strings/en-US.xaml" })
                     app.Resources.MergedDictionaries.Add(new ResourceDictionary
                     {
                         Source = new Uri("/Killendar;component/" + resource, UriKind.Relative)
                     });
-                ready.Set();
-                System.Windows.Threading.Dispatcher.Run();
-            }) { IsBackground = true };
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            Assert.True(ready.Wait(TimeSpan.FromSeconds(20)), "The color picker thread did not start.");
-            return dispatcher!;
+            });
+            return dispatcher;
         }
     }
 }

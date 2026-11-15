@@ -123,7 +123,23 @@ namespace Killendar.Controls
             else if (e.Key == Key.Up && Results.SelectedIndex == 0) { QueryBox.Focus(); e.Handled = true; }
         }
 
-        private void Results_MouseDoubleClick(object sender, MouseButtonEventArgs e) => Choose();
+        // A double-click on the scrollbar or empty space must not choose the selected row.
+        private void Results_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (IsOnRow(e.OriginalSource as DependencyObject)) Choose();
+        }
+
+        internal static bool IsOnRow(DependencyObject? source)
+        {
+            for (var node = source; node != null; node = node is System.Windows.Media.Visual or System.Windows.Media.Media3D.Visual3D
+                     ? System.Windows.Media.VisualTreeHelper.GetParent(node)
+                     : LogicalTreeHelper.GetParent(node))
+            {
+                if (node is System.Windows.Controls.Primitives.ScrollBar) return false;
+                if (node is ListBoxItem) return true;
+            }
+            return false;
+        }
 
         private void Close_Click(object sender, RoutedEventArgs e) => Close();
 

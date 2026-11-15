@@ -180,7 +180,7 @@ namespace Killendar.Tests
             {
                 try
                 {
-                    if (Application.Current == null) new Application();
+                    TestApplication.Ensure();
                     body();
                 }
                 catch (Exception ex) { failure = ex; }

@@ -212,19 +212,36 @@ namespace Killendar.Controls
         }
 
         /// <summary>Validates and applies a rename; refreshes the list on success.</summary>
-        private bool TryRename(string oldName, string newNameRaw)
+        internal enum RenameVerdict { Unchanged, Invalid, Exists, Go }
+
+        /// <summary>
+        /// Decides a rename. A name that differs only in letter case is a real rename (the file
+        /// system sees the "new" name as the same file, so the exists check does not apply to it).
+        /// </summary>
+        internal static (RenameVerdict, string) JudgeRename(string oldName, string newNameRaw, Func<string, bool> exists)
         {
             string newName = newNameRaw.Trim();
-            if (newName.Length == 0) return false;
+            if (newName.Length == 0) return (RenameVerdict.Unchanged, oldName);
             if (!newName.EndsWith(EventStore.Extension, StringComparison.OrdinalIgnoreCase))
                 newName += EventStore.Extension;
-            if (string.Equals(oldName, newName, StringComparison.OrdinalIgnoreCase)) return false;
-            if (newName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            if (string.Equals(oldName, newName, StringComparison.Ordinal)) return (RenameVerdict.Unchanged, newName);
+            if (newName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0) return (RenameVerdict.Invalid, newName);
+            bool caseOnly = string.Equals(oldName, newName, StringComparison.OrdinalIgnoreCase);
+            if (!caseOnly && exists(newName)) return (RenameVerdict.Exists, newName);
+            return (RenameVerdict.Go, newName);
+        }
+
+        private bool TryRename(string oldName, string newNameRaw)
+        {
+            var (verdict, newName) = JudgeRename(oldName, newNameRaw,
+                name => File.Exists(Path.Combine(EventStore.DataDir, name)));
+            if (verdict == RenameVerdict.Unchanged) return false;
+            if (verdict == RenameVerdict.Invalid)
             {
                 DlgStatus.Text = Loc("Str_Kc_BadName");
                 return false;
             }
-            if (File.Exists(Path.Combine(EventStore.DataDir, newName)))
+            if (verdict == RenameVerdict.Exists)
             {
                 DlgStatus.Text = string.Format(Loc("Str_Kc_Exists"), newName);
                 return false;

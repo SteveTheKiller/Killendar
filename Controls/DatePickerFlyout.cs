@@ -15,6 +15,19 @@ namespace Killendar.Controls
     /// <summary>Compact themed month picker for the appointment sidebar date fields.</summary>
     internal static class DatePickerFlyout
     {
+        /// <summary>
+        /// The one-character column header for a weekday. The culture's shortest day names are used,
+        /// because the first character of the abbreviated name is the same for every day in some
+        /// languages (every Chinese abbreviation starts with the same word for "week").
+        /// </summary>
+        internal static string DayInitial(DateTimeFormatInfo format, DayOfWeek day)
+        {
+            string name = format.ShortestDayNames[(int)day];
+            if (string.IsNullOrEmpty(name)) name = format.AbbreviatedDayNames[(int)day];
+            if (string.IsNullOrEmpty(name)) return string.Empty;
+            return StringInfo.GetNextTextElement(name).ToUpperInvariant();
+        }
+
         internal static void Open(TextBox target, UIElement anchor)
         {
             var menu = Create(target, anchor);
@@ -87,11 +100,11 @@ namespace Killendar.Controls
                 days.RowDefinitions.Add(new RowDefinition { Height = new GridLength(r == 0 ? 20 : 26) });
 
             var firstDay = WeekStartManager.FirstDay;
-            var names = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames;
+            var format = CultureInfo.CurrentCulture.DateTimeFormat;
             for (int c = 0; c < 7; c++)
             {
                 var dow = (DayOfWeek)(((int)firstDay + c) % 7);
-                var label = Text(names[(int)dow].Substring(0, 1).ToUpperInvariant(), "DimTextBrush", 9.5);
+                var label = Text(DayInitial(format, dow), "DimTextBrush", 9.5);
                 label.HorizontalAlignment = HorizontalAlignment.Center;
                 label.VerticalAlignment = VerticalAlignment.Center;
                 Grid.SetColumn(label, c);

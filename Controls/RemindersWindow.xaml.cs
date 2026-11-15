@@ -81,7 +81,7 @@ namespace Killendar.Controls
             var detail = new TextBlock { Text = when, FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis };
             detail.SetResourceReference(TextBlock.ForegroundProperty, "MutedTextBrush");
             text.Children.Add(detail);
-            text.MouseLeftButtonUp += (_, _) => OpenRequested?.Invoke(reminder);
+            PressActivation.Attach(text, () => OpenRequested?.Invoke(reminder));
             AutomationPropertiesName(text, title + ", " + when);
             row.Children.Add(text);
 

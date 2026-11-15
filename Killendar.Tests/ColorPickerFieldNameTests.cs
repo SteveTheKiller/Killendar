@@ -11,6 +11,7 @@ namespace Killendar.Tests
 {
     /// <summary>The picker's R, G, B and Hex boxes show only short labels, so each needs its own
     /// spoken name for screen readers.</summary>
+    [Collection("Calendar settings")]
     public sealed class ColorPickerFieldNameTests
     {
         [Fact]

@@ -44,12 +44,31 @@ namespace Killendar.Controls
             _dateStyleChanged = dateStyleChanged;
             _timeStyleChanged = timeStyleChanged;
             _weekStartChanged = weekStartChanged;
+            _menu.Closed += (_, _) => _closedAt = System.Diagnostics.Stopwatch.GetTimestamp();
             if (_anchor is FrameworkElement button)
                 button.ContextMenuOpening += (_, e) => { e.Handled = true; Open(); };
         }
 
+        private long _closedAt = long.MinValue / 2;
+
+        internal enum OpenAction { Open, Close, Ignore }
+
+        /// <summary>
+        /// What a click on the settings button does. A flyout that is open closes. One that the
+        /// same click just closed (a click outside a menu closes it before the button sees the
+        /// click) stays closed instead of opening again.
+        /// </summary>
+        internal static OpenAction Decide(bool isOpen, long sinceClosedMs) =>
+            isOpen ? OpenAction.Close : sinceClosedMs < 250 ? OpenAction.Ignore : OpenAction.Open;
+
         internal void Open()
         {
+            long sinceMs = (System.Diagnostics.Stopwatch.GetTimestamp() - _closedAt) * 1000 / System.Diagnostics.Stopwatch.Frequency;
+            switch (Decide(_menu.IsOpen, sinceMs))
+            {
+                case OpenAction.Close: _menu.IsOpen = false; return;
+                case OpenAction.Ignore: return;
+            }
             Build();
             FlyoutPlacement.Attach(_menu, _anchor);
             _menu.IsOpen = true;

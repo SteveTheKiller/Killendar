@@ -123,6 +123,7 @@ namespace Killendar
 
             KillerFamily.Accessibility.AccessibleControls.Initialize();
             KillerFamily.Theming.AccentShadow.Initialize();
+            Services.ThemeManager.ThemeChanged += KillerFamily.Theming.AccentShadow.Refresh;
             Controls.AltDrag.Register();   // Alt+drag moves any window (Controls/AltDrag.cs)
             var cliArgs = KillerFamily.CommandLine.CommandLineEntry.GetArguments(args, ["agenda", "create"]);
             if (cliArgs != null)

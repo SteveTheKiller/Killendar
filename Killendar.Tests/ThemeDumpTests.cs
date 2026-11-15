@@ -20,6 +20,7 @@ namespace Killendar.Tests
     /// it produces a file and passes or fails nothing. It runs only when KILLENDAR_THEME_DUMP names
     /// the output file, builds every palette off screen and opens no window.
     /// </summary>
+    [Collection("Calendar settings")]
     public sealed class ThemeDumpTests
     {
         [Fact]

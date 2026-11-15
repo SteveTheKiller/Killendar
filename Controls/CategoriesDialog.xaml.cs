@@ -267,7 +267,8 @@ namespace Killendar.Controls
                 if (e.Key == Key.Enter) Commit(true);
                 else if (e.Key == Key.Escape) Commit(false);
             };
-            box.LostFocus += (_, _) => Commit(true);
+            // Rebuilding the rows during the mouse-down that moved the focus would swallow that click.
+            box.LostFocus += (_, _) => ClickGuard.RunAfterClick(this, () => Commit(true));
         }
 
         private void CommitRename(string oldName, string raw)

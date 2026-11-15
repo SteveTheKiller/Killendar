@@ -21,16 +21,44 @@ namespace Killendar.Controls
             host.AddHandler(ScrollViewer.ScrollChangedEvent,
                 new ScrollChangedEventHandler((_, args) =>
                 {
-                    var scroll = host as ScrollViewer ?? Find<ScrollViewer>(host);
-                    if (ReferenceEquals(args.OriginalSource, scroll)) Update(host);
+                    if (ReferenceEquals(args.OriginalSource, Resolve(host).Scroll)) Update(host);
                 }));
+        }
+
+        // The scroll viewer and its viewport are found once per host and kept; a template swap or a
+        // detached tree sends the next update back to the walk.
+        private sealed class Parts
+        {
+            public ScrollViewer? Scroll;
+            public ScrollContentPresenter? Viewport;
+            public (bool, bool, double, double)? MaskKey;
+            public Brush? Mask;
+        }
+
+        private static readonly DependencyProperty PartsProperty =
+            DependencyProperty.RegisterAttached("Parts", typeof(Parts), typeof(SidebarEdgeFade));
+
+        private static Parts Resolve(FrameworkElement host)
+        {
+            var parts = (Parts?)host.GetValue(PartsProperty);
+            if (parts == null) host.SetValue(PartsProperty, parts = new Parts());
+            if (parts.Scroll != null && parts.Viewport != null
+                && ReferenceEquals(parts.Scroll.Template?.FindName("PART_ScrollContentPresenter", parts.Scroll), parts.Viewport)
+                && (ReferenceEquals(parts.Scroll, host) || parts.Scroll.IsDescendantOf(host)))
+                return parts;
+            parts.Scroll = host as ScrollViewer ?? Find<ScrollViewer>(host);
+            parts.Viewport = parts.Scroll?.Template?.FindName("PART_ScrollContentPresenter", parts.Scroll) as ScrollContentPresenter;
+            parts.MaskKey = null;
+            parts.Mask = null;
+            return parts;
         }
 
         private static void Update(FrameworkElement host)
         {
-            var scroll = host as ScrollViewer ?? Find<ScrollViewer>(host);
-            if (scroll?.Template?.FindName("PART_ScrollContentPresenter", scroll)
-                    is not ScrollContentPresenter viewport) return;
+            var parts = Resolve(host);
+            var scroll = parts.Scroll;
+            var viewport = parts.Viewport;
+            if (scroll == null || viewport == null) return;
             double strength = Math.Max(0, Math.Min(1, (double)host.GetValue(StrengthProperty)));
             bool top = scroll.VerticalOffset > 0.5;
             bool bottom = scroll.ScrollableHeight - scroll.VerticalOffset > 0.5;
@@ -38,8 +66,12 @@ namespace Killendar.Controls
             if (strength <= 0 || height <= 0 || (!top && !bottom))
             {
                 viewport.OpacityMask = null;
+                parts.MaskKey = null;
+                parts.Mask = null;
                 return;
             }
+            var key = (top, bottom, height, strength);
+            if (parts.MaskKey == key && ReferenceEquals(viewport.OpacityMask, parts.Mask)) return;
 
             // Relative brush bounds include off-screen rows. Absolute coordinates keep the
             // gradient on the viewport while leaving the sibling scrollbars untouched.
@@ -56,6 +88,8 @@ namespace Killendar.Controls
             mask.GradientStops.Add(new GradientStop(Colors.Black, 1 - edge));
             mask.GradientStops.Add(new GradientStop(bottom ? faded : Colors.Black, 1));
             mask.Freeze();
+            parts.MaskKey = key;
+            parts.Mask = mask;
             viewport.OpacityMask = mask;
         }
 

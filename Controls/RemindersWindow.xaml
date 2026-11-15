@@ -23,7 +23,7 @@
     <!-- Dialog cards sit on the dark tier. Inputs and DimTextBrush are calibrated against it;
          on SurfaceBrush a field is the same color as the card behind it. -->
     <kui:PickerBorder x:Name="RootBorder" Opacity="0"
-            Background="{StaticResource BackgroundBrush}"
+            Background="{DynamicResource BackgroundBrush}"
             BorderBrush="{DynamicResource AppBorderBrush}"
             BorderThickness="1"
             CornerRadius="{DynamicResource PanelCornerRadius}"
