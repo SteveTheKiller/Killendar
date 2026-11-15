@@ -1258,6 +1258,10 @@
                                     <ColumnDefinition Width="12"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
                                 <StackPanel Grid.Column="0">
                                 <CheckBox x:Name="AboutStartupUpdateCheck"
                                           FontSize="11" Margin="0,0,0,6"
@@ -1268,12 +1272,6 @@
                                           FontSize="11" Margin="0,0,0,6"
                                           Click="AboutStartWithWindows_Click">
                                     <TextBlock Text="{DynamicResource Str_About_StartWithWindows}" TextWrapping="Wrap"/>
-                                </CheckBox>
-                                <CheckBox x:Name="AboutCloseToTray"
-                                          ToolTip="{DynamicResource Str_About_CloseToTrayHint}"
-                                          FontSize="11" Margin="0,0,0,6"
-                                          Click="AboutCloseToTray_Click">
-                                    <TextBlock Text="{DynamicResource Str_About_CloseToTray}" TextWrapping="Wrap"/>
                                 </CheckBox>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2">
@@ -1290,14 +1288,39 @@
                                 <TextBlock Text="{DynamicResource Str_About_PhotonPrivacy}"
                                            Foreground="{DynamicResource DimTextBrush}"
                                            FontSize="10" Margin="22,2,0,0" TextWrapping="Wrap"/>
-                                <!-- Diagnostics.cs: copied only on this click, never sent; no appointment text, names, paths or links. -->
-                                <Button x:Name="AboutDiagnosticsButton" Style="{StaticResource OutlineButton}"
-                                        ToolTip="{DynamicResource Str_About_DiagnosticsHint}"
-                                        HorizontalAlignment="Left" FontSize="11" Padding="10,4" Margin="0,12,0,0"
-                                        Click="AboutDiagnostics_Click">
-                                    <TextBlock Text="{DynamicResource Str_About_CopyDiagnostics}" TextWrapping="Wrap"/>
-                                </Button>
                                 </StackPanel>
+                                <!-- Close to tray with Copy diagnostics on the same line, the way KillerShell
+                                     sets its last setting beside Clear all Data. -->
+                                <Grid Grid.Row="1" Grid.ColumnSpan="3" Margin="0,6,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox x:Name="AboutCloseToTray"
+                                          ToolTip="{DynamicResource Str_About_CloseToTrayHint}"
+                                          FontSize="11"
+                                          Click="AboutCloseToTray_Click">
+                                    <TextBlock Text="{DynamicResource Str_About_CloseToTray}" TextWrapping="Wrap"/>
+                                </CheckBox>
+                                <!-- Diagnostics.cs: copied only on this click, never sent; no appointment text, names, paths or links. -->
+                                <TextBlock Grid.Column="1" FontFamily="{DynamicResource MonoFont}" FontSize="10"
+                                           HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,0,0"
+                                           ToolTip="{DynamicResource Str_About_DiagnosticsHint}">
+                                    <Hyperlink TextDecorations="None" Cursor="Hand" Click="AboutDiagnostics_Click">
+                                        <Hyperlink.Style>
+                                            <Style TargetType="Hyperlink">
+                                                <Setter Property="Foreground" Value="{DynamicResource DimTextBrush}"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Hyperlink.Style>
+                                        <Run Text="{DynamicResource Str_About_CopyDiagnostics}"/>
+                                    </Hyperlink>
+                                </TextBlock>
+                                </Grid>
                             </Grid>
 
                             <Button x:Name="AboutUpdateButton" Visibility="Collapsed" Margin="0,14,0,0"

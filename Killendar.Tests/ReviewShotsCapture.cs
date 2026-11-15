@@ -34,6 +34,8 @@ namespace Killendar.Tests
                 ScratchUiProcess.Run(typeof(ReviewShotsFixture), "undo|" + theme + "|" + folder);
             foreach (string theme in new[] { "Dark", "Light", "SE98" })
                 ScratchUiProcess.Run(typeof(ReviewShotsFixture), "gi007|" + theme + "|" + folder);
+            foreach (string theme in new[] { "Dark", "SE98" })
+                ScratchUiProcess.Run(typeof(ReviewShotsFixture), "about|" + theme + "|" + folder);
         }
     }
 
@@ -82,6 +84,7 @@ namespace Killendar.Tests
                 string tag = FileTag(theme);
                 if (kind == "undo") FooterUndo(profile, Path.Combine(folder, "footer-undo-" + tag + ".png"));
                 else if (kind == "gi007") SelectionStyles(Path.Combine(folder, "gi007-" + tag + ".png"));
+                else if (kind == "about") AboutCard(Path.Combine(folder, "about-" + tag + ".png"));
                 else throw new ArgumentException(kind);
             }
             finally { app.Shutdown(); }
@@ -127,6 +130,34 @@ namespace Killendar.Tests
                 var undo = (Button)window.FindName("StatusUndoBtn")!;
                 Assert.Equal(Visibility.Visible, undo.Visibility);
                 Write(root, window.Background ?? Brushes.Black, root.ActualWidth, root.ActualHeight, path, 120);
+            }
+            finally { window.Close(); Microsoft.Data.Sqlite.SqliteConnection.ClearAllPools(); }
+        }
+
+        // The About card's settings and the Copy diagnostics link at the right end of them.
+        private static void AboutCard(string path)
+        {
+            var window = new MainWindow();
+            try
+            {
+                window.ShowInTaskbar = false;
+                window.ShowActivated = false;
+                window.WindowStartupLocation = WindowStartupLocation.Manual;
+                window.WindowState = WindowState.Normal;
+                window.Width = 1400;
+                window.Height = 900;
+                window.Left = -30000;
+                window.Top = -30000;
+                window.Show();
+                window.Left = -30000;
+                window.Top = -30000;
+                for (int i = 0; i < 5; i++) Pump();
+                typeof(MainWindow).GetMethod("ShowAboutOverlay", Instance)!.Invoke(window, null);
+                for (int i = 0; i < 20; i++) { Pump(); Thread.Sleep(50); }
+                var overlay = (FrameworkElement)window.FindName("AboutOverlay")!;
+                overlay.UpdateLayout();
+                var root = (FrameworkElement)window.Content;
+                Write(root, window.Background ?? Brushes.Black, root.ActualWidth, root.ActualHeight, path, 0);
             }
             finally { window.Close(); Microsoft.Data.Sqlite.SqliteConnection.ClearAllPools(); }
         }
