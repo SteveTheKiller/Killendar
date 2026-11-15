@@ -149,6 +149,7 @@ namespace Killendar.Shell
         private void GrowForSidebar()
         {
             _rideGrow = 0;
+            if (!_riding) _rideLeftShift = 0;   // a new borrow starts from nothing owed
             if (WindowState != WindowState.Normal) return;
             if (ActualWidth >= OpenMinWidth) return;      // already room; the calendar can just shrink
             if (InSnapSlot()) return;                     // a snapped window reports Normal too
@@ -274,12 +275,22 @@ namespace Killendar.Shell
             // Drop the minimum FIRST, or the window cannot be narrowed back past the open minimum.
             MinWidth = ClosedMinWidth;
 
-            if (_rideGrow <= 0) return;
-            if (WindowState != WindowState.Normal) { _rideGrow = 0; return; }
+            if (_rideGrow <= 0) { if (!_riding) _rideLeftShift = 0; return; }
+            // Not giving anything back also means not moving the window later: a shift left over
+            // here would be applied by some other ride's end.
+            if (WindowState != WindowState.Normal) { _rideGrow = 0; _rideLeftShift = 0; return; }
 
+            // Closed while the open ride is still running: the width is already following the
+            // panel column every frame, so the same ride carries it back down. Treating the
+            // in-between width as a user resize dropped the borrow and snapped the window.
             // If the user resized the window themselves while the panel was open, their width wins
             // and there is nothing to give back. 2px tolerance for fractional DPI rounding.
-            if (Math.Abs(ActualWidth - (_rideBase + _rideGrow)) > 2) { _rideGrow = 0; return; }
+            if (!_riding && Math.Abs(ActualWidth - (_rideBase + _rideGrow)) > 2)
+            {
+                _rideGrow = 0;
+                _rideLeftShift = 0;
+                return;
+            }
 
             StartWidthRide();
         }

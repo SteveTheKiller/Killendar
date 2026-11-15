@@ -496,6 +496,7 @@
     <sys:String x:Key="Str_Tpl_NewFrom">Nová ze šablony</sys:String>
     <sys:String x:Key="Str_Status_TplSaved">Šablona {0} uložena</sys:String>
     <sys:String x:Key="Str_Status_TplDeleted">Šablona {0} smazána</sys:String>
+    <sys:String x:Key="Str_Status_TplUndo">Zpět</sys:String>
     <sys:String x:Key="Str_Tpl_NeedsTitle">Pro pojmenování šablony zadejte název schůzky.</sys:String>
     <sys:String x:Key="Str_Status_Overlaps">Překrývá se se schůzkou {0}.</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">Překrývá se se schůzkou {0} a {1} dalšími.</sys:String>

@@ -496,6 +496,7 @@
     <sys:String x:Key="Str_Tpl_NewFrom">从模板新建</sys:String>
     <sys:String x:Key="Str_Status_TplSaved">已保存模板 {0}</sys:String>
     <sys:String x:Key="Str_Status_TplDeleted">已删除模板 {0}</sys:String>
+    <sys:String x:Key="Str_Status_TplUndo">撤销</sys:String>
     <sys:String x:Key="Str_Tpl_NeedsTitle">请给约会起个标题作为模板名称。</sys:String>
     <sys:String x:Key="Str_Status_Overlaps">与 {0} 时间重叠。</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">与 {0} 及另外 {1} 个约会时间重叠。</sys:String>

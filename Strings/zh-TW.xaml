@@ -496,6 +496,7 @@
     <sys:String x:Key="Str_Tpl_NewFrom">從範本新增</sys:String>
     <sys:String x:Key="Str_Status_TplSaved">已儲存範本 {0}</sys:String>
     <sys:String x:Key="Str_Status_TplDeleted">已刪除範本 {0}</sys:String>
+    <sys:String x:Key="Str_Status_TplUndo">復原</sys:String>
     <sys:String x:Key="Str_Tpl_NeedsTitle">請替約會加上標題作為範本名稱。</sys:String>
     <sys:String x:Key="Str_Status_Overlaps">與 {0} 時間重疊。</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">與 {0} 及另外 {1} 個約會時間重疊。</sys:String>

@@ -496,6 +496,7 @@
     <sys:String x:Key="Str_Tpl_NewFrom">Şablondan yeni</sys:String>
     <sys:String x:Key="Str_Status_TplSaved">{0} şablonu kaydedildi</sys:String>
     <sys:String x:Key="Str_Status_TplDeleted">{0} şablonu silindi</sys:String>
+    <sys:String x:Key="Str_Status_TplUndo">Geri al</sys:String>
     <sys:String x:Key="Str_Tpl_NeedsTitle">Şablona ad vermek için randevuya bir başlık verin.</sys:String>
     <sys:String x:Key="Str_Status_Overlaps">{0} ile çakışıyor.</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">{0} ve {1} randevu daha ile çakışıyor.</sys:String>

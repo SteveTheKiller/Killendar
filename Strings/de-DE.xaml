@@ -496,6 +496,7 @@
     <sys:String x:Key="Str_Tpl_NewFrom">Neu aus Vorlage</sys:String>
     <sys:String x:Key="Str_Status_TplSaved">Vorlage {0} gespeichert</sys:String>
     <sys:String x:Key="Str_Status_TplDeleted">Vorlage {0} gelöscht</sys:String>
+    <sys:String x:Key="Str_Status_TplUndo">Rückgängig</sys:String>
     <sys:String x:Key="Str_Tpl_NeedsTitle">Geben Sie dem Termin einen Titel, um die Vorlage zu benennen.</sys:String>
     <sys:String x:Key="Str_Status_Overlaps">Überschneidet sich mit {0}.</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">Überschneidet sich mit {0} und {1} weiteren.</sys:String>

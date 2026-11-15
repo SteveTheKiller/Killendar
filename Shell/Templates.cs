@@ -54,10 +54,53 @@ namespace Killendar.Shell
                 {
                     _store.DeleteTemplate(name);
                     StatusText.Text = string.Format(Loc("Str_Status_TplDeleted"), name);
+                    OfferTemplateUndo(template);
                 };
                 delete.Items.Add(item);
             }
             menu.Items.Add(delete);
+        }
+
+        private CalendarEvent? _undoTemplate;
+        private string _undoTemplateStatus = "";
+        private System.Windows.Threading.DispatcherTimer? _undoTemplateTimer;
+
+        /// <summary>Deleting a template asks nothing; instead the status bar offers an Undo for a
+        /// while. It goes when the status line says something else, or after fifteen seconds.</summary>
+        private void OfferTemplateUndo(CalendarEvent deleted)
+        {
+            _undoTemplate = deleted;
+            _undoTemplateStatus = StatusText.Text;
+            StatusUndoBtn.Visibility = Visibility.Visible;
+            if (_undoTemplateTimer == null)
+            {
+                _undoTemplateTimer = new System.Windows.Threading.DispatcherTimer { Interval = TimeSpan.FromSeconds(15) };
+                _undoTemplateTimer.Tick += (_, _) => HideTemplateUndo();
+                System.ComponentModel.DependencyPropertyDescriptor
+                    .FromProperty(TextBlock.TextProperty, typeof(TextBlock))
+                    .AddValueChanged(StatusText, (_, _) =>
+                    {
+                        if (_undoTemplate != null && StatusText.Text != _undoTemplateStatus) HideTemplateUndo();
+                    });
+            }
+            _undoTemplateTimer.Stop();
+            _undoTemplateTimer.Start();
+        }
+
+        private void HideTemplateUndo()
+        {
+            _undoTemplateTimer?.Stop();
+            _undoTemplate = null;
+            StatusUndoBtn.Visibility = Visibility.Collapsed;
+        }
+
+        private void StatusUndo_Click(object sender, RoutedEventArgs e)
+        {
+            var template = _undoTemplate;
+            HideTemplateUndo();
+            if (template == null) return;
+            _store.SaveTemplate(template);
+            StatusText.Text = string.Format(Loc("Str_Status_Restored"), template.Title);
         }
 
         /// <summary>The New button's right-click: start from a template on the day in view.</summary>

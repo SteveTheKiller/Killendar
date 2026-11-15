@@ -51,8 +51,8 @@ namespace Killendar.Shell
             TextOptions.SetTextFormattingMode(ScaleHost,
                 scale == 1.0 ? TextFormattingMode.Display : TextFormattingMode.Ideal);
 
-            MinWidth = Math.Min(_sidebarOpen ? OpenMinWidth : ClosedMinWidth, SystemParameters.WorkArea.Width);
-            MinHeight = Math.Min(FixedChromeHeight + BaseContentMinHeight * scale, SystemParameters.WorkArea.Height);
+            (MinWidth, MinHeight) = ClampMinSize(_sidebarOpen ? OpenMinWidth : ClosedMinWidth,
+                FixedChromeHeight + BaseContentMinHeight * scale, CurrentWorkArea());
 
             if (WindowState == WindowState.Normal)
             {
@@ -66,6 +66,12 @@ namespace Killendar.Shell
                     KillerFamily.Windowing.WorkAreaFit.Fit(this, keepMargin: false);
             }
         }
+
+        /// <summary>The window's minimum size held inside <paramref name="area"/>, the work area of
+        /// the monitor the window is on. Taking the area as input keeps a window on a smaller second
+        /// monitor from being clamped to the primary one's.</summary>
+        internal static (double Width, double Height) ClampMinSize(double minWidth, double minHeight, Rect area) =>
+            (Math.Min(minWidth, area.Width), Math.Min(minHeight, area.Height));
 
         private DispatcherTimer? _scaleReadoutHide;
         private string? _statusBeforeScale;

@@ -580,6 +580,7 @@
     <sys:String x:Key="Str_Tpl_NewFrom">Novo a partir de modelo</sys:String>
     <sys:String x:Key="Str_Status_TplSaved">Modelo {0} salvo</sys:String>
     <sys:String x:Key="Str_Status_TplDeleted">Modelo {0} excluído</sys:String>
+    <sys:String x:Key="Str_Status_TplUndo">Desfazer</sys:String>
     <sys:String x:Key="Str_Tpl_NeedsTitle">Dê um título ao compromisso para nomear o modelo.</sys:String>
     <sys:String x:Key="Str_Status_Overlaps">Ele se sobrepõe a {0}.</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">Ele se sobrepõe a {0} e a mais {1}.</sys:String>

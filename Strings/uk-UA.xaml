@@ -580,6 +580,7 @@
     <sys:String x:Key="Str_Tpl_NewFrom">Створити з шаблону</sys:String>
     <sys:String x:Key="Str_Status_TplSaved">Шаблон {0} збережено</sys:String>
     <sys:String x:Key="Str_Status_TplDeleted">Шаблон {0} видалено</sys:String>
+    <sys:String x:Key="Str_Status_TplUndo">Скасувати</sys:String>
     <sys:String x:Key="Str_Tpl_NeedsTitle">Дайте зустрічі назву, щоб назвати шаблон.</sys:String>
     <sys:String x:Key="Str_Status_Overlaps">Перетинається з «{0}».</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">Перетинається з «{0}» та ще {1}.</sys:String>

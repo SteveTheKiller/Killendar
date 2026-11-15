@@ -496,6 +496,7 @@
     <sys:String x:Key="Str_Tpl_NewFrom">テンプレートから新規</sys:String>
     <sys:String x:Key="Str_Status_TplSaved">テンプレート {0} を保存しました</sys:String>
     <sys:String x:Key="Str_Status_TplDeleted">テンプレート {0} を削除しました</sys:String>
+    <sys:String x:Key="Str_Status_TplUndo">元に戻す</sys:String>
     <sys:String x:Key="Str_Tpl_NeedsTitle">テンプレート名にするため予定にタイトルを付けてください。</sys:String>
     <sys:String x:Key="Str_Status_Overlaps">{0} と重なっています。</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">{0} ほか {1} 件と重なっています。</sys:String>

@@ -18,16 +18,23 @@ namespace Killendar.Views
         private Brush? AlignedGrain(FrameworkElement target)
         {
             if (TryFindResource("GrainTileBrush") is not TileBrush tile) return null;
-            var aligned = tile.CloneCurrentValue();
             var origin = target.TranslatePoint(new Point(0, 0), MonthSilhouetteGrain);
             double w = tile.Viewport.Width > 0 ? tile.Viewport.Width : 256, h = tile.Viewport.Height > 0 ? tile.Viewport.Height : 256;
             // Whole device pixels: a fractional shift resamples the tile and softens the grain.
             double scale = VisualTreeHelper.GetDpi(target).DpiScaleX;
             double dx = Math.Round((origin.X % w) * scale) / scale, dy = Math.Round((origin.Y % h) * scale) / scale;
+            // One frozen brush per tile and shift: hovering a cell again, or another cell the same
+            // distance into the tile, reuses it instead of cloning and freezing a new one.
+            var key = (tile, dx, dy);
+            if (_grainBrushes.TryGetValue(key, out var cached)) return cached;
+            var aligned = tile.CloneCurrentValue();
             aligned.Transform = new TranslateTransform(-dx, -dy);
             aligned.Freeze();
+            _grainBrushes[key] = aligned;
             return aligned;
         }
+
+        private readonly System.Collections.Generic.Dictionary<(TileBrush Tile, double X, double Y), Brush> _grainBrushes = [];
 
         private EventStore? _store;
         private Dictionary<DateTime, List<CalendarEvent>> _gridDays = [];
@@ -213,7 +220,7 @@ namespace Killendar.Views
             {
                 if (_visibleWeeks <= 0) return _anchor.ToString("MMMM yyyy");
                 var start = _rollingStart;
-                var end = start.AddDays(_visibleWeeks * 7 - 1);
+                var end = AddDaysClamped(start, _visibleWeeks * 7 - 1);
                 // The culture's own orders: its month and day pattern for the start, and its long
                 // date without the weekday for the end, so German reads "2. November - 29.
                 // November 2026" rather than the English order.
@@ -234,15 +241,33 @@ namespace Killendar.Views
             return trimmed.Length == 0 ? "D" : trimmed;
         }
 
-        public DateTime Step(DateTime from, int direction) => _visibleWeeks > 0
-            ? _rollingStart.AddDays(7 * _visibleWeeks * direction)
-            : from.AddMonths(direction);
+        public DateTime Step(DateTime from, int direction)
+        {
+            if (_visibleWeeks > 0) return AddDaysClamped(_rollingStart, 7 * _visibleWeeks * direction);
+            // Past the first or last supported month there is nowhere to go: stay put.
+            try { return from.AddMonths(direction); }
+            catch (ArgumentOutOfRangeException) { return from; }
+        }
+
+        /// <summary>Adds days without leaving the supported date range: the first and last days
+        /// stand in for anything past them, so a grid built at either end never throws.</summary>
+        private static DateTime AddDaysClamped(DateTime day, int days)
+        {
+            long ticks = day.Ticks + days * TimeSpan.TicksPerDay;
+            return new DateTime(Math.Max(0, Math.Min(DateTime.MaxValue.Date.Ticks, ticks)), day.Kind);
+        }
+
+        /// <summary>Whether <paramref name="days"/> after <paramref name="start"/> is a real day.
+        /// The grid's last week at the end of the range has cells for days that do not exist.</summary>
+        private static bool DayExists(DateTime start, int days) =>
+            days >= 0 ? (DateTime.MaxValue.Date - start.Date).TotalDays >= days
+                      : (start.Date - DateTime.MinValue).TotalDays >= -days;
 
         public void Refresh()
         {
             // The rolling anchor was aligned when the view opened. Realign it when
             // refreshed so a changed week start moves dates with their headings.
-            if (_visibleWeeks > 0) _rollingStart = StartOfWeek(_rollingStart.AddDays(3));
+            if (_visibleWeeks > 0) _rollingStart = StartOfWeek(AddDaysClamped(_rollingStart, 3));
             Rebuild();
         }
 
@@ -253,19 +278,21 @@ namespace Killendar.Views
         {
             var first = new DateTime(anchor.Year, anchor.Month, 1);
             int shift = ((int)first.DayOfWeek - (int)FirstDay + 7) % 7;
-            return first.AddDays(-shift);
+            return AddDaysClamped(first, -shift);
         }
 
         private static DateTime StartOfWeek(DateTime anchor)
         {
             int shift = ((int)anchor.DayOfWeek - (int)FirstDay + 7) % 7;
-            return anchor.Date.AddDays(-shift);
+            return AddDaysClamped(anchor.Date, -shift);
         }
 
         private static int NaturalRowCount(DateTime anchor)
         {
             var start = StartOfGrid(anchor);
-            var last = new DateTime(anchor.Year, anchor.Month, 1).AddMonths(1).AddDays(-1);
+            // The month's own last day, not the next month's first minus one: that goes through
+            // December 9999's successor.
+            var last = new DateTime(anchor.Year, anchor.Month, DateTime.DaysInMonth(anchor.Year, anchor.Month));
             return (int)Math.Ceiling(((last - start).TotalDays + 1) / 7.0);
         }
 
@@ -295,27 +322,32 @@ namespace Killendar.Views
                 CalGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
 
             var today = DateTime.Today;
-            var visibleEvents = ShownCalendars.With(_store.GetInRange(start, start.AddDays(rows * 7)), start, start.AddDays(rows * 7));
+            var gridEnd = AddDaysClamped(start, rows * 7);
+            var visibleEvents = ShownCalendars.With(_store.GetInRange(start, gridEnd), start, gridEnd);
             // Read once for the whole grid and sorted into days below, not asked again per day:
             // a big calendar took seconds to draw a month at one query per cell.
             _gridDays = CalendarLayout.ByDay(visibleEvents, start, rows * 7);
+            _grainBrushes.Clear();   // cells are new, and a theme change may have replaced the tile
             for (int r = 0; r < rows; r++)
             {
+                if (!DayExists(start, r * 7)) break;
                 var weekStart = start.AddDays(r * 7);
                 var multiDay = CalendarLayout.PlaceMultiDayRange(visibleEvents, weekStart, 7);
                 int multiDayLanes = multiDay.Count == 0 ? 0 : multiDay.Max(p => p.Row) + 1;
 
                 for (int c = 0; c < 7; c++)
                 {
+                    // The last week of the last supported month has cells past the final day.
+                    if (!DayExists(start, r * 7 + c)) continue;
                     var date = start.AddDays(r * 7 + c);
                     bool inMonth = date.Month == _anchor.Month;
                     // Draw separators only where another real day of this month follows. Edges
                     // against spillover dates are the silhouette perimeter, not grid lines; a
                     // stroke there puts the unwanted box back around the hollowed-out days.
                     bool rightSeparator = c < 6 && (SystemParameters.HighContrast || inMonth &&
-                        start.AddDays(r * 7 + c + 1).Month == _anchor.Month);
+                        DayExists(start, r * 7 + c + 1) && start.AddDays(r * 7 + c + 1).Month == _anchor.Month);
                     bool bottomSeparator = r < rows - 1 && (SystemParameters.HighContrast || inMonth &&
-                        start.AddDays((r + 1) * 7 + c).Month == _anchor.Month);
+                        DayExists(start, (r + 1) * 7 + c) && start.AddDays((r + 1) * 7 + c).Month == _anchor.Month);
                     var cell = BuildDayCell(date, inMonth, date == today,
                                             c, rightSeparator, bottomSeparator, multiDayLanes);
                     Grid.SetRow(cell, r);
@@ -373,6 +405,7 @@ namespace Killendar.Views
             for (int row = 0; row < _gridRows; row++)
             for (int column = 0; column < 7; column++)
             {
+                if (!DayExists(_gridStart, row * 7 + column)) continue;
                 var date = _gridStart.AddDays(row * 7 + column);
                 if (date.Month != _anchor.Month) continue;
                 geometry.Children.Add(new RectangleGeometry(
@@ -799,7 +832,9 @@ namespace Killendar.Views
         /// <summary>The dropped start as a delta in whole days between the grabbed and released cells.</summary>
         internal static DateTime DroppedStart(DateTime eventStart, DateTime grabCellDay, DateTime dropCellDay, bool allDay)
         {
-            var day = eventStart.Date.AddDays((dropCellDay.Date - grabCellDay.Date).Days);
+            // Clamped: an appointment grabbed late in a long span and dropped on the first or last
+            // supported day would otherwise land outside the date range.
+            var day = AddDaysClamped(eventStart.Date, (dropCellDay.Date - grabCellDay.Date).Days);
             return allDay ? day : day + eventStart.TimeOfDay;
         }
 
@@ -809,7 +844,7 @@ namespace Killendar.Views
             int rows = Math.Max(1, CalGrid.RowDefinitions.Count);
             int c = (int)Math.Max(0, Math.Min(6, p.X / (CalGrid.ActualWidth / 7)));
             int r = (int)Math.Max(0, Math.Min(rows - 1, p.Y / (CalGrid.ActualHeight / rows)));
-            return (_visibleWeeks > 0 ? _rollingStart : StartOfGrid(_anchor)).AddDays(r * 7 + c).Date;
+            return AddDaysClamped(_visibleWeeks > 0 ? _rollingStart : StartOfGrid(_anchor), r * 7 + c).Date;
         }
 
         /// <summary>

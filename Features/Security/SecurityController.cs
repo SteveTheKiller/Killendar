@@ -350,6 +350,10 @@ namespace Killendar.Features
         /// back to the previous Killendar when that fails or is canceled.</summary>
         internal void ApplyKillendarSelection(string? selected, string previous, string previousDir, string previousPath)
         {
+            // The password belongs to the Killendar open now. Switching drops it so the next one
+            // asks for its own; going back to this one hands it back, so the fallback does not
+            // prompt for a file the user had just unlocked.
+            string? previousPassword = _password;
             if (selected != null &&
                 !string.Equals(selected, EventStore.ActiveFile, StringComparison.OrdinalIgnoreCase))
             {
@@ -377,6 +381,7 @@ namespace Killendar.Features
                 if (!string.Equals(EventStore.DataDir, previousDir, StringComparison.OrdinalIgnoreCase))
                     ReturnToDataDir(previousDir);
                 EventStore.SetActive(previous);
+                _password = previousPassword;
             }
 
             bool opened = Open(exitOnCancel: false);
@@ -387,7 +392,7 @@ namespace Killendar.Features
                 // the previous one rather than leaving the app with nothing open.
                 ReturnToDataDir(previousDir);
                 EventStore.SetActive(previous);
-                _password = null;
+                _password = previousPassword;
                 opened = Open(exitOnCancel: false);
                 failure ??= _lastOpenError;
             }

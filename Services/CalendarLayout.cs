@@ -37,7 +37,8 @@ namespace Killendar.Services
         {
             if (dayCount <= 0) return [];
             var start = rangeStart.Date;
-            var end = start.AddDays(dayCount);
+            // A run that reaches past the last supported day ends there.
+            var end = (DateTime.MaxValue - start).TotalDays >= dayCount ? start.AddDays(dayCount) : DateTime.MaxValue;
             var placements = events
                 .Where(e => e.AllDay && e.Start < end && e.End > start)
                 .Select(e =>
@@ -92,7 +93,8 @@ namespace Killendar.Services
             var copies = new List<CalendarEvent>();
             foreach (var e in events.Where(IsMultiDay))
             {
-                var end = e.End.TimeOfDay == TimeSpan.Zero ? e.End : e.End.Date.AddDays(1);
+                var end = e.End.TimeOfDay == TimeSpan.Zero || e.End.Date == DateTime.MaxValue.Date
+                    ? e.End : e.End.Date.AddDays(1);
                 var copy = new CalendarEvent
                 {
                     Id = e.Id, SeriesId = e.SeriesId, OccurrenceStart = e.OccurrenceStart,

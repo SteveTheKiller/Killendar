@@ -634,7 +634,7 @@
                                             <TextBlock Grid.Column="0" Text="{DynamicResource Str_Rep_Every}" Foreground="{DynamicResource MutedTextBrush}"
                                                        FontFamily="{DynamicResource UiFont}" FontSize="11" VerticalAlignment="Center" Margin="0,0,5,0"/>
                                             <TextBox x:Name="FieldRepeatInterval" Grid.Column="1" Style="{StaticResource DarkTextBox}"
-                                                     FontSize="12" Padding="4,0" TextAlignment="Center" TextChanged="RepeatInterval_TextChanged"/>
+                                                     FontSize="12" Padding="4,0" TextAlignment="Center"/>
                                             <TextBlock x:Name="RepeatUnitLabel" Grid.Column="2" Foreground="{DynamicResource MutedTextBrush}"
                                                        FontFamily="{DynamicResource UiFont}" FontSize="11" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                         </Grid>
@@ -676,7 +676,6 @@
                                                     AutomationProperties.Name="{DynamicResource Str_Rep_AddDate}" ToolTip="{DynamicResource Str_Rep_AddDate}"/>
                                         </Grid>
 
-                                        <TextBlock x:Name="RepeatSummary" Visibility="Collapsed"/>
                                     </StackPanel>
 
                                     <Border Height="10"/>
@@ -872,14 +871,28 @@
                 </Border>
 
                 <Grid Grid.Column="0" Margin="{DynamicResource FooterCellMargin}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
                     <TextBlock x:Name="StatusText" Text="{DynamicResource Str_Status_Ready}"
                                Foreground="{DynamicResource TextFooter}"
                                FontFamily="{DynamicResource BrandSansFont}"
                                FontSize="16" TextOptions.TextFormattingMode="Ideal" VerticalAlignment="Center"
                                Margin="{DynamicResource FooterStatusInset}" Padding="{DynamicResource FooterCellPadding}"/>
-                    <Border IsHitTestVisible="False" BorderBrush="{DynamicResource FooterBevelDarkBrush}"
+                    <!-- Shown for a few seconds after a template is deleted (Templates.cs). -->
+                    <Button x:Name="StatusUndoBtn" Grid.Column="1" Visibility="Collapsed"
+                            Content="{DynamicResource Str_Status_TplUndo}" ToolTip="{DynamicResource Str_Status_TplUndo}"
+                            Click="StatusUndo_Click" Style="{StaticResource OutlineButton}"
+                            FontFamily="{DynamicResource UiFont}" FontSize="10" Padding="8,1" Margin="6,0,6,0"
+                            VerticalAlignment="Center">
+                        <Button.Resources>
+                            <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
+                        </Button.Resources>
+                    </Button>
+                    <Border Grid.ColumnSpan="2" IsHitTestVisible="False" BorderBrush="{DynamicResource FooterBevelDarkBrush}"
                             BorderThickness="{DynamicResource FooterCellLightThickness}"/>
-                    <Border IsHitTestVisible="False" BorderBrush="{DynamicResource FooterBevelLightBrush}"
+                    <Border Grid.ColumnSpan="2" IsHitTestVisible="False" BorderBrush="{DynamicResource FooterBevelLightBrush}"
                             BorderThickness="{DynamicResource FooterCellDarkThickness}"/>
                 </Grid>
 

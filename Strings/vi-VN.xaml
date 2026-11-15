@@ -550,6 +550,7 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_Tpl_NewFrom">Mới từ mẫu</sys:String>
   <sys:String x:Key="Str_Status_TplSaved">Đã lưu mẫu {0}</sys:String>
   <sys:String x:Key="Str_Status_TplDeleted">Đã xóa mẫu {0}</sys:String>
+  <sys:String x:Key="Str_Status_TplUndo">Hoàn tác</sys:String>
   <sys:String x:Key="Str_Tpl_NeedsTitle">Hãy đặt tiêu đề cho cuộc hẹn để đặt tên mẫu.</sys:String>
   <sys:String x:Key="Str_Status_Overlaps">Trùng giờ với {0}.</sys:String>
   <sys:String x:Key="Str_Status_OverlapsMore">Trùng giờ với {0} và {1} cuộc hẹn khác.</sys:String>

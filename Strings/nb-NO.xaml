@@ -580,6 +580,7 @@
     <sys:String x:Key="Str_Tpl_NewFrom">Ny fra mal</sys:String>
     <sys:String x:Key="Str_Status_TplSaved">Malen {0} er lagret</sys:String>
     <sys:String x:Key="Str_Status_TplDeleted">Malen {0} er slettet</sys:String>
+    <sys:String x:Key="Str_Status_TplUndo">Angre</sys:String>
     <sys:String x:Key="Str_Tpl_NeedsTitle">Gi avtalen en tittel for å navngi malen.</sys:String>
     <sys:String x:Key="Str_Status_Overlaps">Den overlapper {0}.</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">Den overlapper {0} og {1} til.</sys:String>

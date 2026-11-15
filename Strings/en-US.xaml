@@ -580,6 +580,7 @@
     <sys:String x:Key="Str_Tpl_NewFrom">New from template</sys:String>
     <sys:String x:Key="Str_Status_TplSaved">Saved the template {0}</sys:String>
     <sys:String x:Key="Str_Status_TplDeleted">Deleted the template {0}</sys:String>
+    <sys:String x:Key="Str_Status_TplUndo">Undo</sys:String>
     <sys:String x:Key="Str_Tpl_NeedsTitle">Give the appointment a title to name the template.</sys:String>
     <sys:String x:Key="Str_Status_Overlaps">It overlaps {0}.</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">It overlaps {0} and {1} more.</sys:String>

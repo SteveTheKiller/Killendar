@@ -496,6 +496,7 @@
     <sys:String x:Key="Str_Tpl_NewFrom">টেমপ্লেট থেকে নতুন</sys:String>
     <sys:String x:Key="Str_Status_TplSaved">টেমপ্লেট {0} সংরক্ষিত হয়েছে</sys:String>
     <sys:String x:Key="Str_Status_TplDeleted">টেমপ্লেট {0} মুছে ফেলা হয়েছে</sys:String>
+    <sys:String x:Key="Str_Status_TplUndo">পূর্বাবস্থায় ফেরান</sys:String>
     <sys:String x:Key="Str_Tpl_NeedsTitle">টেমপ্লেটের নাম দিতে অ্যাপয়েন্টমেন্টের একটি শিরোনাম দিন।</sys:String>
     <sys:String x:Key="Str_Status_Overlaps">এটির সময় {0}-এর সাথে ওভারল্যাপ করে।</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">এটি {0} ও আরও {1}টির সাথে মিলে যায়।</sys:String>

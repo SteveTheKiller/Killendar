@@ -18,14 +18,27 @@ namespace Killendar.Shell
             dlg.ShowDialog();
             if (dlg.GoTo is System.DateTime day)
             {
-                _calendar.GoTo(day);
-                ((ICalendarHost)this).ShowDayAgenda(day, null);
+                SearchOpen.Run(_appointments.ConfirmReplace, () => _calendar.GoTo(day), () => ShowDayAgenda(day, null));
             }
             else if (dlg.Chosen is Models.CalendarEvent ev)
             {
-                _calendar.GoTo(ev.Start.Date);
-                ((ICalendarHost)this).ShowDayAgenda(ev.Start.Date, ev);
+                SearchOpen.Run(_appointments.ConfirmReplace, () => _calendar.GoTo(ev.Start.Date), () => ShowDayAgenda(ev.Start.Date, ev.Id));
             }
+        }
+    }
+
+    /// <summary>Search asks before it replaces a draft, and only then moves the calendar: a kept
+    /// draft would otherwise sit beside a calendar that had already moved to the result.</summary>
+    internal static class SearchOpen
+    {
+        /// <summary>True when the result was shown; false when the user chose to keep the draft,
+        /// in which case nothing moved.</summary>
+        internal static bool Run(System.Func<bool> confirmReplace, System.Action goTo, System.Action show)
+        {
+            if (!confirmReplace()) return false;
+            goTo();
+            show();
+            return true;
         }
     }
 }

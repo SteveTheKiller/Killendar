@@ -580,6 +580,7 @@
     <sys:String x:Key="Str_Tpl_NewFrom">Үлгіден жаңа</sys:String>
     <sys:String x:Key="Str_Status_TplSaved">{0} үлгісі сақталды</sys:String>
     <sys:String x:Key="Str_Status_TplDeleted">{0} үлгісі жойылды</sys:String>
+    <sys:String x:Key="Str_Status_TplUndo">Болдырмау</sys:String>
     <sys:String x:Key="Str_Tpl_NeedsTitle">Үлгіге ат беру үшін кездесуге тақырып беріңіз.</sys:String>
     <sys:String x:Key="Str_Status_Overlaps">Ол {0} кездесуімен қабаттасады.</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">Ол {0} және тағы {1} кездесумен қабаттасады.</sys:String>

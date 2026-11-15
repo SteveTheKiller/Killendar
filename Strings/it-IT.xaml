@@ -536,6 +536,7 @@
     <sys:String x:Key="Str_Tpl_NewFrom">Nuovo da modello</sys:String>
     <sys:String x:Key="Str_Status_TplSaved">Modello {0} salvato</sys:String>
     <sys:String x:Key="Str_Status_TplDeleted">Modello {0} eliminato</sys:String>
+    <sys:String x:Key="Str_Status_TplUndo">Annulla</sys:String>
     <sys:String x:Key="Str_Tpl_NeedsTitle">Dai un titolo all’appuntamento per nominare il modello.</sys:String>
     <sys:String x:Key="Str_Status_Overlaps">Si sovrappone a {0}.</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">Si sovrappone a {0} e ad altri {1}.</sys:String>

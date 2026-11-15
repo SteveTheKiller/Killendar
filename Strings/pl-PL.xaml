@@ -509,6 +509,7 @@
     <sys:String x:Key="Str_Tpl_NewFrom">Nowe z szablonu</sys:String>
     <sys:String x:Key="Str_Status_TplSaved">Zapisano szablon {0}</sys:String>
     <sys:String x:Key="Str_Status_TplDeleted">Usunięto szablon {0}</sys:String>
+    <sys:String x:Key="Str_Status_TplUndo">Cofnij</sys:String>
     <sys:String x:Key="Str_Tpl_NeedsTitle">Nadaj spotkaniu tytuł, aby nazwać szablon.</sys:String>
     <sys:String x:Key="Str_Status_Overlaps">Nakłada się na {0}.</sys:String>
     <sys:String x:Key="Str_Status_OverlapsMore">Nakłada się na {0} i {1} innych.</sys:String>
