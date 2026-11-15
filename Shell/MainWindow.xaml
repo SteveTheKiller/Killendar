@@ -1279,19 +1279,19 @@
                                           IsChecked="{Binding Source={x:Static kl:ShortcutHints.Current}, Path=Enabled, Mode=TwoWay}">
                                     <TextBlock Text="{DynamicResource Str_About_ShowShortcutsInMenus}" TextWrapping="Wrap"/>
                                 </CheckBox>
+                                <!-- Which service answers address lookups is on the tooltip, so the two
+                                     columns stay the same height and the rows line up. -->
                                 <CheckBox x:Name="PhotonLookupToggle"
-                                          FontSize="11"
+                                          ToolTip="{DynamicResource Str_About_PhotonPrivacy}"
+                                          FontSize="11" Margin="0,0,0,6"
                                           Checked="PhotonLookupToggle_Changed"
                                           Unchecked="PhotonLookupToggle_Changed">
                                     <TextBlock Text="{DynamicResource Str_About_PhotonLookup}" TextWrapping="Wrap"/>
                                 </CheckBox>
-                                <TextBlock Text="{DynamicResource Str_About_PhotonPrivacy}"
-                                           Foreground="{DynamicResource DimTextBrush}"
-                                           FontSize="10" Margin="22,2,0,0" TextWrapping="Wrap"/>
                                 </StackPanel>
                                 <!-- Close to tray with Copy diagnostics on the same line, the way KillerShell
                                      sets its last setting beside Clear all Data. -->
-                                <Grid Grid.Row="1" Grid.ColumnSpan="3" Margin="0,6,0,0">
+                                <Grid Grid.Row="1" Grid.ColumnSpan="3">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>

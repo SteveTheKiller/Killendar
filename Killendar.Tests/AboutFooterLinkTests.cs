@@ -28,6 +28,19 @@ namespace Killendar.Tests
             Assert.Contains("DimTextBrush", link.ToString());
         }
 
+        /// <summary>The Photon note rides on the checkbox's tooltip, so no extra line pushes the
+        /// right column taller than the left and the settings rows line up.</summary>
+        [Fact]
+        public void PhotonNoteIsTheCheckboxTooltip()
+        {
+            XNamespace x = "http://schemas.microsoft.com/winfx/2006/xaml";
+            var xaml = XDocument.Load(Path.Combine(Root(), "Shell", "MainWindow.xaml"));
+            var toggle = Assert.Single(xaml.Descendants(), e => (string?)e.Attribute(x + "Name") == "PhotonLookupToggle");
+            Assert.Equal("{DynamicResource Str_About_PhotonPrivacy}", (string?)toggle.Attribute("ToolTip"));
+            Assert.DoesNotContain(xaml.Descendants(), e => e.Name.LocalName == "TextBlock"
+                && (string?)e.Attribute("Text") == "{DynamicResource Str_About_PhotonPrivacy}");
+        }
+
         private static string Root([CallerFilePath] string here = "")
             => Path.GetFullPath(Path.Combine(Path.GetDirectoryName(here)!, ".."));
     }
