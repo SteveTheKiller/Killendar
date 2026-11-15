@@ -1045,6 +1045,8 @@
                                            Foreground="{DynamicResource ChromeTextBrush}"/>
                                 <Button Content="&#xE8BB;" Click="ShortcutsClose_Click"
                                         Style="{StaticResource ChromeCloseButton}" HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Width="{DynamicResource DialogCloseWidth}" Height="{DynamicResource DialogCloseHeight}"
                                         Margin="{DynamicResource DialogCaptionCloseMargin}"/>
                             </Grid>
                         </Border>
@@ -1163,8 +1165,7 @@
                                 <Button Content="&#xE8BB;" Click="AboutClose_Click"
                                         Style="{StaticResource ChromeCloseButton}" HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
-                                        Width="{DynamicResource AboutCaptionCloseWidth}"
-                                        Height="{DynamicResource AboutCaptionCloseHeight}"
+                                        Width="{DynamicResource DialogCloseWidth}" Height="{DynamicResource DialogCloseHeight}"
                                         Margin="{DynamicResource AboutCaptionCloseMargin}"/>
                             </Grid>
                         </Border>

@@ -72,6 +72,7 @@
                         <!-- Same X as the About card: the family overlay glyph on a card, the classic caption button on 98SE. -->
                         <Button Content="&#xE8BB;" Click="Close_Click" Style="{StaticResource ChromeCloseButton}"
                                 HorizontalAlignment="Right" VerticalAlignment="Center"
+                                Width="{DynamicResource DialogCloseWidth}" Height="{DynamicResource DialogCloseHeight}"
                                 Margin="{DynamicResource DialogCaptionCloseMargin}" Visibility="{DynamicResource PlainTitleVisibility}"/>
                         <Button Content="&#x2715;" Click="Close_Click" Style="{StaticResource OverlayCloseButton}"
                                 ToolTip="{DynamicResource Str_Sys_Close}"

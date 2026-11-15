@@ -949,8 +949,11 @@ namespace Killendar.Services
             // theme that draws a dialog caption, a compact 28x26 everywhere else, flush with the
             // caption buttons' right inset.
             bool pickerCaption = combined.Contains("UseDialogCaption") && combined["UseDialogCaption"] is bool fp && fp;
-            SetIfAbsent("DialogCloseWidth", pickerCaption ? combined["CaptionButtonWidth"] : 28.0);
-            SetIfAbsent("DialogCloseHeight", pickerCaption ? combined["CaptionButtonHeight"] : 26.0);
+            // Sized from the dialog band, not the main caption: Win98 made a caption button the
+            // caption minus 4 tall and 2 wider than that, so a 20px band gets an 18x16 X.
+            double bar = combined["DialogTitleBarHeight"] is double barH ? barH : 32.0;
+            SetIfAbsent("DialogCloseWidth", pickerCaption ? bar - 2 : 28.0);
+            SetIfAbsent("DialogCloseHeight", pickerCaption ? bar - 4 : 26.0);
             SetIfAbsent("DialogCaptionButtonsMargin", new Thickness(0, 0,
                 combined["CaptionButtonsMargin"] is Thickness pickerButtons ? pickerButtons.Right : 0, 0));
             SetIfAbsent("TitleLogoMargin", combined.Contains("UseDialogCaption") && combined["UseDialogCaption"] is bool fc && fc

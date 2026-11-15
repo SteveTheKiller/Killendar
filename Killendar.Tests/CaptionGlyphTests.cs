@@ -30,24 +30,36 @@ namespace Killendar.Tests
         }
 
         /// <summary>Win98 sized a caption button from its caption: height is the caption minus 4,
-        /// width is that plus 2. The About band is 20px, so its X is 18x16, centered.</summary>
-        [Fact]
-        public void AboutCaptionCloseFitsTheTwentyPixelBand()
+        /// width is that plus 2. Every dialog band and the About band are 20px on 98SE, so every
+        /// dialog X takes the kit's DialogCloseWidth/Height, derived from the band.</summary>
+        [Theory]
+        [InlineData("Shell", "MainWindow.xaml")]
+        [InlineData("Controls", "CategoriesDialog.xaml")]
+        [InlineData("Controls", "KillendarsDialog.xaml")]
+        [InlineData("Controls", "PasswordDialog.xaml")]
+        [InlineData("Controls", "RemindersWindow.xaml")]
+        [InlineData("Controls", "SearchDialog.xaml")]
+        public void DialogCaptionCloseTakesTheBandDerivedSize(string folder, string file)
         {
-            XNamespace x = "http://schemas.microsoft.com/winfx/2006/xaml";
-            var main = XDocument.Load(Path.Combine(Root(), "Shell", "MainWindow.xaml"));
-            var close = Assert.Single(main.Descendants(), e => e.Name.LocalName == "Button"
-                && (string?)e.Attribute("Margin") == "{DynamicResource AboutCaptionCloseMargin}");
-            Assert.Equal("{DynamicResource AboutCaptionCloseWidth}", (string?)close.Attribute("Width"));
-            Assert.Equal("{DynamicResource AboutCaptionCloseHeight}", (string?)close.Attribute("Height"));
-            Assert.Equal("Center", (string?)close.Attribute("VerticalAlignment"));
+            var xaml = XDocument.Load(Path.Combine(Root(), folder, file));
+            var closes = xaml.Descendants().Where(e => e.Name.LocalName == "Button"
+                && (string?)e.Attribute("Style") == "{StaticResource ChromeCloseButton}"
+                && (string?)e.Attribute(XName.Get("Name", "http://schemas.microsoft.com/winfx/2006/xaml")) != "CloseBtn").ToList();
+            Assert.NotEmpty(closes);
+            foreach (var close in closes)
+            {
+                Assert.Equal("{DynamicResource DialogCloseWidth}", (string?)close.Attribute("Width"));
+                Assert.Equal("{DynamicResource DialogCloseHeight}", (string?)close.Attribute("Height"));
+                Assert.Equal("Center", (string?)close.Attribute("VerticalAlignment"));
+            }
+        }
 
-            var theme = XDocument.Load(Path.Combine(Root(), "Themes", "App", "98SE.xaml"));
-            string Val(string key) => Assert.Single(theme.Root!.Elements(),
-                e => (string?)e.Attribute(x + "Key") == key).Value;
-            Assert.Equal("18", Val("AboutCaptionCloseWidth"));
-            Assert.Equal("16", Val("AboutCaptionCloseHeight"));
-            Assert.Equal("0,0,0,0", Val("AboutCaptionCloseMargin"));
+        [Fact]
+        public void FlatDialogCloseIsDerivedFromTheBand()
+        {
+            var source = File.ReadAllText(Path.Combine(Root(), "Services", "ThemeManager.cs"));
+            Assert.Contains("SetIfAbsent(\"DialogCloseWidth\", pickerCaption ? bar - 2 : 28.0);", source);
+            Assert.Contains("SetIfAbsent(\"DialogCloseHeight\", pickerCaption ? bar - 4 : 26.0);", source);
         }
 
         private static string Root([CallerFilePath] string here = "")
