@@ -132,14 +132,13 @@ namespace Killendar.Shell
         /// automatic locks; without one it goes straight to setting a password, as before.</summary>
         private void ShowLockMenu()
         {
-            var menu = new ContextMenu();
+            // A family card: the two actions as rows, then the automatic locks.
+            var menu = KillerFamily.Controls.CardBuilder.Menu(280);
             FlyoutPlacement.AttachTopRight(menu);   // the pane's top-right corner, 8px in
-            var lockNow = new MenuItem { Header = Loc("Str_Lock_Now"), InputGestureText = "Ctrl+L" };
-            lockNow.Click += (_, _) => LockAndAsk();
-            var change = new MenuItem { Header = Loc("Str_Lock_Change") };
-            change.Click += (_, _) => _security.ToggleLock();
+            var lockNow = KillerFamily.Controls.CardBuilder.Row(Loc("Str_Lock_Now"), "Ctrl+L", char.ConvertFromUtf32(0xE72E), LockAndAsk);
+            var change = KillerFamily.Controls.CardBuilder.Row(Loc("Str_Lock_Change"), null, char.ConvertFromUtf32(0xE8D7), () => _security.ToggleLock());
 
-            var idle = new MenuItem { Header = Loc("Str_Lock_Idle") };
+            var idle = new MenuItem { Header = Loc("Str_Lock_Idle"), Icon = char.ConvertFromUtf32(0xE823) };
             int current = AutoLock.IdleMinutes(Settings.Get(AutoLock.IdleSetting));
             foreach (int minutes in new[] { 0 }.Concat(AutoLock.IdleChoices))
             {

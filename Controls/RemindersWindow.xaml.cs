@@ -101,15 +101,17 @@ namespace Killendar.Controls
 
         private ContextMenu SnoozeMenu(Button anchor, DueReminder reminder)
         {
-            var menu = new ContextMenu { PlacementTarget = anchor, Placement = PlacementMode.Bottom };
+            // A family card named Snooze, one row per delay.
+            var menu = KillerFamily.Controls.CardBuilder.Menu(220);
+            menu.PlacementTarget = anchor;
+            menu.Placement = PlacementMode.Bottom;
+            menu.Items.Add(KillerFamily.Controls.CardBuilder.Header(Loc("Str_Rem_Snooze")));
             foreach (int minutes in Reminders.SnoozeChoices)
             {
-                var item = new MenuItem
-                {
-                    Header = minutes == 60 ? Loc("Str_Rem_SnoozeHour") : string.Format(Loc("Str_Rem_SnoozeFor"), minutes),
-                };
-                item.Click += (_, _) => Snoozed?.Invoke(reminder, minutes);
-                menu.Items.Add(item);
+                int chosen = minutes;
+                menu.Items.Add(KillerFamily.Controls.CardBuilder.Row(
+                    minutes == 60 ? Loc("Str_Rem_SnoozeHour") : string.Format(Loc("Str_Rem_SnoozeFor"), minutes),
+                    null, char.ConvertFromUtf32(0xE916), () => Snoozed?.Invoke(reminder, chosen)));
             }
             return menu;
         }

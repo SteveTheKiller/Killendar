@@ -103,28 +103,15 @@ namespace Killendar.Controls
             };
             row.MouseDoubleClick += (_, _) => BeginRename(grid, label, name);
 
-            var menu = new ContextMenu();
-            var miRename = new MenuItem
+            // The category's card: its name on top, then Rename, Color and Delete in the strip.
+            var menu = KillerFamily.Controls.CardBuilder.Menu(260);
+            menu.Items.Add(KillerFamily.Controls.CardBuilder.Header(name));
+            menu.Items.Add(KillerFamily.Controls.CardBuilder.QuickStrip(name, new[]
             {
-                Header = Loc("Str_TT_CatRename"), InputGestureText = "F2",
-                Icon = Views.CalendarChrome.MenuGlyph(0xE70F)
-            };
-            miRename.Click += (_, _) => BeginRename(grid, label, name);
-            var miColor = new MenuItem
-            {
-                Header = Loc("Str_TT_CatRecolor"),
-                Icon = Views.CalendarChrome.MenuGlyph(0xE790)
-            };
-            miColor.Click += (_, _) => RecolorCategory(name);
-            var miDelete = new MenuItem
-            {
-                Header = Loc("Str_TT_CatDelete"), InputGestureText = "Delete",
-                Icon = Views.CalendarChrome.MenuGlyph(0xE74D)
-            };
-            miDelete.Click += (_, _) => DeleteCategory(name);
-            menu.Items.Add(miRename);
-            menu.Items.Add(miColor);
-            menu.Items.Add(miDelete);
+                new KillerFamily.Controls.CardAction(char.ConvertFromUtf32(0xE70F), Loc("Str_Ctx_Rename"), Loc("Str_TT_CatRename"), "F2", () => BeginRename(grid, label, name)),
+                new KillerFamily.Controls.CardAction(char.ConvertFromUtf32(0xE790), Loc("Str_Color_Name"), Loc("Str_TT_CatRecolor"), null, () => RecolorCategory(name)),
+                new KillerFamily.Controls.CardAction(char.ConvertFromUtf32(0xE74D), Loc("Str_Ctx_Delete"), Loc("Str_TT_CatDelete"), "Delete", () => DeleteCategory(name)),
+            }));
             row.ContextMenu = menu;
             return row;
         }

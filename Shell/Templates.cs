@@ -15,10 +15,11 @@ namespace Killendar.Shell
 
         private void TemplatesBtn_Click(object sender, RoutedEventArgs e)
         {
-            var menu = new ContextMenu { PlacementTarget = TemplatesBtn, Placement = PlacementMode.Top };
-            var save = new MenuItem { Header = Loc("Str_Tpl_Save") };
-            save.Click += (_, _) => _appointments.SaveTemplate();
-            menu.Items.Add(save);
+            var menu = KillerFamily.Controls.CardBuilder.Menu(280);
+            menu.PlacementTarget = TemplatesBtn;
+            menu.Placement = PlacementMode.Top;
+            menu.Items.Add(KillerFamily.Controls.CardBuilder.Header(Loc("Str_TT_Templates")));
+            menu.Items.Add(KillerFamily.Controls.CardBuilder.Row(Loc("Str_Tpl_Save"), null, char.ConvertFromUtf32(0xE74E), () => _appointments.SaveTemplate()));
             menu.Items.Add(new Separator());
             AddTemplateItems(menu, EditorDay());
             menu.IsOpen = true;
@@ -39,12 +40,12 @@ namespace Killendar.Shell
             }
             foreach (var template in templates)
             {
-                var use = new MenuItem { Header = template.Title };
+                var use = new MenuItem { Header = template.Title, Icon = char.ConvertFromUtf32(0xE8A5) };
                 use.Click += (_, _) => _appointments.NewFromTemplate(template, day);
                 menu.Items.Add(use);
             }
             menu.Items.Add(new Separator());
-            var delete = new MenuItem { Header = Loc("Str_Tpl_Delete") };
+            var delete = new MenuItem { Header = Loc("Str_Tpl_Delete"), Icon = char.ConvertFromUtf32(0xE74D) };
             foreach (var template in templates)
             {
                 var item = new MenuItem { Header = template.Title };
@@ -62,12 +63,12 @@ namespace Killendar.Shell
         /// <summary>The New button's right-click: start from a template on the day in view.</summary>
         private void InitTemplateMenu()
         {
-            NewEventBtn.ContextMenu = new ContextMenu();
+            NewEventBtn.ContextMenu = KillerFamily.Controls.CardBuilder.Menu(280);
             NewEventBtn.ContextMenuOpening += (_, e) =>
             {
                 var menu = NewEventBtn.ContextMenu;
                 menu.Items.Clear();
-                menu.Items.Add(new MenuItem { Header = Loc("Str_Tpl_NewFrom"), IsEnabled = false });
+                menu.Items.Add(KillerFamily.Controls.CardBuilder.Header(Loc("Str_Tpl_NewFrom"), Killendar.Services.DateFormatManager.Format(_calendar.Anchor.Date)));
                 AddTemplateItems(menu, _calendar.Anchor.Date);
             };
         }

@@ -311,25 +311,24 @@ namespace Killendar.Views
         private static string Glyph(int codepoint) => char.ConvertFromUtf32(codepoint);
 
         /// <summary>
-        /// Right-click menu for a day cell or an hour slot. Shared so month, week and day all
-        /// offer the same thing, and so the wording lives in one place.
-        /// <paramref name="at"/> is the moment a new appointment would start.
+        /// The right-click card for an empty day cell or hour slot. Shared so month, week and day
+        /// all offer the same thing, and so the wording lives in one place. The card is named for
+        /// the day; <paramref name="timed"/> adds the slot's time under it, which month leaves
+        /// out because its cells have no hours. <paramref name="at"/> is the moment a new
+        /// appointment would start.
         /// </summary>
-        internal static ContextMenu DayMenu(DateTime at, Action<DateTime> onAdd)
+        internal static ContextMenu DayMenu(DateTime at, Action<DateTime> onAdd, bool timed = false)
         {
-            var menu = new ContextMenu();
-            var add = new MenuItem
-            {
-                Header = Services.LocaleManager.Loc("Str_Ctx_AddAppointment"),
-                // Icon left, shortcut right - the family's menu shape. E710 is Add, the same glyph
-                // the New button on the toolbar carries, so the menu names the button.
-                Icon = MenuGlyph(0xE710),
-                // N, matching the "N" binding in ShortcutsOverlay.cs KsAll. Killendar prefers a
-                // bare key over a Ctrl combo; Ctrl+N is only the compatibility alias.
-                InputGestureText = "N",
-            };
-            add.Click += (_, _) => onAdd(at);
-            menu.Items.Add(add);
+            var menu = CardBuilder.Menu(260);
+            // The weekday on top, as the day view's own label leads with it, then the date in the
+            // user's chosen format and, for an hour slot, its time.
+            string date = Services.DateFormatManager.Format(at);
+            menu.Items.Add(CardBuilder.Header(
+                System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(at.DayOfWeek),
+                timed ? date + "  ·  " + Services.DateFormatManager.Time(at) : date));
+            // E710 is Add, the same glyph the New button on the toolbar carries. N matches the
+            // "N" binding in ShortcutsOverlay.cs KsAll; Ctrl+N is only the compatibility alias.
+            menu.Items.Add(CardBuilder.Row(Services.LocaleManager.Loc("Str_Ctx_AddAppointment"), "N", Glyph(0xE710), () => onAdd(at)));
             return menu;
         }
 

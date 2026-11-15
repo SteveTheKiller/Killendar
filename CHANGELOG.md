@@ -15,6 +15,8 @@ Killendar 1.5.0 gives appointments the family's card menu, updates its SQLite, J
 ### Changed
 
 - Right-clicking an appointment opens a card with its title, time and location on top and Open, Edit, Duplicate and Delete buttons below. Another Killendar's appointment offers Open alone.
+- Right-clicking an empty day or hour slot opens a card named for its weekday, with the date, the slot's time and Add appointment.
+- Categories, calendars in the Killendars dialog, templates, the lock button, Recently deleted, folder options and Snooze open family cards with a title and icons on every row.
 - Menu shortcuts line up in their own column at the right edge.
 - Buttons sit flat with no shadow under them, and on 98SE the sliders and drop-down lists take the Win98 look.
 - Updated SQLite and JSON processing to 10.0.15 and time zone conversion to 8.0.1.

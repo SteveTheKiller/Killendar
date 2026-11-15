@@ -113,6 +113,8 @@ namespace Killendar.Controls
         }
         private string? _lockedFile;
 
+        private const string RowCardHeaderTag = "RowCardHeader";
+
         private void ShowAllowedActions(string? name)
         {
             var allowed = AllowedFor(name);
@@ -325,6 +327,17 @@ namespace Killendar.Controls
         private void RowMenu_Opened(object sender, RoutedEventArgs e)
         {
             ShowAllowedActions(SelectedFile);
+            // The card is named for the calendar it acts on: a fresh header each time it opens.
+            if (sender is ContextMenu card)
+            {
+                if (card.Items.Count > 0 && card.Items[0] is MenuItem { Tag: RowCardHeaderTag }) card.Items.RemoveAt(0);
+                if (SelectedFile is string shown)
+                {
+                    var header = KillerFamily.Controls.CardBuilder.Header(Path.GetFileNameWithoutExtension(shown));
+                    header.Tag = RowCardHeaderTag;
+                    card.Items.Insert(0, header);
+                }
+            }
             RestoreBackupMenu.Items.Clear();
             var backups = SelectedFile is string name
                 ? EventStore.ListBackupsFor(Path.Combine(EventStore.DataDir, name))

@@ -13,7 +13,7 @@ namespace Killendar.Shell
 
         private void DeletedBtn_Click(object sender, RoutedEventArgs e)
         {
-            _deletedMenu ??= new ContextMenu();
+            _deletedMenu ??= KillerFamily.Controls.CardBuilder.Menu(320);
             _deletedMenu.Items.Clear();
             var items = _store.ListDeleted();
             _deletedMenu.Items.Add(new MenuItem
@@ -26,6 +26,7 @@ namespace Killendar.Shell
                 string title = string.IsNullOrWhiteSpace(item.Title) ? Loc("Str_Cal_NoTitle") : item.Title;
                 var entry = new MenuItem
                 {
+                    Icon = char.ConvertFromUtf32(0xE7A7),   // Undo: a click restores it
                     Header = title + "    " + DateFormatManager.MonthDay(item.Start)
                              + (item.AllDay ? "" : " " + DateFormatManager.Time(item.Start)),
                     ToolTip = string.Format(Loc("Str_Del_DeletedOn"),

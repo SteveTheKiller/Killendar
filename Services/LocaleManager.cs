@@ -45,9 +45,10 @@ namespace Killendar.Services
         private static ResourceDictionary? _override;
 
         /// <summary>Localized string for a Str_ key. Falls back to the key itself when it is
-        /// missing, so a translation gap shows up as itself instead of as blank UI.</summary>
+        /// missing, so a translation gap shows up as itself instead of as blank UI. With no
+        /// Application at all (a headless export), every key falls back the same way.</summary>
         public static string Loc(string key) =>
-            Application.Current.TryFindResource(key) as string ?? key;
+            Application.Current?.TryFindResource(key) as string ?? key;
 
         // ---- Translator test mode (KillerPDF #211) ----
         // --lang-file <path> reads an external translation file into the override slot, winning

@@ -85,16 +85,13 @@ namespace Killendar.Shell
                 RefreshCategoryChips();
             });
             PaintCategoryChip(chip, name);
-            var menu = new ContextMenu();
-            var primary = new MenuItem();
-            primary.SetResourceReference(HeaderedItemsControl.HeaderProperty, "Str_Cat_MakePrimary");
-            primary.Click += (_, _) => BuildCategoryChips(EventStore.WithPrimaryCategory(ReadCategoryChips(), name));
-            menu.Items.Add(primary);
+            // The chip's card: the category's name, then making it primary, then the dialog.
+            var menu = KillerFamily.Controls.CardBuilder.Menu(240);
+            menu.Items.Add(KillerFamily.Controls.CardBuilder.Header(name));
+            menu.Items.Add(KillerFamily.Controls.CardBuilder.Row(Loc("Str_Cat_MakePrimary"), null, char.ConvertFromUtf32(0xE734),
+                () => BuildCategoryChips(EventStore.WithPrimaryCategory(ReadCategoryChips(), name))));
             menu.Items.Add(new Separator());
-            var manage = new MenuItem();
-            manage.SetResourceReference(HeaderedItemsControl.HeaderProperty, "Str_Cat_Title");
-            manage.Click += (_, _) => OpenCategoriesDialog();
-            menu.Items.Add(manage);
+            menu.Items.Add(KillerFamily.Controls.CardBuilder.Row(Loc("Str_Cat_Title"), null, char.ConvertFromUtf32(0xE8FD), OpenCategoriesDialog));
             chip.ContextMenu = menu;
             return chip;
         }

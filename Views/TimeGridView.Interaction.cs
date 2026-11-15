@@ -243,7 +243,7 @@ namespace Killendar.Views
                 double mins = Math.Max(0, Math.Min(24 * 60 - snap, y / CalendarChrome.HourHeight * 60));
                 int half = (int)Math.Round(mins / snap);
                 canvas.ContextMenu = CalendarChrome.DayMenu(
-                    date.Date.AddMinutes(half * snap), d => SlotSelected?.Invoke(d));
+                    date.Date.AddMinutes(half * snap), d => SlotSelected?.Invoke(d), timed: true);
             };
 
             PlaceTimedEvents(canvas, date);

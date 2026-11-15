@@ -95,7 +95,7 @@
                                  PreviewKeyDown="KcList_PreviewKeyDown"
                                  PreviewMouseRightButtonDown="KcList_PreviewMouseRightButtonDown">
                             <ListBox.ContextMenu>
-                                <ContextMenu Opened="RowMenu_Opened">
+                                <ContextMenu Opened="RowMenu_Opened" Style="{DynamicResource CardMenu}" MinWidth="324" MaxWidth="324">
                                     <MenuItem Header="{DynamicResource Str_Ctx_Open}" Click="Open_Click" InputGestureText="Enter">
                                         <MenuItem.Icon><a11y:Glyph Text="&#xE8E5;" FontFamily="Segoe MDL2 Assets"/></MenuItem.Icon>
                                     </MenuItem>
@@ -174,7 +174,7 @@
                                 Style="{StaticResource SurfaceButton}" FontFamily="Segoe MDL2 Assets"
                                 Width="34" Padding="0">
                             <Button.ContextMenu>
-                                <ContextMenu x:Name="StorageMenu" Placement="Top">
+                                <ContextMenu x:Name="StorageMenu" Placement="Top" Style="{DynamicResource CardMenu}" MinWidth="324" MaxWidth="324">
                                     <MenuItem Header="{DynamicResource Str_Menu_OpenDataFolder}" Click="Explorer_Click">
                                         <MenuItem.Icon><a11y:Glyph Text="&#xE838;" FontFamily="Segoe MDL2 Assets"/></MenuItem.Icon>
                                     </MenuItem>
