@@ -132,8 +132,6 @@
     <sys:String x:Key="Str_Rep_EndAfter">Кейін</sys:String>
     <sys:String x:Key="Str_Rep_EndOn">Белгілі күні</sys:String>
     <sys:String x:Key="Str_Rep_HintCount">Неше рет</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNext">Келесі: {0}</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNone">Бұл ешқашан болмайды. Күндерді тексеріңіз.</sys:String>
     <sys:String x:Key="Str_Rep_Scope">БҰЛ ҚАЙТАЛАНАТЫН КЕЗДЕСУ</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Тек осы күн</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Бүкіл сериясы</sys:String>

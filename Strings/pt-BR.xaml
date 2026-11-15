@@ -132,8 +132,6 @@
     <sys:String x:Key="Str_Rep_EndAfter">Após</sys:String>
     <sys:String x:Key="Str_Rep_EndOn">Na data</sys:String>
     <sys:String x:Key="Str_Rep_HintCount">Quantas vezes</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNext">Próximo: {0}</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNone">Isto nunca acontece. Verifique as datas.</sys:String>
     <sys:String x:Key="Str_Rep_Scope">ESTE É UM COMPROMISSO RECORRENTE</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Somente esta data</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">A série inteira</sys:String>

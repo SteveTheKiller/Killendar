@@ -88,8 +88,6 @@
     <sys:String x:Key="Str_Rep_EndAfter">এতবারের পর</sys:String>
     <sys:String x:Key="Str_Rep_EndOn">তারিখে</sys:String>
     <sys:String x:Key="Str_Rep_HintCount">কতবার</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNext">পরবর্তী: {0}</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNone">এটি কখনও ঘটে না। তারিখগুলি দেখুন।</sys:String>
     <sys:String x:Key="Str_Rep_Scope">এই অ্যাপয়েন্টমেন্টটি পুনরাবৃত্ত</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">শুধু এই তারিখ</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">পুরো সিরিজ</sys:String>

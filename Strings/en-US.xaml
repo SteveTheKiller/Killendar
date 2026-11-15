@@ -132,8 +132,6 @@
     <sys:String x:Key="Str_Rep_EndAfter">After</sys:String>
     <sys:String x:Key="Str_Rep_EndOn">On date</sys:String>
     <sys:String x:Key="Str_Rep_HintCount">How many times</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNext">Next: {0}</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNone">This never happens. Check the dates.</sys:String>
     <sys:String x:Key="Str_Rep_Scope">THIS IS A REPEATING APPOINTMENT</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Just this date</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">The whole series</sys:String>

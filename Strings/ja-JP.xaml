@@ -88,8 +88,6 @@
     <sys:String x:Key="Str_Rep_EndAfter">回数で</sys:String>
     <sys:String x:Key="Str_Rep_EndOn">日付で</sys:String>
     <sys:String x:Key="Str_Rep_HintCount">繰り返す回数</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNext">次回: {0}</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNone">一度も発生しません。日付を確認してください。</sys:String>
     <sys:String x:Key="Str_Rep_Scope">これは繰り返しの予定です</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">この日だけ</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">すべての予定</sys:String>

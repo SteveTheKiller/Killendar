@@ -132,8 +132,6 @@
     <sys:String x:Key="Str_Rep_EndAfter">Etter</sys:String>
     <sys:String x:Key="Str_Rep_EndOn">På dato</sys:String>
     <sys:String x:Key="Str_Rep_HintCount">Hvor mange ganger</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNext">Neste: {0}</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNone">Dette skjer aldri. Kontroller datoene.</sys:String>
     <sys:String x:Key="Str_Rep_Scope">DETTE ER EN GJENTAKENDE AVTALE</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Bare denne datoen</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Hele serien</sys:String>

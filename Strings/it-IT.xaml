@@ -118,8 +118,6 @@
     <sys:String x:Key="Str_Rep_EndAfter">Dopo</sys:String>
     <sys:String x:Key="Str_Rep_EndOn">In data</sys:String>
     <sys:String x:Key="Str_Rep_HintCount">Quante volte</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNext">Prossime: {0}</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNone">Questo non avviene mai. Controlla le date.</sys:String>
     <sys:String x:Key="Str_Rep_Scope">QUESTO È UN APPUNTAMENTO RIPETUTO</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Solo questa data</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Tutta la serie</sys:String>

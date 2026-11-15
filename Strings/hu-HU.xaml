@@ -132,8 +132,6 @@
     <sys:String x:Key="Str_Rep_EndAfter">Után</sys:String>
     <sys:String x:Key="Str_Rep_EndOn">A dátumon</sys:String>
     <sys:String x:Key="Str_Rep_HintCount">Hányszor</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNext">Következő: {0}</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNone">Ez soha nem történik meg. Ellenőrizze a dátumokat.</sys:String>
     <sys:String x:Key="Str_Rep_Scope">EZ ISMÉTLŐDŐ IDŐPONT</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Csak ezt a dátumot</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Az egész sorozat</sys:String>

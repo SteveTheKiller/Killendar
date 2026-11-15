@@ -122,8 +122,6 @@
   <sys:String x:Key="Str_Rep_EndAfter">Sau</sys:String>
   <sys:String x:Key="Str_Rep_EndOn">Vào ngày</sys:String>
   <sys:String x:Key="Str_Rep_HintCount">Số lần</sys:String>
-  <sys:String x:Key="Str_Rep_SummaryNext">Lần tiếp theo: {0}</sys:String>
-  <sys:String x:Key="Str_Rep_SummaryNone">Cuộc hẹn này không bao giờ diễn ra. Hãy kiểm tra ngày.</sys:String>
   <sys:String x:Key="Str_Rep_Scope">ĐÂY LÀ CUỘC HẸN LẶP LẠI</sys:String>
   <sys:String x:Key="Str_Btn_ThisDate">Chỉ ngày này</sys:String>
   <sys:String x:Key="Str_Btn_WholeSeries">Toàn bộ chuỗi</sys:String>

@@ -88,8 +88,6 @@
     <sys:String x:Key="Str_Rep_EndAfter">Po</sys:String>
     <sys:String x:Key="Str_Rep_EndOn">K datu</sys:String>
     <sys:String x:Key="Str_Rep_HintCount">Kolikrát</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNext">Další: {0}</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNone">Tohle nikdy nenastane. Zkontroluj data.</sys:String>
     <sys:String x:Key="Str_Rep_Scope">TATO SCHŮZKA SE OPAKUJE</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Jen toto datum</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Celou sérii</sys:String>

@@ -88,8 +88,6 @@
     <sys:String x:Key="Str_Rep_EndAfter">按次数</sys:String>
     <sys:String x:Key="Str_Rep_EndOn">按日期</sys:String>
     <sys:String x:Key="Str_Rep_HintCount">重复多少次</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNext">接下来：{0}</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNone">这样一次也不会发生。请检查日期。</sys:String>
     <sys:String x:Key="Str_Rep_Scope">这是一个重复约会</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">仅这一天</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">整个系列</sys:String>

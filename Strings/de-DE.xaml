@@ -88,8 +88,6 @@
     <sys:String x:Key="Str_Rep_EndAfter">Nach</sys:String>
     <sys:String x:Key="Str_Rep_EndOn">Am Datum</sys:String>
     <sys:String x:Key="Str_Rep_HintCount">Wie oft</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNext">Nächste: {0}</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNone">Das findet nie statt. Prüfe die Daten.</sys:String>
     <sys:String x:Key="Str_Rep_Scope">DIESER TERMIN WIEDERHOLT SICH</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Nur dieser Termin</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Die ganze Serie</sys:String>

@@ -108,8 +108,6 @@
     <sys:String x:Key="Str_Rep_EndAfter">Po</sys:String>
     <sys:String x:Key="Str_Rep_EndOn">Na datum</sys:String>
     <sys:String x:Key="Str_Rep_HintCount">Kolikokrat</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNext">Naslednjič: {0}</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNone">Tak dogodek se nikoli ne zgodi. Preveri datume.</sys:String>
     <sys:String x:Key="Str_Rep_Scope">TO JE PONAVLJAJOČ SE DOGODEK</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Samo ta datum</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Celoten niz</sys:String>

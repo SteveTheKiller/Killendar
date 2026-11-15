@@ -132,8 +132,6 @@
     <sys:String x:Key="Str_Rep_EndAfter">Після</sys:String>
     <sys:String x:Key="Str_Rep_EndOn">У дату</sys:String>
     <sys:String x:Key="Str_Rep_HintCount">Скільки разів</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNext">Далі: {0}</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNone">Це ніколи не станеться. Перевірте дати.</sys:String>
     <sys:String x:Key="Str_Rep_Scope">ЦЕ ПОВТОРЮВАНА ЗУСТРІЧ</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Лише цю дату</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Усю серію</sys:String>

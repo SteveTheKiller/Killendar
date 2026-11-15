@@ -221,8 +221,6 @@
     <sys:String x:Key="Str_Rep_EndAfter">Po</sys:String>
     <sys:String x:Key="Str_Rep_EndOn">W dniu</sys:String>
     <sys:String x:Key="Str_Rep_HintCount">Liczba powtórzeń</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNext">Następne: {0}</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNone">To spotkanie nigdy nie wystąpi. Sprawdź daty.</sys:String>
     <sys:String x:Key="Str_Rep_Scope">TO SPOTKANIE JEST CYKLICZNE</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Tylko ta data</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Cała seria</sys:String>

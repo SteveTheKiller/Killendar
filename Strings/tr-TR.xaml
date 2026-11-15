@@ -88,8 +88,6 @@
     <sys:String x:Key="Str_Rep_EndAfter">Şu kadar sonra</sys:String>
     <sys:String x:Key="Str_Rep_EndOn">Tarihte</sys:String>
     <sys:String x:Key="Str_Rep_HintCount">Kaç kez</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNext">Sonraki: {0}</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNone">Bu hiç gerçekleşmiyor. Tarihleri kontrol et.</sys:String>
     <sys:String x:Key="Str_Rep_Scope">BU RANDEVU TEKRARLANIYOR</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Yalnızca bu tarih</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Tüm seri</sys:String>

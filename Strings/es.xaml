@@ -88,8 +88,6 @@
     <sys:String x:Key="Str_Rep_EndAfter">Tras</sys:String>
     <sys:String x:Key="Str_Rep_EndOn">En fecha</sys:String>
     <sys:String x:Key="Str_Rep_HintCount">Cuántas veces</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNext">Siguientes: {0}</sys:String>
-    <sys:String x:Key="Str_Rep_SummaryNone">Esto no ocurre nunca. Revisa las fechas.</sys:String>
     <sys:String x:Key="Str_Rep_Scope">ESTA CITA SE REPITE</sys:String>
     <sys:String x:Key="Str_Btn_ThisDate">Solo esta fecha</sys:String>
     <sys:String x:Key="Str_Btn_WholeSeries">Toda la serie</sys:String>
