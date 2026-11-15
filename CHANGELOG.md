@@ -33,6 +33,7 @@ Killendar 1.5.0 gives appointments the family's card menu, hardens how it loads 
 - The window's minimum size fits the monitor it is on.
 - The day view title follows the language's date format.
 - The sidebar slides closed smoothly when it is closed while still opening.
+- Pressing Enter twice in the file picker's name box while a slow network or USB folder is still being checked no longer acts twice.
 
 ### Changed
 
@@ -40,7 +41,7 @@ Killendar 1.5.0 gives appointments the family's card menu, hardens how it loads 
 - Right-clicking an empty day or hour slot opens a card named for its weekday, with the date, the slot's time and Add appointment.
 - Categories, calendars in the Killendars dialog, templates, the lock button, Recently deleted, folder options and Snooze open family cards with a title and icons on every row.
 - Menu shortcuts line up in their own column at the right edge.
-- Buttons sit flat with no shadow under them, and on 98SE the sliders and drop-down lists take the Win98 look.
+- Buttons sit flat with no shadow under them, and on 98SE the sliders and drop-down lists take the Win98 look. The 98SE close buttons draw Win98's pixel X.
 - Updated SQLite to 10.0.15, JSON processing to 11.0.0 and time zone conversion to 8.0.1.
 - Single-line text fields are as tall as the dropdowns beside them, so form rows line up instead of the text boxes standing oversized.
 - The copyright at the right end of the footer ends 8 px before the corner grip, the same gap in every Killer app.

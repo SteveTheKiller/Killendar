@@ -94,7 +94,8 @@
          build: the bundle's Batteries_V2 dynamic loader probes Assembly.Location, which is empty
          for Costura in-memory assemblies and crashes at startup. The static provider binds via
          plain DllImport, satisfied by SqlCipherBootstrap's preload. The .Core ADO.NET wrapper
-         stays managed. Run the vulnerable-package scan at every release. -->
+         stays managed. Run the vulnerable-package scan at every release. 11.0.0 targets net10.0
+         only, so the 10.0.x line is the newest one that restores on net48. -->
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="10.0.15" />
     <PackageReference Include="SQLitePCLRaw.core" Version="3.0.5" />
     <PackageReference Include="SQLitePCLRaw.provider.e_sqlcipher" Version="2.1.11" />
