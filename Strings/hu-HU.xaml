@@ -244,6 +244,7 @@
     <sys:String x:Key="Str_Status_ExportFailed">Az exportálás sikertelen: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Nincs mit exportálni</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Nem sikerült megnyitni a Killendart: {0}</sys:String>
+    <sys:String x:Key="Str_Status_MigrationWarning">A régi events.json fájlt nem sikerült importálni, ezért változatlanul hagytuk: {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">{0} találkozó migrálva a Killendarba</sys:String>
 
     <!-- File dialogs. The CSV column names inside Str_Status_CsvBadHeader stay in English in

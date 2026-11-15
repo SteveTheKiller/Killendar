@@ -234,6 +234,8 @@ namespace Killendar.Features
                 return string.Format(_host.Loc("Str_Status_Migrated"), _store.MigratedCount);
             if (_store.LoadError != null)
                 return string.Format(_host.Loc("Str_Status_LoadError"), _store.LoadError);
+            if (_store.MigrationWarning != null)
+                return string.Format(_host.Loc("Str_Status_MigrationWarning"), _store.MigrationWarning);
             return null;
         }
     }

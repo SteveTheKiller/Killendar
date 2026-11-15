@@ -12,7 +12,8 @@ internal static class SaveFileNamePolicy
         string normalized = extension!.StartsWith(".") ? extension : "." + extension;
         string current = Path.GetExtension(path);
         if (current.Equals(normalized, StringComparison.OrdinalIgnoreCase)) return path;
-        if (current.Length == 0 || requireExtension) return path + normalized;
+        // A name typed as "report." already carries the dot, so it must not turn into "report..ics".
+        if (current.Length == 0 || requireExtension) return path.TrimEnd('.') + normalized;
         return path;
     }
 }

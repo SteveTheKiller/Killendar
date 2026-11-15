@@ -198,6 +198,7 @@
     <sys:String x:Key="Str_Status_ExportFailed">Export selhal: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Není co exportovat</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Tento Killendar nelze otevřít: {0}</sys:String>
+    <sys:String x:Key="Str_Status_MigrationWarning">Starý soubor events.json se nepodařilo importovat a zůstal beze změny: {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">Přeneseno {0} schůzek do vašeho Killendaru</sys:String>
 
     <sys:String x:Key="Str_Dlg_ImportTitle">Importovat schůzky</sys:String>

@@ -71,7 +71,7 @@ namespace Killendar.Cli
                     Console.WriteLine(response);
                     return 0;
                 }
-                var events = Agenda(database ?? EventStore.ActivePath, from, days, limit);
+                var events = Agenda(database, from, days, limit);
                 Console.WriteLine(JsonSerializer.Serialize(events));
                 return 0;
             }

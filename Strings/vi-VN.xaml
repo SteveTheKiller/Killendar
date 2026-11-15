@@ -233,6 +233,7 @@
   <sys:String x:Key="Str_Status_ExportFailed">Xuất không thành công: {0}</sys:String>
   <sys:String x:Key="Str_Status_NothingToExport">Không có nội dung để xuất</sys:String>
   <sys:String x:Key="Str_Status_LoadError">Không thể mở Killendar này: {0}</sys:String>
+  <sys:String x:Key="Str_Status_MigrationWarning">Không thể nhập events.json cũ của bạn và tệp được giữ nguyên: {0}</sys:String>
   <sys:String x:Key="Str_Status_Migrated">Đã chuyển {0} cuộc hẹn vào Killendar của bạn</sys:String>
   <!-- File dialogs. The CSV column names inside Str_Status_CsvBadHeader stay in English in
          EVERY locale: they are Outlook's literal header words, matched by name, not labels. -->

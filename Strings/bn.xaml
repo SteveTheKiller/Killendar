@@ -198,6 +198,7 @@
     <sys:String x:Key="Str_Status_ExportFailed">এক্সপোর্ট ব্যর্থ: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">এক্সপোর্ট করার কিছু নেই</sys:String>
     <sys:String x:Key="Str_Status_LoadError">এই Killendar খোলা যায়নি: {0}</sys:String>
+    <sys:String x:Key="Str_Status_MigrationWarning">আপনার পুরনো events.json ইমপোর্ট করা যায়নি এবং ফাইলটি অপরিবর্তিত রাখা হয়েছে: {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">{0} টি অ্যাপয়েন্টমেন্ট আপনার Killendar-এ স্থানান্তর করা হয়েছে</sys:String>
 
     <sys:String x:Key="Str_Dlg_ImportTitle">অ্যাপয়েন্টমেন্ট ইমপোর্ট</sys:String>

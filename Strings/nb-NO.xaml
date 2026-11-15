@@ -244,6 +244,7 @@
     <sys:String x:Key="Str_Status_ExportFailed">Eksporten mislyktes: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Ingenting å eksportere</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Kunne ikke åpne denne Killendar-filen: {0}</sys:String>
+    <sys:String x:Key="Str_Status_MigrationWarning">Den gamle events.json-filen kunne ikke importeres og ble latt være urørt: {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">Flyttet {0} avtaler inn i Killendar</sys:String>
 
     <!-- File dialogs. The CSV column names inside Str_Status_CsvBadHeader stay in English in

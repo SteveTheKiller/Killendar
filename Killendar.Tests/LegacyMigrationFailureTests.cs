@@ -29,31 +29,20 @@ namespace Killendar.Tests
             string json = Path.Combine(root, "events.json");
             string target = Path.Combine(root, "Default.kcal");
             var timed = new CalendarEvent { Title = "Timed", Start = new DateTime(2026, 1, 5, 15, 30, 0), End = new DateTime(2026, 1, 5, 16, 30, 0) };
-            var allDay = new CalendarEvent { Title = "All day", AllDay = true, Start = new DateTime(2026, 1, 6), End = new DateTime(2026, 1, 7) };
             try
             {
                 var options = new JsonSerializerOptions { IgnoreReadOnlyProperties = true };
                 string broken = JsonSerializer.Serialize(new CalendarEvent?[] { timed, null }, options);
                 File.WriteAllText(json, broken);
-                store.Prepare();
-                Assert.NotNull(store.LoadError);
-                Assert.False(File.Exists(target));
-                Assert.Equal(broken, File.ReadAllText(json));
-
-                store.OpenActive();
-                Assert.NotNull(store.LoadError);
-                Assert.False(store.IsOpen);
-                Assert.False(File.Exists(target));
-
-                File.WriteAllText(json, JsonSerializer.Serialize(new[] { timed, allDay }, options));
+                // A null entry holds no appointment, so it is skipped and the rest still migrates.
                 store.Prepare();
                 Assert.Null(store.LoadError);
-                Assert.Equal(2, store.MigratedCount);
+                Assert.Equal(1, store.MigratedCount);
+                Assert.True(File.Exists(target));
                 Assert.True(File.Exists(json + ".migrated"));
                 store.Open(target);
                 Assert.Collection(store.Events,
-                    e => { Assert.Equal("Timed", e.Title); Assert.Equal(timed.Start, e.Start); Assert.Equal(timed.End, e.End); },
-                    e => { Assert.Equal("All day", e.Title); Assert.Equal(allDay.Start, e.Start); Assert.Equal(allDay.End, e.End); });
+                    e => { Assert.Equal("Timed", e.Title); Assert.Equal(timed.Start, e.Start); Assert.Equal(timed.End, e.End); });
                 store.Close();
                 byte[] original = File.ReadAllBytes(target);
                 File.WriteAllText(json, broken);

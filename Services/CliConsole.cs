@@ -28,11 +28,17 @@ namespace Killendar.Services
         {
             try
             {
-                if (!IsRedirected(StdOutputHandle) && !IsRedirected(StdErrorHandle))
+                if (ShouldAttach(IsRedirected(StdOutputHandle), IsRedirected(StdErrorHandle)))
                     AttachConsole(AttachParentProcess);
             }
             catch (Exception ex) when (ex is DllNotFoundException || ex is EntryPointNotFoundException) { }
         }
+
+        /// <summary>A stream that is still the terminal needs the console attached, even when the
+        /// other one is redirected: "killendar agenda 2>err.txt" must still print its agenda.
+        /// Redirected streams keep their own handles, so attaching never disturbs them.</summary>
+        internal static bool ShouldAttach(bool outputRedirected, bool errorRedirected) =>
+            !outputRedirected || !errorRedirected;
 
         private static bool IsRedirected(int handle)
         {

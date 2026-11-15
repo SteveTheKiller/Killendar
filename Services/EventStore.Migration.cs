@@ -30,21 +30,39 @@ namespace Killendar.Services
             MigratedCount = 0;
             MigrationWarning = null;
             string target = ActivePath;
-            if (File.Exists(target)) return;
+            // Written when a legacy file could not be imported, so a later launch knows the empty
+            // calendar next to it was made as a stand-in and the file may be tried again.
+            string marker = target + ".legacy-retry";
+            bool targetExists = File.Exists(target);
+            if (targetExists && !File.Exists(marker)) return;
 
             string? json = new[]
             {
                 Path.Combine(AppPaths.LocalData, "Killendar", "events.json"),
                 Path.Combine(DataDir, "events.json"),
             }.FirstOrDefault(File.Exists);
-            if (json == null) return;
+            if (json == null)
+            {
+                if (targetExists) TryDelete(marker);
+                return;
+            }
+
+            // The stand-in is replaced only while it is still the untouched empty calendar. Once
+            // the user has added anything, or a calendar is open, it is theirs and stays.
+            bool replaceStandIn = false;
+            if (targetExists)
+            {
+                if (_db != null) return;
+                if (!IsUntouchedStandIn(target)) { TryDelete(marker); return; }
+                replaceStandIn = true;
+            }
 
             List<CalendarEvent> old;
             try
             {
-                old = JsonSerializer.Deserialize<List<CalendarEvent>>(File.ReadAllText(json),
-                          new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
-                      ?? [];
+                old = (JsonSerializer.Deserialize<List<CalendarEvent>>(File.ReadAllText(json),
+                           new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+                       ?? []).Where(ev => ev != null).ToList();
             }
             catch (Exception ex)
             {
@@ -52,6 +70,7 @@ namespace Killendar.Services
                 // Killendar, and must not be renamed away either, because it is the only copy.
                 // The warning is kept apart from LoadError so the calendar still opens.
                 MigrationWarning = json + ": " + ex.Message;
+                WriteRetryMarker(marker, json);
                 return;
             }
 
@@ -97,8 +116,18 @@ namespace Killendar.Services
                     tx.Commit();
                 }
                 SqliteConnection.ClearAllPools();
+                if (replaceStandIn)
+                    foreach (string stale in new[] { target, target + "-wal", target + "-shm", target + "-journal" })
+                        File.Delete(stale);
                 // Move never overwrites a calendar created by another process during migration.
                 File.Move(temporary, target);
+                TryDelete(marker);
+            }
+            catch
+            {
+                // Nothing was published and events.json is untouched; remember that it is still owed.
+                WriteRetryMarker(marker, json);
+                throw;
             }
             finally
             {
@@ -121,6 +150,32 @@ namespace Killendar.Services
             }
 
             MigratedCount = old.Count;
+        }
+
+        private static void WriteRetryMarker(string marker, string json)
+        {
+            try { File.WriteAllText(marker, json); }
+            catch (IOException) { }
+            catch (UnauthorizedAccessException) { }
+        }
+
+        /// <summary>True for a plaintext calendar that holds no appointments and only the
+        /// default categories, which is all the stand-in made after a failed import ever has.</summary>
+        private static bool IsUntouchedStandIn(string path)
+        {
+            try
+            {
+                using var c = new SqliteConnection(Cs(path, null));
+                c.Open();
+                var probe = new EventStore { _db = c };
+                probe.LoadIntoMemory();
+                var categories = probe.ListCategories();
+                return probe.Events.Count == 0
+                    && categories.Count == DefaultCategories.Length
+                    && DefaultCategories.All(d => categories.Contains(d));
+            }
+            catch (Exception) { return false; }
+            finally { SqliteConnection.ClearAllPools(); }
         }
     }
 }

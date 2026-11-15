@@ -127,9 +127,10 @@ namespace Killendar.Services
         /// own <paramref name="preferred"/> when that already clears WCAG AA (4.5:1), and
         /// otherwise falls back to whichever pole - near-black or white - scores higher.
         /// </summary>
-        private static SolidColorBrush ReadableOn(SolidColorBrush? fill, SolidColorBrush? preferred)
+        internal static SolidColorBrush ReadableOn(SolidColorBrush? fill, SolidColorBrush? preferred)
         {
             var white = new SolidColorBrush(Color.FromRgb(0xFF, 0xFF, 0xFF));
+            white.Freeze();
             if (fill == null) return preferred ?? white;
             if (preferred != null && Contrast(fill.Color, preferred.Color) >= 4.5) return preferred;
 

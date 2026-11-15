@@ -217,6 +217,7 @@
     <sys:String x:Key="Str_Status_ExportFailed">Izvoz ni uspel: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Ni vsebine za izvoz</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Tega koledarja Killendar ni bilo mogoče odpreti: {0}</sys:String>
+    <sys:String x:Key="Str_Status_MigrationWarning">Stare datoteke events.json ni bilo mogoče uvoziti, zato je ostala nespremenjena: {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">Preneseni dogodki v tvoj Killendar: {0}</sys:String>
     <sys:String x:Key="Str_Dlg_ImportTitle">Uvozi dogodke</sys:String>
     <sys:String x:Key="Str_Dlg_ExportTitle">Izvozi dogodke</sys:String>

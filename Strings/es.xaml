@@ -198,6 +198,7 @@
     <sys:String x:Key="Str_Status_ExportFailed">Error al exportar: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">No hay nada que exportar</sys:String>
     <sys:String x:Key="Str_Status_LoadError">No se pudo abrir este Killendar: {0}</sys:String>
+    <sys:String x:Key="Str_Status_MigrationWarning">No se pudo importar tu antiguo events.json y se dejó sin cambios: {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">Se migraron {0} citas a tu Killendar</sys:String>
 
     <sys:String x:Key="Str_Dlg_ImportTitle">Importar citas</sys:String>

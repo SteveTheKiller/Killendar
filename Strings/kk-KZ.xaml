@@ -244,6 +244,7 @@
     <sys:String x:Key="Str_Status_ExportFailed">Экспорттау сәтсіз аяқталды: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Экспорттайтын ештеңе жоқ</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Бұл Killendar ашылмады: {0}</sys:String>
+    <sys:String x:Key="Str_Status_MigrationWarning">Ескі events.json файлын импорттау мүмкін болмады, файл өзгеріссіз қалдырылды: {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">Killendar ішіне {0} кездесу көшірілді</sys:String>
 
     <!-- File dialogs. The CSV column names inside Str_Status_CsvBadHeader stay in English in

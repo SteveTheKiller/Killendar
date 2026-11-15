@@ -198,6 +198,7 @@
     <sys:String x:Key="Str_Status_ExportFailed">書き出しに失敗しました: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">書き出すものがありません</sys:String>
     <sys:String x:Key="Str_Status_LoadError">この Killendar を開けませんでした: {0}</sys:String>
+    <sys:String x:Key="Str_Status_MigrationWarning">古い events.json をインポートできませんでした。ファイルはそのまま残してあります: {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">{0} 件の予定を Killendar に移行しました</sys:String>
 
     <sys:String x:Key="Str_Dlg_ImportTitle">予定を読み込む</sys:String>

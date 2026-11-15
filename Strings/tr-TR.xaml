@@ -198,6 +198,7 @@
     <sys:String x:Key="Str_Status_ExportFailed">Dışa aktarma başarısız: {0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">Dışa aktarılacak bir şey yok</sys:String>
     <sys:String x:Key="Str_Status_LoadError">Bu Killendar açılamadı: {0}</sys:String>
+    <sys:String x:Key="Str_Status_MigrationWarning">Eski events.json dosyanız içe aktarılamadı ve olduğu gibi bırakıldı: {0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">{0} randevu Killendar'ınıza taşındı</sys:String>
 
     <sys:String x:Key="Str_Dlg_ImportTitle">Randevuları içe aktar</sys:String>

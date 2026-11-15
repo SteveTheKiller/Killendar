@@ -198,6 +198,7 @@
     <sys:String x:Key="Str_Status_ExportFailed">匯出失敗：{0}</sys:String>
     <sys:String x:Key="Str_Status_NothingToExport">沒有可匯出的內容</sys:String>
     <sys:String x:Key="Str_Status_LoadError">無法開啟此 Killendar：{0}</sys:String>
+    <sys:String x:Key="Str_Status_MigrationWarning">無法匯入你的舊 events.json，檔案已原樣保留：{0}</sys:String>
     <sys:String x:Key="Str_Status_Migrated">已將 {0} 個約會移轉到你的 Killendar</sys:String>
 
     <sys:String x:Key="Str_Dlg_ImportTitle">匯入行程</sys:String>
