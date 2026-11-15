@@ -72,7 +72,7 @@ namespace Killendar.Controls
             row.ColumnDefinitions.Add(new ColumnDefinition());
             row.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
-            var text = new StackPanel { Cursor = Cursors.Hand, Background = System.Windows.Media.Brushes.Transparent };
+            var text = new PressablePanel { Cursor = Cursors.Hand, Background = System.Windows.Media.Brushes.Transparent };
             string title = string.IsNullOrWhiteSpace(reminder.Title) ? Loc("Str_Cal_NoTitle") : reminder.Title;
             // Brushes set explicitly: a TextBlock built in code inherits black, not the theme.
             var heading = new TextBlock { Text = title, FontSize = 13, FontWeight = FontWeights.SemiBold, TextTrimming = TextTrimming.CharacterEllipsis };

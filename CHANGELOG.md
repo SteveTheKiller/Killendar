@@ -34,6 +34,7 @@ Killendar 1.5.0 gives appointments the family's card menu, hardens how it loads 
 - The day view title follows the language's date format.
 - The sidebar slides closed smoothly when it is closed while still opening.
 - A calendar file with a blank or missing appointment id opens, gives that appointment its own id and leaves every other appointment out of its series.
+- Screen readers announce each reminder as a button and can open it.
 - Pressing Enter twice in the file picker's name box while a slow network or USB folder is still being checked no longer acts twice.
 
 ### Changed
