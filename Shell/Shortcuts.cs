@@ -221,7 +221,8 @@ namespace Killendar.Shell
             // or Left/Right would page the calendar instead.
             if ((e.Key == Key.Left || e.Key == Key.Right) &&
                 (Keyboard.FocusedElement is Views.CalendarKeyboard.DayBorder ||
-                 Keyboard.FocusedElement is Views.CalendarKeyboard.SlotCanvas))
+                 Keyboard.FocusedElement is Views.CalendarKeyboard.SlotCanvas ||
+                 Keyboard.FocusedElement is Views.YearView.DayCellGrid))
                 return;
 
             switch (e.Key)

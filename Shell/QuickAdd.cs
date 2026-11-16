@@ -12,13 +12,13 @@ namespace Killendar.Shell
         private void OpenQuickAdd()
         {
             if (!_store.IsOpen || _security.IsLocked) return;
+            // Settle an unsaved draft first, so a typed sentence is never thrown away by the
+            // question that comes after it.
+            if (!_appointments.ConfirmReplace()) return;
             var dlg = new QuickAddDialog { Owner = this };
             dlg.ShowDialog();
-            if (dlg.Result is QuickAddResult line && _appointments.ConfirmReplace())
-            {
+            if (dlg.Result is QuickAddResult line && _appointments.NewFromQuickAdd(line))
                 _calendar.GoTo(line.Start.Date);
-                _appointments.NewFromQuickAdd(line);
-            }
         }
 
         internal static QuickAddWords LocalQuickAddWords()

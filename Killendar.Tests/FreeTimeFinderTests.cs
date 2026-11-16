@@ -84,6 +84,17 @@ namespace Killendar.Tests
         }
 
         [Fact]
+        public void AppointmentsShownAsFreeDoNotBlockTime()
+        {
+            var free = Busy(18, 11, 0, 12, 0);
+            MeetingInfo.SetFree(free, true);
+            var gaps = FreeTime.Find(new[] { free }, Now, Now.Date.AddDays(1), TimeSpan.FromMinutes(30), workHoursOnly: true);
+            var gap = gaps.Single();
+            Assert.Equal(new DateTime(2026, 11, 18, 10, 15, 0), gap.Start);
+            Assert.Equal(new DateTime(2026, 11, 18, 17, 0, 0), gap.End);
+        }
+
+        [Fact]
         public void ABusyBlockThatEndsMidQuarterLeavesTheGapExact()
         {
             var busy = new[] { Busy(18, 10, 0, 14, 10) };

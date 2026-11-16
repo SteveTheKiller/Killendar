@@ -9,7 +9,8 @@ namespace Killendar.Services
     /// Find open time: the gaps between appointments that are at least a given length. The search
     /// starts at the next quarter hour from <c>from</c>. With work hours on, only the working hours
     /// of workdays count, and holidays from the holiday calendar are skipped. All-day appointments
-    /// never count as busy, because a trip or a birthday does not fill the clock.
+    /// never count as busy, because a trip or a birthday does not fill the clock, and neither do
+    /// appointments shown as free.
     /// </summary>
     internal static class FreeTime
     {
@@ -34,7 +35,7 @@ namespace Killendar.Services
 
             // Busy blocks, merged where they touch or overlap.
             var busy = new List<(DateTime Start, DateTime End)>();
-            foreach (var ev in events.Where(e => !e.AllDay && e.End > start && e.Start < to).OrderBy(e => e.Start))
+            foreach (var ev in events.Where(e => !e.AllDay && !MeetingInfo.IsFree(e) && e.End > start && e.Start < to).OrderBy(e => e.Start))
             {
                 if (busy.Count > 0 && ev.Start <= busy[busy.Count - 1].End)
                 {

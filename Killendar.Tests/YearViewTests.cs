@@ -65,5 +65,24 @@ namespace Killendar.Tests
         [InlineData(2028, 2, 29, 1, 2029, 2, 28)]
         public void StepMovesOneYear(int y, int m, int d, int direction, int ey, int em, int ed)
             => Assert.Equal(new DateTime(ey, em, ed), YearView.StepBy(new DateTime(y, m, d), direction));
+
+        [Theory]
+        [InlineData(9999, 1, 9999)]
+        [InlineData(1, -1, 1)]
+        public void StepStopsAtTheEdgesOfTheCalendar(int y, int direction, int ey)
+            => Assert.Equal(ey, YearView.StepBy(new DateTime(y, 6, 1), direction).Year);
+
+        [Fact]
+        public void BusyLevelsWorkInTheLastYear()
+        {
+            var ev = new CalendarEvent { Title = "x", Start = new DateTime(9999, 12, 31, 9, 0, 0), End = new DateTime(9999, 12, 31, 10, 0, 0) };
+            Assert.Equal(1, YearView.BusyLevels(new[] { ev }, 9999)[new DateTime(9999, 12, 31)]);
+        }
+
+        [Theory]
+        [InlineData(4, 3)]
+        [InlineData(3, 4)]
+        public void TheGridAlwaysHasRoomForTwelveMonths(int columns, int rows)
+            => Assert.Equal(rows, YearView.RowsFor(columns));
     }
 }

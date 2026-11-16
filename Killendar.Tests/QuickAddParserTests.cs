@@ -145,6 +145,72 @@ namespace Killendar.Tests
             Assert.Equal(new DateTime(2026, 11, 19, 14, 30, 0), r.End);
         }
 
+        [Theory]
+        [InlineData("dinner 7:30 pm", 19, 30)]
+        [InlineData("dinner 3 pm", 15, 0)]
+        [InlineData("dinner at 7 pm", 19, 0)]
+        public void AnAmOrPmWordJoinsTheNumberBeforeIt(string text, int h, int m)
+        {
+            var r = Parse(text);
+            Assert.Equal(new DateTime(2026, 11, 18, h, m, 0), r.Start);
+            Assert.Equal("dinner", r.Title);
+            Assert.Equal("", r.Location);
+        }
+
+        [Fact]
+        public void AtABareHourIsATimeNotAPlace()
+        {
+            var r = Parse("dinner at 7");
+            Assert.Equal("", r.Location);
+            Assert.Equal(new DateTime(2026, 11, 18, 19, 0, 0), r.Start);
+        }
+
+        [Fact]
+        public void ARangeEndWithoutAMarkTakesTheStartsMark()
+        {
+            var r = Parse("meeting 2pm-3");
+            Assert.Equal(new DateTime(2026, 11, 18, 14, 0, 0), r.Start);
+            Assert.Equal(new DateTime(2026, 11, 18, 15, 0, 0), r.End);
+        }
+
+        [Theory]
+        [InlineData("read Chapter 1-2")]
+        [InlineData("buy 3.5 kg flour")]
+        public void PlainNumbersStayInTheTitle(string text)
+            => Assert.Equal(text, Parse(text).Title);
+
+        [Fact]
+        public void APlaceKeepsWordsThatLookLikeDays()
+        {
+            var r = Parse("brunch tomorrow 10am at Sun Cafe");
+            Assert.Equal("Sun Cafe", r.Location);
+            Assert.Equal(new DateTime(2026, 11, 19, 10, 0, 0), r.Start);
+        }
+
+        [Fact]
+        public void TodaysWeekdayWithAPastTimeMeansNextWeek()
+            => Assert.Equal(new DateTime(2026, 11, 25, 9, 0, 0), Parse("standup wed 9am").Start);
+
+        [Fact]
+        public void MultiWordKeywordsAreRead()
+        {
+            var nb = new QuickAddWords("i dag", "i morgen", "neste", "hos", "i", "hele dagen", "kl. 12");
+            var r = QuickAdd.Parse("Lunsj i morgen kl. 12 hos Per", Now, CultureInfo.GetCultureInfo("nb-NO"), nb);
+            Assert.Equal("Lunsj", r.Title);
+            Assert.Equal("Per", r.Location);
+            Assert.Equal(new DateTime(2026, 11, 19, 12, 0, 0), r.Start);
+        }
+
+        [Theory]
+        [InlineData("party 12/31/9999 11pm for 2h")]
+        [InlineData("party 12/31/9999 11pm-1am")]
+        [InlineData("party 12/31/9999")]
+        public void DatesAtTheEndOfTheCalendarDoNotThrow(string text)
+        {
+            var r = Parse(text);
+            Assert.True(r.End >= r.Start);
+        }
+
         [Fact]
         public void EmptyTextHasNoTitle()
             => Assert.Equal("", Parse("   ").Title);

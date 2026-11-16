@@ -36,7 +36,10 @@ namespace Killendar.Views
 
         public YearView()
         {
-            _months = new UniformGrid { Columns = 4, Rows = 3, Margin = new Thickness(12, 8, 12, 12) };
+            _months = new UniformGrid { Columns = 4, Rows = RowsFor(4), Margin = new Thickness(12, 8, 12, 12) };
+            // One tab stop for the whole year; the arrows move between days inside it.
+            KeyboardNavigation.SetTabNavigation(_months, KeyboardNavigationMode.Once);
+            KeyboardNavigation.SetDirectionalNavigation(_months, KeyboardNavigationMode.Contained);
             var scroller = new ScrollViewer
             {
                 VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
@@ -44,7 +47,12 @@ namespace Killendar.Views
                 Content = _months,
             };
             Content = scroller;
-            SizeChanged += (_, e) => _months.Columns = e.NewSize.Width < 700 ? 3 : 4;
+            SizeChanged += (_, e) =>
+            {
+                int columns = e.NewSize.Width < 700 ? 3 : 4;
+                _months.Columns = columns;
+                _months.Rows = RowsFor(columns);
+            };
             SetResourceReference(AutomationProperties.NameProperty, "Str_View_Year");
         }
 
@@ -65,7 +73,16 @@ namespace Killendar.Views
 
         public DateTime Step(DateTime from, int direction) => StepBy(from, direction);
 
-        internal static DateTime StepBy(DateTime from, int direction) => from.AddYears(direction);
+        /// <summary>One year back or forward, held inside the years DateTime can show.</summary>
+        internal static DateTime StepBy(DateTime from, int direction)
+        {
+            int year = from.Year + direction;
+            if (year < 1 || year > 9999) return from;
+            return from.AddYears(direction);
+        }
+
+        /// <summary>Rows that fit all twelve months at the given column count.</summary>
+        internal static int RowsFor(int columns) => (12 + columns - 1) / columns;
 
         public void Initialize(EventStore store)
         {
@@ -81,16 +98,17 @@ namespace Killendar.Views
         internal static Dictionary<DateTime, int> BusyLevels(IEnumerable<CalendarEvent> events, int year)
         {
             var first = new DateTime(year, 1, 1);
-            var last = first.AddYears(1);
+            var last = year < 9999 ? first.AddYears(1) : DateTime.MaxValue;
             var levels = new Dictionary<DateTime, int>();
             foreach (var ev in events)
             {
-                var end = ev.End > ev.Start ? ev.End : ev.Start.AddMinutes(1);
-                for (var day = ev.Start.Date; day < end && day < last; day = day.AddDays(1))
+                var end = ev.End > ev.Start ? ev.End : (ev.Start < DateTime.MaxValue.AddMinutes(-1) ? ev.Start.AddMinutes(1) : DateTime.MaxValue);
+                for (var day = ev.Start.Date < first ? first : ev.Start.Date; day < end && day < last; )
                 {
-                    if (day < first) continue;
                     levels.TryGetValue(day, out int n);
                     levels[day] = Math.Min(MaxLevel, n + 1);
+                    if (day.Date == DateTime.MaxValue.Date) break;
+                    day = day.AddDays(1);
                 }
             }
             return levels;
@@ -102,7 +120,7 @@ namespace Killendar.Views
             _months.Children.Clear();
             int year = _anchor.Year;
             var from = new DateTime(year, 1, 1);
-            var to = from.AddYears(1);
+            var to = year < 9999 ? from.AddYears(1) : DateTime.MaxValue;
             var levels = BusyLevels(ShownCalendars.With(_store.GetInRange(from, to), from, to), year);
             for (int m = 1; m <= 12; m++)
                 _months.Children.Add(Month(new DateTime(year, m, 1), levels));
@@ -147,7 +165,7 @@ namespace Killendar.Views
 
         private FrameworkElement DayCell(DateTime day, int level)
         {
-            var cell = new Grid { Height = 22, Margin = new Thickness(1), Cursor = Cursors.Hand, Focusable = true };
+            var cell = new DayCellGrid { Height = 22, Margin = new Thickness(1), Cursor = Cursors.Hand, Focusable = true };
             if (level > 0)
             {
                 var shade = new Border { Opacity = 0.18 + 0.18 * level };
@@ -187,6 +205,23 @@ namespace Killendar.Views
         {
             if (DayOpened != null) DayOpened(day);
             else DaySelected?.Invoke(day);
+        }
+
+        /// <summary>A day in the year grid. Its own type lets the shell leave the arrow keys to
+        /// it, and screen readers hear it as a button.</summary>
+        internal sealed class DayCellGrid : Grid
+        {
+            protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() => new Peer(this);
+
+            private sealed class Peer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
+            {
+                public Peer(DayCellGrid owner) : base(owner) { }
+                protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() =>
+                    System.Windows.Automation.Peers.AutomationControlType.Button;
+                protected override string GetClassNameCore() => "YearDay";
+                protected override bool IsControlElementCore() => true;
+                protected override bool IsContentElementCore() => true;
+            }
         }
     }
 }
