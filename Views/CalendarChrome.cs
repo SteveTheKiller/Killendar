@@ -344,6 +344,13 @@ namespace Killendar.Views
                 if (ReferenceEquals(element.ContextMenu, _placeholder))
                     element.ContextMenu = build();
             };
+            element.Unloaded += (_, _) =>
+            {
+                // A popup lives outside its owner's visual tree. Removing a locked calendar's
+                // chip must dismiss the copied appointment details as well as the chip itself.
+                if (element.ContextMenu is { } card && !ReferenceEquals(card, _placeholder))
+                    card.IsOpen = false;
+            };
         }
 
         /// <summary>Starts a new group of rows at the end of a menu: a separator, except straight

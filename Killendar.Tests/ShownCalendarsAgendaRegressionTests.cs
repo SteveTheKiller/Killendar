@@ -50,6 +50,13 @@ namespace Killendar.Tests
         [Fact]
         public void LockingAnEncryptedShownCalendarClearsItsRowsFromTheDayList()
             => ScratchUiProcess.Run(typeof(ShownCalendarsAgendaFixture));
+
+        [Fact]
+        public void LockingAnEncryptedShownCalendarClosesItsOpenCard()
+        {
+            if (Environment.GetEnvironmentVariable("KILLENDAR_WINDOW_TESTS") != "1") return;
+            ScratchUiProcess.Run(typeof(ShownCalendarsAgendaFixture), "card");
+        }
     }
 
     public sealed class ShownCalendarsAgendaFixture
@@ -57,7 +64,9 @@ namespace Killendar.Tests
         private static readonly DateTime Day = new(2026, 10, 20);
         private const string SecretTitle = "Dentist behind the lock";
 
-        public void Run()
+        public void Run() => Run("rows");
+
+        public void Run(string scenario)
         {
             Exception? failure = null;
             var thread = new Thread(() =>
@@ -65,7 +74,7 @@ namespace Killendar.Tests
                 try
                 {
                     System.IO.Packaging.PackUriHelper.Create(new Uri("file:///calendar.html"));
-                    Exercise();
+                    Exercise(scenario);
                 }
                 catch (Exception ex) { failure = ex; }
                 finally { System.Windows.Threading.Dispatcher.CurrentDispatcher.InvokeShutdown(); }
@@ -77,7 +86,7 @@ namespace Killendar.Tests
         }
 
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
-        private static void Exercise()
+        private static void Exercise(string scenario)
         {
             using var profile = new AgendaProfile();
             var secret = new EventStore();
@@ -98,6 +107,13 @@ namespace Killendar.Tests
             var window = new MainWindow();
             try
             {
+                if (scenario == "card")
+                {
+                    window.Width = 1200;
+                    window.Height = 800;
+                    window.Show();
+                    Pump();
+                }
                 var root = (FrameworkElement)window.Content;
                 root.Measure(new Size(1200, 800));
                 root.Arrange(new Rect(0, 0, 1200, 800));
@@ -111,20 +127,71 @@ namespace Killendar.Tests
                 var list = (Panel)window.FindName("AgendaListHost");
                 Assert.Contains(Texts(list), t => t.Contains(SecretTitle));
 
+                ContextMenu? card = null;
+                if (scenario == "card")
+                {
+                    var row = Descendants(list).OfType<FrameworkElement>()
+                        .First(e => e.ContextMenu != null && Texts(e).Any(t => t.Contains(SecretTitle)));
+                    var args = (ContextMenuEventArgs)Activator.CreateInstance(typeof(ContextMenuEventArgs),
+                        BindingFlags.Instance | BindingFlags.NonPublic, null, new object[] { row, true }, null);
+                    args.RoutedEvent = FrameworkElement.ContextMenuOpeningEvent;
+                    row.RaiseEvent(args);
+                    card = row.ContextMenu;
+                    card!.PlacementTarget = row;
+                    card.IsOpen = true;
+                    Pump();
+                    Assert.True(card!.IsOpen, "The secret card must be open before locking.");
+                    Assert.Contains(Texts(card), t => t.Contains(SecretTitle));
+                }
+
                 Invoke(window, "LockShortcut");   // what Ctrl+L runs (Shortcuts.cs)
+                Pump();
 
                 Assert.Equal(ShownCalendars.State.Locked, item.State);
                 Assert.DoesNotContain(Texts(list), t => t.Contains(SecretTitle));
+                if (card != null)
+                {
+                    PumpUntil(() => !card.IsOpen && PresentationSource.FromVisual(card) == null);
+                    Assert.False(card.IsOpen, "Locking must close the secret appointment card.");
+                    Assert.Null(PresentationSource.FromVisual(card));
+                }
             }
             finally
             {
                 ShownCalendars.CloseAll();
+                window.Close();
                 app.Shutdown();
             }
         }
 
         private static void Invoke(MainWindow window, string method, params object?[] args)
             => typeof(MainWindow).GetMethod(method, BindingFlags.Instance | BindingFlags.NonPublic)!.Invoke(window, args);
+
+        private static IEnumerable<DependencyObject> Descendants(DependencyObject root)
+        {
+            yield return root;
+            foreach (object child in LogicalTreeHelper.GetChildren(root))
+                if (child is DependencyObject node)
+                    foreach (var descendant in Descendants(node)) yield return descendant;
+        }
+
+        private static void Pump()
+        {
+            var frame = new System.Windows.Threading.DispatcherFrame();
+            System.Windows.Threading.Dispatcher.CurrentDispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.ApplicationIdle,
+                new Action(() => frame.Continue = false));
+            System.Windows.Threading.Dispatcher.PushFrame(frame);
+        }
+
+        private static void PumpUntil(Func<bool> condition)
+        {
+            var elapsed = System.Diagnostics.Stopwatch.StartNew();
+            while (!condition() && elapsed.ElapsedMilliseconds < 3000)
+            {
+                Pump();
+                Thread.Sleep(15);
+            }
+        }
 
         private static List<string> Texts(DependencyObject root)
         {
