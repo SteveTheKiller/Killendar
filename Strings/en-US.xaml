@@ -221,6 +221,17 @@
     <sys:String x:Key="Str_Search_Past">Past</sys:String>
     <sys:String x:Key="Str_Search_GoTo">Go to {0}</sys:String>
     <sys:String x:Key="Str_Search_None">No appointments match.</sys:String>
+    <sys:String x:Key="Str_QA_Box">New appointment from a sentence</sys:String>
+    <sys:String x:Key="Str_QA_Hint">Type something like "lunch with Dave fri 12:30 at Mel's" and press Enter to open it in the edit panel.</sys:String>
+    <sys:String x:Key="Str_QA_AllDay">all day</sys:String>
+    <sys:String x:Key="Str_QA_Where">at {0}</sys:String>
+    <sys:String x:Key="Str_QA_WordToday">today</sys:String>
+    <sys:String x:Key="Str_QA_WordTomorrow">tomorrow</sys:String>
+    <sys:String x:Key="Str_QA_WordNext">next</sys:String>
+    <sys:String x:Key="Str_QA_WordAt">at</sys:String>
+    <sys:String x:Key="Str_QA_WordFor">for</sys:String>
+    <sys:String x:Key="Str_QA_WordAllDay">all day</sys:String>
+    <sys:String x:Key="Str_QA_WordNoon">noon</sys:String>
     <sys:String x:Key="Str_Del_Empty">Nothing deleted in the last 30 days</sys:String>
     <sys:String x:Key="Str_Del_Header">Deleted in the last 30 days. Click one to restore it.</sys:String>
     <sys:String x:Key="Str_Del_DeletedOn">Deleted {0}</sys:String>

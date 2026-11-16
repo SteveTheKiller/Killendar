@@ -227,6 +227,7 @@ namespace Killendar.Shell
             switch (e.Key)
             {
                 case Key.N:      _calendar.NewAtAnchor(); break;
+                case Key.Q:      OpenQuickAdd(); break;
                 case Key.T:      _calendar.GoToday(); break;
 
                 case Key.Left:
