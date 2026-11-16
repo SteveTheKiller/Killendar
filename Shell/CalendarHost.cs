@@ -141,7 +141,7 @@ namespace Killendar.Shell
         {
             foreach (var (btn, tag) in new[]
                      {
-                         (TabMonth, "Month"), (TabWeek, "Week"), (TabDay, "Day"), (TabAgenda, "Agenda")
+                         (TabMonth, "Month"), (TabWeek, "Week"), (TabDay, "Day"), (TabAgenda, "Agenda"), (TabYear, "Year")
                      })
             {
                 bool on = tag == which;

@@ -19,6 +19,7 @@ namespace Killendar.Features
         private WeekView _week = null!;
         private DayView _day = null!;
         private AgendaView _agenda = null!;
+        private YearView _year = null!;
 
         private ICalendarView _active = null!;
         private DateTime _anchor = DateTime.Today;
@@ -56,8 +57,17 @@ namespace Killendar.Features
             _week = new WeekView();
             _day = new DayView();
             _agenda = new AgendaView();
+            _year = new YearView();
+            // A day in the year opens that day, not just its agenda: the year is for finding the
+            // date, and the Day view is where the date's appointments are.
+            _year.DayOpened += d =>
+            {
+                _anchor = d.Date;
+                SelectView("Day");
+                _host.ShowDayAgenda(d.Date, null);
+            };
 
-            foreach (ICalendarView v in new ICalendarView[] { _month, _week, _day, _agenda })
+            foreach (ICalendarView v in new ICalendarView[] { _month, _week, _day, _agenda, _year })
             {
                 // Clicking an appointment or a day opens the day's AGENDA in the sidebar - the
                 // editor is behind each row's Edit action, never the default (2026-07-30).
@@ -107,6 +117,7 @@ namespace Killendar.Features
                 "Week"   => _week,
                 "Day"    => _day,
                 "Agenda" => _agenda,
+                "Year"   => _year,
                 _        => _month
             };
 

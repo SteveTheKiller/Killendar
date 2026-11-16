@@ -300,7 +300,9 @@
                         <Button x:Name="TabDay"    Content="{DynamicResource Str_View_Day}"    Style="{StaticResource ViewTabButton}"
                                 Padding="12,4" Margin="0,0,4,0" Click="ViewTab_Click" Tag="Day"/>
                         <Button x:Name="TabAgenda" Content="{DynamicResource Str_View_Agenda}" Style="{StaticResource ViewTabButton}"
-                                Padding="12,4" Click="ViewTab_Click" Tag="Agenda"/>
+                                Padding="12,4" Margin="0,0,4,0" Click="ViewTab_Click" Tag="Agenda"/>
+                        <Button x:Name="TabYear"   Content="{DynamicResource Str_View_Year}"   Style="{StaticResource ViewTabButton}"
+                                Padding="12,4" Click="ViewTab_Click" Tag="Year"/>
                     </StackPanel>
 
                     <!-- Overflow. Shown as soon as anything sheds, in a row after the view buttons so

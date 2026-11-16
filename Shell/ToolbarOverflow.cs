@@ -258,7 +258,7 @@ namespace Killendar.Shell
             if (_labelMode == LabelMode.None || _labelMode == LabelMode.Only) return 0;   // nothing to drop
             double iconBox = _iconSize == IconSize.Large ? 46 : 36;
             double saved = 0;
-            foreach (var tab in new[] { TabMonth, TabWeek, TabDay, TabAgenda })
+            foreach (var tab in new[] { TabMonth, TabWeek, TabDay, TabAgenda, TabYear })
                 saved += Math.Max(0, tab.ActualWidth - iconBox);
             return saved;
         }
@@ -274,7 +274,7 @@ namespace Killendar.Shell
             var mode = show ? _labelMode : LabelMode.None;
             foreach (var (btn, glyph, key) in ToolbarItems())
             {
-                if (btn != TabMonth && btn != TabWeek && btn != TabDay && btn != TabAgenda) continue;
+                if (btn != TabMonth && btn != TabWeek && btn != TabDay && btn != TabAgenda && btn != TabYear) continue;
                 btn.Content = BuildToolbarContent(_iconSize, mode, glyph, Loc(key));
                 SizeToolbarButton(btn, _iconSize, mode);
             }
@@ -324,7 +324,7 @@ namespace Killendar.Shell
         /// Month mode choice the Month button's dropdown offers.</summary>
         private IEnumerable<Control> ViewMenuItems()
         {
-            foreach (var btn in new[] { TabMonth, TabWeek, TabDay, TabAgenda })
+            foreach (var btn in new[] { TabMonth, TabWeek, TabDay, TabAgenda, TabYear })
             {
                 // Tag carries the view name and ViewTab_Click reads it - reuse both rather than
                 // restating the list, so the menu can never drift from the buttons.
@@ -339,6 +339,7 @@ namespace Killendar.Shell
                         "Week" => "W",
                         "Day" => "D",
                         "Agenda" => "A",
+                        "Year" => "Y",
                         _ => "",
                     },
                     Icon = GlyphFor(btn)

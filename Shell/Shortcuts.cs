@@ -244,6 +244,8 @@ namespace Killendar.Shell
                 case Key.D3: _calendar.SelectView("Day");    break;
                 case Key.A:
                 case Key.D4: _calendar.SelectView("Agenda"); break;
+                case Key.Y:
+                case Key.D5: _calendar.SelectView("Year");   break;
                 case Key.R:      ToggleMonthMode(); break;
 
                 case Key.B:      SidebarToggle_Click(this, new RoutedEventArgs()); break;

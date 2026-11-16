@@ -54,6 +54,7 @@ namespace Killendar.Shell
             new("W or 2",   "Str_KS_Week",     KsCat.View, false, "W", "D2"),
             new("D or 3",   "Str_KS_Day",      KsCat.View, false, "D", "D3"),
             new("A or 4",   "Str_KS_Agenda",   KsCat.View, false, "A", "D4"),
+            new("Y or 5",   "Str_KS_Year",     KsCat.View, false, "Y", "D5"),
             new("R",        "Str_KS_MonthMode", KsCat.View, false, "R"),
             new("Alt+Shift+G", "Str_Theme_FilmGrain", KsCat.View, false, "G"),
             new("Alt+Shift+Left / Right", "Str_KS_SidebarSide", KsCat.View, false, "Left", "Right"),
@@ -65,6 +66,8 @@ namespace Killendar.Shell
             new("T",        "Str_KS_Today",    KsCat.Nav,  false, "T"),
 
             new("N",        "Str_KS_New",      KsCat.Appt, false, "N"),
+            new("Q",        "Str_KS_QuickAdd", KsCat.Appt, false, "Q"),
+            new("O",        "Str_KS_FreeTime", KsCat.Nav,  false, "O"),
             new("B",        "Str_KS_Panel",    KsCat.Appt, false, "B"),
             new("Ctrl+N",   "Str_KS_New",      KsCat.Appt, true,  "N"),
             new("Ctrl+Enter", "Str_KS_SaveAppt", KsCat.Appt, true, "Enter"),

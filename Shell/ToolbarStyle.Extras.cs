@@ -49,6 +49,7 @@ namespace Killendar.Shell
             yield return (TabWeek, "\uE8C0", "Str_View_Week");    // CalendarWeek      (confirmed)
             yield return (TabDay, "\uE8BF", "Str_View_Day");     // CalendarDay       (confirmed)
             yield return (TabAgenda, "\uE8FD", "Str_View_Agenda");  // List              (confirmed)
+            yield return (TabYear, "\uE8A9", "Str_View_Year");    // ViewAll grid, not yet confirmed from a build
         }
 
         /// <summary>The overlay label key whose shortcut a toolbar button carries (ShortcutsOverlay.cs).</summary>
@@ -67,6 +68,7 @@ namespace Killendar.Shell
             nameof(TabWeek)     => "Str_KS_Week",
             nameof(TabDay)      => "Str_KS_Day",
             nameof(TabAgenda)   => "Str_KS_Agenda",
+            nameof(TabYear)     => "Str_KS_Year",
             _ => "",
         };
 
