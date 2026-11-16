@@ -20,6 +20,11 @@ namespace Killendar.Tests
         private static TextBlock Lay(TextBlock text)
         {
             AccentShadow.Initialize();
+            // Text set aside by earlier tests belongs to their finished threads; Refresh would
+            // touch it from this one. The app has a single UI thread, so only tests meet this.
+            ((System.Collections.IList)typeof(AccentShadow)
+                .GetField("Waiting", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)!
+                .GetValue(null)).Clear();
             var panel = new StackPanel();
             panel.Children.Add(text);
             panel.Measure(new Size(300, 100));
