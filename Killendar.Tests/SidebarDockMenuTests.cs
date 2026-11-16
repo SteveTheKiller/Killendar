@@ -34,6 +34,21 @@ namespace Killendar.Tests
         });
 
         [Fact]
+        public void TheWholeAgendaRowKeepsTheAppointmentCard() => OnSta(() =>
+        {
+            var panel = new StackPanel();
+            var time = new TextBlock { Text = "3:30 PM - 4:00 PM" };
+            var row = new Grid();
+            row.Children.Add(time);
+            var shell = MainWindow.AgendaRowShell(row, new Killendar.Models.CalendarEvent { Title = "Ticket triage" }, _ => { });
+            panel.Children.Add(shell);
+
+            Assert.False(MainWindow.SidebarDockMenuApplies(time, panel));
+            Assert.False(MainWindow.SidebarDockMenuApplies(row, panel));
+            Assert.False(MainWindow.SidebarDockMenuApplies(shell, panel));
+        });
+
+        [Fact]
         public void BarePanelSpaceStillOpensTheDockMenu() => OnSta(() =>
         {
             var panel = new StackPanel();

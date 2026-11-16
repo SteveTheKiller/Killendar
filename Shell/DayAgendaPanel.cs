@@ -192,13 +192,7 @@ namespace Killendar.Shell
 
             // The marked row wears the family SelectionBg fill, on a wrapper so the fill gets
             // corners without restyling the chip.
-            var wrap = new Border
-            {
-                Child        = row,
-                CornerRadius = new CornerRadius(3),
-                Padding      = new Thickness(3, 2, 3, 2),
-                Margin       = new Thickness(0, 1, 0, 1)
-            };
+            var wrap = AgendaRowShell(row, ev, e => { _agendaHighlight = e.Id; BuildDayAgendaRows(); });
             if (_agendaHighlight == ev.Id)
             {
                 wrap.SetResourceReference(Border.BackgroundProperty, "SelectionBg");
@@ -211,6 +205,23 @@ namespace Killendar.Shell
                     foreach (var detailLine in panel.Children.OfType<TextBlock>())
                         detailLine.SetResourceReference(TextBlock.ForegroundProperty, "SelectionFg");
             }
+            return wrap;
+        }
+
+        /// <summary>The row's wrapper, which carries the appointment card too: a right-click on the
+        /// time line or the highlight fill around the chip used to fall through to the sidebar's
+        /// dock menu, because only the chip itself had the card.</summary>
+        internal static Border AgendaRowShell(FrameworkElement row, CalendarEvent ev, Action<CalendarEvent> pick)
+        {
+            var wrap = new Border
+            {
+                Child        = row,
+                CornerRadius = new CornerRadius(3),
+                Padding      = new Thickness(3, 2, 3, 2),
+                Margin       = new Thickness(0, 1, 0, 1),
+                Background   = Brushes.Transparent
+            };
+            Views.CalendarChrome.LazyCard(wrap, () => Views.CalendarChrome.AppointmentCard(ev, ev.SourceCalendar.Length > 0, pick));
             return wrap;
         }
 
