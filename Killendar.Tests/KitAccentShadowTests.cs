@@ -12,7 +12,10 @@ namespace Killendar.Tests
     [Collection("Calendar settings")]
     public sealed class KitAccentShadowTests
     {
-        private static readonly SolidColorBrush Yellow = new SolidColorBrush(Color.FromRgb(0xF2, 0xC5, 0x00));
+        // Frozen: each test runs on its own STA thread, and an unfrozen brush belongs to the first.
+        private static readonly SolidColorBrush Yellow = Frozen(new SolidColorBrush(Color.FromRgb(0xF2, 0xC5, 0x00)));
+
+        private static SolidColorBrush Frozen(SolidColorBrush brush) { brush.Freeze(); return brush; }
 
         private static TextBlock Lay(TextBlock text)
         {
