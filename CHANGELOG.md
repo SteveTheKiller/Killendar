@@ -4,7 +4,7 @@ All notable changes to Killendar are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.5.0] - Unreleased
+## [1.5.0] - 2026-11-16
 
 Killendar 1.5.0 adds a sentence box for new appointments, an open time finder and a Year view, gives appointments the family's card menu, hardens how it loads its database engine and checks updates, fixes a long list of data, keyboard and layout bugs, and lets a deleted template come back with Undo.
 
@@ -20,47 +20,47 @@ Killendar 1.5.0 adds a sentence box for new appointments, an open time finder an
 - Series edits keep saved changes and deletions on extra dates. Shortened invitations remove obsolete edited occurrences, and older cancellations cannot hide newer appointments.
 - Editing zoned appointments preserves unchanged seconds, repeated-hour identity and calendar-day durations. Reminders and snoozes follow elapsed time across clock changes.
 - Template write failures show an error and preserve the draft. Oversized durations in the sentence box no longer crash the app.
-- CLI agenda reads use the open, unlocked app for encrypted calendars, handle large valid responses and fail promptly when the app is closed.
-- CLI commands print to the console they were run from, and an export named "report." no longer gets a doubled dot.
-- The color picker opens under every theme, Replace chip works under Blood, Cyanotic and Greed, and selected repeat chips use more readable text without changing their fill.
+- A damaged or duplicated events.json from an older version no longer blocks every launch. Killendar keeps the file, says so and retries the move on the next start.
+- A calendar file with a blank or missing appointment id opens, gives that appointment its own id and leaves every other appointment out of its series.
+- Search asks about an unsaved draft before it moves the calendar.
 - Saving after a drag keeps the appointment where it was dropped.
 - Duplicating one date of a repeating appointment no longer starts a new series.
-- A damaged or duplicated events.json from an older version no longer blocks every launch. Killendar keeps the file, says so and retries the move on the next start.
 - CSV import removes the apostrophe that protects values like "-call" on export, keeps an apostrophe you typed yourself, and gives rows with different reminders distinct, stable ids.
 - Calendar imports take the newest revision of each appointment.
+- CLI agenda reads use the open, unlocked app for encrypted calendars, handle large valid responses and fail promptly when the app is closed.
+- CLI commands print to the console they were run from, and an export named "report." no longer gets a doubled dot.
+- Falling back to the previous encrypted Killendar no longer asks for its password again.
+- Screen readers can invoke reminder rows and Year-view dates. Previous and Next keep their shortcut hints when switching views.
 - Ctrl+D and Ctrl+Delete act on the focused appointment, even while its card is open.
+- Pressing Enter twice in the file picker's name box while a slow network or USB folder is still being checked no longer acts twice.
 - Right-clicking an appointment in the sidebar's day list opens its card instead of the sidebar's Left and Right menu.
 - Clicking an hour slot lands on the half hour the hover band shows.
 - The month view, its drag and drop and the Next button work in December 9999 and January 0001.
-- Falling back to the previous encrypted Killendar no longer asks for its password again.
-- Search asks about an unsaved draft before it moves the calendar.
 - The window's minimum size fits the monitor it is on.
+- The color picker opens under every theme, Replace chip works under Blood, Cyanotic and Greed, and selected repeat chips use more readable text without changing their fill.
 - The day view title follows the language's date format.
 - The sidebar slides closed smoothly when it is closed while still opening.
-- A calendar file with a blank or missing appointment id opens, gives that appointment its own id and leaves every other appointment out of its series.
-- Screen readers can invoke reminder rows and Year-view dates. Previous and Next keep their shortcut hints when switching views.
-- Pressing Enter twice in the file picker's name box while a slow network or USB folder is still being checked no longer acts twice.
 
 ### Changed
 
 - Right-clicking an appointment opens a card with its title, time and location on top and Open, Edit, Duplicate and Delete buttons below. Another Killendar's appointment offers Open alone.
 - Right-clicking an empty day or hour slot opens a card named for its weekday, with the date, the slot's time and Add appointment.
 - Categories, calendars in the Killendars dialog, templates, the lock button, Recently deleted, folder options and Snooze open family cards with a title and icons on every row.
+- Large months build faster and use less memory, since appointment cards are built when they open.
+- Updated SQLite to 10.0.15, JSON processing to 11.0.0 and time zone conversion to 8.0.1.
 - Menu shortcuts line up in their own column at the right edge.
 - Buttons sit flat with no shadow under them, and on 98SE the sliders and drop-down lists take the Win98 look. The 98SE close buttons draw Win98's pixel X.
-- Updated SQLite to 10.0.15, JSON processing to 11.0.0 and time zone conversion to 8.0.1.
 - Single-line text fields are as tall as the dropdowns beside them, so form rows line up instead of the text boxes standing oversized.
-- The copyright at the right end of the footer ends 8 px before the corner grip, the same gap in every Killer app.
 - Selected files in the file picker use the same highlight as its places list and folder tree.
-- Large months build faster and use less memory, since appointment cards are built when they open.
+- The copyright at the right end of the footer ends 8 px before the corner grip, the same gap in every Killer app.
 
 ### Added
 
-- Deleting a template shows Undo in the status bar, which brings it back.
 - Q opens a sentence box. Type a line like "lunch with Dave fri 12:30 at Mel's", see how it reads as you type, and Enter opens the edit panel filled in. It reads days, dates, times, ranges like 3-5pm, lengths like "for 2h", a place after "at", "all day" and #categories, in every language Killendar speaks. Words are read between spaces, so Chinese and Japanese lines need a space around each date, time and keyword.
 - O finds open time across the calendars that are showing. Pick a length and a range, keep it to work hours or not, and click a gap to start an appointment there. All-day appointments do not count as busy.
 - Year view, on Y or 5, shows twelve months at once with busier days shaded darker. Previous and Next move a year, and clicking a day opens it in the Day view.
 - Back and forward work like a browser. The mouse's side buttons, Alt+Left and Alt+Right step through the views and dates you visited, so opening a day from the Year view is one click away from the year again.
+- Deleting a template shows Undo in the status bar, which brings it back.
 
 ## [1.4.2] - 2026-11-04
 
