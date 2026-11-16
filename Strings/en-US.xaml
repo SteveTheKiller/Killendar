@@ -544,6 +544,7 @@
     <sys:String x:Key="Str_KS_Agenda">Agenda view</sys:String>
     <sys:String x:Key="Str_KS_Year">Year view</sys:String>
     <sys:String x:Key="Str_KS_QuickAdd">New appointment from a sentence</sys:String>
+    <sys:String x:Key="Str_KS_History">Back or forward through the views you visited</sys:String>
     <sys:String x:Key="Str_KS_FreeTime">Find open time</sys:String>
     <sys:String x:Key="Str_KS_Prev">Previous month, week or day</sys:String>
     <sys:String x:Key="Str_KS_Next">Next month, week or day</sys:String>

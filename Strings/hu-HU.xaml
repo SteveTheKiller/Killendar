@@ -546,6 +546,7 @@ A Killendar újraindul a telepített helyről.</sys:String>
     <sys:String x:Key="Str_KS_Agenda">Napirend nézet</sys:String>
     <sys:String x:Key="Str_KS_Year">Éves nézet</sys:String>
     <sys:String x:Key="Str_KS_QuickAdd">Új találkozó mondatból</sys:String>
+    <sys:String x:Key="Str_KS_History">Vissza vagy előre a megnézett nézetek között</sys:String>
     <sys:String x:Key="Str_KS_FreeTime">Szabad idő keresése</sys:String>
     <sys:String x:Key="Str_KS_Prev">Előző hónap, hét vagy nap</sys:String>
     <sys:String x:Key="Str_KS_Next">Következő hónap, hét vagy nap</sys:String>

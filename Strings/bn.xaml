@@ -477,6 +477,7 @@
     <sys:String x:Key="Str_KS_Agenda">সূচি ভিউ</sys:String>
     <sys:String x:Key="Str_KS_Year">বছর ভিউ</sys:String>
     <sys:String x:Key="Str_KS_QuickAdd">বাক্য থেকে নতুন অ্যাপয়েন্টমেন্ট</sys:String>
+    <sys:String x:Key="Str_KS_History">দেখা ভিউগুলোর মধ্যে পিছনে বা সামনে যান</sys:String>
     <sys:String x:Key="Str_KS_FreeTime">ফাঁকা সময় খুঁজুন</sys:String>
     <sys:String x:Key="Str_KS_Prev">আগের মাস, সপ্তাহ বা দিন</sys:String>
     <sys:String x:Key="Str_KS_Next">পরের মাস, সপ্তাহ বা দিন</sys:String>

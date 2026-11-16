@@ -477,6 +477,7 @@
     <sys:String x:Key="Str_KS_Agenda">Vue agenda</sys:String>
     <sys:String x:Key="Str_KS_Year">Vue année</sys:String>
     <sys:String x:Key="Str_KS_QuickAdd">Nouveau rendez-vous depuis une phrase</sys:String>
+    <sys:String x:Key="Str_KS_History">Précédent ou suivant parmi les vues visitées</sys:String>
     <sys:String x:Key="Str_KS_FreeTime">Trouver un créneau libre</sys:String>
     <sys:String x:Key="Str_KS_Prev">Mois, semaine ou jour précédent</sys:String>
     <sys:String x:Key="Str_KS_Next">Mois, semaine ou jour suivant</sys:String>

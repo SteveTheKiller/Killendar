@@ -515,6 +515,7 @@ Killendar sẽ khởi động lại từ vị trí đã cài đặt.</sys:String
   <sys:String x:Key="Str_KS_Agenda">Xem lịch biểu</sys:String>
   <sys:String x:Key="Str_KS_Year">Xem theo năm</sys:String>
   <sys:String x:Key="Str_KS_QuickAdd">Cuộc hẹn mới từ một câu</sys:String>
+  <sys:String x:Key="Str_KS_History">Lùi hoặc tiến qua các chế độ xem đã mở</sys:String>
   <sys:String x:Key="Str_KS_FreeTime">Tìm thời gian trống</sys:String>
   <sys:String x:Key="Str_KS_Prev">Tháng, tuần hoặc ngày trước</sys:String>
   <sys:String x:Key="Str_KS_Next">Tháng, tuần hoặc ngày tiếp theo</sys:String>

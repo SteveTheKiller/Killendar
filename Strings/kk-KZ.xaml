@@ -544,6 +544,7 @@
     <sys:String x:Key="Str_KS_Agenda">Күн тәртібі көрінісі</sys:String>
     <sys:String x:Key="Str_KS_Year">Жыл көрінісі</sys:String>
     <sys:String x:Key="Str_KS_QuickAdd">Сөйлемнен жаңа кездесу</sys:String>
+    <sys:String x:Key="Str_KS_History">Ашылған көріністер бойынша артқа немесе алға</sys:String>
     <sys:String x:Key="Str_KS_FreeTime">Бос уақытты табу</sys:String>
     <sys:String x:Key="Str_KS_Prev">Алдыңғы ай, апта немесе күн</sys:String>
     <sys:String x:Key="Str_KS_Next">Келесі ай, апта немесе күн</sys:String>

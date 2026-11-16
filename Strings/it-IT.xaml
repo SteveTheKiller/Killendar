@@ -501,6 +501,7 @@
     <sys:String x:Key="Str_KS_Agenda">Vista agenda</sys:String>
     <sys:String x:Key="Str_KS_Year">Vista anno</sys:String>
     <sys:String x:Key="Str_KS_QuickAdd">Nuovo appuntamento da una frase</sys:String>
+    <sys:String x:Key="Str_KS_History">Indietro o avanti tra le viste visitate</sys:String>
     <sys:String x:Key="Str_KS_FreeTime">Trova tempo libero</sys:String>
     <sys:String x:Key="Str_KS_Prev">Mese, settimana o giorno precedente</sys:String>
     <sys:String x:Key="Str_KS_Next">Mese, settimana o giorno successivo</sys:String>

@@ -544,6 +544,7 @@
     <sys:String x:Key="Str_KS_Agenda">Перегляд порядку денного</sys:String>
     <sys:String x:Key="Str_KS_Year">Перегляд року</sys:String>
     <sys:String x:Key="Str_KS_QuickAdd">Нова зустріч із речення</sys:String>
+    <sys:String x:Key="Str_KS_History">Назад або вперед відкритими поданнями</sys:String>
     <sys:String x:Key="Str_KS_FreeTime">Знайти вільний час</sys:String>
     <sys:String x:Key="Str_KS_Prev">Попередній місяць, тиждень або день</sys:String>
     <sys:String x:Key="Str_KS_Next">Наступний місяць, тиждень або день</sys:String>

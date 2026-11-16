@@ -26,6 +26,17 @@ namespace Killendar.Shell
         private static bool TypingInField()
             => Keyboard.FocusedElement is TextBox || Keyboard.FocusedElement is PasswordBox;
 
+        /// <summary>The mouse's back and forward side buttons step through the views and dates
+        /// visited, the same as Alt+Left and Alt+Right.</summary>
+        private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton != MouseButton.XButton1 && e.ChangedButton != MouseButton.XButton2) return;
+            if (_security.IsLocked || !_store.IsOpen) return;
+            if (e.ChangedButton == MouseButton.XButton1) _calendar.GoBack();
+            else _calendar.GoForward();
+            e.Handled = true;
+        }
+
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // Escape mid-drag only snaps the chip home, and no window shortcut sees that key.
@@ -163,6 +174,19 @@ namespace Killendar.Shell
                     if (right == _sidebarRight) SidebarToggle_Click(this, new RoutedEventArgs());
                     else SelectSidebarSide(right);
                 }
+                e.Handled = true;
+                return;
+            }
+
+            // Back and forward through the views and dates visited: Alt+Left and Alt+Right like a
+            // browser, and the keyboard's own Back and Forward keys. While an appointment is open
+            // Alt+arrows nudge it instead (above), so this only runs with the panel shut.
+            if (!editingAppointment && !e.IsRepeat &&
+                ((alt && !shift && !ctrl && (e.SystemKey == Key.Left || e.SystemKey == Key.Right)) ||
+                 e.Key == Key.BrowserBack || e.Key == Key.BrowserForward))
+            {
+                if (e.SystemKey == Key.Left || e.Key == Key.BrowserBack) _calendar.GoBack();
+                else _calendar.GoForward();
                 e.Handled = true;
                 return;
             }

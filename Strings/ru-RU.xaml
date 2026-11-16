@@ -545,6 +545,7 @@
     <sys:String x:Key="Str_KS_Agenda">Вид расписания</sys:String>
     <sys:String x:Key="Str_KS_Year">Вид года</sys:String>
     <sys:String x:Key="Str_KS_QuickAdd">Новая встреча из предложения</sys:String>
+    <sys:String x:Key="Str_KS_History">Назад или вперёд по открытым представлениям</sys:String>
     <sys:String x:Key="Str_KS_FreeTime">Найти свободное время</sys:String>
     <sys:String x:Key="Str_KS_Prev">Предыдущий месяц, неделя или день</sys:String>
     <sys:String x:Key="Str_KS_Next">Следующий месяц, неделя или день</sys:String>

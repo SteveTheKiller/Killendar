@@ -477,6 +477,7 @@
     <sys:String x:Key="Str_KS_Agenda">日程视图</sys:String>
     <sys:String x:Key="Str_KS_Year">年视图</sys:String>
     <sys:String x:Key="Str_KS_QuickAdd">用一句话新建约会</sys:String>
+    <sys:String x:Key="Str_KS_History">在访问过的视图间后退或前进</sys:String>
     <sys:String x:Key="Str_KS_FreeTime">查找空闲时间</sys:String>
     <sys:String x:Key="Str_KS_Prev">上一个月、周或日</sys:String>
     <sys:String x:Key="Str_KS_Next">下一个月、周或日</sys:String>

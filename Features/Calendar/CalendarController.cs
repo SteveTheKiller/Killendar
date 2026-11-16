@@ -22,7 +22,9 @@ namespace Killendar.Features
         private YearView _year = null!;
 
         private ICalendarView _active = null!;
+        private string _activeName = "Month";
         private DateTime _anchor = DateTime.Today;
+        private readonly ViewHistory _history = new();
 
         internal CalendarController(ICalendarHost host, EventStore store, AppointmentEditor editor)
         {
@@ -62,8 +64,7 @@ namespace Killendar.Features
             // date, and the Day view is where the date's appointments are.
             _year.DayOpened += d =>
             {
-                _anchor = d.Date;
-                SelectView("Day");
+                Navigate("Day", d.Date);
                 _host.ShowDayAgenda(d.Date, null);
             };
 
@@ -107,11 +108,37 @@ namespace Killendar.Features
             CalendarChrome.DuplicateRequested = ev => { if (_editor.Load(ev)) _editor.Duplicate(); };
             CalendarChrome.DeleteRequested = ev => { if (_editor.Load(ev)) _editor.Delete(); };
 
-            SelectView("Month");
+            Navigate("Month", _anchor, record: false);
         }
 
-        internal void SelectView(string which)
+        internal void SelectView(string which) => Navigate(which, _anchor);
+
+        /// <summary>Back through the views and dates visited (mouse back button, Alt+Left).</summary>
+        internal void GoBack()
         {
+            if (_history.Back(Here) is ViewHistory.Spot to) Navigate(to.View, to.Anchor, record: false);
+        }
+
+        /// <summary>Forward again after Back (mouse forward button, Alt+Right).</summary>
+        internal void GoForward()
+        {
+            if (_history.Forward(Here) is ViewHistory.Spot to) Navigate(to.View, to.Anchor, record: false);
+        }
+
+        private ViewHistory.Spot Here => new(_activeName, _anchor);
+
+        /// <summary>Shows <paramref name="which"/> at <paramref name="anchor"/>. A real change of
+        /// view or date is a visit that Back can return from.</summary>
+        private void Navigate(string which, DateTime anchor, bool record = true)
+        {
+            if (record && _active != null && (which != _activeName || anchor != _anchor))
+                _history.Visit(Here);
+            _anchor = anchor;
+            _activeName = which switch
+            {
+                "Week" or "Day" or "Agenda" or "Year" => which,
+                _ => "Month",
+            };
             _active = which switch
             {
                 "Week"   => _week,
@@ -128,7 +155,7 @@ namespace Killendar.Features
             _active.SetSelection(_selectedDay, _selectedTime);
 
             _host.ShowView(_active);
-            _host.HighlightTab(which);
+            _host.HighlightTab(_activeName);
             _host.ShowFineMonthNavigation(_active == _month && _month.IsRollingMode);
             RefreshPeriodLabel();
         }
@@ -157,16 +184,14 @@ namespace Killendar.Features
             }
         }
 
-        internal void GoTo(DateTime day)
-        {
-            _anchor = day.Date;
-            _active.Anchor = _anchor;
-            RefreshPeriodLabel();
-        }
+        internal void GoTo(DateTime day) => JumpTo(day.Date);
 
-        internal void GoToday()
+        internal void GoToday() => JumpTo(DateTime.Today);
+
+        private void JumpTo(DateTime day)
         {
-            _anchor = DateTime.Today;
+            if (day != _anchor) _history.Visit(Here);
+            _anchor = day;
             _active.Anchor = _anchor;
             RefreshPeriodLabel();
         }

@@ -477,6 +477,7 @@
     <sys:String x:Key="Str_KS_Agenda">行程檢視</sys:String>
     <sys:String x:Key="Str_KS_Year">年檢視</sys:String>
     <sys:String x:Key="Str_KS_QuickAdd">用一句話新增約會</sys:String>
+    <sys:String x:Key="Str_KS_History">在瀏覽過的檢視間後退或前進</sys:String>
     <sys:String x:Key="Str_KS_FreeTime">尋找空檔時間</sys:String>
     <sys:String x:Key="Str_KS_Prev">上一個月、週或日</sys:String>
     <sys:String x:Key="Str_KS_Next">下一個月、週或日</sys:String>

@@ -477,6 +477,7 @@
     <sys:String x:Key="Str_KS_Agenda">Widok agendy</sys:String>
     <sys:String x:Key="Str_KS_Year">Widok roku</sys:String>
     <sys:String x:Key="Str_KS_QuickAdd">Nowe spotkanie ze zdania</sys:String>
+    <sys:String x:Key="Str_KS_History">Wstecz lub dalej przez odwiedzone widoki</sys:String>
     <sys:String x:Key="Str_KS_FreeTime">Znajdź wolny czas</sys:String>
     <sys:String x:Key="Str_KS_Prev">Poprzedni miesiąc, tydzień lub dzień</sys:String>
     <sys:String x:Key="Str_KS_Next">Następny miesiąc, tydzień lub dzień</sys:String>

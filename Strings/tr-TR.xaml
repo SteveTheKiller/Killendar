@@ -477,6 +477,7 @@
     <sys:String x:Key="Str_KS_Agenda">Ajanda görünümü</sys:String>
     <sys:String x:Key="Str_KS_Year">Yıl görünümü</sys:String>
     <sys:String x:Key="Str_KS_QuickAdd">Cümleden yeni randevu</sys:String>
+    <sys:String x:Key="Str_KS_History">Ziyaret edilen görünümlerde geri veya ileri</sys:String>
     <sys:String x:Key="Str_KS_FreeTime">Boş zaman bul</sys:String>
     <sys:String x:Key="Str_KS_Prev">Önceki ay, hafta veya gün</sys:String>
     <sys:String x:Key="Str_KS_Next">Sonraki ay, hafta veya gün</sys:String>

@@ -544,6 +544,7 @@
     <sys:String x:Key="Str_KS_Agenda">Agendavisning</sys:String>
     <sys:String x:Key="Str_KS_Year">Årsvisning</sys:String>
     <sys:String x:Key="Str_KS_QuickAdd">Ny avtale fra en setning</sys:String>
+    <sys:String x:Key="Str_KS_History">Tilbake eller frem gjennom visningene du har besøkt</sys:String>
     <sys:String x:Key="Str_KS_FreeTime">Finn ledig tid</sys:String>
     <sys:String x:Key="Str_KS_Prev">Forrige måned, uke eller dag</sys:String>
     <sys:String x:Key="Str_KS_Next">Neste måned, uke eller dag</sys:String>

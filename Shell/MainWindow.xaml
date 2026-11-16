@@ -18,7 +18,7 @@
         TextOptions.TextFormattingMode="Display" UseLayoutRounding="True"
         FontFamily="{DynamicResource UiFont}"
         WindowStartupLocation="CenterScreen"
-        PreviewKeyDown="Window_PreviewKeyDown">
+        PreviewKeyDown="Window_PreviewKeyDown" PreviewMouseDown="Window_PreviewMouseDown">
 
     <shell:WindowChrome.WindowChrome>
         <shell:WindowChrome CaptionHeight="32" ResizeBorderThickness="8" CornerRadius="0"

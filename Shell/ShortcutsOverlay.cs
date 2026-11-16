@@ -64,6 +64,7 @@ namespace Killendar.Shell
             new("Left / ,", "Str_KS_Prev",     KsCat.Nav,  false, "Left", "Comma"),
             new("Right / .","Str_KS_Next",     KsCat.Nav,  false, "Right", "Period"),
             new("T",        "Str_KS_Today",    KsCat.Nav,  false, "T"),
+            new("Alt+Left / Right", "Str_KS_History", KsCat.Nav, false, "Left", "Right"),
 
             new("N",        "Str_KS_New",      KsCat.Appt, false, "N"),
             new("Q",        "Str_KS_QuickAdd", KsCat.Appt, false, "Q"),

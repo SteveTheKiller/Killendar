@@ -477,6 +477,7 @@
     <sys:String x:Key="Str_KS_Agenda">Zobrazení agendy</sys:String>
     <sys:String x:Key="Str_KS_Year">Zobrazení roku</sys:String>
     <sys:String x:Key="Str_KS_QuickAdd">Nová schůzka z věty</sys:String>
+    <sys:String x:Key="Str_KS_History">Zpět nebo vpřed mezi navštívenými zobrazeními</sys:String>
     <sys:String x:Key="Str_KS_FreeTime">Najít volný čas</sys:String>
     <sys:String x:Key="Str_KS_Prev">Předchozí měsíc, týden nebo den</sys:String>
     <sys:String x:Key="Str_KS_Next">Další měsíc, týden nebo den</sys:String>

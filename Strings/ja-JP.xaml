@@ -477,6 +477,7 @@
     <sys:String x:Key="Str_KS_Agenda">予定一覧表示</sys:String>
     <sys:String x:Key="Str_KS_Year">年表示</sys:String>
     <sys:String x:Key="Str_KS_QuickAdd">文から新しい予定を作成</sys:String>
+    <sys:String x:Key="Str_KS_History">表示した画面を戻る・進む</sys:String>
     <sys:String x:Key="Str_KS_FreeTime">空き時間を探す</sys:String>
     <sys:String x:Key="Str_KS_Prev">前の月、週または日</sys:String>
     <sys:String x:Key="Str_KS_Next">次の月、週または日</sys:String>
