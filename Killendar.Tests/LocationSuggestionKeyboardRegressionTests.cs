@@ -85,9 +85,13 @@ namespace Killendar.Tests
                 Assert.Equal(1, calls);
                 Assert.True(popup.IsOpen, "The fake results must open the real suggestion popup before keyboard input.");
 
-                Press(field, source, Key.Down);
+                var modifiers = Keyboard.Modifiers;
+                var down = Press(field, source, Key.Down);
 
-                Assert.Equal(0, list.SelectedIndex);
+                Assert.True(list.SelectedIndex == 0, "First Down selected " + list.SelectedIndex +
+                    "; modifiers before=" + modifiers + ", after=" + Keyboard.Modifiers +
+                    "; handled=" + down.Handled + "; source=" + down.OriginalSource?.GetType().Name +
+                    "; popup=" + popup.IsOpen + "; items=" + list.Items.Count);
                 Assert.Equal("search address", field.Text);
                 Press(list, source, Key.Enter);
                 Assert.Equal("First Avenue", field.Text);

@@ -63,7 +63,9 @@ namespace Killendar.Tests
             if (failure != null) throw new InvalidOperationException(failure.ToString());
         }
 
-        private const double Width = 1400, Height = 900;
+        private static bool Small => Environment.GetEnvironmentVariable("KILLENDAR_SNAPSHOT_SET") == "small";
+        private static double Width => Small ? 1024 : 1400;
+        private static double Height => Small ? 768 : 900;
 
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         private static void Exercise(string theme, string locale, string folder)
