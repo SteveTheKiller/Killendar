@@ -22,7 +22,7 @@ Killendar 1.5.0 adds a sentence box for new appointments, an open time finder an
 - Template write failures show an error and preserve the draft. Oversized durations in the sentence box no longer crash the app.
 - CLI agenda reads use the open, unlocked app for encrypted calendars, handle large valid responses and fail promptly when the app is closed.
 - CLI commands print to the console they were run from, and an export named "report." no longer gets a doubled dot.
-- The color picker opens under every theme, and Replace chip works under Blood, Cyanotic and Greed.
+- The color picker opens under every theme, Replace chip works under Blood, Cyanotic and Greed, and selected repeat chips use more readable text without changing their fill.
 - Saving after a drag keeps the appointment where it was dropped.
 - Duplicating one date of a repeating appointment no longer starts a new series.
 - A damaged or duplicated events.json from an older version no longer blocks every launch. Killendar keeps the file, says so and retries the move on the next start.
