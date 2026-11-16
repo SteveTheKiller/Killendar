@@ -23,6 +23,67 @@ namespace Killendar.Tests
         };
 
         [Fact]
+        public void MissedFirstHourReminderIsFoundDuringSecondHour()
+        {
+            using var fixture = new AppointmentFixture();
+            fixture.Store.Add(new CalendarEvent
+            {
+                Title = "First hour", Start = new DateTime(2026, 11, 1, 8, 30, 0, DateTimeKind.Utc).ToLocalTime(),
+                End = new DateTime(2026, 11, 1, 8, 50, 0, DateTimeKind.Utc).ToLocalTime(), ReminderMinutes = 0,
+            });
+            var now = new DateTime(2026, 11, 1, 9, 15, 0, DateTimeKind.Utc).ToLocalTime();
+            Assert.Single(fixture.Store.DueReminders(now));
+        }
+
+        [Fact]
+        public void SnoozeIntoSecondHourWaitsForItsInstant()
+        {
+            using var fixture = new AppointmentFixture();
+            var start = new DateTime(2026, 11, 1, 8, 0, 0, DateTimeKind.Utc);
+            fixture.Store.Add(Meeting("Snoozed", start.ToLocalTime(), 0));
+            var due = Assert.Single(fixture.Store.DueReminders(start.ToLocalTime()));
+            fixture.Store.SnoozeReminder(due, new DateTime(2026, 11, 1, 9, 15, 0, DateTimeKind.Utc).ToLocalTime());
+            Assert.Empty(fixture.Store.DueReminders(new DateTime(2026, 11, 1, 8, 45, 0, DateTimeKind.Utc).ToLocalTime()));
+            Assert.Single(fixture.Store.DueReminders(new DateTime(2026, 11, 1, 9, 15, 0, DateTimeKind.Utc).ToLocalTime()));
+        }
+
+        [Fact]
+        public void UpcomingReminderIncludesSecondHourInsideElapsedHorizon()
+        {
+            Assert.Equal("Pacific Standard Time", TimeZoneInfo.Local.Id);
+            using var fixture = new AppointmentFixture();
+            var start = new DateTime(2026, 11, 1, 9, 30, 0, DateTimeKind.Utc);
+            fixture.Store.Add(Meeting("Second hour", start.ToLocalTime(), 0));
+            var now = new DateTime(2026, 11, 1, 8, 45, 0, DateTimeKind.Utc).ToLocalTime();
+
+            var upcoming = Assert.Single(fixture.Store.UpcomingReminderTimes(now, TimeSpan.FromHours(1)));
+
+            Assert.Equal(start, upcoming.ToUniversalTime());
+        }
+
+        [Fact]
+        public void DueReminderUsesInstantsInsideRepeatedHour()
+        {
+            Assert.Equal("Pacific Standard Time", TimeZoneInfo.Local.Id);
+            using var fixture = new AppointmentFixture();
+            var start = new DateTime(2026, 11, 1, 9, 30, 0, DateTimeKind.Utc);
+            fixture.Store.Add(Meeting("Second hour", start.ToLocalTime(), 0));
+
+            Assert.Empty(fixture.Store.DueReminders(new DateTime(2026, 11, 1, 8, 45, 0, DateTimeKind.Utc).ToLocalTime()));
+            Assert.Single(fixture.Store.DueReminders(new DateTime(2026, 11, 1, 9, 45, 0, DateTimeKind.Utc).ToLocalTime()));
+        }
+
+        [Fact]
+        public void TimedLeadUsesElapsedMinutesAcrossFallBack()
+        {
+            Assert.Equal("Pacific Standard Time", TimeZoneInfo.Local.Id);
+            var start = new DateTime(2026, 11, 1, 9, 30, 0, DateTimeKind.Utc);
+            var appointment = Meeting("Repeated hour", start.ToLocalTime(), 60);
+            Assert.Equal(new DateTime(2026, 11, 1, 8, 30, 0, DateTimeKind.Utc),
+                Reminders.FireTime(appointment)!.Value.ToUniversalTime());
+        }
+
+        [Fact]
         public void TimedReminderFiresItsMinutesBeforeTheStart()
             => Assert.Equal(new DateTime(2026, 10, 21, 9, 45, 0),
                 Reminders.FireTime(Meeting("Standup", new DateTime(2026, 10, 21, 10, 0, 0), 15)));

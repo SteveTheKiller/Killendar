@@ -26,24 +26,28 @@ namespace Killendar.Services
             if (!_events.Any(e => e.ReminderMinutes.HasValue)) return [];
             var lead = _events.Max(Reminders.Lead);
             var states = ReminderStates();
+            var nowUtc = now.ToUniversalTime();
             // A missed date of a series is overtaken by the next one: only the latest due date of
             // each appointment counts, and dismissing or snoozing it quiets the older ones too.
             var latest = new Dictionary<Guid, (CalendarEvent Occ, DateTime Fire)>();
-            foreach (var occ in GetInRange(now - Reminders.MissedGrace - lead, now + lead + TimeSpan.FromMinutes(1)))
+            // Range queries use calendar clocks. Whole days include both copies of a repeated
+            // hour; the UTC predicates below then select the actual scheduling instants.
+            foreach (var occ in GetInRange((nowUtc - Reminders.MissedGrace - lead).ToLocalTime().Date,
+                         (nowUtc + lead + TimeSpan.FromMinutes(1)).ToLocalTime().Date.AddDays(1)))
             {
-                if (Reminders.FireTime(occ) is not DateTime fire || fire > now) continue;
-                if (occ.End <= now - Reminders.MissedGrace) continue;
-                if (!latest.TryGetValue(occ.Id, out var seen) || occ.Start > seen.Occ.Start) latest[occ.Id] = (occ, fire);
+                if (Reminders.FireTime(occ) is not DateTime fire || fire.ToUniversalTime() > nowUtc) continue;
+                if (occ.End.ToUniversalTime() <= nowUtc - Reminders.MissedGrace) continue;
+                if (!latest.TryGetValue(occ.Id, out var seen) || occ.Start.ToUniversalTime() > seen.Occ.Start.ToUniversalTime()) latest[occ.Id] = (occ, fire);
             }
             var due = new List<DueReminder>();
             foreach (var (occ, fire) in latest.Values)
             {
                 if (states.TryGetValue((occ.Id, OccurrenceKey(occ)), out var state) &&
-                    (state.Dismissed || state.SnoozeUntil > now)) continue;
+                    (state.Dismissed || state.SnoozeUntil.ToUniversalTime() > nowUtc)) continue;
                 due.Add(new DueReminder(occ.Id, occ.Start, occ.Title, occ.Location, occ.Start, occ.End, occ.AllDay,
-                    state.SnoozeUntil > fire ? state.SnoozeUntil : fire));
+                    state.SnoozeUntil.ToUniversalTime() > fire.ToUniversalTime() ? state.SnoozeUntil : fire));
             }
-            return [.. due.OrderBy(d => d.Fire).ThenBy(d => d.Start)];
+            return [.. due.OrderBy(d => d.Fire.ToUniversalTime()).ThenBy(d => d.Start.ToUniversalTime())];
         }
 
         /// <summary>When reminders will next come due in the coming span, snoozes included. Taken
@@ -53,14 +57,16 @@ namespace Killendar.Services
             if (_db == null) return [];
             var states = ReminderStates();
             var times = new List<DateTime>();
+            var nowUtc = now.ToUniversalTime();
+            var untilUtc = nowUtc + ahead;
             var lead = _events.Count == 0 ? TimeSpan.Zero : _events.Max(Reminders.Lead);
-            foreach (var occ in GetInRange(now, now + ahead + lead))
-                if (Reminders.FireTime(occ) is DateTime fire && fire > now && fire <= now + ahead &&
+            foreach (var occ in GetInRange(now.Date, (untilUtc + lead).ToLocalTime().Date.AddDays(1)))
+                if (Reminders.FireTime(occ) is DateTime fire && fire.ToUniversalTime() > nowUtc && fire.ToUniversalTime() <= untilUtc &&
                     !(states.TryGetValue((occ.Id, OccurrenceKey(occ)), out var state) && state.Dismissed))
                     times.Add(fire);
             foreach (var state in states.Values)
-                if (!state.Dismissed && state.SnoozeUntil > now && state.SnoozeUntil <= now + ahead) times.Add(state.SnoozeUntil);
-            times.Sort();
+                if (!state.Dismissed && state.SnoozeUntil.ToUniversalTime() > nowUtc && state.SnoozeUntil.ToUniversalTime() <= untilUtc) times.Add(state.SnoozeUntil);
+            times.Sort((a, b) => a.ToUniversalTime().CompareTo(b.ToUniversalTime()));
             return times;
         }
 

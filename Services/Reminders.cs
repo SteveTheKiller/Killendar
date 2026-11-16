@@ -41,7 +41,8 @@ namespace Killendar.Services
             if (ev.ReminderMinutes is not int minutes || minutes < 0 || minutes > MaxMinutes) return null;
             try
             {
-                return ev.AllDay ? ev.Start.Date.AddDays(-1).AddHours(AllDayHour) : ev.Start.AddMinutes(-minutes);
+                return ev.AllDay ? ev.Start.Date.AddDays(-1).AddHours(AllDayHour)
+                    : ev.Start.ToUniversalTime().AddMinutes(-minutes).ToLocalTime();
             }
             catch (ArgumentOutOfRangeException) { return null; }
         }
