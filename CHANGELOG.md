@@ -10,19 +10,23 @@ Killendar 1.5.0 adds a sentence box for new appointments, an open time finder an
 
 ### Security
 
+- Password changes report old backup copies that could not be deleted, including copies left by an interrupted change. Locking a shown calendar also closes its open appointment cards.
 - The database engine is loaded from the exact file that was checked, with no window to swap it in between.
 - The command pipe refuses connections from the network, and the install lock is limited to the signed-in user.
 - Update checks verify the signer from the same signature check that approved the file.
 
 ### Fixed
 
-- CLI agenda reads use the open, unlocked app for encrypted calendars and fail promptly when it is closed.
+- Series edits keep saved changes and deletions on extra dates. Shortened invitations remove obsolete edited occurrences, and older cancellations cannot hide newer appointments.
+- Editing zoned appointments preserves unchanged seconds, repeated-hour identity and calendar-day durations. Reminders and snoozes follow elapsed time across clock changes.
+- Template write failures show an error and preserve the draft. Oversized durations in the sentence box no longer crash the app.
+- CLI agenda reads use the open, unlocked app for encrypted calendars, handle large valid responses and fail promptly when the app is closed.
 - CLI commands print to the console they were run from, and an export named "report." no longer gets a doubled dot.
 - The color picker opens under every theme, and Replace chip works under Blood, Cyanotic and Greed.
 - Saving after a drag keeps the appointment where it was dropped.
 - Duplicating one date of a repeating appointment no longer starts a new series.
 - A damaged or duplicated events.json from an older version no longer blocks every launch. Killendar keeps the file, says so and retries the move on the next start.
-- CSV import removes the apostrophe that protects values like "-call" on export, keeps an apostrophe you typed yourself, and imported rows keep stable ids.
+- CSV import removes the apostrophe that protects values like "-call" on export, keeps an apostrophe you typed yourself, and gives rows with different reminders distinct, stable ids.
 - Calendar imports take the newest revision of each appointment.
 - Ctrl+D and Ctrl+Delete act on the focused appointment, even while its card is open.
 - Right-clicking an appointment in the sidebar's day list opens its card instead of the sidebar's Left and Right menu.
@@ -34,7 +38,7 @@ Killendar 1.5.0 adds a sentence box for new appointments, an open time finder an
 - The day view title follows the language's date format.
 - The sidebar slides closed smoothly when it is closed while still opening.
 - A calendar file with a blank or missing appointment id opens, gives that appointment its own id and leaves every other appointment out of its series.
-- Screen readers announce each reminder as a button and can open it.
+- Screen readers can invoke reminder rows and Year-view dates. Previous and Next keep their shortcut hints when switching views.
 - Pressing Enter twice in the file picker's name box while a slow network or USB folder is still being checked no longer acts twice.
 
 ### Changed
