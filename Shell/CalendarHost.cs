@@ -190,8 +190,7 @@ namespace Killendar.Shell
             PrevBtn.FontFamily = visible ? SystemFonts.MessageFontFamily : new FontFamily("Segoe MDL2 Assets");
             NextBtn.FontFamily = visible ? SystemFonts.MessageFontFamily : new FontFamily("Segoe MDL2 Assets");
             PrevBtn.FontSize = NextBtn.FontSize = visible ? 18 : 10;
-            PrevBtn.SetResourceReference(ToolTipProperty, visible ? "Str_TT_PrevRange" : "Str_TT_Prev");
-            NextBtn.SetResourceReference(ToolTipProperty, visible ? "Str_TT_NextRange" : "Str_TT_Next");
+            RefreshNavigationTooltips();
         }
 
         // ---- toolbar ----

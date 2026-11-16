@@ -20,6 +20,10 @@ namespace Killendar.Tests
     public sealed class KdJShellTests
     {
         [Fact]
+        public void SwitchingViewsKeepsPreviousAndNextShortcutHints()
+            => ScratchUiProcess.Run(typeof(KdJShellFixture), "navigation-hints");
+
+        [Fact]
         public void ClosingAfterTheUserResizedClearsTheBorrowedLeftShift()
             => ScratchUiProcess.Run(typeof(KdJShellFixture), "resized-shift");
 
@@ -85,6 +89,7 @@ namespace Killendar.Tests
                 root.UpdateLayout();
                 switch (scenario)
                 {
+                    case "navigation-hints": NavigationHints(window); break;
                     case "resized-shift": ResizedShift(window); break;
                     case "maximized-shift": MaximizedShift(window); break;
                     case "close-mid-open": CloseMidOpen(window); break;
@@ -99,6 +104,17 @@ namespace Killendar.Tests
 
         private static T Get<T>(MainWindow w, string field) =>
             (T)typeof(MainWindow).GetField(field, Instance)!.GetValue(w)!;
+
+        private static void NavigationHints(MainWindow window)
+        {
+            foreach (string view in new[] { "TabWeek", "TabDay", "TabYear", "TabMonth" })
+            {
+                ((Button)window.FindName(view)).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                foreach (var (button, binding) in new[] { ("PrevBtn", "Str_KS_Prev"), ("NextBtn", "Str_KS_Next") })
+                    Assert.EndsWith("(" + MainWindow.ShortcutKeys(binding) + ")",
+                        ((Button)window.FindName(button)).ToolTip?.ToString());
+            }
+        }
 
         private static void Set(MainWindow w, string field, object value) =>
             typeof(MainWindow).GetField(field, Instance)!.SetValue(w, value);

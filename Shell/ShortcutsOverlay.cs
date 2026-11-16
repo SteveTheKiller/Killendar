@@ -123,6 +123,13 @@ namespace Killendar.Shell
         internal static string WithShortcut(string text, string labelKey)
             => KillerFamily.Layout.ShortcutHints.WithHint(text, ShortcutKeys(labelKey));
 
+        private void RefreshNavigationTooltips()
+        {
+            bool rolling = PrevWeekBtn.Visibility == Visibility.Visible;
+            PrevBtn.ToolTip = WithShortcut(Loc(rolling ? "Str_TT_PrevRange" : "Str_TT_Prev"), "Str_KS_Prev");
+            NextBtn.ToolTip = WithShortcut(Loc(rolling ? "Str_TT_NextRange" : "Str_TT_Next"), "Str_KS_Next");
+        }
+
         /// <summary>
         /// Every button that runs a bound action shows its keys (family rule: shortcuts appear on
         /// every action surface). The toolbar sets its own in ToolbarStyle.cs. Called at startup
@@ -130,8 +137,7 @@ namespace Killendar.Shell
         /// </summary>
         private void ApplyShortcutTooltips()
         {
-            PrevBtn.ToolTip = WithShortcut(Loc("Str_TT_Prev"), "Str_KS_Prev");
-            NextBtn.ToolTip = WithShortcut(Loc("Str_TT_Next"), "Str_KS_Next");
+            RefreshNavigationTooltips();
             SidebarToggleBtn.ToolTip = PanelToggleTip();
             VersionLabel.ToolTip = WithShortcut(Loc("Str_TT_About"), "Str_KS_About");
             SaveAppointmentBtn.ToolTip = WithShortcut(Loc("Str_Btn_Save"), "Str_KS_SaveAppt");
