@@ -298,9 +298,19 @@ namespace Killendar.Views
                 var bar = FindVerticalBar(_scroller);
                 inset = bar?.ActualWidth ?? SystemParameters.VerticalScrollBarWidth;
             }
-            var m = _headerRow.Margin;
-            if (Math.Abs(m.Right - inset) < 0.5) return;   // no churn on every layout pass
-            _headerRow.Margin = new Thickness(m.Left, m.Top, inset, m.Bottom);
+            ApplyRightInset(inset);
+        }
+
+        internal void ApplyRightInset(double inset)
+        {
+            // The all-day strip sits above the scroller too; without the same inset its bars
+            // landed a scrollbar's width right of their day columns.
+            foreach (var g in new[] { _headerRow, _allDayStrip })
+            {
+                var m = g.Margin;
+                if (Math.Abs(m.Right - inset) < 0.5) continue;   // no churn on every layout pass
+                g.Margin = new Thickness(m.Left, m.Top, inset, m.Bottom);
+            }
         }
 
         // A ScrollViewer has two scrollbars, so the orientation is checked rather than assumed.
