@@ -87,7 +87,17 @@ namespace KillerFamily.Controls
             var slot = Slot(rule);
             slot.Padding = new Thickness(0);
             AutomationProperties.SetName(slot, name);
+            // The rule below only separates the strip from rows under it; a card that ends at the
+            // strip drew a stray line at its bottom edge.
+            slot.Loaded += (_, _) => rule.BorderThickness = new Thickness(0, 1, 0, EndsCard(slot) ? 0 : 1);
             return slot;
+        }
+
+        /// <summary>Whether this item is the last thing on its card.</summary>
+        internal static bool EndsCard(MenuItem item)
+        {
+            if (ItemsControl.ItemsControlFromItemContainer(item) is not { } owner) owner = item.Parent as ItemsControl;
+            return owner == null || owner.Items.IndexOf(item) == owner.Items.Count - 1;
         }
 
         /// <summary>A labeled row of independent on/off chips (CardToggle).</summary>
