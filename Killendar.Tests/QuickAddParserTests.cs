@@ -15,6 +15,24 @@ namespace Killendar.Tests
         private static QuickAddResult Parse(string text, CultureInfo? culture = null)
             => QuickAdd.Parse(text, Now, culture ?? Us, QuickAddWords.English);
 
+        [Theory]
+        [InlineData("999999999999h")]
+        [InlineData("999999999999m")]
+        [InlineData("337h")]
+        [InlineData("20161m")]
+        public void ExcessiveDurationStaysEditableWithoutOverflow(string duration)
+        {
+            var result = Parse("meeting 3pm for " + duration);
+            Assert.Equal(TimeSpan.FromHours(1), result.End - result.Start);
+            Assert.Contains(duration, result.Title);
+        }
+
+        [Theory]
+        [InlineData("336h")]
+        [InlineData("20160m")]
+        public void FourteenDayDurationRemainsAccepted(string duration)
+            => Assert.Equal(new DateTime(2026, 12, 2, 15, 0, 0), Parse("meeting 3pm for " + duration).End);
+
         [Fact]
         public void WeekdayTimeAndPlaceFillEveryField()
         {

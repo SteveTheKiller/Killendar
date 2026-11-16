@@ -456,7 +456,9 @@ namespace Killendar.Services
             }
             if (!double.TryParse(m.Groups["n"].Value.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out double n) || n <= 0)
                 return false;
-            length = char.ToLowerInvariant(unit[0]) == 'h' ? TimeSpan.FromHours(n) : TimeSpan.FromMinutes(n);
+            bool hours = char.ToLowerInvariant(unit[0]) == 'h';
+            if (double.IsNaN(n) || double.IsInfinity(n) || n > (hours ? 14 * 24 : 14 * 24 * 60)) return false;
+            length = hours ? TimeSpan.FromHours(n) : TimeSpan.FromMinutes(n);
             return length <= TimeSpan.FromDays(14);
         }
     }
