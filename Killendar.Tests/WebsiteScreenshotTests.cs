@@ -38,6 +38,10 @@ namespace Killendar.Tests
             foreach (var shot in WebsiteScreenshotFixture.Shots)
                 if (string.IsNullOrWhiteSpace(only) || only == shot.Id)
                     ScratchUiProcess.Run(typeof(WebsiteScreenshotFixture), shot.Id + "|" + folder);
+            // Review shots of single features: drawn only when named, never in the website set.
+            foreach (var shot in WebsiteScreenshotFixture.ReviewShots)
+                if (!string.IsNullOrWhiteSpace(only) && (only == shot.Id || only == "review"))
+                    ScratchUiProcess.Run(typeof(WebsiteScreenshotFixture), shot.Id + "|" + folder);
         }
     }
 
@@ -166,6 +170,51 @@ namespace Killendar.Tests
             }, Labels: "None"),
         ];
 
+        internal static readonly Shot[] ReviewShots =
+        [
+            new("r1", "month-98se", Theme.SE98, Accent.Green, 1366, 860, s =>
+            {
+                s.Calendar.SelectView("Month");
+                s.Calendar.GoTo(Today);
+            }, Labels: "Under"),
+            new("r2", "month-dark", Theme.Dark, Accent.Red, 1366, 860, s =>
+            {
+                s.Calendar.SelectView("Month");
+                s.Calendar.GoTo(Today);
+            }),
+            new("r3", "year-98se", Theme.SE98, Accent.Green, 1366, 860, s =>
+            {
+                s.Calendar.SelectView("Year");
+                s.Calendar.GoTo(Today);
+            }, Labels: "Under"),
+            new("r4", "year-dark", Theme.Dark, Accent.Red, 1366, 860, s =>
+            {
+                s.Calendar.SelectView("Year");
+                s.Calendar.GoTo(Today);
+            }),
+            new("r5", "sentence-box-98se", Theme.SE98, Accent.Green, 1366, 860, s => SentenceBox(s), Labels: "Under"),
+            new("r6", "sentence-box-dark", Theme.Dark, Accent.Red, 1366, 860, s => SentenceBox(s)),
+            new("r7", "open-time-98se", Theme.SE98, Accent.Green, 1366, 860, s => OpenTime(s), Labels: "Under"),
+            new("r8", "open-time-dark", Theme.Dark, Accent.Red, 1366, 860, s => OpenTime(s)),
+        ];
+
+        private static void SentenceBox(Scene s)
+        {
+            s.Calendar.SelectView("Week");
+            s.Calendar.GoTo(Today);
+            var box = new QuickAddDialog();
+            ((TextBox)box.FindName("LineBox")).Text = "lunch with Dave fri 12:30 at Mel's #food";
+            s.Overlays.Add((ShowAside(box), size => Centered(s, size)));
+        }
+
+        private static void OpenTime(Scene s)
+        {
+            s.Calendar.SelectView("Week");
+            s.Calendar.GoTo(Today);
+            var dlg = new FreeTimeDialog((from, to) => ShownCalendars.With(s.Store.GetInRange(from, to), from, to));
+            s.Overlays.Add((ShowAside(dlg), size => Centered(s, size)));
+        }
+
         private const string BoardReview = "Board review";
         private const string TokyoCall = "Call with the Tokyo office";
         private static DateTime Thanksgiving => NthWeekday(Today.Year, 11, DayOfWeek.Thursday, 4);
@@ -179,7 +228,7 @@ namespace Killendar.Tests
                 {
                     System.IO.Packaging.PackUriHelper.Create(new Uri("file:///calendar.html"));
                     var parts = scenario.Split('|');
-                    Draw(Shots.Single(s => s.Id == parts[0]), parts[1]);
+                    Draw(Shots.Concat(ReviewShots).Single(s => s.Id == parts[0]), parts[1]);
                 }
                 catch (Exception ex) { failure = ex; }
                 finally { System.Windows.Threading.Dispatcher.CurrentDispatcher.InvokeShutdown(); }

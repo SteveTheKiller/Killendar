@@ -150,14 +150,16 @@ namespace Killendar.Views
             var cell = new Grid { Height = 22, Margin = new Thickness(1), Cursor = Cursors.Hand, Focusable = true };
             if (level > 0)
             {
-                var shade = new Border { Opacity = 0.18 + 0.18 * level, CornerRadius = new CornerRadius(3) };
+                var shade = new Border { Opacity = 0.18 + 0.18 * level };
                 shade.SetResourceReference(Border.BackgroundProperty, "PrimaryBrush");
+                shade.SetResourceReference(Border.CornerRadiusProperty, "SmallCornerRadius");
                 cell.Children.Add(shade);
             }
             bool today = day == DateTime.Today;
             if (today || day == _selectedDay)
             {
-                var ring = new Border { BorderThickness = new Thickness(today ? 1.5 : 1), CornerRadius = new CornerRadius(3) };
+                var ring = new Border { BorderThickness = new Thickness(today ? 1.5 : 1) };
+                ring.SetResourceReference(Border.CornerRadiusProperty, "SmallCornerRadius");
                 ring.SetResourceReference(Border.BorderBrushProperty, today ? "SelectionAccent" : "TextBrush");
                 cell.Children.Add(ring);
             }

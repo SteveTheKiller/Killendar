@@ -8,7 +8,7 @@
         xmlns:icons="clr-namespace:Killendar.Controls"
         xmlns:kui="clr-namespace:Killendar.Controls"
         Title="Killendar"
-        Width="460" SizeToContent="Height"
+        Width="540" SizeToContent="Height"
         WindowStartupLocation="CenterOwner"
         WindowStyle="None"
         AllowsTransparency="True"
