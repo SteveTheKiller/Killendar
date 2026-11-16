@@ -198,6 +198,11 @@ namespace Killendar.Tests
             new("r8", "open-time-dark", Theme.Dark, Accent.Red, 1366, 860, s => OpenTime(s)),
             new("r9", "killendars-98se", Theme.SE98, Accent.Green, 1366, 860, s => Killendars(s), Labels: "Under"),
             new("r10", "killendars-dark", Theme.Dark, Accent.Red, 1366, 860, s => Killendars(s)),
+            new("r12", "week-dark", Theme.Dark, Accent.Teal, 1366, 860, s =>
+            {
+                s.Calendar.SelectView("Week");
+                s.Calendar.GoTo(Thanksgiving);
+            }),
             new("r11", "categories-dark", Theme.Dark, Accent.Teal, 1366, 860, s =>
             {
                 s.Calendar.SelectView("Month");

@@ -203,14 +203,13 @@ namespace Killendar.Views
 
         public void Refresh() => Rebuild();
 
-        /// <summary>The body sits flush under the day headers, so its top edge is flat; only the
-        /// bottom corners follow the pane's radius.</summary>
+        /// <summary>The surface fills the whole pane, day headers included, so all four corners
+        /// follow the pane's radius.</summary>
         private void RefreshBodyCorners()
         {
             var pane = TryFindResource("PanelCornerRadius") is CornerRadius r ? r : new CornerRadius(0);
-            var flatTop = new CornerRadius(0, 0, pane.BottomRight, pane.BottomLeft);
-            _bodySurface.CornerRadius = flatTop;
-            _bodyGrain.CornerRadius = flatTop;
+            _bodySurface.CornerRadius = pane;
+            _bodyGrain.CornerRadius = pane;
         }
 
         private void RefreshBodyShadow()
@@ -238,15 +237,17 @@ namespace Killendar.Views
             _bodySurface = new Border { BorderThickness = new Thickness(0) };
             // ContentPaneBrush (PaneBrush unless a theme states its own), like Month and Agenda.
             _bodySurface.SetResourceReference(Border.BackgroundProperty, "ContentPaneBrush");
-            Grid.SetRow(_bodySurface, 1);
-            Grid.SetRowSpan(_bodySurface, 2);
+            // From the day headers down: the pane outline wraps the headers too, and an unfilled
+            // header row inside it read as an empty box.
+            Grid.SetRow(_bodySurface, 0);
+            Grid.SetRowSpan(_bodySurface, 3);
             root.Children.Add(_bodySurface);
 
             var bodyGrain = _bodyGrain = new Border { IsHitTestVisible = false };
             bodyGrain.SetResourceReference(Border.BackgroundProperty, "GrainTileBrush");
             bodyGrain.SetResourceReference(OpacityProperty, "GrainOpacity");
-            Grid.SetRow(bodyGrain, 1);
-            Grid.SetRowSpan(bodyGrain, 2);
+            Grid.SetRow(bodyGrain, 0);
+            Grid.SetRowSpan(bodyGrain, 3);
             root.Children.Add(bodyGrain);
 
             // Like Month, weekday names are a quiet axis on the window surface rather than a
