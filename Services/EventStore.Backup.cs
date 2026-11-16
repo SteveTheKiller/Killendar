@@ -193,12 +193,13 @@ namespace Killendar.Services
         private void RekeyBackups(string calendarPath, string? oldPassword, string? newPassword)
         {
             BackupsNotRekeyed.Clear();
-            SweepRekeyLeftovers(calendarPath);
+            SweepRekeyLeftovers(calendarPath, BackupsNotRekeyed);
             foreach (var backup in ListBackupsFor(calendarPath))
             {
                 string staged = backup.Path + ".rekey";
                 string aside = backup.Path + ".rekey-old";
                 bool keepStaged = false;
+                bool published = false;
                 try
                 {
                     using (var source = new SqliteConnection(new SqliteConnectionStringBuilder
@@ -209,7 +210,7 @@ namespace Killendar.Services
                     }
                     // The original is only set aside until the rewrite is in place, so a failed
                     // move costs nothing; if even the put-back fails, the rewrite is kept too.
-                    TryDelete(aside);
+                    File.Delete(aside);
                     File.Move(backup.Path, aside);
                     try { RekeyMove(staged, backup.Path); }
                     catch
@@ -218,13 +219,17 @@ namespace Killendar.Services
                         catch { keepStaged = true; }
                         throw;
                     }
-                    TryDelete(aside);
+                    published = true;
+                    File.Delete(aside);
                 }
                 catch (Exception ex)
                 {
                     if (!keepStaged) TryDelete(staged);
                     LastBackupError = ex.Message;
-                    BackupsNotRekeyed.Add(backup.Path);
+                    string retained = published || keepStaged ? aside : backup.Path;
+                    if (!BackupsNotRekeyed.Contains(retained)) BackupsNotRekeyed.Add(retained);
+                    if (!published && File.Exists(aside) && !BackupsNotRekeyed.Contains(aside))
+                        BackupsNotRekeyed.Add(aside);
                 }
             }
         }
@@ -345,7 +350,7 @@ namespace Killendar.Services
         /// copy of that day. One whose backup is in place is a stale copy under the previous key
         /// and is deleted, as is a staged .rekey beside a backup that is in place.
         /// </summary>
-        private static void SweepRekeyLeftovers(string calendarPath)
+        private static void SweepRekeyLeftovers(string calendarPath, List<string>? retained = null)
         {
             if (string.IsNullOrEmpty(calendarPath)) return;
             string dir = BackupDirFor(calendarPath);
@@ -369,6 +374,8 @@ namespace Killendar.Services
                     {
                         try { File.Move(leftover, backup); } catch { /* best effort; tried again next pass */ }
                     }
+                    if (suffix == ".rekey-old" && File.Exists(leftover) && retained != null && !retained.Contains(leftover))
+                        retained.Add(leftover);
                 }
             }
         }

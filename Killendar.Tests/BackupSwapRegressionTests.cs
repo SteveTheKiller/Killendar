@@ -23,6 +23,56 @@ namespace Killendar.Tests
         };
 
         [Fact]
+        public void PasswordChangeReportsLockedOrphanFromInterruptedRekey()
+        {
+            using var fixture = new AppointmentFixture();
+            fixture.Store.Add(Appointment("Kept"));
+            string backup = fixture.Store.BackupNow(new DateTime(2026, 10, 21, 9, 30, 0))!;
+            string orphan = backup + ".rekey-old";
+            File.Move(backup, orphan);
+            using var held = new FileStream(orphan, FileMode.Open, FileAccess.Read, FileShare.Read);
+
+            fixture.Store.SetPassword("new-password");
+
+            Assert.Contains(orphan, fixture.Store.BackupsNotRekeyed);
+        }
+
+        [Fact]
+        public void PasswordChangeReportsOldBackupWhenCleanupFails()
+        {
+            using var fixture = new AppointmentFixture();
+            fixture.Store.Add(Appointment("Kept"));
+            var handles = new System.Collections.Generic.List<FileStream>();
+            var retained = new System.Collections.Generic.List<string>();
+            try
+            {
+                fixture.Store.RekeyMove = (source, destination) =>
+                {
+                    File.Move(source, destination);
+                    string old = destination + ".rekey-old";
+                    handles.Add(new FileStream(old, FileMode.Open, FileAccess.Read, FileShare.Read));
+                    retained.Add(old);
+                };
+
+                fixture.Store.SetPassword("new-password");
+
+                Assert.NotEmpty(retained);
+                Assert.All(retained, path => Assert.Contains(path, fixture.Store.BackupsNotRekeyed));
+                Assert.All(retained, path =>
+                {
+                    var copy = new EventStore();
+                    try
+                    {
+                        copy.OpenReadOnly(path);
+                        Assert.Equal("Kept", Assert.Single(copy.Events).Title);
+                    }
+                    finally { copy.Close(); }
+                });
+            }
+            finally { foreach (var handle in handles) handle.Dispose(); }
+        }
+
+        [Fact]
         public void FailedRekeySwapKeepsTheOriginalBackup()
         {
             using var fixture = new AppointmentFixture();
