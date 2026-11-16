@@ -22,6 +22,10 @@ namespace Killendar.Services
             // killendar.net are all built on Dark's #DD504B, so Dark is the first-run theme.
             ThemeManager.SetDefaults(Theme.Dark, dark: Accent.Red, light: Accent.Green, black: Accent.Red, se98: Accent.Blue);
             ThemeManager.AppTokens = AppTokens;
+            // Dialog caption icon (Controls/DialogChrome.cs host setup). Unset, ConfirmDialog,
+            // FileDialog and DialogTitleBar all hid their icon.
+            Controls.DialogChrome.AppName = AppInfo.DisplayName;
+            Controls.DialogChrome.IconUri = new Uri("pack://application:,,,/Resources/kd-icon.ico");
             ThemeManager.AppDerivedTokens = AppDerivedTokens;
         }
 

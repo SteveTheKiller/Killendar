@@ -19,8 +19,6 @@ namespace Killendar.Controls
         public QuickAddDialog()
         {
             InitializeComponent();
-            TitleIcon.Source = BitmapDecoder.Create(new Uri("pack://application:,,,/Resources/kd-icon.ico"),
-                BitmapCreateOptions.None, BitmapCacheOption.OnLoad).Frames[0];
             TaskbarIdentity.Track(this);
             Loaded += (_, _) =>
             {
@@ -71,9 +69,5 @@ namespace Killendar.Controls
             }
         }
 
-        private void Close_Click(object sender, RoutedEventArgs e) => Close();
-
-        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) =>
-            TitleBarDrag.Start(this, e);
-    }
+        private void Close_Click(object sender, RoutedEventArgs e) => Close();    }
 }

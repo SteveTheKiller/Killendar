@@ -64,9 +64,5 @@ namespace Killendar.Controls
         private void PwBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter) OK_Click(sender, e);
-        }
-
-        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-            => TitleBarDrag.Start(this, e);
-    }
+        }    }
 }

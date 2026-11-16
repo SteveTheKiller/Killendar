@@ -25,8 +25,6 @@ namespace Killendar.Controls
         {
             _store = store;
             InitializeComponent();
-            TitleIcon.Source = BitmapDecoder.Create(new Uri("pack://application:,,,/Resources/kd-icon.ico"),
-                BitmapCreateOptions.None, BitmapCacheOption.OnLoad).Frames[0];
             TaskbarIdentity.Track(this);
             foreach (var (span, key) in new[] { (SearchSpan.Any, "Str_Search_Any"), (SearchSpan.Upcoming, "Str_Search_Upcoming"), (SearchSpan.Past, "Str_Search_Past") })
             {
@@ -141,9 +139,5 @@ namespace Killendar.Controls
             return false;
         }
 
-        private void Close_Click(object sender, RoutedEventArgs e) => Close();
-
-        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) =>
-            TitleBarDrag.Start(this, e);
-    }
+        private void Close_Click(object sender, RoutedEventArgs e) => Close();    }
 }

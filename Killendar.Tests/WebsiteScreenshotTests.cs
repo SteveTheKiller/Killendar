@@ -196,7 +196,17 @@ namespace Killendar.Tests
             new("r6", "sentence-box-dark", Theme.Dark, Accent.Red, 1366, 860, s => SentenceBox(s)),
             new("r7", "open-time-98se", Theme.SE98, Accent.Green, 1366, 860, s => OpenTime(s), Labels: "Under"),
             new("r8", "open-time-dark", Theme.Dark, Accent.Red, 1366, 860, s => OpenTime(s)),
+            new("r9", "killendars-98se", Theme.SE98, Accent.Green, 1366, 860, s => Killendars(s), Labels: "Under"),
+            new("r10", "killendars-dark", Theme.Dark, Accent.Red, 1366, 860, s => Killendars(s)),
         ];
+
+        private static void Killendars(Scene s)
+        {
+            s.Calendar.SelectView("Month");
+            s.Calendar.GoTo(Today);
+            var dialog = new KillendarsDialog();
+            s.Overlays.Add((ShowAside(dialog), size => Centered(s, size)));
+        }
 
         private static void SentenceBox(Scene s)
         {

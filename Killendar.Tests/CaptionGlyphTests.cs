@@ -34,16 +34,13 @@ namespace Killendar.Tests
         /// dialog X takes the kit's DialogCloseWidth/Height, derived from the band.</summary>
         [Theory]
         [InlineData("Shell", "MainWindow.xaml")]
-        [InlineData("Controls", "CategoriesDialog.xaml")]
-        [InlineData("Controls", "KillendarsDialog.xaml")]
-        [InlineData("Controls", "PasswordDialog.xaml")]
-        [InlineData("Controls", "RemindersWindow.xaml")]
-        [InlineData("Controls", "SearchDialog.xaml")]
+        [InlineData("Controls", "DialogTitleBar.xaml")]
         public void DialogCaptionCloseTakesTheBandDerivedSize(string folder, string file)
         {
             var xaml = XDocument.Load(Path.Combine(Root(), folder, file));
             var closes = xaml.Descendants().Where(e => e.Name.LocalName == "Button"
-                && (string?)e.Attribute("Style") == "{StaticResource ChromeCloseButton}"
+                && ((string?)e.Attribute("Style") == "{StaticResource ChromeCloseButton}"
+                    || (file == "DialogTitleBar.xaml" && (string?)e.Attribute("Style") == "{StaticResource OverlayCloseButton}"))
                 && (string?)e.Attribute(XName.Get("Name", "http://schemas.microsoft.com/winfx/2006/xaml")) != "CloseBtn").ToList();
             Assert.NotEmpty(closes);
             foreach (var close in closes)
@@ -52,6 +49,26 @@ namespace Killendar.Tests
                 Assert.Equal("{DynamicResource DialogCloseHeight}", (string?)close.Attribute("Height"));
                 Assert.Equal("Center", (string?)close.Attribute("VerticalAlignment"));
             }
+        }
+
+        /// <summary>The dialogs take their card and caption from the shared DialogCard style and
+        /// DialogTitleBar control, so no dialog carries its own copy that can drift.</summary>
+        [Theory]
+        [InlineData("CategoriesDialog.xaml")]
+        [InlineData("KillendarsDialog.xaml")]
+        [InlineData("PasswordDialog.xaml")]
+        [InlineData("RemindersWindow.xaml")]
+        [InlineData("SearchDialog.xaml")]
+        [InlineData("QuickAddDialog.xaml")]
+        [InlineData("FreeTimeDialog.xaml")]
+        public void DialogUsesTheSharedCardAndTitleBar(string file)
+        {
+            var xaml = XDocument.Load(Path.Combine(Root(), "Controls", file));
+            Assert.Contains(xaml.Descendants(), e => e.Name.LocalName == "ContentControl"
+                && (string?)e.Attribute("Style") == "{StaticResource DialogCard}");
+            Assert.Single(xaml.Descendants(), e => e.Name.LocalName == "DialogTitleBar");
+            Assert.DoesNotContain(xaml.Descendants(), e => e.Name.LocalName == "Button"
+                && ((string?)e.Attribute("Style"))?.Contains("CloseButton") == true);
         }
 
         [Fact]

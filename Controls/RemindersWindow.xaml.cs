@@ -29,8 +29,6 @@ namespace Killendar.Controls
         public RemindersWindow()
         {
             InitializeComponent();
-            TitleIcon.Source = BitmapDecoder.Create(new Uri("pack://application:,,,/Resources/kd-icon.ico"),
-                BitmapCreateOptions.None, BitmapCacheOption.OnLoad).Frames[0];
             Loaded += (_, _) => Anim.FadeIn(RootBorder);
             SizeChanged += (_, _) => PlaceInCorner();
         }
@@ -123,9 +121,5 @@ namespace Killendar.Controls
 
         private void DismissAll_Click(object sender, RoutedEventArgs e) => DismissedAll?.Invoke(_due);
 
-        private void Close_Click(object sender, RoutedEventArgs e) => Close();
-
-        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) =>
-            TitleBarDrag.Start(this, e);
-    }
+        private void Close_Click(object sender, RoutedEventArgs e) => Close();    }
 }

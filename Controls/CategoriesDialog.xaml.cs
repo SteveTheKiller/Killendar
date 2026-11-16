@@ -311,7 +311,6 @@ namespace Killendar.Controls
 
         // ---- Chrome ----
 
-        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => TitleBarDrag.Start(this, e);
         private void Close_Click(object sender, RoutedEventArgs e) => Close();
     }
 

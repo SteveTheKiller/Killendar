@@ -21,21 +21,9 @@
         UseLayoutRounding="True" SnapsToDevicePixels="True"
         ShowInTaskbar="False">
 
-    <!-- Dark tier, so the fields and list rows on top of it read as raised. -->
-    <kui:PickerBorder x:Name="RootBorder" Opacity="0"
-            Background="{DynamicResource BackgroundBrush}"
-            BorderBrush="{DynamicResource AppBorderBrush}"
-            BorderThickness="1"
-            CornerRadius="{DynamicResource PanelCornerRadius}"
-            Margin="{DynamicResource DialogHaloMargin}">
-        <kui:PickerBorder.Effect>
-            <DropShadowEffect Color="Black" BlurRadius="20" ShadowDepth="4" Direction="270" Opacity="{DynamicResource DialogShadowOpacity}"/>
-        </kui:PickerBorder.Effect>
-        <Grid>
-            <Border IsHitTestVisible="False" CornerRadius="{DynamicResource PanelCornerRadius}"
-                    Opacity="{DynamicResource GrainOpacity}"
-                    Background="{DynamicResource GrainTileBrush}"/>
-
+    <!-- Card and caption are the shared DialogCard style and DialogTitleBar control
+         (Controls.xaml, DialogTitleBar.xaml), never inline copies. -->
+    <ContentControl x:Name="RootBorder" Opacity="0" Style="{StaticResource DialogCard}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -43,52 +31,20 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" Background="{DynamicResource DialogTitleBarBrush}"
-                        Height="{DynamicResource DialogTitleBarHeight}"
-                        CornerRadius="{DynamicResource DialogTitleCornerRadius}"
-                        MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" Panel.ZIndex="1">
-                    <Grid>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                    Margin="{DynamicResource DialogTitleMargin}">
-                        <!-- The app icon leads the caption, as it does in the main title bar. -->
-                        <icons:AppIcon IsHitTestVisible="False" Source="pack://application:,,,/Resources/kd-icon.ico"
-                               Width="{DynamicResource TitleIconSize}" Height="{DynamicResource TitleIconSize}"
-                               Margin="{DynamicResource TitleIconMargin}" VerticalAlignment="Center"
-                               RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-                        <Grid VerticalAlignment="Center" Visibility="{DynamicResource WordmarkVisibility}">
-                            <TextBlock Text="{DynamicResource Str_Kc_Title}"
-                                       FontFamily="{DynamicResource HeadingFont}" FontSize="18"
-                                       theme:HeadingAccent.Enabled="True"/>
-                        </Grid>
-                        <TextBlock Text="{DynamicResource Str_Kc_Title}" Visibility="{DynamicResource PlainTitleVisibility}"
-                                   VerticalAlignment="Center"
-                                   FontFamily="{DynamicResource ChromeFontFamily}" FontSize="11" FontWeight="Bold"
-                                   Foreground="{DynamicResource ChromeTextBrush}"/>
-                        </StackPanel>
-                        <!-- Same X as the About card: the family overlay glyph on a card, the classic caption button on 98SE. -->
-                        <Button Content="&#xE8BB;" Click="Close_Click" Style="{StaticResource ChromeCloseButton}"
-                                HorizontalAlignment="Right" VerticalAlignment="Center"
-                                Width="{DynamicResource DialogCloseWidth}" Height="{DynamicResource DialogCloseHeight}"
-                                Margin="{DynamicResource DialogCaptionCloseMargin}" Visibility="{DynamicResource PlainTitleVisibility}"/>
-                        <Button Content="&#x2715;" Click="Close_Click" Style="{StaticResource OverlayCloseButton}"
-                                ToolTip="{DynamicResource Str_Sys_Close}"
-                                HorizontalAlignment="Right" VerticalAlignment="Center" Width="28" Height="26" Margin="0,0,3,0"
-                                Visibility="{DynamicResource AboutModernCloseVisibility}"/>
-                    </Grid>
-                </Border>
+                <kui:DialogTitleBar Grid.Row="0" Subtitle="{DynamicResource Str_Kc_Title}" CloseRequested="Close_Click"/>
 
-                <StackPanel Grid.Row="1" Margin="24,14,24,12">
+                <StackPanel Grid.Row="1" Margin="12,8,12,8">
                     <TextBlock Text="{DynamicResource Str_Kc_Hint}" Foreground="{DynamicResource TextBrush}"
                                FontSize="11" TextWrapping="Wrap" Margin="0,0,0,8"/>
+                    <!-- The list is a pane: a childless shadow sibling behind it, the crossed sunken
+                         bevel, and the grain overlay last, above the rows. -->
                     <Grid>
                     <Border IsHitTestVisible="False" Background="{DynamicResource PaneBrush}"
-                            CornerRadius="{DynamicResource ControlCornerRadius}"/>
+                            CornerRadius="{DynamicResource ControlCornerRadius}"
+                            Effect="{DynamicResource PaneShadowEffect}"/>
                     <Border Background="{DynamicResource PaneBrush}"
                             BorderBrush="{DynamicResource PaneBorderBrush}" BorderThickness="1"
                             CornerRadius="{DynamicResource ControlCornerRadius}">
-                        <Grid>
-                        <Border IsHitTestVisible="False" CornerRadius="{DynamicResource ControlCornerRadius}"
-                                Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
                         <ListBox x:Name="KcList" Height="180" Background="Transparent" BorderThickness="0"
                                  HorizontalContentAlignment="Stretch" Margin="4"
                                  MouseDoubleClick="KcList_MouseDoubleClick"
@@ -145,10 +101,12 @@
                                 </Style>
                             </ListBox.ItemContainerStyle>
                         </ListBox>
-                        </Grid>
                     </Border>
                     <Border IsHitTestVisible="False" BorderBrush="{DynamicResource PaneBevelDarkBrush}" BorderThickness="{DynamicResource BevelLightThickness}"/>
                     <Border IsHitTestVisible="False" BorderBrush="{DynamicResource PaneBevelLightBrush}" BorderThickness="{DynamicResource BevelDarkThickness}"/>
+                    <Border IsHitTestVisible="False" CornerRadius="{DynamicResource ControlCornerRadius}"
+                            Opacity="{DynamicResource GrainOpacity}"
+                            Background="{DynamicResource GrainTileBrush}"/>
                     </Grid>
                     <TextBlock x:Name="DlgStatus" Foreground="{DynamicResource TextBrush}"
                                FontSize="10.5" Margin="0,6,0,0" TextWrapping="Wrap"/>
@@ -160,7 +118,7 @@
                      Padding 0: SurfaceButton's side padding clips glyphs at a fixed width.
                      Glyph Content is set in code (Segoe MDL2 private-use characters must never be
                      pasted literally into XAML). -->
-                <Grid Grid.Row="2" Margin="24,0,24,18">
+                <Grid Grid.Row="2" Margin="12,0,12,12">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <Button x:Name="NewBtn" Click="New_Click" ToolTip="{DynamicResource Str_TT_NewKcal}"
                                 Style="{StaticResource SurfaceButton}" FontFamily="Segoe MDL2 Assets"
@@ -195,10 +153,5 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-            <Border Panel.ZIndex="9000" IsHitTestVisible="False" BorderBrush="{DynamicResource OverlayBevelOuterLightBrush}" BorderThickness="{DynamicResource OverlayBevelLightThickness}"/>
-            <Border Panel.ZIndex="9000" IsHitTestVisible="False" BorderBrush="{DynamicResource OverlayBevelOuterDarkBrush}" BorderThickness="{DynamicResource OverlayBevelDarkThickness}"/>
-            <Border Panel.ZIndex="9001" IsHitTestVisible="False" Margin="{DynamicResource OverlayBevelInnerMargin}" BorderBrush="{DynamicResource OverlayBevelInnerLightBrush}" BorderThickness="{DynamicResource OverlayBevelLightThickness}"/>
-            <Border Panel.ZIndex="9001" IsHitTestVisible="False" Margin="{DynamicResource OverlayBevelInnerMargin}" BorderBrush="{DynamicResource OverlayBevelInnerDarkBrush}" BorderThickness="{DynamicResource OverlayBevelDarkThickness}"/>
-        </Grid>
-    </kui:PickerBorder>
+    </ContentControl>
 </Window>
