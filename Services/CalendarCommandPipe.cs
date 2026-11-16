@@ -52,18 +52,22 @@ namespace Killendar.Services
         /// <summary>UTF-8 needs at most four bytes per character, so this byte ceiling can never
         /// refuse a request the character limit would accept.</summary>
         internal const int MaxRequestBytes = MaxRequestChars * 4;
+        internal const int MaxResponseBytes = 16 * 1024 * 1024;
 
         /// <summary>One line, read in small chunks against the byte ceiling. The deadline bounds
         /// how long a client may take; the ceiling bounds how much it may send in that time,
         /// checked as the bytes arrive rather than after a whole line has been buffered.</summary>
         internal static string? ReadRequest(Stream stream, TimeSpan timeout)
+            => ReadLine(stream, timeout, MaxRequestBytes);
+
+        private static string? ReadLine(Stream stream, TimeSpan timeout, int maxBytes)
         {
-            Task<string?> read = ReadLineAsync(stream);
+            Task<string?> read = ReadLineAsync(stream, maxBytes);
             Within(stream, read, timeout).GetAwaiter().GetResult();
             return read.GetAwaiter().GetResult();
         }
 
-        private static async Task<string?> ReadLineAsync(Stream stream)
+        private static async Task<string?> ReadLineAsync(Stream stream, int maxBytes)
         {
             var line = new MemoryStream();
             var chunk = new byte[1024];
@@ -73,8 +77,8 @@ namespace Killendar.Services
                 if (read == 0) return line.Length == 0 ? null : Decode(line);
                 int newline = Array.IndexOf(chunk, (byte)'\n', 0, read);
                 int take = newline < 0 ? read : newline;
-                if (line.Length + take > MaxRequestBytes)
-                    throw new InvalidDataException("Calendar command exceeds " + MaxRequestBytes + " bytes.");
+                if (line.Length + take > maxBytes)
+                    throw new InvalidDataException("Calendar command exceeds " + maxBytes + " bytes.");
                 line.Write(chunk, 0, take);
                 if (newline >= 0) return Decode(line);
             }
@@ -126,7 +130,7 @@ namespace Killendar.Services
                 pipe.Connect(2000);
                 PipeGuard.RequireCurrentUserServer(pipe, serverOwner);
                 if (!WriteResponse(pipe, request, ExchangeTimeout)) throw new IOException("Calendar command could not be sent.");
-                return ReadRequest(pipe, ExchangeTimeout) ?? throw new IOException("Killendar did not answer the calendar command.");
+                return ReadLine(pipe, ExchangeTimeout, MaxResponseBytes) ?? throw new IOException("Killendar did not answer the calendar command.");
             }
             catch (Exception ex) when (ex is IOException || ex is TimeoutException)
             {
