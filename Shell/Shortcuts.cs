@@ -228,6 +228,7 @@ namespace Killendar.Shell
             {
                 case Key.N:      _calendar.NewAtAnchor(); break;
                 case Key.Q:      OpenQuickAdd(); break;
+                case Key.O:      OpenFreeTime(); break;
                 case Key.T:      _calendar.GoToday(); break;
 
                 case Key.Left:
