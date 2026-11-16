@@ -10,6 +10,25 @@ namespace Killendar.Tests
     public sealed class CsvReminderRegressionTests
     {
         [Fact]
+        public void RowsWithDifferentReminderLeadsImportAsDistinctAppointments()
+        {
+            var first = new CalendarEvent
+            {
+                Title = "Call", Start = new DateTime(2026, 10, 22, 9, 0, 0),
+                End = new DateTime(2026, 10, 22, 10, 0, 0), ReminderMinutes = 15,
+            };
+            var second = first.Clone();
+            second.Id = Guid.NewGuid();
+            second.ReminderMinutes = 60;
+            var rows = CsvService.ParseText(CsvService.BuildCsv([first, second])).Events;
+            using var fixture = new AppointmentFixture();
+
+            Assert.Equal(2, fixture.Store.ImportEvents(rows));
+            Assert.Equal(2, fixture.Store.Events.Count);
+            Assert.Equal(0, fixture.Store.ImportEvents(rows));
+        }
+
+        [Fact]
         public void ExportWritesOutlookReminderColumns()
         {
             var ev = new CalendarEvent

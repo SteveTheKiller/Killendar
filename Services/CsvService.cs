@@ -304,8 +304,8 @@ namespace Killendar.Services
                 // file twice skips the second copy in ImportEvents' existing Id check - a CSV
                 // carries no UID of its own to dedupe on. Two genuinely identical rows in one
                 // file collapse to one appointment, which is the right reading of a duplicate.
-                ev.Id = StableId(ev);
                 ev.ReminderMinutes = ReminderFrom(ev, remindOn, remindD, remindT);
+                ev.Id = StableId(ev);
 
                 result.Events.Add(ev);
             }
@@ -387,7 +387,7 @@ namespace Killendar.Services
             using var bytes = new MemoryStream();
             using (var writer = new BinaryWriter(bytes, Encoding.UTF8, leaveOpen: true))
             {
-                writer.Write("Killendar CSV identity 2");
+                writer.Write("Killendar CSV identity 3");
                 writer.Write(row.Title ?? "");
                 writer.Write(row.Start.Ticks);
                 writer.Write(row.End.Ticks);
@@ -395,6 +395,7 @@ namespace Killendar.Services
                 writer.Write(row.Description ?? "");
                 writer.Write(row.Location ?? "");
                 writer.Write(EventStore.NormalizeCategories(row.Categories));
+                writer.Write(row.ReminderMinutes ?? -1);
             }
             using var md5 = MD5.Create();
             return new Guid(md5.ComputeHash(bytes.ToArray()));
