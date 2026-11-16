@@ -777,6 +777,27 @@ namespace Killendar.Features
             _followedStart = CurrentStart();
         }
 
+        /// <summary>A new appointment filled in from a line typed in the sentence box. It opens in
+        /// the panel and saves only when the user saves it. False when a draft was kept.</summary>
+        internal bool NewFromQuickAdd(QuickAddResult line)
+        {
+            if (!NewAt(line.Start)) return false;
+            _loading = true;
+            try
+            {
+                _view.FieldTitle = line.Title;
+                _view.FieldLocation = line.Location;
+                _view.FieldCategories = line.Categories;
+                if (line.AllDay != _allDay) ToggleAllDay();
+                var end = line.AllDay ? line.End.Date : line.End;
+                _view.FieldEndDate = DateFormatManager.Format(end);
+                if (!line.AllDay) _view.FieldEndTime = FormatTime(end);
+            }
+            finally { _loading = false; }
+            _followedStart = CurrentStart();
+            return true;
+        }
+
         /// <summary>
         /// Moves the appointment being edited by <paramref name="by"/> - start and end together -
         /// from the keyboard, the alternative to dragging it. Nothing happens while either time
