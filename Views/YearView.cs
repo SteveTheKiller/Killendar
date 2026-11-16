@@ -165,7 +165,7 @@ namespace Killendar.Views
 
         private FrameworkElement DayCell(DateTime day, int level)
         {
-            var cell = new DayCellGrid { Height = 22, Margin = new Thickness(1), Cursor = Cursors.Hand, Focusable = true };
+            var cell = new DayCellGrid(() => Open(day)) { Height = 22, Margin = new Thickness(1), Cursor = Cursors.Hand, Focusable = true };
             if (level > 0)
             {
                 var shade = new Border { Opacity = 0.18 + 0.18 * level };
@@ -191,11 +191,11 @@ namespace Killendar.Views
             cell.Children.Add(label);
             AutomationProperties.SetName(cell, day.ToString("D", CultureInfo.CurrentCulture));
 
-            cell.MouseLeftButtonUp += (_, e) => { Open(day); e.Handled = true; };
+            cell.MouseLeftButtonUp += (_, e) => { cell.Open(); e.Handled = true; };
             cell.KeyDown += (_, e) =>
             {
                 if (e.Key != Key.Enter && e.Key != Key.Space) return;
-                Open(day);
+                cell.Open();
                 e.Handled = true;
             };
             return cell;
@@ -209,11 +209,13 @@ namespace Killendar.Views
 
         /// <summary>A day in the year grid. Its own type lets the shell leave the arrow keys to
         /// it, and screen readers hear it as a button.</summary>
-        internal sealed class DayCellGrid : Grid
+        internal sealed class DayCellGrid(Action open) : Grid
         {
+            internal void Open() => open();
             protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() => new Peer(this);
 
-            private sealed class Peer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
+            private sealed class Peer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer,
+                System.Windows.Automation.Provider.IInvokeProvider
             {
                 public Peer(DayCellGrid owner) : base(owner) { }
                 protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() =>
@@ -221,6 +223,14 @@ namespace Killendar.Views
                 protected override string GetClassNameCore() => "YearDay";
                 protected override bool IsControlElementCore() => true;
                 protected override bool IsContentElementCore() => true;
+                public override object GetPattern(System.Windows.Automation.Peers.PatternInterface patternInterface) =>
+                    patternInterface == System.Windows.Automation.Peers.PatternInterface.Invoke ? this : base.GetPattern(patternInterface);
+
+                void System.Windows.Automation.Provider.IInvokeProvider.Invoke()
+                {
+                    if (!IsEnabled()) throw new ElementNotEnabledException();
+                    ((DayCellGrid)Owner).Open();
+                }
             }
         }
     }
