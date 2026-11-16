@@ -68,6 +68,8 @@ dotnet build Killendar.csproj -c Release
 
 Requires the .NET Framework 4.8 developer pack and Visual Studio 2022 (or the Build Tools).
 
+Before releasing, run `./test.ps1` and resolve any failures. It builds and runs the Release test suite and saves TRX results outside the checkout. Run `./release.ps1` afterward; it performs release preflight, packaging and publication without repeating the tests. Rerun `test.ps1` if the tested code changes.
+
 Scripted deployment and uninstall completion are described in [Deployment and uninstall results](docs/deployment.md), including pending exit code `997` and the final status receipt.
 
 `brand/` holds the working artwork and is not tracked. Everything the app consumes is generated out of it into `Resources/`, which is tracked, so a fresh clone builds without it.

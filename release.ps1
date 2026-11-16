@@ -4,6 +4,7 @@
 # Compatible with Windows PowerShell 5.1 and PowerShell 7.
 #
 # Usage:
+#   .\test.ps1                 # run first; release does not repeat the tests
 #   .\release.ps1              # full release for the version in the csproj
 #   .\release.ps1 -DryRun      # everything except the site push, tag push and gh release
 #   .\release.ps1 -SkipSign    # local test build only - never release unsigned
@@ -158,10 +159,7 @@ if ($scan -match 'has the following vulnerable packages') {
     Fail 'Vulnerable packages found. Resolve before releasing.'
 }
 
-# --- 4. Release tests ---
-Step "Running Release tests"
-dotnet test 'Killendar.sln' -c Release --no-restore --nologo
-if ($LASTEXITCODE -ne 0) { Fail 'Release tests failed' }
+# --- 4. Release content checks (run test.ps1 before starting this script) ---
 
 # Every localization must contain the complete English key set. Matching placeholders are
 # required because a translated string can load successfully and still fail at runtime when
