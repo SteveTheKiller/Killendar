@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using Killendar.Models;
+using Microsoft.Data.Sqlite;
 
 namespace Killendar.Services
 {
@@ -17,10 +18,11 @@ namespace Killendar.Services
         // ============================================================
 
         /// <summary>Stores <paramref name="source"/> as a template named by its title, replacing
-        /// one of the same name.</summary>
-        public void SaveTemplate(CalendarEvent source)
+        /// one of the same name. Returns the storage error, or null on success.</summary>
+        public string? SaveTemplate(CalendarEvent source)
         {
-            if (_db == null || string.IsNullOrWhiteSpace(source.Title)) return;
+            if (_db == null) return UiText.Loc("Str_Pw_UnlockHead");
+            if (string.IsNullOrWhiteSpace(source.Title)) return UiText.Loc("Str_Tpl_NeedsTitle");
             var template = new CalendarEvent
             {
                 Title = source.Title.Trim(), Location = source.Location, Description = source.Description,
@@ -35,8 +37,10 @@ namespace Killendar.Services
                 cmd.Parameters.AddWithValue("$n", template.Title);
                 cmd.Parameters.AddWithValue("$j", JsonSerializer.Serialize(template, DeletedJson));
                 cmd.Parameters.AddWithValue("$u", DateTime.UtcNow.ToString("o", CultureInfo.InvariantCulture));
-                cmd.ExecuteNonQuery();
+                try { cmd.ExecuteNonQuery(); }
+                catch (SqliteException ex) { return ex.Message; }
             }
+            return null;
         }
 
         /// <summary>Templates by name.</summary>
@@ -55,16 +59,18 @@ namespace Killendar.Services
             return list;
         }
 
-        public void DeleteTemplate(string name)
+        public string? DeleteTemplate(string name)
         {
-            if (_db == null) return;
+            if (_db == null) return UiText.Loc("Str_Pw_UnlockHead");
             lock (_writeGate)
             {
                 using var cmd = _db.CreateCommand();
                 cmd.CommandText = "DELETE FROM templates WHERE name = $n";
                 cmd.Parameters.AddWithValue("$n", name);
-                cmd.ExecuteNonQuery();
+                try { cmd.ExecuteNonQuery(); }
+                catch (SqliteException ex) { return ex.Message; }
             }
+            return null;
         }
 
         /// <summary>Timed, busy appointments that share time with <paramref name="ev"/>: not itself,

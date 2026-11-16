@@ -52,7 +52,8 @@ namespace Killendar.Shell
                 string name = template.Title;
                 item.Click += (_, _) =>
                 {
-                    _store.DeleteTemplate(name);
+                    string? error = _store.DeleteTemplate(name);
+                    if (error != null) { StatusText.Text = error; return; }
                     StatusText.Text = string.Format(Loc("Str_Status_TplDeleted"), name);
                     OfferTemplateUndo(template);
                 };
@@ -99,7 +100,8 @@ namespace Killendar.Shell
             var template = _undoTemplate;
             HideTemplateUndo();
             if (template == null) return;
-            _store.SaveTemplate(template);
+            string? error = _store.SaveTemplate(template);
+            if (error != null) { StatusText.Text = error; return; }
             StatusText.Text = string.Format(Loc("Str_Status_Restored"), template.Title);
         }
 

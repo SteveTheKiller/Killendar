@@ -325,20 +325,25 @@ namespace Killendar.Features
                 if (NominalDuration.HasValue(_editing) &&
                     TryParseDate(_view.FieldEndDate, out var nominalEndDate) &&
                     TryParseTime(_view.FieldEndTime, out var nominalEndTime) &&
-                    MatchesDisplayedInstant(nominalEndDate.Date + nominalEndTime, _nominalEnd.Value))
+                    MatchesDisplayedInstant(nominalEndDate.Date + nominalEndTime,
+                        FieldZone is TimeZoneInfo endZone ? TimeZones.ToZone(_nominalEnd.Value, endZone) : _nominalEnd.Value))
                 {
                     DateTime movedEnd;
                     try
                     {
-                        movedEnd = NominalDuration.EndAfterStartChange(_editing,
-                            PreserveDisplayedInstant(now.Value, _editing.Start));
+                        var movedStart = FieldZone is TimeZoneInfo startZone
+                            ? MatchesDisplayedInstant(now.Value, TimeZones.ToZone(_editing.Start, startZone))
+                                ? _editing.Start : TimeZones.FromZone(now.Value, startZone)
+                            : PreserveDisplayedInstant(now.Value, _editing.Start);
+                        movedEnd = NominalDuration.EndAfterStartChange(_editing, movedStart);
                     }
                     catch (ArgumentOutOfRangeException) { return; }
                     catch (OverflowException) { return; }
                     _followedStart = now;
                     _nominalEnd = movedEnd;
-                    _view.FieldEndDate = DateFormatManager.Format(movedEnd);
-                    _view.FieldEndTime = FormatTime(movedEnd);
+                    var shownEnd = FieldZone is TimeZoneInfo displayZone ? TimeZones.ToZone(movedEnd, displayZone) : movedEnd;
+                    _view.FieldEndDate = DateFormatManager.Format(shownEnd);
+                    _view.FieldEndTime = FormatTime(shownEnd);
                     return;
                 }
                 _nominalEnd = null;
@@ -563,11 +568,15 @@ namespace Killendar.Features
                 end = endDate.Date + endTime;
                 if (FieldZone is TimeZoneInfo zone)
                 {
-                    // Typed on that zone's clock. Its own rules settle a doubled or skipped time.
-                    start = TimeZones.FromZone(start, zone);
-                    end = TimeZones.FromZone(end, zone);
                     preserveNominalDuration = _editing != null && !_editing.AllDay && _nominalEnd.HasValue &&
-                        end.ToUniversalTime() == _editing.End.ToUniversalTime();
+                        MatchesDisplayedInstant(end, TimeZones.ToZone(_nominalEnd.Value, zone));
+                    // Typed on that zone's clock. Its own rules settle a doubled or skipped time.
+                    start = _editing != null && !_editing.AllDay &&
+                        MatchesDisplayedInstant(start, TimeZones.ToZone(_editing.Start, zone))
+                        ? _editing.Start : TimeZones.FromZone(start, zone);
+                    end = _editing != null && !_editing.AllDay &&
+                        MatchesDisplayedInstant(end, TimeZones.ToZone(_editing.End, zone))
+                        ? _editing.End : TimeZones.FromZone(end, zone);
                     if (preserveNominalDuration) end = _nominalEnd!.Value;
                 }
                 else
@@ -743,12 +752,13 @@ namespace Killendar.Features
             else if (TryParseDate(_view.FieldEndDate, out var endDate) && TryParseTime(_view.FieldEndTime, out var endTime) &&
                      endDate.Date + endTime > start)
                 end = endDate.Date + endTime;
-            _store.SaveTemplate(new CalendarEvent
+            string? error = _store.SaveTemplate(new CalendarEvent
             {
                 Title = title, Location = _view.FieldLocation.Trim(), Description = _view.FieldDescription.Trim(),
                 Categories = EventStore.NormalizeCategories(_view.FieldCategories), ReminderMinutes = _view.FieldReminder,
                 AllDay = _allDay, Start = start, End = end,
             });
+            if (error != null) { _view.ShowError(error); return false; }
             _view.SetStatus(string.Format(_view.Loc("Str_Status_TplSaved"), title));
             return true;
         }
