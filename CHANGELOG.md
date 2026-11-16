@@ -6,7 +6,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 
 ## [1.5.0] - Unreleased
 
-Killendar 1.5.0 gives appointments the family's card menu, hardens how it loads its database engine and checks updates, fixes a long list of data, keyboard and layout bugs, and lets a deleted template come back with Undo.
+Killendar 1.5.0 adds a sentence box for new appointments, an open time finder and a Year view, gives appointments the family's card menu, hardens how it loads its database engine and checks updates, fixes a long list of data, keyboard and layout bugs, and lets a deleted template come back with Undo.
 
 ### Security
 
@@ -53,6 +53,9 @@ Killendar 1.5.0 gives appointments the family's card menu, hardens how it loads 
 ### Added
 
 - Deleting a template shows Undo in the status bar, which brings it back.
+- Q opens a sentence box. Type a line like "lunch with Dave fri 12:30 at Mel's", see how it reads as you type, and Enter opens the edit panel filled in. It reads days, dates, times, ranges like 3-5pm, lengths like "for 2h", a place after "at", "all day" and #categories, in every language Killendar speaks.
+- O finds open time across the calendars that are showing. Pick a length and a range, keep it to work hours or not, and click a gap to start an appointment there. All-day appointments do not count as busy.
+- Year view, on Y or 5, shows twelve months at once with busier days shaded darker. Previous and Next move a year, and clicking a day opens it in the Day view.
 
 ## [1.4.2] - 2026-11-04
 

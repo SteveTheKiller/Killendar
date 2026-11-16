@@ -8,7 +8,9 @@ How importing, repeats, reminders, backups, privacy and the command line work is
 
 ## Features
 
-- Four views - month, week, day and agenda - with one shared previous / next / today control; Month zooms from one to six visible weeks and draws multi-day appointments as continuous runs
+- Five views - month, week, day, agenda and year - with one shared previous / next / today control; Month zooms from one to six visible weeks and draws multi-day appointments as continuous runs, and Year shades each day by how busy it is
+- Type a sentence like "lunch with Dave fri 12:30 at Mel's" to start an appointment, with no AI involved, just rules that read days, dates, times, lengths, places and #categories in all twenty languages
+- Find open time across your calendars: pick a length and a range, keep it to work hours, and click a gap to book it
 - Appointments edited in a slide-out sidebar panel, not a dialog: title, start and end, all-day, location, description and attendees
 - Repeating appointments - daily, weekly on the days you tick, monthly on a date or on the first to fourth or last weekday, or yearly, every N of those, ending never, after a count, or on a date - with per-date exceptions; editing or deleting one date offers just that date, this and following (except for a series kept on another time zone's clock), or the whole series
 - Reminders with snooze and dismiss, shown when they come due and caught up after Killendar was closed, with a tray notification while it sits in the tray
