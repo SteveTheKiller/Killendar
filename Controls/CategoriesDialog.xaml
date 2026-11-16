@@ -32,7 +32,7 @@
 
                 <kui:DialogTitleBar Grid.Row="0" Subtitle="{DynamicResource Str_Cat_Title}" CloseRequested="Close_Click"/>
 
-                <StackPanel Grid.Row="1" Margin="12,8,12,8">
+                <StackPanel Grid.Row="1" Margin="12,8,12,12">
                     <TextBlock Text="{DynamicResource Str_Cat_Hint}" Foreground="{DynamicResource MutedTextBrush}"
                                FontSize="11" TextWrapping="Wrap" Margin="0,0,0,8"/>
                     <Grid>
@@ -83,12 +83,17 @@
                                 Background="{DynamicResource GrainTileBrush}" Opacity="{DynamicResource GrainOpacity}"/>
                     </Grid>
 
-                    <!-- Add row: name box + color swatch button + Add -->
-                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <!-- Add row: name box + color swatch button + Add, and Done at the right end
+                         of the same line. -->
+                    <Grid Margin="0,10,0,0">
+                    <Button x:Name="DoneBtn" Content="{DynamicResource Str_Btn_Done}" Click="Close_Click"
+                            Style="{StaticResource OutlineButton}" MinWidth="80" Height="26"
+                            HorizontalAlignment="Right"/>
+                    <StackPanel Orientation="Horizontal">
                         <!-- FontSize/Padding/VerticalContentAlignment all overridden: DarkTextBox's
                              defaults (14pt, 8,6) do not fit a fixed-height row and the text scrolls
                              out of sight. See the template comment on the style. -->
-                        <TextBox x:Name="NewNameBox" Width="180" Height="26"
+                        <TextBox x:Name="NewNameBox" Width="160" Height="26"
                                  Style="{StaticResource DarkTextBox}"
                                  FontSize="12" Padding="6,0" VerticalContentAlignment="Center"
                                  KeyDown="NewNameBox_KeyDown"/>
@@ -108,16 +113,10 @@
                         <Button x:Name="AddBtn" Content="{DynamicResource Str_Btn_CatAdd}" Click="Add_Click"
                                 Style="{StaticResource SurfaceButton}" Margin="8,0,0,0" Padding="12,0" Height="26"/>
                     </StackPanel>
+                    </Grid>
                     <TextBlock x:Name="DlgStatus" Foreground="{DynamicResource DimTextBrush}"
                                FontSize="10.5" Margin="0,6,0,0" TextWrapping="Wrap"/>
                 </StackPanel>
-
-                <Grid Grid.Row="2" Margin="12,0,12,12">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button x:Name="DoneBtn" Content="{DynamicResource Str_Btn_Done}" Click="Close_Click"
-                                Style="{StaticResource OutlineButton}" MinWidth="80"/>
-                    </StackPanel>
-                </Grid>
             </Grid>
     </ContentControl>
 </Window>
