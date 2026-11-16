@@ -115,7 +115,19 @@
                     </StackPanel>
                     </Grid>
                     <TextBlock x:Name="DlgStatus" Foreground="{DynamicResource DimTextBrush}"
-                               FontSize="10.5" Margin="0,6,0,0" TextWrapping="Wrap"/>
+                               FontSize="10.5" Margin="0,6,0,0" TextWrapping="Wrap">
+                        <!-- Collapsed while empty: an empty TextBlock still takes a line, which
+                             left a blank band under the add row. -->
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <Trigger Property="Text" Value="">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                 </StackPanel>
             </Grid>
     </ContentControl>
