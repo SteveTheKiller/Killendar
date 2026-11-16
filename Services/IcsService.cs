@@ -192,7 +192,7 @@ namespace Killendar.Services
             bool canceled = false;
             bool lostDetails = false;
             bool sawCreated = false;
-            var canceledDates = new List<(Guid series, (DateTime dt, bool allDay, RecurrenceTimeBasis basis, DateTime? anchor, string zone) date)>();
+            var canceledDates = new List<(Guid series, int sequence, (DateTime dt, bool allDay, RecurrenceTimeBasis basis, DateTime? anchor, string zone) date)>();
 
             int read = 0;
             foreach (var raw in lines)
@@ -278,7 +278,7 @@ namespace Killendar.Services
                             result.Canceled++;
                             if (recurrenceIdValue.HasValue)
                             {
-                                canceledDates.Add((current.Id, recurrenceIdValue.Value));
+                                canceledDates.Add((current.Id, MeetingInfo.Sequence(current), recurrenceIdValue.Value));
                                 result.CanceledOccurrences.Add(new CalendarEvent
                                 {
                                     SeriesId = current.Id, OccurrenceStart = recurrenceId, Start = recurrenceId!.Value,
@@ -666,15 +666,17 @@ namespace Killendar.Services
             // An appointment still open when the file ends never reached its END:VEVENT.
             if (current != null) result.Unreadable++;
 
-            foreach (var (series, date) in canceledDates)
+            foreach (var (series, sequence, date) in canceledDates)
             {
-                var master = result.Events.Find(e => e.Id == series && e.IsSeries);
-                if (master == null) continue;
-                if (date.allDay) master.SkipDates.Add(date.dt.Date);
-                // Outlook cancels a date of an all-day series with a timed RECURRENCE-ID; the date
-                // is the one it names on its own clock, not this computer's.
-                else if (master.AllDay) master.SkipDates.Add((date.anchor ?? date.dt).Date);
-                else master.SkipOccurrences.Add(CanonicalExclusion(master, date));
+                foreach (var master in result.Events.Where(e => e.Id == series && e.IsSeries))
+                {
+                    if (sequence < MeetingInfo.Sequence(master)) continue;
+                    if (date.allDay) master.SkipDates.Add(date.dt.Date);
+                    // Outlook cancels a date of an all-day series with a timed RECURRENCE-ID; the date
+                    // is the one it names on its own clock, not this computer's.
+                    else if (master.AllDay) master.SkipDates.Add((date.anchor ?? date.dt).Date);
+                    else master.SkipOccurrences.Add(CanonicalExclusion(master, date));
+                }
             }
 
             return result;

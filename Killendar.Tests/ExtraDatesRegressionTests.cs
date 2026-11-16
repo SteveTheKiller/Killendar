@@ -23,6 +23,43 @@ namespace Killendar.Tests
             Recurrence.Expand(master, First.Date, First.Date.AddDays(90)).Select(o => o.Start).ToList();
 
         [Fact]
+        public void DeletedExtraDateStaysDeletedAfterSeriesRenameAndReopen()
+        {
+            using var fixture = new AppointmentFixture();
+            var extra = new DateTime(2026, 10, 22);
+            fixture.Store.Add(Weekly(extra));
+            fixture.Store.DeleteOccurrence(Assert.Single(fixture.Store.GetOnDay(extra)));
+            var regular = Assert.Single(fixture.Store.GetOnDay(First)).Clone();
+            regular.Title = "Renamed series";
+            fixture.Store.UpdateSeries(regular);
+            string path = fixture.Store.FilePath;
+            fixture.Store.Close();
+            fixture.Store.Open(path);
+            Assert.Empty(fixture.Store.GetOnDay(extra));
+        }
+
+        [Fact]
+        public void ExtraDateEditSurvivesSeriesRenameAndReopen()
+        {
+            using var fixture = new AppointmentFixture();
+            var extra = new DateTime(2026, 10, 22);
+            var master = Weekly(extra);
+            fixture.Store.Add(master);
+            var special = Assert.Single(fixture.Store.GetOnDay(extra)).Clone();
+            special.Title = "Custom extra appointment";
+            fixture.Store.SaveOccurrence(special);
+            var regular = Assert.Single(fixture.Store.GetOnDay(First)).Clone();
+            regular.Title = "Renamed series";
+
+            fixture.Store.UpdateSeries(regular);
+            string path = fixture.Store.FilePath;
+            fixture.Store.Close();
+            fixture.Store.Open(path);
+
+            Assert.Equal("Custom extra appointment", Assert.Single(fixture.Store.GetOnDay(extra)).Title);
+        }
+
+        [Fact]
         public void ExtraDatesJoinThePatternAtItsTimeOfDay()
         {
             var starts = Starts(Weekly(new DateTime(2026, 10, 22), new DateTime(2026, 12, 24)));

@@ -365,6 +365,10 @@ namespace Killendar.Services
 
         internal static bool GeneratesCanonicalStart(CalendarEvent master, DateTime nominal)
         {
+            var clock = SeriesClockStart(master);
+            if (master.ExtraDates.Any(day => day.Date == nominal.Date) &&
+                (master.AllDay ? nominal.TimeOfDay == TimeSpan.Zero : nominal.TimeOfDay == clock.TimeOfDay))
+                return true;
             var pattern = master.Clone();
             if (UsesTimeBasis(master)) pattern.Start = master.RepeatAnchor!.Value;
             int interval = master.RepeatInterval > 0 ? master.RepeatInterval : 1;

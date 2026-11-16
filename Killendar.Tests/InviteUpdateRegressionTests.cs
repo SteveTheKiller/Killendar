@@ -34,6 +34,53 @@ namespace Killendar.Tests
         }
 
         [Fact]
+        public void UntilShorteningAndSingleInviteRemoveObsoleteEditedDates()
+        {
+            foreach (string? rule in new[] { "RRULE:FREQ=DAILY;UNTIL=20261020T235959", null })
+            {
+                using var fixture = new AppointmentFixture();
+                Import(fixture.Store, Invite(0, "20261019T090000", "Standup", "RRULE:FREQ=DAILY;COUNT=5"));
+                var last = Assert.Single(fixture.Store.GetOnDay(new DateTime(2026, 10, 23))).Clone();
+                last.Title = "Edited fifth";
+                fixture.Store.SaveOccurrence(last);
+                Import(fixture.Store, Invite(1, "20261019T090000", "Standup", rule));
+                string path = fixture.Store.FilePath;
+                fixture.Store.Close();
+                fixture.Store.Open(path);
+                Assert.Empty(fixture.Store.GetOnDay(new DateTime(2026, 10, 23)));
+                Assert.Single(fixture.Store.GetOnDay(new DateTime(2026, 10, 19)));
+            }
+        }
+
+        [Fact]
+        public void StaleCancellationInOneFileKeepsNewerOccurrence()
+        {
+            string current = Invite(2, "20261019T090000", "Standup", "RRULE:FREQ=DAILY;COUNT=3");
+            string cancel = string.Join("\r\n", "BEGIN:VEVENT", "UID:planning@example.com", "SEQUENCE:1",
+                "RECURRENCE-ID:20261020T090000", "DTSTART:20261020T090000", "DTEND:20261020T100000",
+                "STATUS:CANCELLED", "END:VEVENT", "END:VCALENDAR", "");
+            using var fixture = new AppointmentFixture();
+
+            Import(fixture.Store, current.Replace("END:VCALENDAR\r\n", cancel));
+
+            Assert.Single(fixture.Store.GetOnDay(new DateTime(2026, 10, 20)));
+        }
+
+        [Fact]
+        public void ShortenedInviteRemovesEditedDatesOutsideItsCount()
+        {
+            using var fixture = new AppointmentFixture();
+            Import(fixture.Store, Invite(0, "20261019T090000", "Standup", "RRULE:FREQ=DAILY;COUNT=5"));
+            var last = Assert.Single(fixture.Store.GetOnDay(new DateTime(2026, 10, 23))).Clone();
+            last.Title = "Edited fifth";
+            fixture.Store.SaveOccurrence(last);
+
+            Import(fixture.Store, Invite(1, "20261019T090000", "Standup", "RRULE:FREQ=DAILY;COUNT=2"));
+
+            Assert.Empty(fixture.Store.GetOnDay(new DateTime(2026, 10, 23)));
+        }
+
+        [Fact]
         public void TheSameInviteAgainIsSkipped()
         {
             using var fixture = new AppointmentFixture();

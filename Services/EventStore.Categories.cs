@@ -240,7 +240,7 @@ namespace Killendar.Services
                 update.ReminderMinutes = have.ReminderMinutes;
                 update.Created = have.Created;
                 update.Modified = DateTime.UtcNow;
-                if (have.IsSeries && update.IsSeries) KeepWhatStillFits(have, update, incomingIds, plan, removed);
+                if (have.IsSeries) KeepWhatStillFits(have, update, incomingIds, plan, removed);
                 replaced[update.Id] = update;
                 plan.NewerInvites++;
             }
@@ -301,21 +301,22 @@ namespace Killendar.Services
         private void KeepWhatStillFits(CalendarEvent have, CalendarEvent update, HashSet<Guid> incomingIds,
                                        ImportPlan plan, HashSet<Guid> removed)
         {
-            bool samePattern = update.Start == have.Start && update.AllDay == have.AllDay && update.Repeat == have.Repeat &&
+            bool samePattern = update.IsSeries && update.Start == have.Start && update.AllDay == have.AllDay && update.Repeat == have.Repeat &&
                 update.RepeatInterval == have.RepeatInterval && update.RepeatMonthWeek == have.RepeatMonthWeek &&
                 (update.RepeatDays ?? []).OrderBy(d => d).SequenceEqual((have.RepeatDays ?? []).OrderBy(d => d));
             foreach (var day in have.SkipDates)
                 if (!update.SkipDates.Any(d => d.Date == day.Date) && Recurrence.GeneratesDate(update, day)) update.SkipDates.Add(day.Date);
             if (samePattern)
             {
-                foreach (var nominal in have.SkipOccurrences)
-                    if (!update.SkipOccurrences.Any(v => v.Ticks == nominal.Ticks)) update.SkipOccurrences.Add(nominal);
                 update.ExtraDates = [.. update.ExtraDates.Union(have.ExtraDates.Select(d => d.Date))];
                 update.RepeatShift = have.RepeatShift;
-                return;
+                foreach (var nominal in have.SkipOccurrences)
+                    if (Recurrence.GeneratesCanonicalStart(update, nominal) &&
+                        !update.SkipOccurrences.Any(v => v.Ticks == nominal.Ticks)) update.SkipOccurrences.Add(nominal);
             }
             foreach (var edit in _events.Where(e => e.IsOverride && e.SeriesId == have.Id && !incomingIds.Contains(e.Id)))
-                if (removed.Add(edit.Id)) plan.Removed.Add(edit);
+                if ((!samePattern || !Recurrence.GeneratesCanonicalStart(update, Recurrence.CanonicalOccurrenceStart(have, edit))) &&
+                    removed.Add(edit.Id)) plan.Removed.Add(edit);
         }
 
         /// <summary>Puts a written import into the mirror.</summary>
